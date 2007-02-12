@@ -1,3 +1,3 @@
 #summary nemesis. an experimental finite element code.
 
-The main wiki is maintained at _[http://www.nemesis-project.org nemesis. an experimental finite element code.]_ website. Here you may find additional information mainly about downloading and compiling the source code of *nemesis*.
+The main wiki is maintained at _[http://www.nemesis-project.org nemesis]_ website. Here you may find additional information mainly about downloading and compiling the source code of _[http://www.nemesis-project.org nemesis]_.
