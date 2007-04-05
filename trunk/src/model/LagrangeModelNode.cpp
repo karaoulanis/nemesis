@@ -1,0 +1,65 @@
+/******************************************************************************
+*   nemesis. an experimental finite element code.                             *
+*   Copyright (C) 2004-2007 F.E.Karaoulanis [http://www.nemesis-project.org]  *
+*                                                                             *
+*   This program is free software; you can redistribute it and/or modify      *
+*   it under the terms of the GNU General Public License version 2, as        *
+*   published by the Free Software Foundation.                                *
+*                                                                             *
+*   This program is distributed in the hope that it will be useful,           *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+*   GNU General Public License for more details.                              *
+*                                                                             *
+*   You should have received a copy of the GNU General Public License along   *
+*   with this program; if not, write to the Free Software Foundation, Inc.,   *
+*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.               *
+******************************************************************************/
+
+//*****************************************************************************
+// $LastChangedDate$
+// $LastChangedRevision$
+// $LastChangedBy$
+// $HeadURL$
+// Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
+//*****************************************************************************
+
+#include <LagrangeModelNode.h>
+
+/**
+ * Default constructor.
+ */
+LagrangeModelNode::LagrangeModelNode()
+:ModelNode()
+{
+}
+/**
+ * Constructor.
+ */
+LagrangeModelNode::LagrangeModelNode(const IDContainer& FTable,Node* pNode,Constraint* pConstraint)
+	:ModelNode(FTable,pNode,pConstraint)
+{
+}
+void LagrangeModelNode::add_R(double factor)
+{
+}
+void LagrangeModelNode::incTrialDisp(const Vector& du)
+{
+	myConstraint->update(du[theFTable[0]]);
+}
+void LagrangeModelNode::incTrialVecs(const Vector& du,const Vector& dv,const Vector& da)
+{
+//	myConstraint->incTrialDisp(du[theFTable[0]]);
+}
+void LagrangeModelNode::setTrialDisp(const Vector& u)
+{
+//	myConstraint->setTrialDisp(u[theFTable[0]]);
+}
+void LagrangeModelNode::setTrialVecs(const Vector& u,const Vector& v,const Vector& a)
+{
+//	myConstraint->setTrialDisp(u[theFTable[0]]);
+}
+void LagrangeModelNode::commit()
+{
+	myConstraint->commit();
+}
