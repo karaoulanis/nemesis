@@ -1,0 +1,17 @@
+
+from extras import tetgen
+
+domain.dim(3)
+db.SQLite("tetgen.sdb")
+
+material.elastic(1, 1000., 0.23)
+material.elastic(2, 1000., 0.23)
+
+#tetgen.run("-qpa2.AV","tetgen.poly")
+tetgen.run("-qpa4.AV","tunnel2")
+tetgen.createNodes("tunnel2.1.node")
+tetgen.createElems("tunnel2.1.ele")
+tetgen.show("tunnel2.1.ele")
+
+#db.store("tetgen")
+#db.exportToVtk("tetgen")
