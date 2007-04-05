@@ -4,7 +4,7 @@
 	Version="7.10"
 	Name="nemesis"
 	ProjectGUID="{8C24245F-3BAB-4689-AEAB-09F12E99482D}"
-	RootNamespace="solver"
+	RootNamespace="nemesis"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -26,10 +26,10 @@
 				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_33_1;&quot;..\..\ext\ParMetis-3.1&quot;;&quot;..\..\ext\petsc-2.3.2-p8&quot;;&quot;..\..\ext\petsc-2.3.2-p8\include&quot;;&quot;..\..\ext\petsc-2.3.2-p8\bmake\cygwin-c-opt&quot;;&quot;..\..\ext\sqlite\sqlite-source-3_3_13&quot;;..\..\ext\vld;&quot;C:\Program Files\MPICH2\include&quot;;&quot;C:\Program Files\Python25\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
+				RuntimeLibrary="4"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="Debug/solver.pch"
+				PrecompiledHeaderFile="Debug/nemesis.pch"
 				AssemblerListingLocation="Debug\"
 				ObjectFile="Debug\"
 				ProgramDataBaseFileName="Debug\"
@@ -50,12 +50,12 @@
 				AdditionalLibraryDirectories="..\..\ext\vld;..\..\ext\ifort;..\..\ext\sqlite\Release;..\..\ext\lapack\blas\Release;..\..\ext\lapack\lapack\Release;&quot;..\..\ext\ParMetis-3.1\ParMetis\Metis\Release&quot;;&quot;..\..\ext\ParMetis-3.1\ParMetis\ParMetis\Release&quot;;&quot;..\..\ext\petsc-2.3.2-p8\lib\cygwin-c-opt&quot;;&quot;C:\Program Files\MPICH2\lib&quot;;&quot;C:\Program Files\Python25\libs&quot;"
 				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="./Debug/SolverTest.pdb"
+				ProgramDatabaseFile="./Debug/nemesis.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Debug/SolverTest.tlb"
+				TypeLibraryName=".\Debug/nemesis.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -100,7 +100,7 @@
 				RuntimeLibrary="4"
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="Release/solver.pch"
+				PrecompiledHeaderFile="Release/nemesis.pch"
 				AssemblerListingLocation="Release\"
 				ObjectFile="Release\"
 				ProgramDataBaseFileName="Release\"
@@ -117,81 +117,12 @@
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\ext\vld;..\..\ext\ifort;..\..\ext\sqlite\Release;..\..\ext\lapack\blas\Release;..\..\ext\lapack\lapack\Release;&quot;..\..\ext\ParMetis-3.1\ParMetis\Metis\Release&quot;;&quot;..\..\ext\ParMetis-3.1\ParMetis\ParMetis\Release&quot;;&quot;..\..\ext\petsc-2.3.2-p8\lib\cygwin-c-opt&quot;;&quot;C:\Program Files\MPICH2\lib&quot;;&quot;C:\Program Files\Python25\libs&quot;"
 				IgnoreDefaultLibraryNames="libc.lib libcp.lib"
-				ProgramDatabaseFile="./Release/solver.pdb"
+				ProgramDatabaseFile="./Release/nemesis.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
-				TypeLibraryName=".\Release/SolverTest.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1032"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
-		</Configuration>
-		<Configuration
-			Name="Release-amcl|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="2"
-				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="TRUE"
-				FavorSizeOrSpeed="1"
-				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_33_1;&quot;..\..\ext\sqlite\sqlite-source-3_3_13&quot;;..\..\ext\vld;&quot;C:\Program Files\AMD\acml3.6.0\ifort32_mp\include&quot;;&quot;C:\Program Files\Python25\include&quot;"
-				AdditionalUsingDirectories=""
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				StringPooling="TRUE"
-				RuntimeLibrary="4"
-				EnableFunctionLevelLinking="TRUE"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderFile="Release/solver.pch"
-				AssemblerListingLocation="Release\"
-				ObjectFile="Release\"
-				ProgramDataBaseFileName="Release\"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"
-				ForcedIncludeFiles="acml.h"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="libacml_mp_dll.lib sqlite.lib python25.lib"
-				OutputFile="..\..\bin\nemesis.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\ext\vld;..\..\ext\sqlite\Release;&quot;C:\Program Files\Intel\Compiler\Fortran\9.0\IA32\Lib&quot;;&quot;C:\Program Files\AMD\acml3.6.0\ifort32_mp\lib&quot;;&quot;C:\Program Files\Python25\libs&quot;"
-				IgnoreDefaultLibraryNames="MSVCRT.lib"
-				ProgramDatabaseFile="./Release/solver.pdb"
-				SubSystem="1"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"
-				TypeLibraryName=".\Release/SolverTest.tlb"
+				TypeLibraryName=".\Release/nemesis.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
