@@ -146,13 +146,6 @@ const Matrix& Triangle6::getK()
 	double facK=1e-7;
 	if(myGroup->isActive()) facK=myGroup->getFacK();
 	K*=facK;
-	for(int i=0;i<12;i++)
-	{
-		cout.setf(ios_base::fixed,ios_base::floatfield);
-		cout.precision(0);
-		for(int j=0;j<12;j++) cout<<K(i,j)<<" ";
-		cout<<endl;
-	};
 	return K;
 }
 const Matrix& Triangle6::getM()
