@@ -698,6 +698,25 @@ static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Triangle6d(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,n5,n6,matID;
+    if(!PyArg_ParseTuple(args,"iiiiiiii",&id,&n1,&n2,&n3,&n4,&n5,&n6,&matID))
+		return NULL;
+	try
+	{
+		Element* pElement=new Triangle6(id,n1,n2,n3,n4,n5,n6,matID);
+		pElement->setGroup(currentGroup);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SolverException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_Tetrahedron4d(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,n4,matID;
@@ -745,6 +764,8 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Defines a 4-Noded standard displacement quad."},
 	{"tria3d",		pyElement_Triangle3d,	
 		METH_VARARGS,"Defines a 3-Noded constant strain triangle."},
+	{"tria6d",		pyElement_Triangle6d,	
+		METH_VARARGS,"Defines a 6-Noded linear strain triangle."},
 	{"tetra4d",	pyElement_Tetrahedron4d,	
 		METH_VARARGS,"Defines a 4-Noded constant strain tetrahedron."},
 	{"brick8d",	pyElement_Brick8d,	
