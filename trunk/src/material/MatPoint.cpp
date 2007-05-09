@@ -32,6 +32,16 @@ MatPoint::MatPoint()
 {
 	delete myMaterial;
 }
+MatPoint::MatPoint(MultiaxialMaterial* mat,double xi1_,double xi2_,double xi3_,double w_)
+:DomainObject(IDCounter++)
+{
+	xi1=xi1_;
+	xi2=xi2_;
+	xi3=xi3_;
+	weight=w_;
+	myMaterial=mat->getClone();
+	myTag=TAG_MATERIAL_POINT;
+}
 MatPoint::MatPoint(MultiaxialMaterial* mat,int index,int p1)
 :DomainObject(IDCounter++)
 {
