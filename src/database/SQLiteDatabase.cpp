@@ -314,6 +314,8 @@ void SQLiteDatabase::exportToVtk(const char* tableName)
 			vtkFile<< 9<<endl; break;
 		case 2008:
 			vtkFile<< 5<<endl; break;
+		case 2009:
+			vtkFile<<22<<endl; break;
 		case 2010:
 			vtkFile<<12<<endl; break;
 		case 2011:
