@@ -844,6 +844,12 @@
 				<File
 					RelativePath="..\..\src\elements\Triangle3.h">
 				</File>
+				<File
+					RelativePath="..\..\src\elements\Triangle6.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Triangle6.h">
+				</File>
 			</Filter>
 			<Filter
 				Name="sdof"
