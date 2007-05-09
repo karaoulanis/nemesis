@@ -207,11 +207,11 @@ const Vector& Element::getDispIncrm()
 	int nDofs=myLocalNodalDofs.size();
 	int nNodes=myNodalIDs.size();
 	Vector& disp=*myVector;
-	static Vector uTrial(nNodes*nDofs);
-	static Vector uConvg(nNodes*nDofs);
-	uConvg=this->getDispConvg();
-	uTrial=this->getDispTrial();
-	disp=uTrial-uConvg;
+	///@todo: CHECK!!!!!
+	for(int i=0;i<nNodes;i++)
+		for(int j=0;j<nDofs;j++)
+			disp[i*nDofs+j]=myNodes[i]->getDispTrialAtDof(myLocalNodalDofs[j])-
+			                myNodes[i]->getDispConvgAtDof(myLocalNodalDofs[j]);
 	return disp;
 }
 void Element::zeroLoad()
