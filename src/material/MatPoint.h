@@ -43,6 +43,7 @@ private:
 	static int IDCounter;
 public:
 	MatPoint();
+	MatPoint(MultiaxialMaterial* mat,double xi1_,double xi2_,double xi3_,double w_);
 	MatPoint(MultiaxialMaterial* mat,int index,int p1);
 	MatPoint(MultiaxialMaterial* mat,int index1,int index2,int p1,int p2);
 	MatPoint(MultiaxialMaterial* mat,int index1,int index2,int index3,int p1,int p2,int p3);
