@@ -1,0 +1,66 @@
+
+import time
+from math import pi
+
+t1=time.clock()
+#domain
+domain.plainStrain(1.)
+domain.gravity( 0.,-1., 0.)
+db.SQLite("tunnel")
+
+#materials
+material.elastic(2,20000,0.3,20/9.81)
+material.MohrCoulomb(1,2,300.,32.*pi/180.,0.)
+#material.vonMises(1,2,800.)
+
+execfile("tunnel.dat")
+
+analysis.static()
+#imposer.elimination()
+imposer.penalty(1e14)
+#imposer.lagrange()
+control.load(1.0)
+reorder.rCM()
+soe.symm()
+algorithm.iNR()
+#algorithm.BFGS(60,0)
+convergence.set(150,10,1e-2,1e-2)
+#convergence.set(150,0.1,1e+2,1e+2)
+
+lc.define(1)
+group.state(1,1, 1.,1.,1.,1.0)
+group.state(2,1, 1.,1.,1.,1.0)
+initial.stresses(1,100,0,0,-100*20,1.00)
+initial.stresses(2,100,0,0,-100*20,1.00)
+analysis.run(1,1)
+#db.store("initial")
+#db.exportToVtk("initial")
+print node.data(1)['disp'][1]
+
+control.load(1.0)
+lc.define(2,10.)
+group.state(1,0)
+group.state(2,1, 1.,1.,1.,1.)
+
+res=[]
+for i in range(1):
+	analysis.run(2,1)
+	#db.store("excavation")
+	#db.exportToVtk("excavation")
+	t2=time.clock()
+	print "Analysis lasted ",t2-t1,"s."
+	print node.data(1)['disp'][1]
+	res.append(node.data(1)['disp'][1])
+print res
+
+#~ i=1
+#~ for a in [0.9, 0.8, 0.7, 0.6, 0.5, 0.0000001]:
+	#~ i=i+1
+	#~ lc.define(i,'excavation')
+	#~ group.state(1,1, a,a,a,a)
+	#~ group.state(2,1, 1.,1.,1.,1.)
+	#~ analysis.run(i,1)
+	#~ t2=time.clock()
+	#~ print "Analysis lasted ",t2-t1,"s."
+	#~ print node.data(1)[6]
+
