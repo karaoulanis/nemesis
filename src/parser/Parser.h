@@ -48,6 +48,7 @@
 #include <Quad4DispPlain.h>
 #include <Quad4DispAxisymmetric.h>
 #include <Triangle3.h>
+#include <Triangle6.h>
 #include <Tetrahedron4Disp.h>
 #include <Constraint.h>
 #include <NodalLoadConstant.h>
