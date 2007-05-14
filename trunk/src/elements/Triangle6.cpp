@@ -219,9 +219,39 @@ bool Triangle6::checkIfAllows(FEObject* f)
 }
 void Triangle6::recoverStresses()
 {
+	///@todo check Gauss extrapolation
  	static Vector sigma(6);
- 	sigma=myMatPoints[0]->getMaterial()->getStress();
-	for(int i=0;i<4;i++) myNodes[i]->addStress(sigma);
+ 	static Matrix xi(6,3);
+	const double d1=1.0+num::d23;
+	const double d2=    num::d13;
+	const double d3=    num::d23;
+
+	xi(0,0)= d1;	xi(0,1)=-d2;	xi(0,2)=-d2;
+	xi(1,0)=-d2;	xi(1,1)= d1;	xi(1,2)=-d2;
+	xi(2,0)=-d2;	xi(2,1)=-d2;	xi(2,2)= d1;
+	xi(3,0)= d3;	xi(3,1)= d3;	xi(3,2)=-d2;
+	xi(4,0)=-d2;	xi(4,1)= d3;	xi(4,2)= d3;
+	xi(5,0)= d3;	xi(5,1)=-d2;	xi(5,2)= d3;
+
+	for(unsigned i=0;i<6;i++)
+	{
+		sigma.clear();
+		for(unsigned j=0;j<3;j++)
+		{
+			sigma+=xi(i,j)*(myMatPoints[j]->getMaterial()->getStress());
+		}
+		myNodes[i]->addStress(sigma);
+	}
 }
-void Triangle6::addInitialStresses(InitialStresses* pInitialStresses)	{}
-const int Triangle6::getnPlasticPoints()	{return 0;}
+void Triangle6::addInitialStresses(InitialStresses* pInitialStresses)
+{
+	if(myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
+		for(unsigned i=0;i<myMatPoints.size();i++)
+			myMatPoints[i]->setInitialStresses(pInitialStresses);
+}
+const int Triangle6::getnPlasticPoints()
+{
+	int n=0;
+	if(myMatPoints[0]->getMaterial()->isPlastic()) n=1;
+	return n;
+}
