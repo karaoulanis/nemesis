@@ -210,13 +210,13 @@ static PyObject* pyDomain_Dim(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_PlainStress(PyObject *self, PyObject *args)
+static PyObject* pyDomain_PlaneStress(PyObject *self, PyObject *args)
 {
 	double t=1.0;
     if(!PyArg_ParseTuple(args,"|d",&t))	return NULL;
 	try
 	{
-		pD->setTag(TAG_DOMAIN_PLAIN_STRESS);
+		pD->setTag(TAG_DOMAIN_PLANE_STRESS);
 		pD->setFac(t);
 		pD->setnDim(2);
 	}
@@ -228,13 +228,13 @@ static PyObject* pyDomain_PlainStress(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_PlainStrain(PyObject *self, PyObject *args)
+static PyObject* pyDomain_PlaneStrain(PyObject *self, PyObject *args)
 {
 	double t=1.0;
     if(!PyArg_ParseTuple(args,"|d",&t))	return NULL;
 	try
 	{
-		pD->setTag(TAG_DOMAIN_PLAIN_STRAIN);
+		pD->setTag(TAG_DOMAIN_PLANE_STRAIN);
 		pD->setFac(t);
 		pD->setnDim(2);
 	}
@@ -320,9 +320,9 @@ static PyMethodDef DomainMethods[] =
 {
 	{"dim",		pyDomain_Dim,	
 		METH_VARARGS,	"Set domain dimensions."},
-	{"plainStress",		pyDomain_PlainStress,	
+	{"planeStress",		pyDomain_PlaneStress,	
 		METH_VARARGS,	"Define a plain stress domain."},
-	{"plainStrain",		pyDomain_PlainStrain,	
+	{"planeStrain",		pyDomain_PlaneStrain,	
 		METH_VARARGS,	"Define a plain strain domain."},
 	{"axisymmetric",		pyDomain_Axisymmetric,	
 		METH_VARARGS,	"Define an axisymmetric domain."},
@@ -474,7 +474,11 @@ static PyObject* pyMaterial_Elastic(PyObject *self,PyObject *args)
 	double E=0,nu=0,rho=0,aT=0;
     if(!PyArg_ParseTuple(args,"idd|dd",&id,&E,&nu,&rho,&aT)) 
 		return NULL;
-	Material* pMaterial=new MultiaxialElastic(id,E,nu,rho,aT);
+	Material* pMaterial;
+	if(pD->getTag()==TAG_DOMAIN_PLANE_STRESS)
+		pMaterial=new PlaneStress(id,E,nu,rho,aT);
+	else
+		pMaterial=new MultiaxialElastic(id,E,nu,rho,aT);
 	pD->add(pD->getMaterials(),pMaterial);
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -663,11 +667,11 @@ static PyObject* pyElement_Quad4d(PyObject *self, PyObject *args)
 	try
 	{
 		Element* pElement;
-		if(pD->getTag()==TAG_DOMAIN_PLAIN_STRAIN)
+		if(pD->getTag()==TAG_DOMAIN_PLANE_STRAIN||pD->getTag()==TAG_DOMAIN_PLANE_STRESS)
 			pElement=new Quad4DispPlain(id,n1,n2,n3,n4,matID,2,2);
 		else if(pD->getTag()==TAG_DOMAIN_AXISYMMETRIC)
 			pElement=new Quad4DispAxisymmetric(id,n1,n2,n3,n4,matID,2,2);
-		else throw SolverException(9999,"A quad4d can be used only in plain strain/axisymmetry.");
+		else throw SolverException(9999,"A quad4d can be used only in plane strain/stress/axisymmetry.");
 		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
