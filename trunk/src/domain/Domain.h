@@ -73,8 +73,8 @@ typedef std::map<int,Tracker*>::const_iterator			TrackerIterator;
 enum DomainTag{	TAG_DOMAIN_NOT_SET		=  0,
 				TAG_DOMAIN_1D			= 10,
 				TAG_DOMAIN_2D			= 20,
-				TAG_DOMAIN_PLAIN_STRESS	= 21,
-				TAG_DOMAIN_PLAIN_STRAIN	= 22,
+				TAG_DOMAIN_PLANE_STRESS	= 21,
+				TAG_DOMAIN_PLANE_STRAIN	= 22,
 				TAG_DOMAIN_AXISYMMETRIC	= 23,
 				TAG_DOMAIN_3D			= 30 };
 /**
