@@ -569,6 +569,12 @@
 					RelativePath="..\..\src\material\MultiaxialMaterial.h">
 				</File>
 				<File
+					RelativePath="..\..\src\material\PlaneStress.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\PlaneStress.h">
+				</File>
+				<File
 					RelativePath="..\..\src\material\VonMises.cpp">
 				</File>
 				<File
