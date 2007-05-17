@@ -1,0 +1,26 @@
+
+domain.dim(1)
+
+material.uniElastoPlastic(1,1000.,0.2,10.,0., 5.,500.,0.)
+section.user(1,1.)
+
+node.add(1,0.)
+node.add(2,1.)
+
+element.bar(1,1,2,1,1)
+node.fix(1,1)
+
+lc.define(1)
+load.sin(2,1,15.,1.,0.)
+
+analysis.transient()
+imposer.elimination()
+algorithm.fNR()
+convergence.set(20,1e-3,1e-6,1e-6)
+control.Newmark(0.25,0.5,0.01)
+soe.full()
+analysis.run(1,1000)
+
+print "u =",node.data(2)['disp'][0]
+print "v =",node.data(2)['velc'][0]
+print "a =",node.data(2)['accl'][0]
