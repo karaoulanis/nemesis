@@ -210,6 +210,7 @@ def lineLoad(nodeA,nodeB,dof,pA,pB):
 	# Quadratic triangles
 	if(elType==6):
 		if (len(nodes)-3)%2!=0 or len(nodes)<3:
+			print len(nodes)
 			raise RuntimeError,"Input error"
 		for k in range(0,len(nodes)-1,2):
 			n1=nodes[k  ][0]
@@ -231,166 +232,8 @@ def lineLoad(nodeA,nodeB,dof,pA,pB):
 #
 #
 #
-def preLoad(id,dof,pA,pB):
-	lineLoad(loads[id-1][1],loads[id-1][2],dof,pA,pB)
-#
-#
-#
-def importDxf(filename,options):
-	nodes=[]
-	lines=[]
-	holes=[]
-	regions=[]
-	fixesX=[]
-	fixesY=[]
-	#======================================================================
-	# Open dxf
-	#======================================================================
-	ifile=open(filename+'.dxf','r')
-	while 1:
-		words=ifile.readline().split()
-		if len(words)==0:
-			continue
-		if words[0]=="EOF":
-			break
-		#==============================================================
-		# Read nodes and lines
-		#==============================================================
-		elif words[0]=="LINE":
-			layer=""
-			x1=0; y1=0; z1=0
-			x2=0; y2=0; z2=0
-			while 1:
-				words=ifile.readline().split()
-				if words[0]=="8":
-					layer=ifile.readline().split()[0]
-				elif words[0]=="10":
-					x1=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="20":
-					y1=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="30":
-					z1=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="11":
-					x2=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="21":
-					y2=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="31":
-					z2=float('%12.5f'%float(ifile.readline()))
-					break
-			if [x1,y1,z1] not in nodes:
-				nodes.append([x1,y1,z1])
-			if [x2,y2,z2] not in nodes:
-				nodes.append([x2,y2,z2])
-			n1=nodes.index([x1,y1,z1])+1
-			n2=nodes.index([x2,y2,z2])+1
-			if layer=="geometry":
-				lines.append([n1,n2])
-			elif layer=="fixX":
-				fixesX.append([n1,n2])
-			elif layer=="fixY":
-				fixesY.append([n1,n2])
-			elif layer=="load_1":
-				loads.append([1,n1,n2])
-			elif layer=="load_2":
-				loads.append([2,n1,n2])
-			elif layer=="load_3":
-				loads.append([3,n1,n2])
-			elif layer=="load_4":
-				loads.append([4,n1,n2])
-			elif layer=="load_5":
-				loads.append([5,n1,n2])
-			elif layer=="load_6":
-				loads.append([6,n1,n2])
-			elif layer=="load_7":
-				loads.append([7,n1,n2])
-			elif layer=="load_8":
-				loads.append([8,n1,n2])
-			elif layer=="load_9":
-				loads.append([9,n1,n2])
-		#==============================================================
-		# Read holes and regions
-		#==============================================================
-		elif words[0]=="TEXT":
-			layer=""
-			x=0; y=0; z=0
-			n=""
-			while 1:
-				words=ifile.readline().split()
-				if words[0]=="8":
-					layer=ifile.readline().split()[0]
-				elif words[0]=="10":
-					x=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="20":
-					y=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="30":
-					z=float('%12.5f'%float(ifile.readline()))
-				elif words[0]=="1":
-					n=ifile.readline().split()[0]
-					break
-			if layer=="holes":
-				holes.append([x,y])
-			elif layer=="regions":
-				regions.append([x,y,int(n)])
-	ifile.close()
-	#======================================================================
-	# Save to poly
-	#======================================================================
-	ofile=open(filename+".poly",'w')
-	ofile.write('%i 2 0 0\n'%len(nodes))
-	# Nodes
-	for i in range(len(nodes)):
-		id=i+1
-		x=nodes[i][0]
-		y=nodes[i][1]
-		ofile.write('%4i %12.5f %12.5f \n'%(id,x,y))
-		report('msh: Added node  : %4i %12.5f %12.5f '%(id,x,y))
-	# Lines
-	ofile.write('\n')
-	ofile.write('%i 0\n'%len(lines))
-	for i in range(len(lines)):
-		id=i+1
-		n1=lines[i][0]
-		n2=lines[i][1]
-		ofile.write('%4i %4i %4i \n'%(id,n1,n2))
-		report('msh: Added line  : %4i %4i %4i '%(id,n1,n2))
-	# Holes
-	ofile.write('\n')
-	ofile.write('%i\n'%len(holes))
-	for i in range(len(holes)):
-		id=i+1
-		x=holes[i][0]
-		y=holes[i][1]
-		ofile.write('%4i %12.5f %12.5f \n'%(id,x,y))
-		report('msh: Added hole  : %4i %12.5f %12.5f'%(id,x,y))
-	# Regions
-	ofile.write('\n')
-	ofile.write('%i\n'%len(regions))
-	for i in range(len(regions)):
-		id=i+1
-		x=regions[i][0]
-		y=regions[i][1]
-		n=regions[i][2]
-		ofile.write('%4i %12.5f %12.5f %12.5f 1.0\n'%(id,x,y,n))
-		report('msh: Added region: %4i %12.5f %12.5f %12.5f 1.0'%(id,x,y,n))
-	# Close file
-	ofile.close()
-	#======================================================================
-	# Run mesh generator
-	#======================================================================
-	run(options)
-	createNodes()
-	createElems()
-	#======================================================================
-	# Create fixes
-	#======================================================================
-	for i in range(len(fixesX)):
-		fixX(fixesX[i][0],fixesX[i][1])
-	for i in range(len(fixesY)):
-		fixY(fixesY[i][0],fixesY[i][1])
-#
-#
-#
 def exportToVtk():
+	
 	try:
 		nodeFile = open(file+".1.node",'r')
 		elemFile = open(file+".1.ele",'r')
@@ -463,3 +306,148 @@ def exportToVtk():
 	for i in range(nElems):
 		vtkFile.write('%d\n'%1.0)
 	vtkFile.close()
+#
+#
+#
+def importDxf(filename,options):
+	nodes=[]
+	holes=[]
+	regns=[]
+	lines=[]
+	fixes=[]
+	#======================================================================
+	# Read nodes, holes and regions
+	#======================================================================
+	ifile=open(filename+'.dxf','r')
+	while 1:
+		w=ifile.readline().split()
+		if len(w)==0: 	continue
+		if w[0]=='EOF': break
+		if w[0]=='INSERT':
+			# Read insert
+			block=readBlock(ifile)
+			type=block['2']
+			x=float('%12.5f'%float(block['10']))
+			y=float('%12.5f'%float(block['20']))
+			# Read attributes
+			w=ifile.readline().split()
+			if w[0]!='ATTRIB':
+				raise StandardError,"Error while reading dxf: 1"
+			block=readBlock(ifile)
+			text=block['1']
+			# Collect entities
+			if(type=="node"):
+				nodes.append([int(text),x,y])
+			elif(type=="hole"):
+				holes.append([x,y])
+			elif(type=="region"):
+				regns.append([int(text),x,y])
+	# Sort and clear nodes
+	nodes.sort()
+	for i in range(len(nodes)):
+		nodes[i]=[nodes[i][1],nodes[i][2]]
+	ifile.close()
+	#======================================================================
+	# Read lines and fixes
+	#======================================================================
+	ifile=open(filename+'.dxf','r')
+	while 1:
+		w=ifile.readline().split()
+		if len(w)==0: 	continue
+		if w[0]=='EOF': break
+		if w[0]=='LINE':
+			block=readBlock(ifile)
+			layer=block['8']
+			x1=float('%12.5f'%float(block['10']))
+			y1=float('%12.5f'%float(block['20']))
+			x2=float('%12.5f'%float(block['11']))
+			y2=float('%12.5f'%float(block['21']))
+			if [x1,y1] not in nodes:
+				nodes.append([x1,y1])
+			if [x2,y2] not in nodes:
+				nodes.append([x2,y2])
+			n1=nodes.index([x1,y1])+1
+			n2=nodes.index([x2,y2])+1
+			if(layer=="geom"):
+				lines.append([n1,n2])
+			elif(layer=="fixX"):
+				lines.append([n1,n2])
+				fixes.append([1,n1,n2])
+			elif(layer=="fixY"):
+				lines.append([n1,n2])
+				fixes.append([2,n1,n2])
+			elif(layer=="fixXY"):
+				lines.append([n1,n2])
+				fixes.append([3,n1,n2])
+	ifile.close()
+	#======================================================================
+	# Save to poly
+	#======================================================================
+	ofile=open(filename+".poly",'w')
+	ofile.write('%i 2 0 0\n'%len(nodes))
+	# Nodes
+	for i in range(len(nodes)):
+		id=i+1
+		x=nodes[i][0]
+		y=nodes[i][1]
+		ofile.write('%4i %12.5f %12.5f \n'%(id,x,y))
+		report('msh: Added node  : %4i %12.5f %12.5f '%(id,x,y))
+	print 'msh: Added %4i nodes'%len(nodes)
+	# Lines
+	ofile.write('\n')
+	ofile.write('%i 0\n'%len(lines))
+	for i in range(len(lines)):
+		id=i+1
+		n1=lines[i][0]
+		n2=lines[i][1]
+		ofile.write('%4i %4i %4i \n'%(id,n1,n2))
+		report('msh: Added line  : %4i %4i %4i '%(id,n1,n2))
+	print 'msh: Added %4i lines'%len(lines)
+	# Holes
+	ofile.write('\n')
+	ofile.write('%i\n'%len(holes))
+	for i in range(len(holes)):
+		id=i+1
+		x=holes[i][0]
+		y=holes[i][1]
+		ofile.write('%4i %12.5f %12.5f \n'%(id,x,y))
+		report('msh: Added hole  : %4i %12.5f %12.5f'%(id,x,y))
+	print 'msh: Added %4i nodes'%len(holes)
+	# Regions
+	ofile.write('\n')
+	ofile.write('%i\n'%len(regns))
+	for i in range(len(regns)):
+		id=i+1
+		n=regns[i][0]
+		x=regns[i][1]
+		y=regns[i][2]
+		ofile.write('%4i %12.5f %12.5f %12.5f 1.0\n'%(id,x,y,n))
+		report('msh: Added region: %4i %12.5f %12.5f %12.5f 1.0'%(id,x,y,n))
+		print 'msh: Added %4i nodes'%len(regns)
+	# Close file
+	ofile.close()
+	#======================================================================
+	# Run mesh generator
+	#======================================================================
+	run(options)
+	createNodes()
+	createElems()
+	#======================================================================
+	# Create fixes
+	#======================================================================
+	for i in range(len(fixes)):
+		if fixes[i][0]==1 or fixes[i][0]==3: 
+			fixX(fixes[i][1],fixes[i][2])
+		if fixes[i][0]==2 or fixes[i][0]==3: 
+			fixY(fixes[i][1],fixes[i][2])
+
+def readBlock(ifile):
+	block={}
+	while 1:
+		c1=ifile.readline()
+		if c1.split()[0]=='0':
+			break
+		else:
+			c2=ifile.readline()
+			block[c1.split()[0]]=c2.split()[0]
+	return block	
