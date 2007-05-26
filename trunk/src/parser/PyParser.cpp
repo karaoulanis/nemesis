@@ -594,6 +594,44 @@ static PyObject* pyElement_Beam2e(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
+{
+	int id,iNode,jNode,mat,sec;
+    if(!PyArg_ParseTuple(args,"iiiii",&id,&iNode,&jNode,&mat,&sec))
+		return NULL;
+	try
+	{
+		Element* pElement=new Timoshenko2d(id,iNode,jNode,mat,sec,1);
+		pElement->setGroup(currentGroup);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SolverException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+static PyObject* pyElement_Beam3t(PyObject *self, PyObject *args)
+{
+	int id,iNode,jNode,mNode,mat,sec;
+    if(!PyArg_ParseTuple(args,"iiiiii",&id,&iNode,&jNode,&mNode,&mat,&sec))
+		return NULL;
+	try
+	{
+		Element* pElement=new Timoshenko2d(id,iNode,jNode,mNode,mat,sec,2);
+		pElement->setGroup(currentGroup);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SolverException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 /*
 static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
 {
@@ -759,9 +797,11 @@ static PyMethodDef ElementMethods[] =
 	{"bar2t",			pyElement_Bar2t,	
 		METH_VARARGS,"Defines a 1d/2d/3d bar based on a Total Lagrangian formulation."},
 	{"beam2e",			pyElement_Beam2e,
-		METH_VARARGS,"Defines a 2-Noded Euler-Bernulli beam."},
-//	{"beam2t",			pyElement_Beam2t,
-//		METH_VARARGS,"Defines a 2-Noded Timoshenko beam."},
+		METH_VARARGS,"Defines a 2-Node Euler-Bernulli beam."},
+	{"beam2t",			pyElement_Beam2t,
+		METH_VARARGS,"Defines a 2-Node Timoshenko beam."},
+	{"beam3t",			pyElement_Beam3t,
+		METH_VARARGS,"Defines a 3-Node Timoshenko beam."},
 	{"sdof",			pyElement_SDOF,
 		METH_VARARGS,"Define a single dof element."},
 	{"quad4d",	pyElement_Quad4d,	

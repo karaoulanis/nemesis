@@ -43,7 +43,7 @@
 #include <Bar2t.h>
 #include <Beam2e.h>
 //#include <Beam2t.h>
-//#include <Beam2t3d.h>
+#include <Timoshenko2d.h>
 #include <SDofElement.h>
 #include <Brick8Disp.h>
 #include <Quad4DispPlain.h>
