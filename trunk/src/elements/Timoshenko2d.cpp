@@ -29,13 +29,43 @@
 Timoshenko2d::Timoshenko2d()
 {
 }
-Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID)
+Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID,int rule)
 :Element(ID)
 {
 	myTag=TAG_ELEM_BEAM_2D_TIMOSHENKO_2;
 	myNodalIDs.resize(2);
 	myNodalIDs[0]=Node_1;
 	myNodalIDs[1]=Node_2;
+	myLocalNodalDofs.resize(3);
+	myLocalNodalDofs[0]=0;
+	myLocalNodalDofs[1]=1;
+	myLocalNodalDofs[2]=5;
+	mySecID=secID;
+	myMatID=matID;
+	// Handle common info
+	this->handleCommonInfo();
+	mySecID=secID;
+	mySection=pD->get<CrossSection>(pD->getCrossSections(),mySecID);
+	L=sqrt((x(1,1)-x(0,1))*(x(1,1)-x(0,1))+(x(1,0)-x(0,0))*(x(1,0)-x(0,0)));
+	myUniMaterial=static_cast<UniaxialMaterial*>(myMaterial);
+	cosX[0]=(x(1,0)-x(0,0))/L;
+	cosX[1]=(x(1,1)-x(0,1))/L;
+	// Self weight - Transform vector b to local system
+	///@todo: check this
+	double A=mySection->getA();
+	double b0A=b[0]*A;
+	double b1A=b[1]*A;
+	b[0]= cosX[0]*b0A+cosX[1]*b1A;
+	b[1]=-cosX[1]*b0A+cosX[0]*b1A;
+}
+Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int Node_3,int matID,int secID,int rule)
+:Element(ID)
+{
+	myTag=TAG_ELEM_BEAM_2D_TIMOSHENKO_2;
+	myNodalIDs.resize(3);
+	myNodalIDs[0]=Node_1;
+	myNodalIDs[1]=Node_2;
+	myNodalIDs[2]=Node_3;
 	myLocalNodalDofs.resize(3);
 	myLocalNodalDofs[0]=0;
 	myLocalNodalDofs[1]=1;
@@ -69,8 +99,13 @@ void Timoshenko2d::shapeFunctions(int n,double xi,double &N, double &dN)
 	switch(myNodes.size())
 	{
 		case 2:
-			if(n==0)	{N =-0.5*(1-xi);	dN=-1/L;}
-			else		{N =-0.5*(1+xi);	dN=+1/L;}
+			if(n==0)		{N = 0.5*(1-xi);	dN=-1/L;}
+			else			{N = 0.5*(1+xi);	dN=+1/L;}
+			break;
+		case 3:
+			if(n==0)		{N =-0.5*xi*(1-xi);	dN=(-1+2*xi)/L;}
+			else if(n==1)	{N = 0.5*xi*(1+xi);	dN=(+1+2*xi)/L;}
+			else			{N = (1+xi)*(1-xi);	dN=+4*xi/L;}
 			break;
 		default:
 			break;
@@ -147,7 +182,7 @@ const Vector& Timoshenko2d::getR()
 	
 	// Find epsilon 
 	///@todo This should happen to update() for elastoplastic computations
-	static Vector u(6);
+	static Vector u(3*myNodes.size());
 	static Vector epsilon(3);
 	u=this->getDispTrial();
 	xi=0.;

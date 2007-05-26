@@ -40,7 +40,8 @@ protected:
 	UniaxialMaterial* myUniMaterial;
 public:
 	Timoshenko2d();
-	Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID);	
+	Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID,int rule);	
+	Timoshenko2d(int ID,int Node_1,int Node_2,int Node_3,int matID,int secID,int rule);	
 	~Timoshenko2d();
 
 	const Matrix& getK();
