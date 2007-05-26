@@ -839,6 +839,12 @@
 					<File
 						RelativePath="..\..\src\elements\Beam2e.h">
 					</File>
+					<File
+						RelativePath="..\..\src\elements\Timoshenko2d.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\elements\Timoshenko2d.h">
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
