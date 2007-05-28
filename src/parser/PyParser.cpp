@@ -596,12 +596,13 @@ static PyObject* pyElement_Beam2e(PyObject *self, PyObject *args)
 }
 static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
 {
-	int id,iNode,jNode,mat,sec;
-    if(!PyArg_ParseTuple(args,"iiiii",&id,&iNode,&jNode,&mat,&sec))
+	int id,iNode,jNode,mat,sec,rule=-1;
+    if(!PyArg_ParseTuple(args,"iiiii|i",&id,&iNode,&jNode,&mat,&sec,&rule))
 		return NULL;
 	try
 	{
-		Element* pElement=new Timoshenko2d(id,iNode,jNode,mat,sec,1);
+		if(rule==-1) rule=1;
+		Element* pElement=new Timoshenko2d(id,iNode,jNode,mat,sec,rule);
 		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
@@ -615,12 +616,13 @@ static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
 }
 static PyObject* pyElement_Beam3t(PyObject *self, PyObject *args)
 {
-	int id,iNode,jNode,mNode,mat,sec;
-    if(!PyArg_ParseTuple(args,"iiiiii",&id,&iNode,&jNode,&mNode,&mat,&sec))
+	int id,iNode,jNode,mNode,mat,sec,rule=-1;
+    if(!PyArg_ParseTuple(args,"iiiiii|i",&id,&iNode,&jNode,&mNode,&mat,&sec,&rule))
 		return NULL;
 	try
 	{
-		Element* pElement=new Timoshenko2d(id,iNode,jNode,mNode,mat,sec,2);
+		if(rule==-1) rule=2;
+		Element* pElement=new Timoshenko2d(id,iNode,jNode,mNode,mat,sec,rule);
 		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
