@@ -7,8 +7,10 @@ import math
 import load
 
 trigenPath="D:\\solver\\nemesis\\bin"
-verbose='on'
-tol=0.00000000000001
+infoLevel=0
+tol=0.00001
+beamStartId=100000
+barStartId =1000000
 file=''
 loads=[]
 
@@ -95,8 +97,8 @@ def reportNodes(nodes):
 	print " ----------------------------"
 	for i in range(len(nodes)):
 		print ' %6i % 10.4f % 10.4f'%(nodes[i][0],nodes[i][1],nodes[i][2])
-def report(str):
-	if verbose=='on':
+def report(str,flag):
+	if flag<=infoLevel:
 		print str
 #
 #
@@ -113,15 +115,14 @@ def createNodes():
 		x=float(tokens[1])
 		y=float(tokens[2])
 		node.add(id,x,y)
-		if verbose=='on':
-			print 'msh: Created node : %i %8.4f %8.4f'%(id,x,y)
+		report('msh: Created node : %i %8.4f %8.4f'%(id,x,y),2)
 	ifile.close()
-	print 'msh: Created %i nodes.'%nNodes
+	report('msh: Created %i nodes.'%nNodes,1)
 	return nNodes
 #
 #
 #
-def createElems():
+def createTrigs():
 	ifile=open(file+'.1.ele','r')
 	line=ifile.readline()
 	tokens=line.split()
@@ -147,8 +148,72 @@ def createElems():
 			mat=int(tokens[7])
 			element.tria6d(id,n1,n2,n3,n4,n5,n6,mat)
 	ifile.close()
-	print 'msh: Created %i elements.'%nElems
+	report('msh: Created %i triangles.'%nElems,1)
 	return nElems
+#
+#
+#
+def createBeams():
+	# Get triangle type (3-node or 6-node)
+	ifile=open(file+'.1.ele','r')
+	line=ifile.readline()
+	tokens=line.split()
+	elType=int(tokens[1])
+	ifile.close()
+	nodes=[]
+	if(elType==6):
+		nfile=open(file+'.1.node','r')
+		nNodes=int(nfile.readline().split()[0])
+		for i in range(nNodes):
+			words=nfile.readline().split()
+			nodes.append([float(words[1]),float(words[2])])
+		nfile.close()
+	# Open edge file
+	ifile=open(file+'.1.edge','r')
+	line=ifile.readline()
+	tokens=line.split()
+	nEdges=int(tokens[0])
+	nElems=0
+	for i in range(nEdges):
+		line=ifile.readline()
+		tokens=line.split()
+		id=int(tokens[0])+beamStartId
+		n1=int(tokens[1])
+		n2=int(tokens[2])
+		sec=int(tokens[3])
+		if sec<=0:
+			continue
+		if elType==3:
+			element.beam2t(id,n1,n2,sec,sec,1)
+			nElems=nElems+1
+		else:
+			x=0.5*(nodes[n1-1][0]+nodes[n2-1][0])
+			y=0.5*(nodes[n1-1][1]+nodes[n2-1][1])
+			found=0
+			for i in range(len(nodes)):
+				if abs(x-nodes[i][0])<0.00001 and abs(y-nodes[i][1])<0.00001:
+					n3=i+1
+					element.beam3t(id,n1,n2,n3,sec,sec,2)
+					nElems=nElems+1
+					found=1
+					break
+			if found==0:
+				raise StandardError, "Cannot find internal node!"
+	ifile.close()
+	report('msh: Created %i beams.'%nElems,1)
+	return nElems
+#
+#
+#
+def createBars(bars):
+	for i in range(len(bars)):
+		id=i+barStartId
+		n1=bars[i][0]
+		n2=bars[i][1]
+		sec=bars[i][2]
+		element.bar2s(id,n1,n2,sec,sec)
+	report('msh: Created %i bars.'%len(bars),1)
+	return len(bars)
 #
 #
 #
@@ -164,20 +229,9 @@ def fix(nodeA,nodeB,fix):
 	nNodes=len(nodes)
 	for i in range(nNodes):
 		node.fix(nodes[i][0],fix)
-		if verbose=='on':
-			print 'msh: Fixed node %i dof %i.'%(nodes[i][0],fix)
-	print 'msh: Fixed %i nodes.'%nNodes
+		report('msh: Fixed node %i dof %i.'%(nodes[i][0],fix),2)
+	report('msh: Fixed %i nodes.'%nNodes,1)
 	return nNodes
-#
-#
-#
-def fixX(nodeA,nodeB):
-	fix(nodeA,nodeB,1)
-#
-#
-#
-def fixY(nodeA,nodeB):
-	fix(nodeA,nodeB,2)
 #
 #
 #
@@ -313,8 +367,10 @@ def importDxf(filename,options):
 	nodes=[]
 	holes=[]
 	regns=[]
+	sects=[]
 	lines=[]
 	fixes=[]
+	bars=[]
 	#======================================================================
 	# Read nodes, holes and regions
 	#======================================================================
@@ -342,13 +398,15 @@ def importDxf(filename,options):
 				holes.append([x,y])
 			elif(type=="region"):
 				regns.append([int(text),x,y])
+			elif(type=="section"):
+				sects.append([int(text),x,y])
 	# Sort and clear nodes
 	nodes.sort()
 	for i in range(len(nodes)):
 		nodes[i]=[nodes[i][1],nodes[i][2]]
 	ifile.close()
 	#======================================================================
-	# Read lines and fixes
+	# Read lines, fixes, bars and beams
 	#======================================================================
 	ifile=open(filename+'.dxf','r')
 	while 1:
@@ -368,20 +426,69 @@ def importDxf(filename,options):
 				nodes.append([x2,y2])
 			n1=nodes.index([x1,y1])+1
 			n2=nodes.index([x2,y2])+1
+			#------------------------------------------------------
+			# Geometry line
+			#------------------------------------------------------
 			if(layer=="geom"):
-				lines.append([n1,n2])
+				lines.append([n1,n2,-1])
+			#------------------------------------------------------
+			# FixX line
+			#------------------------------------------------------
 			elif(layer=="fixX"):
-				lines.append([n1,n2])
+				lines.append([n1,n2,-1])
 				fixes.append([1,n1,n2])
+			#------------------------------------------------------
+			# FixY line
+			#------------------------------------------------------
 			elif(layer=="fixY"):
-				lines.append([n1,n2])
+				lines.append([n1,n2,-1])
 				fixes.append([2,n1,n2])
+			#------------------------------------------------------
+			# FixXY line
+			#------------------------------------------------------
 			elif(layer=="fixXY"):
-				lines.append([n1,n2])
+				lines.append([n1,n2,-1])
 				fixes.append([3,n1,n2])
+			#------------------------------------------------------
+			# Bar line
+			#------------------------------------------------------
+			elif(layer=="bar"):
+				x1=nodes[n1-1][0]
+				y1=nodes[n1-1][1]
+				x2=nodes[n2-1][0]
+				y2=nodes[n2-1][1]
+				sec=0
+				for i in range(len(sects)):
+					x0=sects[i][1]
+					y0=sects[i][2]
+					if isPointOnLine(x0,y0,x1,y1,x2,y2)==1:
+						sec=sects[i][0]
+						break
+				if sec==0:
+					raise StandardError, "Cannot find bar section!"
+				bars.append([n1,n2,sec])
+			#------------------------------------------------------
+			# Beam line
+			#------------------------------------------------------
+			elif(layer=="beam"):
+				x1=nodes[n1-1][0]
+				y1=nodes[n1-1][1]
+				x2=nodes[n2-1][0]
+				y2=nodes[n2-1][1]
+				sec=0
+				for i in range(len(sects)):
+					
+					x0=sects[i][1]
+					y0=sects[i][2]
+					if isPointOnLine(x0,y0,x1,y1,x2,y2)==1:
+						sec=sects[i][0]
+						break
+				if sec==0:
+					raise StandardError, "Cannot find beam section!"
+				lines.append([n1,n2,sec])
 	ifile.close()
 	#======================================================================
-	# Save to poly
+	# Save to *.poly
 	#======================================================================
 	ofile=open(filename+".poly",'w')
 	ofile.write('%i 2 0 0\n'%len(nodes))
@@ -391,18 +498,19 @@ def importDxf(filename,options):
 		x=nodes[i][0]
 		y=nodes[i][1]
 		ofile.write('%4i %12.5f %12.5f \n'%(id,x,y))
-		report('msh: Added node  : %4i %12.5f %12.5f '%(id,x,y))
-	print 'msh: Added %4i nodes'%len(nodes)
+		report('msh: Added node  : %4i %12.5f %12.5f '%(id,x,y),2)
+	report('msh: Added %4i nodes'%len(nodes),1)
 	# Lines
 	ofile.write('\n')
-	ofile.write('%i 0\n'%len(lines))
+	ofile.write('%i 1\n'%len(lines))
 	for i in range(len(lines)):
 		id=i+1
 		n1=lines[i][0]
 		n2=lines[i][1]
-		ofile.write('%4i %4i %4i \n'%(id,n1,n2))
-		report('msh: Added line  : %4i %4i %4i '%(id,n1,n2))
-	print 'msh: Added %4i lines'%len(lines)
+		marker=lines[i][2]
+		ofile.write('%4i %4i %4i %3i\n'%(id,n1,n2,marker))
+		report('msh: Added line  : %4i %4i %4i %3i'%(id,n1,n2,marker),2)
+	report('msh: Added %4i lines'%len(lines),1)
 	# Holes
 	ofile.write('\n')
 	ofile.write('%i\n'%len(holes))
@@ -411,8 +519,8 @@ def importDxf(filename,options):
 		x=holes[i][0]
 		y=holes[i][1]
 		ofile.write('%4i %12.5f %12.5f \n'%(id,x,y))
-		report('msh: Added hole  : %4i %12.5f %12.5f'%(id,x,y))
-	print 'msh: Added %4i nodes'%len(holes)
+		report('msh: Added hole  : %4i %12.5f %12.5f'%(id,x,y),2)
+	report('msh: Added %4i holes'%len(holes),1)
 	# Regions
 	ofile.write('\n')
 	ofile.write('%i\n'%len(regns))
@@ -422,8 +530,8 @@ def importDxf(filename,options):
 		x=regns[i][1]
 		y=regns[i][2]
 		ofile.write('%4i %12.5f %12.5f %12.5f 1.0\n'%(id,x,y,n))
-		report('msh: Added region: %4i %12.5f %12.5f %12.5f 1.0'%(id,x,y,n))
-		print 'msh: Added %4i nodes'%len(regns)
+		report('msh: Added region: %4i %12.5f %12.5f %12.5f 1.0'%(id,x,y,n),2)
+		report('msh: Added %4i regions'%len(regns),1)
 	# Close file
 	ofile.close()
 	#======================================================================
@@ -431,15 +539,17 @@ def importDxf(filename,options):
 	#======================================================================
 	run(options)
 	createNodes()
-	createElems()
+	createTrigs()
+	createBeams()
+	createBars(bars)
 	#======================================================================
 	# Create fixes
 	#======================================================================
 	for i in range(len(fixes)):
 		if fixes[i][0]==1 or fixes[i][0]==3: 
-			fixX(fixes[i][1],fixes[i][2])
+			fix(fixes[i][1],fixes[i][2],1)
 		if fixes[i][0]==2 or fixes[i][0]==3: 
-			fixY(fixes[i][1],fixes[i][2])
+			fix(fixes[i][1],fixes[i][2],2)
 
 def readBlock(ifile):
 	block={}
@@ -450,4 +560,22 @@ def readBlock(ifile):
 		else:
 			c2=ifile.readline()
 			block[c1.split()[0]]=c2.split()[0]
-	return block	
+	return block
+#
+#
+#
+#
+def isPointOnLine(x,y,x1,y1,x2,y2):
+	ret=0
+	if x2!=x1:
+		xL=min(x1,x2)
+		xU=max(x1,x2)
+		a=(y2-y1)/(x2-x1)
+		if abs(y-y1-((y2-y1)/(x2-x1))*(x-x1))<tol and x>=xL and x<=xU:
+			ret=1
+	else:
+		yL=min(y1,y2)
+		yU=max(y1,y2)
+		if x==x1 and y>=yL and y<=yU:
+			ret=1
+	return ret
