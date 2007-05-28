@@ -320,6 +320,10 @@ void SQLiteDatabase::exportToVtk(const char* tableName)
 			vtkFile<<12<<endl; break;
 		case 2011:
 			vtkFile<<10<<endl; break;
+		case 2012:
+			vtkFile<<3<<endl; break;
+		case 2013:
+			vtkFile<<21<<endl; break;
 		default:
 			vtkFile<<0<<endl;
 		}
