@@ -38,6 +38,9 @@ protected:
 	CrossSection* mySection;
 	double L;
 	UniaxialMaterial* myUniMaterial;
+	static const double GaussCoords[4][4];
+	static const double GaussWeights[4][4];
+	int gPoints;
 public:
 	Timoshenko2d();
 	Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID,int rule);	
