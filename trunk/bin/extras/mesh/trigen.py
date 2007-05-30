@@ -6,7 +6,7 @@ import element
 import math
 import load
 
-trigenPath="D:\\solver\\nemesis\\bin"
+trigenPath="D:\\new\\nemesis\\bin"
 infoLevel=0
 tol=0.0001
 beamStartId=100000
