@@ -42,7 +42,7 @@ public:
 	// Constructors and Destructor
 	Triangle6();
 	Triangle6(int ID,int Node_1,int Node_2,int Node_3,
-		int Node_4,int Node_5,int Node_6,int MatID);
+		int Node_4,int Node_5,int Node_6,int matID);
 	~Triangle6();
 
 	const Matrix& getK();

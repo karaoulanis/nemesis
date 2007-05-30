@@ -41,7 +41,7 @@ public:
 	Tetrahedron4Disp();
 	Tetrahedron4Disp(int ID,
 				int Node_1,int Node_2,int Node_3,int Node_4,	
-				int MatID);	
+				int matID);	
 	~Tetrahedron4Disp();
 
 	const Matrix& getK();

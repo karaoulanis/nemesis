@@ -53,6 +53,10 @@ void Domain::init()
 	Group* pGroup=new Group(0);
 	pGroup->setDomain(this);
 	this->add(this->getGroups(),pGroup);
+	// Define that groups are by set by materials
+	groupsByMaterial=true;
+	currentGroup=0;
+	// Initialize time
 	timeCurr=0.;
 	timePrev=0.;
 	// Gravity direction vector and default orientation
@@ -98,14 +102,6 @@ int Domain::setnDim(int nDimensions)
 int Domain::getnDim() const
 {
 	return nDim;
-}
-bool Domain::isUpToDate()
-{
-	return upToDate;
-}
-void Domain::setUpToDate()
-{
-    upToDate=true;	
 }
 void Domain::setDatabase(Database* pDB)
 {

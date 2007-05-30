@@ -30,7 +30,7 @@ Timoshenko2d::Timoshenko2d()
 {
 }
 Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID,int rule)
-:Element(ID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_BEAM_2D_TIMOSHENKO_2;
 	myNodalIDs.resize(2);
@@ -41,7 +41,6 @@ Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID,int 
 	myLocalNodalDofs[1]=1;
 	myLocalNodalDofs[2]=5;
 	mySecID=secID;
-	myMatID=matID;
 	// Handle common info
 	this->handleCommonInfo();
 	mySecID=secID;
@@ -61,7 +60,7 @@ Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID,int 
 	if(rule!=1&&rule!=2) throw SolverException(9999,"Integration rule should be 1 or 2.");
 }
 Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int Node_3,int matID,int secID,int rule)
-:Element(ID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_BEAM_2D_TIMOSHENKO_3;
 	myNodalIDs.resize(3);
@@ -73,7 +72,6 @@ Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int Node_3,int matID,int
 	myLocalNodalDofs[1]=1;
 	myLocalNodalDofs[2]=5;
 	mySecID=secID;
-	myMatID=matID;
 	// Handle common info
 	this->handleCommonInfo();
 	mySecID=secID;

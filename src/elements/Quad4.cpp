@@ -32,9 +32,9 @@ double Quad4::detJ;
 Quad4::Quad4()
 {
 }
-Quad4::Quad4(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID,
+Quad4::Quad4(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int matID,
 					 int integrationRuleXi,int integrationRuleEta)
-:Element(ID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_QUAD_4_STD_DISP;
 	// Get nodal data
@@ -47,8 +47,6 @@ Quad4::Quad4(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID,
 	myLocalNodalDofs.resize(2);
 	myLocalNodalDofs[0]=0;
 	myLocalNodalDofs[1]=1;	
-	// Get Material id
-	myMatID=MatID;
 	// Handle common info
 	this->handleCommonInfo();
 

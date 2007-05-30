@@ -35,8 +35,8 @@ Brick8Disp::Brick8Disp()
 Brick8Disp::Brick8Disp(int ID,
 					   int Node_1,int Node_2,int Node_3,int Node_4,
 					   int Node_5,int Node_6,int Node_7,int Node_8,
-					   int MatID)
-:Element(ID)
+					   int matID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_BRICK_8_DISP;
 	// Get nodal data
@@ -54,8 +54,6 @@ Brick8Disp::Brick8Disp(int ID,
 	myLocalNodalDofs[0]=0;
 	myLocalNodalDofs[1]=1;	
 	myLocalNodalDofs[2]=2;	
-	// Get Material id
-	myMatID=MatID;
 	// Handle common info
 	this->handleCommonInfo();
 

@@ -78,7 +78,7 @@ protected:
 public:
 	// Constructors and Destructor
 	Element();
-	Element(int ID);
+	Element(int ID,int matID);
 	~Element();
 
 	const IDContainer& getNodalIDs() const;

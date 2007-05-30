@@ -40,7 +40,7 @@ Element::Element()
  * Constructor
  * Creates an Element with a given ID.
  */
-Element::Element(int ID)
+Element::Element(int ID,int matID)
 :DomainObject(ID),myMatID(0),myMaterial(0),activeParameter(0)
 {
 	if(theStaticMatrices==0)
@@ -50,7 +50,11 @@ Element::Element(int ID)
 		theStaticVectors=new Vector*[64];
 		for(int i=1;i<64;i++) theStaticVectors[i]=new Vector(i,0.);
 	}
-	myGroup=pD->get<Group>(pD->getGroups(),0);
+	myMatID=matID;
+	if(pD->areGroupsByMaterial())
+		myGroup=pD->get<Group>(pD->getGroups(),myMatID);
+	else
+		myGroup=pD->get<Group>(pD->getGroups(),pD->getCurrentGroup());
 }
 Element::~Element()
 {

@@ -29,8 +29,8 @@
 Triangle3::Triangle3()
 {
 }
-Triangle3::Triangle3(int ID,int Node_1,int Node_2,int Node_3,int MatID)
-:Element(ID)
+Triangle3::Triangle3(int ID,int Node_1,int Node_2,int Node_3,int matID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_TRIANGLE_3_PRESSURE;
 	// Get nodal data
@@ -42,8 +42,6 @@ Triangle3::Triangle3(int ID,int Node_1,int Node_2,int Node_3,int MatID)
 	myLocalNodalDofs.resize(2);
 	myLocalNodalDofs[0]=0;
 	myLocalNodalDofs[1]=1;	
-	// Get Material id
-	myMatID=MatID;
 	// Handle common info
 	this->handleCommonInfo();
 
