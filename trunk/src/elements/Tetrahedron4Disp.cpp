@@ -34,8 +34,8 @@ Tetrahedron4Disp::Tetrahedron4Disp()
 }
 Tetrahedron4Disp::Tetrahedron4Disp(int ID,
 					   int Node_1,int Node_2,int Node_3,int Node_4,
-					   int MatID)
-:Element(ID)
+					   int matID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_TETRHEDRON_4_DISP;
 	// Get nodal data
@@ -49,8 +49,6 @@ Tetrahedron4Disp::Tetrahedron4Disp(int ID,
 	myLocalNodalDofs[0]=0;
 	myLocalNodalDofs[1]=1;	
 	myLocalNodalDofs[2]=2;	
-	// Get Material id
-	myMatID=MatID;
 	// Handle common info
 	this->handleCommonInfo();
 

@@ -91,6 +91,8 @@ private:
 	double myFac;		// factor for plane/axisymmetric problems (e.g. 1.0 rad)
 	bool upToDate;
 	Vector gravity;
+	bool groupsByMaterial;
+	int currentGroup;
 
 	NodeContainer				theNodes;
 	CrossSectionContainer		theCrossSections;
@@ -118,8 +120,6 @@ public:
 	int setnDim(int nDimensions);
 	int getnDim() const;
 	void clear();
-	bool isUpToDate();
-	void setUpToDate();
 	void zeroNodalStress();
 	void zeroDisplacements();
 	void zeroSensitivityParameters();
@@ -145,10 +145,16 @@ public:
 	int storeState(const char* tableName);
 	int restoreState(const char* tableName);
 
-	void setTag(DomainTag t)		{myTag=t;}
-	DomainTag getTag()				{return myTag;}
-	void setFac(double fac)			{myFac=fac;}
-	double getFac()					{return myFac;}
+	void setTag(DomainTag t)			{myTag=t;}
+	DomainTag getTag()					{return myTag;}
+	void setFac(double fac)				{myFac=fac;}
+	double getFac()						{return myFac;}
+	bool isUpToDate()					{return upToDate;}
+	void setUpToDate()					{upToDate=true;}
+	bool areGroupsByMaterial()			{return groupsByMaterial;}
+	void setGroupsByMaterial(bool b)	{groupsByMaterial=b;}
+	void setCurrentGroup(int n)			{currentGroup=n;}
+	int  getCurrentGroup()				{return currentGroup;}
 
 	// Rayleigh damping
 	void setRayleighFactors(const Vector& factors);

@@ -41,7 +41,7 @@ protected:
 public:
 	// Constructors and Destructor
 	Triangle3();
-	Triangle3(int ID,int Node_1,int Node_2,int Node_3,int MatID);
+	Triangle3(int ID,int Node_1,int Node_2,int Node_3,int matID);
 	~Triangle3();
 
 	const Matrix& getK();

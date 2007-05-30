@@ -36,14 +36,13 @@ SDofElement::SDofElement()
  * Constructor.
  */
 SDofElement::SDofElement(int ID,int NodeID,int dofID,int matID)	
-	:Element(ID)
+	:Element(ID,matID)
 {
 	// The dofs needed for this element
 	myNodalIDs.resize(1);
 	myNodalIDs[0]=NodeID;
 	myLocalNodalDofs.resize(1);
 	myLocalNodalDofs[0]=dofID-1;
-	myMatID=matID;
 	// Handle common info
     this->handleCommonInfo();
 	myUniMaterial=static_cast<UniaxialMaterial*>(myMaterial);

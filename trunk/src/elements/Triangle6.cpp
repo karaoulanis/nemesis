@@ -32,8 +32,8 @@ Triangle6::Triangle6()
 Triangle6::Triangle6(int ID,
 					   int Node_1,int Node_2,int Node_3,
 					   int Node_4,int Node_5,int Node_6,
-					   int MatID)
-:Element(ID)
+					   int matID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_TRIANGLE_6;
 	// Get nodal data
@@ -48,8 +48,6 @@ Triangle6::Triangle6(int ID,
 	myLocalNodalDofs.resize(2);
 	myLocalNodalDofs[0]=0;
 	myLocalNodalDofs[1]=1;	
-	// Get Material id
-	myMatID=MatID;
 	// Handle common info
 	this->handleCommonInfo();
 

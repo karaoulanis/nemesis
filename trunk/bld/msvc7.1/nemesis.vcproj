@@ -43,7 +43,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib libpetscts.lib libpetscsnes.lib libpetscksp.lib libpetscdm.lib libpetscmat.lib libpetscvec.lib libpetsc.lib libpetsccontrib.lib mpich2.lib parmetis.lib metis.lib blas.lib lapack.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib sqlite.lib python25.lib vld.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib libpetscts.lib libpetscsnes.lib libpetscksp.lib libpetscdm.lib libpetscmat.lib libpetscvec.lib libpetsc.lib libpetsccontrib.lib parmetis.lib metis.lib blas.lib lapack.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib sqlite.lib python25.lib vld.lib"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
@@ -111,7 +111,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libpetscts.lib libpetscsnes.lib libpetscksp.lib libpetscdm.lib libpetscmat.lib libpetscvec.lib libpetsc.lib libpetsccontrib.lib mpich2.lib parmetis.lib metis.lib blas.lib lapack.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib sqlite.lib python25.lib vld.lib"
+				AdditionalDependencies="libpetscts.lib libpetscsnes.lib libpetscksp.lib libpetscdm.lib libpetscmat.lib libpetscvec.lib libpetsc.lib libpetsccontrib.lib parmetis.lib metis.lib blas.lib lapack.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib sqlite.lib python25.lib vld.lib"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"

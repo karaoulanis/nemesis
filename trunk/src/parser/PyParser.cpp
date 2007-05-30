@@ -33,7 +33,6 @@
 ******************************************************************************/
 static Domain*   pD=0;
 static Analysis* pA=0;
-static int currentGroup=0;
 static int currentLC=0;
 
 PyObject* buildTuple(const Packet& p)
@@ -447,6 +446,18 @@ static PyMethodDef SectionMethods[] =
 /******************************************************************************
 * Material Commands
 ******************************************************************************/
+void createGroupByMaterial(int groupId)
+{
+	try
+	{
+		Group* pGroup=new Group(groupId);
+		pD->add(pD->getGroups(),pGroup);
+		pD->setCurrentGroup(groupId);
+	}
+	catch(SolverException e)
+	{
+	}
+}
 static PyObject* pyMaterial_UniaxialElastic(PyObject *self, PyObject *args)
 {
 	int id;
@@ -454,6 +465,7 @@ static PyObject* pyMaterial_UniaxialElastic(PyObject *self, PyObject *args)
     if(!PyArg_ParseTuple(args,"id|ddd",&id,&E,&nu,&rho,&aT))return NULL;
 	Material* pMaterial=new UniaxialElastic(id,E,nu,rho,aT);
 	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -465,6 +477,7 @@ static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject *self, PyObject *args
 		return NULL;
 	Material* pMaterial=new UniaxialElastoPlastic(id,E,nu,rho,aT,sy,Hiso,Hkin,eta);
 	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -480,6 +493,7 @@ static PyObject* pyMaterial_Elastic(PyObject *self,PyObject *args)
 	else
 		pMaterial=new MultiaxialElastic(id,E,nu,rho,aT);
 	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -490,6 +504,7 @@ static PyObject* pyMaterial_UniaxialCyclic(PyObject *self,PyObject *args)
     if(!PyArg_ParseTuple(args,"idddddd",&id,&E,&nu,&rho,&aT,&tmax,&gmax)) return NULL;
 	Material* pMaterial=new UniaxialCyclic(id,E,nu,rho,aT,tmax,gmax);
 	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -501,6 +516,7 @@ static PyObject* pyMaterial_VonMises(PyObject *self,PyObject *args)
 		return NULL;
 	Material* pMaterial=new VonMises(id,elasticId,s0);
 	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -512,6 +528,7 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
 		return NULL;
 	Material* pMaterial=new MohrCoulomb(id,elasticId,c,phi,T);
 	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -541,9 +558,7 @@ static PyObject* pyElement_Bar2s(PyObject *self, PyObject *args)
 		return NULL;
 	try
 	{	if(jSec==-9999) jSec=iSec;
-		Element* pElement;
-		pElement=new Bar2s(id,iNode,jNode,mat,iSec,jSec);
-		pElement->setGroup(currentGroup);
+		Element* pElement=new Bar2s(id,iNode,jNode,mat,iSec,jSec);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -562,9 +577,7 @@ static PyObject* pyElement_Bar2t(PyObject *self, PyObject *args)
 	try
 	{
 		if(jSec==-9999) jSec=iSec;
-		Element* pElement;
-		pElement=new Bar2t(id,iNode,jNode,mat,iSec,jSec);
-		pElement->setGroup(currentGroup);
+		Element* pElement=new Bar2t(id,iNode,jNode,mat,iSec,jSec);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -583,7 +596,6 @@ static PyObject* pyElement_Beam2e(PyObject *self, PyObject *args)
 	try
 	{
 		Element* pElement=new Beam2e(id,iNode,jNode,mat,sec);
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -603,7 +615,6 @@ static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
 	{
 		if(rule==-1) rule=1;
 		Element* pElement=new Timoshenko2d(id,iNode,jNode,mat,sec,rule);
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -623,7 +634,6 @@ static PyObject* pyElement_Beam3t(PyObject *self, PyObject *args)
 	{
 		if(rule==-1) rule=2;
 		Element* pElement=new Timoshenko2d(id,iNode,jNode,mNode,mat,sec,rule);
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -634,39 +644,6 @@ static PyObject* pyElement_Beam3t(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-/*
-static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
-{
-	int id,iNode,jNode,mat,sec,rule=1;
-	Element* pElement;
-	try
-	{
-		switch(pD->getnDim())
-		{
-			case 2:
-				if(!PyArg_ParseTuple(args,"iiiii|i",&id,&iNode,&jNode,&mat,&sec,&rule)) return NULL;
-				pElement=new Beam2t(id,iNode,jNode,mat,sec,rule);
-				break;
-			case 3:
-				double z1,z2,z3;
-				if(!PyArg_ParseTuple(args,"iiiii(ddd)",&id,&iNode,&jNode,&mat,&sec,&z1,&z2,&z3)) return NULL;
-				pElement=new Beam2t3d(id,iNode,jNode,mat,sec,z1,z2,z3);
-				break;
-			default:
-				break;
-		}
-		pD->get<Group>(pD->getGroups(),currentGroup)->addElement(pElement);
-		pD->add(pD->getElements(),pElement);
-	}
-	catch(SolverException e)
-	{
-		PyErr_SetString(PyExc_StandardError,e.what());
-		return NULL;
-	}
-	Py_INCREF(Py_None);
-	return Py_None;
-}
-*/
 static PyObject* pyElement_Brick8d(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,n4,n5,n6,n7,n8,mat;
@@ -675,7 +652,6 @@ static PyObject* pyElement_Brick8d(PyObject *self, PyObject *args)
 	try
 	{
 		Element* pElement=new Brick8Disp(id,n1,n2,n3,n4,n5,n6,n7,n8,mat);
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -691,9 +667,7 @@ static PyObject* pyElement_SDOF(PyObject *self, PyObject *args)
 	int id,nodeID,dofID,matID;
     if(!PyArg_ParseTuple(args,"iiii",&id,&nodeID,&dofID,&matID))
 		return NULL;
-	Element* pElement;
-	pElement=new SDofElement(id,nodeID,dofID,matID);
-	pElement->setGroup(currentGroup);
+	Element* pElement=new SDofElement(id,nodeID,dofID,matID);
 	pD->add(pD->getElements(),pElement);
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -712,7 +686,6 @@ static PyObject* pyElement_Quad4d(PyObject *self, PyObject *args)
 		else if(pD->getTag()==TAG_DOMAIN_AXISYMMETRIC)
 			pElement=new Quad4DispAxisymmetric(id,n1,n2,n3,n4,matID,2,2);
 		else throw SolverException(9999,"A quad4d can be used only in plane strain/stress/axisymmetry.");
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -731,7 +704,6 @@ static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 	try
 	{
 		Element* pElement=new Triangle3(id,n1,n2,n3,matID);
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -750,7 +722,6 @@ static PyObject* pyElement_Triangle6d(PyObject *self, PyObject *args)
 	try
 	{
 		Element* pElement=new Triangle6(id,n1,n2,n3,n4,n5,n6,matID);
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -769,7 +740,6 @@ static PyObject* pyElement_Tetrahedron4d(PyObject *self, PyObject *args)
 	try
 	{
 		Element* pElement=new Tetrahedron4Disp(id,n1,n2,n3,n4,matID);
-		pElement->setGroup(currentGroup);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SolverException e)
@@ -870,13 +840,13 @@ static PyObject* pyGroup_Define(PyObject *self, PyObject *args)
 	{
 		Group* pGroup=new Group(groupId);
 		pD->add(pD->getGroups(),pGroup);
+		pD->setCurrentGroup(groupId);
 	}
 	catch(SolverException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
 	}	
-	currentGroup=groupId;
 	Py_INCREF(Py_None);
 	return Py_None;
 }

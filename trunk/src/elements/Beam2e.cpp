@@ -30,7 +30,7 @@ Beam2e::Beam2e()
 {
 }
 Beam2e::Beam2e(int ID,int Node_1,int Node_2,int matID,int secID)
-:Element(ID)
+:Element(ID,matID)
 {
 	myTag=TAG_ELEM_BEAM_2D_EULER;
 	myNodalIDs.resize(2);
@@ -41,7 +41,6 @@ Beam2e::Beam2e(int ID,int Node_1,int Node_2,int matID,int secID)
 	myLocalNodalDofs[1]=1;
 	myLocalNodalDofs[2]=5;
 	mySecID=secID;
-	myMatID=matID;
 	// Handle common info
 	this->handleCommonInfo();
 	mySecID=secID;

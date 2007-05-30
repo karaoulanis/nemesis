@@ -37,7 +37,7 @@ Bar::Bar()
  * Creates a Bar Element. 
  */
 Bar::Bar(int ID,int Node_1,int Node_2,int matID,int iSecID,int jSecID)	
-:Element(ID)
+:Element(ID,matID)
 {
 	// Get dimension
 	nDim=pD->getnDim();
@@ -52,7 +52,6 @@ Bar::Bar(int ID,int Node_1,int Node_2,int matID,int iSecID,int jSecID)
 	for(int i=0;i<nDim;i++) myLocalNodalDofs[i]=i;
 
 	// Handle common info
-	myMatID=matID;
     this->handleCommonInfo();
 	
 	// Find length

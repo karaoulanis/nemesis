@@ -41,7 +41,7 @@ protected:
 public:
 	// Constructors and Destructor
 	Quad4();
-	Quad4(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID,
+	Quad4(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int matID,
 				 int integrationRuleXi,int integrationRuleEta);
 	~Quad4();
 
