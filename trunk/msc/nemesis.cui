@@ -34,6 +34,26 @@ To access the Customize User Interface dialog box, click the Tools menu > Custom
           <Name xlate="true" UID="XLS_1721">Geometry line</Name>
           <Command>^C^C-layer;s;geom;;l;\\;</Command>
           <HelpString xlate="true" UID="XLS_1723">Create a geometry line</HelpString>
+          <SmallImage Name="RCDATA_16_PLINE" />
+          <LargeImage Name="RCDATA_16_PLINE" />
+        </Macro>
+      </MenuMacro>
+      <MenuMacro UID="MMU_0010">
+        <Macro type="Any">
+          <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+          <Name xlate="true" UID="XLS_1730">Beam</Name>
+          <Command>^C^C-layer;s;beam;;l;\\;-layer;s;geom;;</Command>
+          <HelpString xlate="true" UID="XLS_1731">Create a beam element</HelpString>
+          <SmallImage Name="RCDATA_16_LINE" />
+          <LargeImage Name="RCDATA_16_LINE" />
+        </Macro>
+      </MenuMacro>
+      <MenuMacro UID="MMU_0011">
+        <Macro type="Any">
+          <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+          <Name xlate="true" UID="XLS_1733">Bar</Name>
+          <Command>^C^C-layer;s;bar;;l;\\;-layer;s;geom;;</Command>
+          <HelpString xlate="true" UID="XLS_1734">Create a bar element</HelpString>
           <SmallImage Name="RCDATA_16_OSNEND" />
           <LargeImage Name="RCDATA_16_OSNEND" />
         </Macro>
@@ -42,7 +62,7 @@ To access the Customize User Interface dialog box, click the Tools menu > Custom
         <Macro type="Any">
           <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
           <Name xlate="true" UID="XLS_1712">Fix X</Name>
-          <Command>^C^C-layer;s;fixX;;celtscale;0.5;l;\\;-layer;s;geom;;celtscale;1.0;</Command>
+          <Command>^C^C-layer;s;fixX;;l;\\;-layer;s;geom;;</Command>
           <HelpString xlate="true" UID="XLS_1717">Fix X in a line.</HelpString>
           <SmallImage Name="RCDATA_16_PTFX" />
           <LargeImage Name="RCDATA_16_PTFX" />
@@ -52,7 +72,7 @@ To access the Customize User Interface dialog box, click the Tools menu > Custom
         <Macro type="Any">
           <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
           <Name xlate="true" UID="XLS_1714">Fix Y</Name>
-          <Command>^C^C-layer;s;fixY;;celtscale;0.5;l;\\;-layer;s;geom;;celtscale;1.0;</Command>
+          <Command>^C^C-layer;s;fixY;;l;\\;-layer;s;geom;;</Command>
           <HelpString xlate="true" UID="XLS_1716">Fix Y in a line.</HelpString>
           <SmallImage Name="RCDATA_16_PTFY" />
           <LargeImage Name="RCDATA_16_PTFY" />
@@ -62,29 +82,39 @@ To access the Customize User Interface dialog box, click the Tools menu > Custom
         <Macro type="Any">
           <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
           <Name xlate="true" UID="XLS_1718">Fix XY</Name>
-          <Command>^C^C-layer;s;fixXY;;celtscale;0.5;l;\\;-layer;s;geom;;celtscale;1.0;</Command>
+          <Command>^C^C-layer;s;fixXY;;l;\\;-layer;s;geom;;</Command>
           <HelpString xlate="true" UID="XLS_1719">Fix both x and y in a line.</HelpString>
           <SmallImage Name="RCDATA_16_PTFXY" />
           <LargeImage Name="RCDATA_16_PTFXY" />
         </Macro>
       </MenuMacro>
-      <MenuMacro UID="MMU_0012">
+      <MenuMacro UID="MMU_0009">
         <Macro type="Any">
           <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
           <Name xlate="true" UID="XLS_1728">Hole</Name>
-          <Command>^C^C-layer;s;holes;;-i;hole;\;;;;</Command>
-          <SmallImage Name="RCDATA_16_CIRDIA" />
-          <LargeImage Name="RCDATA_16_CIRDIA" />
+          <Command>^C^C-layer;s;holes;;-i;hole;\;;;;-layer;s;geom;;</Command>
+          <SmallImage Name="RCDATA_16_DIMCEN" />
+          <LargeImage Name="RCDATA_16_DIMCEN" />
         </Macro>
       </MenuMacro>
-      <MenuMacro UID="MMU_0014">
+      <MenuMacro UID="MMU_0017">
         <Macro type="Any">
           <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
           <Name xlate="true" UID="XLS_1725">Region</Name>
-          <Command>^C^C-layer;s;regions;;-i;region;\;;;</Command>
+          <Command>^C^C-layer;s;regions;;-i;region;\;;;\-layer;s;geom;;</Command>
           <HelpString xlate="true" UID="XLS_1726" />
           <SmallImage Name="RCDATA_16_BPOLY" />
           <LargeImage Name="RCDATA_16_BPOLY" />
+        </Macro>
+      </MenuMacro>
+      <MenuMacro UID="MMU_0019">
+        <Macro type="Any">
+          <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+          <Name xlate="true" UID="XLS_1736">CrossSection</Name>
+          <Command>^C^C-layer;s;sections;;-i;section;\;;;\-layer;s;geom;;</Command>
+          <HelpString xlate="true" UID="XLS_1737">Assign a bar/beam CrossSection.</HelpString>
+          <SmallImage Name="RCDATA_16_VPPOLY" />
+          <LargeImage Name="RCDATA_16_VPPOLY" />
         </Macro>
       </MenuMacro>
     </MacroGroup>
@@ -243,39 +273,69 @@ To access the Customize User Interface dialog box, click the Tools menu > Custom
               <MacroRef MenuMacroID="MMU_0007" />
             </MenuItem>
           </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0003">
+          <ToolbarButton IsSeparator="true" UID="TBBU_0003">
             <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0004">Fix X</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0004" />
-            </MenuItem>
           </ToolbarButton>
           <ToolbarButton IsSeparator="false" UID="TBBU_0004">
             <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0005">Fix Y</Name>
+            <Name xlate="true" UID="XLS_0004">Beam</Name>
             <MenuItem>
-              <MacroRef MenuMacroID="MMU_0005" />
+              <MacroRef MenuMacroID="MMU_0010" />
             </MenuItem>
           </ToolbarButton>
           <ToolbarButton IsSeparator="false" UID="TBBU_0005">
             <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0006">Fix XY</Name>
+            <Name xlate="true" UID="XLS_0005">Bar</Name>
+            <MenuItem>
+              <MacroRef MenuMacroID="MMU_0011" />
+            </MenuItem>
+          </ToolbarButton>
+          <ToolbarButton IsSeparator="true" UID="TBBU_0006">
+            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+          </ToolbarButton>
+          <ToolbarButton IsSeparator="false" UID="TBBU_0007">
+            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+            <Name xlate="true" UID="XLS_0006">Fix X</Name>
+            <MenuItem>
+              <MacroRef MenuMacroID="MMU_0004" />
+            </MenuItem>
+          </ToolbarButton>
+          <ToolbarButton IsSeparator="false" UID="TBBU_0008">
+            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+            <Name xlate="true" UID="XLS_0007">Fix Y</Name>
+            <MenuItem>
+              <MacroRef MenuMacroID="MMU_0005" />
+            </MenuItem>
+          </ToolbarButton>
+          <ToolbarButton IsSeparator="false" UID="TBBU_0009">
+            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+            <Name xlate="true" UID="XLS_0008">Fix XY</Name>
             <MenuItem>
               <MacroRef MenuMacroID="MMU_0006" />
             </MenuItem>
           </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0006">
+          <ToolbarButton IsSeparator="true" UID="TBBU_0010">
             <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0007">Hole</Name>
+          </ToolbarButton>
+          <ToolbarButton IsSeparator="false" UID="TBBU_0011">
+            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+            <Name xlate="true" UID="XLS_0009">Hole</Name>
             <MenuItem>
-              <MacroRef MenuMacroID="MMU_0012" />
+              <MacroRef MenuMacroID="MMU_0009" />
             </MenuItem>
           </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0007">
+          <ToolbarButton IsSeparator="false" UID="TBBU_0012">
             <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0008">Region</Name>
+            <Name xlate="true" UID="XLS_0010">Region</Name>
             <MenuItem>
-              <MacroRef MenuMacroID="MMU_0014" />
+              <MacroRef MenuMacroID="MMU_0017" />
+            </MenuItem>
+          </ToolbarButton>
+          <ToolbarButton IsSeparator="false" UID="TBBU_0013">
+            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
+            <Name xlate="true" UID="XLS_0011">Section</Name>
+            <MenuItem>
+              <MacroRef MenuMacroID="MMU_0019" />
             </MenuItem>
           </ToolbarButton>
         </Toolbar>
