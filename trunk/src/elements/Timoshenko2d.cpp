@@ -153,7 +153,7 @@ const Matrix& Timoshenko2d::getK()
 		}
 	}
 	if(myGroup->isActive())	K*=myGroup->getFacK();
-	else					K*=1e-7;
+	else					K*=1e-12;
 	return K;
 }
 const Matrix& Timoshenko2d::getM()
