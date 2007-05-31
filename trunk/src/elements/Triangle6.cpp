@@ -57,6 +57,17 @@ Triangle6::Triangle6(int ID,
 	myMatPoints[0]=new MatPoint(pMat,num::d23,num::d16,num::d16,num::d13);
 	myMatPoints[1]=new MatPoint(pMat,num::d16,num::d23,num::d16,num::d13);
 	myMatPoints[2]=new MatPoint(pMat,num::d16,num::d16,num::d23,num::d13);
+	static Matrix N(6,3);
+	static double detJ;
+	for(unsigned i=0;i<3;i++)
+	{
+		this->getShapeFunctions(myMatPoints[i],N,detJ);
+		double xG=N(0,0)*x(0,0)+N(1,0)*x(2,0)+N(1,0)*x(2,0)
+			     +N(3,0)*x(3,0)+N(4,0)*x(4,0)+N(5,0)*x(5,0);
+		double yG=N(0,0)*x(0,1)+N(1,0)*x(1,1)+N(2,0)*x(2,1)
+			     +N(3,0)*x(3,1)+N(4,0)*x(4,1)+N(5,0)*x(5,1);
+		myMatPoints[i]->setX(xG,yG);
+	}
 }
 Triangle6::~Triangle6()
 {
