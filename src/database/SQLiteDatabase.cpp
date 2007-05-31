@@ -150,6 +150,7 @@ bool SQLiteDatabase::existsTable(const char* tableName)
 	sqlite3_get_table(db,query,&result,&nrow,&ncol,&errMsg);
 	for(int i=1;i<nrow+1;i++)
 		if(!strcmp(result[i],tableName)) {ret=true; break;}
+	sqlite3_free_table(result);
 	return ret;
 }
 /**
@@ -464,10 +465,8 @@ void SQLiteDatabase::exportToVtk(const char* tableName)
 		else vtkFile<<atof(resNodes[i*ncol+2+3+3*16+5])<<endl;
 	}
 	vtkFile<<endl;
-
+	vtkFile.close();
+	
 	sqlite3_free_table(resNodes);
 	sqlite3_free_table(resElems);
-	vtkFile.close();
-
-
 }
