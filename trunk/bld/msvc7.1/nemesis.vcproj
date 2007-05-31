@@ -117,6 +117,7 @@
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\ext\vld;..\..\ext\ifort;..\..\ext\sqlite\Release;..\..\ext\lapack\blas\Release;..\..\ext\lapack\lapack\Release;&quot;..\..\ext\ParMetis-3.1\ParMetis\Metis\Release&quot;;&quot;..\..\ext\ParMetis-3.1\ParMetis\ParMetis\Release&quot;;&quot;..\..\ext\petsc-2.3.2-p8\lib\cygwin-c-opt&quot;;&quot;C:\Program Files\MPICH2\lib&quot;;&quot;C:\Program Files\Python25\libs&quot;"
 				IgnoreDefaultLibraryNames="libc.lib libcp.lib"
+				GenerateDebugInformation="FALSE"
 				ProgramDatabaseFile="./Release/nemesis.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
