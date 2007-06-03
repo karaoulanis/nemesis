@@ -23,7 +23,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_33_1;&quot;..\..\ext\ParMetis-3.1&quot;;&quot;..\..\ext\petsc-2.3.2-p8&quot;;&quot;..\..\ext\petsc-2.3.2-p8\include&quot;;&quot;..\..\ext\petsc-2.3.2-p8\bmake\cygwin-c-opt&quot;;&quot;..\..\ext\sqlite\sqlite-source-3_3_13&quot;;..\..\ext\vld;&quot;C:\Program Files\MPICH2\include&quot;;&quot;C:\Program Files\Python25\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.3.17&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="4"
@@ -43,11 +43,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib libpetscts.lib libpetscsnes.lib libpetscksp.lib libpetscdm.lib libpetscmat.lib libpetscvec.lib libpetsc.lib libpetsccontrib.lib parmetis.lib metis.lib blas.lib lapack.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib sqlite.lib python25.lib vld.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib BLAS.lib LAPACK.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib SQLite.lib python25.lib vld.lib"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\ext\vld;..\..\ext\ifort;..\..\ext\sqlite\Release;..\..\ext\lapack\blas\Release;..\..\ext\lapack\lapack\Release;&quot;..\..\ext\ParMetis-3.1\ParMetis\Metis\Release&quot;;&quot;..\..\ext\ParMetis-3.1\ParMetis\ParMetis\Release&quot;;&quot;..\..\ext\petsc-2.3.2-p8\lib\cygwin-c-opt&quot;;&quot;C:\Program Files\MPICH2\lib&quot;;&quot;C:\Program Files\Python25\libs&quot;"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python25\libs&quot;"
 				IgnoreDefaultLibraryNames="libc.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="./Debug/nemesis.pdb"
@@ -94,7 +94,7 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_33_1;&quot;..\..\ext\ParMetis-3.1&quot;;&quot;..\..\ext\petsc-2.3.2-p8&quot;;&quot;..\..\ext\petsc-2.3.2-p8\include&quot;;&quot;..\..\ext\petsc-2.3.2-p8\bmake\cygwin-c-opt&quot;;&quot;..\..\ext\sqlite\sqlite-source-3_3_13&quot;;..\..\ext\vld;&quot;C:\Program Files\MPICH2\include&quot;;&quot;C:\Program Files\Python25\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.3.17&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				StringPooling="TRUE"
 				RuntimeLibrary="4"
@@ -111,11 +111,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libpetscts.lib libpetscsnes.lib libpetscksp.lib libpetscdm.lib libpetscmat.lib libpetscvec.lib libpetsc.lib libpetsccontrib.lib parmetis.lib metis.lib blas.lib lapack.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib sqlite.lib python25.lib vld.lib"
+				AdditionalDependencies="BLAS.lib LAPACK.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib SQLite.lib python25.lib vld.lib"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\ext\vld;..\..\ext\ifort;..\..\ext\sqlite\Release;..\..\ext\lapack\blas\Release;..\..\ext\lapack\lapack\Release;&quot;..\..\ext\ParMetis-3.1\ParMetis\Metis\Release&quot;;&quot;..\..\ext\ParMetis-3.1\ParMetis\ParMetis\Release&quot;;&quot;..\..\ext\petsc-2.3.2-p8\lib\cygwin-c-opt&quot;;&quot;C:\Program Files\MPICH2\lib&quot;;&quot;C:\Program Files\Python25\libs&quot;"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python25\libs&quot;"
 				IgnoreDefaultLibraryNames="libc.lib libcp.lib"
 				GenerateDebugInformation="FALSE"
 				ProgramDatabaseFile="./Release/nemesis.pdb"
