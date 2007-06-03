@@ -60,6 +60,7 @@ private:
 	Matrix dispSensi;
 	Matrix eigenVecs;
 
+	int avgStress; ///@todo: remove this when full nodal recovering is implemented.
 	Vector stress;
 	Vector strain;
 	bool isLoadApplied;

@@ -52,6 +52,7 @@ Node::Node(int ID,double xc1,double xc2,double xc3)
 	nActivatedDofs=0;
 	stress.resize(6,0.);
 	strain.resize(6,0.);
+	avgStress=0;
 }
 Node::~Node()
 {
@@ -154,19 +155,20 @@ void Node::zeroLoad()
 	P.clear();
 	isLoadApplied=false;
 }
-void Node::zeroStress()
-{
-	stress.clear();
-}
+
 void Node::zeroDisplacements()
 {
 	dispTrial.clear();
 	dispConvg.clear();
 }
+void Node::zeroStress()
+{
+	stress.clear();
+}
 void Node::addStress(const Vector& s)
 {
-	double weigth=1/(double)myConnectedElements.size();
-	stress+=weigth*s;
+	stress+=s;
+	avgStress+=1;
 }
 const Packet& Node::getPacket()
 {
@@ -183,6 +185,7 @@ const Packet& Node::getPacket()
 				thePacket.dblArray[i+3+MAX_NUMBER_OF_DOFS]=velcConvg[myActivatedDofs[i]];
 				thePacket.dblArray[i+3+2*MAX_NUMBER_OF_DOFS]=acclConvg[myActivatedDofs[i]];
 			}
+	if(avgStress>0) stress*=1.0/avgStress;
 	for(int i=0;i<6;i++)
 			thePacket.dblArray[i+3+3*MAX_NUMBER_OF_DOFS]=stress[i];
 	return thePacket;
