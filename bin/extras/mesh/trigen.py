@@ -6,10 +6,10 @@ import element
 import math
 import load
 
-trigenPath="D:\\new\\nemesis\\bin"
+trigenPath="D:\\solver\\nemesis\\bin"
 infoLevel=0
 tol=0.0001
-beamStartId=100000
+beamStartId= 100000
 barStartId =1000000
 file=''
 loads=[]
