@@ -32,7 +32,7 @@ int main(int argc,char* argv[])
 	/*****************************************************************************
 	* Info
 	*****************************************************************************/
-	cout<<"nemesis "<<_NEMESIS_VERSION
+	cout<<"nemesis-"<<_NEMESIS_VERSION
 	    <<"[nemesis-project.org] Copyright (C) 2004-2007 F.E. Karaoulanis."<<endl;
 	cout<<"Built on "	<<_NEMESIS_PLATFORM
 		<<" with "		<<_NEMESIS_COMPILER_NAME

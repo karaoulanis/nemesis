@@ -4,7 +4,7 @@ from math import pi
 
 t1=time.clock()
 #domain
-domain.plainStrain(1.)
+domain.planeStrain(1.)
 domain.gravity( 0.,-1., 0.)
 db.SQLite("tunnel")
 

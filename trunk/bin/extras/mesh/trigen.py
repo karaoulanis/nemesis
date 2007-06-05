@@ -415,9 +415,15 @@ def mesh(type,size):
 	command=path+"\\trigen.exe"+" "+options+" "+file+".poly >trigen.log"
 	os.system(command)
 	if info>1:
+		print
+		print "========================================================"
+		print " Output by Triangle 1.6. (C) 2006 J.R. Shewchuk. "
+		print "========================================================"
 		ifile=open('trigen.log')
 		for line in ifile.readlines():
-			print line.strip()
+			print "  ",line.strip()
+		print "========================================================"
+		print
 		ifile.close()
 	createNodes()
 	createTrigs()
