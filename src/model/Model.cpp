@@ -168,6 +168,8 @@ void Model::clear()
 	Containers::vector_delete(theModelNodes);
 	Containers::vector_delete(theModelElements);
 	nEquations=0;
+	constrained=false;
+	reordered=false;
 }
 int Model::getDirectedGraph(DirectedGraph& G)
 {
