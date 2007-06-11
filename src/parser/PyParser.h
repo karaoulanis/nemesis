@@ -27,7 +27,6 @@
 #ifndef _PYPARSER_H
 #define _PYPARSER_H
 
-#include <Parser.h>
 #ifdef _DEBUG
 	#undef _DEBUG
 	#include <Python.h>
@@ -35,6 +34,8 @@
 #else
 	#include <Python.h>
 #endif
+
+#include <Parser.h>
 
 class PyParser: public Parser
 {
