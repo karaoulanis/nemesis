@@ -28,6 +28,7 @@
 
 SOE::SOE()
 {
+	theSize=0;
 	isLUFactored=false;
 }
 SOE::~SOE()

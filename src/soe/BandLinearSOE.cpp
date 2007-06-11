@@ -58,7 +58,7 @@ void BandLinearSOE::setTheSize()
 	pA->getModel()->getUndirectedGraph(G);
 	lowerBandwidth=bandwidth(G);
 	upperBandwidth=lowerBandwidth;
-
+		  
 	// If the size has not changed do not resize arrays
 	if(theSize==pA->getModel()->getnEquations()) return;
 	else theSize=pA->getModel()->getnEquations();
