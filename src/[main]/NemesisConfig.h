@@ -60,7 +60,7 @@
 /*****************************************************************************
 * Memory leak detectors
 *****************************************************************************/
-#ifdef _MSC_VER
-	#include <vld.h>
-	#include <vldapi.h>
-#endif
+//#ifdef _MSC_VER
+//	#include <vld.h>
+//	#include <vldapi.h>
+//#endif

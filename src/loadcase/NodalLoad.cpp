@@ -37,7 +37,7 @@ NodalLoad::NodalLoad(int nodeID,int dofID)
 	// Set the dof and check if activated
 	dof=dofID-1;
 	if(myNode->getActivatedDof(dof)<0) 
-		throw SolverException(2921,"Dof is not activated.");
+		throw SException("[nemesis:%d] %s",9999,"Dof is not activated.");
 }
 void NodalLoad::apply(double fact,double time)
 {

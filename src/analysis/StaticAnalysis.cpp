@@ -68,27 +68,27 @@ int StaticAnalysis::run(int nLC,int nLoadSteps)
 {
 	// Check the imposer
 	if(pA->getImposer()==0) 
-		throw SolverException(9999,"No imposer has been set.");
+		throw SException("[nemesis:%d] %s",9999,"No imposer has been set.");
 	if(!this->checkIfAllows(pA->getImposer()))
-		throw SolverException(9999,"The imposer type is incorrect.");
+		throw SException("[nemesis:%d] %s",9999,"The imposer type is incorrect.");
 	// Check the control
 	if(pA->getControl()==0) 
-		throw SolverException(9999,"No control has been set.");
+		throw SException("[nemesis:%d] %s",9999,"No control has been set.");
 	if(!this->checkIfAllows(pA->getControl()))
-		throw SolverException(9999,"The control type is incorrect.");
+		throw SException("[nemesis:%d] %s",9999,"The control type is incorrect.");
 	// Check the algorithm
 	if(pA->getAlgorithm()==0) 
-		throw SolverException(9999,"No algorithm has been set.");
+		throw SException("[nemesis:%d] %s",9999,"No algorithm has been set.");
 	if(!this->checkIfAllows(pA->getAlgorithm()))
-		throw SolverException(9999,"The algorithm type is incorrect.");
+		throw SException("[nemesis:%d] %s",9999,"The algorithm type is incorrect.");
 	// Check the SOE
 	if(pA->getSOE()==0) 
-		throw SolverException(9999,"No soe has been set.");
+		throw SException("[nemesis:%d] %s",9999,"No soe has been set.");
 	if(!this->checkIfAllows(pA->getSOE()))
-		throw SolverException(9999,"The soe type is incorrect.");
+		throw SException("[nemesis:%d] %s",9999,"The soe type is incorrect.");
 	// Check the Reorderer
 	if(pA->getReorderer()!=0&&(!this->checkIfAllows(pA->getReorderer())))
-		throw SolverException(9999,"The reorderer type is incorrect.");
+		throw SException("[nemesis:%d] %s",9999,"The reorderer type is incorrect.");
 
 	// Create model by applying the constraints
 	pA->getImposer()->impose();

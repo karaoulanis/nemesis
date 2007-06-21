@@ -66,7 +66,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 	}
 	/**
@@ -86,7 +86,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 		for(int i=0;i<size_;i++) data_[i]=c;
 	}
@@ -107,7 +107,7 @@ public:
 			}
 			catch(std::bad_alloc) 
 			{
-				throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 			}
 			for(int i=0;i<size_;i++) data_[i]=m.data_[i];
 		}
@@ -201,7 +201,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 	}	
 	/**
@@ -224,7 +224,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 		for(int i=0;i<size_;i++) data_[i]=c;
 	}
@@ -567,7 +567,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 		for(int i=0;i<size_;i++) me[i]=data_[i];
 		for(int i=0;i<rows_;i++) index[i]=0;
@@ -577,7 +577,7 @@ public:
 		delete[] vv;
 		delete[] me;
 		delete[] index;
-		if(ret==-1) throw SolverException(9999,"Matrix is singular!\n");
+			throw SException("[nemesis:%d] %s",1006,"Matrix is singular.\n");
 	}
     friend Matrix Inverse(const Matrix& m)
 	{
@@ -599,7 +599,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 		for(int i=0;i<m.size_;i++) me[i]=m.data_[i];
 		for(int i=0;i<m.rows_;i++) index[i]=0;
@@ -609,7 +609,7 @@ public:
 		delete[] col;
 		delete[] vv;
 		delete[] index;
-		if(ret==-1) throw SolverException(9999,"Matrix is singular!\n");
+		if(ret==-1) throw SException("[nemesis:%d] %s",1006,"Matrix is singular.\n");
 		return inv;
 	}
 	friend double det(const Matrix& m)
@@ -630,7 +630,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 		for(int i=0;i<m.size_;i++) me[i]=m.data_[i];
 		for(int i=0;i<m.rows_;i++) index[i]=0;
@@ -639,7 +639,7 @@ public:
 		delete[] me;
 		delete[] vv;
 		delete[] index;
-		if(ret==-1) throw SolverException(9999,"Matrix is singular!\n");
+		if(ret==-1)	throw SException("[nemesis:%d] %s",1006,"Matrix is singular.\n");
 		return det;
 	}
 	friend std::ostream& operator<<(std::ostream& s, const Matrix& m)

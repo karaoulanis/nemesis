@@ -38,7 +38,7 @@ InitialDisplacement::InitialDisplacement(int nodeID,int dofID,double u)
 	dof=dofID-1;
 	// Check if dof is activated
 	if(myNode->getActivatedDof(dof)<0) 
-		throw SolverException(2921,"Dof is not activated.");
+		throw SException("[nemesis:%d] %s",9999,"Dof is not activated.");
 	disp=u;
 }
 int InitialDisplacement::apply()

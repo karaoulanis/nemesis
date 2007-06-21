@@ -58,7 +58,7 @@ Bar::Bar(int ID,int Node_1,int Node_2,int matID,int iSecID,int jSecID)
 	L0=0.;
 	for(int i=0;i<nDim;i++) L0+=(x(1,i)-x(0,i))*(x(1,i)-x(0,i));
 	L0=sqrt(L0);
-	if(num::tiny(L0)) throw SolverException(9999,"Zero length bar is not permitted");
+	if(num::tiny(L0)) throw SException("[nemesis:%d] %s",9999,"Zero length bar is not permitted");
 	
 	// Retrieve the CrossSection pointers and get A0
 	iSection=pD->get<CrossSection>(pD->getCrossSections(),iSecID);

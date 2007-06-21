@@ -96,7 +96,7 @@ int SOE::insertMatrixIntoA(const Matrix& Be,const IDContainer& EFTable,
 int SOE::plotGraph(const char* s)
 {
 	// Create the Graph
-	if(theSize<=0) throw SolverException(9999,"Could not initialize graph.");
+	if(theSize<=0) throw SException("[nemesis:%d] %s",1110,"Could not initialize graph.\n");
 	UndirectedGraph G(theSize);
 	pA->getModel()->getUndirectedGraph(G);
 	// Plot the Graph

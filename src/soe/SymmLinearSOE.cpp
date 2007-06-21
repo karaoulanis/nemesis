@@ -98,7 +98,7 @@ int SymmLinearSOE::solve()
 	{
 		dsptrf(&c,&N,&A[0],&IPIV[0],&INFO);
 		if(INFO!=0)	
-			throw SolverException(9999,"SOE: lapack DSPTRF failed.");
+			throw SException("[nemesis:%d] %s",1102,"SOE: lapack DSPTRF failed.");
 		isLUFactored=true;
 	}
 

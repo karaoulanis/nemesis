@@ -61,7 +61,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 	}
 	/**
@@ -80,7 +80,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 		for(int i=0;i<size_;i++) data_[i]=c;
 	}
@@ -101,7 +101,7 @@ public:
 			}
 			catch(std::bad_alloc)
 			{
-				throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 			}
 			for(int i=0;i<size_;i++) data_[i]=v.data_[i];
 		}
@@ -179,7 +179,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 	}
 	/**
@@ -199,7 +199,7 @@ public:
 		}
 		catch(std::bad_alloc)
 		{
-			throw SolverException(1001,"Run out of memory!\n");
+			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
 		}
 		for(int i=0;i<size_;i++) data_[i]=c;
 	}

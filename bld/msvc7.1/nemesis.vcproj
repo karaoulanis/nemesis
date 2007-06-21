@@ -983,10 +983,10 @@
 			Name="exception"
 			Filter="">
 			<File
-				RelativePath="..\..\src\exception\SolverException.cpp">
+				RelativePath="..\..\src\exception\SException.cpp">
 			</File>
 			<File
-				RelativePath="..\..\src\exception\SolverException.h">
+				RelativePath="..\..\src\exception\SException.h">
 			</File>
 		</Filter>
 		<Filter

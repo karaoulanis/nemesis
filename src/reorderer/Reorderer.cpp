@@ -26,7 +26,7 @@
 
 #include <Reorderer.h>
 #include <fstream>
-#include <SolverException.h>
+#include <SException.h>
 
 Reorderer::Reorderer()
 {

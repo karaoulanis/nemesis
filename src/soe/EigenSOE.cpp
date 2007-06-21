@@ -117,11 +117,7 @@ int EigenSOE::solve()
 	dggev(&JOBVL,&JOBVR,&N,&A[0],&LDA,&M[0],&LDB,&ALPHAR[0],&ALPHAI[0],&BETA[0],
 					  &VL[0],&LDVL,&VR[0],&LDVR,&WORK[0],&LWORK,&INFO);
 	if(INFO!=0)	
-	{
-		char s[128];
-		sprintf(s,"SOE: lapack DSYGV failed (info=%d).",INFO);
-		throw SolverException(9999,s);
-	}
+		throw SException("[nemesis:%d] %s",1110,"SOE: lapack DSYGV failed.");
 	for(int i=0;i<theSize;i++) X[i]=ALPHAR[i]/BETA[i];
     return 0;
 }

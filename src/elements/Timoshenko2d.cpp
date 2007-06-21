@@ -57,7 +57,7 @@ Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int matID,int secID,int 
 	b[0]= cosX[0]*b0A+cosX[1]*b1A;
 	b[1]=-cosX[1]*b0A+cosX[0]*b1A;
 	gPoints=rule;
-	if(rule!=1&&rule!=2) throw SolverException(9999,"Integration rule should be 1 or 2.");
+	if(rule!=1&&rule!=2) throw SException("[nemesis:%d] %s",9999,"Integration rule should be 1 or 2.");
 }
 Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int Node_3,int matID,int secID,int rule)
 :Element(ID,matID)
@@ -88,7 +88,7 @@ Timoshenko2d::Timoshenko2d(int ID,int Node_1,int Node_2,int Node_3,int matID,int
 	b[0]= cosX[0]*b0A+cosX[1]*b1A;
 	b[1]=-cosX[1]*b0A+cosX[0]*b1A;
 	gPoints=rule;
-	if(rule!=2&&rule!=3) throw SolverException(9999,"Integration rule should be 2 or 3.");
+	if(rule!=2&&rule!=3) throw SException("[nemesis:%d] %s",9999,"Integration rule should be 2 or 3.");
 }
 /**
  * Destructor.

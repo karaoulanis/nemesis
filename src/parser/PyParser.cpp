@@ -25,7 +25,7 @@
 //*****************************************************************************
 
 #include <PyParser.h>
-#include <SolverException.h>
+#include <SException.h>
 #include <sstream>
 
 /******************************************************************************
@@ -103,7 +103,7 @@ static PyObject* getData(istream& s)
 			PyDict_SetItem(pyDict,pyKey,buildList(m));
 		}
 		else 
-			SolverException(8999,"Internal error: Unknown tag.");
+			throw SException("[nemesis:%d] %s",9999,"Internal error: Unknown tag.");
 		s>>name;
 	}
 	return pyDict;
@@ -120,7 +120,7 @@ static PyObject* pyDatabase_SQLite(PyObject *self, PyObject *args)
 		Database* pDB=new SQLiteDatabase(s);
 		pD->setDatabase(pDB);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -134,10 +134,10 @@ static PyObject* pyDatabase_Store(PyObject *self, PyObject *args)
 	if(!PyArg_ParseTuple(args,"s",&s))	return NULL;
 	try
 	{
-		if(pD->getDatabase()==0) throw SolverException(9999,"No database set.");
+		if(pD->getDatabase()==0) throw SException("[nemesis:%d] %s",1110,"No database set.");
 		pD->storeState(s);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -150,10 +150,10 @@ static PyObject* pyDatabase_Close(PyObject *self, PyObject *args)
 	if(!PyArg_ParseTuple(args,""))	return NULL;
 	try
 	{
-		if(pD->getDatabase()==0) throw SolverException(9999,"No database set.");
+		if(pD->getDatabase()==0) throw SException("[nemesis:%d] %s",1110,"No database set.");
 		pD->getDatabase()->closeDB();
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -167,10 +167,10 @@ static PyObject* pyDatabase_ExportToVtk(PyObject *self, PyObject *args)
 	if(!PyArg_ParseTuple(args,"s",&s))	return NULL;
 	try
 	{
-		if(pD->getDatabase()==0) throw SolverException(9999,"No database set yet.");
+		if(pD->getDatabase()==0) throw SException("[nemesis:%d] %s",1110,"No database set yet.");
 		pD->getDatabase()->exportToVtk(s);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -201,7 +201,7 @@ static PyObject* pyDomain_Dim(PyObject *self, PyObject *args)
 	{
 		pD->setnDim(n);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -219,7 +219,7 @@ static PyObject* pyDomain_PlaneStress(PyObject *self, PyObject *args)
 		pD->setFac(t);
 		pD->setnDim(2);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -237,7 +237,7 @@ static PyObject* pyDomain_PlaneStrain(PyObject *self, PyObject *args)
 		pD->setFac(t);
 		pD->setnDim(2);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -254,7 +254,7 @@ static PyObject* pyDomain_Axisymmetric(PyObject *self, PyObject *args)
 		pD->setTag(TAG_DOMAIN_AXISYMMETRIC);
 		pD->setFac(t);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -307,7 +307,7 @@ static PyObject* pyDomain_Gravity(PyObject *self, PyObject *args)
 	{
 		pD->setGravityDirection(xG,yG,zG);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -352,7 +352,7 @@ static PyObject* pyNode_Add(PyObject *self, PyObject *args)
 		Node* pNode=new Node(id,x1,x2,x3);
 		pD->add(pD->getNodes(),pNode);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -454,7 +454,7 @@ void createGroupByMaterial(int groupId)
 		pD->add(pD->getGroups(),pGroup);
 		pD->setCurrentGroup(groupId);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 	}
 }
@@ -561,7 +561,7 @@ static PyObject* pyElement_Bar2s(PyObject *self, PyObject *args)
 		Element* pElement=new Bar2s(id,iNode,jNode,mat,iSec,jSec);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -580,7 +580,7 @@ static PyObject* pyElement_Bar2t(PyObject *self, PyObject *args)
 		Element* pElement=new Bar2t(id,iNode,jNode,mat,iSec,jSec);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -598,7 +598,7 @@ static PyObject* pyElement_Beam2e(PyObject *self, PyObject *args)
 		Element* pElement=new Beam2e(id,iNode,jNode,mat,sec);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -617,7 +617,7 @@ static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
 		Element* pElement=new Timoshenko2d(id,iNode,jNode,mat,sec,rule);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -636,7 +636,7 @@ static PyObject* pyElement_Beam3t(PyObject *self, PyObject *args)
 		Element* pElement=new Timoshenko2d(id,iNode,jNode,mNode,mat,sec,rule);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -654,7 +654,7 @@ static PyObject* pyElement_Brick8d(PyObject *self, PyObject *args)
 		Element* pElement=new Brick8Disp(id,n1,n2,n3,n4,n5,n6,n7,n8,mat);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -685,10 +685,10 @@ static PyObject* pyElement_Quad4d(PyObject *self, PyObject *args)
 			pElement=new Quad4DispPlain(id,n1,n2,n3,n4,matID,2,2);
 		else if(pD->getTag()==TAG_DOMAIN_AXISYMMETRIC)
 			pElement=new Quad4DispAxisymmetric(id,n1,n2,n3,n4,matID,2,2);
-		else throw SolverException(9999,"A quad4d can be used only in plane strain/stress/axisymmetry.");
+		else throw SException("[nemesis:%d] %s",1110,"A quad4d can be used only in plane strain/stress/axisymmetry.");
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -706,7 +706,7 @@ static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 		Element* pElement=new Triangle3(id,n1,n2,n3,matID);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -724,7 +724,7 @@ static PyObject* pyElement_Triangle6d(PyObject *self, PyObject *args)
 		Element* pElement=new Triangle6(id,n1,n2,n3,n4,n5,n6,matID);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -742,7 +742,7 @@ static PyObject* pyElement_Tetrahedron4d(PyObject *self, PyObject *args)
 		Element* pElement=new Tetrahedron4Disp(id,n1,n2,n3,n4,matID);
 		pD->add(pD->getElements(),pElement);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -842,7 +842,7 @@ static PyObject* pyGroup_Define(PyObject *self, PyObject *args)
 		pD->add(pD->getGroups(),pGroup);
 		pD->setCurrentGroup(groupId);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -858,7 +858,7 @@ static PyObject* pyGroup_Set(PyObject *self, PyObject *args)
 	{
 		pD->get<Element>(pD->getElements(),elemID)->setGroup(groupID);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -908,7 +908,7 @@ static PyObject* pySens_Elem(PyObject *self, PyObject *args)
 		ElementSensitivityParameter* pParam=new ElementSensitivityParameter(elemID,param);
 		pD->get<LoadCase>(pD->getLoadCases(),currentLC)->addSensitivityParameter(pParam);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -979,7 +979,7 @@ static PyObject* pyLoad_BeamPoint(PyObject *self, PyObject *args)
 	try
 	{
 		if(currentLC<=0) ///todo remove exception to lc
-			throw SolverException(9999,"No LoadCase yet defined.");
+			throw SException("[nemesis:%d] %s",1110,"No LoadCase yet defined.");
 		int elemID;
 		const char* dir;
 		double a0,p0;    
@@ -987,7 +987,7 @@ static PyObject* pyLoad_BeamPoint(PyObject *self, PyObject *args)
 		Load* pLoad=new BeamLoadPoint(elemID,dir,a0,p0);
 		pD->get<LoadCase>(pD->getLoadCases(),currentLC)->addLoad(pLoad);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1000,7 +1000,7 @@ static PyObject* pyLoad_BeamUniform(PyObject *self, PyObject *args)
 	try
 	{
 		if(currentLC<=0) ///todo remove exception to lc
-			throw SolverException(9999,"No LoadCase yet defined.");
+			throw SException("[nemesis:%d] %s",1110,"No LoadCase yet defined.");
 		int elemID;
 		const char* dir;
 		double p0;    
@@ -1008,7 +1008,7 @@ static PyObject* pyLoad_BeamUniform(PyObject *self, PyObject *args)
 		Load* pLoad=new BeamLoadUniform(elemID,dir,p0);
 		pD->get<LoadCase>(pD->getLoadCases(),currentLC)->addLoad(pLoad);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1038,7 +1038,7 @@ static PyObject* pyGroundMotion_File(PyObject *self, PyObject *args)
 	try
 	{
 		if(currentLC<=0) ///todo remove exception to lc
-			throw SolverException(9999,"No LoadCase yet defined.");
+			throw SException("[nemesis:%d] %s",1110,"No LoadCase yet defined.");
 		int dof;
 		const char* filename;
 		double dt;
@@ -1049,7 +1049,7 @@ static PyObject* pyGroundMotion_File(PyObject *self, PyObject *args)
 		data.close();
 		pD->get<LoadCase>(pD->getLoadCases(),currentLC)->addLoad(pLoad);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1062,14 +1062,14 @@ static PyObject* pyGroundMotion_Sin(PyObject *self, PyObject *args)
 	try
 	{
 		if(currentLC<=0) ///todo remove exception to lc
-			throw SolverException(9999,"No LoadCase yet defined.");
+			throw SException("[nemesis:%d] %s",1110,"No LoadCase yet defined.");
 		int dof;
 		double a, omega, phi=0.;
 		if(!PyArg_ParseTuple(args,"idd|d",&dof,&a,&omega,&phi)) return NULL;
 		Load* pLoad=new GroundMotionSin(dof,a,omega,phi);
 		pD->get<LoadCase>(pD->getLoadCases(),currentLC)->addLoad(pLoad);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1211,7 +1211,7 @@ static PyObject* pyAnalysis_Sensitivity(PyObject *self, PyObject *args)
 	{
 		pA->setAnalysisType(pType);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1227,7 +1227,7 @@ static PyObject* pyAnalysis_Run(PyObject *self, PyObject *args)
 	{
 		ret=pA->analyze(LC,steps);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1482,7 +1482,7 @@ static PyObject* pySOE_PlotGraph(PyObject *self, PyObject *args)
 	{
 		pA->getSOE()->plotGraph(s);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1577,7 +1577,7 @@ static PyObject* pyTracker_Node(PyObject *self, PyObject *args)
 		Tracker* pTracker=new Tracker(id,nodeID);
 		pD->add(pD->getTrackers(),pTracker);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1594,7 +1594,7 @@ static PyObject* pyTracker_Steps(PyObject *self, PyObject *args)
 	{
 		steps=pD->get<Tracker>(pD->getTrackers(),id)->getSteps();
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1611,7 +1611,7 @@ static PyObject* pyTracker_Time(PyObject *self, PyObject *args)
 	{
 		time=pD->get<Tracker>(pD->getTrackers(),id)->getTime(step);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1628,7 +1628,7 @@ static PyObject* pyTracker_Lambda(PyObject *self, PyObject *args)
 	{
 		lambda=pD->get<Tracker>(pD->getTrackers(),id)->getLambda(step);
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;
@@ -1643,7 +1643,7 @@ static PyObject* pyTracker_Data(PyObject *self, PyObject *args)
 	{
 		return buildTuple(pD->get<Tracker>(pD->getTrackers(),id)->getPacket(step));
 	}
-	catch(SolverException e)
+	catch(SException e)
 	{
 		PyErr_SetString(PyExc_StandardError,e.what());
 		return NULL;

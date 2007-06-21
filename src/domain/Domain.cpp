@@ -89,9 +89,9 @@ void Domain::clear()
 int Domain::setnDim(int nDimensions)
 {
 	if(nDim!=0) 
-		throw SolverException(2001,"Cannot change dim. Clear domain first.");
+		throw SException("[nemesis:%d] %s",9999,"Domain must be cleared before changing dim."); 
 	else if((nDimensions<1)||(nDimensions>3))
-		throw SolverException(2002,"Dim value 1,2 or 3 is only allowed.");
+		throw SException("[nemesis:%d] %s",9999,"Dim value 1,2 or 3 is only allowed.");
 	else nDim=nDimensions;
 	return 0;
 }
