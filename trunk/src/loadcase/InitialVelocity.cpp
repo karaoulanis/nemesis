@@ -38,7 +38,7 @@ InitialVelocity::InitialVelocity(int nodeID,int DofID,double v)
 	// Check if dof is activated
 	dof=DofID-1;
 	if(myNode->getActivatedDof(dof)<0) 
-		throw SolverException(2921,"Dof is not activated.");
+		throw SException("[nemesis:%d] %s",9999,"Dof is not activated.");
 	velc=v;
 }
 int InitialVelocity::apply()

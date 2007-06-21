@@ -64,7 +64,7 @@ int EliminationImposer::impose()
 		pConstraint=cIter->second;;
 		if(pConstraint->getncDofs()==0) continue;
 		if(pConstraint->getncDofs()>1) 
-			throw SolverException(4302,
+			throw SException("[nemesis:%d] %s",9999,
 			"Elimination method cannot be used for MultiFreedom constraints.");
 		int globalDof=this->getGlobalDof(
 			pConstraint->getcDof(0).pNode->getID(),pConstraint->getcDof(0).dof);
@@ -72,7 +72,7 @@ int EliminationImposer::impose()
 		if(globalDof<0) continue;
 		theNewDofs[globalDof]=-pConstraint->getID();
 		if(fabs(pConstraint->getcVal())>1e-18)
-			throw SolverException(4302,
+			throw SException("[nemesis:%d] %s",9999,
 			"Elimination method cannot be used for non homogeneous constraints.");
 	}
 	int nEquations=0;

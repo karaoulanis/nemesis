@@ -45,7 +45,7 @@ GroundMotionFile::GroundMotionFile(int dof_,std::istream& s,double dt_,double sc
 void GroundMotionFile::apply(double fact,double time)
 {
 	unsigned n=(int)floor(time/dt);
-	if(n<0||n>=data.size()) throw SolverException(9999,"Time exceeds given values.");
+	if(n<0||n>=data.size()) throw SException("[nemesis:%d] %s",9999,"Time exceeds given values.");
 	double t1=n*dt;
 	double t2=(n+1)*dt;
 	double d1=data[n];

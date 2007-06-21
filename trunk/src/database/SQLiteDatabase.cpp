@@ -25,7 +25,7 @@
 //*****************************************************************************
 
 #include <SQLiteDatabase.h>
-#include <SolverException.h>
+#include <SException.h>
 #include <stdio.h>
 #include <iostream>
 using namespace std;
@@ -53,10 +53,10 @@ SQLiteDatabase::SQLiteDatabase(const char* workname)
 	strcat(tmpName,".sdb");
 	if(existsFile(tmpName)) 
 		if(remove(tmpName)) 
-			throw SolverException(9999,"Cannot overwrite database.");
+			throw SException("[nemesis:%d] %s",9999,"Cannot overwrite database.");
 	// Now it is ok to create the database
 	if(sqlite3_open(tmpName,&db)) 
-		throw SolverException(9999,"Cannot open database.");
+		throw SException("[nemesis:%d] %s",9999,"Cannot open database.");
 	// Success
 	strcpy(dbName,workname);
 	isConnected=true;
@@ -87,7 +87,7 @@ int SQLiteDatabase::closeDB()
 	{
 		int errCode=sqlite3_close(db);
 		if(errCode) 
-			throw SolverException(9999,"Error while closing database.");
+			throw SException("[nemesis:%d] %s",9999,"Error while closing database.");
 		dbName[0]='\0';
 		isConnected=false;
 	}
@@ -99,7 +99,7 @@ int SQLiteDatabase::closeDB()
 int SQLiteDatabase::createTable(const char* tableName)
 {
 	if(!isConnected) 
-		throw SolverException(9999,"Not connected to a database.");
+		throw SException("[nemesis:%d] %s",9999,"Not connected to a database.");
 
 	char query[2048];
 	sprintf(query,

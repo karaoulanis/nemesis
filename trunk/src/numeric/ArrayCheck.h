@@ -27,27 +27,27 @@
 #ifndef _ARRAY_CHECK_H
 #define _ARRAY_CHECK_H
 
-#include "SolverException.h"
+#include "SException.h"
 
 inline void array_range_check(int i,int n)
 {
 	if(i<0||i>n)				
-		throw SolverException(1002,"Out of array bounds.");
+		throw SException("[nemesis:%d] %s",1002,"Out of array bounds.");
 }
 inline void array_range_check(int i,int j,int n,int m)
 {
 	///@todo check this out
 	if(i<0||i>n||j<0||j>m)
-		throw SolverException(1003,"Out of array bounds.");
+		throw SException("[nemesis:%d] %s",1003,"Out of array bounds.");
 }
 inline void array_size_check(int n,int size)
 {
 	if(n!=size)					
-		throw SolverException(1004,"Sizes do not match.");
+		throw SException("[nemesis:%d] %s",1004,"Sizes do not match.");
 }
 inline void array_size_check(int n,int m,int size1,int size2)
 {
 	if(n!=size1||m!=size2)		
-		throw SolverException(1005,"Sizes do not match.");
+		throw SException("[nemesis:%d] %s",1005,"Sizes do not match.");
 }
 #endif

@@ -39,7 +39,7 @@
 #include <DomainObject.h>
 #include <Database.h>
 #include <SQLiteDatabase.h>
-#include <SolverException.h>
+#include <SException.h>
 
 // Forward declarations
 class Element;
@@ -181,9 +181,7 @@ public:
 		else
 		{
 			delete e;
-			char msg[512];
-			sprintf(msg,"Component already exists with id %d.",id);
-			throw SolverException(2512,msg);
+			throw SException("[nemesis:%d] Component already exists with id %d.",9999,id);
 		}
 		return 0;
 	}
@@ -202,12 +200,7 @@ public:
 	{
 		typename TC::iterator p=c.find(id);
 		if(p!=c.end())		return p->second;
-		else
-		{
-			char msg[512];
-			sprintf(msg,"Component with id %d does not exist.",id);
-			throw SolverException(2512,msg);
-		}
+		else				throw SException("[nemesis:%d] Component with id %d does not exist.",9999,id);
 	}
 };
 

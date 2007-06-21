@@ -91,7 +91,7 @@ int FullLinearSOE::solve()
 	{
 		dgetrf(&N,&N,&A[0],&LDA,&IPIV[0],&INFO);
 		if(INFO!=0)	
-			throw SolverException(9999,"SOE: lapack DGETRF failed.");
+			throw SException("[nemesis:%d] %s",1101,"SOE: lapack DGETRF failed.\n");
 		isLUFactored=true;
 	}
 	// Solve the system A*X = B, overwriting B with X.

@@ -38,7 +38,7 @@ MultiaxialElastoPlastic::MultiaxialElastoPlastic(int ID,int elasticID)
 	// Get the elastic part
 	Material* p=pD->get<Material>(pD->getMaterials(),elasticID);
 	if(p->getTag()!=TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-		throw SolverException(-9999,"Multiaxial elastic material expected.");
+		throw SException("[nemesis:%d] %s",9999,"Multiaxial elastic material expected.");
 	myElastic=static_cast<MultiaxialMaterial*>(p)->getClone();
 	MatParams[30]=myElastic->getParam(30);
 	MatParams[31]=myElastic->getParam(31);

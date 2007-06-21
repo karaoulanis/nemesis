@@ -45,7 +45,7 @@ Analysis::~Analysis()
 }
 int Analysis::analyze(int lcID,int nLoadSteps)
 {
-	if(theAnalysisType==0) throw SolverException(9999,"No analysis type set.");
+	if(theAnalysisType==0) throw SException("[nemesis:%d] %s",9999,"No analysis type set.");
 	// Run the analysis
 	return theAnalysisType->run(lcID,nLoadSteps);
 }
