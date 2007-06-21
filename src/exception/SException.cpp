@@ -24,14 +24,18 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SolverException.h>
+#include <SException.h>
 #include <stdio.h>
+#include <stdarg.h>
 
-SolverException::SolverException(int code,const char* msg) 
+SException::SException(const char* format,...)
 {
-	sprintf(errMessage,"[solver:%d] %s",code,msg);
+	///@todo buffer overflow if message>1024b (see _vscprintf).  
+	va_list args;
+	va_start(args,format);
+	vsprintf(errMsg,format,args);
 }
-const char* SolverException::what()		
+const char* SException::what()		
 {
-	return errMessage;
+	return errMsg;
 }

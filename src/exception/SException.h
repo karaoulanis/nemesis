@@ -24,15 +24,15 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SOLVEREXCEPTION_H
-#define _SOLVEREXCEPTION_H
+#ifndef _SEXCEPTION_H
+#define _SEXCEPTION_H
 
-class SolverException
+class SException
 {
 private:
-	char errMessage[512];
+	char errMsg[1024];
 public:
-	SolverException(int code,const char* msg);
+	SException(const char* format,...);
 	const char* what();
 };
 #endif
