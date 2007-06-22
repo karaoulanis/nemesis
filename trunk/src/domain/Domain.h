@@ -90,7 +90,8 @@ private:
 	DomainTag myTag;
 	double myFac;		// factor for plane/axisymmetric problems (e.g. 1.0 rad)
 	bool upToDate;
-	Vector gravity;
+	Vector gravityVect;
+	double gravityAccl;
 	bool groupsByMaterial;
 	int currentGroup;
 
@@ -129,8 +130,9 @@ public:
 	void keepTrack(double lambda_,double time_);
 
 	// Gravity axis
-	void setGravityDirection(double xG,double yG,double zG);
-	const Vector& getGravityDirection();
+	void setGravity(double g,double xG,double yG,double zG);
+	const Vector& getGravityVect();
+	const double  getGravityAccl();
 	
 	double getTimeCurr()		{return timeCurr;}
 	double getTimePrev()		{return timePrev;}
