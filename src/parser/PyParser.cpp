@@ -301,11 +301,11 @@ static PyObject* pyDomain_Type(PyObject *self, PyObject *args)
 }
 static PyObject* pyDomain_Gravity(PyObject *self, PyObject *args)
 {
-	double xG,yG=0.,zG=0.;
-    if(!PyArg_ParseTuple(args,"dd|d",&xG,&yG,&xG))	return NULL;
+	double g,xG,yG,zG;
+    if(!PyArg_ParseTuple(args,"d(ddd)",&g,&xG,&yG,&zG))	return NULL;
 	try
 	{
-		pD->setGravityDirection(xG,yG,zG);
+		pD->setGravity(g,xG,yG,zG);
 	}
 	catch(SException e)
 	{

@@ -122,11 +122,11 @@ int Element::handleCommonInfo()
 		// Check if the material can be assigned
 		this->checkIfAllows(myMaterial);
 		// Self weight
-		///@todo make g=9.81 non-constant
 		b.resize(3);
-		b[0]=9.81*(pD->getGravityDirection()[0])*(myMaterial->getRho());
-		b[1]=9.81*(pD->getGravityDirection()[1])*(myMaterial->getRho());
-		b[2]=9.81*(pD->getGravityDirection()[2])*(myMaterial->getRho());
+		double g=pD->getGravityAccl();
+		b[0]=g*(pD->getGravityVect()[0])*(myMaterial->getRho());
+		b[1]=g*(pD->getGravityVect()[1])*(myMaterial->getRho());
+		b[2]=g*(pD->getGravityVect()[2])*(myMaterial->getRho());
 	}
 	return 0;
 }

@@ -59,9 +59,10 @@ void Domain::init()
 	// Initialize time
 	timeCurr=0.;
 	timePrev=0.;
-	// Gravity direction vector and default orientation
-	gravity.resize(3,0.);
-	gravity[2]=-1;
+	// Gravity direction vector and default orientation/acceleration
+	gravityVect.resize(3,0.);
+	gravityVect[2]=-1;
+	gravityAccl=9.81;
 }
 /**
  * Clear the Domain.
@@ -210,27 +211,36 @@ void Domain::zeroGroups()
 		gi->second->setDefault();
 }
 /**
- * Sets gravity direction.
- * It is just a Vector giving the direction of gravity. It does not include 
+ * Sets gravity info.
+ * gravityVect Vector giving the direction of gravity. It does not include 
  * special cases for 1D, 2D or 3D cases. It might not be normalized; it is
  * normalized here and remains so thereafter.
  * @param xG x-coordinate of gravity vector.
  * @param yG y-coordinate of gravity vector.
  * @param zG z-coordinate of gravity vector.
  */
-void Domain::setGravityDirection(double xG,double yG,double zG)
+void Domain::setGravity(double g,double xG,double yG,double zG)
 {
-	gravity[0]=xG;
-	gravity[1]=yG;
-	gravity[2]=zG;
-	gravity.normalize();
+	gravityAccl=g;
+	gravityVect[0]=xG;
+	gravityVect[1]=yG;
+	gravityVect[2]=zG;
+	gravityVect.normalize();
 }
 /**
- * Returns gravity direction.
+ * Returns gravity vector.
  * @return A constant reference to a 3x1 normalized Vector holding gravity
  * directions.
  */
-const Vector& Domain::getGravityDirection()
+const Vector& Domain::getGravityVect()
 {
-	return gravity;
+	return gravityVect;
+}
+/**
+ * Returns gravity acceleration.
+ * @return Gravity acceleration
+ */
+const double Domain::getGravityAccl()
+{
+	return gravityAccl;
 }
