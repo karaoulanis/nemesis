@@ -121,7 +121,7 @@ public:
 
 	void zeroStress();
 	void addStress(const Vector& s);
-	void zeroDisplacements();
+	void multDisp(double facD);
 	
 	const Packet& getPacket();
 	void setPacket(const Packet& p);

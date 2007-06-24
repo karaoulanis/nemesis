@@ -282,10 +282,11 @@ static PyObject* pyDomain_Clear(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_ZeroDisplacements(PyObject *self, PyObject *args)
+static PyObject* pyDomain_State(PyObject *self, PyObject *args)
 {
-    if(!PyArg_ParseTuple(args,""))	return NULL;
-	pD->zeroDisplacements();
+	double facD;
+    if(!PyArg_ParseTuple(args,"d",&facD))	return NULL;
+	pD->state(facD);
 	Py_INCREF(Py_None);
     return Py_None;
 }
@@ -327,8 +328,8 @@ static PyMethodDef DomainMethods[] =
 		METH_VARARGS,	"Define an axisymmetric domain."},
 	{"clear",	pyDomain_Clear,	
 		METH_VARARGS,	"Clear the domain."},
-	{"zeroDisplacements",	pyDomain_ZeroDisplacements,	
-		METH_VARARGS,	"Reset displacements to zero."},
+	{"state",	pyDomain_State,	
+		METH_VARARGS,	"Set domain state."},
 	{"RayleighDamping",		pyDomain_RayleighDamping,
 		METH_VARARGS,	"Set Rayleigh damping factors."},
 	{"eigenvalues",		pyDomain_EigenValues,

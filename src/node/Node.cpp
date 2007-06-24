@@ -156,10 +156,10 @@ void Node::zeroLoad()
 	isLoadApplied=false;
 }
 
-void Node::zeroDisplacements()
+void Node::multDisp(double facD)
 {
-	dispTrial.clear();
-	dispConvg.clear();
+	dispTrial*=facD;
+	dispConvg*=facD;
 }
 void Node::zeroStress()
 {
