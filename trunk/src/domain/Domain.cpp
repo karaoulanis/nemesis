@@ -119,11 +119,11 @@ void Domain::zeroNodalStress()
 		nIter!=theNodes.end();nIter++) 
 			nIter->second->zeroStress();
 }
-void Domain::zeroDisplacements()
+void Domain::state(double facD)
 {
 	for(NodeIterator nIter=theNodes.begin();
 		nIter!=theNodes.end();nIter++) 
-			nIter->second->zeroDisplacements();
+			nIter->second->multDisp(facD);
 }
 void Domain::zeroSensitivityParameters()
 {

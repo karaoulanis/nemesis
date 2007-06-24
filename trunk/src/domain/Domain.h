@@ -120,14 +120,15 @@ public:
 	// Access to data members
 	int setnDim(int nDimensions);
 	int getnDim() const;
-	void clear();
 	void zeroNodalStress();
-	void zeroDisplacements();
 	void zeroSensitivityParameters();
 	void applyLoads(double lambda_,double time_);
 	void zeroLoads();
 	void zeroGroups();
 	void keepTrack(double lambda_,double time_);
+
+	void clear();
+	void state(double facD);
 
 	// Gravity axis
 	void setGravity(double g,double xG,double yG,double zG);
