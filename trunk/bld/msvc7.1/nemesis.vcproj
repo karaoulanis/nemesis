@@ -639,6 +639,16 @@
 					RelativePath="..\..\src\material\MatPoint.h">
 				</File>
 			</Filter>
+			<Filter
+				Name="sdofMaterials"
+				Filter="">
+				<File
+					RelativePath="..\..\src\material\SDofMaterial.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\SDofMaterial.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="numeric"

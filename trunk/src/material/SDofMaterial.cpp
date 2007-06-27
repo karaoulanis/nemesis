@@ -24,53 +24,27 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SDofElement.h>
+#include <SDofMaterial.h>
 
-/**
- * Default constructor.
- */
-SDofElement::SDofElement()	
+SDofMaterial::SDofMaterial()
 {
 }
-/**
- * Constructor.
- */
-SDofElement::SDofElement(int ID,int NodeID,int dofID,int matID)	
-	:Element(ID,matID)
+SDofMaterial::SDofMaterial(int ID,double E,double rho)
+:Material(ID,rho,0.)
 {
-	// The dofs needed for this element
-	myNodalIDs.resize(1);
-	myNodalIDs[0]=NodeID;
-	myLocalNodalDofs.resize(1);
-	myLocalNodalDofs[0]=dofID-1;
-	// Handle common info
-    this->handleCommonInfo();
-	mySDofMaterial=static_cast<SDofMaterial*>(myMaterial)->getClone();
+	// Material parameters
+	MatParams[0]=E;
+	myTag=TAG_MATERIAL_SINGLE_DOF;
 }
-SDofElement::~SDofElement()
+SDofMaterial* SDofMaterial::getClone()
 {
+	// Material parameters
+	double E   =MatParams[ 0];
+	double rho =MatParams[30];
+	// Create clone and return
+	SDofMaterial* clone=new SDofMaterial(myID,E,rho);
+	return clone;
 }
-const Matrix& SDofElement::getK()
+void SDofMaterial::commit()
 {
-	Matrix& K=*myMatrix;
-	double facK=1e-7;
-	if(myGroup->isActive()) facK=myGroup->getFacK();
-	K(0,0)=facK*(mySDofMaterial->getParam(0));
-	return K;
-}
-const Matrix& SDofElement::getM()
-{
-	Matrix& M=*myMatrix;
-	M(0,0)=mySDofMaterial->getRho();
-	return M;
-}
-const Vector& SDofElement::getR()
-{	
-	Vector& R=*myVector;
-	R.clear();
-	return R;
-}
-bool SDofElement::checkIfAllows(FEObject* f)
-{
-	return true;
 }

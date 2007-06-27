@@ -1,0 +1,31 @@
+# Set domain's dimension
+domain.dim(1)
+
+# Add nodes
+node.add(1,0.)
+node.add(2,2.)
+
+# Add materials/sections
+material.uniElastic(1, 1.,0.)
+section.rect(1, 1.,1.)
+material.sdof(2, 1.,1.) 
+
+# Add element
+element.bar2s(1, 1,2,1,1)
+element.sdof(2,2,1,2)
+
+# Fix node 1, dof 1
+node.fix(1,1)
+
+# Define loadcase 
+lc.define(1)
+load.node(2,1,1.)
+
+# Run analysis 
+analysis.static()
+analysis.run(1,1)
+
+# Print results (x-displacements on node 2)
+print node.data(2)["disp"][0]
+
+
