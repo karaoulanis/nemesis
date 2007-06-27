@@ -27,5 +27,3 @@ analysis.run(1,1)
 
 # Print results (x-displacements on node 2)
 print node.data(2)["disp"][0]
-
-
