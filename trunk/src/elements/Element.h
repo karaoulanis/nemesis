@@ -59,9 +59,10 @@ protected:
 	IDContainer myLocalNodalDofs;
 	std::vector<Node*> myNodes;
 	Group* myGroup;
-
-	int myMatID;
+	
+	// Materials
 	Material* myMaterial;
+	std::vector<Material*> myMaterials;
 
 	Vector P;
 	Vector G;

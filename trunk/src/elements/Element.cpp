@@ -38,11 +38,16 @@ Element::Element()
 }
 /**
  * Constructor
- * Creates an Element with a given ID.
+ * Creates an Element with a given ID and a Material ID.
+ * If this is the first element to be created then a series of static Matrices
+ * and Vectors is created, which are used in common for all elements. These
+ * Matrices/Vectors store element properties as K,M,C,Fint etc in order to
+ * reduce memory requirements and to increase speed.
  */
 Element::Element(int ID,int matID)
-:DomainObject(ID),myMatID(0),myMaterial(0),activeParameter(0)
+:DomainObject(ID),myMaterial(0),activeParameter(0)
 {
+	// Create static Matrices/vectors if they do not exist yet
 	if(theStaticMatrices==0)
 	{
 		theStaticMatrices=new Matrix*[64];
@@ -50,9 +55,12 @@ Element::Element(int ID,int matID)
 		theStaticVectors=new Vector*[64];
 		for(int i=1;i<64;i++) theStaticVectors[i]=new Vector(i,0.);
 	}
-	myMatID=matID;
+	// Retrieve Material pointer
+	myMaterial=pD->get<Material>(pD->getMaterials(),matID);
+	// Set Group pointer to the material.
+	///@todo Get rid of Groups and keep only Materials for this functionality.
 	if(pD->areGroupsByMaterial())
-		myGroup=pD->get<Group>(pD->getGroups(),myMatID);
+		myGroup=pD->get<Group>(pD->getGroups(),matID);
 	else
 		myGroup=pD->get<Group>(pD->getGroups(),pD->getCurrentGroup());
 }
@@ -115,10 +123,9 @@ int Element::handleCommonInfo()
 			myNodes[i]->addDofToNode(myLocalNodalDofs[j]);
 	// Create load vector
 	for(int i=0;i<nDofs;i++) P[i]=0;
-	// Retrieve the material pointer
-	if(myMatID>0)
+	// Get Material related info
+	if(myMaterial->getID()>0)
 	{
-		myMaterial=pD->get<Material>(pD->getMaterials(),myMatID);
 		// Check if the material can be assigned
 		this->checkIfAllows(myMaterial);
 		// Self weight
@@ -269,7 +276,7 @@ const Packet& Element::getPacket()
 	// Store nDofs
 	thePacket.intArray[28]=myNodalIDs.size()*myLocalNodalDofs.size();
 	// Store plastic points
-	thePacket.intArray[29]=myMatID;
+	thePacket.intArray[29]=myMaterial->getID();
 	// Store material
 	thePacket.intArray[30]=this->getnPlasticPoints();
 	// Send data
@@ -283,6 +290,6 @@ void Element::save(std::ostream& s)
 	s<<"ELEMENT "	<<' ';
 	s<<"tag	"	<<1000<<' '<<myTag<<' ';
 	s<<"id "	<<1000<<' '<<myID<<' ';
-	s<<"mat "	<<1000<<' '<<myMatID<<' ';
+	s<<"mat "	<<1000<<' '<<myMaterial->getID()<<' ';
 	s<<"END "<<' ';
 }
