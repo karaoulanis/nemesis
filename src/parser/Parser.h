@@ -32,6 +32,7 @@
 #include <Model.h>
 #include <Node.h>
 #include <Group.h>
+#include <SDofMaterial.h>
 #include <UniaxialElastic.h>
 #include <UniaxialElastoPlastic.h>
 #include <UniaxialCyclic.h>

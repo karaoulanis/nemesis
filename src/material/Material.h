@@ -39,16 +39,18 @@ class Domain;
 class Material: public DomainObject
 {
 protected:
+	static int counter;
+	int index;
 	Vector MatParams;
 public:
 	Material();
 	Material(int ID,double rho,double aT);
 	~Material();
 
-	inline void setParam(int i,double d){MatParams[i]=d;}
-	inline double getParam(int i)		{return MatParams[i];}
-	inline double getRho()				{return MatParams[30];}
-	inline double getaT()				{return MatParams[31];}
+	inline void   setParam(int i,double d)	{MatParams[i]=d;}
+	inline double getParam(int i)			{return MatParams[i];}
+	inline double getRho()					{return MatParams[30];}
+	inline double getaT()					{return MatParams[31];}
 	virtual void commit()=0;
 };
 

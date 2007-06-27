@@ -459,6 +459,17 @@ void createGroupByMaterial(int groupId)
 	{
 	}
 }
+static PyObject* pyMaterial_SDof(PyObject *self, PyObject *args)
+{
+	int id;
+	double E,rho=0;
+    if(!PyArg_ParseTuple(args,"id|d",&id,&E,&rho))return NULL;
+	Material* pMaterial=new SDofMaterial(id,E,rho);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyMaterial_UniaxialElastic(PyObject *self, PyObject *args)
 {
 	int id;
@@ -535,6 +546,8 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
 }
 static PyMethodDef MaterialMethods[] = 
 {
+	{"sdof",						pyMaterial_SDof,	
+		METH_VARARGS,"Define a single dof material."},
 	{"uniElastic",					pyMaterial_UniaxialElastic,	
 		METH_VARARGS,"Define a uniaxial elastic material."},
 	{"uniElastoPlastic",			pyMaterial_UniaxialElastoPlastic,

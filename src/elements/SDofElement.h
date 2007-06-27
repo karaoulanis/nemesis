@@ -28,12 +28,12 @@
 #define _SDOFELEMENT_H
 
 #include <Element.h>
-#include <UniaxialMaterial.h>
+#include <SDofMaterial.h>
 
 class SDofElement: public Element
 {
 private:
-	UniaxialMaterial* myUniMaterial;
+	SDofMaterial* mySDofMaterial;
 public:
 	// Constructors and Destructor
 	SDofElement();

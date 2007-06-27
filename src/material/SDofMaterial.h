@@ -24,53 +24,22 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SDofElement.h>
+#ifndef _SDOFMATERIAL_H
+#define _SDOFMATERIAL_H
+
+#include <Material.h>
 
 /**
- * Default constructor.
+ * The Single Dof Material Class.                                                
  */
-SDofElement::SDofElement()	
+class SDofMaterial: public Material
 {
-}
-/**
- * Constructor.
- */
-SDofElement::SDofElement(int ID,int NodeID,int dofID,int matID)	
-	:Element(ID,matID)
-{
-	// The dofs needed for this element
-	myNodalIDs.resize(1);
-	myNodalIDs[0]=NodeID;
-	myLocalNodalDofs.resize(1);
-	myLocalNodalDofs[0]=dofID-1;
-	// Handle common info
-    this->handleCommonInfo();
-	mySDofMaterial=static_cast<SDofMaterial*>(myMaterial)->getClone();
-}
-SDofElement::~SDofElement()
-{
-}
-const Matrix& SDofElement::getK()
-{
-	Matrix& K=*myMatrix;
-	double facK=1e-7;
-	if(myGroup->isActive()) facK=myGroup->getFacK();
-	K(0,0)=facK*(mySDofMaterial->getParam(0));
-	return K;
-}
-const Matrix& SDofElement::getM()
-{
-	Matrix& M=*myMatrix;
-	M(0,0)=mySDofMaterial->getRho();
-	return M;
-}
-const Vector& SDofElement::getR()
-{	
-	Vector& R=*myVector;
-	R.clear();
-	return R;
-}
-bool SDofElement::checkIfAllows(FEObject* f)
-{
-	return true;
-}
+protected:
+public:
+	SDofMaterial();
+	SDofMaterial(int ID,double E,double rho);
+	SDofMaterial* getClone();
+	void commit();
+};
+
+#endif
