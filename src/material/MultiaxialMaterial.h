@@ -52,7 +52,5 @@ public:
 	void  addStress(const Vector& s){sTrial+=s; sConvg+=s;}
 	const Vector& getStress()		{return sTrial;}
 	virtual bool isPlastic()		{return false;}
-
 };
-
 #endif

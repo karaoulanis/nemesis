@@ -30,17 +30,21 @@
 #include <FEObjectTags.h>
 #include <Database.h>
 #include <Packet.h>
+#include <vector>
 
 class FEObject
 {
 protected:
 	FEObjectTag myTag;
+	std::vector<FEObjectTag> consistentTags;
+	char myLabel[64];
 public:
 	FEObject();
 	FEObject(FEObjectTag tag);
+	
 	FEObjectTag getTag();
-	// Methods used to store and retrieve data to/from a database
 	virtual bool checkIfAllows(FEObject* f);
+	virtual void checkConstency(FEObject* f);
 };
 
 #endif
