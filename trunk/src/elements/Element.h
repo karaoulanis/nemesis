@@ -62,7 +62,6 @@ protected:
 	
 	// Materials
 	Material* myMaterial;
-	std::vector<Material*> myMaterials;
 
 	Vector P;
 	Vector G;
