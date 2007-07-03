@@ -44,7 +44,7 @@ const Matrix& Quad4DispPlain::getK()
 	for(unsigned int k=0;k<myMatPoints.size();k++)
 	{
 		this->findShapeFunctionsAt(myMatPoints[k]);
-		double dV=detJ*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
 		int ii=0;
 		for(int i=0;i<4;i++) 
@@ -83,7 +83,7 @@ const Matrix& Quad4DispPlain::getM()
 	for(unsigned k=0;k<myMatPoints.size();k++)
 	{
 		this->findShapeFunctionsAt(myMatPoints[k]);
-		volume+=detJ*(pD->getFac())*(myMatPoints[k]->getWeight()); 
+		volume+=detJ*(pD->getFac())*(myMatPoints[k]->get_w()); 
 	}
 	double mass=rho*volume;
 	for(int i=0;i<8;i++) M(i,i)=0.25*mass;
@@ -103,7 +103,7 @@ const Vector& Quad4DispPlain::getR()
 		sigma=myMatPoints[k]->getMaterial()->getStress();
 		this->findShapeFunctionsAt(myMatPoints[k]);
 		int ii=0;
-		double dV=detJ*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 		for(int i=0;i<4;i++)
 		{
 			R[ii  ]+=facS*(N(1,i)*sigma[0]+N(2,i)*sigma[3])*dV;

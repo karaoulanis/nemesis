@@ -75,9 +75,9 @@ Brick8Disp::~Brick8Disp()
 
 int Brick8Disp::findShapeFunctionsAt(MatPoint* pMatPoint)
 {
-	double xi=  pMatPoint->getxi1();
-	double eta= pMatPoint->getxi2();
-	double zeta=pMatPoint->getxi3();
+	double xi=  pMatPoint->get_r();
+	double eta= pMatPoint->get_s();
+	double zeta=pMatPoint->get_t();
 
 	N(0,0)=0.125*(1-xi)*(1-eta)*(1-zeta);			// N1
 	N(1,0)=0.125*(1+xi)*(1-eta)*(1-zeta);			// N2
@@ -142,7 +142,7 @@ const Matrix& Brick8Disp::getK()
 	for(unsigned int k=0;k<myMatPoints.size();k++)
 	{
 		this->findShapeFunctionsAt(myMatPoints[k]);
-		double dV=detJ*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
 		int ii=0;
 		for(int i=0;i<8;i++) 
@@ -208,7 +208,7 @@ const Vector& Brick8Disp::getR()
 		sigma=myMatPoints[k]->getMaterial()->getStress();
 		this->findShapeFunctionsAt(myMatPoints[k]);
 		int ii=0;
-		double dV=detJ*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 		for(int i=0;i<8;i++)
 		{
 			R[ii  ]+=facS*(N(i,1)*sigma[0]+N(i,2)*sigma[3]+N(i,3)*sigma[5])*dV;

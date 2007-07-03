@@ -83,9 +83,9 @@ Triangle6::~Triangle6()
 }
 void Triangle6::getShapeFunctions(MatPoint* pMatPoint,Matrix& N,double& detJ)
 {
-	double z1=pMatPoint->getxi1();
-	double z2=pMatPoint->getxi2();
-	double z3=pMatPoint->getxi3();
+	double z1=pMatPoint->get_r();
+	double z2=pMatPoint->get_s();
+	double z3=pMatPoint->get_t();
 	double x21=x(1,0)-x(0,0);
 	double x32=x(2,0)-x(1,0);
 	double x13=x(0,0)-x(2,0);
@@ -135,7 +135,7 @@ const Matrix& Triangle6::getK()
 		static Matrix N(6,3);
 		static double detJ;
 		this->getShapeFunctions(myMatPoints[k],N,detJ);
-		double dV=detJ*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
 		int ii=0;
 		for(int i=0;i<6;i++) 
@@ -185,7 +185,7 @@ const Vector& Triangle6::getR()
 		static Matrix N(6,3);
 		static double detJ;
 		this->getShapeFunctions(myMatPoints[k],N,detJ);
-		double dV=detJ*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 		// Get stress vector
  		static Vector sigma(6);
 		sigma=myMatPoints[k]->getMaterial()->getStress();
