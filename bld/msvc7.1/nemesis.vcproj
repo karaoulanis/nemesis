@@ -48,7 +48,7 @@
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python25\libs&quot;"
-				IgnoreDefaultLibraryNames="libcd.lib libcpd.lib"
+				IgnoreDefaultLibraryNames="libc.lib libcpd.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="./Debug/nemesis.pdb"
 				SubSystem="1"

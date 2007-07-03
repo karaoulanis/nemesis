@@ -34,19 +34,19 @@
 class MatPoint: public DomainObject
 {
 private:
-	double x1,x2,x3;
-	double xi1,xi2,xi3;
-	double weight;
-	static const double GaussCoords[7][7];
-	static const double GaussWeights[7][7];
+	double x,y,z;
+	double r,s,t;
+	double w;
+	static const double GaussCrds[7][7];
+	static const double GaussWght[7][7];
 	MultiaxialMaterial* myMaterial;
 	static int IDCounter;
 public:
 	MatPoint();
-	MatPoint(MultiaxialMaterial* mat,double xi1_,double xi2_,double xi3_,double w_);
 	MatPoint(MultiaxialMaterial* mat,int index,int p1);
 	MatPoint(MultiaxialMaterial* mat,int index1,int index2,int p1,int p2);
 	MatPoint(MultiaxialMaterial* mat,int index1,int index2,int index3,int p1,int p2,int p3);
+	MatPoint(MultiaxialMaterial* mat,double r_,double s_,double t_,double w_);
 	~MatPoint();
 
 	void setX(double x1_,double x2_=0,double x3_=0);
@@ -54,13 +54,13 @@ public:
 	bool isPlastic()							{return myMaterial->isPlastic();}
 	void setInitialStresses(InitialStresses* pInitialStresses);
 
-	inline double getx1()			{return x1;			}
-	inline double getx2()			{return x2;			}
-	inline double getx3()			{return x3;			}
-	inline double getxi1()			{return xi1;		}
-	inline double getxi2()			{return xi2;		}
-	inline double getxi3()			{return xi3;		}
-	inline double getWeight()		{return weight;		}
+	inline double get_x()			{return x;}
+	inline double get_y()			{return y;}
+	inline double get_z()			{return z;}
+	inline double get_r()			{return r;}
+	inline double get_s()			{return s;}
+	inline double get_t()			{return t;}
+	inline double get_w()			{return w;}
 	const Packet& getPacket()		{return thePacket;	}
 	void setPacket(const Packet& p) {/*does nothing*/	}
 };

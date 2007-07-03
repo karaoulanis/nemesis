@@ -45,7 +45,7 @@ const Matrix& Quad4DispAxisymmetric::getK()
 	{
 		this->findShapeFunctionsAt(myMatPoints[k]);
 		double r=x(0,0)*N(0,0)+x(1,0)*N(0,1)+x(2,0)*N(0,2)+x(3,0)*N(0,3);
-		double dV=detJ*r*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*r*(pD->getFac())*(myMatPoints[k]->get_w());
 		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
 		int ii=0;
 		for(int i=0;i<4;i++) 
@@ -88,7 +88,7 @@ const Matrix& Quad4DispAxisymmetric::getM() ///@todo
 	for(unsigned k=0;k<myMatPoints.size();k++)
 	{
 		this->findShapeFunctionsAt(myMatPoints[k]);
-		volume+=detJ*(pD->getFac())*(myMatPoints[k]->getWeight());
+		volume+=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 	}
 	double mass=rho*volume;
 	for(int i=0;i<8;i++) M(i,i)=0.25*mass;
@@ -109,7 +109,7 @@ const Vector& Quad4DispAxisymmetric::getR()
 		sigma=myMatPoints[k]->getMaterial()->getStress();
 		this->findShapeFunctionsAt(myMatPoints[k]);
 		double r=x(0,0)*N(0,0)+x(1,0)*N(0,1)+x(2,0)*N(0,2)+x(3,0)*N(0,3);
-		double dV=detJ*r*(pD->getFac())*(myMatPoints[k]->getWeight());
+		double dV=detJ*r*(pD->getFac())*(myMatPoints[k]->get_w());
 		int ii=0;
 		for(int i=0;i<4;i++)
 		{

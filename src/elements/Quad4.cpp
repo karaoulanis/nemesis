@@ -75,8 +75,8 @@ Quad4::~Quad4()
 }
 void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint)
 {
-	double xi= pMatPoint->getxi1();
-	double eta=pMatPoint->getxi2();
+	double xi= pMatPoint->get_r();
+	double eta=pMatPoint->get_s();
 
 	N(0,0)=0.25*(1-xi)*(1-eta);						// N1
 	N(0,1)=0.25*(1+xi)*(1-eta);						// N2
