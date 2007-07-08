@@ -41,6 +41,7 @@ protected:
 public:
 	FEObject();
 	FEObject(FEObjectTag tag);
+	virtual ~FEObject();
 	
 	FEObjectTag getTag();
 	virtual bool checkIfAllows(FEObject* f);

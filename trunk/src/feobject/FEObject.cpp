@@ -36,10 +36,14 @@ FEObject::FEObject(FEObjectTag tag)
 {
 	myTag=tag;
 }
+FEObject::~FEObject()
+{
+}
 FEObjectTag FEObject::getTag()
 {
 	return myTag;
 }
+
 bool FEObject::checkIfAllows(FEObject* f)
 {
 	///@ todo When finished implementing all turn this function into pure.
