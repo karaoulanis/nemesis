@@ -397,7 +397,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 //		cout<<sConvg<<endl;
 //		cout<<ePConvg<<endl;
 //		cout<<ePTrial<<endl;
-		cout<<"PASSED : "<<nActiveSurfaces<<endl;
+//		cout<<"PASSED : "<<nActiveSurfaces<<endl;
 	}
 	//cout<<endl;
 	double dt=pD->getTimeIncr();
