@@ -1,8 +1,10 @@
 domain::
 domain.dim(n) Set domain dimensions.
+domain.axisymmetric(radius) Define an axisymmetric domain.
 domain.zeroDisplacements() Reset displacements to zero.
 domain.RayleighDamping(aK,bM) Set Rayleigh damping factors
 domain.eigenvalues() Return the eigenvalues of the domain.
+
 db::
 db.SQLite(filename) Create and utilize an SQLite database.
 db.close() Close current database.
@@ -17,6 +19,7 @@ node.info(id) Print nodal info.
 element::
 element.bar2s(id,node_i,node_j,mat,sec) Define a simple 2-node bar.
 element.beam(id,node_i,node_j,mat,sec) Define a 2d beam.
+element.quad4d(id,node_1,node_2,node_3,node_4,mat) Define a 4-Noded standard displacement quad.
 
 group::
 group.state(id,active|,facK|,facS|,facG|,facP) Set group options.
