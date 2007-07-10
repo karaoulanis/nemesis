@@ -24,32 +24,27 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TRACKER_H
-#define _TRACKER_H
+#ifndef _NODETRACKER_H
+#define _NODETRACKER_H
 
-#include <Domain.h>
-#include <DomainObject.h>
-#include <vector>
+#include <Tracker.h>
+#include <Node.h>
 
 // Forward Declerations
-class Domain;
+class Node;
 
-class Tracker: public DomainObject
+class NodeTracker: public Tracker
 {
-protected:
-	static int counter;
-	std::vector<double> lambda;
-	std::vector<double> time;
-	std::vector<Packet> data;
+private:
+	Node* myNode;
+	int dof;
 public:
-	Tracker();
-	virtual ~Tracker();
-	const int getSteps();
-	const double getLambda(int step);
-	const double getTime(int step);
-
-	const Packet& getPacket(int step);
-	virtual void keepTrack(double lambda_,double time_)=0;
+	NodeTracker();
+	NodeTracker(int ID,int nodeID);
+	~NodeTracker();
+	Node* getNode();
+	void save(std::ostream& s);
+	void keepTrack(double lambda_,double time_);
 };
 
 #endif
