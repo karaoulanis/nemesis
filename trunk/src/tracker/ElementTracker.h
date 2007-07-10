@@ -33,23 +33,28 @@
 
 // Forward Declerations
 class Domain;
+class Node;
 
 class Tracker: public DomainObject
 {
-protected:
-	static int counter;
+private:
+	Node* myNode;
+	int dof;
 	std::vector<double> lambda;
 	std::vector<double> time;
 	std::vector<Packet> data;
 public:
 	Tracker();
+	Tracker(int ID,int nodeID);
 	virtual ~Tracker();
+	Node* getNode();
 	const int getSteps();
 	const double getLambda(int step);
 	const double getTime(int step);
-
 	const Packet& getPacket(int step);
-	virtual void keepTrack(double lambda_,double time_)=0;
+	void save(std::ostream& s);
+
+	virtual void keepTrack(double lambda_,double time_);
 };
 
 #endif

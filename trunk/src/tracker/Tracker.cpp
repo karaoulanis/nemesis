@@ -26,21 +26,14 @@
 
 #include <Tracker.h>
 
+int Tracker::counter=0;
+
 Tracker::Tracker()
+:DomainObject(++counter)
 {
-}
-Tracker::Tracker(int ID,int nodeID)
-:DomainObject(ID)
-{
-	///@todo: check for errors
-	myNode=pD->get<Node>(pD->getNodes(),nodeID);
 }
 Tracker::~Tracker()
 {
-}
-Node* Tracker::getNode()
-{
-	return myNode;
 }
 const int Tracker::getSteps()
 {
@@ -57,10 +50,4 @@ const double Tracker::getTime(int step)
 const Packet& Tracker::getPacket(int step)
 {
 	return data.at(step);
-}
-void Tracker::keepTrack(double lambda_,double time_)
-{
-	lambda.push_back(lambda_);
-	time.push_back(time_);
-	data.push_back(myNode->getPacket());
 }

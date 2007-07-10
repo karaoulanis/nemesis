@@ -24,32 +24,44 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TRACKER_H
-#define _TRACKER_H
+#include <NodeTracker.h>
 
-#include <Domain.h>
-#include <DomainObject.h>
-#include <vector>
-
-// Forward Declerations
-class Domain;
-
-class Tracker: public DomainObject
+NodeTracker::NodeTracker()
 {
-protected:
-	static int counter;
-	std::vector<double> lambda;
-	std::vector<double> time;
-	std::vector<Packet> data;
-public:
-	Tracker();
-	virtual ~Tracker();
-	const int getSteps();
-	const double getLambda(int step);
-	const double getTime(int step);
-
-	const Packet& getPacket(int step);
-	virtual void keepTrack(double lambda_,double time_)=0;
-};
-
-#endif
+}
+NodeTracker::NodeTracker(int ID,int nodeID)
+{
+	myNode=pD->get<Node>(pD->getNodes(),nodeID);
+}
+NodeTracker::~NodeTracker()
+{
+}
+Node* NodeTracker::getNode()
+{
+	return myNode;
+}
+void NodeTracker::keepTrack(double lambda_,double time_)
+{
+	lambda.push_back(lambda_);
+	time.push_back(time_);
+	data.push_back(myNode->getPacket());
+}
+void NodeTracker::save(std::ostream& s)
+{
+/*	static Vector crds(3);
+	crds[0]=x1;
+	crds[1]=x2;
+	crds[2]=x3;
+	s<<"NODE "	<<' ';
+	s<<"tag	"	<<1000<<' '<<myTag<<' ';
+	s<<"id "	<<1000<<' '<<myID<<' ';
+	s<<"crds "	<<' '<<crds;
+	s<<"disp "	<<' '<<dispConvg;
+	s<<"velc "	<<' '<<velcConvg;
+	s<<"accl "	<<' '<<acclConvg;
+	s<<"stress "<<' '<<stress;
+	s<<"strain "<<' '<<strain;
+	s<<"dsens  "<<' '<<dispSensi;
+	s<<"eigen  "<<' '<<eigenVecs;
+	s<<"END "<<' ';*/
+}
