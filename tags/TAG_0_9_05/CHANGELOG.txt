@@ -1,0 +1,125 @@
+**************************************************************************************************************
+Version        : 0.9.04
+Released       : 31.05.07
+Added files    :   9
+Modified files :  32
+Removed files  :   0
+Comments       :
+**************************************************************************************************************
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|Rev. |Message                                                         |Add.|Mod.|Rem.|Author                |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|   70|CHG: Tag 0.9.04 created.                                        |   0|   2|   0|Fotios.Karaoulanis    |
+|   69|CHG: Increased facK to 10e-12.                                  |   0|   1|   0|Fotios.Karaoulanis    |
+|   68|CHG: Minor changes.                                             |   0|   0|   3|Fotios.Karaoulanis    |
+|   67|BUG: Added free_table that caused a memory leak.                |   0|   1|   0|Fotios.Karaoulanis    |
+|   66|CHG: Added xG,yG in Triangle6.                                  |   0|   1|   0|Fotios.Karaoulanis    |
+|   65|ADD: Added *.txt extension in README/LISENCE files.             |   2|   0|   0|Fotios.Karaoulanis    |
+|   64|ADD: Initial commit.                                            |   2|   0|   0|Fotios.Karaoulanis    |
+|   63|CHG: Minor improvements.                                        |   1|   1|   0|Fotios.Karaoulanis    |
+|   62|REM: Removed mpich2.lib.                                        |   0|   1|   0|Fotios.Karaoulanis    |
+|   61|CHG: Minor changes.                                             |   0|   1|   0|Fotios.Karaoulanis    |
+|   60|CHG: Output window below in SciTe.                              |   0|   1|   0|Fotios.Karaoulanis    |
+|   59|CHG: Let groups defined by material ids.                        |   0|  20|   0|Fotios.Karaoulanis    |
+|   58|CHG: Minor enhancements.                                        |   0|   1|   0|Fotios.Karaoulanis    |
+|   57|CHG: Updated README.                                            |   0|   1|   0|Fotios.Karaoulanis    |
+|   56|CHG: Minor enhancements.                                        |   0|   1|   0|Fotios.Karaoulanis    |
+|   55|ADD: Importing scite files.                                     |   4|   0|   0|Fotios.Karaoulanis    |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+
+
+**************************************************************************************************************
+Version        : 0.9.03
+Released       : 29.05.07
+Added files    :   2
+Modified files :  14
+Removed files  :   0
+Comments       :
+**************************************************************************************************************
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|Rev. |Message                                                         |Add.|Mod.|Rem.|Author                |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|   53|CHG: Minor changes.                                             |   0|   1|   0|Fotios.Karaoulanis    |
+|   52|CHG: Included beam2t/beam3t.                                    |   0|   1|   0|Fotios.Karaoulanis    |
+|   51|CHG: Updated version to 0.9.03.                                 |   0|   1|   0|Fotios.Karaoulanis    |
+|   50|CHG: Minor enhancements.                                        |   0|   2|   0|Fotios.Karaoulanis    |
+|   49|CHG: Updated import from dxf.                                   |   0|   1|   0|Fotios.Karaoulanis    |
+|   48|CHG: Changed introduction info and updated to v.0.9.02.         |   0|   2|   0|Fotios.Karaoulanis    |
+|   47|ADD: Added Timoshenko.h. Timoshenko.cpp.                        |   0|   1|   0|Fotios.Karaoulanis    |
+|   46|CHG: Minor changes in Timoshenko2d.                             |   0|   2|   0|Fotios.Karaoulanis    |
+|   45|ADD: Added element.beam3t command.                              |   0|   2|   0|Fotios.Karaoulanis    |
+|   44|ADD: Added Timoshenko tag.                                      |   0|   1|   0|Fotios.Karaoulanis    |
+|   43|ADD: Initial implementation of 2d, 2/3-node Timoshenko beam.    |   2|   0|   0|Fotios.Karaoulanis    |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+
+
+**************************************************************************************************************
+Version        : 0.9.02
+Released       : 17.05.07
+Added files    :   7
+Modified files :  16
+Removed files  :   0
+Comments       :
+**************************************************************************************************************
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|Rev. |Message                                                         |Add.|Mod.|Rem.|Author                |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|   41|ADD: Initial import.                                            |   3|   0|   0|Fotios.Karaoulanis    |
+|   40|CHG: Updated importDxf command.                                 |   0|   1|   0|Fotios.Karaoulanis    |
+|   39|ADD: Added a python script interface to Triangle Mesh Generator.|   3|   0|   0|Fotios.Karaoulanis    |
+|   38|CHG: Changed typo (plane stress/strain). Added plane stress.    |   0|   2|   0|Fotios.Karaoulanis    |
+|   37|ADD: Added Plane Stress material.                               |   0|   1|   0|Fotios.Karaoulanis    |
+|   36|CHG: Changed typo (plane strain/stress).                        |   0|   1|   0|Fotios.Karaoulanis    |
+|   35|CHG: Implemented stress recovery.                               |   0|   1|   0|Fotios.Karaoulanis    |
+|   34|ADD: Added NEWS file.                                           |   1|   0|   0|Fotios.Karaoulanis    |
+|   33|CHG: Minor modifications.                                       |   0|   1|   0|Fotios.Karaoulanis    |
+|   32|ADD: Added support for Triangle6.                               |   0|   1|   0|Fotios.Karaoulanis    |
+|   31|ADD: Added one more constructor.                                |   0|   2|   0|Fotios.Karaoulanis    |
+|   30|CHG: Changes in stiffness Matrix.                               |   0|   2|   0|Fotios.Karaoulanis    |
+|   29|ADD: Added Triangle6 tag.                                       |   0|   1|   0|Fotios.Karaoulanis    |
+|   28|CHG: Re-Implemented getDispIncrm().                             |   0|   1|   0|Fotios.Karaoulanis    |
+|   27|ADD: Added Triangle6 command.                                   |   0|   2|   0|Fotios.Karaoulanis    |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+
+
+**************************************************************************************************************
+Version        : 0.9.01
+Released       : 09.05.07
+Added files    :   2
+Modified files :   2
+Removed files  :   0
+Comments       :
+**************************************************************************************************************
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|Rev. |Message                                                         |Add.|Mod.|Rem.|Author                |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|   25|CHG: Minor modifications.                                       |   0|   1|   0|Fotios.Karaoulanis    |
+|   24|ADD: Added quadratic triangle.                                  |   2|   0|   0|Fotios.Karaoulanis    |
+|   23|CHG: Minor modifications.                                       |   0|   1|   0|Fotios.Karaoulanis    |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+
+
+**************************************************************************************************************
+Version        : 0.9.00
+Released       : 05.04.07
+Added files    : 292
+Modified files :   3
+Removed files  :   1
+Comments       :
+**************************************************************************************************************
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|Rev. |Message                                                         |Add.|Mod.|Rem.|Author                |
++-----+----------------------------------------------------------------+----+----+----+----------------------+
+|   21|ADD: Initial import (doxygen documentation).                    |   2|   0|   0|Fotios.Karaoulanis    |
+|   20|CHG: Updated version to 0.9.01.                                 |   0|   1|   0|Fotios.Karaoulanis    |
+|   17|CHG: Changed version to 0.9.00                                  |   0|   1|   0|Fotios.Karaoulanis    |
+|   16|REM: Clean up. Removed acml.                                    |   0|   1|   0|Fotios.Karaoulanis    |
+|   15|ADD: Initial import (dat files).                                |  18|   0|   0|Fotios.Karaoulanis    |
+|   14|ADD: Initial import.                                            |   3|   0|   0|Fotios.Karaoulanis    |
+|   13|ADD: Created folder remotely                                    |   1|   0|   0|Fotios.Karaoulanis    |
+|   12|ADD: Created folder remotely.                                   |   1|   0|   0|Fotios.Karaoulanis    |
+|   11|ADD: Initial import.                                            |   1|   0|   0|Fotios.Karaoulanis    |
+|   10|REM: Removed file/folder.                                       |   0|   0|   1|Fotios.Karaoulanis    |
+|    9|ADD: Initial import.                                            | 263|   0|   0|Fotios.Karaoulanis    |
+|    1|ADD: Initial directory structure.                               |   3|   0|   0|Fotios.Karaoulanis    |
++-----+----------------------------------------------------------------+----+----+----+----------------------+

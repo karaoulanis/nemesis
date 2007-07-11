@@ -1,0 +1,32 @@
+
+def domainBuild():
+	domain.clear()
+	domain.dim(1)
+	material.uniElastic(1,1000.)
+	section.user(1,1.)
+	node.add(1,0.)
+	node.add(2,1.)
+	element.bar2s(1,1,2,1,1)
+	node.fix(1,1)
+
+#############################################################
+# Case 1:
+#############################################################
+domainBuild()
+analysis.static()
+for i in range(1,11):
+	lc.define(i,1.,"kkk")
+	load.node(2,1,10.)
+	analysis.run(i,1)
+	print node.data(2)["disp"][0]
+
+#############################################################
+# Case 2:
+#############################################################
+domainBuild()
+analysis.static()
+control.load(1.)
+lc.define(1,8.)
+load.node(2,1,10.)
+analysis.run(1,10)
+print node.data(2)["disp"][0]
