@@ -448,7 +448,7 @@ static PyMethodDef NodeMethods[] =
 	{"track",	pyNode_Track,	
 		METH_VARARGS,	"Add a Tracker to the Node."},
 	{"path",	pyNode_Path,	
-		METH_VARARGS,	"Return the data recorded to the Tracker."},
+		METH_VARARGS,	"Return the data recorded to the tracker."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************
@@ -832,6 +832,23 @@ static PyObject* pyElement_Data(PyObject *self, PyObject *args)
 	is.str(os.str());
 	return buildDict(is);
 }
+static PyObject* pyElement_Track(PyObject *self, PyObject *args)
+{
+	int id,index;
+    if(!PyArg_ParseTuple(args,"ii",&id,&index))	return NULL;
+	pD->get<Element>(pD->getElements(),id)->addTracker(index);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+static PyObject* pyElement_Path(PyObject *self, PyObject *args)
+{
+	int id,index;
+    if(!PyArg_ParseTuple(args,"ii",&id,&index))	return NULL;
+ 	ostringstream os;
+	pD->get<Element>(pD->getElements(),id)->getTracker(index)->save(os);
+	istringstream is(os.str());
+	return buildList(is);
+}
 static PyMethodDef ElementMethods[] = 
 {
 	{"bar",				pyElement_Bar2s,	
@@ -848,18 +865,22 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Defines a 3-Node Timoshenko beam."},
 	{"sdof",			pyElement_SDOF,
 		METH_VARARGS,"Define a single dof element."},
-	{"quad4d",	pyElement_Quad4d,	
+	{"quad4d",			pyElement_Quad4d,	
 		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
-	{"tria3d",		pyElement_Triangle3d,	
+	{"tria3d",				pyElement_Triangle3d,	
 		METH_VARARGS,"Define a 3-Noded constant strain triangle."},
-	{"tria6d",		pyElement_Triangle6d,	
+	{"tria6d",				pyElement_Triangle6d,	
 		METH_VARARGS,"Define a 6-Noded linear strain triangle."},
-	{"tetra4d",	pyElement_Tetrahedron4d,	
+	{"tetra4d",			pyElement_Tetrahedron4d,	
 		METH_VARARGS,"Define a 4-Noded constant strain tetrahedron."},
 	{"brick8d",	pyElement_Brick8d,	
 		METH_VARARGS,"Define a 8-Noded standard displacement brick."},
 	{"data",			pyElement_Data,
 		METH_VARARGS,"Access to the element data."},
+	{"track",			pyElement_Track,	
+		METH_VARARGS,	"Add a Tracker to an element's material."},
+	{"path",			pyElement_Path,	
+		METH_VARARGS,	"Return the data recorded to the tracker."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************

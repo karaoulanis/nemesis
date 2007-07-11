@@ -42,6 +42,7 @@
 class Domain;
 class Material;
 class Node;
+class Tracker;
 class Group;
 class ElementalLoad;
 class InitialStresses;
@@ -122,6 +123,12 @@ public:
 	void save(std::ostream& s);
 
 	void activateParameter(int param) {activeParameter=param;}
+	
+	// Tracker member functions
+	virtual void addTracker(int index);
+	virtual Tracker* getTracker(int index);
+	virtual void track();
+
 };
 
 #endif

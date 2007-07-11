@@ -293,3 +293,27 @@ void Element::save(std::ostream& s)
 	s<<"mat "	<<1000<<' '<<myMaterial->getID()<<' ';
 	s<<"END "<<' ';
 }
+/**
+ * Add a Tracker to an Element's Material.
+ * This should be overwitten depending on how an Element treats its Materials
+ * @param index The index to the Element's Material
+ */
+void Element::addTracker(int index)
+{
+}
+/**
+ * Get the Tracker with \a index.
+ * This should be overwitten depending on how an Element treats its Materials
+ * @param index The index to the Element's Material
+ */
+Tracker* Element::getTracker(int index)
+{
+	return 0;
+}
+/**
+ * Add a record to the tracker.
+ * This should be overwitten depending on how an Element treats its Materials
+ */
+void Element::track()
+{
+}

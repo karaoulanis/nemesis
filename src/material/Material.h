@@ -30,6 +30,7 @@
 #include <Domain.h>
 #include <DomainObject.h>
 #include <Vector.h>
+#include <Tracker.h>
 
 class Domain;
 
@@ -42,16 +43,22 @@ protected:
 	static int counter;
 	int index;
 	Vector MatParams;
+	Tracker* myTracker;
 public:
 	Material();
 	Material(int ID,double rho,double aT);
-	~Material();
+	virtual ~Material();
 
 	inline void   setParam(int i,double d)	{MatParams[i]=d;}
 	inline double getParam(int i)			{return MatParams[i];}
 	inline double getRho()					{return MatParams[30];}
 	inline double getaT()					{return MatParams[31];}
 	virtual void commit()=0;
+
+	// Tracker member functions
+	void addTracker();
+	Tracker* getTracker();
+	virtual void track();
 };
 
 #endif

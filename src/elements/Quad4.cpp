@@ -154,3 +154,34 @@ void Quad4::recoverStresses()
 		myNodes[i]->addStress(sigma);
 	}
 }
+/**
+ * Add a Tracker to an Element's Material.
+ * \a index is checked if is in \a myMatPoints range.
+ * @param index The index to the Element's Material.
+ */
+void Quad4::addTracker(int index)
+{
+	if(index<0 || index>(int)myMatPoints.size()-1)
+		throw SException("[nemesis:%d] %s",9999,"Invalid index.\n");
+	myMatPoints[index]->getMaterial()->addTracker();
+}
+/**
+ * Get the Tracker with \a index.
+ * \a index is checked if is in \a myMatPoints range.
+ * @param index The index to the Element's Material.
+ */
+Tracker* Quad4::getTracker(int index)
+{
+	if(index<0 || index>(int)myMatPoints.size()-1)
+		throw SException("[nemesis:%d] %s",9999,"Invalid index.\n");
+	return myMatPoints[index]->getMaterial()->getTracker();
+}
+/**
+ * Add a record to the tracker.
+ * For all non null trackers records are added.
+ */
+void Quad4::track()
+{
+	for(unsigned i=0;i<myMatPoints.size();i++)
+		myMatPoints[i]->getMaterial()->track();
+}
