@@ -78,7 +78,6 @@
 #include <FullLinearSOE.h>
 #include <SymmLinearSOE.h>
 #include <BandLinearSOE.h>
-#include <Tracker.h>
 #include <InitialDisplacement.h>
 #include <InitialVelocity.h>
 #include <InitialStresses.h>

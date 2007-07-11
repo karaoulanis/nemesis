@@ -103,7 +103,6 @@ int StaticAnalysis::run(int nLC,int nLoadSteps)
 	pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->init();
 	pA->getControl()->init();
 	pA->getConvergenceNorm()->init(nLC,nLoadSteps);
-	pA->getDomain()->keepTrack(pA->getControl()->getLambda(),pA->getControl()->getLambda());
 
 	int ret=0;
 	for(int i=0;i<nLoadSteps;i++)
@@ -117,13 +116,11 @@ int StaticAnalysis::run(int nLC,int nLoadSteps)
 			else if(check==-2)	cout<<"Warning  : Maximum number of iteration was exceeded."<<endl;
 //			pA->getControl()->returnToConverged();
 			pA->getControl()->commit();
-//			pA->getDomain()->keepTrack(pA->getControl()->getLambda(),pA->getControl()->getLambda());
 //			break;
 			ret=-1;
 		}
 		// Algorithm succeeded
 		pA->getControl()->commit();
-		pA->getDomain()->keepTrack(pA->getControl()->getLambda(),pA->getControl()->getLambda());
 	}
 	// Finalize
 	pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->commit();

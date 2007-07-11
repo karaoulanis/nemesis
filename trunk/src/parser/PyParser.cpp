@@ -67,14 +67,14 @@ PyObject* buildList(const Matrix& m)
 	}
 	return pyList;
 }
-static PyObject* getData(istream& s)
+static PyObject* buildDict(istream& s)
 {
 	static PyObject* pyDict;
 	pyDict=PyDict_New();
 	char name[128];
 	int tag;
-	s>>name;	// Should read begin
-	s>>name;	// Read first name
+	s>>name;	// Read label, i.e. NODE
+	s>>name;	// Read first tag name
 	while(strcmp(name,"END"))
 	{
 		s>>tag;
@@ -84,6 +84,12 @@ static PyObject* getData(istream& s)
 			int n;
 			s>>n;
 			PyDict_SetItem(pyDict,pyKey,PyInt_FromLong(n));
+		}
+		else if(tag==1020)
+		{
+			double d;
+			s>>d;
+			PyDict_SetItem(pyDict,pyKey,PyFloat_FromDouble(d));
 		}
 		else if(tag==1100)
 		{
@@ -107,6 +113,36 @@ static PyObject* getData(istream& s)
 		s>>name;
 	}
 	return pyDict;
+}
+PyObject* buildList(istream& s)
+{
+	static PyObject* pyList;
+	char name[128];
+	int tag;
+	s>>name;	// TRACKER
+	s>>name;	// steps
+	s>>tag;		// 1000
+	int steps;
+	s>>steps;
+	pyList=PyList_New(steps);
+	for(int i=0;i<steps;i++)
+	{
+		double lambda,time;
+		s>>name;	// lambda
+		s>>tag;		// 1010
+		s>>lambda;
+		s>>name;	// time
+		s>>tag;		// 1010
+		s>>time;
+		s>>name;	// data
+		s>>tag;		// 1020
+		PyObject* pyRow=PyList_New(3);
+		PyList_SetItem(pyRow,0,PyFloat_FromDouble(lambda));
+		PyList_SetItem(pyRow,1,PyFloat_FromDouble(time));
+		PyList_SetItem(pyRow,2,buildDict(s));
+		PyList_SetItem(pyList,i,pyRow);
+	}
+	return pyList;
 }
 /******************************************************************************
 * Database Commands
@@ -381,7 +417,25 @@ static PyObject* pyNode_Data(PyObject *self, PyObject *args)
 	pD->get<Node>(pD->getNodes(),id)->save(os);
 	static istringstream is;
 	is.str(os.str());
-	return getData(is);
+	return buildDict(is);
+}
+static PyObject* pyNode_Track(PyObject *self, PyObject *args)
+{
+	int id;
+    if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
+	pD->get<Node>(pD->getNodes(),id)->addTracker();
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+static PyObject* pyNode_Path(PyObject *self, PyObject *args)
+{
+	int id;
+    if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
+ 	ostringstream os;
+	pD->get<Node>(pD->getNodes(),id)->getTracker()->save(os);
+	istringstream is(os.str());
+	//return Py_None;
+	return buildList(is);
 }
 static PyMethodDef NodeMethods[] = 
 {
@@ -391,6 +445,10 @@ static PyMethodDef NodeMethods[] =
 		METH_VARARGS,	"Fix a nodal degree of freedom."},
 	{"data",	pyNode_Data,	
 		METH_VARARGS,	"Returns a tuple containing nodal data."},
+	{"track",	pyNode_Track,	
+		METH_VARARGS,	"Add a Tracker to the Node."},
+	{"path",	pyNode_Path,	
+		METH_VARARGS,	"Return the data recorded to the Tracker."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************
@@ -772,7 +830,7 @@ static PyObject* pyElement_Data(PyObject *self, PyObject *args)
 	pD->get<Element>(pD->getElements(),id)->save(os);
 	static istringstream is;
 	is.str(os.str());
-	return getData(is);
+	return buildDict(is);
 }
 static PyMethodDef ElementMethods[] = 
 {
@@ -1582,6 +1640,7 @@ static PyMethodDef ReorderMethods[] =
 /******************************************************************************
 * Tracker commands
 ******************************************************************************/
+/*
 static PyObject* pyTracker_Node(PyObject *self, PyObject *args)
 {
 	int id,nodeID;
@@ -1679,6 +1738,7 @@ static PyMethodDef TrackerMethods[] =
 		METH_VARARGS,	"Get tracker data for a given step."},
 	{NULL,NULL,0,NULL}
 };
+*/
 /******************************************************************************
 * Log commands
 ******************************************************************************/
@@ -1800,7 +1860,6 @@ int PyParser::initModules()
 	Py_InitModule("reorder",ReorderMethods);
 	Py_InitModule("group",GroupMethods);
 	Py_InitModule("sens",SensitivityMethods);
-	Py_InitModule("tracker",TrackerMethods);
 	PyRun_SimpleString("import db");
 	PyRun_SimpleString("import domain");
 	PyRun_SimpleString("import node");
@@ -1822,7 +1881,7 @@ int PyParser::initModules()
 	PyRun_SimpleString("import reorder");
 	PyRun_SimpleString("import group");
 	PyRun_SimpleString("import sens");
-	PyRun_SimpleString("import tracker");
+//	PyRun_SimpleString("import tracker");
 	PyRun_SimpleString("import nemesis");
 	
 	Py_InitModule("log",logMethods);

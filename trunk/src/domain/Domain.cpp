@@ -56,9 +56,10 @@ void Domain::init()
 	// Define that groups are by set by materials
 	groupsByMaterial=true;
 	currentGroup=0;
-	// Initialize time
+	// Initialize time/lambda
 	timeCurr=0.;
 	timePrev=0.;
+	lambdaConvg=0.;
 	// Gravity direction vector and default orientation/acceleration
 	gravityVect.resize(3,0.);
 	gravityVect[2]=-1;
@@ -80,7 +81,6 @@ void Domain::clear()
 	Containers::map_delete(theMaterials);
 	Containers::map_delete(theLoadCases);
 	Containers::map_delete(theConstraints);
-	Containers::map_delete(theTrackers);
 	this->init();
 }
 /**
@@ -130,12 +130,6 @@ void Domain::zeroSensitivityParameters()
 	for(ElementIterator eIter=theElements.begin();
 		eIter!=theElements.end();eIter++)
 			eIter->second->activateParameter(0);
-}
-void Domain::keepTrack(double lambda_,double time_)
-{
-	for(TrackerIterator tIter=theTrackers.begin();
-		tIter!=theTrackers.end();tIter++) 
-			tIter->second->keepTrack(lambda_,time_);
 }
 int Domain::storeState(const char* tableName)
 {
