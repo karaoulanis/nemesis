@@ -68,7 +68,7 @@ void UniaxialElastoPlastic::setStrain(const double De)
 	double E   =MatParams[ 0];
 	double sy  =MatParams[ 2];
 	double Hiso=MatParams[ 3];
-	double Hkin=MatParams[ 4];
+	//double Hkin=MatParams[ 4];
 	double eta =MatParams[ 5];
 
 	// Return mapping

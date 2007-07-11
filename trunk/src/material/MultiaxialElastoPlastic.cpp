@@ -94,8 +94,8 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 	aTrial[0]=aConvg[0];
 	double dg=0;
 	Surface* fS=fSurfaces[0];
-	double eta=1000.;
-	double dt=pD->getTimeIncr();
+	//double eta=1000.;
+	//double dt=pD->getTimeIncr();
 	
 	//=========================================================================
 	// Step 1: Compute trial stress
@@ -182,7 +182,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	//double& dg=aTrial[0];
 	double dg=0.;
 	Surface* fS=fSurfaces[0];
-	Surface* gS=gSurfaces[0];
+	//Surface* gS=gSurfaces[0];
 	
 	Vector enn=invCel*sConvg+ePConvg+De;
 
@@ -250,8 +250,8 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		//cout<<k<<" "<<dg<<" "<<R.twonorm()<<endl;
 	}
 	//cout<<endl;
-	double dt=pD->getTimeIncr();
-	double eta=1000.;
+	//double dt=pD->getTimeIncr();
+	//double eta=1000.;
 	//sTrial=((sConvg+Cel*De)+(dt/eta)*(sConvg+Cel*De))/(1+(dt/eta));
 	//sTrial=(ss+(dt/eta)*sTrial)/(1+(dt/eta));
 }
@@ -390,8 +390,8 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 		for(unsigned a=0;a<fSurfaces.size();a++)
 			if(fSurfaces[a]->isActive()) dg[a]+=ddg[a];
 	}
-	if(k==nIter)
-	{
+//	if(k==nIter)
+//	{
 //		cout.precision(12);
 //		cout<<sConvg+Cel*De<<endl;
 //		cout<<De<<endl;
@@ -399,10 +399,10 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 //		cout<<ePConvg<<endl;
 //		cout<<ePTrial<<endl;
 //		cout<<"PASSED : "<<nActiveSurfaces<<endl;
-	}
+//	}
 	//cout<<endl;
-	double dt=pD->getTimeIncr();
-	double eta=1000.;
+	//double dt=pD->getTimeIncr();
+	//double eta=1000.;
 	//sTrial=((sConvg+Cel*De)+(dt/eta)*(sConvg+Cel*De))/(1+(dt/eta));
 	//sTrial=(ss+(dt/eta)*sTrial)/(1+(dt/eta));
 }

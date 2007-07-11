@@ -36,9 +36,9 @@ public:
 	LogFile& operator<<(string s)					{log<<s; return *this;}
 	LogFile& operator<<(LogFile& (*f)(LogFile&))	{f(*this);return *this;}
 	LogFile& operator>>(LogFile& (*f)(LogFile&))	{f(*this);return *this;}
-	LogFile& flush()								{log.flush();}
-	int width(int n)								{log.width(n);}
-	int fill(int n)									{log.fill(n);}
+	LogFile& flush()								{log.flush();return *this;}
+	void width(int n)								{log.width(n);}
+	void fill(int n)								{log.fill(n);}
 	void write(const Vector& v)						{log<<v<<endl;}
 	void write(const Matrix& m)						{log<<m<<endl;}
 };

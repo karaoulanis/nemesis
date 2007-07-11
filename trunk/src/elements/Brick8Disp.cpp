@@ -214,8 +214,10 @@ const Vector& Brick8Disp::getR()
 			R[ii  ]+=facS*(N(i,1)*sigma[0]+N(i,2)*sigma[3]+N(i,3)*sigma[5])*dV;
 			R[ii+1]+=facS*(N(i,2)*sigma[1]+N(i,1)*sigma[3]+N(i,3)*sigma[4])*dV;
 			R[ii+2]+=facS*(N(i,3)*sigma[2]+N(i,2)*sigma[4]+N(i,1)*sigma[5])*dV;
-			//R[ii  ]-=facG*(N(0,i)*b[0]*dV);
-			//R[ii+1]-=facG*(N(0,i)*b[1]*dV);
+			///@todo check
+			R[ii  ]-=facG*(N(0,i)*b[0]*dV);
+			R[ii+1]-=facG*(N(0,i)*b[1]*dV);
+			R[ii+2]-=facG*(N(0,i)*b[2]*dV);
 			ii+=3;
 		}
 	}
