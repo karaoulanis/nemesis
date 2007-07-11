@@ -51,7 +51,11 @@ public:
 	bool checkIfAllows(FEObject* f);
 	void addInitialStresses(InitialStresses* pInitialStresses);	
 	void recoverStresses();
-
+	
+	// Tracker member functions
+	void addTracker(int index);
+	Tracker* getTracker(int index);
+	void track();
 };
 
 #endif

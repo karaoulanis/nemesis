@@ -77,6 +77,7 @@ void MultiaxialElastoPlastic::commit()
 	sConvg=sTrial;
 	qConvg=qTrial;
 	aConvg=aTrial;
+	this->track();
 }
 void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 {
@@ -413,4 +414,21 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 const Matrix& MultiaxialElastoPlastic::getC()
 {
 	return myElastic->getC();
+}
+/**
+ * Add a record to the tracker.
+ * If \a myTracker pointer is null (no tracker is added) just return.
+ * Otherwise gather info and send them to the tracker.
+ * The domain should be already updated!
+ */
+void MultiaxialElastoPlastic::track()
+{
+	if(myTracker==0) return;
+	ostringstream s;
+	s<<"DATA "	<<' ';
+	s<<"sigm "	<<' '<<sConvg;
+	s<<"epst "	<<' '<<eTotal;
+	s<<"epsp "	<<' '<<ePConvg;
+	s<<"END "<<' ';
+	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
 }

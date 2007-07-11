@@ -319,11 +319,24 @@ bool Node::isActive()
  * \a myTracker pointer should be \a null up to this point. If not this means
  * that a Tracker is already added and nothing is changed.
  * The Node deconstructor should take the responsibility to delete the Tracker.
+ * Then track is called, in order to initialize the tracker.
+ * @todo Check tracker initialization.
  */
 void Node::addTracker()
 {
 	if(myTracker!=0) return;
     myTracker=new Tracker();
+	this->track();
+}
+/**
+ * Get the Tracker.
+ * Return \a myTracker pointer either it is null or not. 
+ * @todo Change this to a constant pointer.
+ * @return  pointer to \a myTracker.
+ */
+Tracker* Node::getTracker()
+{
+	return myTracker;
 }
 /**
  * Add a record to the tracker.
@@ -341,16 +354,6 @@ void Node::track()
 	s<<"accl "	<<' '<<acclConvg;
 	s<<"END "<<' ';
 	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
-}
-/**
- * Get the Tracker.
- * Return \a myTracker pointer either it is null or not. 
- * @todo Change this to a constant pointer.
- * @return  pointer to \a myTracker.
- */
-Tracker* Node::getTracker()
-{
-	return myTracker;
 }
 // Sensitivity functions
 void Node::initSensitivityMatrix(int nGrads)
