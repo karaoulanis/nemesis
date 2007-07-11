@@ -132,13 +132,15 @@ void StaticControl::formResidual(double fac)
 /**
  * Commits displacements.
  * After a successfull step the displacements in the domain are set to be 
- * converged. 
+ * converged. Time and lambda are committed to Domain.
  * @return 0 if everything is ok.
  */
 void StaticControl::commit()
 {
-	pA->getModel()->commit();
 	lambdaConvg=lambdaTrial;
+	pA->getDomain()->setLambda(lambdaConvg);
+	pA->getDomain()->commit();
+	pA->getModel()->commit();
 }
 /**
  * Aborts step.

@@ -53,9 +53,11 @@ Node::Node(int ID,double xc1,double xc2,double xc3)
 	stress.resize(6,0.);
 	strain.resize(6,0.);
 	avgStress=0;
+	myTracker=0;
 }
 Node::~Node()
 {
+	if(myTracker!=0) delete myTracker;
 }
 //=============================================================================
 // Access to data members
@@ -251,6 +253,7 @@ void Node::commit()
 	dispConvg=dispTrial;
 	velcConvg=velcTrial;
 	acclConvg=acclTrial;
+	this->track();
 }
 const Vector& Node::getDispTrial()
 {
@@ -310,6 +313,44 @@ bool Node::isActive()
 		if(pD->get<Element>(pD->getElements(),
 			myConnectedElements[i])->isActive()) return true;
 	return false;
+}
+/**
+ * Add a Tracker to Node.
+ * \a myTracker pointer should be \a null up to this point. If not this means
+ * that a Tracker is already added and nothing is changed.
+ * The Node deconstructor should take the responsibility to delete the Tracker.
+ */
+void Node::addTracker()
+{
+	if(myTracker!=0) return;
+    myTracker=new Tracker();
+}
+/**
+ * Add a record to the tracker.
+ * If \a myTracker pointer is null (no tracker is added) just return.
+ * Otherwise gather info and send them to the tracker.
+ * The domain should be already updated!
+ */
+void Node::track()
+{
+	if(myTracker==0) return;
+	ostringstream s;
+	s<<"DATA "	<<' ';
+	s<<"disp "	<<' '<<dispConvg;
+	s<<"velc "	<<' '<<velcConvg;
+	s<<"accl "	<<' '<<acclConvg;
+	s<<"END "<<' ';
+	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
+}
+/**
+ * Get the Tracker.
+ * Return \a myTracker pointer either it is null or not. 
+ * @todo Change this to a constant pointer.
+ * @return  pointer to \a myTracker.
+ */
+Tracker* Node::getTracker()
+{
+	return myTracker;
 }
 // Sensitivity functions
 void Node::initSensitivityMatrix(int nGrads)

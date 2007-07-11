@@ -35,7 +35,6 @@
 #include <Constraint.h>
 #include <CrossSection.h>
 #include <LoadCase.h>
-#include <Tracker.h>
 #include <DomainObject.h>
 #include <Database.h>
 #include <SQLiteDatabase.h>
@@ -47,7 +46,6 @@ class Material;
 class Group;
 class LoadCase;
 class Constraint;
-class Tracker;
 
 // Type definitions - Containers
 typedef std::map<int,Node*>								NodeContainer;
@@ -57,7 +55,6 @@ typedef std::map<int,CrossSection*>						CrossSectionContainer;
 typedef std::map<int,Material*>							MaterialContainer;
 typedef std::map<int,LoadCase*>							LoadCaseContainer;
 typedef std::map<int,Constraint*>						ConstraintContainer;
-typedef std::map<int,Tracker*>							TrackerContainer;
 
 // Type definitions - Iterators
 typedef std::map<int,Node*>::const_iterator				NodeIterator;
@@ -67,7 +64,6 @@ typedef std::map<int,CrossSection*>::const_iterator 	CrossSectionIterator;
 typedef std::map<int,Material*>::const_iterator			MaterialIterator;
 typedef std::map<int,LoadCase*>::const_iterator			LoadCaseIterator;
 typedef std::map<int,Constraint*>::const_iterator		ConstraintIterator;
-typedef std::map<int,Tracker*>::const_iterator			TrackerIterator;
 
 // Domain tag
 enum DomainTag{	TAG_DOMAIN_NOT_SET		=  0,
@@ -102,7 +98,6 @@ private:
 	MaterialContainer			theMaterials;
 	LoadCaseContainer			theLoadCases;			
 	ConstraintContainer			theConstraints;
-	TrackerContainer			theTrackers;
 
 	Database* theDatabase;
 	Vector RayleighFactors;
@@ -110,6 +105,7 @@ private:
 
 	double timeCurr;
 	double timePrev;
+	double lambdaConvg;
 
 	void init();
 public:
@@ -125,7 +121,6 @@ public:
 	void applyLoads(double lambda_,double time_);
 	void zeroLoads();
 	void zeroGroups();
-	void keepTrack(double lambda_,double time_);
 
 	void clear();
 	void state(double facD);
@@ -135,11 +130,15 @@ public:
 	const Vector& getGravityVect();
 	const double  getGravityAccl();
 	
+	///@todo cleanup
 	double getTimeCurr()		{return timeCurr;}
 	double getTimePrev()		{return timePrev;}
 	double getTimeIncr()		{return timeCurr-timePrev;}
 	void incTime(double dt)		{timeCurr+=dt;}
 	void commit()				{timePrev=timeCurr;}
+	void setLambda(double l)	{lambdaConvg=l;}
+	double getLambda()			{return lambdaConvg;}
+
 	void rollback()				{}
 
 	// Functions that handle the database
@@ -174,7 +173,6 @@ public:
 	inline MaterialContainer& getMaterials()				{return theMaterials;}
 	inline LoadCaseContainer& getLoadCases()				{return theLoadCases;}
 	inline ConstraintContainer& getConstraints()			{return theConstraints;}
-	inline TrackerContainer& getTrackers()					{return theTrackers;}
 	
 	template<class TE,class TC> int add(TC& c,TE* e)
 	{

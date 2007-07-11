@@ -33,6 +33,8 @@
 #include <Containers.h>
 #include <Vector.h>
 #include <Matrix.h>
+#include <Tracker.h>
+#include <sstream>
 
 class Domain;
 class Element;
@@ -59,6 +61,8 @@ private:
 	Vector acclConvg;
 	Matrix dispSensi;
 	Matrix eigenVecs;
+
+	Tracker* myTracker;
 
 	int avgStress; ///@todo: remove this when full nodal recovering is implemented.
 	Vector stress;
@@ -126,6 +130,11 @@ public:
 	const Packet& getPacket();
 	void setPacket(const Packet& p);
 	void save(std::ostream& s);
+
+	// Tracker member functions
+	void addTracker();
+	Tracker* getTracker();
+	void track();
 
 	// Sensitivity functions
 	void initSensitivityMatrix(int nGrads);

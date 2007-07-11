@@ -26,10 +26,8 @@
 
 #include <Tracker.h>
 
-int Tracker::counter=0;
 
 Tracker::Tracker()
-:DomainObject(++counter)
 {
 }
 Tracker::~Tracker()
@@ -37,17 +35,25 @@ Tracker::~Tracker()
 }
 const int Tracker::getSteps()
 {
-	return lambda.size();
+	return myRecords.size();
 }
-const double Tracker::getLambda(int step)
+void Tracker::track(double lambda_,double time_,string data_)
 {
-	return lambda.at(step);
+	TrackerRecord record;
+	record.lambda=lambda_;
+	record.time=time_;
+	record.data=data_;
+	myRecords.push_back(record);
 }
-const double Tracker::getTime(int step)
+void Tracker::save(std::ostream& s)
 {
-	return time.at(step);
-}
-const Packet& Tracker::getPacket(int step)
-{
-	return data.at(step);
+	s<<"TRACKER "	<<' ';
+	s<<"steps "	<<1000<<' '<<myRecords.size()<<' ';
+	for(unsigned i=0;i<myRecords.size();i++)
+	{
+		s<<"lambda "	<<1010<<' '<<myRecords[i].lambda	<<' ';
+		s<<"time "		<<1010<<' '<<myRecords[i].time		<<' ';
+		s<<"data "		<<1020<<' '<<myRecords[i].data		<<' ';
+	}
+	s<<"END "<<' ';
 }

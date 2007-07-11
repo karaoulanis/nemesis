@@ -27,29 +27,29 @@
 #ifndef _TRACKER_H
 #define _TRACKER_H
 
-#include <Domain.h>
-#include <DomainObject.h>
 #include <vector>
+#include <string>
 
-// Forward Declerations
-class Domain;
+using std::string;
+using std::vector;
 
-class Tracker: public DomainObject
+class Tracker
 {
-protected:
-	static int counter;
-	std::vector<double> lambda;
-	std::vector<double> time;
-	std::vector<Packet> data;
+private:
+	struct TrackerRecord
+	{
+		double lambda;
+		double time;
+		string data;
+	};
+	vector<TrackerRecord> myRecords;
 public:
 	Tracker();
 	virtual ~Tracker();
 	const int getSteps();
-	const double getLambda(int step);
-	const double getTime(int step);
 
-	const Packet& getPacket(int step);
-	virtual void keepTrack(double lambda_,double time_)=0;
+	void track(double lambda_,double time_,string data_);
+	void save(std::ostream& s);
 };
 
 #endif
