@@ -72,7 +72,6 @@ void Surface::find_a(const Vector& s)
 void Surface::find_da(const Vector& s)
 {
 	double sb=s.sb();
-	double J2=s.J2();
     double sx=s[0]-sb;
 	double sy=s[1]-sb;
 	double sz=s[2]-sb;

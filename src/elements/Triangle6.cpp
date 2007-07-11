@@ -67,14 +67,6 @@ Triangle6::Triangle6(int ID,
 		double yG=N(0,0)*x(0,1)+N(1,0)*x(1,1)+N(2,0)*x(2,1)
 			     +N(3,0)*x(3,1)+N(4,0)*x(4,1)+N(5,0)*x(5,1);
 		myMatPoints[i]->setX(xG,yG);
-/*	 	cout<<"-----------------"<<endl;
-		cout<<x(0,0)<<'\t'<<x(0,1)<<endl;
-		cout<<x(1,0)<<'\t'<<x(1,1)<<endl;
-		cout<<x(2,0)<<'\t'<<x(2,1)<<endl;
-		cout<<x(3,0)<<'\t'<<x(3,1)<<endl;
-		cout<<x(4,0)<<'\t'<<x(4,1)<<endl;
-		cout<<x(5,0)<<'\t'<<x(5,1)<<endl;
-		cout<<xG<<'\t'<<yG<<endl;*/
 	}
 }
 Triangle6::~Triangle6()

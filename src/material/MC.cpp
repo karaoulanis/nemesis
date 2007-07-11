@@ -73,7 +73,6 @@ double MC::get_f(const Vector& s)
 {
 	double A,dA,d2A;
 	this->find_A(s,A,dA,d2A);
-	double theta=s.theta();
 	double I1=s.I1();
 	double J2=s.J2();
 	return I1*sin(phi)/3.+sqrt(J2)*A-c*cos(phi);

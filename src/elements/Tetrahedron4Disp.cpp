@@ -146,7 +146,7 @@ const Vector& Tetrahedron4Disp::getR()
 	R.clear();
 	if(!(myGroup->isActive()))	return R;
 	double facS=myGroup->getFacS();
-	double facG=myGroup->getFacG();
+	//double facG=myGroup->getFacG();
 	double facP=myGroup->getFacP();
 	sigma=myMatPoints[0]->getMaterial()->getStress();
 	this->findShapeFunctions();
@@ -156,8 +156,10 @@ const Vector& Tetrahedron4Disp::getR()
 		R[ii  ]+=facS*(N(i,1)*sigma[0]+N(i,2)*sigma[3]+N(i,3)*sigma[5])*V;
 		R[ii+1]+=facS*(N(i,2)*sigma[1]+N(i,1)*sigma[3]+N(i,3)*sigma[4])*V;
 		R[ii+2]+=facS*(N(i,3)*sigma[2]+N(i,2)*sigma[4]+N(i,1)*sigma[5])*V;
+		///@todo check
 		//R[ii  ]-=facG*(N(0,i)*b[0]*dV);
 		//R[ii+1]-=facG*(N(0,i)*b[1]*dV);
+		//R[ii+1]-=facG*(N(0,i)*b[2]*dV);
 		ii+=3;
 	}
 
