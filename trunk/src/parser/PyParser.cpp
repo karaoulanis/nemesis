@@ -403,7 +403,16 @@ static PyObject* pyNode_Fix(PyObject *self, PyObject *args)
 	double c=0.;
     if(!PyArg_ParseTuple(args,"ii|d",&nodeID,&dofID,&c))	return NULL;
 	Constraint* pConstraint=new Constraint;
-	pConstraint->setcDof(nodeID,dofID,1.0);
+	try
+	{
+		pConstraint->setcDof(nodeID,dofID,1.0);
+	}
+	catch(SException e)
+	{
+		delete pConstraint;
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
 	pConstraint->setcVal(c);
 	pD->add(pD->getConstraints(),pConstraint);
 	Py_INCREF(Py_None);
@@ -414,7 +423,15 @@ static PyObject* pyNode_Data(PyObject *self, PyObject *args)
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
  	ostringstream os;
-	pD->get<Node>(pD->getNodes(),id)->save(os);
+	try
+	{
+		pD->get<Node>(pD->getNodes(),id)->save(os);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
 	static istringstream is;
 	is.str(os.str());
 	return buildDict(is);
@@ -423,7 +440,15 @@ static PyObject* pyNode_Track(PyObject *self, PyObject *args)
 {
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
-	pD->get<Node>(pD->getNodes(),id)->addTracker();
+	try
+	{
+		pD->get<Node>(pD->getNodes(),id)->addTracker();
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -432,9 +457,16 @@ static PyObject* pyNode_Path(PyObject *self, PyObject *args)
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
  	ostringstream os;
-	pD->get<Node>(pD->getNodes(),id)->getTracker()->save(os);
+	try
+	{
+		pD->get<Node>(pD->getNodes(),id)->getTracker()->save(os);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
 	istringstream is(os.str());
-	//return Py_None;
 	return buildList(is);
 }
 static PyMethodDef NodeMethods[] = 

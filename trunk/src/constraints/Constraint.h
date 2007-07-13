@@ -27,6 +27,7 @@
 #ifndef _CONSTRAINT_H
 #define _CONSTRAINT_H
 
+// Included files
 #include <Domain.h>
 #include <vector>
 
@@ -36,10 +37,15 @@ struct cDof
 	int dof;
 	double coeff;
 };
+
+/**
+ * The Constraint class.
+ */
 class Constraint: public DomainObject
 {
 protected:
 	static int nConstraints;
+
 	std::vector<cDof> theCDofs;
 	double cVal;
 	double fTrial;

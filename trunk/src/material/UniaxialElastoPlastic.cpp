@@ -73,6 +73,8 @@ void UniaxialElastoPlastic::setStrain(const double De)
 
 	// Return mapping
 	///@todo: implement kinematic hardening+viscoplasticity
+	//cout<<sTrial<<endl;
+	//cout<<De<<endl;
 	sTrial=sConvg+E*De;
 	double xi=sTrial;//-Hkin*q;
 	double dt=pD->getTimeIncr();
@@ -81,7 +83,8 @@ void UniaxialElastoPlastic::setStrain(const double De)
 	ePTrial=ePConvg;
 	if(fTrial>=0)
 	{
-		double dg=fTrial/(E+Hiso+eta/dt);
+		//double dg=fTrial/(E+Hiso+eta/dt);
+		double dg=fTrial/(E+Hiso);
 		sTrial -=dg*E*num::sign(xi);
 		ePTrial+=dg*num::sign(xi);
 		aTrial +=dg;

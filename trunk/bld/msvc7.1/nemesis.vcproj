@@ -23,7 +23,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;;&quot;C:\Program Files\Visual Leak Detector\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
@@ -43,11 +43,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python25.lib"
+				AdditionalDependencies="ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python25.lib vld.lib"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python25\libs&quot;"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python25\libs&quot;;&quot;C:\Program Files\Visual Leak Detector\lib&quot;"
 				IgnoreDefaultLibraryNames="libcd.lib libc.lib libcpd.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="./Debug/nemesis.pdb"
