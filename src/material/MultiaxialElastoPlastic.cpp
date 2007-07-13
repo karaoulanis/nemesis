@@ -62,11 +62,12 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
  */ 
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
-	//this->returnMapSYS(De);
+	this->returnMapSYS(De);
 	//this->returnMapTest(De);
-	if(fSurfaces.size()==1)	this->returnMapSYS(De);
+	//this->returnMapMYS(De);
+	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
-	else					this->returnMapMYS(De);
+	//else					this->returnMapMYS(De);
 }
 /**
  * Commit material state.
@@ -189,8 +190,8 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	//=========================================================================
 	// Step 1: Compute trial stress
 	//=========================================================================
-	sTrial=sConvg+Cel*De;
 	Vector ss=sTrial;
+	sTrial=sConvg+Cel*De;
  
 	//=========================================================================
 	// Step 2: Check for plastic process
@@ -278,7 +279,6 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 	aTrial.clear();	//todo:CHECK!!!!
 	Vector& dg=aTrial;
 	Vector enn=invCel*sConvg+ePConvg+De;
-	
 	//=========================================================================
 	// Step 1: Compute trial stress
 	//=========================================================================
@@ -305,6 +305,13 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 		// Step 3: Evaluate flow rule, hardening law and residuals
 		//=====================================================================
 		sTrial=Cel*(enn-ePTrial);
+		if(k==0)
+		{
+			//cout<<"-\n"<<index<<endl;
+			//cout<<enn<<endl;
+			//cout<<ePTrial<<endl;
+			//cout<<sTrial<<endl;
+		}
 		R=-ePTrial+ePConvg;
 		for(unsigned b=0;b<fSurfaces.size();b++)
 			if(fSurfaces[b]->isActive())

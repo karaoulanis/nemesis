@@ -24,23 +24,44 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
+// Included files
 #include <Constraint.h>
 
+// Initialize variables
 int Constraint::nConstraints=0;
 
+/**
+ * Constructor.
+ */
 Constraint::Constraint()
 	:DomainObject(++nConstraints),cVal(0),fTrial(0),fConvg(0)
 {
 }
+/**
+ * Create a constrained dof.
+ * Check if \a nodeID and \a dof is valid; otherwise throw an exception.
+ * @param nodeID The nodal id to be constrained.
+ * @param dof The nodal dof to be constrained.
+ * @param coeff The Constraint's coefficient.
+ */
 void Constraint::setcDof(int nodeID,int dof,double coeff)
 {
 	static cDof newCDof;
-	// Get node
-	Node* pNode=pD->get<Node>(pD->getNodes(),nodeID);
+	// Get node; if does not exists re-throw the exception
+	Node* pNode;
+	try
+	{
+		pNode=pD->get<Node>(pD->getNodes(),nodeID);
+	}
+	catch(SException)
+	{
+		throw;
+	}
+	// Check if dof is active
+	if(pNode->getActivatedDof(dof-1)<0)
+		throw SException("[nemesis:%d] Dof %d is not yet active.\n",1110,dof);
+	// Now it is ok to continue
 	newCDof.pNode=pNode;
-	// Check if the degree of freedom is activated
-	///todo Throw a warning, fix this situation where no dof is constrained
-	if(pNode->getActivatedDof(dof-1<0)) return;
 	newCDof.dof=dof-1;
 	// Add the coeffiecient
 	newCDof.coeff=coeff;

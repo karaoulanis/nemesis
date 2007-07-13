@@ -168,12 +168,15 @@ void Quad4::addTracker(int index)
 /**
  * Get the Tracker with \a index.
  * \a index is checked if is in \a myMatPoints range.
+ * An exception is thrown if no tracker is set.
  * @param index The index to the Element's Material.
  */
 Tracker* Quad4::getTracker(int index)
 {
 	if(index<0 || index>(int)myMatPoints.size()-1)
 		throw SException("[nemesis:%d] %s",9999,"Invalid index.\n");
+	if(myMatPoints[index]->getMaterial()->getTracker()==0)
+		throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.",9999,myID,index);
 	return myMatPoints[index]->getMaterial()->getTracker();
 }
 /**

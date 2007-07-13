@@ -125,6 +125,7 @@ const IDContainer& Node::getActivatedDofs() const
  */
 const int Node::getActivatedDof(int localDof) const
 {
+	///@todo Error if localDof>MAX_NUMBER_OF_DOFS see:Constraint for e.g.
 	return myActivatedDofs[localDof];
 }
 const int Node::getnActivatedDofs()
@@ -330,12 +331,14 @@ void Node::addTracker()
 }
 /**
  * Get the Tracker.
- * Return \a myTracker pointer either it is null or not. 
+ * An exception is thrown if no tracker is set.
  * @todo Change this to a constant pointer.
  * @return  pointer to \a myTracker.
  */
 Tracker* Node::getTracker()
 {
+	if(myTracker==0)
+		throw SException("[nemesis:%d] No tracker is set for Node %d.",9999,myID);
 	return myTracker;
 }
 /**

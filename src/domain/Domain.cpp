@@ -209,6 +209,7 @@ void Domain::zeroGroups()
  * gravityVect Vector giving the direction of gravity. It does not include 
  * special cases for 1D, 2D or 3D cases. It might not be normalized; it is
  * normalized here and remains so thereafter.
+ * @param g  The gravity acceleration.
  * @param xG x-coordinate of gravity vector.
  * @param yG y-coordinate of gravity vector.
  * @param zG z-coordinate of gravity vector.
