@@ -51,5 +51,10 @@ public:
     const Matrix& getM();
 	const Vector& getReff();
 	void recoverStresses();
+	
+	// Tracker member functions
+	void addTracker(int index);
+	Tracker* getTracker(int index);
+	void track();
 };
 #endif

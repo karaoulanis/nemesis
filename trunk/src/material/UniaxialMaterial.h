@@ -37,6 +37,7 @@ class UniaxialMaterial: public Material
 protected:
 	double sTrial;
 	double sConvg;
+	double eTotal;
 public:
 	UniaxialMaterial();
 	UniaxialMaterial(int ID,double rho,double aT);
@@ -48,6 +49,9 @@ public:
 	inline void setStress(const double s)	{sTrial=s;		}
 	inline void addStress(const double s)	{sTrial+=s;		}///@todo: check
 	inline const double getStress()			{return sTrial;	}
+	
+	// Tracker member functions
+	void track();
 };
 
 #endif

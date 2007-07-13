@@ -65,6 +65,8 @@ UniaxialMaterial* UniaxialElastoPlastic::getClone()
 void UniaxialElastoPlastic::setStrain(const double De)
 {
 	// Material parameters
+	eTotal+=De;
+	cout<<De<<endl;
 	double E   =MatParams[ 0];
 	double sy  =MatParams[ 2];
 	double Hiso=MatParams[ 3];
@@ -107,4 +109,5 @@ void UniaxialElastoPlastic::commit()
 	aConvg=aTrial;
 	qConvg=qTrial;
 	ePConvg=ePTrial;
+	this->track();
 }
