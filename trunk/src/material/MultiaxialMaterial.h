@@ -39,6 +39,7 @@ class MultiaxialMaterial: public Material
 protected:
 	Vector sTrial;
 	Vector sConvg;
+	Vector eTotal;
 	static Matrix C;
 public:
 	MultiaxialMaterial();

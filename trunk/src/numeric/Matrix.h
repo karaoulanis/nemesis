@@ -577,7 +577,7 @@ public:
 		delete[] vv;
 		delete[] me;
 		delete[] index;
-			throw SException("[nemesis:%d] %s",1006,"Matrix is singular.\n");
+		if(ret==-1) throw SException("[nemesis:%d] %s",1006,"Matrix is singular.\n");
 	}
     friend Matrix Inverse(const Matrix& m)
 	{

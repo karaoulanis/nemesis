@@ -38,7 +38,7 @@ protected:
 	MultiaxialMaterial* myElastic;
 
 	static Matrix C;
-	Vector ePTrial,ePConvg,eTotal;
+	Vector ePTrial,ePConvg;
 	Vector qTrial,qConvg;
 	Vector aTrial,aConvg;
 	bool plastic;
