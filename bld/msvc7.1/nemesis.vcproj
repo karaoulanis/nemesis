@@ -43,12 +43,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python25.lib vld.lib"
+				AdditionalDependencies="vld.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python25.lib"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python25\libs&quot;;&quot;C:\Program Files\Visual Leak Detector\lib&quot;"
-				IgnoreDefaultLibraryNames="libcd.lib libc.lib libcpd.lib"
+				IgnoreDefaultLibraryNames="libc.lib "
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="./Debug/nemesis.pdb"
 				SubSystem="1"
