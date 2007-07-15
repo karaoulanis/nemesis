@@ -1,13 +1,15 @@
 ;--------------------------------
 ; General
 ;--------------------------------
-OutFile "nemesis-0.9.01.exe"
-Name "nemesis. an experimental finite element code"
+OutFile "nemesis-0.9.05.exe"
+Name "nemesis"
 XPStyle on
 InstallDir $PROGRAMFILES\nemesis
 LicenseText "nemesis licence"
-LicenseData "LICENSE.txt"
-BrandingText "nemesis. an experimental finite element code"
+LicenseData "..\LICENSE.txt"
+BrandingText "nemesis"
+SetCompressor /SOLID lzma
+
 ;--------------------------------
 ; Pages
 ;--------------------------------
@@ -35,17 +37,25 @@ Section ""
 	SetOutPath $INSTDIR\sci
 	File ..\sci\*.*
  
-	; Put rest of the files
-	SetOutPath $INSTDIR
-	File ..\LICENSE
-	File ..\README
-	File ..\NEWS
-	
 	; Put dat files (only well tested!)
 	SetOutPath $INSTDIR\dat
 	File ..\dat\*.slv
 	File ..\dat\*.dat	
 	
+	; Put msc files
+	SetOutPath $INSTDIR\msc
+	File ..\msc\nemesis.dxf
+	File ..\msc\nemesis.cui
+	SetOutPath $INSTDIR\msc\lic
+	File ..\msc\*.txt
+	
+
+	; Put rest of the files
+	SetOutPath $INSTDIR
+	File ..\LICENSE.txt
+	File ..\CHANGELOG.txt
+	;File ..\README.txt
+
 	; Write uninstaller
 	WriteUninstaller "uninstall.exe"
 
