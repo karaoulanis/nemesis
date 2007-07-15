@@ -66,7 +66,6 @@ void UniaxialElastoPlastic::setStrain(const double De)
 {
 	// Material parameters
 	eTotal+=De;
-	cout<<De<<endl;
 	double E   =MatParams[ 0];
 	double sy  =MatParams[ 2];
 	double Hiso=MatParams[ 3];
@@ -75,8 +74,6 @@ void UniaxialElastoPlastic::setStrain(const double De)
 
 	// Return mapping
 	///@todo: implement kinematic hardening+viscoplasticity
-	//cout<<sTrial<<endl;
-	//cout<<De<<endl;
 	sTrial=sConvg+E*De;
 	double xi=sTrial;//-Hkin*q;
 	double dt=pD->getTimeIncr();
@@ -90,6 +87,7 @@ void UniaxialElastoPlastic::setStrain(const double De)
 		sTrial -=dg*E*num::sign(xi);
 		ePTrial+=dg*num::sign(xi);
 		aTrial +=dg;
+		cout<<aTrial<<endl;
 	}
 }
 const double UniaxialElastoPlastic::getC()
