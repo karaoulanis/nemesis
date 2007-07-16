@@ -32,11 +32,12 @@
 class DP_out: public Surface
 {
 private:
-	double s0;
+	double c;
+	double phi;
 	void find_C(const Vector& s);
 public:
 	DP_out();
-	DP_out(double s0_);
+	DP_out(double c_,double phi_);
 	~DP_out();
 	
 	double get_f(const Vector& s);

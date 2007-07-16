@@ -27,11 +27,11 @@
 #include <MC.h>
 
 MC::MC()
-:c(0.),phi(0.),active(false)
+:c(0.),phi(0.)
 {
 }
 MC::MC(double c_,double phi_)
-:c(c_),phi(phi_),active(false)
+:c(c_),phi(phi_)
 {
 }
 MC::~MC()

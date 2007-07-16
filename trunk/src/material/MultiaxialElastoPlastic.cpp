@@ -61,8 +61,8 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
  */ 
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
-	this->returnMapSYS(De);
-	//this->returnMapTest(De);
+	//this->returnMapSYS(De);
+	this->returnMapTest(De);
 	//this->returnMapMYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
@@ -157,7 +157,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 		log<<dg<<'\n';
 	//cout<<sTrial<<endl;
 	}
-	//cout<<fS->get_f(sTrial)<<endl;;
+	cout<<k<<endl;
 }
 /**
  * Single surface return mapping.
@@ -246,7 +246,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		//cout<<sTrial.theta()<<endl;
 		//cout<<((fS->get_dfds(sTrial)))<<endl;
 	}
-//	cout<<k<<endl;
+	cout<<k<<endl;
 
 	//cout<<endl;
 	//double dt=pD->getTimeIncr();
