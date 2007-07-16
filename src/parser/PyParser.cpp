@@ -634,6 +634,18 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_DruckerPrager(PyObject *self,PyObject *args)
+{
+	int id,elasticId,type;
+	double c,phi,psi,T;
+    if(!PyArg_ParseTuple(args,"iiidddd",&id,&elasticId,&type,&c,&phi,&psi,&T)) 
+		return NULL;
+	Material* pMaterial=new DruckerPrager(id,elasticId,type,c,phi,psi,T);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyMethodDef MaterialMethods[] = 
 {
 	{"sdof",						pyMaterial_SDof,	
@@ -650,6 +662,8 @@ static PyMethodDef MaterialMethods[] =
 		METH_VARARGS,"Define a von-Mises type material."},
 	{"MohrCoulomb",					pyMaterial_MohrCoulomb,
 		METH_VARARGS,"Define a Mohr-Coulomb type material."},
+	{"DruckerPrager",				pyMaterial_DruckerPrager,
+		METH_VARARGS,"Define a Drucker-Prager type material."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************

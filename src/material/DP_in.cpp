@@ -29,22 +29,25 @@
 DP_in::DP_in()
 {
 }
-DP_in::DP_in(double s0_)
+DP_in::DP_in(double c_,double phi_)
 {
-	s0=s0_;
+	c=c_;
+	phi=phi_;
 }
 DP_in::~DP_in()
 {
 }
 double DP_in::get_f(const Vector& s)
 {
-	return num::sq3*sqrt(s.J2())-s0;
+	double D=   2*sin(phi)/(num::sq3*(3+sin(phi)));
+	double so=6*c*cos(phi)/(num::sq3*(3+sin(phi)));
+	return D*s.I1()+sqrt(s.J2())-so;
 }
 void DP_in::find_C(const Vector& s)
 {
-	C1=0.;
-	C2=sqrt(0.75)/sqrt(s.J2());
+	C1=2*sin(phi)/(num::sq3*(3+sin(phi)));
+	C2=0.5*sqrt(s.J2());
 	C3=0.;
-	C22=-0.25*num::sq3/pow(s.J2(),-1.5);
+	C22=-0.25*pow(s.J2(),-1.5);
 	C23=0.; C32=0.; C33=0.;
 }
