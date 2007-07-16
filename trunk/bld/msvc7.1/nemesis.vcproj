@@ -547,6 +547,12 @@
 				Name="MultiaxialMaterial"
 				Filter="">
 				<File
+					RelativePath="..\..\src\material\DruckerPrager.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\DruckerPrager.h">
+				</File>
+				<File
 					RelativePath="..\..\src\material\MohrCoulomb.cpp">
 				</File>
 				<File
@@ -585,6 +591,18 @@
 				<Filter
 					Name="Surfaces"
 					Filter="">
+					<File
+						RelativePath="..\..\src\material\DP_in.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DP_in.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DP_out.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DP_out.h">
+					</File>
 					<File
 						RelativePath="..\..\src\material\MC.cpp">
 					</File>

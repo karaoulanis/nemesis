@@ -115,7 +115,7 @@ int StaticAnalysis::run(int nLC,int nLoadSteps)
 			if(check==-1)		cout<<"Warning  : Solution is diverging."<<endl;
 			else if(check==-2)	cout<<"Warning  : Maximum number of iteration was exceeded."<<endl;
 //			pA->getControl()->returnToConverged();
-			pA->getControl()->commit();
+//			pA->getControl()->commit();
 //			break;
 			ret=-1;
 		}

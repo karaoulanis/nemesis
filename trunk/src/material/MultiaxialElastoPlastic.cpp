@@ -61,9 +61,9 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
  */ 
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
-	//this->returnMapSYS(De);
+	this->returnMapSYS(De);
 	//this->returnMapTest(De);
-	this->returnMapMYS(De);
+	//this->returnMapMYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
 	//else					this->returnMapMYS(De);
@@ -155,9 +155,9 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 		for(int i=0;i<6;i++) sTrial[i]+=x[i];
 		dg+=x[6];
 		log<<dg<<'\n';
-	cout<<sTrial<<endl;
+	//cout<<sTrial<<endl;
 	}
-	cout<<fS->get_f(sTrial)<<endl;;
+	//cout<<fS->get_f(sTrial)<<endl;;
 }
 /**
  * Single surface return mapping.
@@ -237,15 +237,18 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		// Step 7: Obtain incremental plastic strains and internal variables
 		//=====================================================================
 		dEp=invCel*A*(R+ddg*(fS->get_dfds(sTrial)));
+
 		//=====================================================================
 		// Step 8: Update
 		//=====================================================================
 		ePTrial+=dEp;
 		dg+=ddg;
-		cout<<sTrial.theta()<<endl;
-		cout<<((fS->get_dfds(sTrial)))<<endl;
+		//cout<<sTrial.theta()<<endl;
+		//cout<<((fS->get_dfds(sTrial)))<<endl;
 	}
-	cout<<endl;
+//	cout<<k<<endl;
+
+	//cout<<endl;
 	//double dt=pD->getTimeIncr();
 	//double eta=1000.;
 	//sTrial=((sConvg+Cel*De)+(dt/eta)*(sConvg+Cel*De))/(1+(dt/eta));

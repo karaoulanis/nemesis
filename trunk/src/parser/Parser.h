@@ -40,10 +40,10 @@
 #include <PlaneStress.h>
 #include <VonMises.h>
 #include <MohrCoulomb.h>
+#include <DruckerPrager.h>
 #include <Bar2s.h>
 #include <Bar2t.h>
 #include <Beam2e.h>
-//#include <Beam2t.h>
 #include <Timoshenko2d.h>
 #include <SDofElement.h>
 #include <Brick8Disp.h>
