@@ -38,6 +38,7 @@ protected:
 	MultiaxialMaterial* myElastic;
 
 	static Matrix C;
+	Vector eTrial;
 	Vector ePTrial,ePConvg;
 	Vector qTrial,qConvg;
 	Vector aTrial,aConvg;
@@ -49,6 +50,7 @@ protected:
 	inline std::vector<Surface*> getgSurfaces()		{return gSurfaces;}
 	void returnMapSYS(const Vector& De);
 	void returnMapMYS(const Vector& De);
+	void returnMapMYS2(const Vector& De);
 	void returnMapTest(const Vector& De);
 public:
 	MultiaxialElastoPlastic();
