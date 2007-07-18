@@ -46,7 +46,7 @@ double DP_in::get_f(const Vector& s)
 void DP_in::find_C(const Vector& s)
 {
 	C1=2*sin(phi)/(num::sq3*(3+sin(phi)));
-	C2=0.5*sqrt(s.J2());
+	C2=0.5/sqrt(s.J2());
 	C3=0.;
 	C22=-0.25*pow(s.J2(),-1.5);
 	C23=0.; C32=0.; C33=0.;
