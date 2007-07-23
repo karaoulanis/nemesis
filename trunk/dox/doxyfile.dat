@@ -1,10 +1,10 @@
-# Doxyfile 1.4.5
+# Doxyfile 1.5.1-p1
 
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = nemesis
-PROJECT_NUMBER         = 0.1.81
+PROJECT_NUMBER         = 0.9.05
 OUTPUT_DIRECTORY       = D:/solver/nemesis/dox
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
@@ -93,6 +93,7 @@ INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
 REFERENCED_BY_RELATION = NO
 REFERENCES_RELATION    = NO
+REFERENCES_LINK_SOURCE = YES
 USE_HTAGS              = NO
 VERBATIM_HEADERS       = NO
 #---------------------------------------------------------------------------
@@ -108,7 +109,7 @@ GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = 
-HTML_FOOTER            = 
+HTML_FOOTER            = D:/solver/nemesis/dox/footer.html
 HTML_STYLESHEET        = 
 HTML_ALIGN_MEMBERS     = NO
 GENERATE_HTMLHELP      = NO
@@ -205,6 +206,7 @@ TEMPLATE_RELATIONS     = NO
 INCLUDE_GRAPH          = YES
 INCLUDED_BY_GRAPH      = YES
 CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
 GRAPHICAL_HIERARCHY    = YES
 DIRECTORY_GRAPH        = YES
 DOT_IMAGE_FORMAT       = png
