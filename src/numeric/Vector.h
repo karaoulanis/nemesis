@@ -571,6 +571,28 @@ public:
 		return asin(arg)/3.0;
 	}
 	/**
+	 * Return p (hydrostatic).
+	 * p=-I1/3.0 (sign convention).
+	 */
+	inline double p() const
+	{
+		#ifdef _DEBUG
+		array_size_check(size_,6);
+		#endif
+		return I1()/3.0;
+	}
+	/**
+	 * Return q (deviatoric).
+	 * p=sqrt(3*J2)
+	 */
+	inline double q() const
+	{
+		#ifdef _DEBUG
+		array_size_check(size_,6);
+		#endif
+		return sqrt(3.*J2());
+	}
+	/**
 	 * Return eigenvalues.
 	 * Eigenvalues are returned in descending order.
 	 */
