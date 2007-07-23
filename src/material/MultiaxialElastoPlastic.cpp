@@ -62,9 +62,9 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
  */ 
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
-	//this->returnMapSYS(De);
+	this->returnMapSYS(De);
 	//this->returnMapTest(De);
-	this->returnMapMYS2(De);
+	//this->returnMapMYS2(De);
 	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
 	//else					this->returnMapMYS(De);
@@ -74,7 +74,7 @@ void MultiaxialElastoPlastic::setStrain(const Vector& De)
  */
 void MultiaxialElastoPlastic::commit()
 {
-	eTotal=eTrial; ///@todo
+	//eTotal=eTrial; ///@todo
 	ePConvg=ePTrial;
 	sConvg=sTrial;
 	qConvg=qTrial;
@@ -118,10 +118,9 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 		Vector tmp(6,0.);
 		tmp=De;
 		tmp-=invCel*(sTrial-sConvg);
-		tmp-=dg*(fS->get_dfds(sTrial));
+		tmp-=dg*(gS->get_dfds(sTrial));
 		R.clear();
 		R.append(tmp,0);
-		//R[6]=-(fS->get_f(sTrial))+(eta/dt)*dg;
 		R[6]=-(fS->get_f(sTrial));
 		// Convergence check
 		if(tmp.twonorm()<tol1 && abs(fS->get_f(sTrial))<tol2)
@@ -131,7 +130,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 		}
 		// Jacobian
 		A.clear();
-		A.append(invCel+dg*(fS->get_df2dss(sTrial)),0,0);
+		A.append(invCel+dg*(gS->get_df2dss(sTrial)),0,0);
 		for(int i=0;i<6;i++) A(6,i)=(fS->get_dfds(sTrial))[i];
 		for(int i=0;i<6;i++) A(i,6)=(gS->get_dfds(sTrial))[i];
 		Vector x(7,0.);
@@ -167,6 +166,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	//double& dg=aTrial[0];
 	double dg=0.;
 	Surface* fS=fSurfaces[0];
+	Surface* gS=gSurfaces[0];
 	//Surface* gS=gSurfaces[0];
 	
 	Vector enn=invCel*sConvg+ePConvg+De;
@@ -193,7 +193,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		// Step 3: Evaluate flow rule, hardening law and residuals
 		//=====================================================================
 		sTrial=Cel*(enn-ePTrial);
-		R=-ePTrial+ePConvg+dg*(fS->get_dfds(sTrial));
+		R=-ePTrial+ePConvg+dg*(gS->get_dfds(sTrial));
 		//cout<<ePConvg[0]<<'\t'<<ePTrial[0]<<endl;
 
 		//=====================================================================
@@ -206,19 +206,18 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		//=====================================================================
 		// Matrix A 
 		Matrix A(6,6,0.);
-		A.append(invCel+dg*(fS->get_df2dss(sTrial)),0,0);
+		A.append(invCel+dg*(gS->get_df2dss(sTrial)),0,0);
 		A=Inverse(A);
 
 		//=====================================================================
 		// Step 6: Obtain increment to consistency parameter
 		//=====================================================================
-		ddg=(fS->get_f(sTrial)-fS->get_dfds(sTrial)*(A*R))/(fS->get_dfds(sTrial)*(A*(fS->get_dfds(sTrial))));
-		//ddg=(fS->get_f(sTrial))/(fS->get_dfds(sTrial)*(A*(fS->get_dfds(sTrial))));
+		ddg=(fS->get_f(sTrial)-fS->get_dfds(sTrial)*(A*R))/(fS->get_dfds(sTrial)*(A*(gS->get_dfds(sTrial))));
 
 		//=====================================================================
 		// Step 7: Obtain incremental plastic strains and internal variables
 		//=====================================================================
-		dEp=invCel*A*(R+ddg*(fS->get_dfds(sTrial)));
+		dEp=invCel*A*(R+ddg*(gS->get_dfds(sTrial)));
 
 		//=====================================================================
 		// Step 8: Update
@@ -432,6 +431,7 @@ void MultiaxialElastoPlastic::track()
 	s<<"sigm "	<<' '<<sConvg;
 	s<<"epst "	<<' '<<eTotal;
 	s<<"epsp "	<<' '<<ePConvg;
+	s<<"epsv "	<<1020<<' '<<eTotal[0]+eTotal[1]+eTotal[2]<<' ';
 	s<<"END "<<' ';
 	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
 }
