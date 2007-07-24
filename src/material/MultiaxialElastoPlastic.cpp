@@ -458,7 +458,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 	eTrial=eTotal;
 	eTrial+=De;
 	Vector enn=invCel*sConvg+ePConvg+De;
-		//=========================================================================
+	//=========================================================================
 	// Step 1: Compute trial stress
 	//=========================================================================
 	//sTrial=sConvg+Cel*De;

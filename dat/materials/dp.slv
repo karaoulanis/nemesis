@@ -1,0 +1,46 @@
+
+from math import pi
+
+domain.axisymmetric(1.0)
+db.SQLite("dp")
+material.elastic( 1, 1000, 0.25)
+material.DruckerPrager( 2, 1, 1, 100.,25.*pi/180.,1.*pi/180.,1.)
+
+node.add( 1, 0., 0.)
+node.add( 2, 1., 0.)
+node.add( 3, 1., 1.)
+node.add( 4, 0., 1.)
+
+element.quad4d( 1, 1, 2, 3, 4, 2)
+
+node.fix(1,1)
+node.fix(1,2)
+node.fix(2,2)
+node.fix(4,1)
+
+node.track(3)
+element.track(1,3)
+
+lc.define(1,0.01)
+load.node(4,2,-1/6.)
+load.node(3,2,-1/3.)
+
+analysis.static()
+imposer.elimination()
+#control.load(10.0)
+control.disp(3,2,-0.01)
+#control.arcLength(3,-0.01)
+algorithm.iNR()
+convergence.set(50,1e-4,1e-1,1e-1)
+analysis.run(1,30)
+
+print "u3x = ",node.data(3)['disp'][0]
+print "u3y = ",node.data(3)['disp'][1]
+print "u4x = ",node.data(4)['disp'][0]
+print "u4y = ",node.data(4)['disp'][1]
+db.store("dp")
+db.exportToVtk("dp")
+import tracker
+#tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"vm.txt")
+#tracker.plotElemPath(1,3,'eps_y','sigma_y',-1.0,-1.0,"dp01.txt")
+tracker.plotElemPath(1,3,'eps_y','eps_v',-1.0,-1.0,"dp01.txt")
