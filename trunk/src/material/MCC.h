@@ -34,10 +34,12 @@ class MCC: public Surface
 {
 protected:
 	double M;
-	double pc;
+	double po;
+	double kappa;
+	double lambda;
 public:
 	MCC();
-	MCC(double M,double pc);
+	MCC(double M_,double po_,double kappa_,double lambda_);
 	~MCC();
 	double get_f(const Vector& s);
 	const Vector& get_dfds(const Vector& s);

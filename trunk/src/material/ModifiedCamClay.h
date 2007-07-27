@@ -24,49 +24,21 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <MCC.h>
+#ifndef _MODIFIEDCAMCLAY_H
+#define _MODIFIEDCAMCLAY_H
 
-MCC::MCC()
+#include <MultiaxialElastoPlastic.h>
+
+/**
+ * The Modified Cam-Clay Material Class.
+ */
+class ModifiedCamClay: public MultiaxialElastoPlastic
 {
-}
-MCC::MCC(double M_,double po_,double kappa_,double lambda_)
-{
-	M=M_;
-	po=po_;
-	kappa=kappa_;
-	lambda=lambda_;
-}
-MCC::~MCC()
-{
-}
-double MCC::get_f(const Vector& s)
-{
-	double q=s.q();
-	double p=s.p();
-	return q*q+M*M*p*(p-po);
-}
-const Vector& MCC::get_dfds(const Vector& s)
-{
-	static Vector ret(6,0.);
-	return ret;
-}
-const Vector& MCC::get_dfdq(const Vector& s)
-{
-	static Vector ret(6,0.);
-	return ret;
-}
-const Matrix& MCC::get_df2dss(const Vector& s)
-{
-	static Matrix ret(6,6,0.);
-	return ret;
-}
-const Matrix& MCC::get_df2dsq(const Vector& s)
-{
-	static Matrix ret(6,6,0.);
-	return ret;
-}
-const Matrix& MCC::get_df2dqq(const Vector& s)
-{
-	static Matrix ret(6,6,0.);
-	return ret;
-}
+private:
+public:
+	ModifiedCamClay();
+	ModifiedCamClay(int ID,int elasticID,double M,double po,double kappa,double lambda);
+	MultiaxialMaterial* getClone();
+	~ModifiedCamClay();
+};
+#endif

@@ -24,49 +24,39 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
+#include <ModifiedCamClay.h>
 #include <MCC.h>
 
-MCC::MCC()
+ModifiedCamClay::ModifiedCamClay()
 {
 }
-MCC::MCC(double M_,double po_,double kappa_,double lambda_)
+ModifiedCamClay::ModifiedCamClay(int ID,int elasticID,double M,double po,double kappa,double lambda)
+:MultiaxialElastoPlastic(ID,elasticID)
 {
-	M=M_;
-	po=po_;
-	kappa=kappa_;
-	lambda=lambda_;
+	// Material parameters
+	MatParams[0]=M;
+	MatParams[1]=po;
+	MatParams[2]=kappa;
+	MatParams[3]=lambda;
+	// Yield/potential surfaces
+	fSurfaces.push_back(new MCC(M,po,kappa,lambda));
+	gSurfaces.push_back(new MCC(M,po,kappa,lambda));
+	// Material tag
+	myTag=TAG_NONE;
 }
-MCC::~MCC()
+ModifiedCamClay::~ModifiedCamClay()
 {
 }
-double MCC::get_f(const Vector& s)
+MultiaxialMaterial* ModifiedCamClay::getClone()
 {
-	double q=s.q();
-	double p=s.p();
-	return q*q+M*M*p*(p-po);
-}
-const Vector& MCC::get_dfds(const Vector& s)
-{
-	static Vector ret(6,0.);
-	return ret;
-}
-const Vector& MCC::get_dfdq(const Vector& s)
-{
-	static Vector ret(6,0.);
-	return ret;
-}
-const Matrix& MCC::get_df2dss(const Vector& s)
-{
-	static Matrix ret(6,6,0.);
-	return ret;
-}
-const Matrix& MCC::get_df2dsq(const Vector& s)
-{
-	static Matrix ret(6,6,0.);
-	return ret;
-}
-const Matrix& MCC::get_df2dqq(const Vector& s)
-{
-	static Matrix ret(6,6,0.);
-	return ret;
+	// Material parameters
+	int myID      = this->getID();
+	int elID      = myElastic->getID();
+	double M      = MatParams[ 0];
+	double po     = MatParams[ 1];
+	double kappa  = MatParams[ 2];
+	double lambda = MatParams[ 3];
+	// Create clone and return
+	ModifiedCamClay* newClone=new ModifiedCamClay(myID,elID,M,po,kappa,lambda);
+	return newClone;
 }
