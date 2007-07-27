@@ -593,6 +593,48 @@ public:
 		return sqrt(3.*J2());
 	}
 	/**
+	 * Return dp/ds.
+	 * @todo remove?
+	 */
+	inline Vector dpds() const
+	{
+		#ifdef _DEBUG
+		array_size_check(size_,6);
+		#endif
+		Vector ret(6,0.);
+		ret[0]=-num::d13;
+		ret[1]=-num::d13;
+		ret[2]=-num::d13;
+		return ret;
+	}
+	/**
+	 * Return dq/ds. 
+	 * @todo remove?
+	 */
+	inline Vector dqds() const
+	{
+		#ifdef _DEBUG
+		array_size_check(size_,6);
+		#endif
+		double sm =sb();
+		double sx =data_[0]-sm;
+		double sy =data_[1]-sm;
+		double sz =data_[2]-sm;
+		double txy=data_[3];
+		double tyz=data_[4];
+		double tzx=data_[5];
+
+		Vector ret(6,0.);
+		ret[0]=sx;
+		ret[1]=sy;
+		ret[2]=sz;
+		ret[0]=2*txy;
+		ret[1]=2*tyz;
+		ret[2]=2*tzx;
+		ret*=num::sq3/(2*J2());
+		return ret;
+	}
+	/**
 	 * Return eigenvalues.
 	 * Eigenvalues are returned in descending order.
 	 */

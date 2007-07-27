@@ -628,6 +628,12 @@
 						RelativePath="..\..\src\material\MC_2.h">
 					</File>
 					<File
+						RelativePath="..\..\src\material\MCC.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\MCC.h">
+					</File>
+					<File
 						RelativePath="..\..\src\material\Surface.cpp">
 					</File>
 					<File
