@@ -53,6 +53,7 @@ void MC::find_C(const Vector& s)
 		C2=0.5/sqJ2*(A-tan(3.*theta)*dA);
 		C3=-sqrt(3.)*dA/(2.*J2*cos(3.*theta));
 		C4=d2A+3.*tan(3.*theta)*dA;
+		C11=0.;
 		C22=-(A-tan(3.*theta)*tan(3.*theta)*C4-3.*tan(3.*theta)*dA)/(4.*J2*sqJ2);
 		C23=(0.5*tan(3*theta)*C4+dA)*sqrt(3.)/(2.*J2*J2*cos(3*theta));
 		C32=C23;
@@ -71,6 +72,7 @@ void MC::find_C(const Vector& s)
 		C1=2*sin(phi)/(num::sq3*(3-sin(phi)));
 		C2=0.5/sqrt(s.J2());
 		C3=0.;
+		C11=0.;
 		C22=-0.25*pow(s.J2(),-1.5);
 		C23=0.; C32=0.; C33=0.;
 

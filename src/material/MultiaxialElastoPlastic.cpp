@@ -62,8 +62,8 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
  */ 
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
-	this->returnMapSYS(De);
-	//this->returnMapTest(De);
+	//this->returnMapSYS(De);
+	this->returnMapTest(De);
 	//this->returnMapMYS2(De);
 	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
@@ -227,7 +227,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		//cout<<sTrial.theta()<<endl;
 		//cout<<((fS->get_dfds(sTrial)))<<endl;
 	}
-	cout<<k<<endl;
+	//cout<<k<<endl;
 
 	//cout<<endl;
 	//double dt=pD->getTimeIncr();

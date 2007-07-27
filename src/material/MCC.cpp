@@ -45,19 +45,18 @@ double MCC::get_f(const Vector& s)
 	double p=s.p();
 	return q*q+M*M*p*(p-po);
 }
-const Vector& MCC::get_dfds(const Vector& s)
+void MCC::find_C(const Vector& s)
 {
-	static Vector ret(6,0.);
-	return ret;
+	C1=1/3.*M*M*(2/3.*s.I1()+po);
+	C2=0.;
+	C3=0.;
+	C11=2./9.*M*M;
+	C22=3.;
+	C23=0.; C32=0.; C33=0.;
 }
 const Vector& MCC::get_dfdq(const Vector& s)
 {
 	static Vector ret(6,0.);
-	return ret;
-}
-const Matrix& MCC::get_df2dss(const Vector& s)
-{
-	static Matrix ret(6,6,0.);
 	return ret;
 }
 const Matrix& MCC::get_df2dsq(const Vector& s)

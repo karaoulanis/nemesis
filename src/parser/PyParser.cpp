@@ -646,6 +646,18 @@ static PyObject* pyMaterial_DruckerPrager(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_ModifiedCamClay(PyObject *self,PyObject *args)
+{
+	int id,elasticId;
+	double M,po,kappa,lambda;
+    if(!PyArg_ParseTuple(args,"iidddd",&id,&elasticId,&M,&po,&kappa,&lambda)) 
+		return NULL;
+	Material* pMaterial=new ModifiedCamClay(id,elasticId,M,po,kappa,lambda);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyMethodDef MaterialMethods[] = 
 {
 	{"sdof",						pyMaterial_SDof,	
@@ -664,6 +676,8 @@ static PyMethodDef MaterialMethods[] =
 		METH_VARARGS,"Define a Mohr-Coulomb type material."},
 	{"DruckerPrager",				pyMaterial_DruckerPrager,
 		METH_VARARGS,"Define a Drucker-Prager type material."},
+	{"modifiedCamClay",				pyMaterial_ModifiedCamClay,
+		METH_VARARGS,"Define a Modified Cam-Clay type material."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************

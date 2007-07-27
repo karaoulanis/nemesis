@@ -38,7 +38,7 @@ protected:
 	static Vector a1,a2,a3;
 	static Matrix da2,da3;
 	static double C1,C2,C3,C4;
-	static double C23,C32,C22,C33;
+	static double C11,C23,C32,C22,C33;
 	void find_a(const Vector& s);
 	void find_da(const Vector& s);
 	virtual void find_C(const Vector& s);
