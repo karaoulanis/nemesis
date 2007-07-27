@@ -45,6 +45,7 @@ void VM::find_C(const Vector& s)
 	C1=0.;
 	C2=sqrt(0.75)/sqrt(s.J2());
 	C3=0.;
+	C11=0.;
 	C22=-0.25*num::sq3/pow(s.J2(),-1.5);
 	C23=0.; C32=0.; C33=0.;
 }

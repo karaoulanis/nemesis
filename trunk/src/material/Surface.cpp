@@ -37,6 +37,7 @@ double Surface::C1=0.;
 double Surface::C2=0.;
 double Surface::C3=0.;
 double Surface::C4=0.;
+double Surface::C11=0.;
 double Surface::C22=0.;
 double Surface::C23=0.;
 double Surface::C32=0.;
@@ -99,7 +100,7 @@ void Surface::find_da(const Vector& s)
 }
 void Surface::find_C(const Vector& s)
 {
-	C1=0;	C2=0;	C3=0;
+	C11=0.; C1=0;	C2=0;	C3=0;
 	C23=0;	C32=0;	C22=0;	C33=0;
 }
 const Vector& Surface::get_dfds(const Vector& s)
@@ -119,7 +120,8 @@ const Matrix& Surface::get_df2dss(const Vector& s)
 	this->find_C(s);
 	this->find_a(s);
 	this->find_da(s);
-	myMatrix=C2*da2+C3*da3+C22*VVT(a2,a2)
+	myMatrix=C2*da2+C3*da3+C11*VVT(a1,a1)
+						  +C22*VVT(a2,a2)
 						  +C23*VVT(a2,a3)
 						  +C32*VVT(a3,a2)
 						  +C33*VVT(a3,a3);
