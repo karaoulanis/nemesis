@@ -579,7 +579,7 @@ public:
 		#ifdef _DEBUG
 		array_size_check(size_,6);
 		#endif
-		return I1()/3.0;
+		return -I1()/3.0;
 	}
 	/**
 	 * Return q (deviatoric).
