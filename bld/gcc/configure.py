@@ -1,58 +1,142 @@
 
 import os
 from time import time,ctime
+import sys,getopt,os
 
-def setProjectFiles(headers,sources):
+def getProjectFiles():
+	#--------------------------------------------------------------------------
+	# Find paths/names at a directory according to some pattern
+	#--------------------------------------------------------------------------
+	print "Searching in the src directory    :",
+	paths=[]
+	names=[]
 	for path, folders, files in os.walk('../..'+'/src'):
-		newpath=path.replace("\\","/")
 		for name in files:
-			if os.path.splitext(name)[1]=='.cpp':
-				sources.append([path.replace("\\","/"),name])
-			if os.path.splitext(name)[1]=='.h':
-				headers.append([path.replace("\\","/"),name])
-	# main.cpp should be the first to be compiled
-	for index in range(len(sources)):
-		if sources[index][1]=='main.cpp':
-			break
-	if index==len(sources):
-		raise StandardError,"No file main.cpp found!"
-	tmp=sources[0]
-	sources[0]=sources[index]
-	sources[index]=tmp
-
-def setExternalFiles(headers,libraries,optlist):
+			if os.path.splitext(name)[1] in ['.cpp','.h']:
+				paths.append(path)
+				names.append(name)
+	nFiles=len(paths)
+	print nFiles,"files found."
+	#--------------------------------------------------------------------------
+	# Change '\\' in paths (win32)
+	#--------------------------------------------------------------------------
+	for i in range(nFiles):
+		paths[i]=paths[i].replace('\\','/')
+	#--------------------------------------------------------------------------
+	# Bring main.cpp in the first row
+	#--------------------------------------------------------------------------
+	index=names.index("main.cpp")
+	tmp=paths[index];	paths[index]=paths[0];	paths[0]=tmp
+	tmp=names[index];	names[index]=names[0];	names[0]=tmp
+	#--------------------------------------------------------------------------
+	# Find first level dependencies (open files)
+	#--------------------------------------------------------------------------
+	depds=[]
+	for i in range(nFiles):
+		ifile=open(paths[i]+'/'+names[i],'r')
+		tmp=[]
+		for line in ifile.readlines():
+			line=line.replace('<',' ')
+			line=line.replace('>',' ')
+			line=line.replace('"',' ')
+			words=line.split()
+			if len(words)>0 and words[0]=='#include':
+				tmp.append(words[1])
+		ifile.close()
+		depds.append(tmp)
+	#--------------------------------------------------------------------------
+	# Remove dependencies not in given directories
+	#--------------------------------------------------------------------------
+	for i in range(nFiles):
+		tmp=[]
+		for dependency in depds[i]:
+			if dependency in names:
+				tmp.append(dependency)
+		depds[i]=tmp
+	#--------------------------------------------------------------------------
+	# Find dependencies iteratively
+	#--------------------------------------------------------------------------
+	print "Finding dependencies              :",
+	k=1
+	while k!=0:
+		k=0
+		print "#",
+		for i in range(nFiles):
+			tmp=[]
+			for dependency in depds[i]:
+				tmp=tmp+depds[names.index(dependency)]
+			for dependency in tmp:
+				if dependency not in depds[i]:
+					depds[i].append(dependency)
+					k=1
+	print
+	#--------------------------------------------------------------------------
+	# Find dependencies paths
+	#--------------------------------------------------------------------------
+	for i in range(nFiles):
+		tmp=[]
+		for dependency in depds[i]:
+			tmp.append(paths[names.index(dependency)]+'/'+dependency)
+		depds[i]=tmp
+	#--------------------------------------------------------------------------
+	# Find cpp files
+	#--------------------------------------------------------------------------
+	cFiles=[]
+	for i in range(nFiles):
+		if os.path.splitext(names[i])[1] in ['.cpp']:
+			cFiles.append([paths[i],names[i],depds[i]])
+	#--------------------------------------------------------------------------
+	# Find included files
+	#--------------------------------------------------------------------------
+	hPaths=[]
+	for i in range(nFiles):
+		if os.path.splitext(names[i])[1] in ['.h']:
+			if paths[i] not in hPaths:
+				hPaths.append(paths[i])
+	return cFiles,hPaths
+#==============================================================================
+#
+#==============================================================================
+def getConfOptions(optlist):
+	#--------------------------------------------------------------------------
+	# List and defaults
+	#--------------------------------------------------------------------------
+	hPaths=[]
+	lPaths=[]
+	lFiles=[]
+	compiler=[]
+	compiler.append('g++')
+	compiler.append('-O2 -fWall')
+	#--------------------------------------------------------------------------
+	# Read options
+	#--------------------------------------------------------------------------
 	for i in optlist:
-		if   i[0]=='--with-inc-dir':
-			print "Configuring with include dir      :",i[1]
-			headers.append(["\""+i[1]+"\"",'NULL'])
-		elif i[0]=='--with-inc-nam':
-			print "Configuring with include file     :",i[1]
-			headers.append(['NULL',i[1]])
-		elif i[0]=='--with-lib-dir':
-			print "Configuring with library dir      :",i[1]
-			libraries.append(["\""+i[1]+"\"",'NULL'])
-		elif i[0]=='--with-lib-nam':
-			print "Configuring with library file     :",i[1]
-			libraries.append(['NULL',i[1]])
-		else:
-			continue
-
-def setCompiler(compiler,optlist):
-	for i in optlist:
-		if   i[0]=='--with-cxx-cmp':
+		if   i[0]=='--with-inc-path':
+			print "Configuring with include path     :",i[1]
+			hPaths.append('\''+i[1]+'\'')	# may have spaces
+		elif i[0]=='--with-lib-path':
+			print "Configuring with library path     :",i[1]
+			lPaths.append('\''+i[1]+'\'')	# may have spaces
+		elif i[0]=='--with-lib-name':
+			print "Configuring with library name     :",i[1]
+			lFiles.append(i[1])
+		elif i[0]=='--with-cxx-comp':
 			print "Configuring with compiler         :",i[1]
 			compiler[0]=i[1]
-		elif i[0]=='--with-cxx-opt':
+		elif i[0]=='--with-cxx-opts':
 			print "Configuring with compiler options :",i[1]
 			compiler[1]=i[1]
 		else:
 			continue
-	if compiler[0]=='NULL':
-		compiler[0]='g++'
-	if compiler[1]=='NULL':
-		compiler[1]='-O2 -fWall'
+	#--------------------------------------------------------------------------
+	# Return
+	#--------------------------------------------------------------------------
+	return hPaths,lPaths,lFiles,compiler
 
-def createMakefile(headers,sources,libraries,compiler):
+#==============================================================================
+#
+#==============================================================================
+def createMakefile(cFiles,hPaths,lPaths,lFiles,compiler):
 	mak = open("Makefile", 'w+')
 	mak.write("#===============================================================\n")
 	mak.write("# Makefile for nemesis                                          \n")
@@ -77,21 +161,16 @@ def createMakefile(headers,sources,libraries,compiler):
 	mak.write("#===============================================================\n")
 	mak.write("LDIR = ")
 	dirs=[]
-	for i in libraries:
-		if i[0]!='NULL' and i[0] not in dirs:
-			dirs.append(i[0])
-	for i in dirs:
-			mak.write(' \\\n\t-I%s'%i)
+	for i in lPaths:
+		mak.write(' \\\n\t-I%s'%i)
 	mak.write("\n\n")
 
 	mak.write("#===============================================================\n")
 	mak.write("# libraries\n")
 	mak.write("#===============================================================\n")
 	mak.write("LIBS = ")
-	for i in libraries:
-		if i[1]!='NULL':
-			lib=i[1].replace('lib','-l').replace('.a','')
-			mak.write(' \\\n\t%s'%(lib))
+	for i in lFiles:
+		mak.write(' \\\n\t%s'%i)
 	mak.write("\n\n")
 
 	mak.write("#===============================================================\n")
@@ -99,27 +178,15 @@ def createMakefile(headers,sources,libraries,compiler):
 	mak.write("#===============================================================\n")
 	mak.write("INCS = ")
 	dirs=[]
-	for i in headers:
-		if i[0]!='NULL' and i[0] not in dirs:
-			dirs.append(i[0])
-	for i in dirs:
+	for i in hPaths:
 		mak.write(' \\\n\t-I%s'%i)
-	mak.write("\n\n")
-
-	mak.write("#===============================================================\n")
-	mak.write("# header files\n")
-	mak.write("#===============================================================\n")
-	mak.write("HDRS = ")
-	for i in headers:
-		if i[1]!='NULL':
-			mak.write(' \\\n\t%s/%s'%(i[0],i[1]))
 	mak.write("\n\n")
 
 	mak.write("#===============================================================\n")
 	mak.write("# object files\n")
 	mak.write("#===============================================================\n")
 	mak.write("OBJS = ")
-	for i in sources:
+	for i in cFiles:
 		mak.write('\\\n\t$(ODIR)/%s.o'%i[1].replace('.cpp',''))
 	mak.write("\n\n")
 
@@ -135,13 +202,16 @@ def createMakefile(headers,sources,libraries,compiler):
 	mak.write("# compile\n")
 	mak.write("#===============================================================\n")
 	k=0
-	for i in sources:
+	for i in cFiles:
 		k=k+1
+		cpath=i[0]
 		cfile=i[1].replace('.cpp','')
-		cdir =i[0]
-		mak.write('$(ODIR)/%s.o: %s/%s.cpp $(HDRS)\n'%(cfile,cdir,cfile))
-		mak.write('\t@echo Compiling [% 4i/% 4i]: %s.cpp\n'%(k,len(sources),cfile))
-		mak.write('\t@$(CC) $(CCFLAGS) $(INCS) -c %s/%s.cpp -o $(ODIR)/%s.o\n'%(cdir,cfile,cfile))
+		cdepd=cpath+'/'+cfile+'.cpp'
+		for i in i[2]:
+			cdepd=cdepd+' '+i
+		mak.write('$(ODIR)/%s.o: %s/%s.cpp %s\n'%(cfile,cpath,cfile,cdepd))
+		mak.write('\t@echo Compiling [% 4i/% 4i]: %s.cpp\n'%(k,len(cFiles),cfile))
+		mak.write('\t@$(CC) $(CCFLAGS) $(INCS) -c %s/%s.cpp -o $(ODIR)/%s.o\n'%(cpath,cfile,cfile))
 		mak.write("\n")
 	mak.write("\n")
 	
@@ -154,31 +224,23 @@ def createMakefile(headers,sources,libraries,compiler):
 	mak.write("\n")
 	mak.close()
 	
-
-
-import sys,getopt,os
-
-
-
+#==============================================================================
+#
+#==============================================================================
 if __name__=='__main__':
-	# lists	
-	headers=[]
-	sources=[]
-	libraries=[]
-	compiler=['NULL','NULL']
 	#
 	argc = len(sys.argv)
 	args=sys.argv
 	optlist, args = getopt.getopt(sys.argv[1:],'',
 		[
-		'with-inc-dir=',
-		'with-inc-nam=',
-		'with-lib-dir=',
-		'with-lib-nam=',
-		'with-cxx-cmp=',
-		'with-cxx-opt='
+		'with-inc-path=',
+		'with-lib-path=',
+		'with-lib-name=',
+		'with-cxx-comp=',
+		'with-cxx-opts='
 		])
-	setProjectFiles(headers,sources)
-	setExternalFiles(headers,libraries,optlist)
-	setCompiler(compiler,optlist)
-	createMakefile(headers,sources,libraries,compiler)
+	cFiles,hPaths                =getProjectFiles()
+	hExtra,lPaths,lFiles,compiler=getConfOptions(optlist)
+	hPaths=hPaths+hExtra
+	createMakefile(cFiles,hPaths,lPaths,lFiles,compiler)
+
