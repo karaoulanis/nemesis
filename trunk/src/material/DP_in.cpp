@@ -37,13 +37,13 @@ DP_in::DP_in(double c_,double phi_)
 DP_in::~DP_in()
 {
 }
-double DP_in::get_f(const Vector& s)
+double DP_in::get_f(const Vector& s,const Vector& e)
 {
 	double D=   2*sin(phi)/(num::sq3*(3+sin(phi)));
 	double so=6*c*cos(phi)/(num::sq3*(3+sin(phi)));
 	return D*s.I1()+sqrt(s.J2())-so;
 }
-void DP_in::find_C(const Vector& s)
+void DP_in::find_C(const Vector& s,const Vector& e)
 {
 	C1=2*sin(phi)/(num::sq3*(3+sin(phi)));
 	C2=0.5/sqrt(s.J2());

@@ -33,12 +33,12 @@ class VM: public Surface
 {
 private:
 	double s0;
-	void find_C(const Vector& s);
+	void find_C(const Vector& s,const Vector& e);
 public:
 	VM();
 	VM(double s0_);
 	~VM();
 	
-	double get_f(const Vector& s);
+	double get_f(const Vector& s,const Vector& e);
 };
 #endif

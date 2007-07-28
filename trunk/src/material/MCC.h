@@ -37,14 +37,14 @@ protected:
 	double po;
 	double kappa;
 	double lambda;
-	void find_C(const Vector& s);
+	void find_C(const Vector& s,const Vector& e);
 public:
 	MCC();
 	MCC(double M_,double po_,double kappa_,double lambda_);
 	~MCC();
-	double get_f(const Vector& s);
-	const Vector& get_dfdq(const Vector& s);
-	const Matrix& get_df2dsq(const Vector& s);
-	const Matrix& get_df2dqq(const Vector& s);
+	double get_f(const Vector& s,const Vector& e);
+	const Vector& get_dfdq(const Vector& s,const Vector& e);
+	const Matrix& get_df2dsq(const Vector& s,const Vector& e);
+	const Matrix& get_df2dqq(const Vector& s,const Vector& e);
 };
 #endif
