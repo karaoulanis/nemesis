@@ -34,12 +34,12 @@ class DP_in: public Surface
 private:
 	double c;
 	double phi;
-	void find_C(const Vector& s);
+	void find_C(const Vector& s,const Vector& e);
 public:
 	DP_in();
 	DP_in(double c_,double phi_);
 	~DP_in();
 	
-	double get_f(const Vector& s);
+	double get_f(const Vector& s,const Vector& e);
 };
 #endif

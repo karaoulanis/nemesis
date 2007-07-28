@@ -39,13 +39,13 @@ MCC::MCC(double M_,double po_,double kappa_,double lambda_)
 MCC::~MCC()
 {
 }
-double MCC::get_f(const Vector& s)
+double MCC::get_f(const Vector& s,const Vector& e)
 {
 	double q=s.q();
 	double p=s.p();
 	return q*q+M*M*p*(p-po);
 }
-void MCC::find_C(const Vector& s)
+void MCC::find_C(const Vector& s,const Vector& e)
 {
 	C1=1/3.*M*M*(2/3.*s.I1()+po);
 	C2=0.;
@@ -54,17 +54,17 @@ void MCC::find_C(const Vector& s)
 	C22=3.;
 	C23=0.; C32=0.; C33=0.;
 }
-const Vector& MCC::get_dfdq(const Vector& s)
+const Vector& MCC::get_dfdq(const Vector& s,const Vector& e)
 {
 	static Vector ret(6,0.);
 	return ret;
 }
-const Matrix& MCC::get_df2dsq(const Vector& s)
+const Matrix& MCC::get_df2dsq(const Vector& s,const Vector& e)
 {
 	static Matrix ret(6,6,0.);
 	return ret;
 }
-const Matrix& MCC::get_df2dqq(const Vector& s)
+const Matrix& MCC::get_df2dqq(const Vector& s,const Vector& e)
 {
 	static Matrix ret(6,6,0.);
 	return ret;

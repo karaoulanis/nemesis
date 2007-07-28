@@ -36,11 +36,11 @@ TC::TC(double t_)
 TC::~TC()
 {
 }
-double TC::get_f(const Vector& s)
+double TC::get_f(const Vector& s,const Vector& e)
 {
 	return t+s.I1();
 }
-const Vector& TC::get_dfds(const Vector& s)
+const Vector& TC::get_dfds(const Vector& s,const Vector& e)
 {
 	myVector[0]=1.0;
 	myVector[1]=1.0;

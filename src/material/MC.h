@@ -35,12 +35,12 @@ class MC: public Surface
 protected:
 	double c;
 	double phi;
-	void find_C(const Vector& s);
+	void find_C(const Vector& s,const Vector& e);
 	virtual void find_A(const Vector& s,double& A,double& dA,double& d2A)=0;
 public:
 	MC();
 	MC(double c_,double phi_);
 	~MC();
-	double get_f(const Vector& s);
+	double get_f(const Vector& s,const Vector& e);
 };
 #endif

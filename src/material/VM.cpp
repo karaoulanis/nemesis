@@ -36,11 +36,11 @@ VM::VM(double s0_)
 VM::~VM()
 {
 }
-double VM::get_f(const Vector& s)
+double VM::get_f(const Vector& s,const Vector& e)
 {
 	return num::sq3*sqrt(s.J2())-s0;
 }
-void VM::find_C(const Vector& s)
+void VM::find_C(const Vector& s,const Vector& e)
 {
 	C1=0.;
 	C2=sqrt(0.75)/sqrt(s.J2());

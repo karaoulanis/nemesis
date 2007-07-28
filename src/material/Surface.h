@@ -41,18 +41,18 @@ protected:
 	static double C11,C23,C32,C22,C33;
 	void find_a(const Vector& s);
 	void find_da(const Vector& s);
-	virtual void find_C(const Vector& s);
+	virtual void find_C(const Vector& s,const Vector& e);
 	bool active;
 public:
 	Surface();
 	virtual ~Surface();
 
-	virtual double get_f(const Vector& s)=0;
-	virtual const Vector& get_dfds(const Vector& s);
-	virtual const Vector& get_dfdq(const Vector& s);
-	virtual const Matrix& get_df2dss(const Vector& s);
-	virtual const Matrix& get_df2dsq(const Vector& s);
-	virtual const Matrix& get_df2dqq(const Vector& s);
+	virtual double get_f(const Vector& s,const Vector& e)=0;
+	virtual const Vector& get_dfds(const Vector& s,const Vector& e);
+	virtual const Vector& get_dfdq(const Vector& s,const Vector& e);
+	virtual const Matrix& get_df2dss(const Vector& s,const Vector& e);
+	virtual const Matrix& get_df2dsq(const Vector& s,const Vector& e);
+	virtual const Matrix& get_df2dqq(const Vector& s,const Vector& e);
 
 	void setActive(bool b)	{active=b;}
 	bool isActive()			{return active;}
