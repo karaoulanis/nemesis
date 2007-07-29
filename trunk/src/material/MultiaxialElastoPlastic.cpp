@@ -47,8 +47,9 @@ MultiaxialElastoPlastic::MultiaxialElastoPlastic(int ID,int elasticID)
 	eTrial.resize(6,0.);
 	ePTrial.resize(6,0.);	ePConvg.resize(6,0.);
 	qTrial.resize(6,0.);	qConvg.resize(6,0.);
-	aTrial.resize(6,0.);	aConvg.resize(6,0.);
+	aTrial=0.;				aConvg=0.;
 	plastic=false;
+	nHardeningVariables=0;
 }
 MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
 {
@@ -93,7 +94,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 	Matrix invCel=Inverse(Cel);
 	Matrix A(7,7,0.);
 	ePTrial=ePConvg;
-	aTrial[0]=aConvg[0];
+	aTrial=aConvg;
 	double dg=0;
 	Surface* fS=fSurfaces[0];
 	Surface* gS=gSurfaces[0];
@@ -125,7 +126,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 		// Convergence check
 		if(tmp.twonorm()<tol1 && abs(fS->get_f(sTrial,ePTrial))<tol2)
 		{
-			aTrial[0]+=dg;
+			aTrial+=dg;
 			break;
 		}
 		// Jacobian
@@ -160,8 +161,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	Matrix invCel=Inverse(Cel);
 	
 	ePTrial=ePConvg;
-	aTrial[0]=0.;
-//	aTrial[0]=aConvg[0];
+	aTrial=aConvg;
 
 	//double& dg=aTrial[0];
 	double dg=0.;
@@ -209,8 +209,15 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		// Step 5: Compute elastic moduli and consistent tangent moduli
 		//=====================================================================
 		// Matrix A 
-		Matrix A(6,6,0.);
+		Matrix A(6+nHardeningVariables,6+nHardeningVariables,0.);
 		A.append(invCel+dg*(gS->get_df2dss(sTrial,ePTrial)),0,0);
+		if(nHardeningVariables>0)
+		{
+			Vector v=dg*(gS->get_df2dsq(sTrial,ePTrial));
+			for(int i=0;i<6;i++) A(i,6)=v[i];
+			for(int i=0;i<6;i++) A(6,i)=v[i];
+			A(7,7)=dg*(gS->get_H(sTrial,ePTrial)+gS->get_df2dqq(sTrial,ePTrial));
+		}
 		A=Inverse(A);
 
 		//=====================================================================
@@ -395,7 +402,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 		for(unsigned a=0;a<fSurfaces.size();a++)
 			if(fSurfaces[a]->isActive()) dg[a]+=ddg[a];
 	}
-	if(k==nIter) cout<<"FAILED"<<endl;
+//	if(k==nIter) cout<<"FAILED"<<endl;
 //	if(k==nIter)
 //	{
 //		cout.precision(12);
@@ -600,5 +607,5 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 		for(unsigned a=0;a<fSurfaces.size();a++)
 			if(fSurfaces[a]->isActive()) dg[a]+=ddg[a];
 	}
-	if(k==nIter) cout<<"FAILED"<<endl;
+//	if(k==nIter) cout<<"FAILED"<<endl;
 }

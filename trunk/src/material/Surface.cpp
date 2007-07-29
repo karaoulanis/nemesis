@@ -105,15 +105,14 @@ void Surface::find_C(const Vector& s,const Vector& e)
 }
 const Vector& Surface::get_dfds(const Vector& s,const Vector& e)
 {
-	this->find_C(s);
+	this->find_C(s,e);
 	this->find_a(s);
 	myVector=C1*a1+C2*a2+C3*a3;
 	return myVector;
 }
-const Vector& Surface::get_dfdq(const Vector& s,const Vector& e)
+const double  Surface::get_dfdq(const Vector& s,const Vector& e)
 {
-	myVector.clear();
-	return myVector;
+	return 0;
 }
 const Matrix& Surface::get_df2dss(const Vector& s,const Vector& e)
 {
@@ -127,13 +126,16 @@ const Matrix& Surface::get_df2dss(const Vector& s,const Vector& e)
 						  +C33*VVT(a3,a3);
 	return myMatrix;
 }
-const Matrix& Surface::get_df2dsq(const Vector& s,const Vector& e)
+const Vector& Surface::get_df2dsq(const Vector& s,const Vector& e)
 {
-	myMatrix.clear();
-	return myMatrix;
+	myVector.clear();
+	return myVector;
 }
-const Matrix& Surface::get_df2dqq(const Vector& s,const Vector& e)
+const double  Surface::get_df2dqq(const Vector& s,const Vector& e)
 {
-	myMatrix.clear();
-	return myMatrix;
+	return 0;
+}
+const double  Surface::get_H(const Vector& s,const Vector& e)
+{
+	return 0;
 }
