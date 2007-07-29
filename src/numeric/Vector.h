@@ -513,10 +513,10 @@ public:
 		#ifdef _DEBUG
 		array_size_check(size_,6);
 		#endif
-		double sb=(data_[0]+data_[1]+data_[2])/3.;
-		double sx=data_[0]-sb;
-		double sy=data_[1]-sb;
-		double sz=data_[2]-sb;
+		double sm=(data_[0]+data_[1]+data_[2])/3.;
+		double sx=data_[0]-sm;
+		double sy=data_[1]-sm;
+		double sz=data_[2]-sm;
 		return 0.5*(sx*sx+sy*sy+sz*sz)
 				+data_[3]*data_[3]+data_[4]*data_[4]+data_[5]*data_[5];
 	}
@@ -529,10 +529,10 @@ public:
 		#ifdef _DEBUG
 		array_size_check(size_,6);
 		#endif
-		double sb=(data_[0]+data_[1]+data_[2])/3.;
-		double sx=data_[0]-sb;
-		double sy=data_[1]-sb;
-		double sz=data_[2]-sb;
+		double sm=(data_[0]+data_[1]+data_[2])/3.;
+		double sx=data_[0]-sm;
+		double sy=data_[1]-sm;
+		double sz=data_[2]-sm;
 		return sx*sy*sz+2.*data_[3]*data_[4]*data_[5]
 				-sx*data_[4]*data_[4]
 				-sy*data_[5]*data_[5]
@@ -553,10 +553,10 @@ public:
 		if(abs(facJ3)>1e10)
 		{
 			double fac=.001;
-			double sb=(data_[0]+data_[1]+data_[2])/3.0;
-			double sx=fac*(data_[0]-sb);
-			double sy=fac*(data_[1]-sb);
-			double sz=fac*(data_[2]-sb);
+			double sm=(data_[0]+data_[1]+data_[2])/3.0;
+			double sx=fac*(data_[0]-sm);
+			double sy=fac*(data_[1]-sm);
+			double sz=fac*(data_[2]-sm);
 			double txy=fac*data_[3];
 			double tyz=fac*data_[4];
 			double tzx=fac*data_[5];
