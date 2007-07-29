@@ -1,4 +1,4 @@
-REM ~ mingw32-make clean
+mingw32-make clean
 @REM ~ mingw32-make -k
 
 configure.py 	--with-inc-path="../../ext/sqlite-3.4.0"             ^

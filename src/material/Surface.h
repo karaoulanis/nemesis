@@ -49,10 +49,11 @@ public:
 
 	virtual double get_f(const Vector& s,const Vector& e)=0;
 	virtual const Vector& get_dfds(const Vector& s,const Vector& e);
-	virtual const Vector& get_dfdq(const Vector& s,const Vector& e);
+	virtual const double  get_dfdq(const Vector& s,const Vector& e);
 	virtual const Matrix& get_df2dss(const Vector& s,const Vector& e);
-	virtual const Matrix& get_df2dsq(const Vector& s,const Vector& e);
-	virtual const Matrix& get_df2dqq(const Vector& s,const Vector& e);
+	virtual const Vector& get_df2dsq(const Vector& s,const Vector& e);
+	virtual const double  get_df2dqq(const Vector& s,const Vector& e);
+	virtual const double  get_H(const Vector& s,const Vector& e);
 
 	void setActive(bool b)	{active=b;}
 	bool isActive()			{return active;}

@@ -41,8 +41,9 @@ protected:
 	Vector eTrial;
 	Vector ePTrial,ePConvg;
 	Vector qTrial,qConvg;
-	Vector aTrial,aConvg;
+	double aTrial,aConvg;
 	bool plastic;
+	int nHardeningVariables;
 
 	std::vector<Surface*> fSurfaces;
 	std::vector<Surface*> gSurfaces;
