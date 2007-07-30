@@ -553,7 +553,7 @@
 					RelativePath="..\..\src\material\DruckerPrager.h">
 				</File>
 				<File
-					RelativePath="..\..\src\material\ModifiedCamCaly.cpp">
+					RelativePath="..\..\src\material\ModifiedCamClay.cpp">
 				</File>
 				<File
 					RelativePath="..\..\src\material\ModifiedCamClay.h">
