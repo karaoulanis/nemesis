@@ -43,6 +43,7 @@ ModifiedCamClay::ModifiedCamClay(int ID,int elasticID,double M,double po,double 
 	gSurfaces.push_back(new MCC(M,po,kappa,lambda));
 	// Material tag
 	myTag=TAG_NONE;
+	nHardeningVariables=1;
 }
 ModifiedCamClay::~ModifiedCamClay()
 {

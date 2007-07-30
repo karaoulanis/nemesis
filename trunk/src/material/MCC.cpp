@@ -50,7 +50,7 @@ double MCC::get_f(const Vector& s,const Vector& e)
 void MCC::find_C(const Vector& s,const Vector& e)
 {
 	C1=1/3.*M*M*(2/3.*s.I1()+po);
-	C2=0.;
+	C2=3.;
 	C3=0.;
 	C11=2./9.*M*M;
 	C22=3.;
@@ -58,12 +58,12 @@ void MCC::find_C(const Vector& s,const Vector& e)
 }
 const double  MCC::get_dfdq(const Vector& s,const Vector& e)
 {
-	double dfda=(po/(kappa-lambda))*exp(e.I1()/(kappa-lambda));
+	double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
 	return num::d13*M*M*s.I1()*dfda;
 }
 const Vector& MCC::get_df2dsq(const Vector& s,const Vector& e)
 {
-	double dfda=(po/(kappa-lambda))*exp(e.I1()/(kappa-lambda));
+	double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
 	double c=num::d13*M*M*s.I1()*dfda;
 	static Vector ret(6,0.);
 	ret.clear();
@@ -73,13 +73,18 @@ const Vector& MCC::get_df2dsq(const Vector& s,const Vector& e)
 }
 const double  MCC::get_df2dqq(const Vector& s,const Vector& e)
 {
-	double dfda=(po/(kappa-lambda))*exp(e.I1()/(kappa-lambda));
-	double d2fda2=(po/(kappa-lambda))*dfda;
+	double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
+	double d2fda2=(po/(lambda-kappa))*dfda;
 	return num::d13*M*M*s.I1()*d2fda2;
 }
 const double  MCC::get_H(const Vector& s,const Vector& e)
 {
+
 	Vector r=this->get_dfds(s,e);
-	double dfda=(po/(kappa-lambda))*exp(e.I1()/(kappa-lambda));
+//	cout<<s<<endl;;
+//	cout<<e<<endl;;
+//	cout<<r<<endl;;
+
+	double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
 	return num::d13*M*M*dfda*(r[0]+r[1]+r[2]);
 }

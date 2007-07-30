@@ -613,10 +613,10 @@ static PyObject* pyMaterial_UniaxialCyclic(PyObject *self,PyObject *args)
 static PyObject* pyMaterial_VonMises(PyObject *self,PyObject *args)
 {
 	int id,elasticId;
-	double s0;
-    if(!PyArg_ParseTuple(args,"iid",&id,&elasticId,&s0)) 
+	double s0,K;
+    if(!PyArg_ParseTuple(args,"iidd",&id,&elasticId,&s0,&K)) 
 		return NULL;
-	Material* pMaterial=new VonMises(id,elasticId,s0);
+	Material* pMaterial=new VonMises(id,elasticId,s0,K);
 	pD->add(pD->getMaterials(),pMaterial);
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);

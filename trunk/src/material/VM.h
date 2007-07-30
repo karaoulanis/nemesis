@@ -33,12 +33,17 @@ class VM: public Surface
 {
 private:
 	double s0;
+	double K;
 	void find_C(const Vector& s,const Vector& e);
 public:
 	VM();
-	VM(double s0_);
+	VM(double s0_,double K_);
 	~VM();
 	
 	double get_f(const Vector& s,const Vector& e);
+	const double  get_dfdq(const Vector& s,const Vector& e);
+	const Vector& get_df2dsq(const Vector& s,const Vector& e);
+	const double  get_df2dqq(const Vector& s,const Vector& e);
+	const double  get_H(const Vector& s,const Vector& e);
 };
 #endif
