@@ -1,4 +1,85 @@
 *******************************************************************************
+Version        : 0.9.06
+Released       : 31.07.07
+Added files    : 26
+Modified files : 116
+Removed files  : 2
+Comments       :
+*******************************************************************************
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|  134|Minor changes. Tag 0.9.06        |   0|   2|   0|Fotios.Karaoulanis    |
+|     |created.                         |    |    |    |                      |
+|  133|Changed typo in                  |   1|   1|   1|Fotios.Karaoulanis    |
+|     |ModifiedCamClay.cpp.             |    |    |    |                      |
+|  132|First implementation of isotropic|   0|  13|   0|Fotios.Karaoulanis    |
+|     |hardening in Von-Mises material. |    |    |    |                      |
+|     |Minor updates to configure.py.   |    |    |    |                      |
+|  131|Removed shadowed declarations.   |   0|   1|   0|Fotios.Karaoulanis    |
+|  130|Updated return map algorithm.    |   0|   8|   0|Fotios.Karaoulanis    |
+|     |Implemented flow vectors in      |    |    |    |                      |
+|     |Cam-Clay. Updated                |    |    |    |                      |
+|     |build.win32.bat. Compiles again  |    |    |    |                      |
+|     |without error with mingw 3.4.2.  |    |    |    |                      |
+|  129|Added ePTrial where it was       |   0|  14|   0|Fotios.Karaoulanis    |
+|     |needed.                          |    |    |    |                      |
+|  128|Added ePTrial where it was       |   0|   1|   0|Fotios.Karaoulanis    |
+|     |needed.                          |    |    |    |                      |
+|  127|Fixed p deviatoric in Vector.h.  |   0|   1|   0|Fotios.Karaoulanis    |
+|  126|Updated configure.py. Initial    |   2|   1|   0|Fotios.Karaoulanis    |
+|     |import of a batch file for       |    |    |    |                      |
+|     |building in win32. Added obj     |    |    |    |                      |
+|     |directory (empty, needed for *.o |    |    |    |                      |
+|     |files).                          |    |    |    |                      |
+|  125|Changed footer.html info (doxygen|   0|   1|   0|Fotios.Karaoulanis    |
+|     |documentation).                  |    |    |    |                      |
+|  124|Included Cam-Clay Material to    |   1|  14|   0|Fotios.Karaoulanis    |
+|     |Parser.                          |    |    |    |                      |
+|  123|Added 1d material sample.        |   1|   0|   0|Fotios.Karaoulanis    |
+|  122|Added Modified Cam-Clay Material.|   2|   2|   0|Fotios.Karaoulanis    |
+|  121|Work on Modified Cam-Clay        |   0|   4|   0|Fotios.Karaoulanis    |
+|     |surface. Minor changes in        |    |    |    |                      |
+|     |Vector.h.                        |    |    |    |                      |
+|  120|Initial import of Modified       |   2|   0|   0|Fotios.Karaoulanis    |
+|     |Cam-Clay surface.                |    |    |    |                      |
+|  119|Imported material examples.      |   4|   1|   0|Fotios.Karaoulanis    |
+|  118|Minor modifications to           |   0|   1|   0|Fotios.Karaoulanis    |
+|     |doxyfile.dat.                    |    |    |    |                      |
+|  117|Introduced non-associative       |   0|   1|   0|Fotios.Karaoulanis    |
+|     |hardening in single yield surface|    |    |    |                      |
+|     |return mapping.                  |    |    |    |                      |
+|  116|Updated doxygen documentation.   |   1|   1|   0|Fotios.Karaoulanis    |
+|  115|Implemented p (hydrostatic) and q|   0|   1|   0|Fotios.Karaoulanis    |
+|     |(deviatoric) invariants.         |    |    |    |                      |
+|  114|Initial import of configure.py   |   1|   0|   0|Fotios.Karaoulanis    |
+|     |(works quite well with mingw).   |    |    |    |                      |
+|  113|Updated MultiSurface plasticity  |   0|   3|   0|Fotios.Karaoulanis    |
+|     |(almost finished plain           |    |    |    |                      |
+|     |multi-surface).                  |    |    |    |                      |
+|  112|Updated MultiSurface plasticity  |   0|   4|   0|Fotios.Karaoulanis    |
+|     |(not finished yet).              |    |    |    |                      |
+|  111|Updated Drucker Prager material. |   0|  11|   0|Fotios.Karaoulanis    |
+|     |Introduced DruckerPrager()       |    |    |    |                      |
+|     |command into the Parser.         |    |    |    |                      |
+|  110|Initial import of Drucker-Prager |   6|   4|   0|Fotios.Karaoulanis    |
+|     |material. Updated commit in      |    |    |    |                      |
+|     |Static Analysis.                 |    |    |    |                      |
+|  109|Work in MultiaxialElastoPlastic  |   0|   7|   0|Fotios.Karaoulanis    |
+|     |materials. Fixed a bug in        |    |    |    |                      |
+|     |Matrix.h.                        |    |    |    |                      |
+|  108|Updated license files and nemesis|   4|   3|   0|Fotios.Karaoulanis    |
+|     |Win32 installer.                 |    |    |    |                      |
+|  107|Added Tracker to                 |   1|   5|   1|Fotios.Karaoulanis    |
+|     |UniaxialElastoPlastic Material.  |    |    |    |                      |
+|     |Renamed sample.dxf to            |    |    |    |                      |
+|     |nemesis.dxf.                     |    |    |    |                      |
+|  106|Minor changes and documentation  |   0|  11|   0|Fotios.Karaoulanis    |
+|     |updates.                         |    |    |    |                      |
++-----+------------------------------------------------+----------------------+
+
+
+*******************************************************************************
 Version        : 0.9.05
 Released       : 11.05.07
 Added files    : 15
