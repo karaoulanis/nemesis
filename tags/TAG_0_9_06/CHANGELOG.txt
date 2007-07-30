@@ -1,0 +1,211 @@
+*******************************************************************************
+Version        : 0.9.05
+Released       : 11.05.07
+Added files    : 15
+Modified files : 119
+Removed files  : 7
+Comments       :
+*******************************************************************************
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|  104|Changed version to 0.9.5.        |   0|   1|   0|Fotios.Karaoulanis    |
+|  103|Minor fixes. Now compiles with no|   0|  10|   0|Fotios.Karaoulanis    |
+|     |warnings with mingw gcc 3.4.2.   |    |    |    |                      |
+|  102|Added elemental tracker.         |   0|  10|   0|Fotios.Karaoulanis    |
+|  101|Removed previous Trackers.       |   0|  11|   4|Fotios.Karaoulanis    |
+|     |Introduced new Tracker. Added to |    |    |    |                      |
+|     |Node.                            |    |    |    |                      |
+|  100|Nodal/Elemental Tracker initial  |   4|   2|   0|Fotios.Karaoulanis    |
+|     |import.                          |    |    |    |                      |
+|   99|Minor changes.                   |   0|   3|   0|Fotios.Karaoulanis    |
+|   98|Added virtual destructor to      |   0|   2|   0|Fotios.Karaoulanis    |
+|     |FEObject.                        |    |    |    |                      |
+|   97|Updated doxyfile.dat. Built      |   1|   0|   1|Fotios.Karaoulanis    |
+|     |documentation.                   |    |    |    |                      |
+|   96|Changed coordinate names to x,y,z|   0|   8|   0|Fotios.Karaoulanis    |
+|     |and r,s,t,w in MatPoint.         |    |    |    |                      |
+|   95|Added label and consistentTags in|   0|   4|   0|Fotios.Karaoulanis    |
+|     |FEObject.                        |    |    |    |                      |
+|   94|Imported plane stress material.  |   2|   0|   0|Fotios.Karaoulanis    |
+|   93|minor modifications in           |   0|   1|   0|Fotios.Karaoulanis    |
+|     |material.sdof.slv.               |    |    |    |                      |
+|   92|Added SDofMAterial. SDofElement  |   3|   8|   0|Fotios.Karaoulanis    |
+|     |reimplemented.                   |    |    |    |                      |
+|   91|Removed myMatID from Elements.   |   0|   2|   0|Fotios.Karaoulanis    |
+|   90|Added CHANGELOG.txt.             |   1|   0|   0|Fotios.Karaoulanis    |
+|   89|Added domain.state               |   2|   5|   0|Fotios.Karaoulanis    |
+|     |command/example.                 |    |    |    |                      |
+|   88|Updated gravity functionality.   |   0|   4|   0|Fotios.Karaoulanis    |
+|   87|Replaced SolverException by      |   0|  29|   0|Fotios.Karaoulanis    |
+|     |SException.                      |    |    |    |                      |
+|   86|Replaced SolverException by      |   2|   0|   2|Fotios.Karaoulanis    |
+|     |SException.                      |    |    |    |                      |
+|   85|Reduced tab/indent size to 4 in  |   0|   1|   0|Fotios.Karaoulanis    |
+|     |SciTe.                           |    |    |    |                      |
+|   84|Updated to sqlite 3.40. Ignored  |   0|   1|   0|Fotios.Karaoulanis    |
+|     |standard library libcd.lib.      |    |    |    |                      |
+|   83|Updated to Scite 1.74            |   0|   2|   0|Fotios.Karaoulanis    |
+|   82|Moved Python.h inclusion at the  |   0|   1|   0|Fotios.Karaoulanis    |
+|     |beginning.                       |    |    |    |                      |
+|   81|Added endline in the end of file |   0|   1|   0|Fotios.Karaoulanis    |
+|     |(gcc warning).                   |    |    |    |                      |
+|   80|Added endline in the end of file |   0|   1|   0|Fotios.Karaoulanis    |
+|     |(gcc warning).                   |    |    |    |                      |
+|   79|Initialized two member boolean   |   0|   1|   0|Fotios.Karaoulanis    |
+|     |variables.                       |    |    |    |                      |
+|   78|Fixed bug caused by              |   0|   2|   0|Fotios.Karaoulanis    |
+|     |non-initialization of theSize.   |    |    |    |                      |
+|   77|Minor modifications.             |   0|   3|   0|Fotios.Karaoulanis    |
+|   76|Replaced old trigen.py by a new  |   0|   1|   0|Fotios.Karaoulanis    |
+|     |one.                             |    |    |    |                      |
+|   75|Last commit before replaced      |   0|   1|   0|Fotios.Karaoulanis    |
+|     |trigen.py by new.                |    |    |    |                      |
+|   74|Exclude beams from contributing  |   0|   2|   0|Fotios.Karaoulanis    |
+|     |to nodal stress vector.          |    |    |    |                      |
+|   73|Updated license info.            |   0|   1|   0|Fotios.Karaoulanis    |
+|   72|Updated to                       |   0|   1|   0|Fotios.Karaoulanis    |
+|     |Boost-1.34.0/SQLite-3.3.17.      |    |    |    |                      |
+|     |Removed PETSc/MPI.               |    |    |    |                      |
++-----+------------------------------------------------+----------------------+
+
+
+*******************************************************************************
+Version        : 0.9.04
+Released       : 31.05.07
+Added files    : 9
+Modified files : 32
+Removed files  : 0
+Comments       :
+*******************************************************************************
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|   70|Tag 0.9.04 created.              |   0|   2|   0|Fotios.Karaoulanis    |
+|   69|Increased facK to 10e-12.        |   0|   1|   0|Fotios.Karaoulanis    |
+|   68|Minor changes.                   |   0|   0|   3|Fotios.Karaoulanis    |
+|   67|Added free_table that caused a   |   0|   1|   0|Fotios.Karaoulanis    |
+|     |memory leak.                     |    |    |    |                      |
+|   66|Added xG,yG in Triangle6.        |   0|   1|   0|Fotios.Karaoulanis    |
+|   65|Added *.txt extension in         |   2|   0|   0|Fotios.Karaoulanis    |
+|     |README/LISENCE files.            |    |    |    |                      |
+|   64|Initial commit of vs 2003        |   2|   0|   0|Fotios.Karaoulanis    |
+|     |solution files.                  |    |    |    |                      |
+|   63|Minor improvements.              |   1|   1|   0|Fotios.Karaoulanis    |
+|   62|Removed mpich2.lib.              |   0|   1|   0|Fotios.Karaoulanis    |
+|   61|Minor changes.                   |   0|   1|   0|Fotios.Karaoulanis    |
+|   60|Output window below in SciTe.    |   0|   1|   0|Fotios.Karaoulanis    |
+|   59|Let groups be defined by material|   0|  20|   0|Fotios.Karaoulanis    |
+|     |ids.                             |    |    |    |                      |
+|   58|Minor enhancements.              |   0|   1|   0|Fotios.Karaoulanis    |
+|   57|Updated README.                  |   0|   1|   0|Fotios.Karaoulanis    |
+|   56|Minor enhancements.              |   0|   1|   0|Fotios.Karaoulanis    |
+|   55|Imported SciTe files.            |   4|   0|   0|Fotios.Karaoulanis    |
++-----+------------------------------------------------+----------------------+
+
+
+*******************************************************************************
+Version        : 0.9.03
+Released       : 29.05.07
+Added files    : 2
+Modified files : 14
+Removed files  : 0
+Comments       :
+*******************************************************************************
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|   53|Minor changes.                   |   0|   1|   0|Fotios.Karaoulanis    |
+|   52|Included beam2t/beam3t.          |   0|   1|   0|Fotios.Karaoulanis    |
+|   51|Updated version to 0.9.03.       |   0|   1|   0|Fotios.Karaoulanis    |
+|   50|Minor enhancements.              |   0|   2|   0|Fotios.Karaoulanis    |
+|   49|Updated import from dxf.         |   0|   1|   0|Fotios.Karaoulanis    |
+|   48|Changed introduction info and    |   0|   2|   0|Fotios.Karaoulanis    |
+|     |updated to v.0.9.02.             |    |    |    |                      |
+|   47|Added Timoshenko.h.              |   0|   1|   0|Fotios.Karaoulanis    |
+|     |Timoshenko.cpp.                  |    |    |    |                      |
+|   46|Minor changes in Timoshenko2d.   |   0|   2|   0|Fotios.Karaoulanis    |
+|   45|Added element.beam3t command.    |   0|   2|   0|Fotios.Karaoulanis    |
+|   44|Added Timoshenko tag.            |   0|   1|   0|Fotios.Karaoulanis    |
+|   43|Initial implementation of 2d,    |   2|   0|   0|Fotios.Karaoulanis    |
+|     |2/3-node Timoshenko beam.        |    |    |    |                      |
++-----+------------------------------------------------+----------------------+
+
+
+*******************************************************************************
+Version        : 0.9.02
+Released       : 17.05.07
+Added files    : 7
+Modified files : 16
+Removed files  : 0
+Comments       :
+*******************************************************************************
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|   41|ADD: Initial import of           |   3|   0|   0|Fotios.Karaoulanis    |
+|     |nemesis.cui/nsi files.           |    |    |    |                      |
+|   40|Updated importDxf command.       |   0|   1|   0|Fotios.Karaoulanis    |
+|   39|Added a python script interface  |   3|   0|   0|Fotios.Karaoulanis    |
+|     |to Triangle Mesh Generator.      |    |    |    |                      |
+|   38|Changed typo (plane              |   0|   2|   0|Fotios.Karaoulanis    |
+|     |stress/strain). Added plane      |    |    |    |                      |
+|     |stress.                          |    |    |    |                      |
+|   37|Added plane stress material.     |   0|   1|   0|Fotios.Karaoulanis    |
+|   36|Changed typo (plane              |   0|   1|   0|Fotios.Karaoulanis    |
+|     |strain/stress).                  |    |    |    |                      |
+|   35|Implemented stress recovery.     |   0|   1|   0|Fotios.Karaoulanis    |
+|   34|Added NEWS file.                 |   1|   0|   0|Fotios.Karaoulanis    |
+|   33|Minor modifications in Trangle6. |   0|   1|   0|Fotios.Karaoulanis    |
+|   32|Added support for Triangle6.     |   0|   1|   0|Fotios.Karaoulanis    |
+|   31|Added one more constructor for   |   0|   2|   0|Fotios.Karaoulanis    |
+|     |MatPoint.                        |    |    |    |                      |
+|   30|Changes in stiffness Matrix.     |   0|   2|   0|Fotios.Karaoulanis    |
+|   29|Added Triangle6 tag.             |   0|   1|   0|Fotios.Karaoulanis    |
+|   28|Re-Implemented getDispIncrm().   |   0|   1|   0|Fotios.Karaoulanis    |
+|   27|Added Triangle6 command.         |   0|   2|   0|Fotios.Karaoulanis    |
++-----+------------------------------------------------+----------------------+
+
+
+*******************************************************************************
+Version        : 0.9.01
+Released       : 09.05.07
+Added files    : 2
+Modified files : 2
+Removed files  : 0
+Comments       :
+*******************************************************************************
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|   25|Minor modifications.             |   0|   1|   0|Fotios.Karaoulanis    |
+|   24|Added quadratic triangle.        |   2|   0|   0|Fotios.Karaoulanis    |
+|   23|Minor modifications in main.cpp. |   0|   1|   0|Fotios.Karaoulanis    |
++-----+------------------------------------------------+----------------------+
+
+
+*******************************************************************************
+Version        : 0.9.00
+Released       : 05.04.07
+Added files    : 292
+Modified files : 3
+Removed files  : 1
+Comments       :
+*******************************************************************************
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|   21|Initial import (doxygen          |   2|   0|   0|Fotios.Karaoulanis    |
+|     |documentation).                  |    |    |    |                      |
+|   20|Updated version to 0.9.01.       |   0|   1|   0|Fotios.Karaoulanis    |
+|   17|Changed version to 0.9.00        |   0|   1|   0|Fotios.Karaoulanis    |
+|   16|Clean up. Removed acml.          |   0|   1|   0|Fotios.Karaoulanis    |
+|   15|Initial import (dat files).      |  18|   0|   0|Fotios.Karaoulanis    |
+|   14|Initial import.                  |   3|   0|   0|Fotios.Karaoulanis    |
+|   13|Created folder remotely          |   1|   0|   0|Fotios.Karaoulanis    |
+|   12|Created folder remotely.         |   1|   0|   0|Fotios.Karaoulanis    |
+|   11|Initial import.                  |   1|   0|   0|Fotios.Karaoulanis    |
+|   10|Removed file/folder.             |   0|   0|   1|Fotios.Karaoulanis    |
+|    9|Initial import.                  | 263|   0|   0|Fotios.Karaoulanis    |
+|    1|Initial directory structure.     |   3|   0|   0|Fotios.Karaoulanis    |
++-----+------------------------------------------------+----------------------+

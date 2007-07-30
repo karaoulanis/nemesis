@@ -1,0 +1,27 @@
+
+
+domain.clear()
+domain.dim(1)
+material.uniElastoPlastic(1,1000.,0.25,20.,0.0005,1000,500.,0.,100000.)
+#material.uniElastic(1,1000.)
+section.user(1,1.)
+node.add(1,0.)
+node.add(2,1.)
+element.bar2s(1,1,2,1,1)
+node.fix(1,1)
+
+analysis.static()
+algorithm.fNR()
+control.load(1.0)
+convergence.set(40,1e-3,1e-6,1e-6)
+
+lc.define(1,10.,"kkk")
+load.node(2,1,1500.)
+
+res=[]
+for i in range(1,300):
+	analysis.run(1,1)
+	res.append([i,node.data(2)["disp"][0]])
+
+for i in range(len(res)):
+	print res[i][0],res[i][1]
