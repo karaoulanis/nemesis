@@ -70,13 +70,13 @@ void UniaxialElastoPlastic::setStrain(const double De)
 	double sy  =MatParams[ 2];
 	double Hiso=MatParams[ 3];
 	//double Hkin=MatParams[ 4];
-	double eta =MatParams[ 5];
+	//double eta =MatParams[ 5];
 
 	// Return mapping
 	///@todo: implement kinematic hardening+viscoplasticity
 	sTrial=sConvg+E*De;
 	double xi=sTrial;//-Hkin*q;
-	double dt=pD->getTimeIncr();
+	//double dt=pD->getTimeIncr();
 	fTrial=fabs(xi)-(Hiso*aConvg+sy);
 	aTrial=aConvg;
 	ePTrial=ePConvg;

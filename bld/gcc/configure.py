@@ -206,10 +206,10 @@ def createMakefile(cFiles,hPaths,lPaths,lFiles,compiler):
 		k=k+1
 		cpath=i[0]
 		cfile=i[1].replace('.cpp','')
-		cdepd=cpath+'/'+cfile+'.cpp'
+		cdeps=cpath+'/'+cfile+'.cpp'
 		for i in i[2]:
-			cdepd=cdepd+' '+i
-		mak.write('$(ODIR)/%s.o: %s/%s.cpp %s\n'%(cfile,cpath,cfile,cdepd))
+			cdeps=cdeps+' '+i
+		mak.write('$(ODIR)/%s.o: %s/%s.cpp %s\n'%(cfile,cpath,cfile,cdeps))
 		mak.write('\t@echo Compiling [% 4i/% 4i]: %s.cpp\n'%(k,len(cFiles),cfile))
 		mak.write('\t@$(CC) $(CCFLAGS) $(INCS) -c %s/%s.cpp -o $(ODIR)/%s.o\n'%(cpath,cfile,cfile))
 		mak.write("\n")

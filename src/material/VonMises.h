@@ -37,7 +37,7 @@ class VonMises: public MultiaxialElastoPlastic
 private:
 public:
 	VonMises();
-	VonMises(int ID,int elasticID,double s0);
+	VonMises(int ID,int elasticID,double s0,double K);
 	MultiaxialMaterial* getClone();
 	~VonMises();
 };
