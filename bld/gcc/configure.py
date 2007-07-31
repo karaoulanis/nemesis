@@ -1,9 +1,28 @@
 
-import os
+import os,sys,getopt
 from time import time,ctime
-import sys,getopt,os
 
+#==============================================================================
+# Get project files
+#==============================================================================
 def getProjectFiles():
+	""" Get files/paths from a given directory.
+		1.	First walk down the directory tree and gather all paths/files 
+			matching a pattern.
+		2.	Then apply some platform specific changes (eg. replace \\ by \ in 
+			win32.)
+		3. 	Rearrange so as 'main.cpp' to be the first in the lists.
+		4. 	Gather dependencies for each file found. This involves opening the
+			file and reading includes.
+		5. 	If any includes are not in the given directory, (eg. std, boost 
+			etc.) remove them from the lists.
+		6. 	Run iteratively and include to each dependency with its 
+			dependencies. This should stop when no other inclusions take place.
+		7.	Now replace each dependency with path+dependency.
+		8. 	Create an array as [c_path,c_filename,[depedencies...],...].
+		9. 	Create an array as [h_path,...].
+		10. Return the above arrays.
+	"""
 	#--------------------------------------------------------------------------
 	# Find paths/names at a directory according to some pattern
 	#--------------------------------------------------------------------------
@@ -56,7 +75,7 @@ def getProjectFiles():
 	#--------------------------------------------------------------------------
 	# Find dependencies iteratively
 	#--------------------------------------------------------------------------
-	print "Finding dependencies              :",
+	print "Finding dependencies (passes)     :",
 	k=1
 	while k!=0:
 		k=0
@@ -95,9 +114,18 @@ def getProjectFiles():
 				hPaths.append(paths[i])
 	return cFiles,hPaths
 #==============================================================================
-#
+# Get configure options 
 #==============================================================================
 def getConfOptions(optlist):
+	""" Get options from the command line.
+		Four arrays are returned:
+		hPaths	: Holds paths to external included directories.	[path,...]
+		lPaths	: Holds paths to library directories.			[path,...]
+		lFiles	: Holds library names.							[lib,... ]
+		compiler: Holds compiler and compiler options.	 		[compiler,opts]
+		Default values are needed for the compiler list, in case nothing is
+		passed through the options list.
+	"""
 	#--------------------------------------------------------------------------
 	# List and defaults
 	#--------------------------------------------------------------------------
@@ -134,9 +162,17 @@ def getConfOptions(optlist):
 	return hPaths,lPaths,lFiles,compiler
 
 #==============================================================================
-#
+# Create Makefile
 #==============================================================================
 def createMakefile(cFiles,hPaths,lPaths,lFiles,compiler):
+	""" Create the Makefile.
+		Parameters:
+		cFiles	: [path,file,[depedencies],...]
+		hPaths	: [path,...]
+		lPaths	: [path,...]
+		lFiles	: [lib,...]
+		compiler: [compiler,options]
+	"""
 	mak = open("Makefile", 'w+')
 	mak.write("#===============================================================\n")
 	mak.write("# Makefile for nemesis                                          \n")
@@ -225,10 +261,9 @@ def createMakefile(cFiles,hPaths,lPaths,lFiles,compiler):
 	mak.close()
 	
 #==============================================================================
-#
+# Main function
 #==============================================================================
 if __name__=='__main__':
-	#
 	argc = len(sys.argv)
 	args=sys.argv
 	optlist, args = getopt.getopt(sys.argv[1:],'',
@@ -241,6 +276,6 @@ if __name__=='__main__':
 		])
 	cFiles,hPaths                =getProjectFiles()
 	hExtra,lPaths,lFiles,compiler=getConfOptions(optlist)
-	hPaths=hPaths+hExtra
+	hPaths                       =hPaths+hExtra
 	createMakefile(cFiles,hPaths,lPaths,lFiles,compiler)
 

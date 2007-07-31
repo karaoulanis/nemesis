@@ -45,7 +45,6 @@ double VM::get_f(const Vector& s,const Vector& e)
 }
 void VM::find_C(const Vector& s,const Vector& e)
 {
-	double d=sqrt(s.J2());
 	C1=0.;
 	C2=sqrt(0.75)/sqrt(s.J2());
 	C3=0.;
