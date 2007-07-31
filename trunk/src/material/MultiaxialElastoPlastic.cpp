@@ -75,7 +75,7 @@ void MultiaxialElastoPlastic::setStrain(const Vector& De)
  */
 void MultiaxialElastoPlastic::commit()
 {
-	//eTotal=eTrial; ///@todo
+	eTotal=eTrial; ///@todo
 	ePConvg=ePTrial;
 	sConvg=sTrial;
 	qConvg=qTrial;
@@ -164,8 +164,10 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	Surface* fS=fSurfaces[0];
 	Surface* gS=gSurfaces[0];
 	
-	Vector enn=invCel*sConvg+ePConvg+De;
-	eTotal+=De;
+	//Vector enn=invCel*sConvg+ePConvg+De;
+	eTrial=eTotal+De;
+	//cout<<"====> "<<(enn-eTrial).twonorm()<<endl;
+	Vector enn=eTrial;///@todo CHECK!!!!
 
 	//=========================================================================
 	// Step 1: Compute trial stress
@@ -173,7 +175,6 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	Vector ss=sTrial;
 	//sTrial=sConvg+Cel*De;
 	sTrial=Cel*enn;
- 
 	//=========================================================================
 	// Step 2: Check for plastic process
 	//=========================================================================

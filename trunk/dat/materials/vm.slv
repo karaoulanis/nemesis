@@ -27,21 +27,24 @@ load.node(3,2,-1/3.)
 
 analysis.static()
 imposer.elimination()
-control.load(100.0)
 #~ control.arcLength(3,-0.0001)
-#~ control.disp(3,2,-0.1)
+control.disp(3,2,-2.5/15)
+#~ control.load(100.0)
 algorithm.iNR()
 convergence.set(90,1e-4,1e-6,1e-6)
 analysis.run(1,15)
 
-analysis.static()
-imposer.elimination()
-control.load(-100.0)
-#~ control.arcLength(3,-0.0001)
-#~ control.disp(3,2,-0.1)
-algorithm.iNR()
-convergence.set(90,1e-4,1e-6,1e-6)
-analysis.run(1,50)
+
+#~ lc.define(2,0.)
+#~ load.node(4,2,-1/6.)
+#~ load.node(3,2,-1/3.)
+
+#~ analysis.static()
+#~ imposer.elimination()
+#~ control.load(-100.0)
+#~ algorithm.iNR()
+#~ convergence.set(30,1e-4,1e-1,1e-1)
+#~ analysis.run(2,1)
 
 print "u3x = ",node.data(3)['disp'][0]
 print "u3y = ",node.data(3)['disp'][1]
@@ -50,5 +53,5 @@ print "u4y = ",node.data(4)['disp'][1]
 db.store("mc")
 db.exportToVtk("mc")
 import tracker
-tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"vm.txt")
-#tracker.plotElemPath(1,3,'eps_y','sigma_y',-1.0,-1.0)
+#tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"vm2.txt")
+tracker.plotElemPath(1,3,'eps_y','sigma_y',-1.0,-1.0,"vm2.txt")
