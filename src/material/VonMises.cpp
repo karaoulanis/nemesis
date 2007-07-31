@@ -41,7 +41,7 @@ VonMises::VonMises(int ID,int elasticID,double s0,double K)
 	gSurfaces.push_back(new VM(s0,K));
 	// Material tag
 	//myTag=TAG_MATERIAL_MOHR_COULOMB;
-	nHardeningVariables=0;
+	nHardeningVariables=1;
 }
 VonMises::~VonMises()
 {
