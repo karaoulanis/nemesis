@@ -159,22 +159,19 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	
 	ePTrial=ePConvg;
 	aTrial=aConvg;
-
 	double dg=0.;
+
 	Surface* fS=fSurfaces[0];
 	Surface* gS=gSurfaces[0];
 	
 	//Vector enn=invCel*sConvg+ePConvg+De;
 	eTrial=eTotal+De;
-	//cout<<"====> "<<(enn-eTrial).twonorm()<<endl;
-	Vector enn=eTrial;///@todo CHECK!!!!
 
 	//=========================================================================
 	// Step 1: Compute trial stress
 	//=========================================================================
 	Vector ss=sTrial;
-	//sTrial=sConvg+Cel*De;
-	sTrial=Cel*enn;
+	sTrial=Cel*(eTrial-ePTrial);
 	//=========================================================================
 	// Step 2: Check for plastic process
 	//=========================================================================
@@ -182,11 +179,10 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 
 	for(int k=0;k<nIter;k++)
 	{
-		//cout<<aTrial<<' '<<dg<<endl;
 		//=====================================================================
 		// Step 3: Evaluate flow rule, hardening law and residuals
 		//=====================================================================
-		sTrial=Cel*(enn-ePTrial);
+		sTrial=Cel*(eTrial-ePTrial);
 		static Vector R(6,0.);
 		if(nHardeningVariables>0)
 			R.resize(7,0.);
