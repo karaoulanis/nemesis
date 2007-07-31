@@ -41,6 +41,7 @@ double VM::get_f(const Vector& s,const Vector& e)
 {
 	Vector r=this->get_dfds(s,e);
 	double eq=sqrt(2/3.)*e.twonorm();
+	//cout<<num::sq3*sqrt(s.J2())-(s0+K*eq)<<endl;
 	return num::sq3*sqrt(s.J2())-(s0+K*eq);
 }
 void VM::find_C(const Vector& s,const Vector& e)

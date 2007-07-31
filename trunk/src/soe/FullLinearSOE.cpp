@@ -85,6 +85,11 @@ int FullLinearSOE::solve()
 	int INFO;
 	char c='N';
 	//this->print();
+//	for(int i=0;i<theSize;i++)
+//	{
+//        cout<<B[i]<<endl;
+//	}
+//	cout<<endl;
 	X=B;
 	// Compute the LU factorization of the band matrix A.
 	if(!isLUFactored)

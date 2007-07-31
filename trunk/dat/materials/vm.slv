@@ -4,7 +4,7 @@ from math import pi
 domain.axisymmetric(1.0)
 db.SQLite("mc")
 material.elastic( 1, 1000, 0.)
-material.vonMises( 2, 1, 1000.,500.)
+material.vonMises( 2, 1, 1000.,0.)
 
 node.add( 1, 0., 0.)
 node.add( 2, 1., 0.)
@@ -32,19 +32,32 @@ control.disp(3,2,-2.5/15)
 #~ control.load(100.0)
 algorithm.iNR()
 convergence.set(90,1e-4,1e-6,1e-6)
-analysis.run(1,15)
+analysis.run(1,30)
 
 
-#~ lc.define(2,0.)
-#~ load.node(4,2,-1/6.)
-#~ load.node(3,2,-1/3.)
+lc.define(2,0.)
+load.node(4,2,-1/6.)
+load.node(3,2,-1/3.)
 
-#~ analysis.static()
-#~ imposer.elimination()
+analysis.static()
+imposer.elimination()
 #~ control.load(-100.0)
-#~ algorithm.iNR()
-#~ convergence.set(30,1e-4,1e-1,1e-1)
-#~ analysis.run(2,1)
+control.disp(3,2,2.5/15)
+algorithm.iNR()
+convergence.set(30,1e-4,1e-1,1e-1)
+analysis.run(2,50)
+
+lc.define(3,0.)
+load.node(4,2,-1/6.)
+load.node(3,2,-1/3.)
+
+analysis.static()
+imposer.elimination()
+#~ control.load(-100.0)
+control.disp(3,2,-2.5/15)
+algorithm.iNR()
+convergence.set(30,1e-4,1e-1,1e-1)
+analysis.run(3,60)
 
 print "u3x = ",node.data(3)['disp'][0]
 print "u3y = ",node.data(3)['disp'][1]
