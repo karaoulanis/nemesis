@@ -249,6 +249,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		ePTrial+=dEp;
 		aTrial+=da;
 		dg+=ddg;
+		cout<<aTrial<<'\t'<<sqrt(2/3.)*ePTrial.twonorm()<<endl;
 	}
 }
 /**
@@ -612,4 +613,8 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 			if(fSurfaces[a]->isActive()) dg[a]+=ddg[a];
 	}
 //	if(k==nIter) cout<<"FAILED"<<endl;
+}
+void MultiaxialElastoPlastic::updateStateVariable()
+{
+	double eq=sqrt(2/3.)*ePTrial.twonorm();
 }
