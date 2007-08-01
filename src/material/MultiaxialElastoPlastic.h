@@ -62,6 +62,8 @@ public:
 	void commit();
 	const Matrix& getC();
 	bool isPlastic()							{return plastic;}
+
+	void updateStateVariable();
 	
 	// Tracker member functions
 	void track();

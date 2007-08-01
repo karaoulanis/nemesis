@@ -55,7 +55,7 @@ void VM::find_C(const Vector& s,const Vector& e)
 }
 const double  VM::get_dfdq(const Vector& s,const Vector& e)
 {
-	return -K;
+	return -1;
 }
 const Vector& VM::get_df2dsq(const Vector& s,const Vector& e)
 {
