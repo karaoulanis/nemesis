@@ -36,7 +36,7 @@ TC::TC(double t_)
 TC::~TC()
 {
 }
-double TC::get_f(const Vector& s,const Vector& e)
+double TC::get_f(const Vector& s,const double q)
 {
 	return t+s.I1();
 }

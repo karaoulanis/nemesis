@@ -63,8 +63,9 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
  */ 
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
-	this->returnMapSYS(De);
 	//this->returnMapTest(De);
+	//this->returnMapSYS(De);
+	this->returnMapSYS2(De);
 	//this->returnMapMYS2(De);
 	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
@@ -96,6 +97,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 	ePTrial=ePConvg;
 	aTrial=aConvg;
 	double dg=0;
+	double q=500.*aTrial;
 	Surface* fS=fSurfaces[0];
 	Surface* gS=gSurfaces[0];
 	//double eta=1000.;
@@ -104,17 +106,16 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 	//=========================================================================
 	// Step 1: Compute trial stress
 	//=========================================================================
-	sTrial=sConvg+Cel*De;
-	Vector ss(6,0.);
-	ss=sTrial;
-	eTotal+=De;
+	eTrial=eTotal+De;
+	sTrial=Cel*(eTrial-ePTrial);
 	
 	//=========================================================================
 	// Step 2: Check for plastic process
 	//=========================================================================
-	if(fS->get_f(sTrial,ePTrial)<=0) return;
+	if(fS->get_f(sTrial,q)<=0) return;
  	for(int k=0;k<nIter;k++)
 	{
+		q=500.*aTrial;
 		// Residual Vector 
 		Vector tmp(6,0.);
 		tmp=De;
@@ -122,11 +123,13 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 		tmp-=dg*(gS->get_dfds(sTrial,ePTrial));
 		R.clear();
 		R.append(tmp,0);
-		R[6]=-(fS->get_f(sTrial,ePTrial));
+		R[6]=-(fS->get_f(sTrial,q));
 		// Convergence check
-		if(tmp.twonorm()<tol1 && abs(fS->get_f(sTrial,ePTrial))<tol2)
+		if(tmp.twonorm()<tol1 && abs(fS->get_f(sTrial,q))<tol2)
 		{
 			aTrial+=dg;
+			ePTrial+=dg*gS->get_dfds(sTrial,ePTrial);
+			cout<<dg<<endl;
 			break;
 		}
 		// Jacobian
@@ -134,10 +137,19 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De)
 		A.append(invCel+dg*(gS->get_df2dss(sTrial,ePTrial)),0,0);
 		for(int i=0;i<6;i++) A(6,i)=(fS->get_dfds(sTrial,ePTrial))[i];
 		for(int i=0;i<6;i++) A(i,6)=(gS->get_dfds(sTrial,ePTrial))[i];
+		// efac
+		Vector r=fS->get_dfds(sTrial,ePTrial);
+		double rm=r[0]+r[1]+r[2];
+		r[0]-=rm;	r[1]-=rm;	r[2]-=rm;
+		double efac=sqrt(2./3.)*sqrt(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+0.5*(r[3]*r[3]+r[4]*r[4]+r[5]*r[5]));
+		// H
+		double H=-500.;
+		A(6,6)=H*efac;
 		Vector x(7,0.);
 		A.solve(x,R);
 		for(int i=0;i<6;i++) sTrial[i]+=x[i];
 		dg+=x[6];
+		aTrial+=dg*efac;
 	}
 //	sTrial=(ss+(dt/eta)*sTrial)/(1+(dt/eta));
 }
@@ -160,6 +172,8 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	ePTrial=ePConvg;
 	aTrial=aConvg;
 	double dg=0.;
+	Vector& r=ePTrial;
+	double eq=sqrt(2/3.)*sqrt(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+0.5*r[3]*r[3]+0.5*r[4]*r[4]+0.5*r[5]*r[5]);
 
 	Surface* fS=fSurfaces[0];
 	Surface* gS=gSurfaces[0];
@@ -175,7 +189,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	//=========================================================================
 	// Step 2: Check for plastic process
 	//=========================================================================
-	if(fS->get_f(sTrial,ePTrial)<=0) return;
+	if(fS->get_f(sTrial,eq)<=0) return;
 
 	for(int k=0;k<nIter;k++)
 	{
@@ -183,6 +197,8 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		// Step 3: Evaluate flow rule, hardening law and residuals
 		//=====================================================================
 		sTrial=Cel*(eTrial-ePTrial);
+
+	    eq=sqrt(2/3.)*sqrt(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+0.5*r[3]*r[3]+0.5*r[4]*r[4]+0.5*r[5]*r[5]);
 		static Vector R(6,0.);
 		if(nHardeningVariables>0)
 			R.resize(7,0.);
@@ -195,7 +211,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		//=====================================================================
 		// Step 4: Check convergence
 		//=====================================================================
-		if(R.twonorm()<tol1 && abs(fS->get_f(sTrial,ePTrial))<tol2) break;
+		if(R.twonorm()<tol1 && abs(fS->get_f(sTrial,eq))<tol2) break;
 
 		//=====================================================================
 		// Step 5: Compute elastic moduli and consistent tangent moduli
@@ -208,8 +224,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 			Vector v=dg*(gS->get_df2dsq(sTrial,ePTrial));
 			for(int i=0;i<6;i++) A(i,6)=v[i];
 			for(int i=0;i<6;i++) A(6,i)=v[i];
-			A(6,6)=gS->get_H(sTrial,ePTrial)+dg*(gS->get_df2dqq(sTrial,ePTrial));
-			//cout<<A(6,6)<<endl;
+			A(6,6)=-500.;//gS->get_H(sTrial,ePTrial)+dg*(gS->get_df2dqq(sTrial,ePTrial));
 		}
 		//cout<<A<<endl;
 		//cout<<endl;
@@ -222,9 +237,10 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		Vector vf(6+nHardeningVariables,0);
 		vf.append(fS->get_dfds(sTrial,ePTrial),0);
 		for(int i=0;i<nHardeningVariables;i++)
-			vf[6+i]=fS->get_dfdq(sTrial,ePTrial);
-		double fy=fS->get_f(sTrial,ePTrial);
+			vf[6+i]=-1.;//fS->get_dfdq(sTrial,ePTrial);
+		double fy=fS->get_f(sTrial,eq);
 		double ddg=(fy-vf*(A*R))/(vf*(A*vf));
+		//cout<<ddg<<endl;
 
 
 		//=====================================================================
@@ -249,9 +265,121 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		ePTrial+=dEp;
 		aTrial+=da;
 		dg+=ddg;
-		cout<<aTrial<<'\t'<<sqrt(2/3.)*ePTrial.twonorm()<<endl;
 	}
+	//cout<<aTrial<<' '<<dg<<' '<<(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+0.5*r[3]*r[3]+0.5*r[4]*r[4]+0.5*r[5]*r[5])<<endl;
 }
+void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
+{
+	static LogFile log("SYS.log");
+	//=========================================================================
+	// Setup
+	//=========================================================================
+	int nIter=25;
+	double tol1=1e-6;
+	double tol2=1e-6;
+	Matrix Cel   =myElastic->getC();
+	Matrix invCel=Inverse(Cel);
+	
+	ePTrial=ePConvg;
+	aTrial =aConvg;
+	double dg=0.;
+
+	Surface* fS=fSurfaces[0];
+	Surface* gS=gSurfaces[0];
+	
+	//Vector enn=invCel*sConvg+ePConvg+De;
+	eTrial=eTotal+De;
+	Vector& r=ePTrial;
+
+	//=========================================================================
+	// Step 1: Compute trial stress
+	//=========================================================================
+	sTrial=Cel*(eTrial-ePTrial);
+	
+	//=========================================================================
+	// Step 2: Check for plastic process
+	//=========================================================================
+	if(fS->get_f(sTrial,aTrial)<=0) return;
+
+	for(int k=0;k<nIter;k++)
+	{
+		//=====================================================================
+		// Step 3: Evaluate flow rule, hardening law and residuals
+		//=====================================================================
+		sTrial=Cel*(eTrial-ePTrial);
+
+		static Vector R(6,0.);
+		if(nHardeningVariables>0)
+			R.resize(7,0.);
+		R.clear();
+		Vector temp=De;
+		temp-=invCel*(sTrial-sConvg);
+		temp-=dg*(gS->get_dfds(sTrial,ePTrial));
+		R.append(temp,0);
+		if(nHardeningVariables>0)
+		{	
+			R[6]=-aTrial+aConvg+dg*(gS->get_dfdq(sTrial,ePTrial));
+		}
+		//=====================================================================
+		// Step 4: Check convergence
+		//=====================================================================
+		if(R.twonorm()<tol1 && abs(fS->get_f(sTrial,aTrial))<tol2) break;
+
+		//=====================================================================
+		// Step 5: Compute elastic moduli and consistent tangent moduli
+		//=====================================================================
+		// Matrix A 
+		Matrix A(6+nHardeningVariables,6+nHardeningVariables,0.);
+		A.append(invCel+dg*(gS->get_df2dss(sTrial,ePTrial)),0,0);
+		if(nHardeningVariables>0)
+		{
+			Vector v=dg*(gS->get_df2dsq(sTrial,ePTrial));
+			for(int i=0;i<6;i++) A(i,6)=v[i];
+			for(int i=0;i<6;i++) A(6,i)=v[i];
+			A(6,6)=-1.;
+		}
+		//A.report();
+		A=Inverse(A);
+
+		//=====================================================================
+		// Step 6: Obtain increment to consistency parameter
+		//=====================================================================
+		Vector vf(6+nHardeningVariables,0);
+		Vector v0(6+nHardeningVariables,0);
+		
+		v0.append(fS->get_dfds(sTrial,ePTrial),0);
+		v0[6]=-500.;
+		
+		vf.append(fS->get_dfds(sTrial,ePTrial),0);
+		for(int i=0;i<nHardeningVariables;i++)
+			vf[6+i]=fS->get_dfdq(sTrial,ePTrial);
+		
+		double fy=fS->get_f(sTrial,aTrial);
+		
+		double ddg=(fy-v0*(A*R))/(v0*(A*vf));
+
+
+		//=====================================================================
+		// Step 7: Obtain incremental plastic strains and internal variables
+		//=====================================================================
+		Vector x(6+nHardeningVariables,0.);
+		x=A*(-R-ddg*vf);
+
+		Vector dEp(6,0.);
+		for(int i=0;i<6;i++) dEp[i]=x[i];
+		dEp=-invCel*dEp;
+        double da=x[6];
+
+		//=====================================================================
+		// Step 8: Update
+		//=====================================================================
+		ePTrial+=dEp;
+		aTrial+=da;
+		dg+=ddg;
+	}
+	//cout<<aTrial<<'\t'<<dg<<'\t'<<(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+0.5*r[3]*r[3]+0.5*r[4]*r[4]+0.5*r[5]*r[5])<<endl;
+}
+
 /**
  * Multiple surface return mapping.
  * @param De Vector containing total strain increment.
@@ -270,6 +398,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 	Matrix invCel=Inverse(Cel);
 	Vector ddg(12,0.);
 	Vector dg(12,0.);
+	double q=0.;
 	
 	ePTrial=ePConvg;//todo:CHECK!!!!
 	//aTrial=aConvg;	//todo:CHECK!!!!
@@ -290,7 +419,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 	//=========================================================================
 	int nActiveSurfaces=0;
 	for(unsigned i=0;i<fSurfaces.size();i++)
-		if(fSurfaces[i]->get_f(sTrial,ePTrial)>0)
+		if(fSurfaces[i]->get_f(sTrial,q)>0)
 		{
 			fSurfaces[i]->setActive(true);
 			nActiveSurfaces++;
@@ -324,7 +453,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 		bool converged=false;
 		if(R.twonorm()>tol1) converged=false;
 		for(unsigned a=0;a<fSurfaces.size();a++)
-			if(fSurfaces[a]->isActive() && abs(fSurfaces[a]->get_f(sTrial,ePTrial))<tol2)
+			if(fSurfaces[a]->isActive() && abs(fSurfaces[a]->get_f(sTrial,q))<tol2)
 				converged=true;
 		if(converged) break;
 
@@ -368,7 +497,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De)
 				if(fSurfaces[a]->isActive() && fSurfaces[b]->isActive())
 				{
 					Vector vb=fSurfaces[b]->get_dfds(sTrial,ePTrial);
-					double fb=fSurfaces[b]->get_f(sTrial,ePTrial);
+					double fb=fSurfaces[b]->get_f(sTrial,q);
 					ddg[a]+=Gab(a,b)*(fb-vb*(A*R));					
 				}
 
@@ -467,6 +596,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 	Matrix Cel   =myElastic->getC();
 	Matrix invCel=Inverse(Cel);
 	Vector dg(12,0.);
+	double q=0;
 	
 	ePTrial=ePConvg;//todo:CHECK!!!!
 	//aTrial=aConvg;	//todo:CHECK!!!!
@@ -487,7 +617,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 	//=========================================================================
 	int nActiveSurfaces=0;
 	for(unsigned i=0;i<fSurfaces.size();i++)
-		if(fSurfaces[i]->get_f(sTrial,ePTrial)>0)
+		if(fSurfaces[i]->get_f(sTrial,q)>0)
 		{
 			fSurfaces[i]->setActive(true);
 			nActiveSurfaces++;
@@ -522,7 +652,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 		bool converged=false;
 		if(R.twonorm()>tol1) converged=false;
 		for(unsigned a=0;a<fSurfaces.size();a++)
-			if(fSurfaces[a]->isActive() && abs(fSurfaces[a]->get_f(sTrial,ePTrial))<tol2)
+			if(fSurfaces[a]->isActive() && abs(fSurfaces[a]->get_f(sTrial,q))<tol2)
 				converged=true;
 		if(converged) break;
 		///cout<<"Res : "<<R.twonorm()<<' '<<abs(fSurfaces[0]->get_f(sTrial))<<endl;
@@ -566,7 +696,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 				if(fSurfaces[a]->isActive() && fSurfaces[b]->isActive())
 				{
 					Vector vb=fSurfaces[b]->get_dfds(sTrial,ePTrial);
-					double fb=fSurfaces[b]->get_f(sTrial,ePTrial);
+					double fb=fSurfaces[b]->get_f(sTrial,q);
 					rhs[a]+=(fb-vb*(A*R));					
 				}
 		bool reset=false;

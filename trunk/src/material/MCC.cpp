@@ -39,11 +39,11 @@ MCC::MCC(double M_,double po_,double kappa_,double lambda_)
 MCC::~MCC()
 {
 }
-double MCC::get_f(const Vector& s,const Vector& e)
+double MCC::get_f(const Vector& s,const double q_)
 {
 	double q=s.q();
 	double p=s.p();
-	double pc=po*exp(e.I1()/(kappa+lambda));
+	double pc=0.;//po*exp(e.I1()/(kappa+lambda));
 	//cout<<e.I1()<<endl;
 	return q*q+M*M*p*(p-pc);
 }

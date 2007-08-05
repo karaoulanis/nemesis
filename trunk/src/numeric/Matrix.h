@@ -648,6 +648,14 @@ public:
 		for(int i=0;i<m.size_;i++) s<<m.data_[i]<<' ';
 		return s;
 	}
+	void report()
+	{
+		for(int i=0;i<rows_;i++)
+		{
+			for(int j=0;j<cols_;j++)	cout<<data_[i*cols_+j]<<' ';
+			cout<<endl;
+		}
+	}
 };
 /**
 * Returns an identity matrix of size n.

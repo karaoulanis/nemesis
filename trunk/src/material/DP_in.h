@@ -40,6 +40,6 @@ public:
 	DP_in(double c_,double phi_);
 	~DP_in();
 	
-	double get_f(const Vector& s,const Vector& e);
+	double get_f(const Vector& s,const double q);
 };
 #endif

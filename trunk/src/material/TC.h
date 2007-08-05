@@ -38,7 +38,7 @@ public:
 	TC(double t_);
 	~TC();
 
-	double get_f(const Vector& s,const Vector& e);
+	double get_f(const Vector& s,const double q);
 	const Vector& get_dfds(const Vector& s,const Vector& e);
 };
 #endif

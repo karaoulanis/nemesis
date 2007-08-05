@@ -37,7 +37,7 @@ DP_in::DP_in(double c_,double phi_)
 DP_in::~DP_in()
 {
 }
-double DP_in::get_f(const Vector& s,const Vector& e)
+double DP_in::get_f(const Vector& s,const double q)
 {
 	double D=   2*sin(phi)/(num::sq3*(3+sin(phi)));
 	double so=6*c*cos(phi)/(num::sq3*(3+sin(phi)));

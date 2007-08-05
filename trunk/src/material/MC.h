@@ -41,6 +41,6 @@ public:
 	MC();
 	MC(double c_,double phi_);
 	~MC();
-	double get_f(const Vector& s,const Vector& e);
+	double get_f(const Vector& s,const double q);
 };
 #endif
