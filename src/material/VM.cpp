@@ -37,12 +37,12 @@ VM::VM(double s0_,double K_)
 VM::~VM()
 {
 }
-double VM::get_f(const Vector& s,const Vector& e)
+double VM::get_f(const Vector& s,const double kappa)
 {
-	Vector r=this->get_dfds(s,e);
-	double eq=sqrt(2/3.)*e.twonorm();
+//	Vector r=this->get_dfds(s,q);
+	//double eq=sqrt(2/3.)*e.twonorm();
 	//cout<<num::sq3*sqrt(s.J2())-(s0+K*eq)<<endl;
-	return num::sq3*sqrt(s.J2())-(s0+K*eq);
+	return num::sq3*sqrt(s.J2())-s0-K*kappa;//*sqrt(3./2.);
 }
 void VM::find_C(const Vector& s,const Vector& e)
 {
@@ -55,7 +55,7 @@ void VM::find_C(const Vector& s,const Vector& e)
 }
 const double  VM::get_dfdq(const Vector& s,const Vector& e)
 {
-	return -1;
+	return 1;//sqrt(2./3.);
 }
 const Vector& VM::get_df2dsq(const Vector& s,const Vector& e)
 {
@@ -69,7 +69,6 @@ const double  VM::get_df2dqq(const Vector& s,const Vector& e)
 }
 const double  VM::get_H(const Vector& s,const Vector& e)
 {
-	Vector r=this->get_dfds(s,e);
-	return K;
+	return 0;
 //	return -K*sqrt(2/3.)*sqrt(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+2*r[3]*r[3]+2*r[4]*r[4]+2*r[5]*r[5]);
 }

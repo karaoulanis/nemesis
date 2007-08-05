@@ -78,7 +78,7 @@ void MC::find_C(const Vector& s,const Vector& e)
 
 	}
 }
-double MC::get_f(const Vector& s,const Vector& e)
+double MC::get_f(const Vector& s,const double q)
 {
 	double A,dA,d2A;
 	this->find_A(s,A,dA,d2A);

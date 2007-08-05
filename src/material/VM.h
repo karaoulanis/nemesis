@@ -40,7 +40,7 @@ public:
 	VM(double s0_,double K_);
 	~VM();
 	
-	double get_f(const Vector& s,const Vector& e);
+	double get_f(const Vector& s,const double q);
 	const double  get_dfdq(const Vector& s,const Vector& e);
 	const Vector& get_df2dsq(const Vector& s,const Vector& e);
 	const double  get_df2dqq(const Vector& s,const Vector& e);
