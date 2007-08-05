@@ -29,12 +29,12 @@ for steps in [25,50,110,170,250,330]:
 
 	analysis.static()
 	imposer.elimination()
-	#~ control.arcLength(3,-0.0001)
 	fac=-fac
 	control.disp(3,2,fac*0.1)
-	#~ control.load(100.0)
+	#~ control.arcLength(3,fac*0.1)
+	#~ control.load(-fac*100.0)
 	algorithm.iNR()
-	convergence.set(30,1e-4,1e-6,1e-6)
+	convergence.set(50,1e-4,1e-6,1e-6)
 	analysis.run(nlc,steps)
 
 print "u3x = ",node.data(3)['disp'][0]

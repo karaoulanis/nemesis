@@ -38,7 +38,6 @@ protected:
 	MultiaxialMaterial* myElastic;
 
 	static Matrix C;
-	Vector eTrial;
 	Vector ePTrial,ePConvg;
 	Vector qTrial,qConvg;
 	double aTrial,aConvg;

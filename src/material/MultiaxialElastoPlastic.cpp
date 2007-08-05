@@ -44,7 +44,6 @@ MultiaxialElastoPlastic::MultiaxialElastoPlastic(int ID,int elasticID)
 	MatParams[31]=myElastic->getParam(31);
 
 	// Material state
-	eTrial.resize(6,0.);
 	ePTrial.resize(6,0.);	ePConvg.resize(6,0.);
 	qTrial.resize(6,0.);	qConvg.resize(6,0.);
 	aTrial=0.;				aConvg=0.;
@@ -580,8 +579,6 @@ void MultiaxialElastoPlastic::track()
 	s<<"END "<<' ';
 	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
 }
-
-
 
 void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 {
