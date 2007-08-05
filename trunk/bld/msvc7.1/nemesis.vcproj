@@ -658,6 +658,22 @@
 						RelativePath="..\..\src\material\VM.h">
 					</File>
 				</Filter>
+				<Filter
+					Name="Evolution"
+					Filter="">
+					<File
+						RelativePath="..\..\src\material\EvolutionLaw.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\EvolutionLaw.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\LinearEquivalent.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\LinearEquivalent.h">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="MaterialItems"
