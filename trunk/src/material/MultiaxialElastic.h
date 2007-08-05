@@ -41,5 +41,7 @@ public:
 	void setStrain(const Vector& De);
 	const Matrix& getC();
 	void commit();
+	// Tracker member functions
+	void track();
 };
 #endif

@@ -36,6 +36,7 @@ MultiaxialMaterial::MultiaxialMaterial(int ID,double rho,double aT)
 {
 	sTrial.resize(6,0.);
 	sConvg.resize(6,0.);
+	eTrial.resize(6,0.);
 	eTotal.resize(6,0.);
 }
 MultiaxialMaterial::~MultiaxialMaterial()

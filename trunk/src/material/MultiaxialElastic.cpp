@@ -51,7 +51,8 @@ MultiaxialMaterial* MultiaxialElastic::getClone()
 }
 void MultiaxialElastic::setStrain(const Vector& De)
 {
-	sTrial=sConvg+(this->getC())*De;
+	eTrial=eTotal+De;
+	sTrial=(this->getC())*eTrial;
 }
 const Matrix& MultiaxialElastic::getC()
 {
@@ -71,5 +72,27 @@ const Matrix& MultiaxialElastic::getC()
 }
 void MultiaxialElastic::commit()
 {
+	eTotal=eTrial;
 	sConvg=sTrial;
+	this->track();
+}
+/**
+ * Add a record to the tracker.
+ * If \a myTracker pointer is null (no tracker is added) just return.
+ * Otherwise gather info and send them to the tracker.
+ * The domain should be already updated!
+ */
+void MultiaxialElastic::track()
+{
+	if(myTracker==0) return;
+	ostringstream s;
+	s<<"DATA "	<<' ';
+	s<<"sigm "	<<' '<<sConvg;
+	s<<"epst "	<<' '<<eTotal;
+//	s<<"epsp "	<<' '<<ePConvg;	///@todo
+//	s<<"epsv "	<<1020<<' '<<eTotal[0]+eTotal[1]+eTotal[2]<<' ';
+	s<<"p "	    <<1020<<' '<<sConvg.p()<<' ';
+	s<<"q "	    <<1020<<' '<<sConvg.q()<<' ';
+	s<<"END "<<' ';
+	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
 }
