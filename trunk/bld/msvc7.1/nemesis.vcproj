@@ -668,10 +668,10 @@
 						RelativePath="..\..\src\material\EvolutionLaw.h">
 					</File>
 					<File
-						RelativePath="..\..\src\material\LinearEquivalent.cpp">
+						RelativePath="..\..\src\material\LinearEquivalentEL.cpp">
 					</File>
 					<File
-						RelativePath="..\..\src\material\LinearEquivalent.h">
+						RelativePath="..\..\src\material\LinearEquivalentEL.h">
 					</File>
 				</Filter>
 			</Filter>

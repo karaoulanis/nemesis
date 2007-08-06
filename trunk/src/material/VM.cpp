@@ -53,22 +53,17 @@ void VM::find_C(const Vector& s,const Vector& e)
 	C22=-0.25*num::sq3*pow(s.J2(),-1.5);
 	C23=0.; C32=0.; C33=0.;
 }
-const double  VM::get_dfdq(const Vector& s,const Vector& e)
+const double  VM::get_dfda(const Vector& s,const Vector& e)
 {
 	return 1;//sqrt(2./3.);
 }
-const Vector& VM::get_df2dsq(const Vector& s,const Vector& e)
+const Vector& VM::get_df2dsa(const Vector& s,const Vector& e)
 {
 	static Vector ret(6,0.);
 	ret.clear();
     return ret;
 }
-const double  VM::get_df2dqq(const Vector& s,const Vector& e)
+const double  VM::get_df2daa(const Vector& s,const Vector& e)
 {
 	return 0.;
-}
-const double  VM::get_H(const Vector& s,const Vector& e)
-{
-	return 0;
-//	return -K*sqrt(2/3.)*sqrt(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+2*r[3]*r[3]+2*r[4]*r[4]+2*r[5]*r[5]);
 }

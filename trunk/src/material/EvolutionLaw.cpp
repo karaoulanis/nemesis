@@ -25,3 +25,9 @@
 //*****************************************************************************
 
 #include <EvolutionLaw.h>
+EvolutionLaw::EvolutionLaw()
+{
+}
+EvolutionLaw::~EvolutionLaw()
+{
+}

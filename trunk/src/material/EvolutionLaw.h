@@ -27,7 +27,6 @@
 #ifndef _EVOLUTIONLAW_H
 #define _EVOLUTIONLAW_H
 
-
 /**
  * The Evolution Law Class.
  */
@@ -35,5 +34,11 @@ class EvolutionLaw
 {
 private:
 public:
+	EvolutionLaw();
+	virtual ~EvolutionLaw();
+	
+	virtual const double get_h()=0;
+	virtual const double get_dhds()=0;
+	virtual const double get_dhda()=0;
 };
 #endif

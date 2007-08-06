@@ -27,10 +27,12 @@
 #ifndef _LINEAREQUIVALENTEL_H
 #define _LINEAREQUIVALENTEL_H
 
+#include <EvolutionLaw.h>
+
 /**
  * The Linear Equivalent Evolution Law Class.
  */
-class LinearEquivalentEL
+class LinearEquivalentEL: public EvolutionLaw
 {
 private:
 public:
