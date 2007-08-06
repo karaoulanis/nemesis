@@ -39,10 +39,7 @@ VM::~VM()
 }
 double VM::get_f(const Vector& s,const double kappa)
 {
-//	Vector r=this->get_dfds(s,q);
-	//double eq=sqrt(2/3.)*e.twonorm();
-	//cout<<num::sq3*sqrt(s.J2())-(s0+K*eq)<<endl;
-	return num::sq3*sqrt(s.J2())-s0-K*kappa;//*sqrt(3./2.);
+	return num::sq3*sqrt(s.J2())-s0-K*kappa;
 }
 void VM::find_C(const Vector& s,const Vector& e)
 {
@@ -55,7 +52,7 @@ void VM::find_C(const Vector& s,const Vector& e)
 }
 const double  VM::get_dfda(const Vector& s,const Vector& e)
 {
-	return 1;//sqrt(2./3.);
+	return -K;
 }
 const Vector& VM::get_df2dsa(const Vector& s,const Vector& e)
 {

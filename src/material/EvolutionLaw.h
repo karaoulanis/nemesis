@@ -27,6 +27,8 @@
 #ifndef _EVOLUTIONLAW_H
 #define _EVOLUTIONLAW_H
 
+#include <Vector.h>
+
 /**
  * The Evolution Law Class.
  */
@@ -37,8 +39,8 @@ public:
 	EvolutionLaw();
 	virtual ~EvolutionLaw();
 	
-	virtual const double get_h()=0;
-	virtual const double get_dhds()=0;
-	virtual const double get_dhda()=0;
+	virtual const double get_h(const Vector& v)=0;
+	virtual const double get_dhds(const Vector& sTrial,const Vector& ePTrial)=0;
+	virtual const double get_dhda(const Vector& sTrial,const Vector& ePTrial)=0;
 };
 #endif
