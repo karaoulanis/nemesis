@@ -110,7 +110,7 @@ const Vector& Surface::get_dfds(const Vector& s,const Vector& e)
 	myVector=C1*a1+C2*a2+C3*a3;
 	return myVector;
 }
-const double  Surface::get_dfdq(const Vector& s,const Vector& e)
+const double  Surface::get_dfda(const Vector& s,const Vector& e)
 {
 	return 0;
 }
@@ -126,16 +126,12 @@ const Matrix& Surface::get_df2dss(const Vector& s,const Vector& e)
 						  +C33*VVT(a3,a3);
 	return myMatrix;
 }
-const Vector& Surface::get_df2dsq(const Vector& s,const Vector& e)
+const Vector& Surface::get_df2dsa(const Vector& s,const Vector& e)
 {
 	myVector.clear();
 	return myVector;
 }
-const double  Surface::get_df2dqq(const Vector& s,const Vector& e)
-{
-	return 0;
-}
-const double  Surface::get_H(const Vector& s,const Vector& e)
+const double  Surface::get_df2daa(const Vector& s,const Vector& e)
 {
 	return 0;
 }

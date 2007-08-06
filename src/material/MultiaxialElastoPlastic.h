@@ -28,6 +28,7 @@
 #define _MULTIAXIALELASTOPLASTIC_H
 
 #include <MultiaxialMaterial.h>
+#include <LinearEquivalentEL.h>
 #include <Surface.h>
 /**
  * The MultiaxialElastoPlastic Class.
@@ -46,6 +47,8 @@ protected:
 
 	std::vector<Surface*> fSurfaces;
 	std::vector<Surface*> gSurfaces;
+	EvolutionLaw* myEvolutionLaw;
+
 	inline std::vector<Surface*> getfSurfaces()		{return fSurfaces;}
 	inline std::vector<Surface*> getgSurfaces()		{return gSurfaces;}
 	void returnMapSYS(const Vector& De);

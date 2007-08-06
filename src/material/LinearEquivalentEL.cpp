@@ -29,7 +29,7 @@
 LinearEquivalentEL::LinearEquivalentEL()
 {
 }
-~LinearEquivalentEL::LinearEquivalentEL()
+LinearEquivalentEL::~LinearEquivalentEL()
 {
 }
 const double LinearEquivalentEL::get_h()

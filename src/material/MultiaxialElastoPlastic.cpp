@@ -47,8 +47,10 @@ MultiaxialElastoPlastic::MultiaxialElastoPlastic(int ID,int elasticID)
 	ePTrial.resize(6,0.);	ePConvg.resize(6,0.);
 	qTrial.resize(6,0.);	qConvg.resize(6,0.);
 	aTrial=0.;				aConvg=0.;
+	
 	plastic=false;
 	nHardeningVariables=0;
+	myEvolutionLaw=new LinearEquivalentEL();
 }
 MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
 {
@@ -205,7 +207,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		R.append(-ePTrial+ePConvg+dg*(gS->get_dfds(sTrial,ePTrial)),0);
 		if(nHardeningVariables>0)
 		{	
-			R[6]=-aTrial+aConvg+dg*(gS->get_dfdq(sTrial,ePTrial));
+			R[6]=-aTrial+aConvg+dg*(gS->get_dfda(sTrial,ePTrial));
 		}
 		//=====================================================================
 		// Step 4: Check convergence
@@ -220,10 +222,10 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		A.append(invCel+dg*(gS->get_df2dss(sTrial,ePTrial)),0,0);
 		if(nHardeningVariables>0)
 		{
-			Vector v=dg*(gS->get_df2dsq(sTrial,ePTrial));
+			Vector v=dg*(gS->get_df2dsa(sTrial,ePTrial));
 			for(int i=0;i<6;i++) A(i,6)=v[i];
 			for(int i=0;i<6;i++) A(6,i)=v[i];
-			A(6,6)=-500.;//gS->get_H(sTrial,ePTrial)+dg*(gS->get_df2dqq(sTrial,ePTrial));
+			A(6,6)=-500.;//gS->get_H(sTrial,ePTrial)+dg*(gS->get_df2daa(sTrial,ePTrial));
 		}
 		//cout<<A<<endl;
 		//cout<<endl;
@@ -236,7 +238,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		Vector vf(6+nHardeningVariables,0);
 		vf.append(fS->get_dfds(sTrial,ePTrial),0);
 		for(int i=0;i<nHardeningVariables;i++)
-			vf[6+i]=-1.;//fS->get_dfdq(sTrial,ePTrial);
+			vf[6+i]=-1.;//fS->get_dfda(sTrial,ePTrial);
 		double fy=fS->get_f(sTrial,eq);
 		double ddg=(fy-vf*(A*R))/(vf*(A*vf));
 		//cout<<ddg<<endl;
@@ -250,7 +252,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 		tmp.append(invCel,0,0);
 		if(nHardeningVariables>0)
 		{	
-			tmp(6,6)=gS->get_H(sTrial,ePTrial);
+			//tmp(6,6)=gS->get_H(sTrial,ePTrial);
 		}
 		Vector x(6+nHardeningVariables,0.);
 		x=tmp*A*(R+ddg*vf);
@@ -317,7 +319,7 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 		R.append(temp,0);
 		if(nHardeningVariables>0)
 		{	
-			R[6]=-aTrial+aConvg+dg*(gS->get_dfdq(sTrial,ePTrial));
+			R[6]=-aTrial+aConvg+dg*(gS->get_dfda(sTrial,ePTrial));
 		}
 		//=====================================================================
 		// Step 4: Check convergence
@@ -332,7 +334,7 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 		A.append(invCel+dg*(gS->get_df2dss(sTrial,ePTrial)),0,0);
 		if(nHardeningVariables>0)
 		{
-			Vector v=dg*(gS->get_df2dsq(sTrial,ePTrial));
+			Vector v=dg*(gS->get_df2dsa(sTrial,ePTrial));
 			for(int i=0;i<6;i++) A(i,6)=v[i];
 			for(int i=0;i<6;i++) A(6,i)=v[i];
 			A(6,6)=-1.;
@@ -351,7 +353,7 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 		
 		vf.append(fS->get_dfds(sTrial,ePTrial),0);
 		for(int i=0;i<nHardeningVariables;i++)
-			vf[6+i]=fS->get_dfdq(sTrial,ePTrial);
+			vf[6+i]=fS->get_dfda(sTrial,ePTrial);
 		
 		double fy=fS->get_f(sTrial,aTrial);
 		
