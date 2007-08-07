@@ -177,7 +177,7 @@ def createMakefile(cFiles,hPaths,lPaths,lFiles,compiler):
 	mak.write("#===============================================================\n")
 	mak.write("# Makefile for nemesis                                          \n")
 	mak.write("# Maintained by : fk._	               	                       \n")
-	mak.write("# Created by    : slvMake.py [Automatically]                    \n")
+	mak.write("# Created by    : configure.py [Automatically]                  \n")
 	mak.write('# Date          : %s\n'%ctime(time()))
 	mak.write("# Version       : 1.0d                                          \n")
 	mak.write("#===============================================================\n")
@@ -198,7 +198,7 @@ def createMakefile(cFiles,hPaths,lPaths,lFiles,compiler):
 	mak.write("LDIR = ")
 	dirs=[]
 	for i in lPaths:
-		mak.write(' \\\n\t-I%s'%i)
+		mak.write(' \\\n\t-L%s'%i)
 	mak.write("\n\n")
 
 	mak.write("#===============================================================\n")
@@ -206,7 +206,7 @@ def createMakefile(cFiles,hPaths,lPaths,lFiles,compiler):
 	mak.write("#===============================================================\n")
 	mak.write("LIBS = ")
 	for i in lFiles:
-		mak.write(' \\\n\t%s'%i)
+		mak.write(' \\\n\t-l%s'%i)
 	mak.write("\n\n")
 
 	mak.write("#===============================================================\n")

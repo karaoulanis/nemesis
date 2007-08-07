@@ -43,7 +43,7 @@ double DP_out::get_f(const Vector& s,const double q)
 	double so=6*c*cos(phi)/(num::sq3*(3-sin(phi)));
 	return D*s.I1()+sqrt(s.J2())-so;
 }
-void DP_out::find_C(const Vector& s,const Vector& e)
+void DP_out::find_C(const Vector& s,const double a)
 {
 	C1=2*sin(phi)/(num::sq3*(3-sin(phi)));
 	C2=0.5/sqrt(s.J2());

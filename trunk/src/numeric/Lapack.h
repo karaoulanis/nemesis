@@ -27,6 +27,21 @@
 #ifndef _LAPACK_H
 #define _LAPACK_H
 
+#if defined(__GNUC__)
+	#define dgesv	dgesv_
+	#define dspsv	dspsv_
+	#define dgbsv	dgbsv_
+	#define dsyev	dsyev_
+	#define dgetrf	dgetrf_
+	#define dgetrs	dgetrs_
+	#define dsptrf	dsptrf_
+	#define dsptrs	dsptrs_
+	#define dgbtrf	dgbtrf_
+	#define dgbtrs	dgbtrs_
+	#define dsygv	dsygv_
+	#define dggev	dggev_
+#endif
+
 extern "C" void dgesv(int *N, int *NRHS, double *A, int *LDA, 
 			      int *IPIV, double *B, int *LDB, int *INFO);
 extern "C" void dspsv(char* UPLO, int *N, int *NRHS, double *AP, 

@@ -34,7 +34,7 @@ class DP_out: public Surface
 private:
 	double c;
 	double phi;
-	void find_C(const Vector& s,const Vector& e);
+	void find_C(const Vector& s,const double a);
 public:
 	DP_out();
 	DP_out(double c_,double phi_);

@@ -67,6 +67,7 @@ DruckerPrager::DruckerPrager(int ID,int elasticID,int type_,double c,double phi,
 	default:
 		throw SException("[nemesis:%d] %s",9999,"Invalid index %d.\n",type);
 	}
+	nHardeningVariables=1;
 	// Material tag
 	myTag=TAG_MATERIAL_DRUCKER_PRAGER;
 }
