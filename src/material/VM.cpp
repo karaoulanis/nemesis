@@ -41,7 +41,7 @@ double VM::get_f(const Vector& s,const double kappa)
 {
 	return num::sq3*sqrt(s.J2())-s0-K*kappa;
 }
-void VM::find_C(const Vector& s,const Vector& e)
+void VM::find_C(const Vector& s,const double a)
 {
 	C1=0.;
 	C2=sqrt(0.75)/sqrt(s.J2());
@@ -50,17 +50,17 @@ void VM::find_C(const Vector& s,const Vector& e)
 	C22=-0.25*num::sq3*pow(s.J2(),-1.5);
 	C23=0.; C32=0.; C33=0.;
 }
-const double  VM::get_dfda(const Vector& s,const Vector& e)
+const double  VM::get_dfda(const Vector& s,const double a)
 {
 	return -K;
 }
-const Vector& VM::get_df2dsa(const Vector& s,const Vector& e)
+const Vector& VM::get_df2dsa(const Vector& s,const double a)
 {
 	static Vector ret(6,0.);
 	ret.clear();
     return ret;
 }
-const double  VM::get_df2daa(const Vector& s,const Vector& e)
+const double  VM::get_df2daa(const Vector& s,const double a)
 {
 	return 0.;
 }

@@ -34,15 +34,15 @@ class VM: public Surface
 private:
 	double s0;
 	double K;
-	void find_C(const Vector& s,const Vector& e);
+	void find_C(const Vector& s,const double a);
 public:
 	VM();
 	VM(double s0_,double K_);
 	~VM();
 	
 	double get_f(const Vector& s,const double q);
-	const double  get_dfda(const Vector& s,const Vector& e);
-	const Vector& get_df2dsa(const Vector& s,const Vector& e);
-	const double  get_df2daa(const Vector& s,const Vector& e);
+	const double  get_dfda(const Vector& s,const double a);
+	const Vector& get_df2dsa(const Vector& s,const double a);
+	const double  get_df2daa(const Vector& s,const double a);
 };
 #endif
