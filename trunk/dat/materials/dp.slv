@@ -36,7 +36,7 @@ for steps in [30]:#,60,65]:#,170,250,330]:
 	#~ control.arcLength(3,fac*0.1)
 	#~ control.load(-fac*100.0)
 	algorithm.iNR()
-	convergence.set(50,1e-4,1e-6,1e-6)
+	convergence.set(150,1e-4,1e-6,1e-6)
 	analysis.run(nlc,steps)
 
 

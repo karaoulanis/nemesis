@@ -39,14 +39,15 @@ DP_in::~DP_in()
 }
 double DP_in::get_f(const Vector& s,const double a)
 {
-	double Kf=10.;
+	double Kf=0.01;
 	double D=   2*sin(phi+Kf*a)/(num::sq3*(3+sin(phi+Kf*a)));
 	double so=6*c*cos(phi+Kf*a)/(num::sq3*(3+sin(phi+Kf*a)));
+	cout<<phi+Kf*a<<endl;
 	return D*s.I1()+sqrt(s.J2())-so;
 }
 void DP_in::find_C(const Vector& s,const double a)
 {
-	double Kf=10.;
+	double Kf=0.01;
 	C1=2*sin(phi+Kf*a)/(num::sq3*(3+sin(phi+Kf*a)));
 	//C1=2*sin(phi)/(num::sq3*(3+sin(phi)));
 	C2=0.5/sqrt(s.J2());
@@ -57,7 +58,8 @@ void DP_in::find_C(const Vector& s,const double a)
 }
 const double  DP_in::get_dfda(const Vector& s,const double a)
 {
-	double Kc=10.;
+	double Kf=0.01;
+/*
 	double Kf=0.0075;
 	double sf=3+sin(phi+Kf*a);
 	double cf=cos(phi+Kf*a);
@@ -66,20 +68,29 @@ const double  DP_in::get_dfda(const Vector& s,const double a)
 
 	return -(d1+d2);
 	//return 0;
+*/
+	return -2*Kf*sqrt(3.)*(cos(phi+Kf*a)*s.I1()+3*c*sin(phi+Kf*a)+c)/
+		(-10-6.*sin(phi+Kf*a)+pow(cos(phi+Kf*a),2));
 }
 const Vector& DP_in::get_df2dsa(const Vector& s,const double a)
 {
 	static Vector ret(6,0.);
 	ret.clear();
+	double Kf=0.01;
+	double d=-2*Kf*sqrt(3.)*cos(phi+Kf*a)/(-10.-6.*sin(phi+Kf*a)+pow(cos(phi+Kf*a),2));
+	ret[0]=d;
+	ret[1]=d;
+	ret[2]=d;
 
+	/*
 	double Kc=0.;
-	double Kf=10.;
+	double Kf=0.01;
 	double sf=3.+sin(phi);
 	double cf=cos(phi);
 	ret[0]=(6./(sqrt(3.)*sf*sf))*cf*Kf;
 	ret[1]=(6./(sqrt(3.)*sf*sf))*cf*Kf;
 	ret[2]=(6./(sqrt(3.)*sf*sf))*cf*Kf;
-
+*/
     return ret;
 }
 const double  DP_in::get_df2daa(const Vector& s,const double a)
