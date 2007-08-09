@@ -65,7 +65,7 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
 	//this->returnMapTest(De);
-	this->returnMapSYS(De);
+	this->returnMapSYS2(De);
 	//this->returnMapMYS2(De);
 	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
@@ -260,6 +260,115 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De)
 	}
 	//cout<<aTrial<<'\t'<<dg<<'\t'<<(r[0]*r[0]+r[1]*r[1]+r[2]*r[2]+0.5*r[3]*r[3]+0.5*r[4]*r[4]+0.5*r[5]*r[5])<<endl;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+double kappa(const Vector& v,double Dlambda)
+{
+	double eq=2./3.*(v[0]*v[0]+    v[1]*v[1]+    v[2]*v[2]
+			    +0.5*v[3]*v[3]+0.5*v[4]*v[4]+0.5*v[5]*v[5]);
+	//cout<<eq<<endl;
+	return Dlambda*sqrt(eq);
+}
+double dkds(const Vector& s,double Dlambda)
+{
+	return 0.;
+}
+double dkdl(const Vector& v,double Dlambda)
+{
+	double eq=2./3.*(v[0]*v[0]+    v[1]*v[1]+    v[2]*v[2]
+			    +0.5*v[3]*v[3]+0.5*v[4]*v[4]+0.5*v[5]*v[5]);
+	cout<<eq<<endl;
+	return sqrt(eq);
+}
+void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
+{
+	//=========================================================================
+	// Setup
+	//=========================================================================
+	int nIter=25;
+	double tol1=1e-6;
+	double tol2=1e-6;
+	Matrix Cel   =myElastic->getC();
+	Matrix invCel=Inverse(Cel);
+	
+	aTrial =aConvg;
+	ePTrial=ePConvg;
+	eTrial=eTotal+De;
+	double dg=0.;
+
+	Surface* fS=fSurfaces[0];
+	Surface* gS=gSurfaces[0];
+
+	//=========================================================================
+	// Step 1: Compute trial stress
+	//=========================================================================
+	sTrial=Cel*(eTrial-ePTrial);
+	
+	//=========================================================================
+	// Step 2: Check for plastic process
+	//=========================================================================
+	if(fS->get_f(sTrial,aTrial)<=0) return;
+
+	for(int k=0;k<nIter;k++)
+	{
+		//=====================================================================
+		// Step 3: Evaluate flow rule, hardening law and residuals
+		//=====================================================================
+		sTrial=Cel*(eTrial-ePTrial);
+
+		static Vector R(8,0.);
+		Vector temp=De;
+		temp-=invCel*(sTrial-sConvg);
+		temp-=dg*(gS->get_dfds(sTrial,aTrial));
+		R.append(temp,0);
+		R[6]=-aTrial+aConvg+kappa(gS->get_dfds(sTrial,aTrial),dg);
+		R[7]=-(fS->get_f(sTrial,aTrial));
+
+		//=====================================================================
+		// Step 4: Check convergence
+		//=====================================================================
+		if(R.twonorm()<tol1 && abs(fS->get_f(sTrial,aTrial))<tol2) break;
+
+		//=====================================================================
+		// Step 5: Compute elastic moduli and consistent tangent moduli
+		//=====================================================================
+		// Matrix A 
+		Matrix A(8,8,0.);
+		A.append(invCel+dg*(gS->get_df2dss(sTrial,aTrial)),0,0);
+		for(int i=0;i<6;i++) A(i,6)=dg*(gS->get_df2dsa(sTrial,aTrial)[i]);
+		for(int i=0;i<6;i++) A(i,7)=gS->get_dfds(sTrial,aTrial)[i];
+		for(int i=0;i<6;i++) A(6,i)=0.;
+		A(6,6)=-1.;
+		A(6,7)=dkdl(gS->get_dfds(sTrial,aTrial),dg);
+		for(int i=0;i<6;i++) A(7,i)=fS->get_dfds(sTrial,aTrial)[i];
+		A(7,6)=fS->get_dfda(sTrial,aTrial);
+		A(7,7)=0.;
+		
+		//A.report();
+		Vector x(8,0.);
+		A.solve(x,R);
+
+		Vector dEp(6,0.);
+		for(int i=0;i<6;i++) dEp[i]=x[i];
+		dEp=-invCel*dEp;
+        double da=x[6];
+		double ddg=x[7];
+		//cout<<da<<'\t'<<ddg<<'\t'<<R<<endl;
+
+		//=====================================================================
+		// Step 8: Update
+		//=====================================================================
+		ePTrial+=dEp;
+		aTrial+=da;
+		dg+=ddg;
+	}
+	cout<<endl;
+}
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+
 
 /**
  * Multiple surface return mapping.
