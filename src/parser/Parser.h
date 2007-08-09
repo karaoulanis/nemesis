@@ -42,6 +42,7 @@
 #include <MohrCoulomb.h>
 #include <DruckerPrager.h>
 #include <ModifiedCamClay.h>
+#include <LadeDuncan.h>
 #include <Bar2s.h>
 #include <Bar2t.h>
 #include <Beam2e.h>

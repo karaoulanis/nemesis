@@ -278,7 +278,7 @@ double dkdl(const Vector& v,double Dlambda)
 {
 	double eq=2./3.*(v[0]*v[0]+    v[1]*v[1]+    v[2]*v[2]
 			    +0.5*v[3]*v[3]+0.5*v[4]*v[4]+0.5*v[5]*v[5]);
-	cout<<eq<<endl;
+	//cout<<eq<<endl;
 	return sqrt(eq);
 }
 void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
@@ -363,7 +363,7 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 		aTrial+=da;
 		dg+=ddg;
 	}
-	cout<<endl;
+	//cout<<endl;
 }
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
