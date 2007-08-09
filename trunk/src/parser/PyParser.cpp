@@ -658,6 +658,18 @@ static PyObject* pyMaterial_ModifiedCamClay(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_LadeDuncan(PyObject *self,PyObject *args)
+{
+	int id,elasticId;
+	double K;
+    if(!PyArg_ParseTuple(args,"iid",&id,&elasticId,&K)) 
+		return NULL;
+	Material* pMaterial=new LadeDuncan(id,elasticId,K);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyMethodDef MaterialMethods[] = 
 {
 	{"sdof",						pyMaterial_SDof,	
@@ -678,6 +690,8 @@ static PyMethodDef MaterialMethods[] =
 		METH_VARARGS,"Define a Drucker-Prager type material."},
 	{"modifiedCamClay",				pyMaterial_ModifiedCamClay,
 		METH_VARARGS,"Define a Modified Cam-Clay type material."},
+	{"LadeDuncan",					pyMaterial_LadeDuncan,
+		METH_VARARGS,"Define a Lade-Duncan type material."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************
