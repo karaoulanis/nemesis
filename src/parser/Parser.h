@@ -37,6 +37,7 @@
 #include <UniaxialElastoPlastic.h>
 #include <UniaxialCyclic.h>
 #include <MultiaxialElastic.h>
+#include <DuncanChang.h>
 #include <PlaneStress.h>
 #include <VonMises.h>
 #include <MohrCoulomb.h>
