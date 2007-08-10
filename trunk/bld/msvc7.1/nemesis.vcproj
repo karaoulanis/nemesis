@@ -553,6 +553,12 @@
 					RelativePath="..\..\src\material\DruckerPrager.h">
 				</File>
 				<File
+					RelativePath="..\..\src\material\LadeDuncan.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\LadeDuncan.h">
+				</File>
+				<File
 					RelativePath="..\..\src\material\ModifiedCamClay.cpp">
 				</File>
 				<File
@@ -563,12 +569,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\material\MohrCoulomb.h">
-				</File>
-				<File
-					RelativePath="..\..\src\material\MultiaxialElastic.cpp">
-				</File>
-				<File
-					RelativePath="..\..\src\material\MultiaxialElastic.h">
 				</File>
 				<File
 					RelativePath="..\..\src\material\MultiaxialElastoPlastic.cpp">
@@ -608,6 +608,12 @@
 					</File>
 					<File
 						RelativePath="..\..\src\material\DP_out.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\LadeDuncanSurface.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\LadeDuncanSurface.h">
 					</File>
 					<File
 						RelativePath="..\..\src\material\MC.cpp">
@@ -672,6 +678,22 @@
 					</File>
 					<File
 						RelativePath="..\..\src\material\LinearEquivalentEL.h">
+					</File>
+				</Filter>
+				<Filter
+					Name="Elastic"
+					Filter="">
+					<File
+						RelativePath="..\..\src\material\DuncanChang.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DuncanChang.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\MultiaxialElastic.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\MultiaxialElastic.h">
 					</File>
 				</Filter>
 			</Filter>

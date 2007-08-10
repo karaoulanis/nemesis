@@ -599,6 +599,18 @@ static PyObject* pyMaterial_Elastic(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_DuncanChang(PyObject *self,PyObject *args)
+{
+	int id;
+	double E,nu,c,phi,m,Rf,pa,rho=0,aT=0;
+    if(!PyArg_ParseTuple(args,"iddddddd|dd",&id,&E,&nu,&c,&phi,&m,&Rf,&pa,&rho,&aT)) 
+		return NULL;
+	Material* pMaterial=new DuncanChang(id,E,nu,c,phi,m,Rf,pa,rho,aT);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyMaterial_UniaxialCyclic(PyObject *self,PyObject *args)
 {
 	int id;
@@ -681,7 +693,9 @@ static PyMethodDef MaterialMethods[] =
 	{"uniCyclic",					pyMaterial_UniaxialCyclic,
 		METH_VARARGS,"Define a cyclic material based on a backbone curve."},
 	{"elastic",						pyMaterial_Elastic,
-		METH_VARARGS,"Define a multiaxial elasticmaterial."},
+		METH_VARARGS,"Define a multiaxial elastic material."},
+	{"DuncanChang",					pyMaterial_DuncanChang,
+		METH_VARARGS,"Define a Duncan-Chang material."},
 	{"vonMises",					pyMaterial_VonMises,
 		METH_VARARGS,"Define a von-Mises type material."},
 	{"MohrCoulomb",					pyMaterial_MohrCoulomb,
