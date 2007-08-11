@@ -46,6 +46,6 @@ public:
 	PyParser();
 	virtual ~PyParser();
 	int parse();
-	int parse(char* fileName);
+	int parse(char* filename);
 };
 #endif

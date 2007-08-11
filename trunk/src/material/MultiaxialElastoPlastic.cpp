@@ -734,5 +734,5 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De)
 }
 void MultiaxialElastoPlastic::updateStateVariable()
 {
-	double eq=sqrt(2/3.)*ePTrial.twonorm();
+	//double eq=sqrt(2/3.)*ePTrial.twonorm();
 }
