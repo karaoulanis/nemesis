@@ -71,6 +71,7 @@ const Matrix& DuncanChang::getC()
 	const Vector& s=sTrial.eigenvalues();
 	double s1=-s[2];
 	double s3=-s[0];
+	cout<<s1<<'\t'<<s3<<endl;
 
 	// Material parameters
 	double E   =MatParams[ 0];
@@ -81,9 +82,10 @@ const Matrix& DuncanChang::getC()
 	double Rf  =MatParams[ 5];
 	double pa  =MatParams[ 6];
 	double d=1-Rf*(1-sin(phi)*(s1-s3))/(2*c*cos(phi)+2*s3*sin(phi));
+	if(s3<0) s3=0;
 	double Et=d*d*E*pa*pow(s3/pa,m);
 	if(num::tiny(Et)) Et=E;
-	cout<<d*d<<endl;
+	cout<<Et<<endl;
 
 	// Find and return C
 	double Em=Et/((1.+nu)*(1.-2*nu));
