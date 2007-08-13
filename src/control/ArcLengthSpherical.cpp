@@ -29,15 +29,16 @@
 
 /**
  * Constructor.
- * @param DL0			Initial Dl.
- * @param minDL			Lower bound for Dl.
- * @param maxDL			Upper bound for Dl.
- * @param IterDesired	Desired number of iterations.
- * @param n				Exponent parameter.
+ * \param DL0			Initial Dl.
+ * \param minDL			Lower bound for Dl.
+ * \param maxDL			Upper bound for Dl.
+ * \param IterDesired	Desired number of iterations.
+ * \param n				Exponent parameter.
+ * \param DeltaTime     Timestep for viscoplastic solutions.
  */
 ArcLengthSpherical::ArcLengthSpherical(double DL0,double minDL,double maxDL,
-									   int IterDesired,double n)
-:StaticControl(DL0,minDL,maxDL,IterDesired,n),DeltaL(DL0)
+									   int IterDesired,double n,double DeltaTime)
+:StaticControl(DL0,minDL,maxDL,IterDesired,n,DeltaTime),DeltaL(DL0)
 {
 	DeltaL=DL0;
 	myTag=TAG_CONTROL_ARC_LENGTH_SPHERICAL;

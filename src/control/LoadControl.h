@@ -44,7 +44,7 @@ class LoadControl :public StaticControl
 private:
 public:
 	// Constructor and destructor
-	LoadControl(double DL0,double minDL,double maxDL,int IterDesired,double n);
+	LoadControl(double DL0,double minDL,double maxDL,int IterDesired,double n,double DeltaTime);
 	~LoadControl();
 
 	// Methods for incremental/iterative algorithms

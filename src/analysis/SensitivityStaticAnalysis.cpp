@@ -33,7 +33,7 @@ SensitivityStaticAnalysis::SensitivityStaticAnalysis()
 	myTag=TAG_ANALYSIS_STATIC;
 	// defaults
 	pA->setImposer(new EliminationImposer());
-	pA->setControl(new LoadControl(1.,1.,1.,1,0.5));
+	pA->setControl(new LoadControl(1.,1.,1.,1,0.5,0.));
 	pA->setAlgorithm(new LinearAlgorithm());
 	pA->setSOE(new FullLinearSOE());
 	theSensitivityControl=new SensitivityControl;

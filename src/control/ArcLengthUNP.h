@@ -46,7 +46,7 @@ class ArcLengthUNP :public StaticControl
 private:
 public:
 	ArcLengthUNP(double DL0,double minDL,double maxDL,
-								int IterDesired,double n);
+								int IterDesired,double n,double DeltaTime);
 	~ArcLengthUNP();
 
 	// Methods for incremental/iterative algorithms

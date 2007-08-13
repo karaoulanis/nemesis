@@ -35,13 +35,12 @@ LoadCase::LoadCase()
 /**
  * Constructor.
  */
-LoadCase::LoadCase(int ID,double deltaTime,const char* label)
+LoadCase::LoadCase(int ID,const char* label)
 	:DomainObject(ID)
 {
 	if(!strcmp(label,"default"))	sprintf(myLabel,"LC_%04d",ID);
 	else							sprintf(myLabel,"%s",label);
 	active=-1;
-	dt=deltaTime;
 	myFac=0;
 }
 /**
@@ -56,7 +55,6 @@ LoadCase::~LoadCase()
 }
 void LoadCase::init()
 {
-	pD->incTime(dt);
 	if(active==1) return;
 	active=0;
 	pD->zeroGroups();

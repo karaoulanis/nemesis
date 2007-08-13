@@ -57,7 +57,6 @@ class LoadCase: public DomainObject
 private:
 	char myLabel[512];
 	double myFac;
-	double dt;
 	int active;
 	LoadVector					myLoads;
 	GroupStateVector			myGroupStates;
@@ -66,7 +65,7 @@ private:
 public:
 	// Constructors and destructor
 	LoadCase();
-	LoadCase(int ID,double deltaTime,const char* label);
+	LoadCase(int ID,const char* label);
 	~LoadCase();
 
 	// Initialize loadcase

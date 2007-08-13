@@ -39,15 +39,17 @@ StaticControl::StaticControl()
  * \param maxD			Upper bound for Delta.
  * \param n				Exponent parameter.
  * \param IterDesired	Desired number of iterations.
+ * \param DeltaTime     Timestep for viscoplastic solutions.
  */
 StaticControl::StaticControl(double D0,double minD,double maxD,
-								   int IterDesired,double n)
+								   int IterDesired,double n,double DeltaTime)
 :Delta0(D0),minDelta(fabs(minD)),maxDelta(fabs(maxD)),
 Io(IterDesired),Id(IterDesired),nExp(n)
 {
 	DLambda=D0;
 	if(minDelta>maxDelta)		throw SException("[nemesis:%d] %s",9999,"'max' cannot be less than 'min'.");
 	if(IterDesired<=0)			throw SException("[nemesis:%d] %s",9999,"'Id' should be greater than 0.");
+	Dt=DeltaTime;
 }
 /**
  * Destructor.
@@ -76,6 +78,7 @@ void StaticControl::init()
 	lambdaTrial=0;
 	lambdaConvg=0;
 	dLambda=0;
+	pA->getDomain()->incTime(Dt);
 }
 /**
  * Forms the elemental tangent for a static analysis, element by element.
