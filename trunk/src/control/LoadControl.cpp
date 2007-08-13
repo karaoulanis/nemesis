@@ -29,15 +29,16 @@
 
 /**
  * Constructor.
- * @param DL0			Initial Delta lambda.
- * @param minDL			Lower bound for Delta lambda.
- * @param maxDL			Upper bound for Delta lambda.
- * @param IterDesired	Desired number of iterations.
- * @param n				Exponent parameter.
- */
+ * \param DL0			Initial Delta lambda.
+ * \param minDL			Lower bound for Delta lambda.
+ * \param maxDL			Upper bound for Delta lambda.
+ * \param IterDesired	Desired number of iterations.
+ * \param n				Exponent parameter.
+ * \param DeltaTime     Timestep for viscoplastic solutions.
+*/
 LoadControl::LoadControl(double DL0,double minDL,double maxDL,
-						 int IterDesired,double n)
-:StaticControl(DL0,minDL,maxDL,IterDesired,n)
+						 int IterDesired,double n,double DeltaTime)
+:StaticControl(DL0,minDL,maxDL,IterDesired,n,DeltaTime)
 {
 	myTag=TAG_CONTROL_LOAD;
 }

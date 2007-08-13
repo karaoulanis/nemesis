@@ -60,7 +60,7 @@ private:
 	int theRefDof;				///< From Node and Dof comes the global dof
 public:
 	DisplacementControl(int nodeID,int dofID,
-		double Du0,double minDu,double maxDu,int IterDesired,double n);
+		double Du0,double minDu,double maxDu,int IterDesired,double n,double DeltaTime);
 	~DisplacementControl();
 
 	// Methods for incremental/iterative algorithms

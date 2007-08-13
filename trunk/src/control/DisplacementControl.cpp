@@ -29,17 +29,18 @@
 
 /**
  * Constructor.
- * @param nodeID		Reference node.
- * @param dofID			Reference dof.
- * @param Du0			Initial Delta u.
- * @param minDu			Lower bound for Delta u.
- * @param maxDu			Upper bound for Delta u.
- * @param IterDesired	Desired number of iterations.
- * @param n				Exponent parameter.
- */
+ * \param nodeID		Reference node.
+ * \param dofID			Reference dof.
+ * \param Du0			Initial Delta u.
+ * \param minDu			Lower bound for Delta u.
+ * \param maxDu			Upper bound for Delta u.
+ * \param IterDesired	Desired number of iterations.
+ * \param n				Exponent parameter.
+ * \param DeltaTime     Timestep for viscoplastic solutions
+*/
 DisplacementControl::DisplacementControl(int nodeID,int dofID,
-		double Du0,double minDu,double maxDu,int IterDesired,double n)
-:StaticControl(Du0,minDu,maxDu,IterDesired,n),DeltaU(Du0)
+		double Du0,double minDu,double maxDu,int IterDesired,double n,double DeltaTime)
+:StaticControl(Du0,minDu,maxDu,IterDesired,n,DeltaTime),DeltaU(Du0)
 {
 	theNodeID=nodeID;
 	theDofID=dofID;

@@ -1330,13 +1330,12 @@ static PyMethodDef InitialConditionsMethods[] =
 static PyObject* pyLC_Define(PyObject *self, PyObject *args)
 {
 	int id;
-	double dt=0.;
 	const char* name=0;
-	if(!PyArg_ParseTuple(args,"i|ds",&id,&dt,&name)) return NULL;
+	if(!PyArg_ParseTuple(args,"i|s",&id,&name)) return NULL;
 	LoadCase* pLC;
 	///todo: check this better
-	if(name!=0) pLC=new LoadCase(id,dt,name);
-	else		pLC=new LoadCase(id,dt,"default");
+	if(name!=0) pLC=new LoadCase(id,name);
+	else		pLC=new LoadCase(id,"default");
 	pD->add(pD->getLoadCases(),pLC);
 	currentLC=id;
 	Py_INCREF(Py_None);
@@ -1474,30 +1473,30 @@ static PyMethodDef ImposerMethods[] =
 ******************************************************************************/
 static PyObject* pyControl_Load(PyObject *self, PyObject *args)
 {
-	double DL0,minDL=1.,maxDL=1.,n=0.5;
+	double DL0,minDL=1.,maxDL=1.,n=0.5,dt=0.;
 	int Id=1;
-	if(!PyArg_ParseTuple(args,"d|ddid",&DL0,&minDL,&maxDL,&Id,&n)) return NULL;
-	Control* pControl=new LoadControl(DL0,minDL,maxDL,Id,n);
+	if(!PyArg_ParseTuple(args,"d|ddidd",&DL0,&minDL,&maxDL,&Id,&n,&dt)) return NULL;
+	Control* pControl=new LoadControl(DL0,minDL,maxDL,Id,n,dt);
 	pA->setControl(pControl);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
 static PyObject* pyControl_ArcLength(PyObject *self, PyObject *args)
 {
-	double DL0,minDL=1.,maxDL=1.,n=0.5;
+	double DL0,minDL=1.,maxDL=1.,n=0.5,dt=0.;
 	int Id=1;
-	if(!PyArg_ParseTuple(args,"d|ddid",&DL0,&minDL,&maxDL,&Id,&n)) return NULL;
-	Control* pControl=new ArcLengthSpherical(DL0,minDL,maxDL,Id,n);
+	if(!PyArg_ParseTuple(args,"d|ddidd",&DL0,&minDL,&maxDL,&Id,&n,&dt)) return NULL;
+	Control* pControl=new ArcLengthSpherical(DL0,minDL,maxDL,Id,n,dt);
 	pA->setControl(pControl);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
 static PyObject* pyControl_ArcLengthUNP(PyObject *self, PyObject *args)
 {
-	double DL0,minDL=1.,maxDL=1.,n=0.5;
+	double DL0,minDL=1.,maxDL=1.,n=0.5,dt=0.;
 	int Id=1;
-	if(!PyArg_ParseTuple(args,"d|ddid",&DL0,&minDL,&maxDL,&Id,&n)) return NULL;
-	Control* pControl=new ArcLengthUNP(DL0,minDL,maxDL,Id,n);
+	if(!PyArg_ParseTuple(args,"d|ddidd",&DL0,&minDL,&maxDL,&Id,&n,&dt)) return NULL;
+	Control* pControl=new ArcLengthUNP(DL0,minDL,maxDL,Id,n,dt);
 	pA->setControl(pControl);
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -1505,11 +1504,11 @@ static PyObject* pyControl_ArcLengthUNP(PyObject *self, PyObject *args)
 static PyObject* pyControl_Disp(PyObject *self, PyObject *args)
 {
 	int nodeID,dofID;
-	double Du0,minDu=1.,maxDu=1.;
+	double Du0,minDu=1.,maxDu=1.,dt=0.;
 	int Id=1;
 	double n=0.5;
-	if(!PyArg_ParseTuple(args,"iid|ddid",&nodeID,&dofID,&Du0,&minDu,&maxDu,&Id,&n)) return NULL;
-	Control* pControl=new DisplacementControl(nodeID,dofID,Du0,minDu,maxDu,Id,n);
+	if(!PyArg_ParseTuple(args,"iid|ddidd",&nodeID,&dofID,&Du0,&minDu,&maxDu,&Id,&n,&dt)) return NULL;
+	Control* pControl=new DisplacementControl(nodeID,dofID,Du0,minDu,maxDu,Id,n,dt);
 	pA->setControl(pControl);
 	Py_INCREF(Py_None);
 	return Py_None;

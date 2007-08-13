@@ -32,7 +32,7 @@ StaticAnalysis::StaticAnalysis()
 	myTag=TAG_ANALYSIS_STATIC;
 	// defaults
 	pA->setImposer(new EliminationImposer());
-	pA->setControl(new LoadControl(1.,1.,1.,1,0.5));
+	pA->setControl(new LoadControl(1.,1.,1.,1,0.5,0.));
 	pA->setAlgorithm(new LinearAlgorithm());
 	pA->setSOE(new FullLinearSOE());
 }
@@ -125,5 +125,6 @@ int StaticAnalysis::run(int nLC,int nLoadSteps)
 	// Finalize
 	pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->commit();
 	pA->getModel()->setNodalStress();
+	pA->getDomain()->commit(); ///@todo For commiting time; find a more elegant way.
 	return ret;
 }

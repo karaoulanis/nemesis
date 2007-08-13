@@ -43,7 +43,7 @@ private:
 	double DeltaL;				///< Current Delta l for this step
 public:
 	ArcLengthSpherical(double DL0,double minDL,double maxDL,
-									int IterDesired,double n);
+									int IterDesired,double n,double DeltaTime);
 	~ArcLengthSpherical();
 
 	// Methods for incremental/iterative algorithms

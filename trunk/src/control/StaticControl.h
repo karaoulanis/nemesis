@@ -57,12 +57,13 @@ protected:
 	int Io;						///< Number of iterations in the last step
 	int Id;						///< Desired number of iterations in this step
 	double nExp;				///< Exponent for the auto incrementation				
+	double Dt;					///< Timestep for viscoplastic solutions				
 public:
 
 	// Constructors and destructor
 	StaticControl();
 	StaticControl(double D0,double minD,double maxD,
-		int IterDesired,double n);
+		int IterDesired,double n,double DeltaTime);
 	virtual ~StaticControl();
 
 	void formResidual(double factor);
