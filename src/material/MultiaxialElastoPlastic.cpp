@@ -366,8 +366,8 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 	}
 	double eta=1000.;
 	double Dt=pD->getTimeIncr();
-	sTrial=(ss    +(1000.*Dt/eta)*sTrial)/(1+1000.*Dt/eta);
-	aTrial=(aConvg+(1000.*Dt/eta)*aTrial)/(1+1000.*Dt/eta);
+	sTrial=(ss    +(Dt/eta)*sTrial)/(1+Dt/eta);
+	aTrial=(aConvg+(Dt/eta)*aTrial)/(1+Dt/eta);
 }
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
