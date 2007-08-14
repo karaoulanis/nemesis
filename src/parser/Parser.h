@@ -91,6 +91,7 @@
 #include <ForwardCuthillMckee.h>
 #include <ReverseSloan.h>
 #include <ForwardSloan.h>
+#include <Crack.h>
 //#include <King.h>
 //#include <MinimumDegreeOrdering.h>
 
