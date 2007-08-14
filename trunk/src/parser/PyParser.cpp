@@ -874,6 +874,24 @@ static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Triangle3dXFem(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,matID;
+    if(!PyArg_ParseTuple(args,"iiiii",&id,&n1,&n2,&n3,&matID))
+		return NULL;
+	try
+	{
+		Element* pElement=new Triangle3XFem(id,n1,n2,n3,matID);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_Triangle6d(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,n4,n5,n6,matID;
@@ -957,6 +975,8 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
 	{"tria3d",				pyElement_Triangle3d,	
 		METH_VARARGS,"Define a 3-Noded constant strain triangle."},
+	{"tria3x",				pyElement_Triangle3dXFem,	
+		METH_VARARGS,"Define a 3-Noded constant strain triangle for XFem."},
 	{"tria6d",				pyElement_Triangle6d,	
 		METH_VARARGS,"Define a 6-Noded linear strain triangle."},
 	{"tetra4d",			pyElement_Tetrahedron4d,	
@@ -1418,6 +1438,22 @@ static PyObject* pyAnalysis_Sensitivity(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyAnalysis_XFem(PyObject *self, PyObject *args)
+{
+	if(!PyArg_ParseTuple(args,"")) return NULL;
+	AnalysisType* pType=new XFemAnalysis();
+	try
+	{
+		pA->setAnalysisType(pType);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyAnalysis_Run(PyObject *self, PyObject *args)
 {
 	int LC,steps,ret;
@@ -1444,6 +1480,8 @@ static PyMethodDef AnalysisMethods[] =
 		METH_VARARGS,"Define a eigeinvalue analysis."},
 	{"sensitivity",	pyAnalysis_Sensitivity,	
 		METH_VARARGS,"Define a sensitivity analysis."},
+	{"xFem",		pyAnalysis_XFem,	
+		METH_VARARGS,"Define an xFem analysis."},
 	{"run",	pyAnalysis_Run,	
 		METH_VARARGS,"Run given analysis."},
 	{NULL,NULL,0,NULL}

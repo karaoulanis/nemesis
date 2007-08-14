@@ -139,6 +139,10 @@ public:
 	// Sensitivity functions
 	void initSensitivityMatrix(int nGrads);
 	void commitSens(const Vector& v,int param);
+
+	// Enrichment functions
+	void evalLevelSets();
+
 };
 
 #endif

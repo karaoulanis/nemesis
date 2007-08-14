@@ -120,5 +120,8 @@ public:
 
 	int getDirectedGraph(DirectedGraph& G);
 	int getUndirectedGraph(UndirectedGraph& G);
+
+	// XFem (or other type) enrichment
+	void enrich();
 };
 #endif
