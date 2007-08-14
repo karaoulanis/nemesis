@@ -304,7 +304,8 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 	// Step 1: Compute trial stress
 	//=========================================================================
 	sTrial=Cel*(eTrial-ePTrial);
-	
+	Vector ss(6,0.);
+	ss=sTrial;
 	//=========================================================================
 	// Step 2: Check for plastic process
 	//=========================================================================
@@ -363,7 +364,10 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 		aTrial+=da;
 		dg+=ddg;
 	}
-	//cout<<endl;
+	double eta=1000.;
+	double Dt=pD->getTimeIncr();
+	sTrial=(ss    +(1000.*Dt/eta)*sTrial)/(1+1000.*Dt/eta);
+	aTrial=(aConvg+(1000.*Dt/eta)*aTrial)/(1+1000.*Dt/eta);
 }
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

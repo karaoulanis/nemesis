@@ -142,7 +142,7 @@ void StaticControl::commit()
 {
 	lambdaConvg=lambdaTrial;
 	pA->getDomain()->setLambda(lambdaConvg);
-	pA->getDomain()->commit();
+//	pA->getDomain()->commit(); ///@todo this commits only domains time!
 	pA->getModel()->commit();
 }
 /**

@@ -23,7 +23,7 @@ nlc=1
 fac=1
 for steps in [25,60,65]:#,170,250,330]:
 	nlc=nlc+1
-	lc.define(nlc,0.)
+	lc.define(nlc)
 	load.node(4,2,-1/6.)
 	load.node(3,2,-1/3.)
 
