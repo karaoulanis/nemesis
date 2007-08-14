@@ -209,6 +209,12 @@
 			<File
 				RelativePath="..\..\src\analysis\TransientAnalysis.h">
 			</File>
+			<File
+				RelativePath="..\..\src\analysis\XFemAnalysis.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\analysis\XFemAnalysis.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="algorithm"
@@ -898,6 +904,12 @@
 					RelativePath="..\..\src\elements\Triangle3.h">
 				</File>
 				<File
+					RelativePath="..\..\src\elements\Triangle3XFem.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Triangle3XFem.h">
+				</File>
+				<File
 					RelativePath="..\..\src\elements\Triangle6.cpp">
 				</File>
 				<File
@@ -1125,7 +1137,7 @@
 			Name="crack"
 			Filter="">
 			<File
-				RelativePath=".\Crack.cpp">
+				RelativePath="..\..\src\crack\Crack.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\crack\Crack.h">

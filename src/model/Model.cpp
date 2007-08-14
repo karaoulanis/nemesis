@@ -228,3 +228,14 @@ void Model::setNodalStress()
 		eIter!=theDomain->getElements().end();eIter++) 
 			eIter->second->recoverStresses();
 }
+void Model::enrich()
+{
+	// First enrich nodes (Level set initialization)
+	for(NodeIterator nIter=theDomain->getNodes().begin();
+		nIter!=theDomain->getNodes().end();nIter++) 
+			nIter->second->evalLevelSets();
+	// And then enrich elements
+	for(ElementIterator eIter=theDomain->getElements().begin();
+		eIter!=theDomain->getElements().end();eIter++) 
+			eIter->second->enrich();
+}

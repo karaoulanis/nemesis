@@ -317,3 +317,8 @@ Tracker* Element::getTracker(int index)
 void Element::track()
 {
 }
+
+// Enrichment functions
+void Element::enrich()
+{
+}

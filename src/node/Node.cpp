@@ -367,3 +367,7 @@ void Node::commitSens(const Vector& v,int param)
 {
 	dispSensi.appendCol(v,0,param);
 }
+// Enrichment functions
+void Node::evalLevelSets()
+{
+}

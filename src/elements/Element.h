@@ -129,6 +129,9 @@ public:
 	virtual Tracker* getTracker(int index);
 	virtual void track();
 
+	// Enrichment functions
+	virtual void enrich();
+
 };
 
 #endif
