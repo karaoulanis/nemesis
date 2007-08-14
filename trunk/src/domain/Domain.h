@@ -33,6 +33,7 @@
 #include <Group.h>
 #include <Material.h>
 #include <Constraint.h>
+#include <Crack.h>
 #include <CrossSection.h>
 #include <LoadCase.h>
 #include <DomainObject.h>
@@ -55,6 +56,7 @@ typedef std::map<int,CrossSection*>						CrossSectionContainer;
 typedef std::map<int,Material*>							MaterialContainer;
 typedef std::map<int,LoadCase*>							LoadCaseContainer;
 typedef std::map<int,Constraint*>						ConstraintContainer;
+typedef std::map<int,Crack*>							CrackContainer;
 
 // Type definitions - Iterators
 typedef std::map<int,Node*>::const_iterator				NodeIterator;
@@ -64,6 +66,7 @@ typedef std::map<int,CrossSection*>::const_iterator 	CrossSectionIterator;
 typedef std::map<int,Material*>::const_iterator			MaterialIterator;
 typedef std::map<int,LoadCase*>::const_iterator			LoadCaseIterator;
 typedef std::map<int,Constraint*>::const_iterator		ConstraintIterator;
+typedef std::map<int,Crack*>::const_iterator			CrackIterator;
 
 // Domain tag
 enum DomainTag{	TAG_DOMAIN_NOT_SET		=  0,
@@ -98,6 +101,7 @@ private:
 	MaterialContainer			theMaterials;
 	LoadCaseContainer			theLoadCases;			
 	ConstraintContainer			theConstraints;
+	CrackContainer				theCracks;
 
 	Database* theDatabase;
 	Vector RayleighFactors;
@@ -173,6 +177,7 @@ public:
 	inline MaterialContainer& getMaterials()				{return theMaterials;}
 	inline LoadCaseContainer& getLoadCases()				{return theLoadCases;}
 	inline ConstraintContainer& getConstraints()			{return theConstraints;}
+	inline CrackContainer& getCracks()						{return theCracks;}
 	
 	template<class TE,class TC> int add(TC& c,TE* e)
 	{

@@ -23,7 +23,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;;&quot;C:\Program Files\Visual Leak Detector\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;;&quot;C:\Program Files\Visual Leak Detector\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
@@ -94,7 +94,7 @@
 				EnableIntrinsicFunctions="TRUE"
 				FavorSizeOrSpeed="1"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				StringPooling="TRUE"
 				RuntimeLibrary="4"
@@ -1119,6 +1119,16 @@
 			</File>
 			<File
 				RelativePath="..\..\src\tracker\Tracker.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="crack"
+			Filter="">
+			<File
+				RelativePath=".\Crack.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\crack\Crack.h">
 			</File>
 		</Filter>
 	</Files>

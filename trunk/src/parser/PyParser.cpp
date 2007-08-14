@@ -1325,6 +1325,25 @@ static PyMethodDef InitialConditionsMethods[] =
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************
+* Crack commands
+******************************************************************************/
+static PyObject* pyCrack_OneTip(PyObject *self, PyObject *args)
+{
+	int id;
+	double xS,yS,xT,yT;
+	if(!PyArg_ParseTuple(args,"idddd",&id,&xS,&yS,&xT,&yT)) return NULL;
+	Crack* pCrack=new Crack(id,xS,yS,xT,yT);
+	pD->add<Crack>(pD->getCracks(),pCrack);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+static PyMethodDef CrackMethods[] = 
+{
+	{"oneTip",		pyCrack_OneTip,
+		METH_VARARGS,	"Define a one tip crack."},
+	{NULL,NULL,0,NULL}
+};
+/******************************************************************************
 * LoadCase commands
 ******************************************************************************/
 static PyObject* pyLC_Define(PyObject *self, PyObject *args)
@@ -1968,6 +1987,7 @@ int PyParser::initModules()
 	Py_InitModule("reorder",ReorderMethods);
 	Py_InitModule("group",GroupMethods);
 	Py_InitModule("sens",SensitivityMethods);
+	Py_InitModule("crack",CrackMethods);
 	PyRun_SimpleString("import db");
 	PyRun_SimpleString("import domain");
 	PyRun_SimpleString("import node");
@@ -1989,6 +2009,7 @@ int PyParser::initModules()
 	PyRun_SimpleString("import reorder");
 	PyRun_SimpleString("import group");
 	PyRun_SimpleString("import sens");
+	PyRun_SimpleString("import crack");
 //	PyRun_SimpleString("import tracker");
 	PyRun_SimpleString("import nemesis");
 	
