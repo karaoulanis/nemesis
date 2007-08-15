@@ -1,0 +1,48 @@
+
+domain.axisymmetric(1.0)
+db.SQLite("vm")
+material.elastic( 1, 1000, 0.)
+material.vonMises( 2, 1, 1000.,500.)
+
+node.add( 1, 0., 0.)
+node.add( 2, 1., 0.)
+node.add( 3, 1., 1.)
+node.add( 4, 0., 1.)
+
+element.quad4d( 1, 1, 2, 3, 4, 2)
+
+node.fix(1,1)
+node.fix(1,2)
+node.fix(2,2)
+node.fix(4,1)
+
+node.track(3)
+element.track(1,3)
+
+nlc=1
+fac=1
+for steps in [25,60,65]:#,170,250,330]:
+	nlc=nlc+1
+	lc.define(nlc)
+	load.node(4,2,-1/6.)
+	load.node(3,2,-1/3.)
+
+	analysis.static()
+	imposer.elimination()
+	fac=-fac
+	control.disp(3,2,fac*0.1)
+	#~ control.arcLength(3,fac*0.1)
+	#~ control.load(-fac*100.0)
+	algorithm.iNR()
+	convergence.set(50,1e-4,1e-6,1e-6)
+	analysis.run(nlc,steps)
+
+print "u3x = ",node.data(3)['disp'][0]
+print "u3y = ",node.data(3)['disp'][1]
+print "u4x = ",node.data(4)['disp'][0]
+print "u4y = ",node.data(4)['disp'][1]
+db.store("mc")
+db.exportToVtk("mc")
+import tracker
+#tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"vm2.txt")
+tracker.plotElemPath(1,3,'eps_y','sigma_y',-1.0,-1.0,"vm2.txt")

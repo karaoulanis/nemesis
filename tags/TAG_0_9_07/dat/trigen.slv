@@ -1,0 +1,16 @@
+
+from extras import trigen
+
+domain.plainStrain()
+db.SQLite("trigen.sdb")
+
+material.elastic(1, 1000., 0.23)
+material.elastic(2, 2000., 0.23)
+
+trigen.run("-qpa2.AV","trigen.poly")
+trigen.createNodes("trigen.1.node")
+trigen.createElems("trigen.1.ele")
+
+
+db.store("trigen")
+db.exportToVtk("trigen")
