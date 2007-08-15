@@ -1,4 +1,70 @@
 *******************************************************************************
+Version        : 0.9.07
+Released       : 15.08.07
+Added files    : 18
+Modified files : 402
+Removed files  : 2
+Comments       :
+*******************************************************************************
+
++-----+------------------------------------------------+----------------------+
+|Rev. |Message                          |Add.|Mod.|Rem.|Author                |
++-----+------------------------------------------------+----------------------+
+|  160|Updated license to GPLv3.        |   0|   1|   0|Fotios.Karaoulanis    |
+|  159|Updated license to GPLv3.        |   0| 261|   0|Fotios.Karaoulanis    |
+|  158|Minor changes in viscoplastic    |   0|   2|   0|Fotios.Karaoulanis    |
+|     |modeling.                        |    |    |    |                      |
+|  157|xFem [experimental]. Definition  |   2|   9|   0|Fotios.Karaoulanis    |
+|     |of XFem analysis and XFem 3-noded|    |    |    |                      |
+|     |triangle.                        |    |    |    |                      |
+|  156|xFem [experimental]. Definition  |   3|   4|   0|Fotios.Karaoulanis    |
+|     |of a simple crack.               |    |    |    |                      |
+|  155|Viscoplasticity                  |   1|   3|   0|Fotios.Karaoulanis    |
+|     |re-implementation.               |    |    |    |                      |
+|  154|Removed time from LoadCase and   |   0|  15|   0|Fotios.Karaoulanis    |
+|     |moved it in StaticControl for use|    |    |    |                      |
+|     |in viscoplasticity.              |    |    |    |                      |
+|  153|Minor changes to DuncanChang     |   0|   1|   0|Fotios.Karaoulanis    |
+|     |material.                        |    |    |    |                      |
+|  152|nemesis now compiles and links   |   0|   7|   0|Fotios.Karaoulanis    |
+|     |with mingw gcc 4.2.1-dw.         |    |    |    |                      |
+|  151|Initial import of Duncan-Chang   |   2|   4|   0|Fotios.Karaoulanis    |
+|     |hyperbolic model.                |    |    |    |                      |
+|  150|Initial import of Lade-Duncan    |   4|   4|   0|Fotios.Karaoulanis    |
+|     |material. Changes in the         |    |    |    |                      |
+|     |Drucker-Prager material.         |    |    |    |                      |
+|  149|Changes in the Drucker-Prager    |   0|   4|   0|Fotios.Karaoulanis    |
+|     |material.                        |    |    |    |                      |
+|  148|Minor updates.                   |   0|   2|   0|Fotios.Karaoulanis    |
+|  147|Changes in the Drucker-Prager    |   0|  21|   0|Fotios.Karaoulanis    |
+|     |material. nemesis now builds with|    |    |    |                      |
+|     |mingw 3.4.2.                     |    |    |    |                      |
+|  146|Updated equivalent plastic       |   0|   7|   0|Fotios.Karaoulanis    |
+|     |strain.                          |    |    |    |                      |
+|  145|Replaced stress internal variable|   0|  13|   2|Fotios.Karaoulanis    |
+|     |q with strain internal variable  |    |    |    |                      |
+|     |a.                               |    |    |    |                      |
+|  144|Renamed LinearEquivalent.[cpp|h] |   2|   0|   0|Fotios.Karaoulanis    |
+|     |to LinearEquivalentEL.[cpp|h].   |    |    |    |                      |
+|  143|Initial import of Evolution Laws.|   4|   1|   0|Fotios.Karaoulanis    |
+|  142|Updated multiaxial elastic       |   0|   7|   0|Fotios.Karaoulanis    |
+|     |material.                        |    |    |    |                      |
+|  141|Updates in the single surface    |   0|  17|   0|Fotios.Karaoulanis    |
+|     |return mapping. Works correctly  |    |    |    |                      |
+|     |now.                             |    |    |    |                      |
+|  140|Minor changes and code clean up. |   0|   3|   0|Fotios.Karaoulanis    |
+|  139|Updates in the VonMises material.|   0|   2|   0|Fotios.Karaoulanis    |
+|  138|Updates in return mapping        |   0|   8|   0|Fotios.Karaoulanis    |
+|     |algorithm. Updated nemesis.api.  |    |    |    |                      |
+|  137|Minor changes in                 |   0|   5|   0|Fotios.Karaoulanis    |
+|     |MultiaxialElastoPlastic.cpp and  |    |    |    |                      |
+|     |VM.cpp. Updated documentation in |    |    |    |                      |
+|     |configure.py.                    |    |    |    |                      |
+|  136|Saved changes to CHANGELOG.txt.  |   0|   1|   0|Fotios.Karaoulanis    |
++-----+------------------------------------------------+----------------------+
+
+
+*******************************************************************************
 Version        : 0.9.06
 Released       : 31.07.07
 Added files    : 26
