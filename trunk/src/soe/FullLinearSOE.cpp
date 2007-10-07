@@ -83,7 +83,7 @@ int FullLinearSOE::solve()
 	int LDB = N;
 	int INFO;
 	char c='N';
-	//this->print();
+//	this->print();
 //	for(int i=0;i<theSize;i++)
 //	{
 //        cout<<B[i]<<endl;
@@ -100,5 +100,6 @@ int FullLinearSOE::solve()
 	}
 	// Solve the system A*X = B, overwriting B with X.
 	dgetrs(&c,&N,&NRHS,&A[0],&LDA,&IPIV[0],&X[0],&LDB,&INFO);
+	//for(int i=0;i<theSize;i++) cout<<B[i]<<endl; cout<<endl;
     return 0;
 }

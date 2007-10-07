@@ -56,6 +56,7 @@ protected:
 	void returnMapTest(const Vector& De);
 	void returnMapMYS(const Vector& De);
 	void returnMapMYS2(const Vector& De);
+	void returnMapMYS3(const Vector& De);
 public:
 	MultiaxialElastoPlastic();
 	MultiaxialElastoPlastic(int ID,int elasticID);

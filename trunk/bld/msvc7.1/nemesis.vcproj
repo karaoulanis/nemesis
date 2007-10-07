@@ -43,7 +43,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="vld.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python25.lib"
+				AdditionalDependencies="ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python25.lib"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
