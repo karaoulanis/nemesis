@@ -651,7 +651,7 @@ public:
 	{
 		for(int i=0;i<rows_;i++)
 		{
-			for(int j=0;j<cols_;j++)	cout<<data_[i*cols_+j]<<' ';
+			for(int j=0;j<cols_;j++)	cout<<data_[i*cols_+j]<<'\t';
 			cout<<endl;
 		}
 	}
