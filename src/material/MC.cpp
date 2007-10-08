@@ -45,8 +45,7 @@ void MC::find_C(const Vector& s,const double a)
 	this->find_A(s,A,dA,d2A);
 	
 	// Constants Ci,Cii [Crisfield II, p.106, (Tab. 14.3), p.106, (Tab. 14.2)]
-	if(abs(theta)*180./num::pi<29.999) theta=29.990/180.*num::pi;
-	if(abs(theta)*180./num::pi<29.999)
+	if(abs(theta)*180./num::pi<29.99)
 	{
 		C1=sin(phi)*num::d13;
 		C2=0.5/sqJ2*(A-tan(3.*theta)*dA);
@@ -60,21 +59,18 @@ void MC::find_C(const Vector& s,const double a)
 	}
 	else
 	{
-		/*C1=2*sin(phi)/(sqrt(3.)*(3+sin(phi)));
-		C2=0.5*sqJ2;
-		C3=0.;
-		C4=0.;
-		C22=-1./(4.*J2*sqJ2);
-		C23=0.;
-		C32=0.;
-		C33=0.;*/
-		C1=2*sin(phi)/(num::sq3*(3-sin(phi)));
+		C1=2*sin(phi)/(num::sq3*(3+sin(phi)));
 		C2=0.5/sqrt(s.J2());
 		C3=0.;
 		C11=0.;
 		C22=-0.25*pow(s.J2(),-1.5);
 		C23=0.; C32=0.; C33=0.;
-
+		//C1=2*sin(phi)/(num::sq3*(3-sin(phi)));
+		//C2=0.5/sqrt(s.J2());
+		//C3=0.;
+		//C11=0.;
+		//C22=-0.25*pow(s.J2(),-1.5);
+		//C23=0.; C32=0.; C33=0.;
 	}
 }
 double MC::get_f(const Vector& s,const double q)

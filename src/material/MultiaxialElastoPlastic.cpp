@@ -362,11 +362,11 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De)
 		aTrial+=da;
 		dg+=ddg;
 	}
-	double eta=1000.;
-	double Dt=pD->getTimeIncr();
-	sTrial=(ss    +(Dt/eta)*sTrial)/(1+Dt/eta);
-	aTrial=(aConvg+(Dt/eta)*aTrial)/(1+Dt/eta);
-	ePTrial=eTrial-invCel*sTrial;
+//	double eta=1000.;
+//	double Dt=pD->getTimeIncr();
+//	sTrial=(ss    +(Dt/eta)*sTrial)/(1+Dt/eta);
+//	aTrial=(aConvg+(Dt/eta)*aTrial)/(1+Dt/eta);
+//	ePTrial=eTrial-invCel*sTrial;
 }
 
 /**
@@ -749,7 +749,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 	//=========================================================================
 	int nIter=25;
 	double tol1=1e-6;
-	double tol2=1e-6;
+	double tol2=1e-9;
 	Vector dEp(6,0.);
 	Matrix Cel   =myElastic->getC();
 	Matrix invCel=Inverse(Cel);
@@ -772,7 +772,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 	std::vector<int> activeSurfaces;
 	activeSurfaces.resize(0);
 	for(unsigned i=0;i<fSurfaces.size();i++)
-		if(fSurfaces[i]->get_f(sTrial,aTrial)>0)
+		if(fSurfaces[i]->get_f(sTrial,aTrial)>tol2)
 		{
 			fSurfaces[i]->setActive(true);
 			activeSurfaces.push_back(i);
@@ -787,12 +787,24 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 		sTrial=Cel*(eTrial-ePTrial);
 		activeSurfaces.resize(0);
 		for(unsigned i=0;i<fSurfaces.size();i++)
-			if(fSurfaces[i]->get_f(sTrial,aTrial)>0)
+		{
+			if(fSurfaces[i]->get_f(sTrial,aTrial)>tol2)
 			{
 				fSurfaces[i]->setActive(true);
 				activeSurfaces.push_back(i);
 			}	
-		//cout<<"active surfaces : "<<activeSurfaces.size()<<endl;
+		}
+
+		if(activeSurfaces.size()>tol2 && abs(sTrial.theta())*180./num::pi>29.99)
+		{	
+			activeSurfaces.resize(0);
+			for(unsigned i=0;i<fSurfaces.size();i++) fSurfaces[i]->setActive(false);
+			fSurfaces[0]->setActive(true);
+			activeSurfaces.push_back(0);
+		}
+
+		//cout<<sTrial.theta()/num::pi*180.<<endl;
+//		cout<<"active surfaces : "<<activeSurfaces.size()<<endl;
 
 		Vector R(7+activeSurfaces.size(),0.);
 		// ----- R[0-5]
@@ -811,10 +823,13 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 		//=====================================================================
 		// Step 4: Check convergence
 		//=====================================================================
+		//for(unsigned i=0;i<fSurfaces.size();i++)
+		//	cout<<k<<'\t'<<i<<'\t'<<fSurfaces[i]->get_f(sTrial,aTrial)<<endl;
+		//cout<<R.twonorm()<<endl;
 		bool converged=true;
 		if(R.twonorm()>tol1) converged=false;
 		for(unsigned i=0;i<activeSurfaces.size();i++)
-			if(abs(fSurfaces[activeSurfaces[i]]->get_f(sTrial,aTrial))<tol2)
+			if(fSurfaces[activeSurfaces[i]]->get_f(sTrial,aTrial)>tol2)
 				converged=false;
 		if(converged) break;
 
@@ -852,9 +867,10 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 			V1=fSurfaces[activeSurfaces[i]]->get_dfds(sTrial,aTrial);
 			A.appendRow(V1,7+i,0);
 		}
-		cout<<sTrial<<endl;
-		cout<<sTrial.eigenvalues()<<endl;
-		A.report();
+		//cout<<sTrial<<endl;
+		//cout<<sTrial.eigenvalues()<<endl;
+		//A.report();
+		//cout<<"Det : "<<det(A)<<endl;;
 
 		Vector x(7+activeSurfaces.size(),0.);
 		A.solve(x,R);
