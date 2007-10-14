@@ -5,7 +5,7 @@ If you attempt to edit this file using an XML editor, you could lose customizati
 If you need to change information in the customization file, use the Customize User Interface dialog box in the product.
 To access the Customize User Interface dialog box, click the Tools menu > Customize > Interface, or enter CUI on the command line. 
 -->
-<CustSection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<CustSection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <FileVersion MajorVersion="0" MinorVersion="1" IncrementalVersion="3" UserVersion="1" />
   <Header>
     <CommonConfiguration>
@@ -254,92 +254,7 @@ To access the Customize User Interface dialog box, click the Tools menu > Custom
         </ButtonGroup>
       </DigitizerButtonRoot>
       <PopMenuRoot />
-      <ToolbarRoot>
-        <Toolbar ToolbarOrient="floating" ToolbarVisible="show" xval="200" yval="200" rows="1" UID="TBU_0002">
-          <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-          <Alias>Toolbar1</Alias>
-          <Name xlate="true" UID="XLS_0001">nemesis</Name>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0001">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0002">Node</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0002" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0002">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0003">Geometry line</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0007" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="true" UID="TBBU_0003">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0004">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0004">Beam</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0010" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0005">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0005">Bar</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0011" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="true" UID="TBBU_0006">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0007">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0006">Fix X</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0004" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0008">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0007">Fix Y</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0005" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0009">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0008">Fix XY</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0006" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="true" UID="TBBU_0010">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0011">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0009">Hole</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0009" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0012">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0010">Region</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0017" />
-            </MenuItem>
-          </ToolbarButton>
-          <ToolbarButton IsSeparator="false" UID="TBBU_0013">
-            <Revision MajorVersion="16" MinorVersion="2" UserVersion="1" />
-            <Name xlate="true" UID="XLS_0011">Section</Name>
-            <MenuItem>
-              <MacroRef MenuMacroID="MMU_0019" />
-            </MenuItem>
-          </ToolbarButton>
-        </Toolbar>
-      </ToolbarRoot>
+      <ToolbarRoot />
       <ScreenMenuRoot />
       <ImageMenuRoot />
       <TabletMenuRoot>

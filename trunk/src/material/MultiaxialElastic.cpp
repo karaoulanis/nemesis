@@ -51,7 +51,8 @@ MultiaxialMaterial* MultiaxialElastic::getClone()
 void MultiaxialElastic::setStrain(const Vector& De)
 {
 	eTrial=eTotal+De;
-	sTrial=(this->getC())*eTrial;
+	//sTrial=(this->getC())*eTrial;
+	sTrial=sConvg+(this->getC())*De;
 }
 const Matrix& MultiaxialElastic::getC()
 {

@@ -11,7 +11,7 @@ import load
 path  = "D:\\solver\\nemesis\\bin"
 file  =''
 info  = 1
-tol   = 0.0001
+tol   = 0.000001
 bmId  =  100000
 brId  = 1000000
 lines =[]
@@ -86,8 +86,8 @@ def getNodesBetween(nodeA,nodeB):
 	# Check for errors
 	if outNodes[0][0]!=allNodes[nodeA][0] or outNodes[len(outNodes)-1][0]!=allNodes[nodeB][0]:
 		print outNodes
-		raise IOError,"Undefined error in handling nodes."
-	# Return.
+		raise IOError,'Undefined error in handling nodes %i %i.'%(nodeA,nodeB)
+	# Return
 	return outNodes
 
 #==============================================================================
