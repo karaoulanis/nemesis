@@ -58,7 +58,11 @@ void Constraint::setcDof(int nodeID,int dof,double coeff)
 	}
 	// Check if dof is active
 	if(pNode->getActivatedDof(dof-1)<0)
-		throw SException("[nemesis:%d] Dof %d is not yet active.\n",1110,dof);
+	{
+		throw SException("[nemesis:%d] Node %d dof %d is not yet active.\n",1110,pNode->getID(),dof);
+		//Containers::vector_print(pNode->getConnectedElements());cout<<endl;
+		//return;
+	} 
 	// Now it is ok to continue
 	newCDof.pNode=pNode;
 	newCDof.dof=dof-1;
