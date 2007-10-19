@@ -778,9 +778,10 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 			activeSurfaces.push_back(i);
 		}	
 	if(activeSurfaces.empty()) return;
-	
+	plastic=true;	
 	for(int k=0;k<nIter;k++)
 	{
+		//cout<<k<<' '<<activeSurfaces.size()<<endl;
 		//=====================================================================
 		// Step 3: Evaluate flow rule, hardening law and residuals
 		//=====================================================================
@@ -910,5 +911,15 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 		for(unsigned i=0;i<activeSurfaces.size();i++)
 			dg[i]+=ddg[i];
 	}
-	if(k==nIter) cout<<"FAILED"<<endl;
+	if(k==nIter)
+	{
+		cout<<"FAILED : "<<activeSurfaces.size()<<endl;
+		//cout<<sTrial<<endl;
+		//cout<<ss<<endl;
+		aTrial =aConvg;
+		ePTrial=ePConvg;
+		eTrial=eTotal+De;
+		Vector dg(12,0.);
+		sTrial=Cel*(eTrial-ePTrial);
+	}
 }

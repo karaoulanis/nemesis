@@ -553,6 +553,12 @@
 				Name="MultiaxialMaterial"
 				Filter="">
 				<File
+					RelativePath="..\..\src\material\Creep.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\Creep.h">
+				</File>
+				<File
 					RelativePath="..\..\src\material\DruckerPrager.cpp">
 				</File>
 				<File
