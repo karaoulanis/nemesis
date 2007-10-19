@@ -645,6 +645,18 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_Creep(PyObject *self,PyObject *args)
+{
+	int id,elasticId;
+	double A,n,k;
+    if(!PyArg_ParseTuple(args,"iiddd",&id,&elasticId,&A,&n,&k)) 
+		return NULL;
+	Material* pMaterial=new Creep(id,elasticId,A,n,k);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyMaterial_DruckerPrager(PyObject *self,PyObject *args)
 {
 	int id,elasticId,type;
@@ -705,6 +717,8 @@ static PyMethodDef MaterialMethods[] =
 		METH_VARARGS,"Define a Modified Cam-Clay type material."},
 	{"LadeDuncan",					pyMaterial_LadeDuncan,
 		METH_VARARGS,"Define a Lade-Duncan type material."},
+	{"creep",						pyMaterial_Creep,
+		METH_VARARGS,"Define a creep material."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************

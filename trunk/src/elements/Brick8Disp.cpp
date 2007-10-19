@@ -57,7 +57,7 @@ Brick8Disp::Brick8Disp(int ID,
 	this->handleCommonInfo();
 
 	// Materials
-	myMatPoints.resize(4);
+	myMatPoints.resize(8);
 	MultiaxialMaterial* pMat=static_cast<MultiaxialMaterial*>(myMaterial); 
 	myMatPoints[0]=new MatPoint(pMat,1,1,1,2,2,2);
 	myMatPoints[1]=new MatPoint(pMat,2,1,1,2,2,2);
@@ -70,8 +70,8 @@ Brick8Disp::Brick8Disp(int ID,
 }
 Brick8Disp::~Brick8Disp()
 {
+	Containers::vector_delete(myMatPoints);
 }
-
 int Brick8Disp::findShapeFunctionsAt(MatPoint* pMatPoint)
 {
 	double xi=  pMatPoint->get_r();

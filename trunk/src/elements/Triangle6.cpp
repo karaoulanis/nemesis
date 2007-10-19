@@ -151,7 +151,7 @@ const Matrix& Triangle6::getK()
 			ii+=2;
 		}
 	}
-	double facK=1e-7;
+	double facK=1e-9;
 	if(myGroup->isActive()) facK=myGroup->getFacK();
 	K*=facK;
 	return K;
@@ -260,6 +260,7 @@ void Triangle6::addInitialStresses(InitialStresses* pInitialStresses)
 const int Triangle6::getnPlasticPoints()
 {
 	int n=0;
-	if(myMatPoints[0]->getMaterial()->isPlastic()) n=1;
+	for(unsigned int i=0;i<myMatPoints.size();i++) 
+		if(myMatPoints[i]->getMaterial()->isPlastic()) n++;
 	return n;
 }
