@@ -582,6 +582,18 @@ static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject *self, PyObject *args
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_UniaxialGap(PyObject *self, PyObject *args)
+{
+	int id;
+	double E=0,nu=0,rho=0,aT=0,sy=0,gap=0;
+    if(!PyArg_ParseTuple(args,"idddddd",&id,&E,&nu,&rho,&aT,&sy,&gap)) 
+		return NULL;
+	Material* pMaterial=new UniaxialGap(id,E,nu,rho,aT,sy,gap);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyMaterial_Elastic(PyObject *self,PyObject *args)
 {
 	int id;
@@ -703,6 +715,8 @@ static PyMethodDef MaterialMethods[] =
 		METH_VARARGS,"Define a uniaxial elastoplastic material."},
 	{"uniCyclic",					pyMaterial_UniaxialCyclic,
 		METH_VARARGS,"Define a cyclic material based on a backbone curve."},
+	{"uniGap",						pyMaterial_UniaxialGap,
+		METH_VARARGS,"Define a uniaxial elastoplastic material with a gap."},
 	{"elastic",						pyMaterial_Elastic,
 		METH_VARARGS,"Define a multiaxial elastic material."},
 	{"DuncanChang",					pyMaterial_DuncanChang,

@@ -1,0 +1,28 @@
+
+domain.dim(1)
+material.uniGap( 1, 1000, 0.25, 0., 0., 1000., 0.2)
+section.user(1,1.)
+
+node.add( 1, 0.)
+node.add( 2, 1.)
+
+element.bar2s( 1, 1, 2, 1, 1)
+
+node.fix(1,1)
+node.track(2)
+
+node.track(2)
+
+lc.define(1)
+load.node(2,1,100.)
+
+
+analysis.static()
+imposer.elimination()
+control.disp(2,1,0.1)
+algorithm.fNR()
+convergence.set(4,1e-4,1e-3,1e-3)
+analysis.run(1,30)
+
+import tracker
+tracker.plotNodePath(2,'u_x','lambda', 1., 1.,"data.txt")
