@@ -23,39 +23,67 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <UniaxialElastic.h>
+#include <UniaxialGap.h>
 
-UniaxialElastic::UniaxialElastic()
+UniaxialGap::UniaxialGap()
 {
 }
-UniaxialElastic::UniaxialElastic(int ID,double E,double nu,double rho,double aT)
+UniaxialGap::UniaxialGap(int ID,double E,double nu,double rho,double aT,double sy_,double gap_)
 :UniaxialMaterial(ID,rho,aT)
 {
+	gap=gap_;
+	sy=sy_;
+	eElastMin=gap;
+	eElastMax=gap+sy/E;
+	Et=E;
+
 	// Material parameters
 	MatParams[0]=E;
 	MatParams[1]=nu;
+	MatParams[2]=sy;
+	MatParams[3]=gap;
 	myTag=TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
-UniaxialMaterial* UniaxialElastic::getClone()
+UniaxialMaterial* UniaxialGap::getClone()
 {
 	// Material parameters
 	double E   =MatParams[ 0];
 	double nu  =MatParams[ 1];
+	double sy  =MatParams[ 2];
+	double gap =MatParams[ 3];
 	double rho =MatParams[30];
 	double aT  =MatParams[31];
 	// Create clone and return
-	UniaxialMaterial* clone=new UniaxialElastic(myID,E,nu,rho,aT);
+	UniaxialMaterial* clone=new UniaxialGap(myID,E,nu,rho,aT,sy,gap);
 	return clone;
 }
-void UniaxialElastic::setStrain(const double De)
+void UniaxialGap::setStrain(const double De)
 {
-	sTrial=sConvg+MatParams[0]*De;
+	double E=MatParams[ 0];
+
+	eTrial=eTotal+De;
+	if(eTrial<eElastMin)
+	{
+		sTrial=0.;
+		Et=0.;
+	}
+	else if(eTrial>eElastMax)
+	{
+		sTrial=sy;
+		Et=0.;
+	}
+	else
+	{
+		sTrial=E*(eTrial-eElastMin);
+		Et=E;
+	}
 }
-const double UniaxialElastic::getC()
+const double UniaxialGap::getC()
 {
-	return MatParams[0];
+	return Et;
 }
-void UniaxialElastic::commit()
+void UniaxialGap::commit()
 {
 	sConvg=sTrial;
+	eTotal=eTrial;
 }

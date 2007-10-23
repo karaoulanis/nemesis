@@ -35,6 +35,7 @@
 #include <UniaxialElastic.h>
 #include <UniaxialElastoPlastic.h>
 #include <UniaxialCyclic.h>
+#include <UniaxialGap.h>
 #include <MultiaxialElastic.h>
 #include <DuncanChang.h>
 #include <PlaneStress.h>

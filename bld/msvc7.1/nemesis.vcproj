@@ -543,6 +543,12 @@
 					RelativePath="..\..\src\material\UniaxialElastoPlastic.h">
 				</File>
 				<File
+					RelativePath="..\..\src\material\UniaxialGap.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\UniaxialGap.h">
+				</File>
+				<File
 					RelativePath="..\..\src\material\UniaxialMaterial.cpp">
 				</File>
 				<File

@@ -23,39 +23,27 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <UniaxialElastic.h>
+#ifndef _UNIAXIALGAP_H
+#define _UNIAXIALGAP_H
 
-UniaxialElastic::UniaxialElastic()
+#include <UniaxialMaterial.h>
+
+class UniaxialGap: public UniaxialMaterial
 {
-}
-UniaxialElastic::UniaxialElastic(int ID,double E,double nu,double rho,double aT)
-:UniaxialMaterial(ID,rho,aT)
-{
-	// Material parameters
-	MatParams[0]=E;
-	MatParams[1]=nu;
-	myTag=TAG_MATERIAL_UNIAXIAL_ELASTIC;
-}
-UniaxialMaterial* UniaxialElastic::getClone()
-{
-	// Material parameters
-	double E   =MatParams[ 0];
-	double nu  =MatParams[ 1];
-	double rho =MatParams[30];
-	double aT  =MatParams[31];
-	// Create clone and return
-	UniaxialMaterial* clone=new UniaxialElastic(myID,E,nu,rho,aT);
-	return clone;
-}
-void UniaxialElastic::setStrain(const double De)
-{
-	sTrial=sConvg+MatParams[0]*De;
-}
-const double UniaxialElastic::getC()
-{
-	return MatParams[0];
-}
-void UniaxialElastic::commit()
-{
-	sConvg=sTrial;
-}
+private:
+	double eTrial;
+	double eElastMin;
+	double eElastMax;
+	double sy;
+	double gap;
+	double Et;
+public:
+	UniaxialGap();
+	UniaxialGap(int ID,double E,double nu,double rho,double aT,double sy_,double gap_=0.);
+	UniaxialMaterial* getClone();
+	void setStrain(const double De);
+	const double getC();
+	void commit();
+};
+
+#endif
