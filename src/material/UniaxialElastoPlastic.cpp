@@ -64,7 +64,7 @@ UniaxialMaterial* UniaxialElastoPlastic::getClone()
 void UniaxialElastoPlastic::setStrain(const double De)
 {
 	// Material parameters
-	eTotal+=De;
+	eTrial=eTotal+De;
 	double E   =MatParams[ 0];
 	double sy  =MatParams[ 2];
 	double Hiso=MatParams[ 3];
@@ -82,12 +82,12 @@ void UniaxialElastoPlastic::setStrain(const double De)
 	if(fTrial>=0)
 	{
 		double dt=pD->getTimeIncr();
+		dt=1.0;
 		double dg=fTrial/(E+Hiso+eta/dt);
 		//double dg=fTrial/(E+Hiso);
 		sTrial -=dg*E*num::sign(xi);
 		ePTrial+=dg*num::sign(xi);
 		aTrial +=dg;
-		cout<<De<<endl;
 	}
 }
 const double UniaxialElastoPlastic::getC()
@@ -97,9 +97,10 @@ const double UniaxialElastoPlastic::getC()
 	double Hiso=MatParams[ 3];
 	double Hkin=MatParams[ 4];
 	double eta =MatParams[ 5];
-	double dt=pD->getTimeIncr();
-	//if(fTrial<=0)	return E;
-	//else			return E*(Hkin+Hiso+eta/dt)/(E+Hkin+Hiso+eta/dt);
+	//double dt=pD->getTimeIncr();
+	double dt=1.;
+	if(fTrial<=0)	return E;
+	else			return E*(Hkin+Hiso+eta/dt)/(E+Hkin+Hiso+eta/dt);
 	return E;
 }
 void UniaxialElastoPlastic::commit()
@@ -107,6 +108,7 @@ void UniaxialElastoPlastic::commit()
 	sConvg=sTrial;
 	aConvg=aTrial;
 	qConvg=qTrial;
+	eTotal=eTrial;
 	ePConvg=ePTrial;
 	this->track();
 }

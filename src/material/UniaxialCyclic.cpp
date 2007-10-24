@@ -41,6 +41,9 @@ UniaxialCyclic::UniaxialCyclic(int ID,double E,double nu,double rho,double aT,do
 	er=0.;
 	eTrial=0.;
 	eConvg=0.;
+	// Initial stiffness
+	Et=Gmax;
+	reversed=false;
 	// Tag
 	myTag=TAG_MATERIAL_UNIAXIAL_CYCLIC;
 }
@@ -60,32 +63,40 @@ UniaxialMaterial* UniaxialCyclic::getClone()
 }	
 void UniaxialCyclic::setStrain(const double De)
 {
-	static bool reversed=false;
 	double tmax=MatParams[2];
 	double Gmax=MatParams[3];
-	double e0=eTrial;
-	double s0=sTrial;
-	double en=eConvg+De;
-	eTrial=en;
-	if((en-er)*De<0)
+	// At first step check if reversed
+	if(((eConvg+De-er))*De<0)
 	{
-		sr=s0;
-		er=e0;
-		if(reversed==false) reversed=true;
+		sr=sConvg;
+		er=eConvg;
+		reversed=true;
+		cout<<er<<'\t'<<sr<<endl;
 	}
+	eTrial=eConvg+De;
+	//cout<<er<<'\t'<<eTrial<<'\t'<<reversed<<endl;
 	if(reversed==false)
-		sTrial=Gmax*en/(1+(Gmax/tmax)*fabs(en));
+	{
+		sTrial=Gmax*eTrial/(1+(Gmax/tmax)*fabs(eTrial));
+		Et=Gmax*tmax*(tmax+Gmax*fabs(eTrial)-Gmax*eTrial*num::sign(eTrial))/((tmax+Gmax*abs(eTrial))*(tmax+Gmax*fabs(eTrial)));
+	}
 	else
-		sTrial=sr+2.0*Gmax*(0.5*(en-er))/(1+(Gmax/tmax)*abs(0.5*(en-er)));
+	{
+		sTrial=sr+2.0*Gmax*(0.5*(eTrial-er))/(1+(Gmax/tmax)*fabs(0.5*(eTrial-er)));
+		Et=0.5*Gmax*tmax*(2*tmax+Gmax*fabs(er-eTrial)-0.5*Gmax*num::sign(er-eTrial)*(er-eTrial))
+			   /((tmax+0.5*Gmax*abs(er-eTrial))*(tmax+0.5*Gmax*abs(er-eTrial)));
+	}
 }
 const double UniaxialCyclic::getC()
 {
 	///@todo
-	return 0;
+	return Et;
 }
 void UniaxialCyclic::commit()
 {
-	sTrial=sConvg;
-	eTrial=eConvg;
+	sConvg=sTrial;
+	eConvg=eTrial;
+	eTotal=eConvg;
+	this->track();
 }
 

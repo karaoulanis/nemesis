@@ -38,6 +38,7 @@ private:
 	double qConvg;
 	double ePTrial;
 	double ePConvg;
+	double eTrial;
 public:
 	UniaxialElastoPlastic();
 	UniaxialElastoPlastic(int ID,double E,double nu,double rho,double aT,
