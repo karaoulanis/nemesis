@@ -1,39 +1,41 @@
-from math import pi
-
+###############################################################################
+#
+#
+#
+###############################################################################
+# domain
 domain.dim(1)
-db.SQLite("mc")
-#~ material.uniElastoPlastic( 1, 1000, 0.25, 0., 0., 1000., 500., 0.)
-material.uniCyclic( 1, 1000, 0.25, 0., 0., 500., 7000.)
+# material
+material.uniCyclic( 1, 1000, 0.25, 0., 0., 500., 1000.)
+# section
 section.user(1,1.)
-
+# nodes
 node.add( 1, 0.)
 node.add( 2, 1.)
-
+# element
 element.bar2s( 1, 1, 2, 1, 1)
-
+# constraints
 node.fix(1,1)
-node.track(2)
-
+# tracker
 element.track(1,1)
-
+# lc 1: loading
 lc.define(1)
 load.node(2,1,+10.)
-
+# lc 2: loading
 lc.define(2)
 load.node(2,1,-10.)
-
+# lc 3: loading
 lc.define(3)
 load.node(2,1,+10.)
-
+# lc 4: loading
 lc.define(4)
 load.node(2,1,-10.)
-
+# lc 5: loading
 lc.define(5)
 load.node(2,1,+10.)
-
+# analysis
 analysis.static()
 imposer.elimination()
-#~ control.disp(2,1,0.1)
 control.load(1.)
 algorithm.fNR()
 convergence.set(60,1e-4,1e-3,1e-3)
@@ -42,8 +44,6 @@ analysis.run(2,60)
 analysis.run(3,70)
 analysis.run(4,80)
 analysis.run(5,90)
+# results
 import tracker
-#~ #tracker.plotNodePath(2,'u_x','lambda')
-for i in element.path(1,1):
-	print i
 tracker.plotElemPath(1,1,'eps','sigma')

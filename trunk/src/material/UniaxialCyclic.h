@@ -35,6 +35,8 @@ private:
 	double er;
 	double eTrial;
 	double eConvg;
+	double Et;
+	bool reversed;
 public:
 	UniaxialCyclic();
 	UniaxialCyclic(int ID,double E,double nu,double rho,double aT,double tmax,double Gmax);
