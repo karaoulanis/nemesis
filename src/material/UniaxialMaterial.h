@@ -36,7 +36,7 @@ class UniaxialMaterial: public Material
 protected:
 	double sTrial;
 	double sConvg;
-	double eTotal;///@todo: Wrong! eTotal+=de not De
+	double eTotal;
 public:
 	UniaxialMaterial();
 	UniaxialMaterial(int ID,double rho,double aT);

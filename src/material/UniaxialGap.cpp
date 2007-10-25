@@ -65,12 +65,12 @@ void UniaxialGap::setStrain(const double De)
 	if(eTrial<eElastMin)
 	{
 		sTrial=0.;
-		Et=0.000002;
+		Et=0.;
 	}
 	else if(eTrial>eElastMax)
 	{
 		sTrial=sy;
-		Et=0.000002;
+		Et=0.;
 	}
 	else
 	{

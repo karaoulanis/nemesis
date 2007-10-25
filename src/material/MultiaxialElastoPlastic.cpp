@@ -779,7 +779,8 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 		}	
 	if(activeSurfaces.empty()) return;
 	plastic=true;	
-	for(int k=0;k<nIter;k++)
+	int k=0;
+	for(k=0;k<nIter;k++)
 	{
 		//cout<<k<<' '<<activeSurfaces.size()<<endl;
 		//=====================================================================
