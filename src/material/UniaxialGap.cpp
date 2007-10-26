@@ -60,22 +60,42 @@ UniaxialMaterial* UniaxialGap::getClone()
 void UniaxialGap::setStrain(const double De)
 {
 	double E=MatParams[ 0];
-
 	eTrial=eTotal+De;
-	if(eTrial<eElastMin)
+	if(sy>=0)
 	{
-		sTrial=0.;
-		Et=0.;
-	}
-	else if(eTrial>eElastMax)
-	{
-		sTrial=sy;
-		Et=0.;
+		if(eTrial<eElastMin)
+		{
+			sTrial=0.;
+			Et=0.;
+		}
+		else if(eTrial>eElastMax)
+		{
+			sTrial=sy;
+			Et=0.;
+		}
+		else
+		{
+			sTrial=E*(eTrial-eElastMin);
+			Et=E;
+		}
 	}
 	else
 	{
-		sTrial=E*(eTrial-eElastMin);
-		Et=E;
+		if(eTrial>eElastMin)
+		{
+			sTrial=0.;
+			Et=0.;
+		}
+		else if(eTrial<eElastMax)
+		{
+			sTrial=sy;
+			Et=0.;
+		}
+		else
+		{
+			sTrial=E*(eTrial-eElastMin);
+			Et=E;
+		}
 	}
 }
 const double UniaxialGap::getC()

@@ -17,12 +17,14 @@ node.info(id) Print nodal info.
 element.bar2s(id,node_i,node_j,mat,sec) Define a simple 2-node bar.
 element.beam(id,node_i,node_j,mat,sec) Define a 2d beam.
 element.quad4d(id,node_1,node_2,node_3,node_4,mat) Define a 4-Noded standard displacement quad.
+element.spring(id,node_1,node_2,mat) Define a 2-noded spring element.
 
 group.state(id,active|,facK|,facS|,facG|,facP) Set group options.
 
 lc.define(id,name) Define a new loadcase.
 
-material.uniaxialElastic(id,E,nu|,rho|,aT) Define a uniaxial elastic material.
+material.uniElastic(id,E,nu|,rho|,aT) Define a uniaxial elastic material.
+material.spring(K1,sy,gap,K2,mue2,K3,mue3) Define a spring material.
 
 section.user(id,A|,As2|,As3|,J1|,J2|,J3|,h2|,h3) Define a user cross-section.
 
