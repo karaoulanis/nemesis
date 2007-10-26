@@ -726,13 +726,23 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="sdofMaterials"
+				Name="SdofMaterial"
 				Filter="">
 				<File
 					RelativePath="..\..\src\material\SDofMaterial.cpp">
 				</File>
 				<File
 					RelativePath="..\..\src\material\SDofMaterial.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="ContactMaterial"
+				Filter="">
+				<File
+					RelativePath="..\..\src\material\SpringMaterial.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\SpringMaterial.h">
 				</File>
 			</Filter>
 		</Filter>
@@ -1016,6 +1026,16 @@
 				</File>
 				<File
 					RelativePath="..\..\src\elements\Bar2t.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="spring"
+				Filter="">
+				<File
+					RelativePath="..\..\src\elements\Spring.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Spring.h">
 				</File>
 			</Filter>
 		</Filter>

@@ -559,6 +559,17 @@ static PyObject* pyMaterial_SDof(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_Spring(PyObject *self, PyObject *args)
+{
+	int id;
+	double Kn,sy,gap=0.,Ks1=0.,mue1=0.,Ks2=0.,mue2=0.;
+    if(!PyArg_ParseTuple(args,"idd|ddddd",&id,&Kn,&sy,&gap,&Ks1,&mue1,&Ks2,&mue2))return NULL;
+	Material* pMaterial=new SpringMaterial(id,Kn,sy,gap,Ks1,mue1,Ks2,mue2);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyMaterial_UniaxialElastic(PyObject *self, PyObject *args)
 {
 	int id;
@@ -709,6 +720,8 @@ static PyMethodDef MaterialMethods[] =
 {
 	{"sdof",						pyMaterial_SDof,	
 		METH_VARARGS,"Define a single dof material."},
+	{"spring",						pyMaterial_Spring,	
+		METH_VARARGS,"Define a spring material."},
 	{"uniElastic",					pyMaterial_UniaxialElastic,	
 		METH_VARARGS,"Define a uniaxial elastic material."},
 	{"uniElastoPlastic",			pyMaterial_UniaxialElastoPlastic,
@@ -738,6 +751,26 @@ static PyMethodDef MaterialMethods[] =
 /******************************************************************************
 * Element commands
 ******************************************************************************/
+static PyObject* pyElement_Spring(PyObject *self, PyObject *args)
+{
+	int id,iNode,jNode,mat;
+	double xp1=1.,xp2=0.,xp3=0.,yp1=0.,yp2=1.,yp3=0.;
+    if(!PyArg_ParseTuple(args,"iiii|dddddd",&id,&iNode,&jNode,&mat,
+		                                    &xp1,&xp2,&xp3,&yp1,&yp2,&yp3))
+		return NULL;
+	try
+	{
+		Element* pElement=new Spring(id,iNode,jNode,mat,xp1,xp2,xp3,yp1,yp2,yp3);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_Bar2s(PyObject *self, PyObject *args)
 {
 	int id,iNode,jNode,mat,iSec,jSec=-9999;
@@ -984,6 +1017,8 @@ static PyObject* pyElement_Path(PyObject *self, PyObject *args)
 }
 static PyMethodDef ElementMethods[] = 
 {
+	{"spring",			pyElement_Spring,	
+		METH_VARARGS,"Define a spring element."},
 	{"bar",				pyElement_Bar2s,	
 		METH_VARARGS,"An alias for bar2s."},
 	{"bar2s",			pyElement_Bar2s,	

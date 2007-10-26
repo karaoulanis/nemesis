@@ -36,6 +36,7 @@
 #include <UniaxialElastoPlastic.h>
 #include <UniaxialCyclic.h>
 #include <UniaxialGap.h>
+#include <SpringMaterial.h>
 #include <MultiaxialElastic.h>
 #include <DuncanChang.h>
 #include <PlaneStress.h>
@@ -47,6 +48,7 @@
 #include <Creep.h>
 #include <Bar2s.h>
 #include <Bar2t.h>
+#include <Spring.h>
 #include <Beam2e.h>
 #include <Timoshenko2d.h>
 #include <SDofElement.h>
