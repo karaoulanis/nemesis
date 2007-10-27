@@ -559,12 +559,23 @@ static PyObject* pyMaterial_SDof(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_Spring(PyObject *self, PyObject *args)
+static PyObject* pyMaterial_SpringElastic(PyObject *self, PyObject *args)
 {
 	int id;
-	double Kn,sy,gap=0.,Ks1=0.,mue1=0.,Ks2=0.,mue2=0.;
-    if(!PyArg_ParseTuple(args,"idd|ddddd",&id,&Kn,&sy,&gap,&Ks1,&mue1,&Ks2,&mue2))return NULL;
-	Material* pMaterial=new SpringMaterial(id,Kn,sy,gap,Ks1,mue1,Ks2,mue2);
+	double Kn,Ks2=0.,Ks3=0.;
+    if(!PyArg_ParseTuple(args,"id|dd",&id,&Kn,&Ks2,&Ks3))return NULL;
+	Material* pMaterial=new SpringMaterialElastic(id,Kn,Ks2,Ks3);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+static PyObject* pyMaterial_SpringContact(PyObject *self, PyObject *args)
+{
+	int id;
+	double Kn,sy,gap=0.,Ks2=0.,mue2=0.,Ks3=0.,mue3=0.;
+    if(!PyArg_ParseTuple(args,"idd|ddddd",&id,&Kn,&sy,&gap,&Ks2,&mue2,&Ks3,&mue3))return NULL;
+	Material* pMaterial=new SpringMaterialContact(id,Kn,sy,gap,Ks2,mue2,Ks3,mue3);
 	pD->add(pD->getMaterials(),pMaterial);
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
@@ -720,8 +731,10 @@ static PyMethodDef MaterialMethods[] =
 {
 	{"sdof",						pyMaterial_SDof,	
 		METH_VARARGS,"Define a single dof material."},
-	{"spring",						pyMaterial_Spring,	
-		METH_VARARGS,"Define a spring material."},
+	{"springElastic",				pyMaterial_SpringElastic,	
+		METH_VARARGS,"Define a spring elastic material."},
+	{"springContact",				pyMaterial_SpringContact,	
+		METH_VARARGS,"Define a spring contact material."},
 	{"uniElastic",					pyMaterial_UniaxialElastic,	
 		METH_VARARGS,"Define a uniaxial elastic material."},
 	{"uniElastoPlastic",			pyMaterial_UniaxialElastoPlastic,

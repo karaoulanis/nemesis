@@ -32,6 +32,8 @@
 #include <Node.h>
 #include <Group.h>
 #include <SDofMaterial.h>
+#include <SpringMaterialElastic.h>
+#include <SpringMaterialContact.h>
 #include <UniaxialElastic.h>
 #include <UniaxialElastoPlastic.h>
 #include <UniaxialCyclic.h>

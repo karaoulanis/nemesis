@@ -23,8 +23,10 @@ group.state(id,active|,facK|,facS|,facG|,facP) Set group options.
 
 lc.define(id,name) Define a new loadcase.
 
+
+material.springElastic(Kn,Ks2,Ks3) Define a spring elastic material.
+material.springContact(Kn,sy,gap,Ks2,mue2,Ks3,mue3) Define a spring contact material.
 material.uniElastic(id,E,nu|,rho|,aT) Define a uniaxial elastic material.
-material.spring(K1,sy,gap,K2,mue2,K3,mue3) Define a spring material.
 
 section.user(id,A|,As2|,As3|,J1|,J2|,J3|,h2|,h3) Define a user cross-section.
 
