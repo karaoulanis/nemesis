@@ -736,13 +736,25 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="ContactMaterial"
+				Name="SpringMaterial"
 				Filter="">
 				<File
 					RelativePath="..\..\src\material\SpringMaterial.cpp">
 				</File>
 				<File
 					RelativePath="..\..\src\material\SpringMaterial.h">
+				</File>
+				<File
+					RelativePath="..\..\src\material\SpringMaterialContact.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\SpringMaterialContact.h">
+				</File>
+				<File
+					RelativePath="..\..\src\material\SpringMaterialElastic.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\SpringMaterialElastic.h">
 				</File>
 			</Filter>
 		</Filter>
