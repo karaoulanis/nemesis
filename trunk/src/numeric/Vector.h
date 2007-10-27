@@ -410,10 +410,13 @@ public:
 	}
 	/**
 	 * Returns the normal of a Vector.
+	 * Provides check for zero division.
 	 */
 	inline Vector& normalize() 
 	{
 		double norm=twonorm();
+		if(num::tiny(norm))
+			throw SException("[nemesis:%d] %s",9999,"Zero vector length encountered.");
 		for(int i=0;i<size_;i++) data_[i]/=norm;
 		return *this;
 	}
