@@ -400,7 +400,7 @@ void SQLiteDatabase::exportToVtk(const char* tableName)
 		if(resNodes[i*ncol+2+4]==0) vtkFile<<0.<<' ';
 		else vtkFile<<atof(resNodes[i*ncol+2+4])<<' ';
 		if(resNodes[i*ncol+2+5]==0) vtkFile<<0.<<' ';
-		else vtkFile<<atof(resNodes[i*ncol+2+4])<<' ';
+		else vtkFile<<atof(resNodes[i*ncol+2+5])<<' ';
 		vtkFile<<endl;
 	}
 	vtkFile<<endl;
