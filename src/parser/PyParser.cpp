@@ -1401,11 +1401,19 @@ static PyObject* pyInitialConditions_Stresses(PyObject *self, PyObject *args)
 		PyErr_SetString(PyExc_StandardError,"No LoadCase yet defined.");
 		return NULL;
 	}
-	int groupID;
+	int groupID,dir;
 	double h1,s1,h2,s2,K0;
-	if(!PyArg_ParseTuple(args,"iddddd",&groupID,&h1,&s1,&h2,&s2,&K0)) return NULL;
-	InitialStresses* pInitial=new InitialStresses(groupID,h1,s1,h2,s2,K0);
-	pD->get<LoadCase>(pD->getLoadCases(),currentLC)->addInitialCondition(pInitial);
+	if(!PyArg_ParseTuple(args,"iiddddd",&groupID,&dir,&h1,&s1,&h2,&s2,&K0)) return NULL;
+	try
+	{
+		InitialStresses* pInitial=new InitialStresses(groupID,dir,h1,s1,h2,s2,K0);
+		pD->get<LoadCase>(pD->getLoadCases(),currentLC)->addInitialCondition(pInitial);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
 	Py_INCREF(Py_None);
 	return Py_None;
 }

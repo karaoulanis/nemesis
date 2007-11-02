@@ -67,6 +67,18 @@ Brick8Disp::Brick8Disp(int ID,
 	myMatPoints[5]=new MatPoint(pMat,2,1,2,2,2,2);
 	myMatPoints[6]=new MatPoint(pMat,2,2,2,2,2,2);
 	myMatPoints[7]=new MatPoint(pMat,1,2,2,2,2,2);
+	for(unsigned i=0;i<8;i++)
+	{
+		this->findShapeFunctionsAt(myMatPoints[i]);
+		double xG=0,yG=0,zG=0;
+		for(unsigned j=0;j<8;j++)
+		{
+			xG+=N(j,0)*x(j,0);
+			yG+=N(j,0)*x(j,1);
+			zG+=N(j,0)*x(j,2);
+		}
+		myMatPoints[i]->setX(xG,yG,zG);
+	}
 }
 Brick8Disp::~Brick8Disp()
 {
@@ -214,9 +226,9 @@ const Vector& Brick8Disp::getR()
 			R[ii+1]+=facS*(N(i,2)*sigma[1]+N(i,1)*sigma[3]+N(i,3)*sigma[4])*dV;
 			R[ii+2]+=facS*(N(i,3)*sigma[2]+N(i,2)*sigma[4]+N(i,1)*sigma[5])*dV;
 			///@todo check
-			R[ii  ]-=facG*(N(0,i)*b[0]*dV);
-			R[ii+1]-=facG*(N(0,i)*b[1]*dV);
-			R[ii+2]-=facG*(N(0,i)*b[2]*dV);
+			R[ii  ]-=facG*(N(i,0)*b[0]*dV);
+			R[ii+1]-=facG*(N(i,0)*b[1]*dV);
+			R[ii+2]-=facG*(N(i,0)*b[2]*dV);
 			ii+=3;
 		}
 	}
@@ -267,6 +279,12 @@ bool Brick8Disp::checkIfAllows(FEObject* f)
 {
 	return true;
 }
+void Brick8Disp::addInitialStresses(InitialStresses* pInitialStresses)
+{
+	if(myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
+		for(unsigned i=0;i<myMatPoints.size();i++)
+			myMatPoints[i]->setInitialStresses(pInitialStresses);
+}
 void Brick8Disp::recoverStresses()
 {
  	static Vector sigma(6);
@@ -300,4 +318,11 @@ void Brick8Disp::recoverStresses()
 				sigma[j]+=E(i,k)*(myMatPoints[k]->getMaterial()->getStress())[j];
 		myNodes[i]->addStress(sigma);
 	}
+}
+const int Brick8Disp::getnPlasticPoints()
+{
+	int n=0;
+	for(unsigned i=0;i<myMatPoints.size();i++)
+		if(myMatPoints[i]->getMaterial()->isPlastic()) n+=1;
+	return n;
 }

@@ -53,6 +53,8 @@ public:
 	
 	int findShapeFunctionsAt(MatPoint* pMatPoint);
 	bool checkIfAllows(FEObject* f);
+	void addInitialStresses(InitialStresses* pInitialStresses);	
 	void recoverStresses();
+	const int getnPlasticPoints();
 };
 #endif

@@ -35,6 +35,7 @@ class InitialStresses: public InitialCondition
 {
 private:
 	int theGroupID;
+	int dir;
 	double h1;
 	double s1;
 	double h2;
@@ -42,9 +43,10 @@ private:
 	double K0;
 public:
 	InitialStresses();
-	InitialStresses(int groupID_,double h1_,double s1_,double h2_,double s2_,double K0_);
+	InitialStresses(int groupID_,int dir_,double h1_,double s1_,double h2_,double s2_,double K0_);
 	~InitialStresses();
 	inline int getGroupID()	{return theGroupID;}
+	inline int getDir()		{return dir;}
 	inline double getH1()	{return h1;}
 	inline double getS1()	{return s1;}
 	inline double getH2()	{return h2;}

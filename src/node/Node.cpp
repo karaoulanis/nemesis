@@ -166,6 +166,7 @@ void Node::multDisp(double facD)
 void Node::zeroStress()
 {
 	stress.clear();
+	avgStress=0;
 }
 void Node::addStress(const Vector& s)
 {

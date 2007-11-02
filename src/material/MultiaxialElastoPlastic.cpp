@@ -762,7 +762,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 	//=========================================================================
 	// Step 1: Compute trial stress
 	//=========================================================================
-	sTrial=Cel*(eTrial-ePTrial);
+	sTrial=sConvg+Cel*De;
 	Vector ss(6,0.);
 	ss=sTrial;
    
@@ -786,7 +786,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 		//=====================================================================
 		// Step 3: Evaluate flow rule, hardening law and residuals
 		//=====================================================================
-		sTrial=Cel*(eTrial-ePTrial);
+		//sTrial=Cel*(eTrial-ePTrial);
 		activeSurfaces.resize(0);
 		for(unsigned i=0;i<fSurfaces.size();i++)
 		{
@@ -907,6 +907,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 		//=====================================================================
 		// Step 8: Update
 		//=====================================================================
+		for(int i=0;i<6;i++) sTrial[i]+=x[i];
 		ePTrial+=dEp;
 		aTrial+=da;
 		for(unsigned i=0;i<activeSurfaces.size();i++)
@@ -914,7 +915,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
 	}
 	if(k==nIter)
 	{
-		cout<<"FAILED : "<<activeSurfaces.size()<<endl;
+		//cout<<"FAILED : "<<activeSurfaces.size()<<endl;
 		//cout<<sTrial<<endl;
 		//cout<<ss<<endl;
 		aTrial =aConvg;
