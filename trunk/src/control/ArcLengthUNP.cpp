@@ -78,9 +78,9 @@ void ArcLengthUNP::predict()
 {
 	// Find DLambda
 	///@todo Auto-incrementation involves abs() and this might be a problem...
-	DLambda=DLambda*pow(((double)Id/(double)Io),nExp);
-	if(fabs(DLambda)<minDelta)		DLambda=minDelta;
-	else if(fabs(DLambda)>maxDelta) DLambda=maxDelta;
+//	DLambda=DLambda*pow(((double)Id/(double)Io),nExp);
+//	if(fabs(DLambda)<minDelta)		DLambda=minDelta;
+//	else if(fabs(DLambda)>maxDelta) DLambda=maxDelta;
 
 	// Find duT (tangent du)
 	pA->getSOE()->setB(qRef);

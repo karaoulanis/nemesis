@@ -39,7 +39,7 @@ load.beamUniform(beam,direction,p) Define a uniform force load acting on a beam.
 groundMotion.file(dof_id,filename,dt|,scale) Define a uniform excitation through a file.
 groundMotion.sin(dof_id,a,omega|,phi) Define a sinus uniform excitation.
 
-initial.stresses(group_id,h1,s1,h2,s2,K0)
+initial.stresses(group_id,dir,h1,s1,h2,s2,K0)
 
 analysis.static() Define a static analysis.
 analysis.transient() Define a static analysis.

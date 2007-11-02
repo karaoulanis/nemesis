@@ -28,11 +28,12 @@
 InitialStresses::InitialStresses()
 {
 }
-InitialStresses::InitialStresses(int groupID_,double h1_,double s1_,double h2_,double s2_,double K0_)
+InitialStresses::InitialStresses(int groupID_,int dir_,double h1_,double s1_,double h2_,double s2_,double K0_)
 	:InitialCondition()
 {
 	myTag=TAG_INITIAL_STRESSES;
 	theGroupID=groupID_;
+	dir=dir_;
 	h1=h1_;
 	s1=s1_;
 	h2=h2_;
@@ -40,6 +41,9 @@ InitialStresses::InitialStresses(int groupID_,double h1_,double s1_,double h2_,d
 	K0=K0_;
 	// Check if group exists
 	pD->get<Group>(pD->getGroups(),theGroupID);
+	// Check direction
+	if(dir<1 || dir>3)
+		throw SException("[nemesis:%d] Direction should be 1, 2 or 3.",9999);
 }
 InitialStresses::~InitialStresses()
 {
