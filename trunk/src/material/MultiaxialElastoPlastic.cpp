@@ -889,7 +889,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De)
         double da=x[6];
 		
 		bool reset=false;
-		counter=0;
+		//counter=0;
 		for(unsigned i=0;i<activeSurfaces.size();i++)
 			ddg[i]=x[7+i];
 		for(unsigned i=0;i<activeSurfaces.size();i++)
