@@ -161,6 +161,9 @@
 				RelativePath="..\..\src\[main]\NemesisConfig.h">
 			</File>
 			<File
+				RelativePath="..\..\src\[main]\NemesisDebug.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\[main]\NemesisDebug.h">
 			</File>
 		</Filter>
@@ -990,6 +993,12 @@
 				</File>
 				<File
 					RelativePath="..\..\src\elements\Quad4DispPlain.h">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Quad4e.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Quad4e.h">
 				</File>
 			</Filter>
 			<Filter
