@@ -67,9 +67,11 @@ public:
 	void write(const Matrix& m)						{log<<m<<endl;}
 };
 
-namespace Counters
-{
-	int c1=0;
-	int c2=0;
-};
+//namespace Counters
+//{
+//	int c1;
+//	int c2;
+//};
+void report(const Matrix& m,const char* name="Noname",int total=8,int decimal=4);
+void report(const Vector& v,const char* name="Noname",bool transpose=true,int total=8,int decimal=4);
 #endif
