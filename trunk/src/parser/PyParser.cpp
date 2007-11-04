@@ -929,6 +929,28 @@ static PyObject* pyElement_Quad4d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Quad4e(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,matID;
+    if(!PyArg_ParseTuple(args,"iiiiii",
+		&id,&n1,&n2,&n3,&n4,&matID))
+		return NULL;
+	try
+	{
+		Element* pElement;
+		if(pD->getTag()==TAG_DOMAIN_PLANE_STRAIN||pD->getTag()==TAG_DOMAIN_PLANE_STRESS)
+			pElement=new Quad4e(id,n1,n2,n3,n4,matID);
+		else throw SException("[nemesis:%d] %s",1110,"A quad4e can be used only in plane strain/stress.");
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,matID;
@@ -1048,6 +1070,8 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Define a single dof element."},
 	{"quad4d",			pyElement_Quad4d,	
 		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
+	{"quad4e",			pyElement_Quad4e,	
+		METH_VARARGS,"Define a 4-Noded enhanced assumed strain quad."},
 	{"tria3d",				pyElement_Triangle3d,	
 		METH_VARARGS,"Define a 3-Noded constant strain triangle."},
 	{"tria3x",				pyElement_Triangle3dXFem,	
