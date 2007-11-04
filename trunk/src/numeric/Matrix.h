@@ -184,6 +184,7 @@ public:
 	/**
 	 * Resizes the Matrix.
 	 * Does not preserves data and does not initialize entries.
+	 * If new Matrix of the same size no allocation takes place.
 	 * Exception handling for bad allocation is provided.
 	 * @param m The number of rows.
 	 * @param n The number of columns.
@@ -192,20 +193,24 @@ public:
 	{
 		rows_=m;
 		cols_=n;
-		size_=m*n;
-		if(data_!=0) delete[] data_;
-		try
+		if(size_!=m*n)
 		{
-			data_=new double[size_];
-		}
-		catch(std::bad_alloc)
-		{
-			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			size_=m*n;
+			if(data_!=0) delete[] data_;
+			try
+			{
+				data_=new double[size_];
+			}
+			catch(std::bad_alloc)
+			{
+				throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			}
 		}
 	}	
 	/**
 	 * Resizes the Matrix.
 	 * Does not preserves data but initializes all entries to c.
+	 * If new Matrix of the same size no allocation takes place.
 	 * Exception handling for bad allocation is provided.
 	 * @param m The number of rows.
 	 * @param n The number of columns.
@@ -215,15 +220,18 @@ public:
 	{
 		rows_=m;
 		cols_=n;
-		size_=m*n;
-		if(data_!=0) delete[] data_;
-		try
+		if(size_!=m*n)
 		{
-			data_=new double[size_];
-		}
-		catch(std::bad_alloc)
-		{
-			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			size_=m*n;
+			if(data_!=0) delete[] data_;
+			try
+			{
+				data_=new double[size_];
+			}
+			catch(std::bad_alloc)
+			{
+				throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			}
 		}
 		for(int i=0;i<size_;i++) data_[i]=c;
 	}
@@ -646,14 +654,6 @@ public:
 		s<<1200<<' '<<m.rows_<<' '<<m.cols_<<' ';
 		for(int i=0;i<m.size_;i++) s<<m.data_[i]<<' ';
 		return s;
-	}
-	void report()
-	{
-		for(int i=0;i<rows_;i++)
-		{
-			for(int j=0;j<cols_;j++)	cout<<data_[i*cols_+j]<<'\t';
-			cout<<endl;
-		}
 	}
 };
 /**

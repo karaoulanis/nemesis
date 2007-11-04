@@ -165,40 +165,48 @@ public:
 	/**
 	 * Resizes the Vector.
 	 * Does not preserves data and does not initialize entries.
+	 * If new Vector of the same size no allocation takes place.
 	 * Exception handling for bad allocation is provided.
 	 * @param n The size of the vector.
 	 */
 	inline void resize(int n)
 	{
-		size_=n;
-		if(data_!=0) delete[] data_;
-		try
+		if(size_!=n)
 		{
-			data_=new double[size_];
-		}
-		catch(std::bad_alloc)
-		{
-			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			size_=n;
+			if(data_!=0) delete[] data_;
+			try
+			{
+				data_=new double[size_];
+			}
+			catch(std::bad_alloc)
+			{
+				throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			}
 		}
 	}
 	/**
 	 * Resizes the Vector.
 	 * Does not preserves data but initializes all entries to c.
+	 * If new Vector of the same size no allocation takes place.
 	 * Exception handling for bad allocation is provided.
 	 * @param n The size of the vector.
 	 * @param c Initial value for all entries.
 	 */
 	inline void resize(int n,double c)
 	{
-		size_=n;
-		if(data_!=0) delete[] data_;
-		try
+		if(size_!=n)
 		{
-			data_=new double[size_];
-		}
-		catch(std::bad_alloc)
-		{
-			throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			size_=n;
+			if(data_!=0) delete[] data_;
+			try
+			{
+				data_=new double[size_];
+			}
+			catch(std::bad_alloc)
+			{
+				throw SException("[nemesis:%d] %s",1001,"Run out of memory.\n");
+			}
 		}
 		for(int i=0;i<size_;i++) data_[i]=c;
 	}
