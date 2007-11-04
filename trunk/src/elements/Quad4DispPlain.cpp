@@ -119,6 +119,7 @@ void Quad4DispPlain::update()
 {
 	if(!(myGroup->isActive()))	return;
 	Vector& u=*myVector;
+	///todo: Change this with incrm
 	static Vector u1(8);
 	static Vector u2(8);
 	u2=this->getDispConvg();

@@ -212,12 +212,12 @@ const Vector& Element::getAcclConvg()
 			disp[i*nDofs+j]=myNodes[i]->getAcclConvgAtDof(myLocalNodalDofs[j]);
 	return disp;
 }
+///@todo void getDispIncrm(u)
 const Vector& Element::getDispIncrm()
 {
 	int nDofs=myLocalNodalDofs.size();
 	int nNodes=myNodalIDs.size();
 	Vector& disp=*myVector;
-	///@todo: CHECK!!!!!
 	for(int i=0;i<nNodes;i++)
 		for(int j=0;j<nDofs;j++)
 			disp[i*nDofs+j]=myNodes[i]->getDispTrialAtDof(myLocalNodalDofs[j])-
