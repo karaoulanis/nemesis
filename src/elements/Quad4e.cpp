@@ -131,10 +131,31 @@ void Quad4e::formKR()
 		}
 		Kee.solve(dalpha,Fe);
 		Dalpha+=dalpha;
-		if(counter>30) 
+		if(counter>30)
+		{ 
+			for(unsigned i=0;i<myMatPoints.size();i++)
+			{
+				double xi =myMatPoints[i]->get_r();
+				double eta=myMatPoints[i]->get_s();
+				double detJ=this->getJ(xi,eta);
+				double dV=myMatPoints[i]->get_w()*detJ;
+				const Matrix& C0=myMatPoints[i]->getMaterial()->getC();
+				C(0,0)=C0(0,0);	C(0,1)=C0(0,1);	C(0,2)=C0(0,3);	  
+				C(1,0)=C0(1,0);	C(1,1)=C0(1,1);	C(1,2)=C0(1,3);	  
+				C(2,0)=C0(3,0);	C(2,1)=C0(3,1);	C(2,2)=C0(3,3);	  
+				this->formBe(xi,eta);
+				report(detJ,"detJ",20,12);
+				report(dV,  "dV  ",20,12);
+				report(Be,"Be",20, 2);
+				report(C,"C",20, 2);
+			}
+			report(Kee,"Kee",20, 2);
+			report(Fe,"Fe",  20,10);
+			report(Dalpha,"Da",  20,10);
 			throw SException("[nemesis:%d] %s",9999,"Error in quad4e.\n");
+		}
 	}
-	while(Fe.twonorm()>1e-9);
+	while(Fe.twonorm()>1e-6);
 	alpha+=Dalpha;
 	//report(alpha,"alpha",true,12,9);
 
@@ -248,40 +269,40 @@ void Quad4e::formBu(double xi,double eta)
 	Bu(1,0)=0.;		Bu(1,1)=d1deta;	Bu(1,2)=0.;		Bu(1,3)=d2deta;	Bu(1,4)=0.;		Bu(1,5)=d3deta;	Bu(1,6)=0.;		Bu(1,7)=d4deta;		
 	Bu(2,0)=d1deta;	Bu(2,1)=d1dxi;	Bu(2,2)=d2deta;	Bu(2,3)=d2dxi;	Bu(2,4)=d3deta;	Bu(2,5)=d3dxi;	Bu(2,6)=d4deta;	Bu(2,7)=d4dxi;
 }
-void Quad4e::formBe(double xi,double eta)
-{
-	Be.clear();
-	Be(0,0)=xi;
-	Be(1,1)=eta;
-	Be(2,2)=xi;
-	Be(2,3)=eta;
-	//Be(2,4)=xi*eta;
-
-	double detJ0=getJ(0.,0.);
-	double detJ =getJ(xi,eta);
-	this->formT0(0.,0.);
-	Be=(detJ0/detJ)*Transpose(Inverse(T0))*Be;
-
-}
 //void Quad4e::formBe(double xi,double eta)
 //{
-//	static Matrix J(2,2);
-//	static Matrix invTranJ(2,2);
-//	J(0,0)=0.25*(-x(0,0)+x(1,0)+x(2,0)-x(3,0));
-//	J(0,1)=0.25*(-x(0,0)-x(1,0)+x(2,0)+x(3,0));
-//	J(1,0)=0.25*(-x(0,1)+x(1,1)+x(2,1)-x(3,1));
-//	J(1,1)=0.25*(-x(0,1)-x(1,1)+x(2,1)+x(3,1));
-//
-//	invTranJ=Transpose(Inverse(J));
-//	double detJ =getJ(xi,eta);
-//
-//	double d00=invTranJ(0,0)*xi/detJ;
-//	double d10=invTranJ(1,0)*xi/detJ;
-//	double d01=invTranJ(0,1)*eta/detJ;
-//	double d11=invTranJ(1,1)*eta/detJ;
-//
 //	Be.clear();
-//	Be(0,0)=d00;	Be(0,1)=0.;		Be(0,2)=d01;	Be(0,3)=0.;
-//	Be(1,0)=0.;		Be(1,1)=d10;	Be(1,2)=0.;		Be(1,3)=d11;
-//	Be(2,0)=d10;	Be(2,1)=d00;	Be(2,2)=d11;	Be(2,3)=d01;
+//	Be(0,0)=xi;
+//	Be(1,1)=eta;
+//	Be(2,2)=xi;
+//	Be(2,3)=eta;
+//	//Be(2,4)=xi*eta;
+//
+//	double detJ0=getJ(0.,0.);
+//	double detJ =getJ(xi,eta);
+//	this->formT0(0.,0.);
+//	Be=(detJ0/detJ)*Transpose(Inverse(T0))*Be;
+//
 //}
+void Quad4e::formBe(double xi,double eta)
+{
+	static Matrix J(2,2);
+	static Matrix invTranJ(2,2);
+	J(0,0)=0.25*(-x(0,0)+x(1,0)+x(2,0)-x(3,0));
+	J(0,1)=0.25*(-x(0,0)-x(1,0)+x(2,0)+x(3,0));
+	J(1,0)=0.25*(-x(0,1)+x(1,1)+x(2,1)-x(3,1));
+	J(1,1)=0.25*(-x(0,1)-x(1,1)+x(2,1)+x(3,1));
+
+	invTranJ=Transpose(Inverse(J));
+	double detJ =getJ(xi,eta);
+
+	double d00=invTranJ(0,0)*xi/detJ;
+	double d10=invTranJ(1,0)*xi/detJ;
+	double d01=invTranJ(0,1)*eta/detJ;
+	double d11=invTranJ(1,1)*eta/detJ;
+
+	Be.clear();
+	Be(0,0)=d00;	Be(0,1)=0.;		Be(0,2)=d01;	Be(0,3)=0.;
+	Be(1,0)=0.;		Be(1,1)=d10;	Be(1,2)=0.;		Be(1,3)=d11;
+	Be(2,0)=d10;	Be(2,1)=d00;	Be(2,2)=d11;	Be(2,3)=d01;
+}
