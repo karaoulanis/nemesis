@@ -117,7 +117,7 @@ int StaticAnalysis::run(int nLC,int nLoadSteps)
 //			pA->getControl()->commit();
 //			break;
 			ret=-1;
-			return -1;
+//			return -1;
 		}
 		// Algorithm succeeded
 		pA->getControl()->commit();
