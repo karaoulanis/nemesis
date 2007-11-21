@@ -25,6 +25,12 @@
 
 #include <NemesisDebug.h>
 
+void report(const double d,const char* name,int total,int decimal)
+{
+	cout<<name<<" =";
+	num::print_d(d,total,decimal);
+	cout<<endl;
+}
 void report(const Matrix& m,const char* name,int total,int decimal)
 {
 	cout<<name<<" [ "<<m.rows()<<","<<m.cols()<<" ] ="<<endl;
@@ -35,14 +41,10 @@ void report(const Matrix& m,const char* name,int total,int decimal)
 		cout<<endl;
 	}
 }
-void report(const Vector& v,const char* name,bool transpose,int total,int decimal)
+void report(const Vector& v,const char* name,int total,int decimal)
 {
 	cout<<name<<" [ "<<v.size()<<" ] =";
-	if(!transpose) cout<<endl;
 	for(int i=0;i<v.size();i++)
-	{
 		num::print_d(v[i],total,decimal);
-		if(!transpose) cout<<endl;
-	}
-	if(transpose) cout<<endl;
+	cout<<endl;
 }
