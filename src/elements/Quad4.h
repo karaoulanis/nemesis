@@ -55,6 +55,8 @@ public:
 	void addTracker(int index);
 	Tracker* getTracker(int index);
 	void track();
+	
+	const int getnPlasticPoints();
 };
 
 #endif
