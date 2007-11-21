@@ -89,6 +89,7 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint)
 	J(1,1)=0.25*(-x(0,1)*(1-xi)  -x(1,1)*(1+xi)  +x(2,1)*(1+xi)  +x(3,1)*(1-xi));
 
 	detJ=J(0,0)*J(1,1)-J(0,1)*J(1,0);			// detJ
+	if(detJ<0.) cout<<myNodes[0]->getID()<<endl;
 	double dxidx  = J(1,1)/detJ;
 	double detadx =-J(1,0)/detJ;
 	double dxidy  =-J(0,1)/detJ;
@@ -186,4 +187,11 @@ void Quad4::track()
 {
 	for(unsigned i=0;i<myMatPoints.size();i++)
 		myMatPoints[i]->getMaterial()->track();
+}
+const int Quad4::getnPlasticPoints()
+{
+	int n=0;
+	for(unsigned int i=0;i<myMatPoints.size();i++) 
+		if(myMatPoints[i]->getMaterial()->isPlastic()) n++;
+	return n;
 }
