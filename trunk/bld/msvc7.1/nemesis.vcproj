@@ -610,6 +610,12 @@
 					RelativePath="..\..\src\material\PlaneStress.h">
 				</File>
 				<File
+					RelativePath="..\..\src\material\Tresca.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\Tresca.h">
+				</File>
+				<File
 					RelativePath="..\..\src\material\VonMises.cpp">
 				</File>
 				<File
@@ -981,6 +987,12 @@
 				</File>
 				<File
 					RelativePath="..\..\src\elements\Quad4.h">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Quad4b.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Quad4b.h">
 				</File>
 				<File
 					RelativePath="..\..\src\elements\Quad4DispAxisymmetric.cpp">
