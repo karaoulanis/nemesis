@@ -1,0 +1,71 @@
+
+def run(type):
+	u=[]
+	aVec=[]
+	for a in [0., 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]:
+		aVec.append(a)
+		domain.planeStrain(1.0)
+		#~ db.SQLite("test")
+		material.elastic( 1, 10000., 0.0)
+
+		node.add( 1,    0., 0.)
+		node.add( 2,  5.+a, 0.)
+		node.add( 3,   10., 0.)
+		node.add( 4,    0., 2.)
+		node.add( 5,  5.-a, 2.)
+		node.add( 6,   10., 2.)
+
+		if (type=='disp'):
+			element.quad4d( 1, 1, 2, 5, 4, 1)
+			element.quad4d( 2, 2, 3, 6, 5, 1)
+		elif (type=="EAS5"):
+			element.quad4e( 1, 1, 2, 5, 4, 1)
+			element.quad4e( 2, 2, 3, 6, 5, 1)
+		else:
+			element.quad4b( 1, 1, 2, 5, 4, 1)
+			element.quad4b( 2, 2, 3, 6, 5, 1)
+
+		node.fix(1,1)
+		node.fix(1,2)
+		node.fix(4,1)
+
+
+		lc.define(1)
+		load.node(3,1,+1.)
+		load.node(6,1,-1.)
+
+
+		analysis.static()
+		imposer.elimination()
+		control.load(1.0)
+
+		algorithm.linear()
+		analysis.run(1,1)
+
+		u.append(node.data(6)['disp'][1])
+		
+		#~ db.store("test")
+		#~ db.exportToVtk("test")
+		#~ db.close()
+		domain.clear()
+	return aVec,u
+
+a,uDisp=run("disp")
+a,uEAS5=run("EAS5")
+a,uBBAR=run("BBAR")
+uCorrect=[0.015]*len(a)
+
+for i in range(len(a)):
+	uDisp[i]=uDisp[i]/uCorrect[i]
+	uEAS5[i]=uEAS5[i]/uCorrect[i]
+	uBBAR[i]=uBBAR[i]/uCorrect[i]
+	uCorrect[i]=1.
+	
+import pylab
+from numpy import array
+# plot
+pylab.plot(a,uDisp,'k-o',a,uEAS5,'b-o',a,uBBAR,'r-o',a,uCorrect,'k-')
+pylab.grid(True)
+pylab.xlim=[0.,4.0]
+pylab.ylim=[0.,1.1]
+pylab.show()
