@@ -1,0 +1,368 @@
+
+
+from math import sin,pi,sqrt
+import sys
+tol=1e-9
+
+def getNodes(nodes,nodeA,nodeB,sort='unsorted'):
+	n1=nodes.index(nodeA)
+	n2=nodes.index(nodeB)
+	xA=nodes[n1][0]
+	yA=nodes[n1][1]
+	xB=nodes[n2][0]
+	yB=nodes[n2][1]
+	xL=min(xA,xB)	
+	xU=max(xA,xB)
+	yL=min(yA,yB)
+	yU=max(yA,yB)
+	nList=[]
+	# Find nodes
+	if xB!=xA:
+		a=(yB-yA)/(xB-xA)
+		for i in range(len(nodes)):
+			x  = nodes[i][0]
+			y  = nodes[i][1]
+			if abs(y-yA-a*(x-xA))<tol and x>=xL and x<=xU:
+				nList.append([i,x,y])
+	else:
+		for i in range(len(nodes)):
+			x  = nodes[i][0]
+			y  = nodes[i][1]
+			if x==xA and y>=yL and y<=yU:
+				nList.append([i,x,y])
+	# Sort
+	if sort=='sorted':
+		if xB!=xA: 	sortBy=1
+		else:		sortBy=2
+		for i in range(len(nList)):
+			tmp=nList[i][0]
+			nList[i][0]=nList[i][sortBy]
+			nList[i][sortBy]=tmp
+		nList.sort()
+		for i in range(len(nList)):
+			tmp=nList[i][0]
+			nList[i][0]=nList[i][sortBy]
+			nList[i][sortBy]=tmp
+		#######################################
+		# Check if sorted ok
+		#######################################
+		if nList[0][0]!=n1:
+			nList.reverse()
+		if nList[0][0]!=n1 or nList[len(nList)-1][0]!=n2:
+			for i in nList:
+				print i[0],i[1],i[2]
+			raise IOError,"Undefined error in handling nodes."
+	return nList
+def merge(nodes,quads,newNodes,newQuads):
+	"""
+	Merge
+	"""
+	tol=1e-9
+	# lists
+	nodalIDs=[i for i in range(len(nodes))]
+	mrgNodes=nodes[:]
+	mrgQuads=quads[:]
+
+	# merge nodes
+	k=len(nodes)
+
+	for n in newNodes:
+		duplicate=False
+		for m in nodes:
+			if sqrt((n[0]-m[0])**2+(n[1]-m[1])**2)<tol:
+				duplicate=True
+				break
+		if duplicate==True:
+			nodalIDs.append(nodes.index(m))
+		else:
+			nodalIDs.append(k)
+			mrgNodes.append(n)
+			k=k+1
+	
+	# merge quads
+	for q in newQuads:
+		for i in range(4):
+			q[i]=nodalIDs[q[i]-1+len(nodes)]+1
+		if q not in quads:
+			mrgQuads.append(q)
+
+	# info
+	s1='msh: merge   :'
+	s2='% 5i nodes existing,'%(len(nodes))
+	s3='% 5i nodes added, '  %(len(newNodes))
+	s4='% 5i nodes merged, ' %(len(mrgNodes)-len(nodes))
+	s5='% 5i nodes total.'	 %(len(mrgNodes))
+	print s1+s2+s3+s4+s5
+	s1='msh: merge   :'
+	s2='% 5i quads existing,'%(len(quads))
+	s3='% 5i quads added, '  %(len(newQuads))
+	s4='% 5i quads merged, ' %(len(mrgQuads)-len(quads))
+	s5='% 5i quads total.'	 %(len(mrgQuads))
+	print s1+s2+s3+s4+s5
+	
+	#return
+	return 	mrgNodes,mrgQuads
+
+def mirror(nodes,quads,p1,p2):
+	"""
+	Mirror
+	"""
+	# lists and tolerance
+	mirNodes=[]
+	mirQuads=[]
+	tol=1e-8
+	
+	# Mirror nodes 	
+	for n in nodes:
+		xP= n[0]; yP= n[1]
+		x1=p1[0]; y1=p1[1]
+		x2=p2[0]; y2=p2[1]
+		if abs(x1-x2)<tol:
+			if abs(x1-xP)<tol:
+				mirNodes.append(n)
+			else:
+				if xP>x1:
+					xP=2*x1-xP
+				else:
+					xP=2*x1-xP
+				yP=yP
+				mirNodes.append([xP,yP])
+		elif abs(yP-y1-(y2-y1)*(xP-x1)/(x2-x1))<tol:
+			mirNodes.append(n)
+		else:
+			xP=xP-x1
+			yP=yP-y1
+			LL=sqrt((x2-x1)**2+(y2-y1)**2)
+			c=(x2-x1)/LL
+			s=(y2-y1)/LL
+			xP_= c*xP + s*yP
+			yP_=-s*xP + c*yP
+			xP= xP_
+			yP=-yP_
+			xP_= c*xP - s*yP
+			yP_= s*xP + c*yP
+			xP=xP_+x1
+			yP=yP_+y1
+			mirNodes.append([xP,yP])
+
+	# Mirror quads 
+	for q in quads:
+		n1=q[0]
+		n2=q[3]
+		n3=q[2]
+		n4=q[1]
+		mirQuads.append([n1,n2,n3,n4])
+		
+	# info
+	s1='msh: mirror  :'
+	s2='% 5i nodes mirrored.'%(len(mirNodes))
+	print s1+s2
+	s1='msh: mirror  :'
+	s2='% 5i quads mirrored.'%(len(mirQuads))
+	print s1+s2
+
+	# Merge nodes and quads
+	nodes,quads=merge(nodes,quads,mirNodes,mirQuads)
+	
+	# Return
+	return nodes,quads
+
+def struct2(nodes,quads,n1,n2,n3,n4,m,n):
+	"""
+	struct2
+	"""
+	# Split lines
+	pY=[]
+	for ([x1,y1],[x2,y2]) in [[n4,n1],[n3,n2]]:
+		tmp=[]
+		for i in range(n+1):
+			if x1==x2:
+				x=x1
+				y=y1+i*(y2-y1)/n
+			else:
+				x=x1+i*(x2-x1)/n
+				y=y1+(y2-y1)/(x2-x1)*(x-x1)
+			tmp.append([x,y])
+		pY.append(tmp)
+	
+	# Nodes
+	newNodes=[]
+	for i in range(n+1):
+		x1=pY[0][i][0]	
+		y1=pY[0][i][1]
+		x2=pY[1][i][0]	
+		y2=pY[1][i][1]
+		for j in range(m+1):
+			if x1==x2:
+				x=x1
+				y=y1+j*(y2-y1)/m
+			else:
+				x=x1+j*(x2-x1)/m
+				y=y1+(y2-y1)/(x2-x1)*(x-x1)
+			newNodes.append([x,y])
+	
+	# Quads
+	newQuads=[]
+	for i in range(n):
+		for j in range(m):
+			n1=    i*(m+1)+j+1
+			n4=    i*(m+1)+j+2
+			n3=(i+1)*(m+1)+j+2
+			n2=(i+1)*(m+1)+j+1
+			newQuads.append([n1,n2,n3,n4])
+
+	# info
+	s1='msh: struct2 :'
+	s2='% 5i nodes created.'%((n+1)*(m+1))
+	print s1+s2
+	s1='msh: struct2 :'
+	s2='% 5i quads created.'%(n*m)
+	print s1+s2
+
+	# Merge nodes and quads
+	nodes,quads=merge(nodes,quads,newNodes,newQuads)
+	
+	# Return
+	return nodes,quads
+
+def struct3(nodes,quads,L1,L2,n,r):
+	"""
+	struct3
+	"""
+	m=[]
+	d=L2/n
+	
+	# Find nodes in x-direction
+	divX=[0.5*L2]
+	i=0
+	while(1):
+		i+=1
+		if divX[i-1]+d*r**i+d*r**(i+1)>(L1-0.5*L2):
+			divX.append(L1)
+			break
+		else:
+			divX.append(divX[i-1]+d*r**i)
+	divX.reverse()
+	for i in range(len(divX)):
+		divX[i]*=-1
+
+	# Find nodes in y-direction
+	divY=[]
+	for i in range(n+1):
+		divY.append(-i*L1/n)
+		
+	# Find nodal coordinates
+	for j in range(len(divY)):
+		tmp=[]
+		a=(-j*0.5*L2/n-divY[j])/(-0.5*L2+L1)
+		for i in range(len(divX)):		
+			x=divX[i]		
+			y=divY[j]+a*(L1+divX[i])
+			tmp.append([x,y])
+		m.append(tmp)
+
+	# Find new nodes
+	newNodes=[]
+	for i in range(len(divY)):
+		for j in range(len(divX)):
+			newNodes.append([m[i][j][0],m[i][j][1]])
+
+	# Find new quads
+	newQuads=[]
+	for i in range(len(divY)-1):
+		for j in range(len(divX)-1):
+			n1=    i*(len(divX))+j+1
+			n2=(i+1)*(len(divX))+j+1
+			n3=(i+1)*(len(divX))+j+2
+			n4=    i*(len(divX))+j+2
+			newQuads.append([n1,n2,n3,n4])
+	
+	# info
+	s1='msh: struct3 :'
+	s2='% 5i nodes created.'%(len(newNodes))
+	print s1+s2
+	s1='msh: struct3 :'
+	s2='% 5i quads created.'%(len(newQuads))
+	print s1+s2
+
+	# Merge nodes and quads
+	nodes,quads=merge(nodes,quads,newNodes,newQuads)
+	
+	# Return
+	return nodes,quads
+
+
+
+
+L1 = 0.5
+L2 = 0.05
+n  = 7
+r  = 1.3
+nodes,quads=struct3([],[],L1,L2,n,r)
+nodes,quads=mirror (nodes,quads,[ -L1,  -L1],[-0.5*L2,-0.5*L2])
+nodes,quads=mirror (nodes,quads,[  0.,   0.],[     0.,     1.])
+nodes,quads=struct2(nodes,quads,[ -L1,-4*L1],[   4*L1,  -4*L1],[     L1,    -L1],[    -L1,-L1],2*n,  n)
+nodes,quads=struct2(nodes,quads,[  L1,  -L1],[   4*L1,  -4*L1],[   4*L1,     0.],[     L1, 0.],  n,  n)
+nodes,quads=struct2(nodes,quads,[-0.5*L2,0.],[-0.5*L2,-0.5*L2],[ 0.5*L2,-0.5*L2],[ 0.5*L2, 0.],  n,2*n)
+
+domain.planeStrain(1.0)
+db.SQLite("test")
+
+material.elastic(1,1000., 0.49, 0.)
+material.Tresca( 2, 1, 1.)
+
+domain.gravity(10.,(0,-1,0))
+# Nodes
+id=0
+for n in nodes:
+	id+=1
+	node.add(id,n[0],n[1])
+
+
+# Elements
+id=0
+for e in quads:
+	id+=1
+	element.quad4b(id,e[0],e[1],e[2],e[3],2)
+
+# Constraints
+nd=getNodes(nodes,[-L1,0.],[-L1,-4*L1])
+for n in nd:
+	node.fix(n[0]+1,1)
+nd=getNodes(nodes,[4*L1,0.],[4*L1,-4*L1])
+for n in nd:
+	node.fix(n[0]+1,1)
+nd=getNodes(nodes,[-L1,-4*L1],[4*L1,-4*L1])
+for n in nd:
+	node.fix(n[0]+1,1)
+	node.fix(n[0]+1,2)
+
+# loadcase
+lc.define(1)
+#~ initial.stresses(1,2,0.,0.,-3*L1,-3*L1*20.,1.0)
+p=-1.
+nd=getNodes(nodes,[-L1,0.],[0.,0.],"sorted")
+for i in range(len(nd)-1):
+	x1=nd[i  ][1]
+	x2=nd[i+1][1]
+	n1=nd[i  ][0]+1
+	n2=nd[i+1][0]+1
+	pN=0.5*p*abs(x2-x1)
+	load.node(n1,2,pN)
+	load.node(n2,2,pN)
+	print x1,pN
+	print x2,pN
+node.track(1)
+
+analysis.static()
+control.disp(1,2,-0.001)
+algorithm.BFGS(40)
+convergence.set(40,1e-4,1e-1,1e-1)
+reorder.rCM()
+soe.band()
+analysis.run(1,15)
+
+db.store("test")
+db.exportToVtk("test")
+import tracker
+tracker.plotNodePath(1,'u_y','lambda',-1., 1.,"vm.txt")
