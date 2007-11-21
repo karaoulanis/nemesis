@@ -72,6 +72,7 @@ public:
 //	int c1;
 //	int c2;
 //};
+void report(const double  d,const char* name="Noname",int total=8,int decimal=4);
 void report(const Matrix& m,const char* name="Noname",int total=8,int decimal=4);
-void report(const Vector& v,const char* name="Noname",bool transpose=true,int total=8,int decimal=4);
+void report(const Vector& v,const char* name="Noname",int total=8,int decimal=4);
 #endif
