@@ -117,9 +117,9 @@ void Tresca::setStrain(const Vector& De)
 	tempS=sTrial;
 
 	static Vector f(3);
-	f[0]=s[0]-s[2]-cu;
-	f[1]=s[0]-s[1]-cu;
-	f[2]=s[1]-s[2]-cu;
+	f[0]=s[0]-s[2]-2.*cu;
+	f[1]=s[0]-s[1]-2.*cu;
+	f[2]=s[1]-s[2]-2.*cu;
 	//report(f,"Yield fun",true,12);
 	double theta=sTrial.theta();
 	//report(2.*sqrt(sTrial.J2())*cos(theta)-cu,"f");
@@ -190,10 +190,10 @@ void Tresca::setStrain(const Vector& De)
 	sTrial[5]=s[0]*sV(0,0)*sV(0,2)+s[1]*sV(1,0)*sV(1,2)+s[2]*sV(2,0)*sV(2,2);
 
 	theta=sTrial.theta();
-	if((2.*sqrt(sTrial.J2())*cos(theta)-cu)>1e-6) 
+	if((2.*sqrt(sTrial.J2())*cos(theta)-2*cu)>1e-6) 
 	{
-		inaccurate++;
-		//cout<<"error : "<<2.*sqrt(sTrial.J2())*cos(theta)-cu<<endl;
+		//inaccurate++;
+		cout<<"error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu<<endl;
 		//report(tempS,"sTrial");
 		//report(f,    "yield");
 		//report(x,    "solns",20,15);
