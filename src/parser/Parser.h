@@ -45,6 +45,7 @@
 #include <VonMises.h>
 #include <MohrCoulomb.h>
 #include <DruckerPrager.h>
+#include <Tresca.h>
 #include <ModifiedCamClay.h>
 #include <LadeDuncan.h>
 #include <Creep.h>
@@ -58,6 +59,7 @@
 #include <Quad4DispPlain.h>
 #include <Quad4DispAxisymmetric.h>
 #include <Quad4e.h>
+#include <Quad4b.h>
 #include <Triangle3.h>
 #include <Triangle3XFem.h>
 #include <Triangle6.h>

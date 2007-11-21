@@ -679,6 +679,18 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_Tresca(PyObject *self,PyObject *args)
+{
+	int id,elasticId;
+	double cu;
+    if(!PyArg_ParseTuple(args,"iid",&id,&elasticId,&cu)) 
+		return NULL;
+	Material* pMaterial=new Tresca(id,elasticId,cu);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyMaterial_Creep(PyObject *self,PyObject *args)
 {
 	int id,elasticId;
@@ -751,6 +763,8 @@ static PyMethodDef MaterialMethods[] =
 		METH_VARARGS,"Define a von-Mises type material."},
 	{"MohrCoulomb",					pyMaterial_MohrCoulomb,
 		METH_VARARGS,"Define a Mohr-Coulomb type material."},
+	{"Tresca",						pyMaterial_Tresca,
+		METH_VARARGS,"Define a Tresca type material."},
 	{"DruckerPrager",				pyMaterial_DruckerPrager,
 		METH_VARARGS,"Define a Drucker-Prager type material."},
 	{"modifiedCamClay",				pyMaterial_ModifiedCamClay,
@@ -951,6 +965,26 @@ static PyObject* pyElement_Quad4e(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Quad4b(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,matID;
+    if(!PyArg_ParseTuple(args,"iiiiii",
+		&id,&n1,&n2,&n3,&n4,&matID))
+		return NULL;
+	try
+	{
+		Element* pElement=new Quad4b(id,n1,n2,n3,n4,matID);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,matID;
@@ -1072,6 +1106,8 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
 	{"quad4e",			pyElement_Quad4e,	
 		METH_VARARGS,"Define a 4-Noded enhanced assumed strain quad."},
+	{"quad4b",			pyElement_Quad4b,	
+		METH_VARARGS,"Define a 4-Noded B-Bar quad."},
 	{"tria3d",				pyElement_Triangle3d,	
 		METH_VARARGS,"Define a 3-Noded constant strain triangle."},
 	{"tria3x",				pyElement_Triangle3dXFem,	
