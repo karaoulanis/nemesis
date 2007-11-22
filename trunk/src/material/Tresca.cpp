@@ -193,7 +193,7 @@ void Tresca::setStrain(const Vector& De)
 	if((2.*sqrt(sTrial.J2())*cos(theta)-2*cu)>1e-6) 
 	{
 		//inaccurate++;
-		cout<<"error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu<<endl;
+		//cout<<"error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu<<endl;
 		//report(tempS,"sTrial");
 		//report(f,    "yield");
 		//report(x,    "solns",20,15);
