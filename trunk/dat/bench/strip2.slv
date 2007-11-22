@@ -1,0 +1,94 @@
+
+
+from math import sin,pi,sqrt
+from pymesh import structured
+import sys
+name="strip2"
+
+B=1.0
+x=[	 0.000*B,
+	 0.250*B,
+	 0.500*B,
+	 0.625*B,
+	 0.750*B,
+	 0.875*B,
+	 1.000*B,
+	 1.125*B,
+	 1.250*B,
+	 1.375*B,
+	 1.500*B,
+	 1.750*B,
+	 2.000*B,
+	 2.750*B,
+	 3.500*B,
+	 5.000*B,
+	 7.000*B,
+	10.000*B]
+y=[	 0.000*B,
+	 3.000*B,
+	 5.000*B,
+	 6.500*B,
+	 7.500*B,
+	 8.000*B,
+	 8.250*B,
+	 8.500*B,
+	 8.750*B,
+	 9.000*B,
+	 9.125*B,
+	 9.250*B,
+	 9.375*B,
+	 9.500*B,
+	 9.625*B,
+	 9.750*B,
+	 9.875*B,
+	10.000*B]
+
+domain.planeStrain(1.0)
+db.SQLite(name)
+
+nu=0.49995
+E =100.*2*(1+nu)
+material.elastic(1,E, nu, 0.)
+material.Tresca( 2, 1, 1.)
+
+domain.gravity(10.,(0,-1,0))
+
+nodes,elems=structured.mesh2d(x,y)
+# Nodes
+for n in nodes:
+	node.add(n[0],n[1],n[2])
+# Elements
+for e in elems:
+	element.quad4b(e[0],e[0],e[1],e[2],e[3],2)
+# Constraints
+for n in nodes:
+	if n[2]==0.:
+		node.fix(n[0],2)
+	if n[1]==x[0] or n[1]==x[len(x)-1]:
+		node.fix(n[0],1)
+# loadcase
+lc.define(1)
+p=-1.
+nA=len(x)*(len(y)-1)+1
+for i in range(6):
+	L=x[i+1]-x[i]
+	pN=0.5*p*L
+	load.node(nA+i,  2,pN)
+	load.node(nA+i+1,2,pN)
+	print x[i]  ,pN
+	print x[i+1],pN
+node.track(nA)
+# analysis
+analysis.static()
+control.disp(nA,2,-0.005)
+#~ algorithm.BFGS(40)
+algorithm.iNR()
+convergence.set(200,1e-3,1e-6,1e-6)
+reorder.rCM()
+soe.band()
+analysis.run(1,28)
+# results
+db.store(name)
+db.exportToVtk(name)
+import tracker
+tracker.plotNodePath(nA,'u_y','lambda',-1., 1.,name)
