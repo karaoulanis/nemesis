@@ -24,6 +24,7 @@
 //*****************************************************************************
 
 #include <Brick8Disp.h>
+#include <NemesisDebug.h>
 
 Matrix Brick8Disp::N(8,4);
 double Brick8Disp::detJ;
@@ -198,7 +199,8 @@ const Matrix& Brick8Disp::getK()
 	double facK=1e-7;
 	if(myGroup->isActive()) facK=myGroup->getFacK();
 	K*=facK;
-	return K;}
+	return K;
+}
 const Matrix& Brick8Disp::getM()
 {
 	Matrix &M=*myMatrix;
