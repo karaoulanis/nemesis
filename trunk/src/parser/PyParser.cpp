@@ -909,6 +909,24 @@ static PyObject* pyElement_Brick8d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Brick8b(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,n5,n6,n7,n8,mat;
+	if(!PyArg_ParseTuple(args,"iiiiiiiiii",&id,&n1,&n2,&n3,&n4,&n5,&n6,&n7,&n8,&mat))
+		return NULL;
+	try
+	{
+		Element* pElement=new Brick8b(id,n1,n2,n3,n4,n5,n6,n7,n8,mat);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_SDOF(PyObject *self, PyObject *args)
 {
 	int id,nodeID,dofID,matID;
@@ -1118,6 +1136,8 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Define a 4-Noded constant strain tetrahedron."},
 	{"brick8d",	pyElement_Brick8d,	
 		METH_VARARGS,"Define a 8-Noded standard displacement brick."},
+	{"brick8b",	pyElement_Brick8b,	
+		METH_VARARGS,"Define a 8-Noded Bbar brick."},
 	{"data",			pyElement_Data,
 		METH_VARARGS,"Access to the element data."},
 	{"track",			pyElement_Track,	

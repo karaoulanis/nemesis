@@ -163,6 +163,13 @@ public:
 		return data_;
 	}
 	/**
+	 * Returns a const pointer to Vector data.
+	 */
+	inline double* data() const
+	{
+		return data_;
+	}
+	/**
 	 * Resizes the Vector.
 	 * Does not preserves data and does not initialize entries.
 	 * If new Vector of the same size no allocation takes place.

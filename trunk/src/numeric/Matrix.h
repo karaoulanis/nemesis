@@ -182,6 +182,13 @@ public:
 		return data_;
 	}	
 	/**
+	 * Returns a const pointer to Matrix data.
+	 */
+	inline double* data() const
+	{
+		return data_;
+	}	
+	/**
 	 * Resizes the Matrix.
 	 * Does not preserves data and does not initialize entries.
 	 * If new Matrix of the same size no allocation takes place.

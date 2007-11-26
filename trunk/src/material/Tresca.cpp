@@ -113,8 +113,8 @@ void Tresca::setStrain(const Vector& De)
 	eTrial=eTotal+De;
 	sTrial=sConvg+(this->getC())*De;
 	spectralDecomposition(sTrial,s,sV);
-	Vector tempS(3);
-	tempS=sTrial;
+	//Vector tempS(3);
+	//tempS=sTrial;
 
 	static Vector f(3);
 	f[0]=s[0]-s[2]-2.*cu;
