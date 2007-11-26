@@ -973,6 +973,12 @@
 				Name="bricks"
 				Filter="">
 				<File
+					RelativePath="..\..\src\elements\Brick8b.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Brick8b.h">
+				</File>
+				<File
 					RelativePath="..\..\src\elements\Brick8Disp.cpp">
 				</File>
 				<File
