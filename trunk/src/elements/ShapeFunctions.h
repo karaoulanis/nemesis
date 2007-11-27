@@ -28,6 +28,7 @@
 
 #include <Matrix.h>
 
-void shape8(const Matrix& x,double shp[8][4][8],double detJ[8])
+void shape4(const Matrix& x,double shp[4][3][4],double detJ[4]);
+void shape8(const Matrix& x,double shp[8][4][8],double detJ[8]);
 
 #endif
