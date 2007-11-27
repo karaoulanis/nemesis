@@ -48,3 +48,50 @@ void report(const Vector& v,const char* name,int total,int decimal)
 		num::print_d(v[i],total,decimal);
 	cout<<endl;
 }
+
+
+void add(Matrix& K,int row,int col,const Matrix& B1,const Matrix& C,const Matrix B2,double c1,double c0)
+{
+	int m=B1.rows();
+	int n=B2.cols();
+	int pos=row*K.cols()+col;
+	int colK=K.cols();
+	double* pK =K.data();
+	double* pB1=B1.data();
+	double* pB2=B2.data();
+	double* pC=C.data();
+	for(int i=0;i<n;i++)
+		for(int j=0;j<n;j++)
+			pK[pos+i*colK+j]*=c0;
+	for(int i=0;i<n;i++)
+		for(int k=0;k<m;k++)
+			for(int l=0;l<m;l++)
+				for(int j=0;j<n;j++)
+					pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[k*m+l]*pB2[l*n+j];
+}
+void add(Vector& R,int row,const Matrix& BT,const Vector& V,double c1,double c0)
+{
+	int m=BT.rows();
+	int n=BT.cols();
+	double* pV =V.data();
+	double* pR =R.data();
+	double* pBT=BT.data();
+	for(int i=0;i<n;i++)
+		pR[i]*=c0;
+	for(int i=0;i<n;i++)
+		for(int j=0;j<m;j++)
+			pR[row+i]+=c1*pBT[j*n+i]*pV[j];
+}
+void add2(Vector& R,int row,const Matrix& BT,const Vector& V,double c1,double c0)
+{
+	int m=BT.rows();
+	int n=BT.cols();
+	double* pV =V.data();
+	double* pR =R.data();
+	double* pBT=BT.data();
+	for(int i=0;i<m;i++)
+		pR[i]*=c0;
+	for(int i=0;i<m;i++)
+		for(int j=0;j<n;j++)
+			pR[i]+=c1*pBT[i*n+j]*pV[row+j];
+}
