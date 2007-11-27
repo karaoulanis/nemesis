@@ -26,51 +26,6 @@
 #include <Brick8b.h>
 #include <NemesisDebug.h>
 
-void add(Matrix& K,int row,int col,const Matrix& B1,const Matrix& C,const Matrix B2,double c1,double c0=0.)
-{
-	int m=B1.rows();
-	int n=B2.cols();
-	int pos=row*K.cols()+col;
-	int colK=K.cols();
-	double* pK =K.data();
-	double* pB1=B1.data();
-	double* pB2=B2.data();
-	double* pC=C.data();
-	for(int i=0;i<n;i++)
-		for(int j=0;j<n;j++)
-			pK[pos+i*colK+j]*=c0;
-	for(int i=0;i<n;i++)
-		for(int k=0;k<m;k++)
-			for(int l=0;l<m;l++)
-				for(int j=0;j<n;j++)
-					pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[k*m+l]*pB2[l*n+j];
-}
-void add(Vector& R,int row,const Matrix& BT,const Vector& V,double c1,double c0=0.)
-{
-	int m=BT.rows();
-	int n=BT.cols();
-	double* pV =V.data();
-	double* pR =R.data();
-	double* pBT=BT.data();
-	for(int i=0;i<n;i++)
-		pR[row+i]*=c0;
-	for(int i=0;i<n;i++)
-		for(int j=0;j<m;j++)
-			pR[row+i]+=c1*pBT[j*n+i]*pV[j];
-}
-void add2(Vector& R,int row,const Matrix& BT,const Vector& V,double c1,double c0=0.)
-{
-	int m=BT.rows();
-	int n=BT.cols();
-	double* pV =V.data();
-	double* pR =R.data();
-	double* pBT=BT.data();
-	for(int i=0;i<n;i++)
-		pR[row+i]*=c0;
-	for(int i=0;i<m;i++)
-		for(int j=0;j<n;j++)
-			pR[i]+=c1*pBT[i*n+j]*pV[row+j];
-}
 Vector Brick8b::N(8);
 Matrix Brick8b::B[8];
 double Brick8b::detJ;
@@ -232,7 +187,6 @@ void Brick8b::shapeFunctions(MatPoint* pMatPoint)
 		B[i](3,0)=B2;	B[i](3,1)=B1;	B[i](3,2)=0.;
 		B[i](4,0)=0.;	B[i](4,1)=B3;	B[i](4,2)=B2;
 		B[i](5,0)=B3;	B[i](5,1)=0.;	B[i](5,2)=B1;
-		//report(B[i]);
 	}
 
 }
@@ -274,7 +228,9 @@ const Vector& Brick8b::getR()
 		this->shapeFunctions(myMatPoints[k]);
 		double dV=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
 		for(unsigned a=0;a<myNodes.size();a++)
+		{
 			add(R,3*a,B[a],sigma,dV,1.);
+		}
 	}
 	//R.add_cV(-facP,P);
 	return R;
@@ -284,7 +240,6 @@ void Brick8b::update()
 	if(!(myGroup->isActive()))	return;
 	static Vector u(24);
 	u=this->getDispIncrm();
-	//report(u,"dsp");
 	static Vector epsilon(6);
 	for(unsigned k=0;k<myMatPoints.size();k++)
 	{
@@ -293,7 +248,6 @@ void Brick8b::update()
 		for(unsigned a=0;a<myNodes.size();a++)
 			add2(epsilon,3*a,B[a],u,1.0,1.0);
 		myMatPoints[k]->getMaterial()->setStrain(epsilon);
-		//report(epsilon,"eps",20,18);
 	}
 }
 
@@ -385,7 +339,6 @@ void Brick8b::formBb(Vector& Bb1,Vector& Bb2,Vector& Bb3)
 		J(2,0)=0.125*(+x(7,0)+x(6,0)*xi*eta-x(5,0)*xi*eta-x(3,0)*eta-x(7,0)*xi*eta+x(1,0)*xi*eta-x(2,0)*eta-x(1,0)*xi-x(0,0)*xi*eta+x(4,0)*xi*eta-x(7,0)*xi+x(1,0)*eta-x(0,0)-x(1,0)+x(7,0)*eta-x(2,0)*xi*eta+x(3,0)*xi*eta-x(2,0)*xi-x(2,0)-x(3,0)+x(6,0)*xi+x(6,0)*eta+x(0,0)*xi+x(5,0)*xi-x(5,0)*eta-x(4,0)*xi-x(4,0)*eta+x(0,0)*eta+x(3,0)*xi+x(4,0)+x(5,0)+x(6,0));
 		J(2,1)=0.125*(-x(2,1)*eta+x(4,1)*xi*eta+x(3,1)*xi*eta+x(0,1)*xi+x(6,1)*xi*eta-x(5,1)*xi*eta-x(7,1)*xi*eta-x(0,1)-x(1,1)-x(1,1)*xi+x(3,1)*xi-x(3,1)*eta-x(4,1)*xi-x(4,1)*eta-x(5,1)*eta+x(5,1)*xi-x(2,1)*xi*eta+x(6,1)*xi+x(6,1)*eta+x(7,1)*eta-x(7,1)*xi+x(0,1)*eta+x(1,1)*eta-x(2,1)*xi+x(5,1)-x(0,1)*xi*eta+x(1,1)*xi*eta+x(6,1)+x(7,1)-x(2,1)-x(3,1)+x(4,1));
 		J(2,2)=0.125*(-x(5,2)*xi*eta-x(0,2)-x(1,2)-x(2,2)-x(3,2)+x(4,2)+x(6,2)+x(7,2)+x(6,2)*xi*eta+x(4,2)*xi*eta-x(7,2)*xi*eta+x(1,2)*eta-x(2,2)*xi*eta-x(1,2)*xi-x(2,2)*xi-x(2,2)*eta-x(3,2)*eta-x(4,2)*eta+x(3,2)*xi-x(4,2)*xi+x(5,2)*xi-x(5,2)*eta+x(3,2)*xi*eta+x(6,2)*xi+x(6,2)*eta-x(7,2)*xi+x(7,2)*eta+x(1,2)*xi*eta-x(0,2)*xi*eta+x(5,2)+x(0,2)*xi+x(0,2)*eta);
-
 		vol+=det(J);
 	}
 	// find Bb's
