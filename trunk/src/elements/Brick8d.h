@@ -23,26 +23,26 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BRICK8DISP_H
-#define _BRICK8DISP_H
+#ifndef _BRICK8D_H
+#define _BRICK8D_H
 
 #include <Element.h>
 #include <MatPoint.h>
 
-class Brick8Disp: public Element
+class Brick8d: public Element
 {
 protected:
-	static Matrix N;
-	static double detJ;
 	std::vector<MatPoint*> myMatPoints;
+	static double shp[8][4][8];
+	static double detJ[8];
 public:
 	// Constructors and Destructor
-	Brick8Disp();
-	Brick8Disp(int ID,
+	Brick8d();
+	Brick8d(int ID,
 				int Node_1,int Node_2,int Node_3,int Node_4,	
 				int Node_5,int Node_6,int Node_7,int Node_8,
 				int matID);	
-	~Brick8Disp();
+	~Brick8d();
 
 	const Matrix& getK();
     const Matrix& getM();
@@ -51,7 +51,7 @@ public:
 	void update();
 	void commit();
 	
-	int findShapeFunctionsAt(MatPoint* pMatPoint);
+	void getB(Matrix& B,int node,int gPoint);
 	bool checkIfAllows(FEObject* f);
 	void addInitialStresses(InitialStresses* pInitialStresses);	
 	void recoverStresses();
