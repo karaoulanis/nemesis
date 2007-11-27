@@ -979,10 +979,10 @@
 					RelativePath="..\..\src\elements\Brick8b.h">
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8Disp.cpp">
+					RelativePath="..\..\src\elements\Brick8d.cpp">
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8Disp.h">
+					RelativePath="..\..\src\elements\Brick8d.h">
 				</File>
 			</Filter>
 			<Filter
@@ -1075,6 +1075,16 @@
 				</File>
 				<File
 					RelativePath="..\..\src\elements\Spring.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="tools"
+				Filter="">
+				<File
+					RelativePath="..\..\src\elements\ShapeFunctions.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\ShapeFunctions.h">
 				</File>
 			</Filter>
 		</Filter>
