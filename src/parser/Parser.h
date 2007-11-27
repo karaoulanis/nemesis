@@ -55,7 +55,7 @@
 #include <Beam2e.h>
 #include <Timoshenko2d.h>
 #include <SDofElement.h>
-#include <Brick8Disp.h>
+#include <Brick8d.h>
 #include <Brick8b.h>
 #include <Quad4DispPlain.h>
 #include <Quad4DispAxisymmetric.h>
