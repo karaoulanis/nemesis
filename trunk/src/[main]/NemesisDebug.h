@@ -75,4 +75,9 @@ public:
 void report(const double  d,const char* name="Noname",int total=8,int decimal=4);
 void report(const Matrix& m,const char* name="Noname",int total=8,int decimal=4);
 void report(const Vector& v,const char* name="Noname",int total=8,int decimal=4);
+
+void add(Matrix& K,int row,int col,const Matrix& B1,const Matrix& C,const Matrix B2,double c1,double c0=0.);
+void add(Vector& R,int row,const Matrix& BT,const Vector& V,double c1,double c0=0.);
+void add2(Vector& R,int row,const Matrix& BT,const Vector& V,double c1,double c0=0.);
+
 #endif
