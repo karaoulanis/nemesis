@@ -898,7 +898,7 @@ static PyObject* pyElement_Brick8d(PyObject *self, PyObject *args)
 		return NULL;
 	try
 	{
-		Element* pElement=new Brick8Disp(id,n1,n2,n3,n4,n5,n6,n7,n8,mat);
+		Element* pElement=new Brick8d(id,n1,n2,n3,n4,n5,n6,n7,n8,mat);
 		pD->add(pD->getElements(),pElement);
 	}
 	catch(SException e)
