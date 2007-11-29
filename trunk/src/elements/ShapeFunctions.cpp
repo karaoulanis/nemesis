@@ -73,13 +73,11 @@ void shape4(const Matrix& x,double shp[4][3][4],double detJ[4])
         double ddetJ=1./detJ[k];
 		
 		// Inverse J
-		double d;
-		d=J[0][0];
+		double d=J[0][0];
 		J[0][0]= ddetJ*J[1][1];
 		J[1][1]= ddetJ*d;
-		d=J[1][0];
-		J[1][0]=-ddetJ*J[0][1];
-		J[0][1]=-ddetJ*d;
+		J[0][1]=-ddetJ*J[0][1];
+		J[1][0]=-ddetJ*J[1][0];
 
 		// dNdx
 		for(int i=0;i<4;i++)

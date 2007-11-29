@@ -252,5 +252,5 @@ void Quad4b::shape(double xi,double eta,Matrix& N,Matrix& B,double& detJ)
 	B(1,6)=B10;	B(1,7)=B7;
 	B(2,6)=B2;	B(2,7)=B1;
 	B(3,6)=B11;	B(3,7)=B6;
-	//report(B,"B");
+
 }
