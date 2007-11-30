@@ -782,7 +782,7 @@ static PyObject* pyElement_Spring(PyObject *self, PyObject *args)
 {
 	int id,iNode,jNode,mat;
 	double xp1=1.,xp2=0.,xp3=0.,yp1=0.,yp2=1.,yp3=0.;
-    if(!PyArg_ParseTuple(args,"iiii|dddddd",&id,&iNode,&jNode,&mat,
+    if(!PyArg_ParseTuple(args,"iiii|(ddd)(ddd)",&id,&iNode,&jNode,&mat,
 		                                    &xp1,&xp2,&xp3,&yp1,&yp2,&yp3))
 		return NULL;
 	try
@@ -961,6 +961,25 @@ static PyObject* pyElement_Quad4d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Quad4Test(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,matID;
+    if(!PyArg_ParseTuple(args,"iiiiii",
+		&id,&n1,&n2,&n3,&n4,&matID))
+		return NULL;
+	try
+	{
+		Element* pElement=new Quad4d(id,n1,n2,n3,n4,matID);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_Quad4e(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,n4,matID;
@@ -1121,6 +1140,8 @@ static PyMethodDef ElementMethods[] =
 	{"sdof",			pyElement_SDOF,
 		METH_VARARGS,"Define a single dof element."},
 	{"quad4d",			pyElement_Quad4d,	
+		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
+	{"quad4t",			pyElement_Quad4Test,	
 		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
 	{"quad4e",			pyElement_Quad4e,	
 		METH_VARARGS,"Define a 4-Noded enhanced assumed strain quad."},

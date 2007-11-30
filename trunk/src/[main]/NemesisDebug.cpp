@@ -95,3 +95,52 @@ void add2(Vector& R,int row,const Matrix& BT,const Vector& V,double c1,double c0
 		for(int j=0;j<n;j++)
 			pR[i]+=c1*pBT[i*n+j]*pV[row+j];
 }
+//*****************************************************************************
+//
+//*****************************************************************************
+void add_BTCB(Matrix& K,int row,int col,const int* perm,const Matrix& B1,const Matrix& C,const Matrix B2,double c1,double c0)
+{
+	int m=B1.rows();
+	int n=B2.cols();
+	int pos=row*K.cols()+col;
+	int colK=K.cols();
+	int colC=C.cols();
+	double* pK =K.data();
+	double* pB1=B1.data();
+	double* pB2=B2.data();
+	double* pC=C.data();
+	for(int i=0;i<n;i++)
+		for(int j=0;j<n;j++)
+			pK[pos+i*colK+j]*=c0;
+	for(int i=0;i<n;i++)
+		for(int k=0;k<m;k++)
+			for(int l=0;l<m;l++)
+				for(int j=0;j<n;j++)
+					pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
+}
+void add_BTv (Vector& R,int row,const int* perm,const Matrix& B,const Vector& v,double c1,double c0)
+{
+	int m=B.rows();
+	int n=B.cols();
+	double* pV=v.data();
+	double* pR=R.data();
+	double* pB=B.data();
+	for(int i=0;i<n;i++)
+		pR[i]*=c0;
+	for(int i=0;i<n;i++)
+		for(int j=0;j<m;j++)
+			pR[row+i]+=c1*pB[j*n+i]*pV[perm[j]];
+}
+void add_Bv  (Vector& R,int row,const int* perm,const Matrix& B,const Vector& v,double c1,double c0)
+{
+	int m=B.rows();
+	int n=B.cols();
+	double* pV=v.data();
+	double* pR=R.data();
+	double* pB=B.data();
+	for(int i=0;i<m;i++)
+		pR[i]*=c0;
+	for(int i=0;i<m;i++)
+		for(int j=0;j<n;j++)
+			pR[perm[i]]+=c1*pB[i*n+j]*pV[row+j];
+}

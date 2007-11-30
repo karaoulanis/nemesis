@@ -26,21 +26,10 @@
 #ifndef _BRICK8B_H
 #define _BRICK8B_H
 
-#include <Element.h>
-#include <MatPoint.h>
+#include <Brick8.h>
 
-class Brick8b: public Element
+class Brick8b: public Brick8
 {
-protected:
-	static Vector N;
-	static Matrix B[8];
-	static double detJ;
-	static bool first;
-	
-	Vector Bb1;
-	Vector Bb2;
-	Vector Bb3;
-	std::vector<MatPoint*> myMatPoints;
 public:
 	// Constructors and Destructor
 	Brick8b();
@@ -50,20 +39,6 @@ public:
 				int matID);	
 	~Brick8b();
 
-	const Matrix& getK();
-    const Matrix& getM();
-	const Vector& getR();
-
-	void update();
-	void commit();
-	
-	void shapeFunctions(MatPoint* pMatPoint);
-	bool checkIfAllows(FEObject* f);
-	void addInitialStresses(InitialStresses* pInitialStresses);	
-	void recoverStresses();
-	const int getnPlasticPoints();
-
-	void formBb(Vector& Bb1,Vector& Bb2,Vector& Bb3);
-
+	void getB(Matrix& B,int node,int gPoint);
 };
 #endif

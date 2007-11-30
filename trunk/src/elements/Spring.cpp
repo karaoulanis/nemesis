@@ -40,6 +40,7 @@ Spring::Spring(int ID,int Node_1,int Node_2,int matID,
 		       double yp1,double yp2,double yp3)
 :Element(ID,matID)
 {
+	myTag=TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
 	// Get dimension
 	nDim=pD->getnDim();
 	
