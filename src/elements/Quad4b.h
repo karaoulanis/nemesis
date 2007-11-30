@@ -31,9 +31,9 @@
 class Quad4b: public Quad4
 {
 private:
-	double volume;
-	Vector Bb1;
-	Vector Bb2;
+	static double shp[4][3][4];
+	static double detJ[4];
+	static std::vector<int> perm;
 public:
 	// Constructors and Destructor
 	Quad4b();
@@ -43,9 +43,9 @@ public:
 	const Matrix& getK();
     const Matrix& getM();
 	const Vector& getR();
-
+	void getB(Matrix& B,int node,int gPoint);
+	void shapeFunctions();
 	void update();
-	void shape(double xi,double eta,Matrix& N,Matrix& B,double& detJ);
 };
 
 #endif

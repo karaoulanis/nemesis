@@ -662,6 +662,25 @@ public:
 		for(int i=0;i<m.size_;i++) s<<m.data_[i]<<' ';
 		return s;
 	}
+	void add_BTCB(int row,int col,const int* perm,const Matrix& B1,const Matrix& C,const Matrix B2,double c1,double c0=0.)
+	{
+		int m=B1.rows();
+		int n=B2.cols();
+		int pos=row*cols_+col;
+		int colC=C.cols();
+		double* pB1=B1.data();
+		double* pB2=B2.data();
+		double* pC=C.data();
+		for(int i=0;i<n;i++)
+			for(int j=0;j<n;j++)
+				data_[pos+i*cols_+j]*=c0;
+		for(int i=0;i<n;i++)
+			for(int k=0;k<m;k++)
+				for(int l=0;l<m;l++)
+					for(int j=0;j<n;j++)
+						data_[pos+i*cols_+j]+=c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
+	}
+
 };
 /**
 * Returns an identity matrix of size n.
