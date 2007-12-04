@@ -2,7 +2,7 @@
 
 from math import sin,pi,sqrt
 from pymesh import structured
-import sys
+import time
 name="strip2"
 
 B=1.0
@@ -83,7 +83,7 @@ analysis.static()
 control.disp(nA,2,-0.005)
 #~ algorithm.BFGS(40)
 algorithm.iNR()
-convergence.set(200,1e-3,1e-6,1e-6)
+convergence.set(400,1e-3,1e-6,1e-6)
 reorder.rCM()
 soe.band()
 analysis.run(1,28)
@@ -91,4 +91,4 @@ analysis.run(1,28)
 db.store(name)
 db.exportToVtk(name)
 import tracker
-tracker.plotNodePath(nA,'u_y','lambda',-1., 1.,name)
+tracker.plotNodePath(nA,'u_y','lambda',-1., 1.,name+".txt")
