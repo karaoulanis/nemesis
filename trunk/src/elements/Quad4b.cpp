@@ -117,7 +117,7 @@ const Vector& Quad4b::getR()
 			this->getB(Ba,a,k);
 			add_BTv(R,2*a,&perm[0],Ba,sigma,facS*dV,1.0);
 			// -facG*SelfWeigth
-			for(int i=0;i<3;i++)
+			for(int i=0;i<2;i++)
 				R[2*a+i]-=facG*shp[a][0][k]*b[i]*dV;
 		}
 	}
