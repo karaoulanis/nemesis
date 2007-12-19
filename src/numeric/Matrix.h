@@ -511,7 +511,7 @@ public:
 		#endif
 		if(c0==0.0)
 			for(int i=0;i<m.rows_;i++) 
-				for (int j=0;j<m.cols_;j++) data_[(row+i)*cols_+j]=0.;
+				for (int j=0;j<m.cols_;j++) data_[(row+i)*cols_+(col+j)]=0.;
 		else if(c0!=1.0)
 			for(int i=0;i<m.rows_;i++) 
 				for (int j=0;j<m.cols_;j++) data_[(row+i)*cols_+(col+j)]*=c0;
