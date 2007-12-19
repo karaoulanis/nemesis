@@ -24,6 +24,7 @@
 //*****************************************************************************
 
 #include <Spring.h>
+#include <NemesisDebug.h>
 
 /**
  * Default constructor.
@@ -126,6 +127,21 @@ const Matrix& Spring::getK()
 {
 	Matrix& K=*myMatrix;
 	K.clear();
+	const Matrix& Ct=mySpringMaterial->getC();
+	report(Ct);
+	Matrix K0=Transpose(T)*Ct*T;
+	K.append(K0,0,0,+1.);
+	K.append(K0,0,3,-1.);
+	K.append(K0,3,0,-1.);
+	K.append(K0,3,3,+1.);
+	double facK=1e-7;
+	if(myGroup->isActive()) facK=myGroup->getFacK();
+	K*=facK;
+	report(K);
+	return K;
+
+/*	Matrix& K=*myMatrix;
+	K.clear();
 	Vector Ct=mySpringMaterial->getC();
 	for(int k=0;k<nDim;k++)
 	{
@@ -143,7 +159,7 @@ const Matrix& Spring::getK()
 	double facK=1e-7;
 	if(myGroup->isActive()) facK=myGroup->getFacK();
 	K*=facK;
-	return K;
+	return K;*/
 }
 const Matrix& Spring::getM()
 {   
