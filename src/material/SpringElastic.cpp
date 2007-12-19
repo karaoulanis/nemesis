@@ -23,12 +23,12 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SpringMaterialElastic.h>
+#include <SpringElastic.h>
 
-SpringMaterialElastic::SpringMaterialElastic()
+SpringElastic::SpringElastic()
 {
 }
-SpringMaterialElastic::SpringMaterialElastic(int ID,double Kn,double Ks2,double Ks3)
+SpringElastic::SpringElastic(int ID,double Kn,double Ks2,double Ks3)
 :SpringMaterial(ID)
 {
 	// Material parameters
@@ -43,17 +43,17 @@ SpringMaterialElastic::SpringMaterialElastic(int ID,double Kn,double Ks2,double 
 	Ct(1,1)=Ks2;
 	Ct(2,2)=Ks3;
 }
-SpringMaterial* SpringMaterialElastic::getClone()
+SpringMaterial* SpringElastic::getClone()
 {
 	// Material parameters
 	double Kn  =MatParams[0];
 	double Ks2 =MatParams[1];
 	double Ks3 =MatParams[2];
 	// Create clone and return
-	SpringMaterial* clone=new SpringMaterialElastic(myID,Kn,Ks2,Ks3);
+	SpringMaterial* clone=new SpringElastic(myID,Kn,Ks2,Ks3);
 	return clone;
 }
-void SpringMaterialElastic::setStrain(const Vector& De)
+void SpringElastic::setStrain(const Vector& De)
 {
 	double Kn  =MatParams[0];
 	double Ks2 =MatParams[1];

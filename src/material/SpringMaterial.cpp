@@ -41,7 +41,7 @@ SpringMaterial::SpringMaterial(int ID)
 }
 /**
  */
-const Vector& SpringMaterial::getC()
+const Matrix& SpringMaterial::getC()
 {
 	return Ct;
 }

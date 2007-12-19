@@ -23,20 +23,20 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SPRINGMATERIALELASTIC_H
-#define _SPRINGMATERIALELASTIC_H
+#ifndef _SPRINGELASTIC_H
+#define _SPRINGELASTIC_H
 
 #include <SpringMaterial.h>
 
 /**
  * The Elastic Spring Material Class.                                                
  */
-class SpringMaterialElastic: public SpringMaterial
+class SpringElastic: public SpringMaterial
 {
 private:
 public:
-	SpringMaterialElastic();
-	SpringMaterialElastic(int ID,double Kn,double Ks2,double Ks3);
+	SpringElastic();
+	SpringElastic(int ID,double Kn,double Ks2,double Ks3);
 
 	SpringMaterial* getClone();
 	void setStrain(const Vector& De);
