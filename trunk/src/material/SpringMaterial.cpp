@@ -37,7 +37,7 @@ SpringMaterial::SpringMaterial(int ID)
 	sConvg.resize(nDim,0.);
 	eTrial.resize(nDim,0.);
 	eTotal.resize(nDim,0.);
-	Ct.resize(3,0.);
+	Ct.resize(3,3,0.);
 }
 /**
  */
