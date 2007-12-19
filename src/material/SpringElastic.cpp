@@ -23,22 +23,51 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SPRINGMATERIALCONTACT_H
-#define _SPRINGMATERIALCONTACT_H
+#include <SpringMaterialElastic.h>
 
-#include <SpringMaterial.h>
-
-/**
- * The Contact Spring Material Class.                                                
- */
-class SpringMaterialContact: public SpringMaterial
+SpringMaterialElastic::SpringMaterialElastic()
 {
-private:
-public:
-	SpringMaterialContact();
-	SpringMaterialContact(int ID,double Kn,double sy,double gap=0.,double Ks2=0.,double mue2=0.,double Ks3=0.,double mue3=0.);
-	SpringMaterial* getClone();
-	void setStrain(const Vector& De);
-};
+}
+SpringMaterialElastic::SpringMaterialElastic(int ID,double Kn,double Ks2,double Ks3)
+:SpringMaterial(ID)
+{
+	// Material parameters
+	MatParams[0]=Kn;
+	MatParams[1]=Ks2;
+	MatParams[2]=Ks3;
+	myTag=TAG_MATERIAL_SPRING;
 
-#endif
+	// Initialize Ct
+	Ct.clear();
+	Ct(0,0)=Kn;
+	Ct(1,1)=Ks2;
+	Ct(2,2)=Ks3;
+}
+SpringMaterial* SpringMaterialElastic::getClone()
+{
+	// Material parameters
+	double Kn  =MatParams[0];
+	double Ks2 =MatParams[1];
+	double Ks3 =MatParams[2];
+	// Create clone and return
+	SpringMaterial* clone=new SpringMaterialElastic(myID,Kn,Ks2,Ks3);
+	return clone;
+}
+void SpringMaterialElastic::setStrain(const Vector& De)
+{
+	double Kn  =MatParams[0];
+	double Ks2 =MatParams[1];
+	double Ks3 =MatParams[2];
+	eTrial=eTotal+De;
+	switch(nDim)
+	{
+	case 3:
+		sTrial[2]=Ks3*eTrial[2];
+	case 2:
+		sTrial[1]=Ks2*eTrial[1];
+	case 1:
+		sTrial[0]=Kn*eTrial[0];
+	default:
+		break;
+	}
+}

@@ -38,7 +38,7 @@ protected:
 	Vector sConvg;
 	Vector eTrial;
 	Vector eTotal;
-	Vector Ct;
+	Matrix Ct;
 	int nDim;
 public:
 	SpringMaterial();
@@ -48,7 +48,7 @@ public:
 	virtual SpringMaterial* getClone()=0;
 	virtual void setStrain(const Vector& De)=0;
 
-	const Vector& getC();
+	const Matrix& getC();
 	void commit();
 	inline void setStress(const Vector& s)	{sTrial=s;		}
 	inline void addStress(const Vector& s)	{sTrial+=s;		}
