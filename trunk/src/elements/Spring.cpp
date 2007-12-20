@@ -60,6 +60,10 @@ Spring::Spring(int ID,int Node_1,int Node_2,int matID,
 	// Store material information
 	mySpringMaterial=static_cast<SpringMaterial*>(myMaterial)->getClone();
 
+	// Find gap
+	//gap=sqrt((x(1,0)-x(0,0))*(x(1,0)-x(0,0))
+	//		+(x(1,1)-x(0,1))*(x(1,1)-x(0,1))
+	//		+(x(1,2)-x(0,2))*(x(1,2)-x(0,2)));
 	// Define transformations
 	T.resize(nDim,nDim,0.);
 	static Vector xp,yp,zp;
@@ -108,11 +112,13 @@ void Spring::update()
 {
 	static Vector du(2*nDim);
 	du=this->getDispIncrm();
+	report(du,"du");
 	static Vector de(nDim,0);
 	de.clear();
 	for(int k=0;k<nDim;k++)
 		for(int i=0;i<nDim;i++)
 			de[i]+=T(i,k)*(du[k+nDim]-du[k]);
+	//report(de,"de");
 	mySpringMaterial->setStrain(de);
 }
 void Spring::commit()
@@ -128,7 +134,6 @@ const Matrix& Spring::getK()
 	Matrix& K=*myMatrix;
 	K.clear();
 	const Matrix& Ct=mySpringMaterial->getC();
-	report(Ct);
 	Matrix K0=Transpose(T)*Ct*T;
 	K.append(K0,0,0,+1.);
 	K.append(K0,0,3,-1.);
@@ -137,7 +142,7 @@ const Matrix& Spring::getK()
 	double facK=1e-7;
 	if(myGroup->isActive()) facK=myGroup->getFacK();
 	K*=facK;
-	report(K);
+	//report(K,"K",14,1);
 	return K;
 
 /*	Matrix& K=*myMatrix;
@@ -187,6 +192,7 @@ const Vector& Spring::getR()
 			R[i+nDim]+= d;
 		}
 	}
+	report(R,"R");
 	return R;
 }
 const Vector& Spring::getReff()

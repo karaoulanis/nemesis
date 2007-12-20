@@ -33,6 +33,7 @@ class Spring: public Element
 {
 protected:
 	int nDim;
+	//double gap;
 	SpringMaterial* mySpringMaterial;
 	Matrix T;
 public:
