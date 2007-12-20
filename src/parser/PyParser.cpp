@@ -564,18 +564,19 @@ static PyObject* pyMaterial_SpringElastic(PyObject *self, PyObject *args)
 	int id;
 	double Kn,Ks2=0.,Ks3=0.;
     if(!PyArg_ParseTuple(args,"id|dd",&id,&Kn,&Ks2,&Ks3))return NULL;
-	Material* pMaterial=new SpringMaterialElastic(id,Kn,Ks2,Ks3);
+	Material* pMaterial=new SpringElastic(id,Kn,Ks2,Ks3);
 	pD->add(pD->getMaterials(),pMaterial);
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+
 static PyObject* pyMaterial_SpringContact(PyObject *self, PyObject *args)
 {
 	int id;
-	double Kn,sy,gap=0.,Ks2=0.,mue2=0.,Ks3=0.,mue3=0.;
-    if(!PyArg_ParseTuple(args,"idd|ddddd",&id,&Kn,&sy,&gap,&Ks2,&mue2,&Ks3,&mue3))return NULL;
-	Material* pMaterial=new SpringMaterialContact(id,Kn,sy,gap,Ks2,mue2,Ks3,mue3);
+	double Kn,Ks,mu,gap;
+    if(!PyArg_ParseTuple(args,"idddd",&id,&Kn,&Ks,&mu,&gap))return NULL;
+	Material* pMaterial=new SpringContact(id,Kn,Ks,mu,gap);
 	pD->add(pD->getMaterials(),pMaterial);
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
