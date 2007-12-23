@@ -80,23 +80,39 @@ void PenaltyModelElement::add_C(double factor)
 }
 void PenaltyModelElement::add_R(double factor)
 {
-	///@todo Make this work for the non-linear multi constraint
+	// Find constraint violation
 	double c=myConstraint->getcVal(0.);
+	double cv=0.;
 	for(unsigned i=0;i<theFTable.size();i++)
 	{
 		double ci=myConstraint->getcDof(i).coeff;
 		double ui=myConstraint->getDisp(i);
-		(*myVector)[i]=+factor*ci*(a*ui-a*c);
+		cv+=a*ci*ui;
+	}
+	cv-=a*c;
+	// Add to constraint load vector
+	for(unsigned i=0;i<theFTable.size();i++)
+	{
+		double ci=myConstraint->getcDof(i).coeff;
+		(*myVector)[i]=+factor*ci*cv;
 	}
 }
 void PenaltyModelElement::add_Reff(double factor)
 {
-	///@todo Make this work for the non-linear multi constraint
+	// Find constraint violation
 	double c=myConstraint->getcVal(0.);
+	double cv=0.;
 	for(unsigned i=0;i<theFTable.size();i++)
 	{
 		double ci=myConstraint->getcDof(i).coeff;
 		double ui=myConstraint->getDisp(i);
-		(*myVector)[i]=+factor*ci*(a*ui-a*c);
+		cv+=a*ci*ui;
+	}
+	cv-=a*c;
+	// Add to constraint load vector
+	for(unsigned i=0;i<theFTable.size();i++)
+	{
+		double ci=myConstraint->getcDof(i).coeff;
+		(*myVector)[i]=+factor*ci*cv;
 	}
 }
