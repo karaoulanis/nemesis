@@ -1199,12 +1199,70 @@ static PyObject* pyConstraint_twoDofs(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyConstraint_Linear(PyObject *self, PyObject *args)
+{
+	double c0;
+	PyObject* cList;
+    if(!PyArg_ParseTuple(args,"dO",&c0,&cList)) return NULL;
+	Constraint* pConstraint=new Constraint;
+	pConstraint->setcVal(c0);
+	
+	// Check if list ok
+	if(!PyList_Check(cList))
+	{
+		PyErr_SetString(PyExc_StandardError, "Expected a list.");
+		return NULL;
+	}
+	// Start reading list
+	for(int i=0;i<PyList_Size(cList);i++)
+	{
+		// Get tuple
+		PyObject* cTuple=PyList_GetItem(cList,i);
+		// Check if tuple ok
+		if(!PyTuple_Check(cTuple) || PyTuple_Size(cTuple)!=3)
+		{
+			PyErr_SetString(PyExc_StandardError, "Expected a tuple of size 3.");
+			return NULL;
+		}
+		// Get arguments and check if arguments ok
+		PyObject* tmpNode=PyTuple_GetItem(cTuple,0);
+		PyObject* tmpDof =PyTuple_GetItem(cTuple,1);
+		PyObject* tmpCi  =PyTuple_GetItem(cTuple,2);
+		if(!PyInt_Check(tmpNode))
+		{
+			PyErr_SetString(PyExc_StandardError, "Expected (INTEGER,integer,float).");
+			return NULL;
+		}
+		if(!PyInt_Check(tmpDof))
+		{
+			PyErr_SetString(PyExc_StandardError, "Expected (integer,INTEGER,float).");
+			return NULL;
+		}
+		if(!PyFloat_Check(tmpCi))
+		{
+			PyErr_SetString(PyExc_StandardError, "Expected (integer,integer,FLOAT).");
+			return NULL;
+		}
+		// Get arguments
+		int node =PyInt_AsLong(tmpNode);
+		int dof  =PyInt_AsLong(tmpDof);
+		double ci=PyFloat_AsDouble(tmpCi);
+		// Build triple
+		pConstraint->setcDof(node,dof,ci);
+	}
+	// Add to domain
+	pD->add(pD->getConstraints(),pConstraint);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyMethodDef ConstraintMethods[] = 
 {
-	{"set",	pyConstraint_Set,	
+	{"set",							pyConstraint_Set,	
 		METH_VARARGS,"Define a single/multiple dof constraint."},
-	{"twoDofs",	pyConstraint_twoDofs,	
+	{"twoDofs",						pyConstraint_twoDofs,	
 		METH_VARARGS,"Define a two dof constraint."},
+	{"linear",						pyConstraint_Linear,	
+		METH_VARARGS,"Define a linear constraint."},
 	{NULL,NULL,0,NULL}
 };
 /******************************************************************************
