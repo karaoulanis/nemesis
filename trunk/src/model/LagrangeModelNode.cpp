@@ -44,7 +44,7 @@ void LagrangeModelNode::add_R(double factor)
 }
 void LagrangeModelNode::incTrialDisp(const Vector& du)
 {
-	myConstraint->update(du[theFTable[0]]);
+	myConstraint->incTrialForce(du[theFTable[0]]);
 }
 void LagrangeModelNode::incTrialVecs(const Vector& du,const Vector& dv,const Vector& da)
 {

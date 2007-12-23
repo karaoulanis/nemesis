@@ -24,6 +24,7 @@
 //*****************************************************************************
 
 #include <LagrangeModelElement.h>
+#include <NemesisDebug.h>
 
 /**
  * Default constructor
@@ -84,10 +85,23 @@ void LagrangeModelElement::add_C(double factor)
 void LagrangeModelElement::add_R(double factor)
 {
 	///@todo Make this work for the non-linear multi constraint
+	// Find constraint violation
 	double c=myConstraint->getcVal();
-	double u=myConstraint->getDisp(0); //wrong
-	for(unsigned i=0;i<theFTable.size()-1;i++) (*myVector)[i]=myConstraint->getF();
-	(*myVector)[theFTable.size()-1]=u-c;
+	double cv=0.;
+	for(unsigned i=0;i<theFTable.size()-1;i++)
+	{
+		double ci=myConstraint->getcDof(i).coeff;
+		double ui=myConstraint->getDisp(i);
+		cv+=ci*ui;
+	}
+	cv-=c;
+	for(unsigned i=0;i<theFTable.size()-1;i++)
+	{
+		double ci=myConstraint->getcDof(i).coeff;
+		double Fi=myConstraint->getF();
+		(*myVector)[i]=ci*Fi;
+	}
+	(*myVector)[theFTable.size()-1]=cv;
 }
 /**
  * 
