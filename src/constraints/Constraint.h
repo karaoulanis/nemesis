@@ -60,6 +60,7 @@ public:
 	const cDof& getcDof(int i);
 	virtual double getcVal(double time=0.);
 
+	void incTrialForce(double f);
 	double getDisp(int i);
 	double getVelc(int i);
 	double getDispConvg(int i);

@@ -111,6 +111,10 @@ double Constraint::getAcclConvg(int i)
 {
 	return theCDofs[i].pNode->getAcclConvgAtDof(theCDofs[i].dof);
 }
+void Constraint::incTrialForce(double f)
+{
+	fTrial+=f;
+}
 void Constraint::update(double f)	
 {
 	fTrial+=f;
