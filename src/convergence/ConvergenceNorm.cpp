@@ -86,7 +86,7 @@ int ConvergenceNorm::update()
 
 	const Vector& dR=pA->getSOE()->getB();
 	const Vector& dU=pA->getSOE()->getX();
-//	for(int i=0;i<dR.size();i++) cout<<dR[i]<<"\t"<<dU[i] <<endl;
+//	for(int i=0;i<dR.size();i++) cout<<dR[i] <<endl;
 	for(int i=0;i<dR.size();i++) 
 	{
 		double c1=dR[i];
