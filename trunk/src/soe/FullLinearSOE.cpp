@@ -83,7 +83,7 @@ int FullLinearSOE::solve()
 	int LDB = N;
 	int INFO;
 	char c='N';
-	//this->print();
+//	this->print();
 //	for(int i=0;i<theSize;i++)
 //	{
 //        cout<<B[i]<<endl;
