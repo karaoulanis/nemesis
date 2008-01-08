@@ -23,29 +23,39 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _QUAD4B_H
-#define _QUAD4B_H
+#ifndef _QUAD4I_H
+#define _QUAD4I_H
 
 #include <Quad4.h>
 
-class Quad4b: public Quad4
+class Quad4i: public Quad4
 {
 private:
-	static double shp[4][3][4];
+	static double shpStd[4][3][4];
+	static double shpInc[2][3][4];
+
 	static double detJ[4];
 	static std::vector<int> perm;
+	
+	Vector aTrial;
+	Vector aConvg;
+	void shapeFunctions();
+	void getBStd(Matrix& B,int node,int gPoint);
+	void getBInc(Matrix& B,int node,int gPoint);
+	void getKdd(Matrix& K);
+	void getKda(Matrix& K);
+	void getKaa(Matrix& K);
 public:
 	// Constructors and Destructor
-	Quad4b();
-	Quad4b(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID);
-	~Quad4b();
+	Quad4i();
+	Quad4i(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID);
+	~Quad4i();
 	
 	const Matrix& getK();
     const Matrix& getM();
 	const Vector& getR();
-	void getB(Matrix& B,int node,int gPoint);
-	void shapeFunctions();
 	void update();
+	void commit();
 };
 
 #endif

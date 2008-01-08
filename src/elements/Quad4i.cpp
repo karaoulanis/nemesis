@@ -23,80 +23,82 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Quad4b.h>
+#include <Quad4i.h>
 #include <ShapeFunctions.h>
 #include <NemesisDebug.h>
 
-double Quad4b::detJ[4];
-double Quad4b::shp[4][3][4];
-std::vector<int> Quad4b::perm(4);
+double Quad4i::detJ[4];
+double Quad4i::shpStd[4][3][4];
+double Quad4i::shpInc[2][3][4];
+std::vector<int> Quad4i::perm(4);
 
-Quad4b::Quad4b()
+Quad4i::Quad4i()
 {
 }
-Quad4b::Quad4b(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID)
+Quad4i::Quad4i(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID)
 :Quad4(ID,Node_1,Node_2,Node_3,Node_4,MatID,2,2)
 {
 	perm[0]=0;
 	perm[1]=1;
 	perm[2]=2;
 	perm[3]=3;
+	aTrial.resize(3,0.);
+	aConvg.resize(3,0.);
 }
-Quad4b::~Quad4b()
+Quad4i::~Quad4i()
 {
 }
-const Matrix& Quad4b::getK()
+const Matrix& Quad4i::getK()
 {
+	// Get a reference to myMatrix as K
 	Matrix &K=*myMatrix;
-	static Matrix Ba;
-	static Matrix Bb;
-
+	// Define local static matrices
+	static Matrix Ba(3,2),Bb(3,2);
+	static Matrix Kdd(8,8),Kda(8,4),Kaa(4,4);
+	// Form shape functions
 	this->shapeFunctions();
-	K.clear();
-	for(unsigned k=0;k<myMatPoints.size();k++)
-	{
-		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
-		for(unsigned a=0;a<myNodes.size();a++)
-		{
-			this->getB(Ba,a,k);
-			for(unsigned b=0;b<myNodes.size();b++)
-			{
-				this->getB(Bb,b,k);
-				double dV=(pD->getFac())*detJ[k];
-				K.add_BTCB(2*a,2*b,&perm[0],Ba,C,Bb,dV,1.0);
-			}
-		}
-	}
+	// Get Kdd,Kda,Kaa Matrices
+	this->getKdd(Kdd);
+	this->getKda(Kda);
+	this->getKaa(Kaa);
+	// Form K
+	K=Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
+	// Get group factors
 	double facK=1e-7;
 	if(myGroup->isActive()) facK=myGroup->getFacK();
 	K*=facK;
+	// Return K
 	return K;
 }
-const Matrix& Quad4b::getM()
+const Matrix& Quad4i::getM()
 {
+	// Get a reference to myMatrix as K
 	Matrix &M=*myMatrix;
 	M.clear();
+	// Find total mass
 	double rho=myMaterial->getRho();
 	double volume=0.;
-	
 	this->shapeFunctions();
 	for(unsigned k=0;k<myMatPoints.size();k++)
 		volume+=detJ[k]*(pD->getFac())*(myMatPoints[k]->get_w()); 
 	double mass=rho*volume;
-	for(int i=0;i<8;i++) M(i,i)=0.25*mass;
+	// Set corresponding mass to diagonal terms
+	for(int i=0;i<8;i++) 
+		M(i,i)=0.25*mass;
+	// Return M
 	return M;
 }
 /**
  * Element residual vector.
  */
-const Vector& Quad4b::getR()
+const Vector& Quad4i::getR()
 {
-	// Static variables and references
-	static Vector sigma(6);
-	static Matrix Ba;
+	// Get a reference to myVector as R
 	Vector& R=*myVector;
 	R.clear();
-	
+	// Static vectors and matrices
+	static Vector sigma(6);
+	static Matrix Ba(3,2);
 	// Factors
 	if(!(myGroup->isActive()))	return R;
 	double facS=myGroup->getFacS();
@@ -114,104 +116,190 @@ const Vector& Quad4b::getR()
 		for(unsigned a=0;a<myNodes.size();a++)
 		{
 			// +facS*Fint
-			this->getB(Ba,a,k);
+			this->getBStd(Ba,a,k);
 			add_BTv(R,2*a,&perm[0],Ba,sigma,facS*dV,1.0);
 			// -facG*SelfWeigth
 			for(int i=0;i<2;i++)
-				R[2*a+i]-=facG*shp[a][0][k]*b[i]*dV;
+				R[2*a+i]-=facG*shpStd[a][0][k]*b[i]*dV;
 		}
 	}
 	// -facP*ElementalLoads
 	R-=facP*P;
 
-	// Return
+	// Return R
 	return R;
 }
 /**
  * Element update.
  */
-void Quad4b::update()
+void Quad4i::update()
 {
-	static Vector u(8);
-	static Vector epsilon(6);
-	static Matrix Ba;
-
+	// Check for a quick return
 	if(!(myGroup->isActive()))	return;
-	u=this->getDispIncrm();
-
+	// Static vectors and matrices
+	static Vector Du(8),Da(8),epsilon(6);
+	static Matrix Ba(3,2);
+	static Matrix Kda(8,4),Kaa(4,4);
+	// Form shape functions
 	this->shapeFunctions();
+	// Get incremental displacements
+	Du=this->getDispIncrm();
+	// Get incremental alphas
+	this->getKda(Kda);
+	this->getKaa(Kaa);
+	Da=-Inverse(Kaa)*Transpose(Kda)*Du;
+	aTrial=aConvg+Da;
 	// For each material point
 	for(unsigned k=0;k<myMatPoints.size();k++)
 	{
 		epsilon.clear();
-		for(unsigned a=0;a<myNodes.size();a++)
+		for(unsigned a=0;a<4;a++)
 		{
-			this->getB(Ba,a,k);
+			this->getBStd(Ba,a,k);
 			double dV=(pD->getFac())*detJ[k];
-			add_Bv(epsilon,2*a,&perm[0],Ba,u,1.0,1.0);
+			add_Bv(epsilon,2*a,&perm[0],Ba,Du,1.0,1.0);
+		}
+		for(unsigned a=0;a<2;a++)
+		{
+			this->getBInc(Ba,a,k);
+			double dV=(pD->getFac())*detJ[k];
+			add_Bv(epsilon,2*a,&perm[0],Ba,Da,1.0,1.0);
 		}
 		myMatPoints[k]->getMaterial()->setStrain(epsilon);
 	}
 }
-void Quad4b::shapeFunctions()
+/**
+ * Element commit.
+ * Overwrites base function, because incompatible modes must also
+ * be commited. This takes place in element level.
+ */
+void Quad4i::commit()
 {
-	shape4(x,shp,detJ);
-	// Axisymmetry
-	if(pD->getTag()==TAG_DOMAIN_AXISYMMETRIC)
+	for(unsigned int i=0;i<myMatPoints.size();i++) 
+		myMatPoints[i]->getMaterial()->commit();
+	aConvg=aTrial;
+}
+/**
+ * Call shape functions and fill in corresponding arrays.
+ */
+void Quad4i::shapeFunctions()
+{
+	shape4(x,shpStd,detJ);
+	shapeQM6(x,shpInc);
+}
+/**
+ * Get standard displacement B-matrix.
+ * Shape function array shpStd and detJs must be defined.
+ * @param B B-Matrix.
+ * @param node The corresponding node.
+ * @param gPoint The corresponding Gauss Point.
+ */
+void Quad4i::getBStd(Matrix& B,int node,int gPoint)
+{
+	// B-factors
+	double B1=shpStd[node][1][gPoint];
+	double B2=shpStd[node][2][gPoint];
+
+	// B-matrix
+	B(0,0)=B1;	B(0,1)=0.;
+	B(1,0)=0.;	B(1,1)=B2;
+	B(2,0)=B2;	B(2,1)=B1;
+}
+/**
+ * Get B-matrix of incompatible modes.
+ * Shape function array shpInc and detJs must be defined.
+ * @param B B-Matrix.
+ * @param node The corresponding node.
+ * @param gPoint The corresponding Gauss Point.
+ */
+void Quad4i::getBInc(Matrix& B,int node,int gPoint)
+{
+	// B-factors
+	double B1=shpInc[node][1][gPoint]/detJ[gPoint];
+	double B2=shpInc[node][2][gPoint]/detJ[gPoint];
+
+	// B-matrix
+	B(0,0)=B1;	B(0,1)=0.;
+	B(1,0)=0.;	B(1,1)=B2;
+	B(2,0)=B2;	B(2,1)=B1;
+}
+/**
+ * Get Kdd Matrix.
+ * This is the usual displacement matrix.
+ * Formed as the integral of Bstd^T.C.Bstd on dOmega.
+ * @todo Increase performance.
+ * @param K The matrix to be filled.
+ */
+void Quad4i::getKdd(Matrix& K)
+{
+	K.clear();
+	static Matrix Ba(3,2),Bb(3,2);
+	// For all Gauss points
+	for(unsigned k=0;k<4;k++)
 	{
-		for(int k=0;k<4;k++)		// matpoints
+		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
+		for(unsigned a=0;a<4;a++)
 		{
-			double r=0.;
-			for(int i=0;i<4;i++)	// nodes
-			    r+=x(i,0)*shp[i][0][k];
-			detJ[k]*=r;
+			getBStd(Ba,a,k);
+			for(unsigned b=0;b<4;b++)
+			{
+				getBStd(Bb,b,k);
+				double dV=(pD->getFac())*detJ[k];
+				K.add_BTCB(2*a,2*b,&perm[0],Ba,C,Bb,dV,1.0);
+			}
+		}
+	}
+
+}
+/**
+ * Get Kda Matrix.
+ * Formed as the integral of Bstd^T.C.Binc on dOmega.
+ * @todo Increase performance.
+ * @param K The matrix to be filled.
+ */
+void Quad4i::getKda(Matrix& K)
+{
+	K.clear();
+	static Matrix Ba(3,2),Bb(3,2);
+	// For all Gauss points
+	for(unsigned k=0;k<4;k++)
+	{
+		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
+		for(unsigned a=0;a<4;a++)
+		{
+			getBStd(Ba,a,k);
+			for(unsigned b=0;b<2;b++)
+			{
+				getBInc(Bb,b,k);
+				double dV=1.0*detJ[k];
+				K.add_BTCB(2*a,2*b,&perm[0],Ba,C,Bb,dV,1.0);
+			}
 		}
 	}
 }
-void Quad4b::getB(Matrix& B,int node,int gPoint)
+/**
+ * Get Kda Matrix.
+ * Formed as the integral of Binc^T.C.Binc on dOmega.
+ * @todo Increase performance.
+ * @param K The matrix to be filled.
+ */
+void Quad4i::getKaa(Matrix& K)
 {
-	B.resize(4,2);
-	double Bb1=0.,Bb2=0.,vol=0.;
-	for(int k=0;k<4;k++)  //matpoints
+	K.clear();
+	static Matrix Ba(3,2),Bb(3,2);
+	// For all Gauss points
+	for(unsigned k=0;k<4;k++)
 	{
-		double dV=detJ[k]*(pD->getFac());
-		Bb1+=shp[node][1][k]*dV;
-		Bb2+=shp[node][2][k]*dV;
-		vol+=dV;
-	}
-	Bb1/=vol;
-	Bb2/=vol;
-	
-    double B0=0.,Bb0=0.;
-	// Axisymmetry
-	double r=0.;
-	if(pD->getTag()==TAG_DOMAIN_AXISYMMETRIC)
-	{
-		for(int i=0;i<4;i++)		// nodes
-			    r+=x(i,0)*shp[i][0][gPoint];
-		B0=shp[node][0][gPoint]/r;
-		for(int k=0;k<4;k++)		// matpoints
+		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
+		for(unsigned a=0;a<2;a++)
 		{
-			r=0.;
-			for(int i=0;i<4;i++)	// nodes
-			    r+=x(i,0)*shp[i][0][k];
-			Bb0+=shp[node][0][k]*detJ[k]*(pD->getFac())/vol/r;
+			getBInc(Ba,a,k);
+			for(unsigned b=0;b<2;b++)
+			{
+				getBInc(Bb,b,k);
+				double dV=1.0*detJ[k];
+				K.add_BTCB(2*a,2*b,&perm[0],Ba,C,Bb,dV,1.0);
+			}
 		}
 	}
-
-	// B-factors
-	double B1=shp[node][1][gPoint];
-	double B2=shp[node][2][gPoint];
-	double B4=(Bb1-B1)/3.;
-	double B6=(Bb2-B2)/3.;
-	double B7=B2+B6;
-	double B10=B4+(Bb0-B0)/3.;
-	double B11=B0+B10;
-	double B12=B1+B10;
-
-	// B-matrix
-	B(0,0)=B12;	B(0,1)=B6;
-	B(1,0)=B10;	B(1,1)=B7;
-	B(2,0)=B11;	B(2,1)=B6;
-	B(3,0)=B2;	B(3,1)=B1;
 }
