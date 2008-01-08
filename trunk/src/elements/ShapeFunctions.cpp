@@ -56,6 +56,8 @@ void shape4(const Matrix& x,double shp[4][3][4],double detJ[4])
 		shp[3][2][k]=+0.25*m1;			// N4,eta
 	
 		// Jacobian
+		// [ dxdxi  dydxi ]
+		// [ dxdeta dydeta]
 		static double J[2][2];
 		for(int i=0;i<2;i++)
 		{
@@ -196,4 +198,58 @@ void shape8(const Matrix& x,double shp[8][4][8],double detJ[8])
 	}
 }
 
+void shapeQM6(const Matrix& x,double shpQM6[2][3][4])
+{
+	double shp[4][3];
 
+	shp[0][0]= 0.25;				// N1(0,0)
+	shp[1][0]= 0.25;				// N2(0,0)
+	shp[2][0]= 0.25;				// N3(0,0)
+	shp[3][0]= 0.25;				// N4(0,0)
+
+	shp[0][1]=-0.25;				// N1,xi(0,0)
+	shp[1][1]=+0.25;				// N2,xi(0,0)
+	shp[2][1]=+0.25;				// N3,xi(0,0)
+	shp[3][1]=-0.25;				// N4,xi(0,0)
+
+	shp[0][2]=-0.25;				// N1,eta(0,0)
+	shp[1][2]=-0.25;				// N2,eta(0,0)
+	shp[2][2]=+0.25;				// N3,eta(0,0)
+	shp[3][2]=+0.25;				// N4,eta(0,0)
+
+	// Jacobian
+	// [ dxdxi  dydxi ]
+	// [ dxdeta dydeta]
+	static double J[2][2];
+	for(int i=0;i<2;i++)
+	{
+		J[0][i]=0.;
+		J[1][i]=0.;
+		for(int j=0;j<4;j++)
+		{
+			J[0][i]+=shp[j][1]*x(j,i);
+			J[1][i]+=shp[j][2]*x(j,i);
+		}
+	}
+	const double dsq3=0.577350269189626;
+	static const double gCrds[4][2]={	{-dsq3,-dsq3},
+										{+dsq3,-dsq3},
+									    {+dsq3,+dsq3},
+										{-dsq3,+dsq3}};
+
+	for(int k=0;k<4;k++)
+	{
+		double d1=2.0*gCrds[k][0];	// 2*xi
+		double d2=2.0*gCrds[k][1];	// 2*eta
+
+		shpQM6[0][0][k]= 1.0;		// N5(0,0) [not needed]
+		shpQM6[1][0][k]= 1.0;		// N6(0,0) [not needed]
+
+		shpQM6[0][1][k]=-d1*J[1][1];// N5,x(0,0)=-2*xi*dydeta
+		shpQM6[1][1][k]= d2*J[0][1];// N6,x(0,0)= 2*eta*dydxi
+
+		shpQM6[0][2][k]= d1*J[1][0];// N5,y(0,0)= 2*xi*dxdeta
+		shpQM6[1][2][k]=-d2*J[0][0];// N6,y(0,0)=-2*eta*dxdxi
+	}
+
+}
