@@ -981,6 +981,44 @@ static PyObject* pyElement_Quad4Test(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Quad4b(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,matID;
+    if(!PyArg_ParseTuple(args,"iiiiii",
+		&id,&n1,&n2,&n3,&n4,&matID))
+		return NULL;
+	try
+	{
+		Element* pElement=new Quad4b(id,n1,n2,n3,n4,matID);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+static PyObject* pyElement_Quad4i(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,matID;
+    if(!PyArg_ParseTuple(args,"iiiiii",
+		&id,&n1,&n2,&n3,&n4,&matID))
+		return NULL;
+	try
+	{
+		Element* pElement=new Quad4i(id,n1,n2,n3,n4,matID);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_Quad4e(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,n4,matID;
@@ -1003,26 +1041,6 @@ static PyObject* pyElement_Quad4e(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Quad4b(PyObject *self, PyObject *args)
-{
-	int id,n1,n2,n3,n4,matID;
-    if(!PyArg_ParseTuple(args,"iiiiii",
-		&id,&n1,&n2,&n3,&n4,&matID))
-		return NULL;
-	try
-	{
-		Element* pElement=new Quad4b(id,n1,n2,n3,n4,matID);
-		pD->add(pD->getElements(),pElement);
-	}
-	catch(SException e)
-	{
-		PyErr_SetString(PyExc_StandardError,e.what());
-		return NULL;
-	}
-	Py_INCREF(Py_None);
-	return Py_None;
-}
-
 static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 {
 	int id,n1,n2,n3,matID;
@@ -1144,10 +1162,12 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
 	{"quad4t",			pyElement_Quad4Test,	
 		METH_VARARGS,"Define a 4-Noded standard displacement quad."},
-	{"quad4e",			pyElement_Quad4e,	
-		METH_VARARGS,"Define a 4-Noded enhanced assumed strain quad."},
 	{"quad4b",			pyElement_Quad4b,	
 		METH_VARARGS,"Define a 4-Noded B-Bar quad."},
+	{"quad4i",			pyElement_Quad4i,	
+		METH_VARARGS,"Define a 4-Noded non-conforming quad."},
+	{"quad4e",			pyElement_Quad4e,	
+		METH_VARARGS,"Define a 4-Noded enhanced assumed strain quad."},
 	{"tria3d",				pyElement_Triangle3d,	
 		METH_VARARGS,"Define a 3-Noded constant strain triangle."},
 	{"tria3x",				pyElement_Triangle3dXFem,	

@@ -59,9 +59,10 @@
 #include <Brick8b.h>
 #include <Quad4DispPlain.h>
 #include <Quad4DispAxisymmetric.h>
-#include <Quad4e.h>
-#include <Quad4b.h>
 #include <Quad4d.h>
+#include <Quad4b.h>
+#include <Quad4i.h>
+#include <Quad4e.h>
 #include <Triangle3.h>
 #include <Triangle3XFem.h>
 #include <Triangle6.h>
