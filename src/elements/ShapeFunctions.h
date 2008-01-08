@@ -30,5 +30,6 @@
 
 void shape4(const Matrix& x,double shp[4][3][4],double detJ[4]);
 void shape8(const Matrix& x,double shp[8][4][8],double detJ[8]);
+void shapeQM6(const Matrix& x,double shpQM6[2][3][4]);
 
 #endif
