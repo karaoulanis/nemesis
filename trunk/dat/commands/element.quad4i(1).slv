@@ -1,0 +1,93 @@
+# /******************************************************************************
+# *   nemesis. an experimental finite element code.                             *
+# *   Copyright (C) 2004-2008 F.E.Karaoulanis [http://www.nemesis-project.org]  *
+# *                                                                             *
+# *   This program is free software; you can redistribute it and/or modify      *
+# *   it under the terms of the GNU General Public License version 3, as        *
+# *   published by the Free Software Foundation.                                *
+# *                                                                             *
+# *   This program is distributed in the hope that it will be useful,           *
+# *   but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+# *   GNU General Public License for more details.                              *
+# *                                                                             *
+# *   You should have received a copy of the GNU General Public License         *
+# *   along with this program.  If not, see <http://www.gnu.org/licenses/>.     *
+# ******************************************************************************/
+
+# //*****************************************************************************
+# // $LastChangedDate$
+# // $LastChangedRevision$
+# // $LastChangedBy$
+# // $HeadURL$
+# // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
+# //*****************************************************************************
+
+# Data
+a=[0.,1.,2.,3.,4.]
+u={}
+# Main loop
+for type in ['STD','QM6']:
+	u[type]=[]
+	disp=[]
+	for e in a:
+		# Domain
+		domain.planeStress(1.0)
+		# Material
+		material.elastic( 1, 1., 0.)
+		# Nodes
+		node.add( 1,  0.,   0.)
+		node.add( 2,  5.+e, 0.)
+		node.add( 3, 10.,   0.)
+		node.add( 4,  0.,   2.)
+		node.add( 5,  5.-e, 2.)
+		node.add( 6, 10.,   2.)
+		# Elements
+		if type=='STD':
+			element.quad4d( 1, 1, 2, 5, 4, 1)
+			element.quad4d( 2, 2, 3, 6, 5, 1)
+		else:
+			element.quad4i( 1, 1, 2, 5, 4, 1)
+			element.quad4i( 2, 2, 3, 6, 5, 1)
+		# Constraints
+		node.fix(1,1)
+		node.fix(1,2)
+		node.fix(4,1)
+		# LoadCase
+		lc.define(1)
+		load.node(3,1,+1.)
+		load.node(6,1,-1.)
+		# Analysis
+		analysis.static()
+		analysis.run(1,1)
+		# Get tip displacement
+		disp.append(node.data(6)['disp'][1])
+		domain.clear()
+	# Store displacements
+	u[type][:]=disp[:]
+
+# Normalize results
+u0=u['QM6'][0]
+for type in ['STD','QM6']:
+	for i in range(len(u[type])):
+		u[type][i]=u[type][i]/u0
+
+# Print results
+print "==========================="
+print "|alpha |STD      |QM6     |"
+print "+------+---------+--------+"
+for i in range(len(a)):
+	print '|% 5.2f| % 8.4f| % 8.4f|'%(a[i],u['STD'][i],u['QM6'][i])
+print "==========================="
+
+# Plot results using matplotlib
+from pylab import *
+plot(a,u['STD'],'b-o',linewidth=1.0,label="QM6")
+plot(a,u['QM6'],'k-o',linewidth=1.0,label="Standard")
+xlabel('alpha')
+ylabel('u/u0')
+title('Mesh distortion test.')
+ylim([0.,1.])
+grid(True)
+legend(loc='upper right')
+show()
