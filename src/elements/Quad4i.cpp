@@ -30,7 +30,7 @@
 double Quad4i::detJ[4];
 double Quad4i::shpStd[4][3][4];
 double Quad4i::shpInc[2][3][4];
-std::vector<int> Quad4i::perm(4);
+std::vector<int> Quad4i::perm(3);
 
 Quad4i::Quad4i()
 {
@@ -40,10 +40,9 @@ Quad4i::Quad4i(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID)
 {
 	perm[0]=0;
 	perm[1]=1;
-	perm[2]=2;
-	perm[3]=3;
-	aTrial.resize(3,0.);
-	aConvg.resize(3,0.);
+	perm[2]=3;
+	aTrial.resize(4,0.);
+	aConvg.resize(4,0.);
 }
 Quad4i::~Quad4i()
 {
@@ -137,7 +136,7 @@ void Quad4i::update()
 	// Check for a quick return
 	if(!(myGroup->isActive()))	return;
 	// Static vectors and matrices
-	static Vector Du(8),Da(8),epsilon(6);
+	static Vector Du(8),Da(4),epsilon(6);
 	static Matrix Ba(3,2);
 	static Matrix Kda(8,4),Kaa(4,4);
 	// Form shape functions
