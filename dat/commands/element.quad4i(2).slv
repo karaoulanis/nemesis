@@ -24,70 +24,71 @@
 # //*****************************************************************************
 
 # Data
-a=[0.,1.,2.,3.,4.]
-u={}
-# Main loop
-for type in ['STD','QM6']:
-	u[type]=[]
-	disp=[]
-	for e in a:
-		# Domain
-		domain.planeStress(1.0)
-		# Material
-		material.elastic( 1, 1., 0.)
-		# Nodes
-		node.add( 1,  0.,   0.)
-		node.add( 2,  5.+e, 0.)
-		node.add( 3, 10.,   0.)
-		node.add( 4,  0.,   2.)
-		node.add( 5,  5.-e, 2.)
-		node.add( 6, 10.,   2.)
-		# Elements
-		if type=='STD':
-			element.quad4d( 1, 1, 2, 5, 4, 1)
-			element.quad4d( 2, 2, 3, 6, 5, 1)
-		else:
-			element.quad4i( 1, 1, 2, 5, 4, 1)
-			element.quad4i( 2, 2, 3, 6, 5, 1)
-		# Constraints
-		node.fix(1,1)
-		node.fix(1,2)
-		node.fix(4,1)
-		# LoadCase
-		lc.define(1)
-		load.node(3,1,+1.)
-		load.node(6,1,-1.)
-		# Analysis
-		analysis.static()
-		analysis.run(1,1)
-		# Get tip displacement
-		disp.append(node.data(6)['disp'][1])
-		domain.clear()
-	# Store displacements
-	u[type][:]=disp[:]
+nds={1:[0.0, 0.0],
+	 2:[9.0, 0.0],
+	 3:[8.0, 8.0],
+	 4:[0.0, 6.0],
+	 5:[2.5, 2.0],
+	 6:[6.5, 1.5],
+	 7:[5.5, 5.0],
+	 8:[2.5, 5.0]}
+ax=[ 0.0001, 0.0061, 0.0049]
+ay=[-0.0005, 0.0042, 0.0038]
 
-# Normalize results
-u0=u['QM6'][0]
-for type in ['STD','QM6']:
-	for i in range(len(u[type])):
-		u[type][i]=u[type][i]/u0
+# domain
+domain.planeStrain(1.0)
 
-# Print results
-print "==========================="
-print "|alpha|STD      |QM6      |"
-print "+-----+---------+---------+"
-for i in range(len(a)):
-	print '|% 5.2f| % 8.4f| % 8.4f|'%(a[i],u['STD'][i],u['QM6'][i])
-print "==========================="
+# database
+name="vtk"
+db.SQLite(name)
 
-# Plot results using matplotlib
-from pylab import *
-plot(a,u['STD'],'b-o',linewidth=1.0,label="QM6")
-plot(a,u['QM6'],'k-o',linewidth=1.0,label="Standard")
-xlabel('alpha')
-ylabel('u/u0')
-title('Mesh distortion test.')
-ylim([0.,1.])
-grid(True)
-legend(loc='upper right')
-show()
+# material
+material.elastic( 1, 1000., 0.25)
+
+# nodes
+for i in nds:
+	node.add( i, nds[i][0], nds[i][1])
+
+# elements
+element.quad4i( 1, 1, 2, 6, 5, 1)
+element.quad4i( 2, 2, 3, 7, 6, 1)
+element.quad4i( 3, 8, 7, 3, 4, 1)
+element.quad4i( 4, 1, 5, 8, 4, 1)
+element.quad4i( 5, 5, 6, 7, 8, 1)
+
+# constraints
+for i in [1,2,3,4]:
+	x=nds[i][0]
+	y=nds[i][1]
+	ux=ax[0]+ax[1]*x+ax[2]*y
+	uy=ay[0]+ay[1]*x+ay[2]*y
+	node.fix(i,1,ux)
+	node.fix(i,2,uy)
+
+# loadcase (empty)
+lc.define(1)
+
+# analysis
+analysis.static()
+imposer.lagrange()
+analysis.run(1,1)
+
+# results
+print '================================================='
+print '|   |     Analytical      |     Numerical       |'
+print '+---+----------+----------+----------+----------+'
+print '|id |ux        |uy        |ux        |uy        |'
+print '+---+----------+----------+----------+----------+'
+for i in [5,6,7,8]:
+	x=nds[i][0]
+	y=nds[i][1]
+	uxA=ax[0]+ax[1]*x+ax[2]*y
+	uyA=ay[0]+ay[1]*x+ay[2]*y
+	uxN=node.data(i)['disp'][0]
+	uyN=node.data(i)['disp'][1]
+	print '| %2i| % 8.6f| % 8.6f| % 8.6f| % 8.6f|'%(i,uxA,uyA,uxN,uyN)
+print '================================================='
+
+# store to database
+db.store(name)
+db.exportToVtk(name)
