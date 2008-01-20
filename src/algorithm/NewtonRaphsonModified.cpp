@@ -37,6 +37,7 @@ int NewtonRaphsonModified::solveStep(int n)
 	// Predictor phase
 	pA->getControl()->formTangent();
 	pA->getControl()->predict();
+	pA->getConvergenceNorm()->newStep();
 	pA->getControl()->formResidual(pA->getControl()->getLambda());
 
 	// Corrector phase
