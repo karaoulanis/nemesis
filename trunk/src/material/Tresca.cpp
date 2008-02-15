@@ -53,7 +53,7 @@ void spectralDecomposition(const Vector& s, Vector& sP,Matrix& sV)
 Tresca::Tresca()
 {
 }
-Tresca::Tresca(int ID,int elasticID,double cu)
+Tresca::Tresca(int ID,int elasticID,double cu,double kx,double ky,double kz)
 :MultiaxialMaterial(ID,0.,0.)
 {
 	// Get the elastic part
@@ -66,6 +66,9 @@ Tresca::Tresca(int ID,int elasticID,double cu)
 
 	// Material properties
 	MatParams[0]=cu;
+	MatParams[1]=kx;
+	MatParams[2]=ky;
+	MatParams[3]=kz;
 	
 	// Material state
 //	ePTrial.resize(6,0.);	ePConvg.resize(6,0.);
@@ -85,8 +88,11 @@ MultiaxialMaterial* Tresca::getClone()
 	int myID    = this->getID();
 	int elID    = myElastic->getID();
 	double cu   = MatParams[ 0];
+	double kx   = MatParams[ 1];
+	double ky   = MatParams[ 2];
+	double kz   = MatParams[ 3];
 	// Create clone and return
-	Tresca* newClone=new Tresca(myID,elID,cu);
+	Tresca* newClone=new Tresca(myID,elID,cu,kx,ky,kz);
 	return newClone;
 }
 /**
@@ -103,7 +109,10 @@ void Tresca::setStrain(const Vector& De)
 	
 	double E = myElastic->getParam(0);
 	double nu= myElastic->getParam(1);
-	double cu= MatParams[ 0];
+	double kx   = MatParams[ 1];
+	double ky   = MatParams[ 2];
+	double kz   = MatParams[ 3];
+	double cu= MatParams[ 0]+(kx*x+ky*y+kz*z);
 	C3(0,0)=  1/E;	C3(0,1)=-nu/E;	C3(0,2)=-nu/E;
 	C3(1,0)=-nu/E;	C3(1,1)=  1/E;	C3(1,2)=-nu/E;
 	C3(2,0)=-nu/E;	C3(2,1)=-nu/E;	C3(2,2)=  1/E;

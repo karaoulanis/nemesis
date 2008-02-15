@@ -61,6 +61,16 @@ Material::~Material()
 	if(myTracker!=0) delete myTracker;
 }
 /**
+ * Set global coordinates to material.
+ * This is useful in case where material is position depended.
+ */
+void Material::setX(double x1_,double x2_,double x3_)
+{
+	x=x1_;
+	y=x2_;
+	z=x3_;
+}
+/**
  * Add a Tracker to a Material.
  * \a myTracker pointer should be \a null up to this point. If not this means
  * that a Tracker is already added and nothing is changed.
