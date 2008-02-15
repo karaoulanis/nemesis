@@ -43,11 +43,13 @@ protected:
 	int index;
 	Vector MatParams;
 	Tracker* myTracker;
+	double x,y,z;
 public:
 	Material();
 	Material(int ID,double rho,double aT);
 	virtual ~Material();
 
+	void setX(double x1_,double x2_=0,double x3_=0);
 	inline void   setParam(int i,double d)	{MatParams[i]=d;}
 	inline double getParam(int i)			{return MatParams[i];}
 	inline double getRho()					{return MatParams[30];}

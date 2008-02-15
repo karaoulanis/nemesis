@@ -41,7 +41,7 @@ protected:
 	int inaccurate;
 public:
 	Tresca();
-	Tresca(int ID,int elasticID,double sy);
+	Tresca(int ID,int elasticID,double sy,double kx,double ky,double kz);
 	~Tresca();
 	
 	MultiaxialMaterial* getClone();
