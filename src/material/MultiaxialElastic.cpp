@@ -28,12 +28,16 @@
 MultiaxialElastic::MultiaxialElastic()
 {
 }
-MultiaxialElastic::MultiaxialElastic(int ID,double E,double nu,double rho,double aT)
+MultiaxialElastic::MultiaxialElastic(int ID,double E,double nu,double rho,double aT,
+									 double kx,double ky,double kz)
 :MultiaxialMaterial(ID,rho,aT)
 {
 	// Material parameters
 	MatParams[0]=E;
 	MatParams[1]=nu;
+	MatParams[2]=kx;
+	MatParams[3]=ky;
+	MatParams[4]=kz;
 	// Material tag
 	myTag=TAG_MATERIAL_MULTIAXIAL_ELASTIC;
 }
@@ -42,10 +46,13 @@ MultiaxialMaterial* MultiaxialElastic::getClone()
 	// Material parameters
 	double E   =MatParams[ 0];
 	double nu  =MatParams[ 1];
+	double kx  =MatParams[ 2];
+	double ky  =MatParams[ 3];
+	double kz  =MatParams[ 4];
 	double rho =MatParams[30];
 	double aT  =MatParams[31];
 	// Create clone and return
-	MultiaxialElastic* newClone=new MultiaxialElastic(myID,E,nu,rho,aT);
+	MultiaxialElastic* newClone=new MultiaxialElastic(myID,E,nu,rho,aT,kx,ky,kz);
 	return newClone;
 }
 void MultiaxialElastic::setStrain(const Vector& De)
@@ -58,7 +65,10 @@ const Matrix& MultiaxialElastic::getC()
 {
 	C.clear();
 	// Material parameters
-	double E   =MatParams[ 0];
+	double kx  =MatParams[ 2];
+	double ky  =MatParams[ 3];
+	double kz  =MatParams[ 4];
+	double E   =MatParams[ 0]+(kx*x+ky*y+kz*z);
 	double nu  =MatParams[ 1];
 	// Find and return C
 	double Em=E/((1.+nu)*(1.-2*nu));
