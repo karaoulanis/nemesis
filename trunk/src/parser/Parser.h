@@ -57,6 +57,7 @@
 #include <SDofElement.h>
 #include <Brick8d.h>
 #include <Brick8b.h>
+#include <Brick8i.h>
 #include <Quad4DispPlain.h>
 #include <Quad4DispAxisymmetric.h>
 #include <Quad4d.h>

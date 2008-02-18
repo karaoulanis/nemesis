@@ -23,37 +23,42 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <PlaneStress.h>
+#ifndef _BRICK8I_H
+#define _BRICK8I_H
 
-PlaneStress::PlaneStress()
+#include <Brick8.h>
+
+class Brick8i: public Brick8
 {
-}
-///@todo 0.
-PlaneStress::PlaneStress(int ID,double E,double nu,double rho,double aT)
-:MultiaxialElastic(ID,E,nu,rho,aT,0.,0.,0.)
-{
-}
-MultiaxialMaterial* PlaneStress::getClone()
-{
-	// Material parameters
-	double E   =MatParams[ 0];
-	double nu  =MatParams[ 1];
-	double rho =MatParams[30];
-	double aT  =MatParams[31];
-	// Create clone and return
-	PlaneStress* newClone=new PlaneStress(myID,E,nu,rho,aT);
-	return newClone;
-}
-const Matrix& PlaneStress::getC()
-{
-	C.clear();
-	// Material parameters
-	double E   =MatParams[ 0];
-	double nu  =MatParams[ 1];
-	// Find and return C
-	double Em=E/(1-nu*nu);
-	C(0,0)=Em;		C(0,1)=Em*nu;
-	C(1,0)=Em*nu;	C(1,1)=Em;		
-	C(3,3)=Em*0.5*(1.-nu);
-	return C;
-}
+private:
+	static double shpStd[8][4][8];
+	static double shpInc[3][4][8];
+	static double detJ[8];
+	
+	Vector aTrial;
+	Vector aConvg;
+	void shapeFunctions();
+	void getBStd(Matrix& B,int node,int gPoint);
+	void getBInc(Matrix& B,int node,int gPoint);
+	void getKdd(Matrix& K);
+	void getKda(Matrix& K);
+	void getKaa(Matrix& K);
+public:
+	// Constructors and Destructor
+	Brick8i();
+	Brick8i(int ID,
+				int Node_1,int Node_2,int Node_3,int Node_4,	
+				int Node_5,int Node_6,int Node_7,int Node_8,
+				int matID);
+	~Brick8i();
+	
+	const Matrix& getK();
+    const Matrix& getM();
+	const Vector& getR();
+	void update();
+	void commit();
+	void getB(Matrix& B,int node,int gPoint) {}
+
+};
+
+#endif

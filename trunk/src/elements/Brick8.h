@@ -45,12 +45,12 @@ public:
 				int matID);	
 	virtual ~Brick8();
 
-	const Matrix& getK();
-    const Matrix& getM();
-	const Vector& getR();
+	virtual const Matrix& getK();
+    virtual const Matrix& getM();
+	virtual const Vector& getR();
 
-	void update();
-	void commit();
+	virtual void update();
+	virtual void commit();
 	
 	bool checkIfAllows(FEObject* f);
 	void addInitialStresses(InitialStresses* pInitialStresses);	

@@ -35,7 +35,8 @@ class MultiaxialElastic: public MultiaxialMaterial
 {
 public:
 	MultiaxialElastic();
-	MultiaxialElastic(int ID,double E,double nu,double rho,double aT);
+	MultiaxialElastic(int ID,double E,double nu,double rho,double aT,
+		double kx,double ky,double kz);
 	MultiaxialMaterial* getClone();
 	void setStrain(const Vector& De);
 	const Matrix& getC();

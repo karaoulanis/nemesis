@@ -621,13 +621,14 @@ static PyObject* pyMaterial_Elastic(PyObject *self,PyObject *args)
 {
 	int id;
 	double E=0,nu=0,rho=0,aT=0;
-    if(!PyArg_ParseTuple(args,"idd|dd",&id,&E,&nu,&rho,&aT)) 
+	double kx=0.,ky=0.,kz=0.;
+    if(!PyArg_ParseTuple(args,"idd|ddddd",&id,&E,&nu,&rho,&aT,&kx,&ky,&kz)) 
 		return NULL;
 	Material* pMaterial;
 	if(pD->getTag()==TAG_DOMAIN_PLANE_STRESS)
 		pMaterial=new PlaneStress(id,E,nu,rho,aT);
 	else
-		pMaterial=new MultiaxialElastic(id,E,nu,rho,aT);
+		pMaterial=new MultiaxialElastic(id,E,nu,rho,aT,kx,ky,kz);
 	pD->add(pD->getMaterials(),pMaterial);
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
@@ -929,6 +930,24 @@ static PyObject* pyElement_Brick8b(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyElement_Brick8i(PyObject *self, PyObject *args)
+{
+	int id,n1,n2,n3,n4,n5,n6,n7,n8,mat;
+	if(!PyArg_ParseTuple(args,"iiiiiiiiii",&id,&n1,&n2,&n3,&n4,&n5,&n6,&n7,&n8,&mat))
+		return NULL;
+	try
+	{
+		Element* pElement=new Brick8i(id,n1,n2,n3,n4,n5,n6,n7,n8,mat);
+		pD->add(pD->getElements(),pElement);
+	}
+	catch(SException e)
+	{
+		PyErr_SetString(PyExc_StandardError,e.what());
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyElement_SDOF(PyObject *self, PyObject *args)
 {
 	int id,nodeID,dofID,matID;
@@ -1181,6 +1200,8 @@ static PyMethodDef ElementMethods[] =
 		METH_VARARGS,"Define a 8-Noded standard displacement brick."},
 	{"brick8b",	pyElement_Brick8b,	
 		METH_VARARGS,"Define a 8-Noded Bbar brick."},
+	{"brick8i",	pyElement_Brick8i,	
+		METH_VARARGS,"Define a 8-Noded non-conforming brick."},
 	{"data",			pyElement_Data,
 		METH_VARARGS,"Access to the element data."},
 	{"track",			pyElement_Track,	
