@@ -990,6 +990,12 @@
 				<File
 					RelativePath="..\..\src\elements\Brick8d.h">
 				</File>
+				<File
+					RelativePath="..\..\src\elements\Brick8i.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\elements\Brick8i.h">
+				</File>
 			</Filter>
 			<Filter
 				Name="quads"

@@ -350,14 +350,14 @@ void shapeQM9(const Matrix& x,double shpQM9[3][4][8])
 		shpQM9[2][0][k]= 1.0;		// N3i(0,0) [not needed]
 
 		shpQM9[0][1][k]= d1*J[0][0];// N1i,x(0,0)=-2*xi*dydeta
-		shpQM9[1][1][k]= d2*J[1][0];// N2i,x(0,0)= 2*eta*dydxi
-		shpQM9[2][1][k]= d3*J[2][0];// N3i,x(0,0)= 2*eta*dydxi
+		shpQM9[1][1][k]= d2*J[1][0];// N2i,x(0,0)=-2*eta*dydxi
+		shpQM9[2][1][k]= d3*J[2][0];// N3i,x(0,0)=-2*eta*dydxi
 
-		shpQM9[0][2][k]= d1*J[0][1];// N1i,y(0,0)= 2*xi*dxdeta
+		shpQM9[0][2][k]= d1*J[0][1];// N1i,y(0,0)=-2*xi*dxdeta
 		shpQM9[1][2][k]= d2*J[1][1];// N2i,y(0,0)=-2*eta*dxdxi
 		shpQM9[2][2][k]= d3*J[2][1];// N3i,y(0,0)=-2*eta*dxdxi
 		
-		shpQM9[0][3][k]= d1*J[0][2];// N1i,z(0,0)= 2*xi*dxdeta
+		shpQM9[0][3][k]= d1*J[0][2];// N1i,z(0,0)=-2*xi*dxdeta
 		shpQM9[1][3][k]= d2*J[1][2];// N2i,z(0,0)=-2*eta*dxdxi
 		shpQM9[2][3][k]= d3*J[2][2];// N3i,z(0,0)=-2*eta*dxdxi
 	}
