@@ -405,6 +405,36 @@ void SQLiteDatabase::exportToVtk(const char* tableName)
 	}
 	vtkFile<<endl;
 
+	// Print ux
+	vtkFile<<"SCALARS ux float"<<endl;
+	vtkFile<<"LOOKUP_TABLE DEFAULT"<<endl;
+	for(int i=1;i<nNodes+1;i++) 
+	{
+		if(resNodes[i*ncol+2+3]==0) vtkFile<<0.<<" ";
+		else vtkFile<<atof(resNodes[i*ncol+2+3])<<" ";
+	}
+	vtkFile<<endl;
+
+	// Print uy
+	vtkFile<<"SCALARS uy float"<<endl;
+	vtkFile<<"LOOKUP_TABLE DEFAULT"<<endl;
+	for(int i=1;i<nNodes+1;i++) 
+	{
+		if(resNodes[i*ncol+2+4]==0) vtkFile<<0.<<" ";
+		else vtkFile<<atof(resNodes[i*ncol+2+4])<<" ";
+	}
+	vtkFile<<endl;
+
+	// Print uz
+	vtkFile<<"SCALARS uz float"<<endl;
+	vtkFile<<"LOOKUP_TABLE DEFAULT"<<endl;
+	for(int i=1;i<nNodes+1;i++) 
+	{
+		if(resNodes[i*ncol+2+5]==0) vtkFile<<0.<<" ";
+		else vtkFile<<atof(resNodes[i*ncol+2+5])<<" ";
+	}
+	vtkFile<<endl;
+
 	// Print sx
 	vtkFile<<"SCALARS sx float"<<endl;
 	vtkFile<<"LOOKUP_TABLE DEFAULT"<<endl;
