@@ -61,7 +61,7 @@ void Domain::init()
 	lambdaConvg=0.;
 	// Gravity direction vector and default orientation/acceleration
 	gravityVect.resize(3,0.);
-	gravityVect[2]=-1;
+	gravityVect[1]=-1;
 	gravityAccl=9.81;
 }
 /**
