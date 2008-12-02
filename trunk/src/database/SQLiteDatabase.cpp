@@ -406,32 +406,32 @@ void SQLiteDatabase::exportToVtk(const char* tableName)
 	vtkFile<<endl;
 
 	// Print ux
-	vtkFile<<"SCALARS ux float"<<endl;
+	vtkFile<<"SCALARS uxp float"<<endl;
 	vtkFile<<"LOOKUP_TABLE DEFAULT"<<endl;
 	for(int i=1;i<nNodes+1;i++) 
 	{
-		if(resNodes[i*ncol+2+3]==0) vtkFile<<0.<<" ";
-		else vtkFile<<atof(resNodes[i*ncol+2+3])<<" ";
+		if(resNodes[i*ncol+2+3]==0) vtkFile<<0.<<endl;
+		else vtkFile<<atof(resNodes[i*ncol+2+3])<<endl;
 	}
 	vtkFile<<endl;
 
 	// Print uy
-	vtkFile<<"SCALARS uy float"<<endl;
+	vtkFile<<"SCALARS uyp float"<<endl;
 	vtkFile<<"LOOKUP_TABLE DEFAULT"<<endl;
 	for(int i=1;i<nNodes+1;i++) 
 	{
-		if(resNodes[i*ncol+2+4]==0) vtkFile<<0.<<" ";
-		else vtkFile<<atof(resNodes[i*ncol+2+4])<<" ";
+		if(resNodes[i*ncol+2+4]==0) vtkFile<<0.<<endl;
+		else vtkFile<<atof(resNodes[i*ncol+2+4])<<endl;
 	}
 	vtkFile<<endl;
 
 	// Print uz
-	vtkFile<<"SCALARS uz float"<<endl;
+	vtkFile<<"SCALARS uzp float"<<endl;
 	vtkFile<<"LOOKUP_TABLE DEFAULT"<<endl;
 	for(int i=1;i<nNodes+1;i++) 
 	{
-		if(resNodes[i*ncol+2+5]==0) vtkFile<<0.<<" ";
-		else vtkFile<<atof(resNodes[i*ncol+2+5])<<" ";
+		if(resNodes[i*ncol+2+5]==0) vtkFile<<0.<<endl;
+		else vtkFile<<atof(resNodes[i*ncol+2+5])<<endl;
 	}
 	vtkFile<<endl;
 
