@@ -106,7 +106,7 @@ int BandLinearSOE::solve()
 		dgbtrf(&N,&N,&KL,&KU,&A[0],&LDAB,&IPIV[0],&INFO);
 		if(INFO!=0)
 			throw SException("[nemesis:%d] %s",1103,"SOE: lapack DGBTRF failed.\n");
-		isLUFactored=true;
+		isLUFactored=true;	
 	}
 	// Solve the system A*X = B, overwriting B with X.
 	dgbtrs(&c,&N,&KL,&KU,&NRHS,&A[0],&LDAB,&IPIV[0],&X[0],&LDB,&INFO);
