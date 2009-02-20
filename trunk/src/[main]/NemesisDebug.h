@@ -84,4 +84,5 @@ void add_BTCB(Matrix& K,int row,int col,const int* perm,const Matrix& B1,const M
 void add_BTv (Vector& R,int row,const int* perm,const Matrix& B,const Vector& v,double c1,double c0=0.);
 void add_Bv  (Vector& R,int row,const int* perm,const Matrix& B,const Vector& v,double c1,double c0=0.);
 
+void spectralDecomposition(const Vector& s, Vector& sP,Matrix& sV);
 #endif
