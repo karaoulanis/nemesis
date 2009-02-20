@@ -1,0 +1,152 @@
+
+#==========================================================
+# init
+#==========================================================
+from math import pi,sin,tan
+
+#==========================================================
+# domain
+#==========================================================
+domain.planeStrain(1.0)
+domain.gravity(9.81,(0.,-1.,0.))
+db.SQLite("MohrCoulomb")
+
+#==========================================================
+# material
+#==========================================================
+material.elastic( 10000000, 1000., 0.25, 2.)
+#~ material.MohrCoulomb( 2, 1, 15.,20./180.*pi,20./180.*pi)
+
+n=40
+L=10.
+dx=L/n
+c   = 15.
+phi = 22./180.*pi
+H=4.*c*tan(pi/4+phi/2)/(2*9.81)
+steps=int(H/dx+1)
+
+# nodes
+for i in range(n+1):
+	for j in range(n+1):
+		id=j+i*1000+1
+		x=j*dx
+		y=i*dx-L
+		node.add(id,x,y)
+# elements + materials
+for i in range(n):
+	for j in range(n):
+		id=j+i*1000+1
+		n1=id
+		n2=id+1
+		n3=id+1+1000
+		n4=id+1000
+		material.MohrCoulomb( id, 10000000, c,phi,phi)
+		element.quad4d( id, n1, n2, n3, n4, id)
+# bc's
+for i in range(n+1):
+	for j in range(n+1):
+		id=j+i*1000+1
+		x=j*dx
+		y=i*dx-L
+		if x==0.:
+			node.fix(id,1)
+		if x==+L:
+			node.fix(id,1)
+		if y==-L:
+			node.fix(id,2)
+db.store("geom")
+db.exportToVtk("geom")
+
+
+#==========================================================
+# analysis options
+#==========================================================
+analysis.static()
+imposer.elimination()
+reorder.rCM()
+algorithm.iNR()
+convergence.set(160,1e-6,1e-6,1e-6)
+control.load(1.)
+
+#==========================================================
+# lc 1 (initial)
+#==========================================================
+lc.define(1)
+for i in range(n):
+	for j in range(n):
+		id=j+i*1000+1
+		initial.stresses(id,2,0.,0.,-L, -2.*9.81*L, 1.-sin(phi))
+analysis.run(1,1)
+
+db.store("lc01")
+db.exportToVtk("lc01")
+
+#==========================================================
+# lc 2... (excavations)
+#==========================================================
+for k in range(2,2+steps):
+	print "LC    : ",k
+	print "Depth : ",(k-1)*dx,"/",H
+	lc.define(k)
+	for i in range(n):
+		for j in range(n):
+			id=j+i*1000+1
+			x=j*dx
+			y=i*dx-L
+			if x<1.0 and y>-k*dx:
+				group.state(id,0)
+			else:
+				group.state(1,1,1.0,1.0,1.0,1.0)
+	analysis.run(k,1)
+
+	db.store('lc%02i'%k)
+	db.exportToVtk('lc%02i'%k)
+
+
+#~ #==========================================================
+#~ # trackers
+#~ #==========================================================
+#~ node.track(3)
+#~ element.track(1,3)
+
+#~ #==========================================================
+#~ # analysis options
+#~ #==========================================================
+#~ analysis.static()
+#~ imposer.elimination()
+#~ algorithm.iNR()
+#~ convergence.set(160,1e-6,1e-6,1e-6)
+
+#~ #==========================================================
+#~ # lc 1 (isotropic loading)
+#~ #========================================================== 
+#~ lc.define(1)
+#~ load.node(4,2,-1/6.)
+#~ load.node(3,2,-1/3.)
+#~ load.node(2,1,-0.5)
+#~ load.node(3,1,-0.5)
+#~ control.load(1.)
+#~ analysis.run(1,1)
+#~ db.store("lc01")
+#~ db.exportToVtk("lc01")
+
+#~ #==========================================================
+#~ # lc 2 (compression (-0.01)/tension (+0.01))
+#~ #==========================================================
+#~ lc.define(2)
+#~ load.node(4,2,-1/6.)
+#~ load.node(3,2,-1/3.)
+#~ load.node(2,1,-.0)
+#~ load.node(3,1,-.0)
+#~ control.disp(3,2,+0.01)
+#~ analysis.run(2,20)
+
+#~ #==========================================================
+#~ # plot
+#~ #==========================================================
+#~ print "u3x = ",node.data(3)['disp'][0]
+#~ print "u3y = ",node.data(3)['disp'][1]
+#~ print "u4x = ",node.data(4)['disp'][0]
+#~ print "u4y = ",node.data(4)['disp'][1]
+#~ import tracker
+#~ tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"tresca.txt")

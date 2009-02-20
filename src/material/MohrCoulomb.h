@@ -26,18 +26,31 @@
 #ifndef _MOHRCOULOMB_H
 #define _MOHRCOULOMB_H
 
-#include <MultiaxialElastoPlastic.h>
+#include <MultiaxialMaterial.h>
 
 /**
  * The Mohr-Coulomb Class.
  */
-class MohrCoulomb: public MultiaxialElastoPlastic
+class MohrCoulomb: public MultiaxialMaterial
 {
 private:
+	MultiaxialMaterial* myElastic;
+	static Matrix C;
+	static Matrix C3;
+	bool plastic;
+	int inaccurate;
 public:
 	MohrCoulomb();
-	MohrCoulomb(int ID,int elasticID,double c,double phi,double T);
-	MultiaxialMaterial* getClone();
+	MohrCoulomb(int ID,int elasticID,double c,double phi,double alpha);
 	~MohrCoulomb();
+
+	MultiaxialMaterial* getClone();
+	void setStrain(const Vector& De);
+	void commit();
+	const Matrix& getC();
+	bool isPlastic();
+
+	// Tracker member functions
+	void track();
 };
 #endif

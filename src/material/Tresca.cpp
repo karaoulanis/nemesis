@@ -29,27 +29,6 @@
 Matrix Tresca::C(6,6,0.);
 Matrix Tresca::C3(3,3,0.);
 
-void spectralDecomposition(const Vector& s, Vector& sP,Matrix& sV)
-{
-	int N=3;
-	char JOBZ='V';
-	char UPLO='L';
-	int LDA=3;
-	int LWORK=102;
-	int INFO;
-	static Vector WORK(LWORK);
-
-	sV(0,0)=s[0];	sV(0,1)=s[3];	sV(0,2)=s[5];
-	sV(1,0)=0.;		sV(1,1)=s[1];	sV(1,2)=s[4];
-	sV(2,0)=0.;		sV(2,1)=0.;		sV(2,2)=s[2];
-
-	dsyev(&JOBZ,&UPLO,&N,sV.data(),&LDA,sP.data(),WORK.data(),&LWORK,&INFO);
-	//cout<<WORK[0]<<endl;
-	double d,d0,d1,d2;
-	d    =sP[0];	d0     =sV(0,0);		d1 =sV(0,1);		d2 =sV(0,2);
-	sP[0]=sP[2];	sV(0,0)=sV(2,0);	sV(0,1)=sV(2,1);	sV(0,2)=sV(2,2);
-	sP[2]=d;		sV(2,0)=d0;			sV(2,1)=d1;			sV(2,2)=d2;
-}
 Tresca::Tresca()
 {
 }

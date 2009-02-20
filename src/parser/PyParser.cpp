@@ -672,10 +672,10 @@ static PyObject* pyMaterial_VonMises(PyObject *self,PyObject *args)
 static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
 {
 	int id,elasticId;
-	double c,phi,T;
-    if(!PyArg_ParseTuple(args,"iiddd",&id,&elasticId,&c,&phi,&T)) 
+	double c,phi,alpha;
+    if(!PyArg_ParseTuple(args,"iiddd",&id,&elasticId,&c,&phi,&alpha)) 
 		return NULL;
-	Material* pMaterial=new MohrCoulomb(id,elasticId,c,phi,T);
+	Material* pMaterial=new MohrCoulomb(id,elasticId,c,phi,alpha);
 	pD->add(pD->getMaterials(),pMaterial);
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
