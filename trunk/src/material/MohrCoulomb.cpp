@@ -91,9 +91,9 @@ void MohrCoulomb::setStrain(const Vector& De)
 	// derivatives
 	std::vector<Vector> df(3);
 	df[0].resize(3);			df[1].resize(3);			df[2].resize(3);			//df[3].resize(3);
-	df[0][0]= 1.0+sin(alpha);		df[1][0]= 0.0;				df[2][0]= 1.0+sin(alpha);		//df[3][0]=+1.0;
-	df[0][1]= 0.0;				df[1][1]= 1.0+sin(alpha);		df[2][1]=-1.0+sin(alpha);		//df[3][1]=+1.0;
-	df[0][2]=-1.0+sin(alpha);		df[1][2]=-1.0+sin(alpha);		df[2][2]= 0.0;				//df[3][2]=+1.0;	
+	df[0][0]= 1.0+sin(alpha);	df[1][0]= 0.0;				df[2][0]= 1.0+sin(alpha);		//df[3][0]=+1.0;
+	df[0][1]= 0.0;				df[1][1]= 1.0+sin(alpha);	df[2][1]=-1.0+sin(alpha);		//df[3][1]=+1.0;
+	df[0][2]=-1.0+sin(alpha);	df[1][2]=-1.0+sin(alpha);	df[2][2]= 0.0;				//df[3][2]=+1.0;	
 
 	// elasticity matrix
 	C3(0,0)=  1/E;	C3(0,1)=-nu/E;	C3(0,2)=-nu/E;
