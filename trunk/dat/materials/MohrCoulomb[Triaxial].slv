@@ -56,16 +56,17 @@ analysis.run(1,1)
 db.store("lc01")
 db.exportToVtk("lc01")
 
+
 #==========================================================
-# lc 2 (compression (-0.01)/tension (+0.01))
+# lc 2 (compression (-0.005)/tension (+0.005))
 #==========================================================
 lc.define(2)
 load.node(4,2,-1/6.)
 load.node(3,2,-1/3.)
 load.node(2,1,-.0)
 load.node(3,1,-.0)
-control.disp(3,2,+0.01)
-analysis.run(2,20)
+control.disp(3,2,+0.005)
+analysis.run(2,60)
 
 #==========================================================
 # plot
@@ -75,5 +76,5 @@ print "u3y = ",node.data(3)['disp'][1]
 print "u4x = ",node.data(4)['disp'][0]
 print "u4y = ",node.data(4)['disp'][1]
 import tracker
-tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"tresca.txt")
+tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"results.txt")
 #~ tracker.plotElemPath(1,3,'eps_y','sigma_y',-1.0,-1.0)

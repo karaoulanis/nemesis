@@ -13,7 +13,7 @@ db.SQLite("MohrCoulomb")
 #==========================================================
 # material
 #==========================================================
-material.elastic( 1, 1000., 0.)
+material.elastic( 1, 1000., 0.2)
 material.MohrCoulomb( 2, 1, 15.,20./180.*pi,10./180.*pi)
 
 #==========================================================
@@ -78,5 +78,5 @@ print "u4x = ",node.data(4)['disp'][0]
 print "u4y = ",node.data(4)['disp'][1]
 import tracker
 #~ tracker.plotNodePath(3,'u_y','lambda',-1., 1.,"tresca.txt")
-tracker.plotNodePath(3,'u_x','u_y',+1., -1.,"tresca.txt")
+tracker.plotNodePath(3,'u_x','u_y',+1., -1.,"results.txt")
 #~ tracker.plotElemPath(1,3,'eps_x','eps_y',+1.,-1.)
