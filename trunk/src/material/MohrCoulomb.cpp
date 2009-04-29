@@ -91,9 +91,15 @@ void MohrCoulomb::setStrain(const Vector& De)
 	// derivatives
 	std::vector<Vector> df(3);
 	df[0].resize(3);			df[1].resize(3);			df[2].resize(3);			//df[3].resize(3);
-	df[0][0]= 1.0+sin(alpha);	df[1][0]= 0.0;				df[2][0]= 1.0+sin(alpha);		//df[3][0]=+1.0;
-	df[0][1]= 0.0;				df[1][1]= 1.0+sin(alpha);	df[2][1]=-1.0+sin(alpha);		//df[3][1]=+1.0;
-	df[0][2]=-1.0+sin(alpha);	df[1][2]=-1.0+sin(alpha);	df[2][2]= 0.0;				//df[3][2]=+1.0;	
+	df[0][0]= 1.0+sin(phi);		df[1][0]= 0.0;				df[2][0]= 1.0+sin(phi);		//df[3][0]=+1.0;
+	df[0][1]= 0.0;				df[1][1]= 1.0+sin(phi);		df[2][1]=-1.0+sin(phi);		//df[3][1]=+1.0;
+	df[0][2]=-1.0+sin(phi);		df[1][2]=-1.0+sin(phi);		df[2][2]= 0.0;				//df[3][2]=+1.0;	
+
+	std::vector<Vector> dg(3);
+	dg[0].resize(3);			dg[1].resize(3);			dg[2].resize(3);			//df[3].resize(3);
+	dg[0][0]= 1.0+sin(alpha);	dg[1][0]= 0.0;				dg[2][0]= 1.0+sin(alpha);	//df[3][0]=+1.0;
+	dg[0][1]= 0.0;				dg[1][1]= 1.0+sin(alpha);	dg[2][1]=-1.0+sin(alpha);	//df[3][1]=+1.0;
+	dg[0][2]=-1.0+sin(alpha);	dg[1][2]=-1.0+sin(alpha);	dg[2][2]= 0.0;				//df[3][2]=+1.0;	
 
 	// elasticity matrix
 	C3(0,0)=  1/E;	C3(0,1)=-nu/E;	C3(0,2)=-nu/E;
@@ -112,6 +118,8 @@ void MohrCoulomb::setStrain(const Vector& De)
 	f[0]=(s[0]-s[2])+(s[0]+s[2])*sin(phi)-2*c*cos(phi);
 	f[1]=(s[1]-s[2])+(s[1]+s[2])*sin(phi)-2*c*cos(phi);
 	f[2]=(s[0]-s[1])+(s[0]+s[1])*sin(phi)-2*c*cos(phi);
+	
+	//if(f[0]>0. && f[1]>0. && f[2]>0.) f[2]=-1.;
 
 	std::vector<int> active;
 	for(unsigned i=0;i<3;i++)
@@ -139,7 +147,7 @@ void MohrCoulomb::setStrain(const Vector& De)
 		A.append(C3,0,0);
 		for(unsigned i=0;i<active.size();i++)
 		{
-			A.appendCol(df[active[i]],  0,3+i);
+			A.appendCol(dg[active[i]],  0,3+i);
 			A.appendRow(df[active[i]],3+i,  0);
 			R[3+i]=-f[active[i]];
 		}
@@ -173,16 +181,12 @@ void MohrCoulomb::setStrain(const Vector& De)
 	sTrial[5]=s[0]*sV(0,0)*sV(0,2)+s[1]*sV(1,0)*sV(1,2)+s[2]*sV(2,0)*sV(2,2);
 
 	// check
-	//theta=sTrial.theta();
-	//if((2.*sqrt(sTrial.J2())*cos(theta)-2*cu)>1e-6) 
-	//{
-		//inaccurate++;
-		//cout<<"error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu<<endl;
-		//report(tempS,"sTrial");
-		//report(f,    "yield");
-		//report(x,    "solns",20,15);
-        //exit(0);
-	//}
+	f[0]=(s[0]-s[2])+(s[0]+s[2])*sin(phi)-2*c*cos(phi);
+	f[1]=(s[1]-s[2])+(s[1]+s[2])*sin(phi)-2*c*cos(phi);
+	f[2]=(s[0]-s[1])+(s[0]+s[1])*sin(phi)-2*c*cos(phi);
+
+	if(f[0]>1e-8 || f[1]>1e-8 || f[2]>1e-8)
+		cout<<"inacurate : "<<s[0]<<"\t"<<s[1]<<"\t"<<s[2]<<"\t"<<endl;
 }
 /**
  * Commit material state.
