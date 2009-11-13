@@ -64,8 +64,8 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic()
 void MultiaxialElastoPlastic::setStrain(const Vector& De)
 {
 	//this->returnMapTest(De);
-	//this->returnMapSYS2(De);
-	this->returnMapMYS3(De);
+	this->returnMapSYS2(De);
+	//this->returnMapMYS3(De);
 	//if(fSurfaces.size()==1)	this->returnMapSYS(De);
 	//if(fSurfaces.size()==1)	this->returnMapTest(De);
 	//else					this->returnMapMYS(De);
