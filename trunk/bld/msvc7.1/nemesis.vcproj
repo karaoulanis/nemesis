@@ -723,6 +723,40 @@
 						RelativePath="..\..\src\material\MultiaxialElastic.h">
 					</File>
 				</Filter>
+				<Filter
+					Name="DruckerPragerNew"
+					Filter="">
+					<File
+						RelativePath="..\..\src\material\DruckerPragerNew.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DruckerPragerNew.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DruckerPragerYS.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DruckerPragerYS.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\Hardening.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\Hardening.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\TensionCutOffYS.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\TensionCutOffYS.h">
+					</File>
+					<File
+						RelativePath="..\..\src\material\YS.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\YS.h">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="MaterialItems"
