@@ -45,6 +45,7 @@
 #include <VonMises.h>
 #include <MohrCoulomb.h>
 #include <DruckerPrager.h>
+#include <DruckerPragerNew.h>
 #include <Tresca.h>
 #include <ModifiedCamClay.h>
 #include <LadeDuncan.h>
