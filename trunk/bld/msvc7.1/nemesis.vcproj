@@ -574,6 +574,12 @@
 					RelativePath="..\..\src\material\DruckerPrager.h">
 				</File>
 				<File
+					RelativePath="..\..\src\material\HoekBrown.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\material\HoekBrown.h">
+				</File>
+				<File
 					RelativePath="..\..\src\material\LadeDuncan.cpp">
 				</File>
 				<File
