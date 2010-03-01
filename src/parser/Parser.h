@@ -44,6 +44,7 @@
 #include <PlaneStress.h>
 #include <VonMises.h>
 #include <MohrCoulomb.h>
+#include <HoekBrown.h>
 #include <DruckerPrager.h>
 #include <DruckerPragerNew.h>
 #include <Tresca.h>

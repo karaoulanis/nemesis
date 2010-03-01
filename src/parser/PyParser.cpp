@@ -694,6 +694,18 @@ static PyObject* pyMaterial_Tresca(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+static PyObject* pyMaterial_HoekBrown(PyObject *self,PyObject *args)
+{
+	int id,elasticId;
+	double si,sp,mb,mbb,alpha;
+    if(!PyArg_ParseTuple(args,"iiddd",&id,&elasticId,&si,&sp,&mb,&mbb,&alpha)) 
+		return NULL;
+	Material* pMaterial=new HoekBrown(id,elasticId,si,sp,mb,mbb,alpha);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 static PyObject* pyMaterial_Creep(PyObject *self,PyObject *args)
 {
 	int id,elasticId;
