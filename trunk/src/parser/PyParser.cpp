@@ -698,7 +698,7 @@ static PyObject* pyMaterial_HoekBrown(PyObject *self,PyObject *args)
 {
 	int id,elasticId;
 	double si,sp,mb,mbb,alpha;
-    if(!PyArg_ParseTuple(args,"iiddd",&id,&elasticId,&si,&sp,&mb,&mbb,&alpha)) 
+    if(!PyArg_ParseTuple(args,"iiddddd",&id,&elasticId,&si,&sp,&mb,&mbb,&alpha)) 
 		return NULL;
 	Material* pMaterial=new HoekBrown(id,elasticId,si,sp,mb,mbb,alpha);
 	pD->add(pD->getMaterials(),pMaterial);
@@ -792,6 +792,8 @@ static PyMethodDef MaterialMethods[] =
 		METH_VARARGS,"Define a Mohr-Coulomb type material."},
 	{"Tresca",						pyMaterial_Tresca,
 		METH_VARARGS,"Define a Tresca type material."},
+	{"HoekBrown",						pyMaterial_HoekBrown,
+		METH_VARARGS,"Define a Hoek Brown type material."},
 	{"DruckerPrager",				pyMaterial_DruckerPrager,
 		METH_VARARGS,"Define a Drucker-Prager type material."},
 	{"DruckerPragerNew",			pyMaterial_DruckerPragerNew,
