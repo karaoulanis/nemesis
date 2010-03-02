@@ -166,16 +166,18 @@ void HoekBrown::setStrain(const Vector& De)
 
 	// spectral decomposition
 	Vector s(3),De3(3);
+	Vector sTrial3(3); //todo: remove
 	Matrix sV(3,3),eV(3,3);
 	aTrial=aConvg;
 	eTrial=eTotal+De;
 	sTrial=sConvg+(this->getC())*De;
 	spectralDecomposition(sTrial,s,sV);
 	Vector eTrial3=C3*s;
+	sTrial3=s;
 	
 	// Yield functions
 	double q=0.;
-	this->find_f(sTrial,q);
+	this->find_f(s,q);
 	//report(f,"f",8,4);
 
 	// Setup
@@ -208,6 +210,7 @@ void HoekBrown::setStrain(const Vector& De)
 		return;
 	}
 
+	plastic=true;
 	// Check for stupid
 	if(nActive==3)
 	{
@@ -218,9 +221,9 @@ void HoekBrown::setStrain(const Vector& De)
 	response=1;
 	
 	// Now its time for plasticity
-	this->find_dfds(sTrial,q);
-	this->find_dgds(sTrial,q);
-	this->find_d2gdsds(sTrial,q);
+	this->find_dfds(s,q);
+	this->find_dgds(s,q);
+	this->find_d2gdsds(s,q);
 
 	int iter=0;
 	for(;;)
@@ -232,7 +235,7 @@ void HoekBrown::setStrain(const Vector& De)
 		R.resize(3+nActive,0.);
 		x.resize(3+nActive);
 		A.append(C3,0,0);
-		R.append(-C3*sTrial+eTrial3,0,1.,0.);
+		R.append(-C3*s+eTrial3,0,1.,0.);
 		int pos=0;
 		for(int i=0;i<3;i++)
 		{
@@ -250,10 +253,6 @@ void HoekBrown::setStrain(const Vector& De)
 		// check for convergence
 		//---------------------------------------------------------------------
 		iter++;
-		//cout<<"\niter="<<iter<<endl;
-		//report(sTrial,"s",14,5);
-		//report(eTrial3,"e",14,5);
-		//report(R,"R",14,9);
 		
 		if(R.twonorm()<1.e-09) 
 		{
@@ -274,12 +273,12 @@ void HoekBrown::setStrain(const Vector& De)
 			}
 			if(restart)
 			{
-				cout<<"RESTART\n";
-				sTrial=sConvg+C*De;
+				//cout<<"RESTART\n";
+				s=sTrial3;
 				for(int i=0;i<nf;i++) DLambda[i]=0.;
-				this->find_f(sTrial,q);
-				this->find_dfds(sTrial,q);
-				this->find_dgds(sTrial,q);
+				this->find_f(s,q);
+				this->find_dfds(s,q);
+				this->find_dgds(s,q);
 				restart=false;
 				continue;
 			}
@@ -331,7 +330,7 @@ void HoekBrown::setStrain(const Vector& De)
 		//---------------------------------------------------------------------
 		// Update stresses
 		for(int i=0;i<3;i++)
-			sTrial[i]+=x[i];
+			s[i]+=x[i];
 		// Update dLambda
 		pos=0;
 		for(int i=0;i<3;i++)
@@ -341,12 +340,12 @@ void HoekBrown::setStrain(const Vector& De)
 				pos++;
 			}
 		// update vectors
-		this->find_f(sTrial,q);
-		this->find_dfds(sTrial,q);
-		this->find_dgds(sTrial,q);
-		this->find_d2gdsds(sTrial,q);
+		this->find_f(s,q);
+		this->find_dfds(s,q);
+		this->find_dgds(s,q);
+		this->find_d2gdsds(s,q);
 	}
-	cout<<iter<<'\t'<<f[0]<<'\t'<<f[1]<<'\t'<<f[2]<<'\t'<<R.twonorm()<<endl;
+	//cout<<iter<<'\t'<<f[0]<<'\t'<<f[1]<<'\t'<<f[2]<<'\t'<<R.twonorm()<<endl;
 
 	// coordinate transformation
 	sTrial[0]=s[0]*sV(0,0)*sV(0,0)+s[1]*sV(1,0)*sV(1,0)+s[2]*sV(2,0)*sV(2,0);
