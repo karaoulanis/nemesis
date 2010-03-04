@@ -206,6 +206,7 @@ void HoekBrown::setStrain(const Vector& De)
 	// Check for purely elastic
 	if(nActive==0)
 	{
+		plastic=false;
 		response=0;
 		return;
 	}
