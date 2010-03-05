@@ -274,7 +274,7 @@ void HoekBrown::setStrain(const Vector& De)
 			}
 			if(restart)
 			{
-				//cout<<"RESTART\n";
+				cout<<"RESTART\n";
 				s=sTrial3;
 				for(int i=0;i<nf;i++) DLambda[i]=0.;
 				this->find_f(s,q);
