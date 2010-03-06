@@ -1,6 +1,6 @@
 /******************************************************************************
 *   nemesis. an experimental finite element code.                             *
-*   Copyright (C) 2004-2007 F.E.Karaoulanis [http://www.nemesis-project.org]  *
+*   Copyright (C) 2004-2010 F.E.Karaoulanis [http://www.nemesis-project.org]  *
 *                                                                             *
 *   This program is free software; you can redistribute it and/or modify      *
 *   it under the terms of the GNU General Public License version 3, as        *
@@ -32,7 +32,7 @@ int main(int argc,char* argv[])
 	* Info
 	*****************************************************************************/
 	cout<<"nemesis-"<<_NEMESIS_VERSION
-	    <<"[nemesis-project.org] Copyright (C) 2004-2007 F.E. Karaoulanis."<<endl;
+	    <<"[nemesis-project.org] Copyright (C) 2004-2010 F.E. Karaoulanis."<<endl;
 	cout<<"Built on "	<<_NEMESIS_PLATFORM
 		<<" with "		<<_NEMESIS_COMPILER_NAME
 		<<" ver."		<<_NEMESIS_COMPILER_VERSION
