@@ -1,6 +1,6 @@
 /******************************************************************************
 *   nemesis. an experimental finite element code.                             *
-*   Copyright (C) 2004-2007 F.E.Karaoulanis [http://www.nemesis-project.org]  *
+*   Copyright (C) 2004-2010 F.E.Karaoulanis [http://www.nemesis-project.org]  *
 *                                                                             *
 *   This program is free software; you can redistribute it and/or modify      *
 *   it under the terms of the GNU General Public License version 3, as        *
@@ -206,19 +206,18 @@ void HoekBrown::setStrain(const Vector& De)
 	// Check for purely elastic
 	if(nActive==0)
 	{
-		plastic=false;
 		response=0;
 		return;
 	}
 
-	plastic=true;
+
 	// Check for stupid
 	if(nActive==3)
 	{
 		response=3;
 		return;
 	}
-	
+	plastic=true;	
 	response=1;
 	
 	// Now its time for plasticity
@@ -274,7 +273,7 @@ void HoekBrown::setStrain(const Vector& De)
 			}
 			if(restart)
 			{
-				cout<<"RESTART\n";
+				//cout<<"RESTART\n";
 				s=sTrial3;
 				for(int i=0;i<nf;i++) DLambda[i]=0.;
 				this->find_f(s,q);
