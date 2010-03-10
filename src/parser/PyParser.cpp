@@ -544,7 +544,7 @@ void createGroupByMaterial(int groupId)
 		pD->add(pD->getGroups(),pGroup);
 		pD->setCurrentGroup(groupId);
 	}
-	catch(SException e)
+	catch(SException /*e*/)
 	{
 	}
 }
