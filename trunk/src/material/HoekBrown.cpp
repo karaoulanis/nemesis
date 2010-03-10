@@ -210,15 +210,15 @@ void HoekBrown::setStrain(const Vector& De)
 		return;
 	}
 
+	plastic=true;	
+	response=1;
 
 	// Check for stupid
 	if(nActive==3)
 	{
 		response=3;
-		return;
+		//return;
 	}
-	plastic=true;	
-	response=1;
 	
 	// Now its time for plasticity
 	this->find_dfds(s,q);
