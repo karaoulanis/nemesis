@@ -686,7 +686,7 @@ static PyObject* pyMaterial_Tresca(PyObject *self,PyObject *args)
 	int id,elasticId;
 	double cu;
 	double kx=0.,ky=0.,kz=0.;
-    if(!PyArg_ParseTuple(args,"iidddd",&id,&elasticId,&cu,&kx,&ky,&kz)) 
+    if(!PyArg_ParseTuple(args,"iid|ddd",&id,&elasticId,&cu,&kx,&ky,&kz)) 
 		return NULL;
 	Material* pMaterial=new Tresca(id,elasticId,cu,kx,ky,kz);
 	pD->add(pD->getMaterials(),pMaterial);
