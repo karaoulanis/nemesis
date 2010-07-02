@@ -47,6 +47,7 @@
 #include <HoekBrown.h>
 #include <DruckerPrager.h>
 #include <DruckerPragerNew.h>
+#include <DruckerPragerNew2.h>
 #include <Tresca.h>
 #include <ModifiedCamClay.h>
 #include <LadeDuncan.h>

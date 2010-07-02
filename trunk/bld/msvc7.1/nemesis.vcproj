@@ -739,6 +739,12 @@
 						RelativePath="..\..\src\material\DruckerPragerNew.h">
 					</File>
 					<File
+						RelativePath="..\..\src\material\DruckerPragerNew2.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\material\DruckerPragerNew2.h">
+					</File>
+					<File
 						RelativePath="..\..\src\material\DruckerPragerYS.cpp">
 					</File>
 					<File
