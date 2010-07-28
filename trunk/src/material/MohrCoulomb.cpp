@@ -185,8 +185,8 @@ void MohrCoulomb::setStrain(const Vector& De)
 	f[1]=(s[1]-s[2])+(s[1]+s[2])*sin(phi)-2*c*cos(phi);
 	f[2]=(s[0]-s[1])+(s[0]+s[1])*sin(phi)-2*c*cos(phi);
 
-	if(f[0]>1e-8 || f[1]>1e-8 || f[2]>1e-8)
-		cout<<"inacurate : "<<s[0]<<"\t"<<s[1]<<"\t"<<s[2]<<"\t"<<endl;
+	//if(f[0]>1e-8 || f[1]>1e-8 || f[2]>1e-8)
+	//	cout<<"inacurate : "<<s[0]<<"\t"<<s[1]<<"\t"<<s[2]<<"\t"<<endl;
 }
 /**
  * Commit material state.
