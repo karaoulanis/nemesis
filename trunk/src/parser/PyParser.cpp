@@ -753,6 +753,17 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject *self,PyObject *args)
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
+}static PyObject* pyMaterial_DruckerPragerNew3(PyObject *self,PyObject *args)
+{
+	int id,elasticId;
+	double c,phi,psi,Kphi,Kc,T;
+    if(!PyArg_ParseTuple(args,"iidddddd",&id,&elasticId,&c,&phi,&psi,&Kc,&Kphi,&T)) 
+		return NULL;
+	Material* pMaterial=new DruckerPragerNew3(id,elasticId,c,phi,psi,Kc,Kphi,T);
+	pD->add(pD->getMaterials(),pMaterial);
+	createGroupByMaterial(id);
+	Py_INCREF(Py_None);
+	return Py_None;
 }
 static PyObject* pyMaterial_ModifiedCamClay(PyObject *self,PyObject *args)
 {
@@ -811,6 +822,8 @@ static PyMethodDef MaterialMethods[] =
 	{"DruckerPragerNew",			pyMaterial_DruckerPragerNew,
 		METH_VARARGS,"Define a Drucker-Prager type material."},
 	{"DruckerPragerNew2",			pyMaterial_DruckerPragerNew2,
+		METH_VARARGS,"Define a Drucker-Prager type material."},
+	{"DruckerPragerNew3",			pyMaterial_DruckerPragerNew3,
 		METH_VARARGS,"Define a Drucker-Prager type material."},
 	{"modifiedCamClay",				pyMaterial_ModifiedCamClay,
 		METH_VARARGS,"Define a Modified Cam-Clay type material."},
