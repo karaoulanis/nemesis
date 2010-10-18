@@ -100,6 +100,7 @@ int SOE::plotGraph(const char* s)
 	pA->getModel()->getUndirectedGraph(G);
 	// Plot the Graph
 	ofstream outfile(s);
-	write_graphviz(outfile,G);
+	/// @todo: the following line is commented, produces error/warnings
+	// write_graphviz(outfile,G);
 	return 0;
 }
