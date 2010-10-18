@@ -79,7 +79,7 @@
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python27\libs&quot;;&quot;C:\Program Files\Visual Leak Detector\lib&quot;"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python27\libs&quot;"
 				IgnoreDefaultLibraryNames="libc.lib "
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="./Debug/nemesis.pdb"
