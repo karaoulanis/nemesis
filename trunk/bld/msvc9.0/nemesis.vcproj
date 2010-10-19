@@ -11,6 +11,9 @@
 		<Platform
 			Name="Win32"
 		/>
+		<Platform
+			Name="x64"
+		/>
 	</Platforms>
 	<ToolFiles>
 	</ToolFiles>
@@ -58,9 +61,10 @@
 				BrowseInformation="1"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				Detect64BitPortabilityProblems="false"
+				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 				CompileAs="0"
+				DisableSpecificWarnings="4267"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -79,7 +83,7 @@
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python27\libs&quot;"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;..\..\lib\msvc9.0;&quot;C:\Program Files\Python27\libs&quot;"
 				IgnoreDefaultLibraryNames="libc.lib "
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="./Debug/nemesis.pdb"
@@ -87,6 +91,103 @@
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug|x64"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+				TypeLibraryName=".\Debug/nemesis.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;&quot;C:\Program Files (x86)\boost_1_44_0&quot;;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python27\include&quot;;&quot;C:\Program Files\Visual Leak Detector\include&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile="Debug/nemesis.pch"
+				AssemblerListingLocation="Debug\"
+				ObjectFile="Debug\"
+				ProgramDataBaseFileName="Debug\"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+				CompileAs="0"
+				DisableSpecificWarnings="4267"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1032"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python27.lib"
+				OutputFile="..\..\bin\nemesis.exe"
+				LinkIncremental="2"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;..\..\lib\msvc9.0;&quot;C:\Program Files\Python27\libs&quot;"
+				IgnoreDefaultLibraryNames="libc.lib "
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./Debug/nemesis.pdb"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -183,6 +284,297 @@
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|x64"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+				TypeLibraryName=".\Release/nemesis.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;..\..\ext\boost_1_34_0;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python25\include&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				StringPooling="true"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile="Release/nemesis.pch"
+				AssemblerListingLocation="Release\"
+				ObjectFile="Release\"
+				ProgramDataBaseFileName="Release\"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="0"
+				CompileAs="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1032"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="BLAS.lib LAPACK.lib ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib SQLite.lib python25.lib"
+				OutputFile="..\..\bin\nemesis.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;&quot;C:\Program Files\Python25\libs&quot;"
+				IgnoreDefaultLibraryNames="libc.lib libcp.lib"
+				GenerateDebugInformation="false"
+				ProgramDatabaseFile="./Release/nemesis.pdb"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug x64|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TypeLibraryName=".\Debug/nemesis.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;&quot;C:\Program Files (x86)\boost_1_44_0&quot;;&quot;..\..\ext\sqlite-3.4.0&quot;;..\..\ext\vld;&quot;C:\Program Files\Python27\include&quot;;&quot;C:\Program Files\Visual Leak Detector\include&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile="Debug/nemesis.pch"
+				AssemblerListingLocation="Debug\"
+				ObjectFile="Debug\"
+				ProgramDataBaseFileName="Debug\"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="4"
+				CompileAs="0"
+				DisableSpecificWarnings="4267"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1032"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="ifconsol.lib libifcore.lib libifport.lib libirc.lib libm.lib BLAS.lib SQLite.lib LAPACK.lib python27.lib"
+				OutputFile="..\..\bin\nemesis.exe"
+				LinkIncremental="2"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\lib\msvc7.1;..\..\lib\msvc9.0;&quot;C:\Program Files\Python27\libs&quot;"
+				IgnoreDefaultLibraryNames="libc.lib "
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./Debug/nemesis.pdb"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug x64|x64"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+				TypeLibraryName=".\Debug/nemesis.tlb"
+				HeaderFileName=""
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;&quot;C:\Program Files\boost_1_44_0&quot;;&quot;C:\Program Files\SQLite&quot;;&quot;C:\Program Files\Python27\include&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile="Debug/nemesis.pch"
+				AssemblerListingLocation="Debug\"
+				ObjectFile="Debug\"
+				ProgramDataBaseFileName="Debug\"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+				CompileAs="0"
+				DisableSpecificWarnings="4267"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1032"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SQLite.lib python27.lib libacml_mp_dll.lib"
+				ShowProgress="1"
+				OutputFile="..\..\bin\nemesis.exe"
+				LinkIncremental="2"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="&quot;C:\Program Files\boost_1_44_0\libs\serialization&quot;;&quot;C:\Program Files\SQLite&quot;;&quot;C:\Program Files\AMD\acml4.4.0\ifort64_mp\lib&quot;;&quot;C:\Program Files\Python27\libs&quot;"
+				IgnoreDefaultLibraryNames=""
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./Debug/nemesis.pdb"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
