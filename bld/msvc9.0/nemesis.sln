@@ -8,6 +8,8 @@ Global
 		Debug x64|x64 = Debug x64|x64
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
+		Release x64|Win32 = Release x64|Win32
+		Release x64|x64 = Release x64|x64
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
@@ -20,6 +22,10 @@ Global
 		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Debug|Win32.Build.0 = Debug|Win32
 		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Debug|x64.ActiveCfg = Debug|x64
 		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Debug|x64.Build.0 = Debug|x64
+		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Release x64|Win32.ActiveCfg = Release x64|Win32
+		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Release x64|Win32.Build.0 = Release x64|Win32
+		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Release x64|x64.ActiveCfg = Release x64|x64
+		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Release x64|x64.Build.0 = Release x64|x64
 		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Release|Win32.ActiveCfg = Release|Win32
 		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Release|Win32.Build.0 = Release|Win32
 		{8C24245F-3BAB-4689-AEAB-09F12E99482D}.Release|x64.ActiveCfg = Release|x64
