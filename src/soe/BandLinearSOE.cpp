@@ -103,12 +103,15 @@ int BandLinearSOE::solve()
 	// Compute the LU factorization of the band matrix A.
 	if(!isLUFactored)
 	{
+		cout<<KL<<endl;
+		cout<<KU<<endl;
+		cout<<LDAB<<endl;
 		dgbtrf(&N,&N,&KL,&KU,&A[0],&LDAB,&IPIV[0],&INFO);
 		if(INFO!=0)
 			throw SException("[nemesis:%d] %s",1103,"SOE: lapack DGBTRF failed.\n");
 		isLUFactored=true;	
 	}
 	// Solve the system A*X = B, overwriting B with X.
-	dgbtrs(&c,&N,&KL,&KU,&NRHS,&A[0],&LDAB,&IPIV[0],&X[0],&LDB,&INFO);
+	dgbtrs(&c,&N,&KL,&KU,&NRHS,&A[0],&LDAB,&IPIV[0],&X[0],&LDB,&INFO,1);
     return 0;
 }

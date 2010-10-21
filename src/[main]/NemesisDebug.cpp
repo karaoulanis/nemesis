@@ -158,7 +158,7 @@ void spectralDecomposition(const Vector& s, Vector& sP,Matrix& sV)
 	sV(1,0)=0.;		sV(1,1)=s[1];	sV(1,2)=s[4];
 	sV(2,0)=0.;		sV(2,1)=0.;		sV(2,2)=s[2];
 
-	dsyev(&JOBZ,&UPLO,&N,sV.data(),&LDA,sP.data(),WORK.data(),&LWORK,&INFO);
+	dsyev(&JOBZ,&UPLO,&N,sV.data(),&LDA,sP.data(),WORK.data(),&LWORK,&INFO,1,1);
 	//cout<<WORK[0]<<endl;
 	double d,d0,d1,d2;
 	d    =sP[0];	d0     =sV(0,0);		d1 =sV(0,1);		d2 =sV(0,2);

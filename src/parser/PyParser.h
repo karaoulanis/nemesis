@@ -27,9 +27,8 @@
 #define _PYPARSER_H
 
 #ifdef _DEBUG
-	#undef _DEBUG
 	#include <Python.h>
-	#define _DEBUG
+	#undef Py_DEBUG
 #else
 	#include <Python.h>
 #endif

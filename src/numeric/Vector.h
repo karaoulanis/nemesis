@@ -675,7 +675,8 @@ public:
 		A[3]=0.;		A[4]=data_[1];	A[5]=data_[4];
 		A[6]=0.;		A[7]=0.;		A[8]=data_[2];
 
-		dsyev(&JOBZ,&UPLO,&N,A.data(),&LDA,res.data(),WORK.data(),&LWORK,&INFO);
+		dsyev(&JOBZ,&UPLO,&N,A.data(),&LDA,res.data(),WORK.data(),&LWORK,&INFO,1,1);
+	//	dsyev(&JOBZ,&UPLO,&N,A.data(),&LDA,res.data(),WORK.data(),&LWORK,&INFO);
 	//	cout<<"Optimal LWORK : "<<WORK[0]<<endl;
 		double d=res[0];
 		res[0]=res[2];
