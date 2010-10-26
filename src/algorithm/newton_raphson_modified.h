@@ -26,7 +26,7 @@
 #ifndef _NEWTONRAPHSONALGORITHMMODIFIED_H
 #define _NEWTONRAPHSONALGORITHMMODIFIED_H
 
-#include "algorithm/Algorithm.h"
+#include "algorithm/algorithm.h"
 
 class NewtonRaphsonModified :public Algorithm
 {

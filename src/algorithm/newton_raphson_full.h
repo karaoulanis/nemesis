@@ -26,7 +26,7 @@
 #ifndef _NEWTONRAPHSONALGORITHMFULL_H
 #define _NEWTONRAPHSONALGORITHMFULL_H
 
-#include "algorithm/Algorithm.h"
+#include "algorithm/algorithm.h"
 
 class NewtonRaphsonFull :public Algorithm
 {
