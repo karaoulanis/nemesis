@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <NewtonRaphsonModified.h>
+#include "algorithm/NewtonRaphsonModified.h"
 
 NewtonRaphsonModified::NewtonRaphsonModified()
 {

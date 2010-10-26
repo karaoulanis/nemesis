@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <NodalLoadConstant.h>
+#include "loadcase/NodalLoadConstant.h"
 
 NodalLoadConstant::NodalLoadConstant()
 {

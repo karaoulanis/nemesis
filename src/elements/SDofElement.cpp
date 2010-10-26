@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SDofElement.h>
+#include "elements/SDofElement.h"
 
 /**
  * Default constructor.

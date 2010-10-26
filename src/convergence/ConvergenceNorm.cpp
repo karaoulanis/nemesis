@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <ConvergenceNorm.h>
+#include "convergence/ConvergenceNorm.h"
 
 ConvergenceNorm::ConvergenceNorm()
 {

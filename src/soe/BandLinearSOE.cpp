@@ -23,9 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <BandLinearSOE.h>
-#include <boost/numeric/ublas/io.hpp>
-
+#include "soe/BandLinearSOE.h"
 
 BandLinearSOE::BandLinearSOE()
 	:SOE()
@@ -103,9 +101,6 @@ int BandLinearSOE::solve()
 	// Compute the LU factorization of the band matrix A.
 	if(!isLUFactored)
 	{
-		cout<<KL<<endl;
-		cout<<KU<<endl;
-		cout<<LDAB<<endl;
 		dgbtrf(&N,&N,&KL,&KU,&A[0],&LDAB,&IPIV[0],&INFO);
 		if(INFO!=0)
 			throw SException("[nemesis:%d] %s",1103,"SOE: lapack DGBTRF failed.\n");

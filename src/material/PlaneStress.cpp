@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <PlaneStress.h>
+#include "material/PlaneStress.h"
 
 PlaneStress::PlaneStress()
 {

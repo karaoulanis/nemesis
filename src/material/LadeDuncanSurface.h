@@ -26,7 +26,7 @@
 #ifndef _LADEDUNCANSURFACE_H
 #define _LADEDUNCANSURFACE_H
 
-#include <Surface.h>
+#include "material/Surface.h"
 
 class LadeDuncanSurface: public Surface
 {

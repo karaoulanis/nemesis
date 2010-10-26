@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <AnalysisObject.h>
+#include "analysis/AnalysisObject.h"
 
 Analysis* AnalysisObject::pA=0;
 

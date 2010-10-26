@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <MultiaxialElastoPlastic.h>
-#include <NemesisDebug.h>
+#include "main/NemesisDebug.h"
+#include "material/MultiaxialElastoPlastic.h"
 
 Matrix MultiaxialElastoPlastic::C(6,6,0.);
 

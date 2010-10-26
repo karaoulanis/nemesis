@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <LadeDuncanSurface.h>
+#include "material/LadeDuncanSurface.h"
 
 LadeDuncanSurface::LadeDuncanSurface()
 {
@@ -42,7 +42,7 @@ double LadeDuncanSurface::get_f(const Vector& s,const double kappa)
 	double sI3=s.I3();
 	if(abs(sI3)<1e-4) sI3=0.;
 	double f=pow(1.*sI3,num::d13)-s.I1();
-	cout<<sI3<<'\t'<<f<<endl;
+	std::cout<<sI3<<'\t'<<f<<std::endl;
 	return f;
 }
 void LadeDuncanSurface::find_C(const Vector& s,const double a)

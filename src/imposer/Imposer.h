@@ -26,11 +26,11 @@
 #ifndef _IMPOSER_H
 #define _IMPOSER_H
 
-#include <Analysis.h>
-#include <AnalysisObject.h>
-#include <Model.h>
-#include <StandardModelNode.h>
-#include <StandardModelElement.h>
+#include "analysis/Analysis.h"
+#include "analysis/AnalysisObject.h"
+#include "model/Model.h"
+#include "model/StandardModelElement.h"
+#include "model/StandardModelNode.h"
 
 // Forward declarations
 class Model;

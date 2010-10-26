@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Quad4.h>
+#include "elements/Quad4.h"
 
 Matrix Quad4::N(3,4);
 double Quad4::detJ;

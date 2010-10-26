@@ -26,7 +26,7 @@
 #ifndef _EVOLUTIONLAW_H
 #define _EVOLUTIONLAW_H
 
-#include <Vector.h>
+#include "numeric/Vector.h"
 
 /**
  * The Evolution Law Class.

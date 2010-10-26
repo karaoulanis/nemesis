@@ -26,7 +26,7 @@
 #ifndef _MOHRCOULOMB_H
 #define _MOHRCOULOMB_H
 
-#include <MultiaxialMaterial.h>
+#include "material/MultiaxialMaterial.h"
 
 /**
  * The Mohr-Coulomb Class.

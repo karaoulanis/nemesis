@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <InitialCondition.h>
+#include "loadcase/InitialCondition.h"
 
 int InitialCondition::nInitialConditions=0;
 

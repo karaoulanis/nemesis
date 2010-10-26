@@ -27,24 +27,24 @@
 #define _ELEMENT_H
 
 // Included Files
-#include <Domain.h>
-#include <DomainObject.h>
-#include <Node.h>
-#include <Group.h>
-#include <Matrix.h>
-#include <Vector.h>
-#include <ElementalLoad.h>
-#include <Containers.h>
-#include <InitialStresses.h>
+#include "containers/Containers.h"
+#include "domain/Domain.h"
+#include "domain/DomainObject.h"
+#include "group/Group.h"
+#include "loadcase/ElementalLoad.h"
+#include "loadcase/InitialStresses.h"
+#include "node/Node.h"
+#include "numeric/Matrix.h"
+#include "numeric/Vector.h"
 
 // Forward Declerations
 class Domain;
+class ElementalLoad;
+class Group;
+class InitialStresses;
 class Material;
 class Node;
 class Tracker;
-class Group;
-class ElementalLoad;
-class InitialStresses;
 
 /**
  * The Element Class.                                                

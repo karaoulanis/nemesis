@@ -25,11 +25,11 @@
 #ifndef __VECTOR_H
 #define __VECTOR_H
 
-#include <ArrayCheck.h>
-#include <Numeric.h>
-#include <Lapack.h> 
-#include <cmath>
 #include <iostream>
+#include <cmath>
+#include "numeric/ArrayCheck.h"
+#include "numeric/Numeric.h"
+#include "numeric/Lapack.h"
 
 class Vector
 {

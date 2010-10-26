@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <ModelElement.h>
+#include "model/ModelElement.h"
 
 /**
  * Default constructor.

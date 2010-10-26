@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Crack.h>
+#include "crack/Crack.h"
 
 Crack::Crack()
 {

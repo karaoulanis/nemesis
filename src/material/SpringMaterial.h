@@ -26,7 +26,7 @@
 #ifndef _SPRINGMATERIAL_H
 #define _SPRINGMATERIAL_H
 
-#include <Material.h>
+#include "material/Material.h"
 
 /**
  * The Single Dof Material Class.                                                

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <StaticAnalysis.h>
+#include "analysis/StaticAnalysis.h"
 
 StaticAnalysis::StaticAnalysis()
 	:AnalysisType()

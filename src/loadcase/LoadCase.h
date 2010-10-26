@@ -26,23 +26,23 @@
 #ifndef _LOADCASE_H
 #define _LOADCASE_H
 
-// Included files
-#include <DomainObject.h>
-#include <NodalLoad.h>
-#include <Load.h>
-#include <ElementalLoad.h>
-#include <GroupState.h>
-#include <InitialCondition.h>
-#include <ElementSensitivityParameter.h>
-#include <Containers.h>
+// Project files (alphabetically)
+#include "containers/Containers.h"
+#include "domain/DomainObject.h"
+#include "loadcase/ElementalLoad.h"
+#include "loadcase/ElementSensitivityParameter.h"
+#include "loadcase/GroupState.h"
+#include "loadcase/InitialCondition.h"
+#include "loadcase/Load.h"
+#include "loadcase/NodalLoad.h"
 
 // Forward declarations
-class NodalLoad;
-class InitialCondition;
-class Load;
+class ElementSensitivityParameter;
 class GroupState;
 class Group;
-class ElementSensitivityParameter;
+class InitialCondition;
+class Load;
+class NodalLoad;
 
 // Type definitions 
 typedef std::vector<Load*>								LoadVector;

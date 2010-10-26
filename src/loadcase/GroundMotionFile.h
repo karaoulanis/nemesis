@@ -26,11 +26,11 @@
 #ifndef _GROUNDMOTIONFILE_H
 #define _GROUNDMOTIONFILE_H
 
-#include <Load.h>
-#include <vector>
-#include <map>
-#include <Element.h>
 #include <iostream>
+#include <map>
+#include <vector>
+#include "loadcase/Load.h"
+#include "elements/Element.h"
 
 class GroundMotionFile: public Load
 {

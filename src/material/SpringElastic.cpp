@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SpringElastic.h>
+#include "material/SpringElastic.h"
 
 SpringElastic::SpringElastic()
 {

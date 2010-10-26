@@ -26,7 +26,7 @@
 #ifndef _UNIAXIALLOAD_H
 #define _UNIAXIALLOAD_H
 
-#include <ElementalLoad.h>
+#include "loadcase/ElementalLoad.h"
 
 /******************************************************************************
 * Uniaxial Load

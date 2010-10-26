@@ -26,8 +26,8 @@
 #ifndef _TRIANGLE3_H
 #define _TRIANGLE3_H
 
-#include <Element.h>
-#include <MatPoint.h>
+#include "elements/Element.h"
+#include "material/MatPoint.h"
 
 class Triangle3: public Element
 {

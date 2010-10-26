@@ -26,8 +26,8 @@
 #ifndef _SDOFELEMENT_H
 #define _SDOFELEMENT_H
 
-#include <Element.h>
-#include <SDofMaterial.h>
+#include "elements/Element.h"
+#include "material/SDofMaterial.h"
 
 class SDofElement: public Element
 {

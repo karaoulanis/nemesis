@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <UniaxialElastoPlastic.h>
+#include "material/UniaxialElastoPlastic.h"
 
 UniaxialElastoPlastic::UniaxialElastoPlastic()
 {

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <DomainObject.h>
+#include "domain/DomainObject.h"
 
 Domain* DomainObject::pD=0;
 Packet DomainObject::thePacket;

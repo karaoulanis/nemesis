@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <GroundMotionSin.h>
+#include "loadcase/GroundMotionSin.h"
 
 GroundMotionSin::GroundMotionSin()
 {

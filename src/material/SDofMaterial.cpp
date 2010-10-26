@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SDofMaterial.h>
+#include "material/SDofMaterial.h"
 
 SDofMaterial::SDofMaterial()
 {

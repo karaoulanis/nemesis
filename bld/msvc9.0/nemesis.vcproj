@@ -531,7 +531,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;&quot;C:\Program Files\boost_1_44_0&quot;;&quot;C:\Program Files\SQLite&quot;;&quot;C:\Program Files\Python27\include&quot;;&quot;C:\Program Files\AMD\acml4.4.0\ifort64_mp\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;C:\Program Files\AMD\acml4.4.0\ifort64_mp\include&quot;;&quot;C:\Program Files\boost_1_44_0&quot;;&quot;C:\Program Files\SQLite&quot;;&quot;C:\Program Files\Python27\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -728,7 +728,7 @@
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;..\..\src\[main]&quot;;..\..\src\algorithm;..\..\src\analysis;..\..\src\constraints;..\..\src\containers;..\..\src\control;..\..\src\convergence;..\..\src\crack;..\..\src\crosssection;..\..\src\database;..\..\src\domain;..\..\src\elements;..\..\src\exception;..\..\src\feobject;..\..\src\group;..\..\src\imposer;..\..\src\loadcase;..\..\src\material;..\..\src\model;..\..\src\node;..\..\src\numeric;..\..\src\parser;..\..\src\reorderer;..\..\src\soe;..\..\src\tracker;..\..\src\transformation;&quot;C:\Program Files\boost_1_44_0&quot;;&quot;C:\Program Files\SQLite&quot;;&quot;C:\Program Files\Python27\include&quot;;&quot;C:\Program Files\AMD\acml4.4.0\ifort64_mp\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;C:\Program Files\AMD\acml4.4.0\ifort64_mp\include&quot;;&quot;C:\Program Files\boost_1_44_0&quot;;&quot;C:\Program Files\SQLite&quot;;&quot;C:\Program Files\Python27\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -742,6 +742,7 @@
 				SuppressStartupBanner="true"
 				DebugInformationFormat="0"
 				CompileAs="0"
+				DisableSpecificWarnings="4267"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -796,22 +797,22 @@
 	</References>
 	<Files>
 		<Filter
-			Name="[main]"
+			Name="main"
 			>
 			<File
-				RelativePath="..\..\src\[main]\main.cpp"
+				RelativePath="..\..\src\main\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\[main]\NemesisConfig.h"
+				RelativePath="..\..\src\main\NemesisConfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\[main]\NemesisDebug.cpp"
+				RelativePath="..\..\src\main\NemesisDebug.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\[main]\NemesisDebug.h"
+				RelativePath="..\..\src\main\NemesisDebug.h"
 				>
 			</File>
 		</Filter>

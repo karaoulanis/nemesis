@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SOE.h>
+#include "soe/SOE.h"
 
 SOE::SOE()
 {

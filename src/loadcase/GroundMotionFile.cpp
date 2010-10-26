@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <GroundMotionFile.h>
+#include "loadcase/GroundMotionFile.h"
 
 GroundMotionFile::GroundMotionFile()
 {

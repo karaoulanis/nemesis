@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Load.h>
+#include "loadcase/Load.h"
 
 int Load::nLoads=0;
 Load::Load()

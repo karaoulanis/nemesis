@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <MC_2.h>
+#include "material/MC_2.h"
 
 MC_2::MC_2()
 {

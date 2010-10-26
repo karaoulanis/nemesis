@@ -26,7 +26,7 @@
 #ifndef _NEWMARK_H
 #define _NEWMARK_H
 
-#include <TransientControl.h>
+#include "control/TransientControl.h"
 
 /**
  * The Newmark Class.

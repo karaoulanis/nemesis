@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <EliminationModelNode.h>
+#include "model/EliminationModelNode.h"
 
 /**
  * Default constructor.

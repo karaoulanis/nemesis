@@ -23,7 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <ReverseCuthillMckee.h>
+#include "reorderer/ReverseCuthillMckee.h"
+#include <boost/graph/cuthill_mckee_ordering.hpp>
 
 ReverseCuthillMckee::ReverseCuthillMckee()
 {

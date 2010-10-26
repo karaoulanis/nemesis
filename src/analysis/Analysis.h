@@ -26,25 +26,24 @@
 #ifndef _ANALYSIS_H
 #define _ANALYSIS_H
 
-#include <Domain.h>
-#include <Model.h>
-#include <AnalysisType.h>
-#include <Model.h>
-#include <Imposer.h>
-#include <Control.h>
-#include <Algorithm.h>
-#include <ConvergenceNorm.h>
-#include <Reorderer.h>
-#include <SOE.h>
+#include "algorithm/Algorithm.h"
+#include "analysis/AnalysisType.h"
+#include "control/Control.h"
+#include "convergence/ConvergenceNorm.h"
+#include "domain/Domain.h"
+#include "imposer/Imposer.h"
+#include "model/Model.h"
+#include "reorderer/Reorderer.h"
+#include "soe/SOE.h"
 
-class Model;
-class Control;
-class Imposer;
-class SOE;
-class Reorderer;
-class AnalysisType;
 class Algorithm;
+class AnalysisType;
+class Control;
 class ConvergenceNorm;
+class Imposer;
+class Model;
+class Reorderer;
+class SOE;
 
 class Analysis
 {

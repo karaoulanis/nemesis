@@ -23,7 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <ReverseSloan.h>
+#include "reorderer/ReverseSloan.h"
+#include <boost/graph/sloan_ordering.hpp>
 
 ReverseSloan::ReverseSloan(double w1,double w2)
 {

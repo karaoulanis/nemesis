@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <MC.h>
+#include "material/MC.h"
 
 MC::MC()
 :c(0.),phi(0.)

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <DP_out.h>
+#include "material/DP_out.h"
 
 DP_out::DP_out()
 {

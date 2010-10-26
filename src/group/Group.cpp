@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Group.h>
+#include "group/Group.h"
 
 Group::Group()
 {

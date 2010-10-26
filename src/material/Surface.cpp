@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Surface.h>
+#include "material/Surface.h"
 
 Vector Surface::myVector(6,0.);
 Matrix Surface::myMatrix(6,6,0.);

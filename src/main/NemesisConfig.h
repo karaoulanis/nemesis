@@ -55,11 +55,3 @@
 	#define _NEMESIS_COMPILER_NAME "<Unknown>"
 	#define _NEMESIS_COMPILER_VERSION 0.0.0
 #endif
-
-/*****************************************************************************
-* Memory leak detectors
-*****************************************************************************/
-#ifdef _MSC_VER
-// 	#include <vld.h>
-// 	#include <vldapi.h>
-#endif

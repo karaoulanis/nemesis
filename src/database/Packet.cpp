@@ -23,10 +23,17 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Packet.h>
-#include <iostream>
-using namespace std;
+// Corresponding h file
+#include "database/Packet.h"
 
+// C++ system files
+#include <iostream>
+
+// Namespaces
+using std::cout;
+using std::endl;
+
+// Constant initializations
 const double Packet::dblDefault=-9999999999.99;
 const int    Packet::intDefault=-999999;
 

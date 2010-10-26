@@ -26,9 +26,17 @@
 #ifndef _CONSTRAINT_H
 #define _CONSTRAINT_H
 
-// Included files
-#include <Domain.h>
+// C++ system files
 #include <vector>
+
+// Project files
+#include "domain/Domain.h"
+#include "domain/DomainObject.h"
+#include "node/Node.h"
+
+// Forward declarations
+class Domain;
+class Node;
 
 struct cDof
 {

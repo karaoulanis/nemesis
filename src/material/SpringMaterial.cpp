@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SpringMaterial.h>
+#include "material/SpringMaterial.h"
 
 SpringMaterial::SpringMaterial()
 {

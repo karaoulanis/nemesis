@@ -26,8 +26,7 @@
 #ifndef _FORWARDSLOAN_H
 #define _FORWARDSLOAN_H
 
-#include <Reorderer.h>
-#include <boost/graph/sloan_ordering.hpp>
+#include "reorderer/Reorderer.h"
 
 class ForwardSloan: public Reorderer
 {

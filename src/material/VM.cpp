@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <VM.h>
+#include "material/VM.h"
 
 VM::VM()
 {

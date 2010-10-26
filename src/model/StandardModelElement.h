@@ -26,7 +26,7 @@
 #ifndef _STANDARDMODELELEMENT_H
 #define _STANDARDMODELELEMENT_H
 
-#include <ModelElement.h>
+#include "model/ModelElement.h"
 
 class StandardModelElement : public ModelElement
 {

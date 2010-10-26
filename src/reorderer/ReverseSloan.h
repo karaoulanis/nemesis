@@ -26,8 +26,7 @@
 #ifndef _REVERSESLOAN_H
 #define _REVERSESLOAN_H
 
-#include <Reorderer.h>
-#include <boost/graph/sloan_ordering.hpp>
+#include "reorderer/Reorderer.h"
 
 class ReverseSloan: public Reorderer
 {

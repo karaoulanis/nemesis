@@ -26,7 +26,7 @@
 #ifndef _BRICK8D_H
 #define _BRICK8D_H
 
-#include <Brick8.h>
+#include "elements/Brick8.h"
 
 class Brick8d: public Brick8
 {

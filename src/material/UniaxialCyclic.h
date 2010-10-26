@@ -26,7 +26,7 @@
 #ifndef _UNIAXIALCYCLIC_H
 #define _UNIAXIALCYCLIC_H
 
-#include <UniaxialMaterial.h>
+#include "material/UniaxialMaterial.h"
 
 class UniaxialCyclic: public UniaxialMaterial
 {

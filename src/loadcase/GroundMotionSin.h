@@ -26,11 +26,11 @@
 #ifndef _GROUNDMOTIONSIN_H
 #define _GROUNDMOTIONSIN_H
 
-#include <Load.h>
-#include <vector>
-#include <map>
-#include <Element.h>
 #include <iostream>
+#include <map>
+#include <vector>
+#include "elements/Element.h"
+#include "loadcase/Load.h"
 
 class GroundMotionSin: public Load
 {

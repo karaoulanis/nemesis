@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <InitialDisplacement.h>
+#include "loadcase/InitialDisplacement.h"
 
 InitialDisplacement::InitialDisplacement()
 {

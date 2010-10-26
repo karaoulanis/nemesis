@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <NewtonRaphsonInitial.h>
+#include "algorithm/NewtonRaphsonInitial.h"
 
 NewtonRaphsonInitial::NewtonRaphsonInitial()
 {

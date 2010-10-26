@@ -26,10 +26,10 @@
 #ifndef _MATERIAL_H
 #define _MATERIAL_H
 
-#include <Domain.h>
-#include <DomainObject.h>
-#include <Vector.h>
-#include <Tracker.h>
+#include "domain/Domain.h"
+#include "domain/DomainObject.h"
+#include "numeric/Vector.h"
+#include "tracker/Tracker.h"
 
 class Domain;
 

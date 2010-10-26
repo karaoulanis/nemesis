@@ -23,9 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Brick8i.h>
-#include <ShapeFunctions.h>
-#include <NemesisDebug.h>
+#include "elements/Brick8i.h"
+#include "elements/ShapeFunctions.h"
+#include "main/NemesisDebug.h"
 
 double Brick8i::detJ[8];
 double Brick8i::shpStd[8][4][8];

@@ -23,9 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Quad4b.h>
-#include <ShapeFunctions.h>
-#include <NemesisDebug.h>
+#include "elements/Quad4b.h"
+#include "elements/ShapeFunctions.h"
+#include "main/NemesisDebug.h"
 
 double Quad4b::detJ[4];
 double Quad4b::shp[4][3][4];

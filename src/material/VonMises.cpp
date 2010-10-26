@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <VonMises.h>
-#include <VM.h>
+#include "material/VM.h"
+#include "material/VonMises.h"
 
 VonMises::VonMises()
 {

@@ -26,11 +26,12 @@
 #ifndef _GROUP_STATE_H
 #define _GROUP_STATE_H
 
-#include <DomainObject.h>
-#include <Domain.h>
-#include <Group.h>
+#include "domain/Domain.h"
+#include "domain/DomainObject.h"
+#include "group/Group.h"
 
 class Group;
+
 class GroupState: public DomainObject
 {
 private:

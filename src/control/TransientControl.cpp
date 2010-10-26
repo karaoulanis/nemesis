@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <TransientControl.h>
+#include "control/TransientControl.h"
 
 /**
  * Constructor.

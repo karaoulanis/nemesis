@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <MCC.h>
+#include "material/MCC.h"
 
 MCC::MCC()
 {

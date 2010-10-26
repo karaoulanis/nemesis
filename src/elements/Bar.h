@@ -26,8 +26,8 @@
 #ifndef _BAR_H
 #define _BAR_H
 
-#include <Element.h>
-#include <UniaxialMaterial.h>
+#include "elements/Element.h"
+#include "material/UniaxialMaterial.h"
 
 class Bar: public Element
 {

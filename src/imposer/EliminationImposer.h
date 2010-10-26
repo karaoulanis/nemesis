@@ -26,9 +26,9 @@
 #ifndef _ELIMINATIONIMPOSER_H
 #define _ELIMINATIONIMPOSER_H
 
-#include <Imposer.h>
-#include <EliminationModelNode.h>
-#include <EliminationModelElement.h>
+#include "imposer/Imposer.h"
+#include "model/EliminationModelElement.h"
+#include "model/EliminationModelNode.h"
 
 class EliminationImposer: public Imposer
 {

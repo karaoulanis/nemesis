@@ -26,9 +26,9 @@
 #ifndef _MULTIAXIALMATERIAL_H
 #define _MULTIAXIALMATERIAL_H
 
-#include <Material.h>
-#include <Matrix.h>
-#include <Vector.h>
+#include "material/Material.h"
+#include "numeric/Matrix.h"
+#include "numeric/Vector.h"
 
 /**
  * The Multiaxial Material Class.                                                

@@ -26,10 +26,10 @@
 #ifndef _CONTROL_H
 #define _CONTROL_H
 
-#include <Analysis.h>
-#include <AnalysisObject.h>
-#include <ModelElement.h>
-#include <ModelNode.h>
+#include "analysis/Analysis.h"
+#include "analysis/AnalysisObject.h"
+#include "model/ModelElement.h"
+#include "model/ModelNode.h"
 
 class Control: public AnalysisObject
 {

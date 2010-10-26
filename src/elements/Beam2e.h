@@ -26,8 +26,8 @@
 #ifndef _BEAM2E_H
 #define _BEAM2E_H
 
-#include <Element.h>
-#include <UniaxialMaterial.h>
+#include "elements/Element.h"
+#include "material/UniaxialMaterial.h"
 
 class Beam2e: public Element
 {

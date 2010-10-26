@@ -26,8 +26,8 @@
 #ifndef _ANALYSISTYPE_H
 #define _ANALYSISTYPE_H
 
-#include <AnalysisObject.h>
-#include <Analysis.h>
+#include "analysis/Analysis.h"
+#include "analysis/AnalysisObject.h"
 
 class AnalysisType: public AnalysisObject
 {

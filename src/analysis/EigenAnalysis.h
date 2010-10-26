@@ -27,10 +27,10 @@
 #ifndef _EIGENANALYIS_H
 #define _EIGENANALYIS_H
 
-#include <AnalysisType.h>
-#include <EliminationImposer.h>
-#include <EigenControl.h>
-#include <EigenSOE.h>
+#include "analysis/AnalysisType.h"
+#include "control/EigenControl.h"
+#include "imposer/EliminationImposer.h"
+#include "soe/EigenSOE.h"
 
 class Analysis;
 class EigenAnalysis :public AnalysisType

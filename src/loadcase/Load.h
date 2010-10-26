@@ -26,7 +26,7 @@
 #ifndef _LOAD_H
 #define _LOAD_H
 
-#include <DomainObject.h>
+#include "domain/DomainObject.h"
 
 class Load: public DomainObject
 {

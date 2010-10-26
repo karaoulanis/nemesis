@@ -26,7 +26,7 @@
 #ifndef _UNIAXIALGAP_H
 #define _UNIAXIALGAP_H
 
-#include <UniaxialMaterial.h>
+#include "material/UniaxialMaterial.h"
 
 class UniaxialGap: public UniaxialMaterial
 {

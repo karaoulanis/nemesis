@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <FEObject.h>
 #include <iostream>
+#include "feobject/FEObject.h"
 
 FEObject::FEObject()
 {

@@ -23,9 +23,10 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Database.h>
 #include <cstring>
 #include <fstream>
+#include "database/Database.h"
+
 using namespace std;
 
 Packet Database::myPacket;

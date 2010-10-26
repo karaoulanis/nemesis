@@ -26,10 +26,10 @@
 #ifndef _REODERER_H
 #define _REODERER_H
 
-#include <AnalysisObject.h>
-#include <Analysis.h>
-#include <Model.h>
 #include <vector>
+#include "analysis/Analysis.h"
+#include "analysis/AnalysisObject.h"
+#include "model/Model.h"
 
 class Reorderer: public AnalysisObject
 {

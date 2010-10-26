@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <ElementalLoad.h>
+#include "loadcase/ElementalLoad.h"
 
 Vector ElementalLoad::P(0,0.);
 

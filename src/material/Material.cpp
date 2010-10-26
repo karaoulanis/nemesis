@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 // Included files
-#include <Material.h>
+#include "material/Material.h"
 
 // Variable initialization
 int Material::counter=0;
