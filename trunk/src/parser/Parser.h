@@ -37,7 +37,7 @@
 #include "analysis/static_analysis.h"
 #include "analysis/transient_analysis.h"
 #include "analysis/xfem_analysis.h"
-#include "constraints/Constraint.h"
+#include "constraints/constraint.h"
 #include "control/ArcLengthSpherical.h"
 #include "control/ArcLengthUNP.h"
 #include "control/DisplacementControl.h"
