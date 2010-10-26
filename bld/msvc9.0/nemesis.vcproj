@@ -888,51 +888,51 @@
 			Name="algorithm"
 			>
 			<File
-				RelativePath="..\..\src\algorithm\Algorithm.cpp"
+				RelativePath="..\..\src\algorithm\algorithm.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\Algorithm.h"
+				RelativePath="..\..\src\algorithm\algorithm.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\BFGS.cpp"
+				RelativePath="..\..\src\algorithm\bfgs.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\BFGS.h"
+				RelativePath="..\..\src\algorithm\bfgs.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\LinearAlgorithm.cpp"
+				RelativePath="..\..\src\algorithm\linear_algorithm.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\LinearAlgorithm.h"
+				RelativePath="..\..\src\algorithm\linear_algorithm.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\NewtonRaphsonFull.cpp"
+				RelativePath="..\..\src\algorithm\newton_raphson_full.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\NewtonRaphsonFull.h"
+				RelativePath="..\..\src\algorithm\newton_raphson_full.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\NewtonRaphsonInitial.cpp"
+				RelativePath="..\..\src\algorithm\newton_raphson_initial.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\NewtonRaphsonInitial.h"
+				RelativePath="..\..\src\algorithm\newton_raphson_initial.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\NewtonRaphsonModified.cpp"
+				RelativePath="..\..\src\algorithm\newton_raphson_modified.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\algorithm\NewtonRaphsonModified.h"
+				RelativePath="..\..\src\algorithm\newton_raphson_modified.h"
 				>
 			</File>
 		</Filter>

@@ -26,11 +26,11 @@
 #ifndef _PARSER_H
 #define _PARSER_H
 
-#include "algorithm/BFGS.h"
-#include "algorithm/LinearAlgorithm.h"
-#include "algorithm/NewtonRaphsonFull.h"
-#include "algorithm/NewtonRaphsonInitial.h"
-#include "algorithm/NewtonRaphsonModified.h"
+#include "algorithm/bfgs.h"
+#include "algorithm/linear_algorithm.h"
+#include "algorithm/newton_raphson_full.h"
+#include "algorithm/newton_raphson_initial.h"
+#include "algorithm/newton_raphson_modified.h"
 #include "analysis/Analysis.h"
 #include "analysis/EigenAnalysis.h"
 #include "analysis/SensitivityStaticAnalysis.h"

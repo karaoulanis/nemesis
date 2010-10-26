@@ -26,7 +26,7 @@
 #ifndef _STATICANALYSIS_H
 #define _STATICANALYSIS_H
 
-#include "algorithm/LinearAlgorithm.h"
+#include "algorithm/linear_algorithm.h"
 #include "analysis/AnalysisType.h"
 #include "control/LoadControl.h"
 #include "imposer/EliminationImposer.h"
