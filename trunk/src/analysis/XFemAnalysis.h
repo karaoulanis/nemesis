@@ -26,7 +26,7 @@
 #ifndef _XFEMANALYSIS_H
 #define _XFEMANALYSIS_H
 
-#include "algorithm/LinearAlgorithm.h"
+#include "algorithm/linear_algorithm.h"
 #include "analysis/AnalysisType.h"
 #include "control/LoadControl.h"
 #include "imposer/EliminationImposer.h"

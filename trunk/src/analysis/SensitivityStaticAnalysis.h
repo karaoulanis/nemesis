@@ -27,7 +27,7 @@
 #ifndef _SENSITIVITYSTATICANALYSIS_H
 #define _SENSITIVITYSTATICANALYSIS_H
 
-#include "algorithm/LinearAlgorithm.h"
+#include "algorithm/linear_algorithm.h"
 #include "analysis/AnalysisType.h"
 #include "control/SensitivityControl.h"
 #include "control/LoadControl.h"

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "algorithm/LinearAlgorithm.h"
+#include "algorithm/linear_algorithm.h"
 
 LinearAlgorithm::LinearAlgorithm()
 {

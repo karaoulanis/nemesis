@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "algorithm/NewtonRaphsonFull.h"
+#include "algorithm/newton_raphson_full.h"
 
 NewtonRaphsonFull::NewtonRaphsonFull()
 {
