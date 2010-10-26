@@ -25,7 +25,7 @@
 
 #include "elements/brick8.h"
 #include "elements/shape_functions.h"
-#include "main/NemesisDebug.h"
+#include "main/nemesis_debug.h"
 
 double Brick8::detJ[8];
 double Brick8::shp[8][4][8];

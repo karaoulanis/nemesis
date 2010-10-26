@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "main/NemesisConfig.h"
+#include "main/nemesis_config.h"
 #include "parser/PyParser.h"
 
 int main(int argc,char* argv[])

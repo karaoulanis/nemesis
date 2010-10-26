@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "elements/quad4e.h"
-#include "main/NemesisDebug.h"
+#include "main/nemesis_debug.h"
 
 Matrix Quad4e::Bu(3,8);
 Matrix Quad4e::Be(3,4);

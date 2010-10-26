@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "elements/brick8b.h"
-#include "main/NemesisDebug.h"
+#include "main/nemesis_debug.h"
 
 Brick8b::Brick8b()
 {

@@ -25,7 +25,7 @@
 
 #include "elements/quad4b.h"
 #include "elements/shape_functions.h"
-#include "main/NemesisDebug.h"
+#include "main/nemesis_debug.h"
 
 double Quad4b::detJ[4];
 double Quad4b::shp[4][3][4];
