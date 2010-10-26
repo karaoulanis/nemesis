@@ -1,5 +1,5 @@
 
-#include "material/TensionCutOffYS.h"
+#include "material/tension_cutoff_ys.h"
 
 
 TensionCutOffYS::TensionCutOffYS(double T_)

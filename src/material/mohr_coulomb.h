@@ -26,7 +26,7 @@
 #ifndef _MOHRCOULOMB_H
 #define _MOHRCOULOMB_H
 
-#include "material/MultiaxialMaterial.h"
+#include "material/multiaxial_elastic_plastic.h"
 
 /**
  * The Mohr-Coulomb Class.

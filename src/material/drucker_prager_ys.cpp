@@ -1,5 +1,5 @@
 
-#include "material/DruckerPragerYS.h"
+#include "material/drucker_prager_ys.h"
 
 DruckerPragerYS::DruckerPragerYS(double c_,double phi_,double Kc_,double Kphi_)
 {

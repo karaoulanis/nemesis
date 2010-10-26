@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "elements/Spring.h"
+#include "elements/spring.h"
 #include "main/nemesis_debug.h"
 
 /**

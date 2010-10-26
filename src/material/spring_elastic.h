@@ -26,7 +26,7 @@
 #ifndef _SPRINGELASTIC_H
 #define _SPRINGELASTIC_H
 
-#include "material/SpringMaterial.h"
+#include "material/spring_material.h"
 
 /**
  * The Elastic Spring Material Class.                                                

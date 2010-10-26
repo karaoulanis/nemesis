@@ -26,7 +26,7 @@
 #ifndef _PLANESTRESS_H
 #define _PLANESTRESS_H
 
-#include "material/MultiaxialElastic.h"
+#include "material/multiaxial_elastic.h"
 
 /**
  * The Elastic Class.

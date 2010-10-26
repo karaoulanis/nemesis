@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/LinearEquivalentEL.h"
+#include "material/linear_equivalent_el.h"
 
 LinearEquivalentEL::LinearEquivalentEL()
 {

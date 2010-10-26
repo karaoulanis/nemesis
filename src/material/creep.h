@@ -26,7 +26,7 @@
 #ifndef _CREEP_H
 #define _CREEP_H
 
-#include "material/MultiaxialMaterial.h"
+#include "material/multiaxial_material.h"
 /**
  * The Creep Class.
  */

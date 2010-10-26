@@ -27,7 +27,7 @@
 #define _SPRING_H
 
 #include "elements/element.h"
-#include "material/SpringMaterial.h"
+#include "material/spring_material.h"
 
 class Spring: public Element
 {

@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 
-#include "material/UniaxialMaterial.h"
+#include "material/uniaxial_material.h"
 
 UniaxialMaterial::UniaxialMaterial()
 {

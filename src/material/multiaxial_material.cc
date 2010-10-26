@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/MultiaxialMaterial.h"
+#include "material/multiaxial_material.h"
 
 Matrix MultiaxialMaterial::C(6,6);
 

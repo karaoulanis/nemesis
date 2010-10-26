@@ -23,9 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/DruckerPragerNew3.h"
-#include "material/DruckerPragerYS.h"
-#include "material/TensionCutOffYS.h"
+#include "material/drucker_prager_new3.h"
+#include "material/drucker_prager_ys.h"
+#include "material/tension_cutoff_ys.h"
 
 Matrix DruckerPragerNew3::C(6,6,0.);
 Matrix DruckerPragerNew3::C3(3,3,0.);

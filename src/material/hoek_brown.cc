@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/HoekBrown.h"
+#include "material/hoek_brown.h"
 #include "main/nemesis_debug.h"
 
 Matrix HoekBrown::C(6,6,0.);
