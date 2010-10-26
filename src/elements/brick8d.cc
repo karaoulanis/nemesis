@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "elements/Brick8d.h"
+#include "elements/brick8d.h"
 #include "main/NemesisDebug.h"
 
 Brick8d::Brick8d()

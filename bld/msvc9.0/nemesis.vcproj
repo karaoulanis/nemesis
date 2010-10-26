@@ -1856,38 +1856,38 @@
 			Name="elements"
 			>
 			<File
-				RelativePath="..\..\src\elements\Element.cpp"
+				RelativePath="..\..\src\elements\element.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\elements\Element.h"
+				RelativePath="..\..\src\elements\element.h"
 				>
 			</File>
 			<Filter
 				Name="triangles"
 				>
 				<File
-					RelativePath="..\..\src\elements\Triangle3.cpp"
+					RelativePath="..\..\src\elements\triangle3.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Triangle3.h"
+					RelativePath="..\..\src\elements\triangle3.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Triangle3XFem.cpp"
+					RelativePath="..\..\src\elements\triangle3_xfem.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Triangle3XFem.h"
+					RelativePath="..\..\src\elements\triangle3_xfem.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Triangle6.cpp"
+					RelativePath="..\..\src\elements\triangle6.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Triangle6.h"
+					RelativePath="..\..\src\elements\triangle6.h"
 					>
 				</File>
 			</Filter>
@@ -1895,11 +1895,11 @@
 				Name="sdof"
 				>
 				<File
-					RelativePath="..\..\src\elements\SDofElement.cpp"
+					RelativePath="..\..\src\elements\sdof_element.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\SDofElement.h"
+					RelativePath="..\..\src\elements\sdof_element.h"
 					>
 				</File>
 			</Filter>
@@ -1907,35 +1907,35 @@
 				Name="bricks"
 				>
 				<File
-					RelativePath="..\..\src\elements\Brick8.cpp"
+					RelativePath="..\..\src\elements\brick8.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8.h"
+					RelativePath="..\..\src\elements\brick8.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8b.cpp"
+					RelativePath="..\..\src\elements\brick8b.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8b.h"
+					RelativePath="..\..\src\elements\brick8b.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8d.cpp"
+					RelativePath="..\..\src\elements\brick8d.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8d.h"
+					RelativePath="..\..\src\elements\brick8d.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8i.cpp"
+					RelativePath="..\..\src\elements\brick8i.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Brick8i.h"
+					RelativePath="..\..\src\elements\brick8i.h"
 					>
 				</File>
 			</Filter>
@@ -1943,59 +1943,59 @@
 				Name="quads"
 				>
 				<File
-					RelativePath="..\..\src\elements\Quad4.cpp"
+					RelativePath="..\..\src\elements\quad4.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4.h"
+					RelativePath="..\..\src\elements\quad4.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4b.cpp"
+					RelativePath="..\..\src\elements\quad4_disp_axisymmetric.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4b.h"
+					RelativePath="..\..\src\elements\quad4_disp_axisymmetric.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4d.cpp"
+					RelativePath="..\..\src\elements\quad4_disp_plain.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4d.h"
+					RelativePath="..\..\src\elements\quad4_disp_plain.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4DispAxisymmetric.cpp"
+					RelativePath="..\..\src\elements\quad4b.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4DispAxisymmetric.h"
+					RelativePath="..\..\src\elements\quad4b.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4DispPlain.cpp"
+					RelativePath="..\..\src\elements\quad4d.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4DispPlain.h"
+					RelativePath="..\..\src\elements\quad4d.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4e.cpp"
+					RelativePath="..\..\src\elements\quad4e.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4e.h"
+					RelativePath="..\..\src\elements\quad4e.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4i.cpp"
+					RelativePath="..\..\src\elements\quad4i.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Quad4i.h"
+					RelativePath="..\..\src\elements\quad4i.h"
 					>
 				</File>
 			</Filter>
@@ -2003,11 +2003,11 @@
 				Name="tetrahedra"
 				>
 				<File
-					RelativePath="..\..\src\elements\Tetrahedron4Disp.cpp"
+					RelativePath="..\..\src\elements\tetrahedron4_disp.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Tetrahedron4Disp.h"
+					RelativePath="..\..\src\elements\tetrahedron4_disp.h"
 					>
 				</File>
 			</Filter>
@@ -2015,19 +2015,19 @@
 				Name="beam"
 				>
 				<File
-					RelativePath="..\..\src\elements\Beam2e.cpp"
+					RelativePath="..\..\src\elements\beam2e.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Beam2e.h"
+					RelativePath="..\..\src\elements\beam2e.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Timoshenko2d.cpp"
+					RelativePath="..\..\src\elements\timoshenko2d.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Timoshenko2d.h"
+					RelativePath="..\..\src\elements\timoshenko2d.h"
 					>
 				</File>
 			</Filter>
@@ -2035,27 +2035,27 @@
 				Name="bar"
 				>
 				<File
-					RelativePath="..\..\src\elements\Bar.cpp"
+					RelativePath="..\..\src\elements\bar.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Bar.h"
+					RelativePath="..\..\src\elements\bar.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Bar2s.cpp"
+					RelativePath="..\..\src\elements\bar2s.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Bar2s.h"
+					RelativePath="..\..\src\elements\bar2s.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Bar2t.cpp"
+					RelativePath="..\..\src\elements\bar2t.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Bar2t.h"
+					RelativePath="..\..\src\elements\bar2t.h"
 					>
 				</File>
 			</Filter>
@@ -2063,11 +2063,11 @@
 				Name="spring"
 				>
 				<File
-					RelativePath="..\..\src\elements\Spring.cpp"
+					RelativePath="..\..\src\elements\spring.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\Spring.h"
+					RelativePath="..\..\src\elements\spring.h"
 					>
 				</File>
 			</Filter>
@@ -2075,11 +2075,11 @@
 				Name="tools"
 				>
 				<File
-					RelativePath="..\..\src\elements\ShapeFunctions.cpp"
+					RelativePath="..\..\src\elements\shape_functions.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\elements\ShapeFunctions.h"
+					RelativePath="..\..\src\elements\shape_functions.h"
 					>
 				</File>
 			</Filter>

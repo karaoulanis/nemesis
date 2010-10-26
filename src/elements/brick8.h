@@ -26,7 +26,7 @@
 #ifndef _BRICK8_H
 #define _BRICK8_H
 
-#include "elements/Element.h"
+#include "elements/element.h"
 #include "material/MatPoint.h"
 
 class Brick8: public Element
