@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "control/StaticControl.h"
+#include "control/static_control.h"
 
 /**
  * Constructor.

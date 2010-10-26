@@ -28,7 +28,7 @@
 
 #include "algorithm/linear_algorithm.h"
 #include "analysis/analysis_type.h"
-#include "control/LoadControl.h"
+#include "control/load_control.h"
 #include "imposer/EliminationImposer.h"
 #include "soe/FullLinearSOE.h"
 

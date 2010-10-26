@@ -26,7 +26,7 @@
 #ifndef _DISPLACEMENTCONTROL_H
 #define _DISPLACEMENTCONTROL_H
 
-#include "control/StaticControl.h"
+#include "control/static_control.h"
 
 /**
  * The DisplacementControl Class.

@@ -28,7 +28,7 @@
 #define _EIGENANALYIS_H
 
 #include "analysis/analysis_type.h"
-#include "control/EigenControl.h"
+#include "control/eigen_control.h"
 #include "imposer/EliminationImposer.h"
 #include "soe/EigenSOE.h"
 

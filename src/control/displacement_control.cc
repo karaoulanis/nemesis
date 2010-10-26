@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "control/DisplacementControl.h"
+#include "control/displacement_control.h"
 #include <cmath>
 
 /**
