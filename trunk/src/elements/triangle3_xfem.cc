@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "elements/Triangle3XFem.h"
+#include "elements/triangle3_xfem.h"
 
 Triangle3XFem::Triangle3XFem()
 {

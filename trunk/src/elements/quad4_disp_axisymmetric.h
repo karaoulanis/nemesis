@@ -26,7 +26,7 @@
 #ifndef _Quad4DispAxisymmetric_H
 #define _Quad4DispAxisymmetric_H
 
-#include "elements/Quad4.h"
+#include "elements/quad4.h"
 
 class Quad4DispAxisymmetric: public Quad4
 {

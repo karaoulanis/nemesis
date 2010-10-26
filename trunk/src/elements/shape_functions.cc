@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 // Included files
-#include "elements/ShapeFunctions.h"
+#include "elements/shape_functions.h"
 
 void shape4(const Matrix& x,double shp[4][3][4],double detJ[4])
 {

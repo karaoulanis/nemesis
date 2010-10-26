@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "elements/Tetrahedron4Disp.h"
+#include "elements/tetrahedron4_disp.h"
 
 Matrix Tetrahedron4Disp::N(4,4);
 double Tetrahedron4Disp::V=0;

@@ -26,7 +26,7 @@
 #ifndef _QUAD4DISPPLAIN_H
 #define _QUAD4DISPPLAIN_H
 
-#include "elements/Quad4.h"
+#include "elements/quad4.h"
 
 class Quad4DispPlain: public Quad4
 {
