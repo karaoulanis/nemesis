@@ -27,7 +27,7 @@
 #define _INITIAL_DISPLACEMENT_H
 
 #include "loadcase/InitialCondition.h"
-#include "node/Node.h"
+#include "node/node.h"
 
 class InitialDisplacement: public InitialCondition
 {

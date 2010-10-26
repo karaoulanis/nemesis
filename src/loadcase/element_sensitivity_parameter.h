@@ -21,43 +21,24 @@
 // $LastChangedBy$
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
+//            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#ifndef _ELEMENTALLOAD_H
-#define _ELEMENTALLOAD_H
+#ifndef _ELEMENTSENSITIVEPARAMETER_H
+#define _ELEMENTSENSITIVEPARAMETER_H
 
-#include "elements/Element.h"
-#include "loadcase/Load.h"
-#include "numeric/Vector.h"
+#include "elements/element.h"
 
-class Element;
-
-class ElementalLoad: public Load
+class ElementSensitivityParameter: public DomainObject
 {
-protected:
-	Element* myElement;		/// A pointer to the corresponding Element.
-	static Vector P;
+private:
+	static int nSensitivityParameters;
+	Element* myElement;
+	int parameter;
 public:
-	// Constructor and destructors
-	ElementalLoad();
-	ElementalLoad(int elemID);
-	virtual ~ElementalLoad();
-/*
-	// Access to member data
-	int setTheLoadDirection(LoadDirection direction);
-	int setTheUserDirection(Vector* direction);
-	void setA(Vector& aValues);
-	void setP(Vector& pValues);
-
-	LoadDirection getTheLoadDirection();
-	Vector* getTheUserDirection();
-	const Vector& getA();
-	const Vector& getP();
-*/	
-	// Apply load
-	virtual const Vector& getP()=0;
-	void apply(double fact,double t);
+	ElementSensitivityParameter();
+	ElementSensitivityParameter(int elemID,int param);
+	int apply();
 };
-
 
 #endif

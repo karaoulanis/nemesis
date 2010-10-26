@@ -27,7 +27,7 @@
 #define _INITIAL_STRESSES_H
 
 #include "loadcase/InitialCondition.h"
-#include "elements/Element.h"
+#include "elements/element.h"
 
 typedef std::map<int,Element*>	ElementContainer;
 

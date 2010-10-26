@@ -27,7 +27,7 @@
 #define _INITIAL_VELOCITY_H
 
 #include "loadcase/InitialCondition.h"
-#include "node/Node.h"
+#include "node/node.h"
 
 class InitialVelocity: public InitialCondition
 {

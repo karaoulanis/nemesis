@@ -26,8 +26,8 @@
 #ifndef _NODALLOAD_H
 #define _NODALLOAD_H
 
-#include "node/Node.h"
-#include "loadcase/Load.h"
+#include "node/node.h"
+#include "loadcase/load.h"
 
 class NodalLoad: public Load
 {

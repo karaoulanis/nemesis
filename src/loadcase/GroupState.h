@@ -28,7 +28,7 @@
 
 #include "domain/domain.h"
 #include "domain/domain_object.h"
-#include "group/Group.h"
+#include "group/group.h"
 
 class Group;
 
