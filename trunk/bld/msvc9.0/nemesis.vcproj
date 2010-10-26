@@ -563,7 +563,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="SQLite.lib python27.lib libacml_mp_dll.lib"
-				ShowProgress="1"
+				ShowProgress="0"
 				OutputFile="..\..\bin\nemesis.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -820,67 +820,67 @@
 			Name="analysis"
 			>
 			<File
-				RelativePath="..\..\src\analysis\Analysis.cpp"
+				RelativePath="..\..\src\analysis\analysis.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\Analysis.h"
+				RelativePath="..\..\src\analysis\analysis.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\AnalysisObject.cpp"
+				RelativePath="..\..\src\analysis\analysis_object.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\AnalysisObject.h"
+				RelativePath="..\..\src\analysis\analysis_object.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\AnalysisType.cpp"
+				RelativePath="..\..\src\analysis\analysis_type.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\AnalysisType.h"
+				RelativePath="..\..\src\analysis\analysis_type.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\EigenAnalysis.cpp"
+				RelativePath="..\..\src\analysis\eigen_analysis.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\EigenAnalysis.h"
+				RelativePath="..\..\src\analysis\eigen_analysis.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\SensitivityStaticAnalysis.cpp"
+				RelativePath="..\..\src\analysis\sensitivity_static_analysis.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\SensitivityStaticAnalysis.h"
+				RelativePath="..\..\src\analysis\sensitivity_static_analysis.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\StaticAnalysis.cpp"
+				RelativePath="..\..\src\analysis\static_analysis.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\StaticAnalysis.h"
+				RelativePath="..\..\src\analysis\static_analysis.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\TransientAnalysis.cpp"
+				RelativePath="..\..\src\analysis\transient_analysis.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\TransientAnalysis.h"
+				RelativePath="..\..\src\analysis\transient_analysis.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\XFemAnalysis.cpp"
+				RelativePath="..\..\src\analysis\xfem_analysis.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\analysis\XFemAnalysis.h"
+				RelativePath="..\..\src\analysis\xfem_analysis.h"
 				>
 			</File>
 		</Filter>

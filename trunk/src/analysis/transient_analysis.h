@@ -26,7 +26,7 @@
 #ifndef _TRANSIENTANALYSIS_H
 #define _TRANSIENTANALYSIS_H
 
-#include "analysis/AnalysisType.h"
+#include "analysis/analysis_type.h"
 
 class TransientAnalysis :public AnalysisType
 {

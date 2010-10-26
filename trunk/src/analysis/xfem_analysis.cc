@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "analysis/XFemAnalysis.h"
+#include "analysis/xfem_analysis.h"
 
 XFemAnalysis::XFemAnalysis()
 	:AnalysisType()

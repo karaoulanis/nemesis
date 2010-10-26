@@ -24,7 +24,7 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#include "analysis/EigenAnalysis.h"
+#include "analysis/eigen_analysis.h"
 
 EigenAnalysis::EigenAnalysis()
 	:AnalysisType()
