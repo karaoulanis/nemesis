@@ -28,9 +28,9 @@
 
 #include <sstream>
 
-#include "containers/Containers.h"
-#include "domain/Domain.h"
-#include "domain/DomainObject.h"
+#include "containers/containers.h"
+#include "domain/domain.h"
+#include "domain/domain_object.h"
 #include "elements/Element.h"
 #include "numeric/Matrix.h"
 #include "numeric/Vector.h"

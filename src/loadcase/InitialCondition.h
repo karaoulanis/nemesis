@@ -26,7 +26,7 @@
 #ifndef _INITIAL_CONDITION_H
 #define _INITIAL_CONDITION_H
 
-#include "domain/DomainObject.h"
+#include "domain/domain_object.h"
 
 class InitialCondition: public DomainObject
 {

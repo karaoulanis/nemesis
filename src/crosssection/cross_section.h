@@ -26,7 +26,7 @@
 #ifndef _CROSSSECTION_H
 #define _CROSSSECTION_H
 
-#include "domain/DomainObject.h"
+#include "domain/domain_object.h"
 
 //=============================================================
 // CrossSection Class

@@ -26,7 +26,7 @@
 #ifndef _MATPOINT_H
 #define _MATPOINT_H
 
-#include "domain/DomainObject.h"
+#include "domain/domain_object.h"
 #include "loadcase/InitialStresses.h"
 #include "material/MultiaxialMaterial.h"
 

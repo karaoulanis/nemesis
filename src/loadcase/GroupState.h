@@ -26,8 +26,8 @@
 #ifndef _GROUP_STATE_H
 #define _GROUP_STATE_H
 
-#include "domain/Domain.h"
-#include "domain/DomainObject.h"
+#include "domain/domain.h"
+#include "domain/domain_object.h"
 #include "group/Group.h"
 
 class Group;
