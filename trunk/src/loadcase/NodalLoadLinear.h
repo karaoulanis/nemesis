@@ -26,7 +26,7 @@
 #ifndef _NODALLOADLINEAR_H
 #define _NODALLOADLINEAR_H
 
-#include <NodalLoad.h>
+#include "loadcase/NodalLoad.h"
 
 class NodalLoadLinear: public NodalLoad
 {

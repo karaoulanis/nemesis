@@ -26,9 +26,9 @@
 #ifndef _CRACK_H
 #define _CRACK_H
 
-#include <DomainObject.h>
 #include <vector>
-#include <Containers.h>
+#include "containers/Containers.h"
+#include "domain/DomainObject.h"
 
 using namespace std;
 

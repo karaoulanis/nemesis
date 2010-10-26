@@ -26,7 +26,7 @@
 #ifndef _SHAPEFUNCTIONS_H
 #define _SHAPEFUNCTIONS_H
 
-#include <Matrix.h>
+#include "numeric/Matrix.h"
 
 void shape4(const Matrix& x,double shp[4][3][4],double detJ[4]);
 void shape8(const Matrix& x,double shp[8][4][8],double detJ[8]);

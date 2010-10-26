@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 
-#include <PenaltyModelElement.h>
+#include "model/PenaltyModelElement.h"
 
 /**
  * Default constructor

@@ -26,14 +26,15 @@
 #ifndef _NODE_H
 #define _NODE_H
 
-#include <DomainObject.h>
-#include <Domain.h>
-#include <Element.h>
-#include <Containers.h>
-#include <Vector.h>
-#include <Matrix.h>
-#include <Tracker.h>
 #include <sstream>
+
+#include "containers/Containers.h"
+#include "domain/Domain.h"
+#include "domain/DomainObject.h"
+#include "elements/Element.h"
+#include "numeric/Matrix.h"
+#include "numeric/Vector.h"
+#include "tracker/Tracker.h"
 
 class Domain;
 class Element;

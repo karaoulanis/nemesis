@@ -26,9 +26,9 @@
 #ifndef _MULTIAXIALELASTOPLASTIC_H
 #define _MULTIAXIALELASTOPLASTIC_H
 
-#include <MultiaxialMaterial.h>
-#include <LinearEquivalentEL.h>
-#include <Surface.h>
+#include "material/MultiaxialMaterial.h"
+#include "material/LinearEquivalentEL.h"
+#include "material/Surface.h"
 /**
  * The MultiaxialElastoPlastic Class.
  */

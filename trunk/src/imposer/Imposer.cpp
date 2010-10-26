@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Imposer.h>
+#include "imposer/Imposer.h"
 
 Imposer::Imposer()
 {

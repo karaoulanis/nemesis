@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Bar2s.h>
+#include "elements/Bar2s.h"
 
 /**
  * Default constructor.

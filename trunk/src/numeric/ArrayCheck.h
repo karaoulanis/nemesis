@@ -26,7 +26,7 @@
 #ifndef _ARRAY_CHECK_H
 #define _ARRAY_CHECK_H
 
-#include "SException.h"
+#include "exception/SException.h"
 
 inline void array_range_check(int i,int n)
 {

@@ -26,37 +26,37 @@
 #ifndef _NUMERIC_H
 #define _NUMERIC_H
 
+// C++ system files
 #include <cmath>
-#include <limits>
 #include <cstdio>
-using namespace std;
+#include <limits>
 
 namespace num
 {
-	const double pi=4.*atan(1.0);
-	const double sq2=sqrt(2.);
-	const double sq3=sqrt(3.);
-	const double sq6=sqrt(6.);
+	const double pi=4.*std::atan(1.0);
+	const double sq2=std::sqrt(2.);
+	const double sq3=std::sqrt(3.);
+	const double sq6=std::sqrt(6.);
 	const double d13=1./3.;
 	const double d23=2./3.;
 	const double d43=4./3.;
 	const double d16=1./6.;
-	const double eps=numeric_limits<double>::epsilon();
+	const double eps=std::numeric_limits<double>::epsilon();
 	inline bool equal(double d1,double d2)
 	{
-		return fabs(d2-d1)<eps	? true : false;
+		return std::fabs(d2-d1)<eps	? true : false;
 	}
 	inline bool smaller(double d1,double e)
 	{
-		return fabs(d1)<e		? true : false;
+		return std::fabs(d1)<e		? true : false;
 	}
 	inline bool smaller(double d1,double d2,double e)
 	{
-		return fabs(d1-d2)<e	? true : false;
+		return std::fabs(d1-d2)<e	? true : false;
 	}
 	inline bool tiny(double d)
 	{
-		return fabs(d)<eps		? true : false;
+		return std::fabs(d)<eps		? true : false;
 	}
 	inline double deg2rad(double d)
 	{

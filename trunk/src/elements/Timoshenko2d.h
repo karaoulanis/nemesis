@@ -26,8 +26,8 @@
 #ifndef _TIMOSHENKO2D_H
 #define _TIMOSHENKO2D_H
 
-#include <Element.h>
-#include <UniaxialMaterial.h>
+#include "elements/Element.h"
+#include "material/UniaxialMaterial.h"
 
 class Timoshenko2d: public Element
 {

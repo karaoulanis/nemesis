@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Algorithm.h>
+#include "algorithm/Algorithm.h"
 
 Algorithm::Algorithm()
 {

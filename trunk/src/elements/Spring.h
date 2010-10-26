@@ -26,8 +26,8 @@
 #ifndef _SPRING_H
 #define _SPRING_H
 
-#include <Element.h>
-#include <SpringMaterial.h>
+#include "elements/Element.h"
+#include "material/SpringMaterial.h"
 
 class Spring: public Element
 {

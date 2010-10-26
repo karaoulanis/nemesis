@@ -26,7 +26,7 @@
 #ifndef _MODELOBJECT_H
 #define _MODELOBJECT_H
 
-#include <Element.h>
+#include "elements/Element.h"
 
 class ModelObject
 {

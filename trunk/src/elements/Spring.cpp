@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Spring.h>
-#include <NemesisDebug.h>
+#include "elements/Spring.h"
+#include "main/NemesisDebug.h"
 
 /**
  * Default constructor.

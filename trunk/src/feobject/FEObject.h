@@ -26,10 +26,11 @@
 #ifndef _FEOBJECT_H
 #define _FEOBJECT_H
 
-#include <FEObjectTags.h>
-#include <Database.h>
-#include <Packet.h>
 #include <vector>
+#include "database/Database.h"
+#include "database/Packet.h"
+#include "feobject/FEObjectTags.h"
+
 
 class FEObject
 {

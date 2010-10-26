@@ -24,7 +24,7 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#include <SensitivityStaticAnalysis.h>
+#include "analysis/SensitivityStaticAnalysis.h"
 
 SensitivityStaticAnalysis::SensitivityStaticAnalysis()
 	:AnalysisType()

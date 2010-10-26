@@ -26,7 +26,7 @@
 #ifndef _UNIAXIALELASTIC_H
 #define _UNIAXIALELASTIC_H
 
-#include <UniaxialMaterial.h>
+#include "material/UniaxialMaterial.h"
 
 class UniaxialElastic: public UniaxialMaterial
 {

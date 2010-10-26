@@ -26,7 +26,7 @@
 #ifndef _TRANSIENTCONTROL_H
 #define _TRANSIENTCONTROL_H
 
-#include <Control.h>
+#include "control/Control.h"
 
 class TransientControl :public Control
 {

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <ArcLengthSpherical.h>
+#include "control/ArcLengthSpherical.h"
 #include <cmath>
 
 /**

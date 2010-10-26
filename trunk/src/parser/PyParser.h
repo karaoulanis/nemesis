@@ -33,7 +33,7 @@
 	#include <Python.h>
 #endif
 
-#include <Parser.h>
+#include "parser/Parser.h"
 
 class PyParser: public Parser
 {

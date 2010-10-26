@@ -26,7 +26,7 @@
 #ifndef _MC_1_H
 #define _MC_1_H
 
-#include <MC.h>
+#include "material/MC.h"
 
 class MC_1: public MC
 {

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Triangle6.h>
+#include "elements/Triangle6.h"
 
 Triangle6::Triangle6()
 {

@@ -23,10 +23,11 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SQLiteDatabase.h>
-#include <SException.h>
-#include <stdio.h>
 #include <iostream>
+#include <stdio.h>
+#include "database/SQLiteDatabase.h"
+#include "exception/SException.h"
+
 using namespace std;
 
 /**

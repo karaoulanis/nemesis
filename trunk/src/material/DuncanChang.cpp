@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <DuncanChang.h>
+#include "material/DuncanChang.h"
 
 DuncanChang::DuncanChang()
 {

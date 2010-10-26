@@ -26,7 +26,7 @@
 #ifndef _UNIAXIALMATERIAL_H
 #define _UNIAXIALMATERIAL_H
 
-#include <Material.h>
+#include "material/Material.h"
 
 /**
  * The Uniaxial Material Class.                                                

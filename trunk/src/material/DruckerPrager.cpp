@@ -23,10 +23,10 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <DruckerPrager.h>
-#include <DP_in.h>
-#include <DP_out.h>
-#include <TC.h>
+#include "material/DruckerPrager.h"
+#include "material/DP_in.h"
+#include "material/DP_out.h"
+#include "material/TC.h"
 
 DruckerPrager::DruckerPrager()
 {

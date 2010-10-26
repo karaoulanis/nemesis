@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <SymmLinearSOE.h>
+#include "soe/SymmLinearSOE.h"
 
 SymmLinearSOE::SymmLinearSOE()
 	:SOE()

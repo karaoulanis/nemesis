@@ -27,8 +27,8 @@
 #define _GROUP_H
 
 // Included files
-#include <DomainObject.h>
-#include <GroupState.h>
+#include "domain/DomainObject.h"
+#include "loadcase/GroupState.h"
 
 class GroupState;
 

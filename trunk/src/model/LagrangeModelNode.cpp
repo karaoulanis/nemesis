@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <LagrangeModelNode.h>
+#include "model/LagrangeModelNode.h"
 
 /**
  * Default constructor.

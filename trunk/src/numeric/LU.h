@@ -26,6 +26,8 @@
 #ifndef _LU_H
 #define _LU_H
 
+#include "numeric/numeric.h"
+
 namespace LU
 {
 	///@todo check and comment the algorithm

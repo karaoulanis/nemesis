@@ -26,8 +26,9 @@
 #ifndef _ELEMENTALLOAD_H
 #define _ELEMENTALLOAD_H
 
-#include <Load.h>
-#include <Element.h>
+#include "elements/Element.h"
+#include "loadcase/Load.h"
+#include "numeric/Vector.h"
 
 class Element;
 

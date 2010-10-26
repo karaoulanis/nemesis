@@ -23,7 +23,10 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <NemesisDebug.h>
+#include "main/NemesisDebug.h"
+
+using std::cout;
+using std::endl;
 
 void report(const double d,const char* name,int total,int decimal)
 {

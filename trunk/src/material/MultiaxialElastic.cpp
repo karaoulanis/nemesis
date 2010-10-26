@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <MultiaxialElastic.h>
+#include "material/MultiaxialElastic.h"
 
 MultiaxialElastic::MultiaxialElastic()
 {

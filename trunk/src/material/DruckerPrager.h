@@ -26,7 +26,7 @@
 #ifndef _DRUCKERPRAGER_H
 #define _DRUCKERPRAGER_H
 
-#include <MultiaxialElastoPlastic.h>
+#include "material/MultiaxialElastoPlastic.h"
 
 /**
  * The Von-Mises Material Class.

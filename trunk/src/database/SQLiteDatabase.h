@@ -26,10 +26,10 @@
 #ifndef _SQLITEDATABASE_H
 #define _SQLITEDATABASE_H
 
-#include <Containers.h>
-#include <Database.h>
-#include <sqlite3.h>
 #include <fstream>
+#include <sqlite3.h>
+#include "containers/Containers.h"
+#include "database/Database.h"
 
 class SQLiteDatabase: public Database
 {

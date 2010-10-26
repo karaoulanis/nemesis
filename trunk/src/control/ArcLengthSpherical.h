@@ -26,7 +26,7 @@
 #ifndef _ARCLENGTHSPHERICALCONTROL_H
 #define _ARCLENGTHSPHERICALCONTROL_H
 
-#include <StaticControl.h>
+#include "control/StaticControl.h"
 /**
  * The ArcLengthSpherical Class.
  * ArcLengthSpherical is a static control that is based on Crisfield's 

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <TC.h>
+#include "material/TC.h"
 
 TC::TC()
 {

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <InitialStresses.h>
+#include "loadcase/InitialStresses.h"
 
 InitialStresses::InitialStresses()
 {

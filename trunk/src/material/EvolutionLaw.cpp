@@ -23,7 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <EvolutionLaw.h>
+#include "material/EvolutionLaw.h"
+
 EvolutionLaw::EvolutionLaw()
 {
 }

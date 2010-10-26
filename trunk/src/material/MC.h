@@ -26,8 +26,8 @@
 #ifndef _MC_H
 #define _MC_H
 
-#include <Surface.h>
-#include <Vector.h>
+#include "material/Surface.h"
+#include "numeric/Vector.h"
 
 class MC: public Surface
 {

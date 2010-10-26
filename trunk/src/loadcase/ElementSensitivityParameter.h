@@ -27,7 +27,7 @@
 #ifndef _ELEMENTSENSITIVEPARAMETER_H
 #define _ELEMENTSENSITIVEPARAMETER_H
 
-#include <Element.h>
+#include "elements/Element.h"
 
 class ElementSensitivityParameter: public DomainObject
 {

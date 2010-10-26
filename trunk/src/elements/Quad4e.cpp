@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Quad4e.h>
-#include <NemesisDebug.h>
+#include "elements/Quad4e.h"
+#include "main/NemesisDebug.h"
 
 Matrix Quad4e::Bu(3,8);
 Matrix Quad4e::Be(3,4);

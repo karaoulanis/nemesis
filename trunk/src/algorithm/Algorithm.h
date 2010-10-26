@@ -26,8 +26,8 @@
 #ifndef _ALGORITHM_H
 #define _ALGORITHM_H
 
-#include <Analysis.h>
-#include <AnalysisObject.h>
+#include "analysis/Analysis.h"
+#include "analysis/AnalysisObject.h"
 
 class Algorithm: public AnalysisObject
 {

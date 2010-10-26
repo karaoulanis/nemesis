@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <LagrangeModelElement.h>
-#include <NemesisDebug.h>
+#include "model/LagrangeModelElement.h"
+#include "main/NemesisDebug.h"
 
 /**
  * Default constructor

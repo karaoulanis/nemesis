@@ -26,11 +26,11 @@
 #ifndef _XFEMANALYSIS_H
 #define _XFEMANALYSIS_H
 
-#include <AnalysisType.h>
-#include <EliminationImposer.h>
-#include <LinearAlgorithm.h>
-#include <LoadControl.h>
-#include <FullLinearSOE.h>
+#include "algorithm/LinearAlgorithm.h"
+#include "analysis/AnalysisType.h"
+#include "control/LoadControl.h"
+#include "imposer/EliminationImposer.h"
+#include "soe/FullLinearSOE.h"
 
 class Analysis;
 class XFemAnalysis :public AnalysisType

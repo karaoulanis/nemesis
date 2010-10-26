@@ -26,9 +26,9 @@
 #ifndef _LAGRANGEIMPOSER_H
 #define _LAGRANGEIMPOSER_H
 
-#include <Imposer.h>
-#include <LagrangeModelElement.h>
-#include <LagrangeModelNode.h>
+#include "imposer/Imposer.h"
+#include "model/LagrangeModelElement.h"
+#include "model/LagrangeModelNode.h"
 
 class LagrangeImposer: public Imposer
 {

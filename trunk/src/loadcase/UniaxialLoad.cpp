@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <UniaxialLoad.h>
+#include "loadcase/UniaxialLoad.h"
 
 /******************************************************************************
 * Uniaxial Load

@@ -26,7 +26,7 @@
 #ifndef _LAGRANGEMODELELEMENT_H
 #define _LAGRANGEMODELELEMENT_H
 
-#include <ModelElement.h>
+#include "model/ModelElement.h"
 
 class LagrangeModelElement : public ModelElement
 {

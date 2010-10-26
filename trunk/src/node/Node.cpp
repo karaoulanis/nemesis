@@ -23,13 +23,10 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Node.h>
 #include <cmath>
 #include <stdlib.h>
+#include "node/Node.h"
 
-//=============================================================================
-// Constructors and destructor
-//=============================================================================
 /**
  * Defuault Constructor.
  */

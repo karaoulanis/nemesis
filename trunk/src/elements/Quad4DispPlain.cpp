@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Quad4DispPlain.h>
+#include "elements/Quad4DispPlain.h"
 
 Quad4DispPlain::Quad4DispPlain()
 {

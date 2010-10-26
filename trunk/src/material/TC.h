@@ -26,7 +26,7 @@
 #ifndef _TC_H
 #define _TC_H
 
-#include <Surface.h>
+#include "material/Surface.h"
 
 class TC: public Surface
 {

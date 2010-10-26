@@ -26,12 +26,6 @@
 #ifndef _MODEL_H
 #define _MODEL_H
 
-#include <AnalysisObject.h>
-#include <Domain.h>
-#include <ModelElement.h>
-#include <StandardModelElement.h>
-#include <ModelNode.h>
-#include <ElementalLoad.h>
 #include <boost/config.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/properties.hpp>
@@ -39,6 +33,13 @@
 #include <boost/graph/profile.hpp>
 #include <boost/graph/wavefront.hpp>
 #include <boost/graph/graphviz.hpp>
+
+#include "analysis/AnalysisObject.h"
+#include "domain/Domain.h"
+#include "loadcase/ElementalLoad.h"
+#include "model/ModelElement.h"
+#include "model/ModelNode.h"
+#include "model/StandardModelElement.h"
 
 // Using from boost nameespace
 using boost::adjacency_list;

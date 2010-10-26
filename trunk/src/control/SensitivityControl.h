@@ -27,7 +27,7 @@
 #ifndef _SENSITIVITYCONTROL_H
 #define _SENSITIVITYCONTROL_H
 
-#include <Control.h>
+#include "control/Control.h"
 
 class SensitivityControl :public Control
 {

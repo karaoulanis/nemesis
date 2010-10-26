@@ -26,8 +26,7 @@
 #ifndef _REVERSECUTHILLMCKEE_H
 #define _REVERSECUTHILLMCKEE_H
 
-#include <Reorderer.h>
-#include <boost/graph/cuthill_mckee_ordering.hpp>
+#include "reorderer/Reorderer.h"
 
 class ReverseCuthillMckee: public Reorderer
 {

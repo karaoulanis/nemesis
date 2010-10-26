@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Model.h>
+#include "model/Model.h"
 #include <algorithm>
 
 /**

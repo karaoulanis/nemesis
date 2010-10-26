@@ -26,7 +26,7 @@
 #ifndef _FULL_LINEAR_SOE_H
 #define _FULL_LINEAR_SOE_H
 
-#include <SOE.h>
+#include "soe/SOE.h"
 
 class FullLinearSOE: public SOE
 {

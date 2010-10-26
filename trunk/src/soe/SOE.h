@@ -26,15 +26,18 @@
 #ifndef _SOE_H
 #define _SOE_H
 
-#include <Analysis.h>
-#include <AnalysisObject.h>
-#include <iostream>
+// C++ system files
 #include <cmath>
-#include <Matrix.h>
-#include <Vector.h>
-#include <Containers.h>
-#include <Lapack.h>
+#include <iostream>
 #include <valarray>
+
+// Project files (alphabetically)
+#include "analysis/Analysis.h"
+#include "analysis/AnalysisObject.h"
+#include "numeric/Lapack.h"
+#include "numeric/Matrix.h"
+#include "numeric/Vector.h"
+#include "containers/Containers.h"
 
 // Forward declarations
 class Analysis;

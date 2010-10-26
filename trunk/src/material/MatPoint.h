@@ -26,9 +26,9 @@
 #ifndef _MATPOINT_H
 #define _MATPOINT_H
 
-#include <DomainObject.h>
-#include <MultiaxialMaterial.h>
-#include <InitialStresses.h>
+#include "domain/DomainObject.h"
+#include "loadcase/InitialStresses.h"
+#include "material/MultiaxialMaterial.h"
 
 class MatPoint: public DomainObject
 {

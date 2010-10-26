@@ -26,9 +26,11 @@
 #ifndef _TRACKER_H
 #define _TRACKER_H
 
+// C++ system files
 #include <vector>
 #include <string>
 
+// namespaces
 using std::string;
 using std::vector;
 

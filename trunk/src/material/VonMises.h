@@ -26,7 +26,7 @@
 #ifndef _VONMISES_H
 #define _VONMISES_H
 
-#include <MultiaxialElastoPlastic.h>
+#include "material/MultiaxialElastoPlastic.h"
 
 /**
  * The Von-Mises Material Class.

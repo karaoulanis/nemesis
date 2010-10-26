@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <GroupState.h>
+#include "loadcase/GroupState.h"
 
 int GroupState::nGroupStates=0;
 

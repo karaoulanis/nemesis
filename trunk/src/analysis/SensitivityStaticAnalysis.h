@@ -27,12 +27,12 @@
 #ifndef _SENSITIVITYSTATICANALYSIS_H
 #define _SENSITIVITYSTATICANALYSIS_H
 
-#include <AnalysisType.h>
-#include <EliminationImposer.h>
-#include <LinearAlgorithm.h>
-#include <LoadControl.h>
-#include <FullLinearSOE.h>
-#include <SensitivityControl.h>
+#include "algorithm/LinearAlgorithm.h"
+#include "analysis/AnalysisType.h"
+#include "control/SensitivityControl.h"
+#include "control/LoadControl.h"
+#include "imposer/EliminationImposer.h"
+#include "soe/FullLinearSOE.h"
 
 class Analysis;
 class SensitivityStaticAnalysis :public AnalysisType

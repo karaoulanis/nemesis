@@ -26,7 +26,7 @@
 #ifndef _LINEAREQUIVALENTEL_H
 #define _LINEAREQUIVALENTEL_H
 
-#include <EvolutionLaw.h>
+#include "material/EvolutionLaw.h"
 
 /**
  * The Linear Equivalent Evolution Law Class.

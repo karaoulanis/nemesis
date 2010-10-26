@@ -27,18 +27,18 @@
 #define _DOMAIN_H
 
 #include <map>
-#include <Node.h>
-#include <Element.h>
-#include <Group.h>
-#include <Material.h>
-#include <Constraint.h>
-#include <Crack.h>
-#include <CrossSection.h>
-#include <LoadCase.h>
-#include <DomainObject.h>
-#include <Database.h>
-#include <SQLiteDatabase.h>
-#include <SException.h>
+#include "constraints/Constraint.h"
+#include "crack/Crack.h"
+#include "crosssection/CrossSection.h"
+#include "database/Database.h"
+#include "database/SQLiteDatabase.h"
+#include "domain/DomainObject.h"
+#include "elements/Element.h"
+#include "group/Group.h"
+#include "loadcase/LoadCase.h"
+#include "material/Material.h"
+#include "node/Node.h"
+#include "exception/SException.h"
 
 // Forward declarations
 class Element;

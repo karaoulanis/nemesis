@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Timoshenko2d.h>
+#include "elements/Timoshenko2d.h"
 
 Timoshenko2d::Timoshenko2d()
 {

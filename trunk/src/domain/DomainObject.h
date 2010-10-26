@@ -26,8 +26,8 @@
 #ifndef _DOMAINOBJECT_H
 #define _DOMAINOBJECT_H
 
-#include <FEObject.h>
 #include <iostream>
+#include "feobject/FEObject.h"
 
 // Forward declarations
 class Domain;

@@ -24,11 +24,12 @@
 //*****************************************************************************
 #ifndef _MATRIX_H
 #define _MATRIX_H
+
 // Included files
-#include <ArrayCheck.h>
 #include <exception>
-#include <Vector.h>
-#include <LU.h>
+#include "numeric/ArrayCheck.h"
+#include "numeric/LU.h"
+#include "numeric/Vector.h"
 
 using namespace LU;
 
@@ -476,26 +477,6 @@ public:
 		return res;	
 	}
 	/**
-	 * Implements Vector1*Transpose(Vector).
-	 * Size checking is provided for the debug version.
-	 * It is implemented here to avoid conflicts.
-	 * A temporary object is created.
-	 * @param v1 The column vector.
-	 * @param v2 The row (transposed) vector.
-	 * @return   Created Matrix.
-	 */
-	inline friend Matrix VVT(const Vector& v1,const Vector& v2)
-	{
-		#ifdef _DEBUG
-		array_size_check(v1.size(),v2.size());
-		#endif		
-		Matrix res(v1.size(),v2.size());
-		for(int i=0;i<v1.size();i++)
-			for(int j=0;j<v2.size();j++)
-				res.data_[i*res.cols_+j]=v1[i]*v2[j];
-		return res;
-	}
-	/**
 	 * Appends the entries of a Matrix m.
 	 * Range checking is provided for the debug version.
 	 * @param m   The Matrix to be copied.
@@ -690,5 +671,25 @@ inline Matrix Identity(int n)
 	Matrix res(n,n,0.);
 	for(int i=0;i<n;i++) res(i,i)=1.;
 	return res;
-}	
+}
+/**
+ * Implements Vector1*Transpose(Vector).
+ * Size checking is provided for the debug version.
+ * It is implemented here to avoid conflicts.
+ * A temporary object is created.
+ * @param v1 The column vector.
+ * @param v2 The row (transposed) vector.
+ * @return   Created Matrix.
+ */
+inline Matrix VVT(const Vector& v1,const Vector& v2)
+{
+	#ifdef _DEBUG
+	array_size_check(v1.size(),v2.size());
+	#endif		
+	Matrix res(v1.size(),v2.size());
+	for(int i=0;i<v1.size();i++)
+		for(int j=0;j<v2.size();j++)
+			res(i,j)=v1[i]*v2[j];
+	return res;
+}
 #endif

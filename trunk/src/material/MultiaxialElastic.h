@@ -26,7 +26,7 @@
 #ifndef _MULTIAXIALELASTIC_H
 #define _MULTIAXIALELASTIC_H
 
-#include <MultiaxialMaterial.h>
+#include "material/MultiaxialMaterial.h"
 
 /**
  * The Elastic Class.

@@ -26,20 +26,21 @@
 #ifndef _NEMESIS_DEBUG
 #define _NEMESIS_DEBUG
 
-#include <fstream>
+// C++ system files
 #include <iostream>
+#include <fstream>
 #include <string>
-#include <Matrix.h>
-#include <Vector.h>
-#include <string>
-using namespace std;
+
+// Project files (alphabetically)
+#include "numeric/Matrix.h"
+#include "numeric/Vector.h"
 
 class LogFile
 {
 private:
-	ofstream log;
+	std::ofstream log;
 public:
-	LogFile(const char* name)						{log.open(name,ios_base::out);}
+	LogFile(const char* name)						{log.open(name,std::ios_base::out);}
 	~LogFile()										{log.close();}
 	LogFile& operator<<(char c)						{log<<c; return *this;}
 	LogFile& operator<<(unsigned char c)			{log<<c; return *this;}
@@ -57,14 +58,14 @@ public:
 	LogFile& operator<<(double d)					{log<<d; return *this;}
 	LogFile& operator<<(float d)					{log<<d; return *this;}
 	LogFile& operator<<(bool b)						{log<<b; return *this;}
-	LogFile& operator<<(string s)					{log<<s; return *this;}
+	LogFile& operator<<(std::string s)				{log<<s; return *this;}
 	LogFile& operator<<(LogFile& (*f)(LogFile&))	{f(*this);return *this;}
 	LogFile& operator>>(LogFile& (*f)(LogFile&))	{f(*this);return *this;}
 	LogFile& flush()								{log.flush();return *this;}
 	void width(int n)								{log.width(n);}
 	void fill(int n)								{log.fill(n);}
-	void write(const Vector& v)						{log<<v<<endl;}
-	void write(const Matrix& m)						{log<<m<<endl;}
+	void write(const Vector& v)						{log<<v<<std::endl;}
+	void write(const Matrix& m)						{log<<m<<std::endl;}
 };
 
 //namespace Counters

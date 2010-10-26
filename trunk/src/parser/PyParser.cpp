@@ -23,9 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <PyParser.h>
-#include <SException.h>
+#include "parser/PyParser.h"
 #include <sstream>
+#include "exception/SException.h"
 
 /******************************************************************************
 * Static variables

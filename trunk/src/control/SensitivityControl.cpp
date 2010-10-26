@@ -24,7 +24,7 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#include <SensitivityControl.h>
+#include "control/SensitivityControl.h"
 
 SensitivityControl::SensitivityControl()
 {

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include <Quad4DispAxisymmetric.h>
+#include "elements/Quad4DispAxisymmetric.h"
 
 Quad4DispAxisymmetric::Quad4DispAxisymmetric()
 {
