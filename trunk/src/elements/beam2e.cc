@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "elements/Beam2e.h"
+#include "elements/beam2e.h"
 
 Beam2e::Beam2e()
 {

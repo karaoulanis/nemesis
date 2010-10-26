@@ -28,8 +28,8 @@
 
 #include <fstream>
 #include <sqlite3.h>
-#include "containers/Containers.h"
-#include "database/Database.h"
+#include "containers/containers.h"
+#include "database/database.h"
 
 class SQLiteDatabase: public Database
 {

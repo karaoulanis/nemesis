@@ -26,7 +26,7 @@
 #ifndef _STATICCONTROL_H
 #define _STATICCONTROL_H
 
-#include "control/Control.h"
+#include "control/control.h"
 
 /**
  * The StaticControl Class.

@@ -29,7 +29,7 @@
 #include "algorithm/linear_algorithm.h"
 #include "analysis/analysis_type.h"
 #include "control/load_control.h"
-#include "imposer/EliminationImposer.h"
+#include "imposer/elimination_imposer.h"
 #include "soe/FullLinearSOE.h"
 
 class Analysis;

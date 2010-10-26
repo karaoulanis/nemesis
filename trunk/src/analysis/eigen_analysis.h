@@ -29,7 +29,7 @@
 
 #include "analysis/analysis_type.h"
 #include "control/eigen_control.h"
-#include "imposer/EliminationImposer.h"
+#include "imposer/elimination_imposer.h"
 #include "soe/EigenSOE.h"
 
 class Analysis;

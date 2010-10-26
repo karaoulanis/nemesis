@@ -33,12 +33,12 @@
 #include "database/database.h"
 #include "database/sqlite_database.h"
 #include "domain/domain_object.h"
-#include "elements/Element.h"
-#include "group/Group.h"
-#include "loadcase/LoadCase.h"
-#include "material/Material.h"
-#include "node/Node.h"
-#include "exception/SException.h"
+#include "elements/element.h"
+#include "group/group.h"
+#include "loadcase/loadcase.h"
+#include "material/material.h"
+#include "node/node.h"
+#include "exception/sexception.h"
 
 // Forward declarations
 class Element;

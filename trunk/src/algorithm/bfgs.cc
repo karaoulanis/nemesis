@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "algorithm/BFGS.h"
+#include "algorithm/bfgs.h"
 
 BFGS::BFGS(int m_)
 :m(m_),isLineSearchActive(false)

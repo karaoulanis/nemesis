@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include <iostream>
-#include "feobject/FEObject.h"
+#include "feobject/fe_object.h"
 
 FEObject::FEObject()
 {

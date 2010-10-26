@@ -27,9 +27,9 @@
 #define _FEOBJECT_H
 
 #include <vector>
-#include "database/Database.h"
-#include "database/Packet.h"
-#include "feobject/FEObjectTags.h"
+#include "database/database.h"
+#include "database/packet.h"
+#include "feobject/fe_object_tags.h"
 
 
 class FEObject

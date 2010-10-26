@@ -25,7 +25,7 @@
 
 #include <cstring>
 #include <fstream>
-#include "database/Database.h"
+#include "database/database.h"
 
 using namespace std;
 

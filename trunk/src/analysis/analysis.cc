@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "analysis/Analysis.h"
+#include "analysis/analysis.h"
 
 Analysis::Analysis(Domain* pDomain)
 :M(pDomain),theDomain(pDomain)

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "control/Newmark.h"
+#include "control/newmark.h"
 #include <cmath>
 
 /**

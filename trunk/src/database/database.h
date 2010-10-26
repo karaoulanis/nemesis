@@ -26,7 +26,7 @@
 #ifndef _DATABASE_H
 #define _DATABASE_H
 
-#include "database/Packet.h"
+#include "database/packet.h"
 
 class Database
 {

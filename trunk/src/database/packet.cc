@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-// Corresponding h file
-#include "database/Packet.h"
+// Corresponding header file
+#include "database/packet.h"
 
 // C++ system files
 #include <iostream>
