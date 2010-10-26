@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 // Included files
-#include "constraints/Constraint.h"
+#include "constraints/constraint.h"
 
 // Initialize variables
 int Constraint::nConstraints=0;
