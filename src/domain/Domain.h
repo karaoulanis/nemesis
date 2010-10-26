@@ -27,7 +27,7 @@
 #define _DOMAIN_H
 
 #include <map>
-#include "constraints/Constraint.h"
+#include "constraints/constraint.h"
 #include "crack/Crack.h"
 #include "crosssection/CrossSection.h"
 #include "database/Database.h"
