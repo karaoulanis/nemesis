@@ -1000,19 +1000,19 @@
 			Name="domain"
 			>
 			<File
-				RelativePath="..\..\src\domain\Domain.cpp"
+				RelativePath="..\..\src\domain\domain.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\domain\Domain.h"
+				RelativePath="..\..\src\domain\domain.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\domain\DomainObject.cpp"
+				RelativePath="..\..\src\domain\domain_object.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\domain\DomainObject.h"
+				RelativePath="..\..\src\domain\domain_object.h"
 				>
 			</File>
 		</Filter>
@@ -2100,27 +2100,27 @@
 			Name="database"
 			>
 			<File
-				RelativePath="..\..\src\database\Database.cpp"
+				RelativePath="..\..\src\database\database.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\database\Database.h"
+				RelativePath="..\..\src\database\database.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\database\Packet.cpp"
+				RelativePath="..\..\src\database\packet.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\database\Packet.h"
+				RelativePath="..\..\src\database\packet.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\database\SQLiteDatabase.cpp"
+				RelativePath="..\..\src\database\sqlite_database.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\database\SQLiteDatabase.h"
+				RelativePath="..\..\src\database\sqlite_database.h"
 				>
 			</File>
 		</Filter>
@@ -2164,11 +2164,11 @@
 			Name="exception"
 			>
 			<File
-				RelativePath="..\..\src\exception\SException.cpp"
+				RelativePath="..\..\src\exception\sexception.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\exception\SException.h"
+				RelativePath="..\..\src\exception\sexception.h"
 				>
 			</File>
 		</Filter>

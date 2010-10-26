@@ -27,9 +27,9 @@
 #define _ELEMENT_H
 
 // Included Files
-#include "containers/Containers.h"
-#include "domain/Domain.h"
-#include "domain/DomainObject.h"
+#include "containers/containers.h"
+#include "domain/domain.h"
+#include "domain/domain_object.h"
 #include "group/Group.h"
 #include "loadcase/ElementalLoad.h"
 #include "loadcase/InitialStresses.h"

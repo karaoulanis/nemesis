@@ -25,7 +25,7 @@
 
 #include <iostream>
 #include <stdio.h>
-#include "database/SQLiteDatabase.h"
+#include "database/sqlite_database.h"
 #include "exception/SException.h"
 
 using namespace std;

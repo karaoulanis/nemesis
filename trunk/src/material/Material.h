@@ -26,8 +26,8 @@
 #ifndef _MATERIAL_H
 #define _MATERIAL_H
 
-#include "domain/Domain.h"
-#include "domain/DomainObject.h"
+#include "domain/domain.h"
+#include "domain/domain_object.h"
 #include "numeric/Vector.h"
 #include "tracker/Tracker.h"
 

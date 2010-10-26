@@ -27,8 +27,8 @@
 #define _LOADCASE_H
 
 // Project files (alphabetically)
-#include "containers/Containers.h"
-#include "domain/DomainObject.h"
+#include "containers/containers.h"
+#include "domain/domain_object.h"
 #include "loadcase/ElementalLoad.h"
 #include "loadcase/ElementSensitivityParameter.h"
 #include "loadcase/GroupState.h"

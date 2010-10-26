@@ -30,8 +30,8 @@
 #include <vector>
 
 // Project files
-#include "domain/Domain.h"
-#include "domain/DomainObject.h"
+#include "domain/domain.h"
+#include "domain/domain_object.h"
 #include "node/Node.h"
 
 // Forward declarations
