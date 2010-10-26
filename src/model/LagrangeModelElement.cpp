@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "model/LagrangeModelElement.h"
-#include "main/NemesisDebug.h"
+#include "main/nemesis_debug.h"
 
 /**
  * Default constructor

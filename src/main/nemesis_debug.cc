@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "main/NemesisDebug.h"
+#include "main/nemesis_debug.h"
 
 using std::cout;
 using std::endl;
