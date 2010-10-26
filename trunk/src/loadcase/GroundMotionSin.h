@@ -29,8 +29,8 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "elements/Element.h"
-#include "loadcase/Load.h"
+#include "elements/element.h"
+#include "loadcase/load.h"
 
 class GroundMotionSin: public Load
 {

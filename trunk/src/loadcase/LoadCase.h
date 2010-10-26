@@ -33,7 +33,7 @@
 #include "loadcase/ElementSensitivityParameter.h"
 #include "loadcase/GroupState.h"
 #include "loadcase/InitialCondition.h"
-#include "loadcase/Load.h"
+#include "loadcase/load.h"
 #include "loadcase/NodalLoad.h"
 
 // Forward declarations
