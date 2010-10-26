@@ -26,7 +26,7 @@
 #ifndef _LINEARALGORITHM_H
 #define _LINEARALGORITHM_H
 
-#include "algorithm/Algorithm.h"
+#include "algorithm/algorithm.h"
 
 class LinearAlgorithm :public Algorithm
 {

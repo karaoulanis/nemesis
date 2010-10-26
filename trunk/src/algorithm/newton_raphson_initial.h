@@ -26,7 +26,7 @@
 #ifndef _NEWTONRAPHSONALGORITHMINITIAL_H
 #define _NEWTONRAPHSONALGORITHMINITIAL_H
 
-#include "algorithm/Algorithm.h"
+#include "algorithm/algorithm.h"
 
 class NewtonRaphsonInitial :public Algorithm
 {

@@ -26,7 +26,7 @@
 #ifndef _BFGS_H
 #define _BFGS_H
 
-#include "algorithm/Algorithm.h"
+#include "algorithm/algorithm.h"
 
 class BFGS :public Algorithm
 {
