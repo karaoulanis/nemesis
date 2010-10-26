@@ -26,7 +26,7 @@
 #ifndef _NODALLOADCONSTANT_H
 #define _NODALLOADCONSTANT_H
 
-#include "loadcase/NodalLoad.h"
+#include "loadcase/nodal_load.h"
 
 class NodalLoadConstant: public NodalLoad
 {

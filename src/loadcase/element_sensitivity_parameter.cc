@@ -24,7 +24,7 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#include "loadcase/ElementSensitivityParameter.h"
+#include "loadcase/element_sensitivity_parameter.h"
 
 int ElementSensitivityParameter::nSensitivityParameters=0;
 

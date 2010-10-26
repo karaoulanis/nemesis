@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "loadcase/InitialVelocity.h"
+#include "loadcase/initial_velocity.h"
 
 InitialVelocity::InitialVelocity()
 {

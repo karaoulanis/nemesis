@@ -28,7 +28,7 @@
 
 // Included files
 #include "domain/domain_object.h"
-#include "loadcase/GroupState.h"
+#include "loadcase/group_state.h"
 
 class GroupState;
 

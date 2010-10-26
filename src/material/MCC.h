@@ -27,7 +27,7 @@
 #define _MCC_H
 
 #include "material/Surface.h"
-#include "numeric/Vector.h"
+#include "numeric/vector.h"
 
 class MCC: public Surface
 {

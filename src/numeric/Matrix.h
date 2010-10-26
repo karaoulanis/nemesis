@@ -29,7 +29,7 @@
 #include <exception>
 #include "numeric/ArrayCheck.h"
 #include "numeric/LU.h"
-#include "numeric/Vector.h"
+#include "numeric/vector.h"
 
 using namespace LU;
 

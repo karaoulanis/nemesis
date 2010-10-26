@@ -32,8 +32,8 @@
 #include <string>
 
 // Project files (alphabetically)
-#include "numeric/Matrix.h"
-#include "numeric/Vector.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 
 class LogFile
 {

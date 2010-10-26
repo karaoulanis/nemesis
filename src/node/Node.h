@@ -31,9 +31,9 @@
 #include "containers/containers.h"
 #include "domain/domain.h"
 #include "domain/domain_object.h"
-#include "elements/Element.h"
-#include "numeric/Matrix.h"
-#include "numeric/Vector.h"
+#include "elements/element.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 #include "tracker/Tracker.h"
 
 class Domain;

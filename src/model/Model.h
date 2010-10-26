@@ -35,8 +35,7 @@
 #include <boost/graph/graphviz.hpp>
 
 #include "analysis/analysis_object.h"
-#include "domain/Domain.h"
-#include "loadcase/ElementalLoad.h"
+#include "domain/domain.h"
 #include "model/ModelElement.h"
 #include "model/ModelNode.h"
 #include "model/StandardModelElement.h"

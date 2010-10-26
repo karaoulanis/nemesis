@@ -1104,41 +1104,41 @@
 			Name="loadcase"
 			>
 			<File
-				RelativePath="..\..\src\loadcase\LoadCase.cpp"
+				RelativePath="..\..\src\loadcase\loadcase.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\loadcase\LoadCase.h"
+				RelativePath="..\..\src\loadcase\loadcase.h"
 				>
 			</File>
 			<Filter
 				Name="loads"
 				>
 				<File
-					RelativePath="..\..\src\loadcase\Load.cpp"
+					RelativePath="..\..\src\loadcase\load.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\Load.h"
+					RelativePath="..\..\src\loadcase\load.h"
 					>
 				</File>
 				<Filter
 					Name="elementalLoad"
 					>
 					<File
-						RelativePath="..\..\src\loadcase\ElementalLoad.cpp"
+						RelativePath="..\..\src\loadcase\elemental_load.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\ElementalLoad.h"
+						RelativePath="..\..\src\loadcase\elemental_load.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\UniaxialLoad.cpp"
+						RelativePath="..\..\src\loadcase\uniaxial_load.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\UniaxialLoad.h"
+						RelativePath="..\..\src\loadcase\uniaxial_load.h"
 						>
 					</File>
 				</Filter>
@@ -1146,35 +1146,35 @@
 					Name="nodalLoad"
 					>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoad.cpp"
+						RelativePath="..\..\src\loadcase\nodal_load.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoad.h"
+						RelativePath="..\..\src\loadcase\nodal_load.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoadConstant.cpp"
+						RelativePath="..\..\src\loadcase\nodal_load_constant.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoadConstant.h"
+						RelativePath="..\..\src\loadcase\nodal_load_constant.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoadLinear.cpp"
+						RelativePath="..\..\src\loadcase\nodal_load_linear.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoadLinear.h"
+						RelativePath="..\..\src\loadcase\nodal_load_linear.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoadSin.cpp"
+						RelativePath="..\..\src\loadcase\nodal_load_sin.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\NodalLoadSin.h"
+						RelativePath="..\..\src\loadcase\nodal_load_sin.h"
 						>
 					</File>
 				</Filter>
@@ -1182,19 +1182,19 @@
 					Name="GroundMotion"
 					>
 					<File
-						RelativePath="..\..\src\loadcase\GroundMotionFile.cpp"
+						RelativePath="..\..\src\loadcase\ground_motion_file.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\GroundMotionFile.h"
+						RelativePath="..\..\src\loadcase\ground_motion_file.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\GroundMotionSin.cpp"
+						RelativePath="..\..\src\loadcase\ground_motion_sin.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\loadcase\GroundMotionSin.h"
+						RelativePath="..\..\src\loadcase\ground_motion_sin.h"
 						>
 					</File>
 				</Filter>
@@ -1203,35 +1203,35 @@
 				Name="initialConditions"
 				>
 				<File
-					RelativePath="..\..\src\loadcase\InitialCondition.cpp"
+					RelativePath="..\..\src\loadcase\initial_condition.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\InitialCondition.h"
+					RelativePath="..\..\src\loadcase\initial_condition.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\InitialDisplacement.cpp"
+					RelativePath="..\..\src\loadcase\initial_displacement.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\InitialDisplacement.h"
+					RelativePath="..\..\src\loadcase\initial_displacement.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\InitialStresses.cpp"
+					RelativePath="..\..\src\loadcase\initial_stresses.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\InitialStresses.h"
+					RelativePath="..\..\src\loadcase\initial_stresses.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\InitialVelocity.cpp"
+					RelativePath="..\..\src\loadcase\initial_velocity.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\InitialVelocity.h"
+					RelativePath="..\..\src\loadcase\initial_velocity.h"
 					>
 				</File>
 			</Filter>
@@ -1239,11 +1239,11 @@
 				Name="groupState"
 				>
 				<File
-					RelativePath="..\..\src\loadcase\GroupState.cpp"
+					RelativePath="..\..\src\loadcase\group_state.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\GroupState.h"
+					RelativePath="..\..\src\loadcase\group_state.h"
 					>
 				</File>
 			</Filter>
@@ -1251,11 +1251,11 @@
 				Name="senstivityParameter"
 				>
 				<File
-					RelativePath="..\..\src\loadcase\ElementSensitivityParameter.cpp"
+					RelativePath="..\..\src\loadcase\element_sensitivity_parameter.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\loadcase\ElementSensitivityParameter.h"
+					RelativePath="..\..\src\loadcase\element_sensitivity_parameter.h"
 					>
 				</File>
 			</Filter>

@@ -26,8 +26,8 @@
 #ifndef _SURFACE_H
 #define _SURFACE_H
 
-#include "numeric/Matrix.h"
-#include "numeric/Vector.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 
 class Surface
 {

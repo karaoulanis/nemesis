@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "loadcase/LoadCase.h"
+#include "loadcase/loadcase.h"
 
 /**
  * Default constructor.

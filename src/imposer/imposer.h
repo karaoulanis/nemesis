@@ -28,7 +28,7 @@
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "model/Model.h"
+#include "model/model.h"
 #include "model/StandardModelElement.h"
 #include "model/StandardModelNode.h"
 

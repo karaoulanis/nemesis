@@ -29,12 +29,12 @@
 // Project files (alphabetically)
 #include "containers/containers.h"
 #include "domain/domain_object.h"
-#include "loadcase/ElementalLoad.h"
-#include "loadcase/ElementSensitivityParameter.h"
-#include "loadcase/GroupState.h"
-#include "loadcase/InitialCondition.h"
+#include "loadcase/elemental_load.h"
+#include "loadcase/element_sensitivity_parameter.h"
+#include "loadcase/group_state.h"
+#include "loadcase/initial_condition.h"
 #include "loadcase/load.h"
-#include "loadcase/NodalLoad.h"
+#include "loadcase/nodal_load.h"
 
 // Forward declarations
 class ElementSensitivityParameter;
