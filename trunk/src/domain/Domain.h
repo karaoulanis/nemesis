@@ -28,8 +28,8 @@
 
 #include <map>
 #include "constraints/constraint.h"
-#include "crack/Crack.h"
-#include "crosssection/CrossSection.h"
+#include "crack/crack.h"
+#include "crosssection/cross_section.h"
 #include "database/Database.h"
 #include "database/SQLiteDatabase.h"
 #include "domain/DomainObject.h"

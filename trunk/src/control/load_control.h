@@ -26,7 +26,7 @@
 #ifndef _LOADCONTROL_H
 #define _LOADCONTROL_H
 
-#include "control/StaticControl.h"
+#include "control/static_control.h"
 
 /**
  * The LoadControl Class.

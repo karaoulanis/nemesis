@@ -28,13 +28,13 @@
 
 #include "algorithm/algorithm.h"
 #include "analysis/analysis_type.h"
-#include "control/Control.h"
-#include "convergence/ConvergenceNorm.h"
-#include "domain/Domain.h"
-#include "imposer/Imposer.h"
-#include "model/Model.h"
-#include "reorderer/Reorderer.h"
-#include "soe/SOE.h"
+#include "control/control.h"
+#include "convergence/convergence_norm.h"
+#include "domain/domain.h"
+#include "imposer/imposer.h"
+#include "model/model.h"
+#include "reorderer/reorderer.h"
+#include "soe/soe.h"
 
 class Algorithm;
 class AnalysisType;

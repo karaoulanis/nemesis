@@ -28,7 +28,7 @@
 #ifndef _ARCLENGTHUNP_H
 #define _ARCLENGTHUNP_H
 
-#include "control/StaticControl.h"
+#include "control/static_control.h"
 
 /**
  * The ArcLengthUNP Class.

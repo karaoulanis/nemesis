@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "control/LoadControl.h"
+#include "control/load_control.h"
 #include <cmath>
 
 /**

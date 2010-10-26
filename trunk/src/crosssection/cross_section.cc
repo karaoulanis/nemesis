@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "crosssection/CrossSection.h"
+#include "crosssection/cross_section.h"
 #include "numeric/Numeric.h"
 
 RectangularCrossSection::RectangularCrossSection(int ID,double width,double height)

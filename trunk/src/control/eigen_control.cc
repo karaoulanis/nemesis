@@ -24,7 +24,7 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#include "control/EigenControl.h"
+#include "control/eigen_control.h"
 #include "soe/EigenSOE.h"
 /**
  * Constructor.
