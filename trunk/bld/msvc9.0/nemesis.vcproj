@@ -804,15 +804,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\main\NemesisConfig.h"
+				RelativePath="..\..\src\main\nemesis_config.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\main\NemesisDebug.cpp"
+				RelativePath="..\..\src\main\nemesis_debug.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\main\NemesisDebug.h"
+				RelativePath="..\..\src\main\nemesis_debug.h"
 				>
 			</File>
 		</Filter>
