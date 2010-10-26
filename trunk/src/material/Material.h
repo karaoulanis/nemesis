@@ -28,7 +28,7 @@
 
 #include "domain/domain.h"
 #include "domain/domain_object.h"
-#include "numeric/Vector.h"
+#include "numeric/vector.h"
 #include "tracker/Tracker.h"
 
 class Domain;

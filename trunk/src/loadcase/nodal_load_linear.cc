@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "loadcase/NodalLoadLinear.h"
+#include "loadcase/nodal_load_linear.h"
 
 NodalLoadLinear::NodalLoadLinear()
 {

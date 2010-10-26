@@ -26,7 +26,7 @@
 #ifndef _TETRAEDRON4DISP_H
 #define _TETRAEDRON4DISP_H
 
-#include "elements/Element.h"
+#include "elements/element.h"
 #include "material/MatPoint.h"
 
 class Tetrahedron4Disp: public Element

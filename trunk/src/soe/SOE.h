@@ -35,8 +35,8 @@
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 #include "numeric/Lapack.h"
-#include "numeric/Matrix.h"
-#include "numeric/Vector.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 #include "containers/Containers.h"
 
 // Forward declarations

@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-#include "exception/SException.h"
+#include "exception/sexception.h"
 
 SException::SException(const char* format,...)
 {

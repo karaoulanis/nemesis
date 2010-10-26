@@ -26,7 +26,7 @@
 #ifndef _NODALLOADSIN_H
 #define _NODALLOADSIN_H
 
-#include "loadcase/NodalLoad.h"
+#include "loadcase/nodal_load.h"
 
 class NodalLoadSin: public NodalLoad
 {

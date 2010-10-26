@@ -26,7 +26,7 @@
 #ifndef _TRIANGLE3XFEM_H
 #define _TRIANGLE3XFEM_H
 
-#include "elements/Element.h"
+#include "elements/element.h"
 #include "material/MatPoint.h"
 
 class Triangle3XFem: public Element

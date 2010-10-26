@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "loadcase/NodalLoad.h"
+#include "loadcase/nodal_load.h"
 
 NodalLoad::NodalLoad()
 {

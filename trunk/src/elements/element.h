@@ -30,12 +30,12 @@
 #include "containers/containers.h"
 #include "domain/domain.h"
 #include "domain/domain_object.h"
-#include "group/Group.h"
-#include "loadcase/ElementalLoad.h"
-#include "loadcase/InitialStresses.h"
-#include "node/Node.h"
-#include "numeric/Matrix.h"
-#include "numeric/Vector.h"
+#include "group/group.h"
+#include "loadcase/elemental_load.h"
+#include "loadcase/initial_stresses.h"
+#include "node/node.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 
 // Forward Declerations
 class Domain;

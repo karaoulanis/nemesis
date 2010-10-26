@@ -28,7 +28,7 @@
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "numeric/Vector.h"
+#include "numeric/vector.h"
 
 class ConvergenceNorm: public AnalysisObject
 {
