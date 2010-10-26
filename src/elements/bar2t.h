@@ -26,7 +26,7 @@
 #ifndef _BAR2T_H
 #define _BAR2T_H
 
-#include "elements/Bar.h"
+#include "elements/bar.h"
 
 class Bar2t: public Bar
 {

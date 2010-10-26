@@ -940,35 +940,35 @@
 			Name="imposer"
 			>
 			<File
-				RelativePath="..\..\src\imposer\EliminationImposer.cpp"
+				RelativePath="..\..\src\imposer\elimination_imposer.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\imposer\EliminationImposer.h"
+				RelativePath="..\..\src\imposer\elimination_imposer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\imposer\Imposer.cpp"
+				RelativePath="..\..\src\imposer\imposer.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\imposer\Imposer.h"
+				RelativePath="..\..\src\imposer\imposer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\imposer\LagrangeImposer.cpp"
+				RelativePath="..\..\src\imposer\lagrange_imposer.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\imposer\LagrangeImposer.h"
+				RelativePath="..\..\src\imposer\lagrange_imposer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\imposer\PenaltyImposer.cpp"
+				RelativePath="..\..\src\imposer\penalty_imposer.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\imposer\PenaltyImposer.h"
+				RelativePath="..\..\src\imposer\penalty_imposer.h"
 				>
 			</File>
 		</Filter>
@@ -2128,15 +2128,15 @@
 			Name="feobject"
 			>
 			<File
-				RelativePath="..\..\src\feobject\FEObject.cpp"
+				RelativePath="..\..\src\feobject\fe_object.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\feobject\FEObject.h"
+				RelativePath="..\..\src\feobject\fe_object.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\feobject\FEObjectTags.h"
+				RelativePath="..\..\src\feobject\fe_object_tags.h"
 				>
 			</File>
 		</Filter>
@@ -2220,11 +2220,11 @@
 			Name="group"
 			>
 			<File
-				RelativePath="..\..\src\group\Group.cpp"
+				RelativePath="..\..\src\group\group.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\group\Group.h"
+				RelativePath="..\..\src\group\group.h"
 				>
 			</File>
 		</Filter>

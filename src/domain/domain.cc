@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "domain/Domain.h"
+#include "domain/domain.h"
 
 /**
  * Default Constructor.

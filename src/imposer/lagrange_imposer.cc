@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "imposer/LagrangeImposer.h"
+#include "imposer/lagrange_imposer.h"
 
 LagrangeImposer::LagrangeImposer()
 	:Imposer()

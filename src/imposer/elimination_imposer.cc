@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "imposer/EliminationImposer.h"
+#include "imposer/elimination_imposer.h"
 
 EliminationImposer::EliminationImposer()
 	:Imposer()

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "imposer/PenaltyImposer.h"
+#include "imposer/penalty_imposer.h"
 
 PenaltyImposer::PenaltyImposer(double amf)
 	:Imposer()

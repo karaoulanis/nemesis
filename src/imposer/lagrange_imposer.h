@@ -26,7 +26,7 @@
 #ifndef _LAGRANGEIMPOSER_H
 #define _LAGRANGEIMPOSER_H
 
-#include "imposer/Imposer.h"
+#include "imposer/imposer.h"
 #include "model/LagrangeModelElement.h"
 #include "model/LagrangeModelNode.h"
 

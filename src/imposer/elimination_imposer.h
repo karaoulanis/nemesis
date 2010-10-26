@@ -26,7 +26,7 @@
 #ifndef _ELIMINATIONIMPOSER_H
 #define _ELIMINATIONIMPOSER_H
 
-#include "imposer/Imposer.h"
+#include "imposer/imposer.h"
 #include "model/EliminationModelElement.h"
 #include "model/EliminationModelNode.h"
 

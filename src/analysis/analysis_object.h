@@ -26,7 +26,7 @@
 #ifndef _ANALYSISOBJECT_H
 #define _ANALYSISOBJECT_H
 
-#include "feobject/FEObject.h"
+#include "feobject/fe_object.h"
 
 // Forward declarations
 class Analysis;
