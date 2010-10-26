@@ -26,8 +26,8 @@
 #ifndef _CONTROL_H
 #define _CONTROL_H
 
-#include "analysis/Analysis.h"
-#include "analysis/AnalysisObject.h"
+#include "analysis/analysis.h"
+#include "analysis/analysis_object.h"
 #include "model/ModelElement.h"
 #include "model/ModelNode.h"
 

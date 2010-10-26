@@ -26,8 +26,8 @@
 #ifndef _CONVERGENCENORM_H
 #define _CONVERGENCENORM_H
 
-#include "analysis/Analysis.h"
-#include "analysis/AnalysisObject.h"
+#include "analysis/analysis.h"
+#include "analysis/analysis_object.h"
 #include "numeric/Vector.h"
 
 class ConvergenceNorm: public AnalysisObject

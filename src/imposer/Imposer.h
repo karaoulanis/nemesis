@@ -26,8 +26,8 @@
 #ifndef _IMPOSER_H
 #define _IMPOSER_H
 
-#include "analysis/Analysis.h"
-#include "analysis/AnalysisObject.h"
+#include "analysis/analysis.h"
+#include "analysis/analysis_object.h"
 #include "model/Model.h"
 #include "model/StandardModelElement.h"
 #include "model/StandardModelNode.h"

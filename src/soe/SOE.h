@@ -32,8 +32,8 @@
 #include <valarray>
 
 // Project files (alphabetically)
-#include "analysis/Analysis.h"
-#include "analysis/AnalysisObject.h"
+#include "analysis/analysis.h"
+#include "analysis/analysis_object.h"
 #include "numeric/Lapack.h"
 #include "numeric/Matrix.h"
 #include "numeric/Vector.h"

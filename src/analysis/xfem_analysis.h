@@ -27,7 +27,7 @@
 #define _XFEMANALYSIS_H
 
 #include "algorithm/linear_algorithm.h"
-#include "analysis/AnalysisType.h"
+#include "analysis/analysis_type.h"
 #include "control/LoadControl.h"
 #include "imposer/EliminationImposer.h"
 #include "soe/FullLinearSOE.h"

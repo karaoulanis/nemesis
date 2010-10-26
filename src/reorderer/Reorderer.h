@@ -27,8 +27,8 @@
 #define _REODERER_H
 
 #include <vector>
-#include "analysis/Analysis.h"
-#include "analysis/AnalysisObject.h"
+#include "analysis/analysis.h"
+#include "analysis/analysis_object.h"
 #include "model/Model.h"
 
 class Reorderer: public AnalysisObject

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "analysis/TransientAnalysis.h"
+#include "analysis/transient_analysis.h"
 
 TransientAnalysis::TransientAnalysis()
 	:AnalysisType()

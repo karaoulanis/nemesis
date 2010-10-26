@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "analysis/AnalysisType.h"
+#include "analysis/analysis_type.h"
 
 AnalysisType::AnalysisType()
 {
