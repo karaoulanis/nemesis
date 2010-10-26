@@ -26,8 +26,8 @@
 #ifndef _ANALYSIS_H
 #define _ANALYSIS_H
 
-#include "algorithm/Algorithm.h"
-#include "analysis/AnalysisType.h"
+#include "algorithm/algorithm.h"
+#include "analysis/analysis_type.h"
 #include "control/Control.h"
 #include "convergence/ConvergenceNorm.h"
 #include "domain/Domain.h"
