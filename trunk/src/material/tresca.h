@@ -26,7 +26,7 @@
 #ifndef _TRESCA_H
 #define _TRESCA_H
 
-#include "material/MultiaxialMaterial.h"
+#include "material/multiaxial_material.h"
 
 /**
  * The Tresca Material Class.                                                

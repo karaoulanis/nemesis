@@ -28,7 +28,7 @@
 
 #include "domain/domain_object.h"
 #include "loadcase/initial_stresses.h"
-#include "material/MultiaxialMaterial.h"
+#include "material/multiaxial_material.h"
 
 class MatPoint: public DomainObject
 {

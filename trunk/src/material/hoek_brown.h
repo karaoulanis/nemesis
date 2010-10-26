@@ -26,7 +26,7 @@
 #ifndef _HOEKBROWN_H
 #define _HOEKBROWN_H
 
-#include "material/MultiaxialElastoPlastic.h"
+#include "material/multiaxial_elastic_plastic.h"
 
 /**
  * The Hoek-Brown Class.

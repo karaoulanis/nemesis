@@ -26,8 +26,8 @@
 #ifndef _DRUCKERPRAGERNEW2_H
 #define _DRUCKERPRAGERNEW2_H
 
-#include "material/Hardening.h"
-#include "material/MultiaxialMaterial.h"
+#include "material/hardening.h"
+#include "material/multiaxial_material.h"
 #include "material/ys.h"
 
 /**

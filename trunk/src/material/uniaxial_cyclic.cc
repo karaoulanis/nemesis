@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/UniaxialCyclic.h"
+#include "material/uniaxial_cyclic.h"
 
 UniaxialCyclic::UniaxialCyclic()
 {

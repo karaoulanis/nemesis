@@ -26,7 +26,7 @@
 #ifndef _LADEDUNCAN_H
 #define _LADEDUNCAN_H
 
-#include "material/MultiaxialElastoPlastic.h"
+#include "material/multiaxial_elastic_plastic.h"
 
 /**
  * The Lade-Duncan Material Class.

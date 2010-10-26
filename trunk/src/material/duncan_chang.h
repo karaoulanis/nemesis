@@ -26,7 +26,7 @@
 #ifndef _DUNCANCHANG_H
 #define _DUNCANCHANG_H
 
-#include "material/MultiaxialMaterial.h"
+#include "material/multiaxial_material.h"
 
 /**
  * The Elastic Class.

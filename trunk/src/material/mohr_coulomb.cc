@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "main/nemesis_debug.h"
-#include "material/MohrCoulomb.h"
+#include "material/mohr_coulomb.h"
 
 Matrix MohrCoulomb::C(6,6,0.);
 Matrix MohrCoulomb::C3(3,3,0.);

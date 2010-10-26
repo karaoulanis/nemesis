@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/UniaxialGap.h"
+#include "material/uniaxial_gap.h"
 
 UniaxialGap::UniaxialGap()
 {

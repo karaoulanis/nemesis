@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/LadeDuncan.h"
-#include "material/LadeDuncanSurface.h"
+#include "material/lade_duncan.h"
+#include "material/lade_duncan_surface.h"
 
 LadeDuncan::LadeDuncan()
 {

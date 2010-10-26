@@ -26,7 +26,7 @@
 #ifndef _MODIFIEDCAMCLAY_H
 #define _MODIFIEDCAMCLAY_H
 
-#include "material/MultiaxialElastoPlastic.h"
+#include "material/multiaxial_elastic_plastic.h"
 
 /**
  * The Modified Cam-Clay Material Class.

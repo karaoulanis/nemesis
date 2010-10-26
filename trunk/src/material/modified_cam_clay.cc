@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/ModifiedCamClay.h"
+#include "material/modified_cam_clay.h"
 #include "material/MCC.h"
 
 ModifiedCamClay::ModifiedCamClay()

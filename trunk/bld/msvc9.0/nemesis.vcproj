@@ -1264,54 +1264,54 @@
 			Name="material"
 			>
 			<File
-				RelativePath="..\..\src\material\Material.cpp"
+				RelativePath="..\..\src\material\material.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\material\Material.h"
+				RelativePath="..\..\src\material\material.h"
 				>
 			</File>
 			<Filter
 				Name="UniaxialMaterial"
 				>
 				<File
-					RelativePath="..\..\src\material\UniaxialCyclic.cpp"
+					RelativePath="..\..\src\material\uniaxial_cyclic.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialCyclic.h"
+					RelativePath="..\..\src\material\uniaxial_cyclic.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialElastic.cpp"
+					RelativePath="..\..\src\material\uniaxial_elastic.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialElastic.h"
+					RelativePath="..\..\src\material\uniaxial_elastic.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialElastoPlastic.cpp"
+					RelativePath="..\..\src\material\uniaxial_elastic_plastic.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialElastoPlastic.h"
+					RelativePath="..\..\src\material\uniaxial_elastic_plastic.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialGap.cpp"
+					RelativePath="..\..\src\material\uniaxial_gap.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialGap.h"
+					RelativePath="..\..\src\material\uniaxial_gap.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialMaterial.cpp"
+					RelativePath="..\..\src\material\uniaxial_material.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\UniaxialMaterial.h"
+					RelativePath="..\..\src\material\uniaxial_material.h"
 					>
 				</File>
 			</Filter>
@@ -1319,182 +1319,190 @@
 				Name="MultiaxialMaterial"
 				>
 				<File
-					RelativePath="..\..\src\material\Creep.cpp"
+					RelativePath="..\..\src\material\creep.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\Creep.h"
+					RelativePath="..\..\src\material\creep.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\DruckerPrager.cpp"
+					RelativePath="..\..\src\material\drucker_prager.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\DruckerPrager.h"
+					RelativePath="..\..\src\material\drucker_prager.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\HoekBrown.cpp"
+					RelativePath="..\..\src\material\hoek_brown.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\HoekBrown.h"
+					RelativePath="..\..\src\material\hoek_brown.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\LadeDuncan.cpp"
+					RelativePath="..\..\src\material\lade_duncan.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\LadeDuncan.h"
+					RelativePath="..\..\src\material\lade_duncan.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\ModifiedCamClay.cpp"
+					RelativePath="..\..\src\material\modified_cam_clay.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\ModifiedCamClay.h"
+					RelativePath="..\..\src\material\modified_cam_clay.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\MohrCoulomb.cpp"
+					RelativePath="..\..\src\material\mohr_coulomb.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\MohrCoulomb.h"
+					RelativePath="..\..\src\material\mohr_coulomb.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\MultiaxialElastoPlastic.cpp"
+					RelativePath="..\..\src\material\multiaxial_elastic_plastic.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\MultiaxialElastoPlastic.h"
+					RelativePath="..\..\src\material\multiaxial_elastic_plastic.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\MultiaxialMaterial.cpp"
+					RelativePath="..\..\src\material\multiaxial_material.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\MultiaxialMaterial.h"
+					RelativePath="..\..\src\material\multiaxial_material.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\PlaneStress.cpp"
+					RelativePath="..\..\src\material\plane_stress.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\PlaneStress.h"
+					RelativePath="..\..\src\material\plane_stress.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\Tresca.cpp"
+					RelativePath="..\..\src\material\tresca.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\Tresca.h"
+					RelativePath="..\..\src\material\tresca.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\VonMises.cpp"
+					RelativePath="..\..\src\material\von_mises.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\VonMises.h"
+					RelativePath="..\..\src\material\von_mises.h"
 					>
 				</File>
 				<Filter
 					Name="Surfaces"
 					>
 					<File
-						RelativePath="..\..\src\material\DP_in.cpp"
+						RelativePath="..\..\src\material\dp_in.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DP_in.h"
+						RelativePath="..\..\src\material\dp_in.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DP_out.cpp"
+						RelativePath="..\..\src\material\dp_out.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DP_out.h"
+						RelativePath="..\..\src\material\dp_out.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\LadeDuncanSurface.cpp"
+						RelativePath="..\..\src\material\lade_duncan_surface.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\LadeDuncanSurface.h"
+						RelativePath="..\..\src\material\lade_duncan_surface.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC.cpp"
+						RelativePath="..\..\src\material\mc.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC.h"
+						RelativePath="..\..\src\material\mc.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC_0.cpp"
+						RelativePath="..\..\src\material\mc_0.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC_0.h"
+						RelativePath="..\..\src\material\mc_0.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC_1.cpp"
+						RelativePath="..\..\src\material\mc_1.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC_1.h"
+						RelativePath="..\..\src\material\mc_1.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC_2.cpp"
+						RelativePath="..\..\src\material\mc_2.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MC_2.h"
+						RelativePath="..\..\src\material\mc_2.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MCC.cpp"
+						RelativePath="..\..\src\material\mcc.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MCC.h"
+						RelativePath="..\..\src\material\mcc.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\Surface.cpp"
+						RelativePath="..\..\src\material\surface.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\Surface.h"
+						RelativePath="..\..\src\material\surface.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\TC.cpp"
+						RelativePath="..\..\src\material\tc.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\TC.h"
+						RelativePath="..\..\src\material\tc.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\VM.cpp"
+						RelativePath="..\..\src\material\tension_cutoff_ys.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\VM.h"
+						RelativePath="..\..\src\material\tension_cutoff_ys.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\material\vm.cc"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\material\vm.h"
 						>
 					</File>
 				</Filter>
@@ -1502,19 +1510,19 @@
 					Name="Evolution"
 					>
 					<File
-						RelativePath="..\..\src\material\EvolutionLaw.cpp"
+						RelativePath="..\..\src\material\evolution_law.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\EvolutionLaw.h"
+						RelativePath="..\..\src\material\evolution_law.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\LinearEquivalentEL.cpp"
+						RelativePath="..\..\src\material\linear_equivalent_el.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\LinearEquivalentEL.h"
+						RelativePath="..\..\src\material\linear_equivalent_el.h"
 						>
 					</File>
 				</Filter>
@@ -1522,19 +1530,19 @@
 					Name="Elastic"
 					>
 					<File
-						RelativePath="..\..\src\material\DuncanChang.cpp"
+						RelativePath="..\..\src\material\duncan_chang.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DuncanChang.h"
+						RelativePath="..\..\src\material\duncan_chang.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MultiaxialElastic.cpp"
+						RelativePath="..\..\src\material\multiaxial_elastic.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\MultiaxialElastic.h"
+						RelativePath="..\..\src\material\multiaxial_elastic.h"
 						>
 					</File>
 				</Filter>
@@ -1542,59 +1550,51 @@
 					Name="DruckerPragerNew"
 					>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerNew.cpp"
+						RelativePath="..\..\src\material\drucker_prager_new.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerNew.h"
+						RelativePath="..\..\src\material\drucker_prager_new.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerNew2.cpp"
+						RelativePath="..\..\src\material\drucker_prager_new2.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerNew2.h"
+						RelativePath="..\..\src\material\drucker_prager_new2.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerNew3.cpp"
+						RelativePath="..\..\src\material\drucker_prager_new3.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerNew3.h"
+						RelativePath="..\..\src\material\drucker_prager_new3.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerYS.cpp"
+						RelativePath="..\..\src\material\drucker_prager_ys.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\DruckerPragerYS.h"
+						RelativePath="..\..\src\material\drucker_prager_ys.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\Hardening.cpp"
+						RelativePath="..\..\src\material\hardening.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\Hardening.h"
+						RelativePath="..\..\src\material\hardening.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\TensionCutOffYS.cpp"
+						RelativePath="..\..\src\material\ys.cc"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\material\TensionCutOffYS.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\material\YS.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\material\YS.h"
+						RelativePath="..\..\src\material\ys.h"
 						>
 					</File>
 				</Filter>
@@ -1603,11 +1603,11 @@
 				Name="MaterialItems"
 				>
 				<File
-					RelativePath="..\..\src\material\MatPoint.cpp"
+					RelativePath="..\..\src\material\matpoint.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\MatPoint.h"
+					RelativePath="..\..\src\material\matpoint.h"
 					>
 				</File>
 			</Filter>
@@ -1615,11 +1615,11 @@
 				Name="SdofMaterial"
 				>
 				<File
-					RelativePath="..\..\src\material\SDofMaterial.cpp"
+					RelativePath="..\..\src\material\sdof_material.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\SDofMaterial.h"
+					RelativePath="..\..\src\material\sdof_material.h"
 					>
 				</File>
 			</Filter>
@@ -1627,27 +1627,27 @@
 				Name="SpringMaterial"
 				>
 				<File
-					RelativePath="..\..\src\material\SpringContact.cpp"
+					RelativePath="..\..\src\material\spring_contact.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\SpringContact.h"
+					RelativePath="..\..\src\material\spring_contact.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\SpringElastic.cpp"
+					RelativePath="..\..\src\material\spring_elastic.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\SpringElastic.h"
+					RelativePath="..\..\src\material\spring_elastic.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\SpringMaterial.cpp"
+					RelativePath="..\..\src\material\spring_material.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\material\SpringMaterial.h"
+					RelativePath="..\..\src\material\spring_material.h"
 					>
 				</File>
 			</Filter>

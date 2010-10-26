@@ -27,7 +27,7 @@
 #define _BEAM2E_H
 
 #include "elements/element.h"
-#include "material/UniaxialMaterial.h"
+#include "material/uniaxial_material.h"
 
 class Beam2e: public Element
 {

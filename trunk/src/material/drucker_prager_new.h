@@ -26,9 +26,9 @@
 #ifndef _DRUCKERPRAGERNEW_H
 #define _DRUCKERPRAGERNEW_H
 
-#include "material/MultiaxialMaterial.h"
+#include "material/multiaxial_material.h"
 #include "material/ys.h"
-#include "material/Hardening.h"
+#include "material/hardening.h"
 
 /**
  * The Drucker-Prager Class.
