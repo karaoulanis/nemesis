@@ -1,59 +1,83 @@
 #!/bin/bash
 
+echo -e "# Makefile.am \n" > Makefile.am
+echo -e "# Place generated object files (.o) into the same" >> Makefile.am
+echo -e "# directory as their source files" >> Makefile.am
+echo -e "AUTOMAKE_OPTIONS = subdir-objects" >> Makefile.am
+
+echo -e "\n# Define executable target" >> Makefile.am
+echo -e "bin_PROGRAMS = nemesis" >> Makefile.am
+
+echo -e "\n# Command line flags for the compiler" >> Makefile.am
+echo -e "AM_CXXFLAGS = -O2"               >> Makefile.am
+
+echo -e "\n# Command line flags for the preprocessor" >> Makefile.am
+echo -e "AM_CPPFLAGS = -Isrc \\"          >> Makefile.am
+echo -e "\t\$(PYTHON_CPPFLAGS) \\"        >> Makefile.am
+echo -e "\t\$(BOOST_CPPFLAGS) \\"         >> Makefile.am
+echo -e "\t\$(SQLITE3_CPPFLAGS) \\"       >> Makefile.am
+echo -e "\t\$(ACML_CPPFLAGS)"             >> Makefile.am
+
+echo -e "\n# Source/Header files" >> Makefile.am
 SOURCES="nemesis_SOURCES ="
-for DIRNAME in $(ls -d1 src/*/)                      # run through dirs
+for DIRNAME in $(ls -d1 src/*/) # run through dirs
 do
-	CPPFLAGS+=' \\'
-	CPPFLAGS+="\n\t-I"
-	CPPFLAGS+=${DIRNAME%/}
-	LSOUTPUT=`ls $DIRNAME*.{cc,h}`
 	if [ $? == 0 ]; then 
-		for FILENAME in $LSOUTPUT 
+		for FILENAME in `ls $DIRNAME*.{cc,h}`
 		do
 			SOURCES+=' \\'
 			SOURCES+="\n\t$FILENAME"
 		done
 	fi
 done
-CPPFLAGS='AM_CPPFLAGS = -Isrc \\'
-CPPFLAGS+="\n\t-I/opt/acml4.4.0/gfortran64_mp/include"
-CPPFLAGS+=' \\'
-CPPFLAGS+="\n\t-I/usr/include"
-CPPFLAGS+=' \\'
-CPPFLAGS+="\n\t-I/usr/include/python2.6"
-CPPFLAGS+=' \\'
-CPPFLAGS+="\n\t-I/usr/include/boost"
+echo -e $SOURCES >> Makefile.am
 
-DATA=$CPPFLAGS
-DATA+='\n\n'
-DATA+='bin_PROGRAMS = nemesis \n'
-DATA+=$SOURCES
+echo -e "\n# Linker flags" >> Makefile.am
+echo -e "nemesis_LDFLAGS = -L/usr/lib \\" >> Makefile.am
+echo -e "\t\$(PYTHON_LDFLAGS) \\"         >> Makefile.am
+echo -e "\t\$(SQLITE3_LDFLAGS) \\"        >> Makefile.am
+echo -e "\t\$(ACML_LDFLAGS) \\"           >> Makefile.am
+echo -e "\t-fopenmp"                      >> Makefile.am
 
-DATA+='\n\n'
-DATA+="nemesis_LDFLAGS ="
-DATA+=' \\'
-DATA+="\n\t-L/usr/lib"
-DATA+=' \\'
-DATA+="\n\t-L/opt/acml4.4.0/gfortran64_mp/lib"
-DATA+=' \\'
-DATA+="\n\t-lpython2.6"
-DATA+=' \\'
-DATA+="\n\t-lsqlite3"
-DATA+=' \\'
-DATA+="\n\t-lacml_mp -lacml_mv"
-DATA+=' \\'
-DATA+="\n\t-lgfortran -lgomp -lrt -lm"
-#DATA+='\n\n'
-#DATA+='\n\n'
-#DATA+="nemesis_LDADD ="
-#DATA+=' \\'
-#DATA+="\n\tlibpython2.6.a"
+echo -e "\n# Libraries to be passed to the linker" >> Makefile.am
+echo -e "nemesis_LDADD = \\"              >> Makefile.am
+echo -e "\t\$(PYTHON_LIBS) \\"            >> Makefile.am
+echo -e "\t\$(SQLITE3_LIBS) \\"           >> Makefile.am
+echo -e "\t\$(ACML_LIBS)"                 >> Makefile.am
 
-echo -e $DATA > Makefile.am
+autoreconf --force --install --verbose
+exit
+
+#~ DATA=$CPPFLAGS
+#~ DATA+='\n\n'
+#~ DATA+='bin_PROGRAMS = nemesis \n'
+#~ DATA+=$SOURCES
+
+#~ DATA+='\n\n'
+#~ DATA+="nemesis_LDFLAGS ="
+#~ DATA+=' \\'
+#~ DATA+="\n\t-L/usr/lib"
+#~ DATA+=' \\'
+#~ DATA+="\n\t-L/opt/acml4.4.0/gfortran64_mp/lib"
+#~ DATA+=' \\'
+#~ DATA+="\n\t-lpython2.6"
+#~ DATA+=' \\'
+#~ DATA+="\n\t-lsqlite3"
+#~ DATA+=' \\'
+#~ DATA+="\n\t-lacml_mp -lacml_mv"
+#~ DATA+=' \\'
+#~ DATA+="\n\t-lgfortran -lgomp -lrt -lm"
+#~ #DATA+='\n\n'
+#~ #DATA+='\n\n'
+#~ #DATA+="nemesis_LDADD ="
+#~ #DATA+=' \\'
+#~ #DATA+="\n\tlibpython2.6.a"
+
+#~ echo -e $DATA > Makefile.am
 
 
 ###############################################################################
 # autoreconf
 ###############################################################################
-autoreconf --force --install --verbose
+#~ autoreconf --force --install --verbose
 
