@@ -26,6 +26,8 @@
 #ifndef _LAPACK_H
 #define _LAPACK_H
 
+#include <acml.h>
+
 #if defined(__GNUC__)
 	#define dgesv	dgesv_
 	#define dspsv	dspsv_
@@ -41,9 +43,8 @@
 	#define dggev	dggev_
 #endif
 
-#define __ACML__
+//#define __ACML__
 #if defined(__ACML__)
-	#include <acml.h>
 	#define dgesv	DGESV
 	#define dspsv	DSPSV
 	#define dgbsv	DGBSV

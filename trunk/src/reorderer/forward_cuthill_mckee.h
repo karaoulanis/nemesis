@@ -26,7 +26,7 @@
 #ifndef _FORWARDCUTHILLMCKEE_H
 #define _FORWARDCUTHILLMCKEE_H
 
-#include "reorderer/Reorderer.h"
+#include "reorderer/reorderer.h"
 
 class ForwardCuthillMckee: public Reorderer
 {

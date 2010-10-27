@@ -45,7 +45,7 @@ void MC::find_C(const Vector& s,const double a)
 	this->find_A(s,A,dA,d2A);
 	
 	// Constants Ci,Cii [Crisfield II, p.106, (Tab. 14.3), p.106, (Tab. 14.2)]
-	if(abs(theta)*180./num::pi<29.99)
+	if(fabs(theta)*180./num::pi<29.99)
 	{
 		C1=sin(phi)*num::d13;
 		C2=0.5/sqJ2*(A-tan(3.*theta)*dA);

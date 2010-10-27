@@ -26,7 +26,7 @@
 #ifndef _SDOFMATERIAL_H
 #define _SDOFMATERIAL_H
 
-#include "material/Material.h"
+#include "material/material.h"
 
 /**
  * The Single Dof Material Class.                                                

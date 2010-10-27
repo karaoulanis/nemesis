@@ -27,7 +27,7 @@
 #ifndef _EIGENCONTROL_H
 #define _EIGENCONTROL_H
 
-#include "control/Control.h"
+#include "control/control.h"
 
 class EigenControl :public Control
 {
