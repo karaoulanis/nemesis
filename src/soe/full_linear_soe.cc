@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "soe/FullLinearSOE.h"
+#include "soe/full_linear_soe.h"
 
 FullLinearSOE::FullLinearSOE()
 	:SOE()

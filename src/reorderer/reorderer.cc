@@ -23,9 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "reorderer/Reorderer.h"
+#include "reorderer/reorderer.h"
 #include <fstream>
-#include "exception/SException.h"
+#include "exception/sexception.h"
 
 Reorderer::Reorderer()
 {

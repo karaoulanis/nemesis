@@ -26,7 +26,7 @@
 #ifndef _PENALTYMODELELEMENT_H
 #define _PENALTYMODELELEMENT_H
 
-#include "model/ModelElement.h"
+#include "model/model_element.h"
 
 class PenaltyModelElement : public ModelElement
 {

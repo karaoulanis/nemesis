@@ -26,7 +26,7 @@
 #ifndef _FORWARDSLOAN_H
 #define _FORWARDSLOAN_H
 
-#include "reorderer/Reorderer.h"
+#include "reorderer/reorderer.h"
 
 class ForwardSloan: public Reorderer
 {

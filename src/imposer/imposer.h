@@ -29,8 +29,8 @@
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 #include "model/model.h"
-#include "model/StandardModelElement.h"
-#include "model/StandardModelNode.h"
+#include "model/standard_model_element.h"
+#include "model/standard_model_node.h"
 
 // Forward declarations
 class Model;

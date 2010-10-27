@@ -30,7 +30,7 @@
 #include "analysis/analysis_type.h"
 #include "control/load_control.h"
 #include "imposer/elimination_imposer.h"
-#include "soe/FullLinearSOE.h"
+#include "soe/full_linear_soe.h"
 
 class Analysis;
 class XFemAnalysis :public AnalysisType

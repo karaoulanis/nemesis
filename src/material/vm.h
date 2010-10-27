@@ -26,7 +26,7 @@
 #ifndef _VM_H
 #define _VM_H
 
-#include "material/Surface.h"
+#include "material/surface.h"
 
 class VM: public Surface
 {

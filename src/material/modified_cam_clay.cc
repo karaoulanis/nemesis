@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "material/modified_cam_clay.h"
-#include "material/MCC.h"
+#include "material/mcc.h"
 
 ModifiedCamClay::ModifiedCamClay()
 {

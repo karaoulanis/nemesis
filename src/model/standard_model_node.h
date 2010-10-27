@@ -26,7 +26,7 @@
 #ifndef _STANDARDStandardModelNode_H
 #define _STANDARDStandardModelNode_H
 
-#include "model/ModelNode.h"
+#include "model/model_node.h"
 
 class StandardModelNode :public ModelNode
 {

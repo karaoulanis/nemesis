@@ -26,9 +26,9 @@
 #ifndef _MODELNODE_H
 #define _MODELNODE_H
 
-#include "containers/Containers.h"
-#include "model/ModelObject.h"
-#include "node/Node.h"
+#include "containers/containers.h"
+#include "model/model_object.h"
+#include "node/node.h"
 
 class ModelNode :public ModelObject
 {

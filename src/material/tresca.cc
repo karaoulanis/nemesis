@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "main/nemesis_debug.h"
-#include "material/Tresca.h"
+#include "material/tresca.h"
 
 Matrix Tresca::C(6,6,0.);
 Matrix Tresca::C3(3,3,0.);

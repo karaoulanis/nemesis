@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "tracker/Tracker.h"
+#include "tracker/tracker.h"
 
 // C++ files
 #include <iostream>

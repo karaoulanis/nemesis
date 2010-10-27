@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "model/LagrangeModelElement.h"
+#include "model/lagrange_model_element.h"
 #include "main/nemesis_debug.h"
 
 /**

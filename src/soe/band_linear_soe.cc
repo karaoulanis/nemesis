@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "soe/BandLinearSOE.h"
+#include "soe/band_linear_soe.h"
 
 BandLinearSOE::BandLinearSOE()
 	:SOE()

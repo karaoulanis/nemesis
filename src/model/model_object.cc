@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "model/ModelObject.h"
+#include "model/model_object.h"
 
 Vector** ModelObject::theStaticVectors;
 Matrix** ModelObject::theStaticMatrices;

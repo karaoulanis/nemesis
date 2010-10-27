@@ -26,7 +26,7 @@
 #ifndef _REVERSESLOAN_H
 #define _REVERSESLOAN_H
 
-#include "reorderer/Reorderer.h"
+#include "reorderer/reorderer.h"
 
 class ReverseSloan: public Reorderer
 {

@@ -25,7 +25,7 @@
 //*****************************************************************************
 
 #include "control/eigen_control.h"
-#include "soe/EigenSOE.h"
+#include "soe/eigen_soe.h"
 /**
  * Constructor.
  */

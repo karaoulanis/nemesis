@@ -1656,27 +1656,27 @@
 			Name="numeric"
 			>
 			<File
-				RelativePath="..\..\src\numeric\ArrayCheck.h"
+				RelativePath="..\..\src\numeric\array_check.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\numeric\Lapack.h"
+				RelativePath="..\..\src\numeric\lapack.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\numeric\LU.h"
+				RelativePath="..\..\src\numeric\lu.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\numeric\Matrix.h"
+				RelativePath="..\..\src\numeric\matrix.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\numeric\Numeric.h"
+				RelativePath="..\..\src\numeric\numeric.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\numeric\Vector.h"
+				RelativePath="..\..\src\numeric\vector.h"
 				>
 			</File>
 		</Filter>
@@ -1684,54 +1684,54 @@
 			Name="model"
 			>
 			<File
-				RelativePath="..\..\src\model\Model.cpp"
+				RelativePath="..\..\src\model\model.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\model\Model.h"
+				RelativePath="..\..\src\model\model.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\model\ModelElement.cpp"
+				RelativePath="..\..\src\model\model_element.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\model\ModelElement.h"
+				RelativePath="..\..\src\model\model_element.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\model\ModelNode.cpp"
+				RelativePath="..\..\src\model\model_node.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\model\ModelNode.h"
+				RelativePath="..\..\src\model\model_node.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\model\ModelObject.cpp"
+				RelativePath="..\..\src\model\model_object.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\model\ModelObject.h"
+				RelativePath="..\..\src\model\model_object.h"
 				>
 			</File>
 			<Filter
 				Name="Lagrange Model Elements"
 				>
 				<File
-					RelativePath="..\..\src\model\LagrangeModelElement.cpp"
+					RelativePath="..\..\src\model\lagrange_model_element.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\LagrangeModelElement.h"
+					RelativePath="..\..\src\model\lagrange_model_element.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\LagrangeModelNode.cpp"
+					RelativePath="..\..\src\model\lagrange_model_node.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\LagrangeModelNode.h"
+					RelativePath="..\..\src\model\lagrange_model_node.h"
 					>
 				</File>
 			</Filter>
@@ -1739,19 +1739,19 @@
 				Name="Standard Model Elements"
 				>
 				<File
-					RelativePath="..\..\src\model\StandardModelElement.cpp"
+					RelativePath="..\..\src\model\standard_model_element.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\StandardModelElement.h"
+					RelativePath="..\..\src\model\standard_model_element.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\StandardModelNode.cpp"
+					RelativePath="..\..\src\model\standard_model_node.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\StandardModelNode.h"
+					RelativePath="..\..\src\model\standard_model_node.h"
 					>
 				</File>
 			</Filter>
@@ -1759,11 +1759,11 @@
 				Name="Penalty Model Elements"
 				>
 				<File
-					RelativePath="..\..\src\model\PenaltyModelElement.cpp"
+					RelativePath="..\..\src\model\penalty_model_element.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\PenaltyModelElement.h"
+					RelativePath="..\..\src\model\penalty_model_element.h"
 					>
 				</File>
 			</Filter>
@@ -1771,19 +1771,19 @@
 				Name="Elmination Model Elements"
 				>
 				<File
-					RelativePath="..\..\src\model\EliminationModelElement.cpp"
+					RelativePath="..\..\src\model\elimination_model_element.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\EliminationModelElement.h"
+					RelativePath="..\..\src\model\elimination_model_element.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\EliminationModelNode.cpp"
+					RelativePath="..\..\src\model\elimination_model_node.cc"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\model\EliminationModelNode.h"
+					RelativePath="..\..\src\model\elimination_model_node.h"
 					>
 				</File>
 			</Filter>
@@ -1792,43 +1792,43 @@
 			Name="soe"
 			>
 			<File
-				RelativePath="..\..\src\soe\BandLinearSOE.cpp"
+				RelativePath="..\..\src\soe\band_linear_soe.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\BandLinearSOE.h"
+				RelativePath="..\..\src\soe\band_linear_soe.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\EigenSOE.cpp"
+				RelativePath="..\..\src\soe\eigen_soe.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\EigenSOE.h"
+				RelativePath="..\..\src\soe\eigen_soe.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\FullLinearSOE.cpp"
+				RelativePath="..\..\src\soe\full_linear_soe.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\FullLinearSOE.h"
+				RelativePath="..\..\src\soe\full_linear_soe.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\SOE.cpp"
+				RelativePath="..\..\src\soe\soe.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\SOE.h"
+				RelativePath="..\..\src\soe\soe.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\SymmLinearSOE.cpp"
+				RelativePath="..\..\src\soe\symm_linear_soe.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\soe\SymmLinearSOE.h"
+				RelativePath="..\..\src\soe\symm_linear_soe.h"
 				>
 			</File>
 		</Filter>
@@ -1836,19 +1836,19 @@
 			Name="parser"
 			>
 			<File
-				RelativePath="..\..\src\parser\Parser.cpp"
+				RelativePath="..\..\src\parser\parser.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\parser\Parser.h"
+				RelativePath="..\..\src\parser\parser.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\parser\PyParser.cpp"
+				RelativePath="..\..\src\parser\py_parser.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\parser\PyParser.h"
+				RelativePath="..\..\src\parser\py_parser.h"
 				>
 			</File>
 		</Filter>
@@ -2144,11 +2144,11 @@
 			Name="node"
 			>
 			<File
-				RelativePath="..\..\src\node\Node.cpp"
+				RelativePath="..\..\src\node\node.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\node\Node.h"
+				RelativePath="..\..\src\node\node.h"
 				>
 			</File>
 		</Filter>
@@ -2176,43 +2176,43 @@
 			Name="reorderer"
 			>
 			<File
-				RelativePath="..\..\src\reorderer\ForwardCuthillMckee.cpp"
+				RelativePath="..\..\src\reorderer\forward_cuthill_mckee.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\ForwardCuthillMckee.h"
+				RelativePath="..\..\src\reorderer\forward_cuthill_mckee.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\ForwardSloan.cpp"
+				RelativePath="..\..\src\reorderer\forward_sloan.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\ForwardSloan.h"
+				RelativePath="..\..\src\reorderer\forward_sloan.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\Reorderer.cpp"
+				RelativePath="..\..\src\reorderer\reorderer.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\Reorderer.h"
+				RelativePath="..\..\src\reorderer\reorderer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\ReverseCuthillMckee.cpp"
+				RelativePath="..\..\src\reorderer\reverse_cuthill_mckee.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\ReverseCuthillMckee.h"
+				RelativePath="..\..\src\reorderer\reverse_cuthill_mckee.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\ReverseSloan.cpp"
+				RelativePath="..\..\src\reorderer\reverse_sloan.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\reorderer\ReverseSloan.h"
+				RelativePath="..\..\src\reorderer\reverse_sloan.h"
 				>
 			</File>
 		</Filter>
@@ -2232,11 +2232,11 @@
 			Name="tracker"
 			>
 			<File
-				RelativePath="..\..\src\tracker\Tracker.cpp"
+				RelativePath="..\..\src\tracker\tracker.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tracker\Tracker.h"
+				RelativePath="..\..\src\tracker\tracker.h"
 				>
 			</File>
 		</Filter>

@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/Creep.h"
+#include "material/creep.h"
 
 Matrix Creep::C(6,6,0.);
 

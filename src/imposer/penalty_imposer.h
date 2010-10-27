@@ -27,7 +27,7 @@
 #define _PENALTYIMPOSER_H
 
 #include "imposer/imposer.h"
-#include "model/PenaltyModelElement.h"
+#include "model/penalty_model_element.h"
 
 class PenaltyImposer: public Imposer
 {

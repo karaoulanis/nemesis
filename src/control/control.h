@@ -28,8 +28,8 @@
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "model/ModelElement.h"
-#include "model/ModelNode.h"
+#include "model/model_element.h"
+#include "model/model_node.h"
 
 class Control: public AnalysisObject
 {

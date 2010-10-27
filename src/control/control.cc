@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "control/Control.h"
+#include "control/control.h"
 #include <cmath>
 
 Control::Control()

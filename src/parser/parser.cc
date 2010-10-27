@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "parser/Parser.h"
+#include "parser/parser.h"
 /**
  * Simple constructor.
  */

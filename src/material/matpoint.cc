@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/MatPoint.h"
+#include "material/matpoint.h"
 
 int MatPoint::IDCounter=0;
 

@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "crosssection/cross_section.h"
-#include "numeric/Numeric.h"
+#include "numeric/numeric.h"
 
 RectangularCrossSection::RectangularCrossSection(int ID,double width,double height)
 :CrossSection(ID)
