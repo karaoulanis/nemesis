@@ -27,9 +27,9 @@
 
 #include <iostream>
 #include <cmath>
-#include "numeric/ArrayCheck.h"
-#include "numeric/Numeric.h"
-#include "numeric/Lapack.h"
+#include "numeric/array_check.h"
+#include "numeric/numeric.h"
+#include "numeric/lapack.h"
 
 class Vector
 {

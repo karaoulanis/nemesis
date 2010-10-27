@@ -26,7 +26,7 @@
 #ifndef _BAND_LINEAR_SOE_H
 #define _BAND_LINEAR_SOE_H
 
-#include "soe/SOE.h"
+#include "soe/soe.h"
 
 class BandLinearSOE: public SOE
 {

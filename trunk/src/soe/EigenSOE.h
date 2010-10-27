@@ -27,7 +27,7 @@
 #ifndef _FULL_EIGEN_SOE_H
 #define _FULL_EIGEN_SOE_H
 
-#include "soe/SOE.h"
+#include "soe/soe.h"
 
 class EigenSOE: public SOE
 {
