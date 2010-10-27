@@ -27,8 +27,8 @@
 
 // Included files
 #include <exception>
-#include "numeric/ArrayCheck.h"
-#include "numeric/LU.h"
+#include "numeric/array_check.h"
+#include "numeric/lu.h"
 #include "numeric/vector.h"
 
 using namespace LU;

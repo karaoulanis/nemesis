@@ -26,7 +26,7 @@
 #ifndef _SYMM_LINEAR_SOE_H
 #define _SYMM_LINEAR_SOE_H
 
-#include "soe/SOE.h"
+#include "soe/soe.h"
 
 class SymmLinearSOE: public SOE
 {
