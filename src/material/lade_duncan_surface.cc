@@ -40,7 +40,7 @@ double LadeDuncanSurface::get_f(const Vector& s,const double kappa)
 	//cout<<s<<endl;
 	//cout<<s.I3()<<endl;
 	double sI3=s.I3();
-	if(abs(sI3)<1e-4) sI3=0.;
+	if(fabs(sI3)<1e-4) sI3=0.;
 	double f=pow(1.*sI3,num::d13)-s.I1();
 	std::cout<<sI3<<'\t'<<f<<std::endl;
 	return f;

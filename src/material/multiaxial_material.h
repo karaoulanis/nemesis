@@ -26,7 +26,7 @@
 #ifndef _MULTIAXIALMATERIAL_H
 #define _MULTIAXIALMATERIAL_H
 
-#include "material/Material.h"
+#include "material/material.h"
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
 

@@ -567,7 +567,7 @@ public:
 		#endif
 		double facJ3=this->J3();
 		double facSqJ2=sqrt(this->J2());
-		if(abs(facJ3)>1e10)
+		if(fabs(facJ3)>1e10)
 		{
 			double fac=.001;
 			double sm=(data_[0]+data_[1]+data_[2])/3.0;

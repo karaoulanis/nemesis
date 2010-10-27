@@ -42,7 +42,7 @@ DATA+="\n\t-lsqlite3"
 DATA+=' \\'
 DATA+="\n\t-lacml_mp -lacml_mv"
 DATA+=' \\'
-DATA+="\n\t-lgfortran -lgomp -lrt -lm -rpath /opt/acml4.4.0/gfortran64_mp/lib"
+DATA+="\n\t-lgfortran -lgomp -lrt -lm"
 #DATA+='\n\n'
 #DATA+='\n\n'
 #DATA+="nemesis_LDADD ="
