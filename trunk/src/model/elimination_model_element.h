@@ -26,7 +26,7 @@
 #ifndef _ELIMINATIONMODELELEMENT_H
 #define _ELIMINATIONMODELELEMENT_H
 
-#include "model/ModelElement.h"
+#include "model/model_element.h"
 
 class EliminationModelElement : public ModelElement
 {

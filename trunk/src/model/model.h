@@ -36,9 +36,9 @@
 
 #include "analysis/analysis_object.h"
 #include "domain/domain.h"
-#include "model/ModelElement.h"
-#include "model/ModelNode.h"
-#include "model/StandardModelElement.h"
+#include "model/model_element.h"
+#include "model/model_node.h"
+#include "model/standard_model_element.h"
 
 // Using from boost nameespace
 using boost::adjacency_list;

@@ -24,11 +24,8 @@
 //*****************************************************************************
 
 
-#include "model/StandardModelElement.h"
+#include "model/standard_model_element.h"
 
-//=============================================================================
-// Constructors
-//=============================================================================
 /**
  * Default constructor.
  * Initializes only the ModelObject, which in turn initializes the FEObject.

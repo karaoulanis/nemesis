@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 
-#include "model/EliminationModelElement.h"
+#include "model/elimination_model_element.h"
 
 /**
  * Default constructor

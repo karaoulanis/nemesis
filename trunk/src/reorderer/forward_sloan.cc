@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "reorderer/ForwardSloan.h"
+#include "reorderer/forward_sloan.h"
 #include <boost/graph/sloan_ordering.hpp>
 
 ForwardSloan::ForwardSloan(double w1,double w2)

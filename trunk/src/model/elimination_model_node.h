@@ -26,8 +26,8 @@
 #ifndef _ELIMINATIONMODELNODE_H
 #define _ELIMINATIONMODELNODE_H
 
-#include "model/ModelNode.h"
-#include "node/Node.h"
+#include "model/model_node.h"
+#include "node/node.h"
 
 class EliminationModelNode: public ModelNode
 {

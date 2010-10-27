@@ -27,7 +27,7 @@
 #define _QUAD4_H
 
 #include "elements/element.h"
-#include "material/MatPoint.h"
+#include "material/matpoint.h"
 
 class Quad4: public Element
 {

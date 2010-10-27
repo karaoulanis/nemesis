@@ -24,7 +24,7 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#include "soe/EigenSOE.h"
+#include "soe/eigen_soe.h"
 
 EigenSOE::EigenSOE()
 	:SOE()

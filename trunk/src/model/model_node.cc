@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "model/ModelNode.h"
+#include "model/model_node.h"
 /**
  * Default constructor.
  */

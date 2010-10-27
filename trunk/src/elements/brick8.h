@@ -27,7 +27,7 @@
 #define _BRICK8_H
 
 #include "elements/element.h"
-#include "material/MatPoint.h"
+#include "material/matpoint.h"
 
 class Brick8: public Element
 {

@@ -24,7 +24,7 @@
 //*****************************************************************************
 
 #include "main/nemesis_config.h"
-#include "parser/PyParser.h"
+#include "parser/py_parser.h"
 
 int main(int argc,char* argv[])
 {

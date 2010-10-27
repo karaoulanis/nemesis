@@ -26,8 +26,8 @@
 #ifndef _LAGRANGEMODELNODE_H
 #define _LAGRANGEMODELNODE_H
 
-#include "model/ModelNode.h"
-#include "node/Node.h"
+#include "model/model_node.h"
+#include "node/node.h"
 
 class LagrangeModelNode: public ModelNode
 {

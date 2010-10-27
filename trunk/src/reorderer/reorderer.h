@@ -29,7 +29,7 @@
 #include <vector>
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "model/Model.h"
+#include "model/model.h"
 
 class Reorderer: public AnalysisObject
 {

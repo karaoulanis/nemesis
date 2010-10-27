@@ -30,7 +30,7 @@
 #include "analysis/analysis_type.h"
 #include "control/eigen_control.h"
 #include "imposer/elimination_imposer.h"
-#include "soe/EigenSOE.h"
+#include "soe/eigen_soe.h"
 
 class Analysis;
 class EigenAnalysis :public AnalysisType

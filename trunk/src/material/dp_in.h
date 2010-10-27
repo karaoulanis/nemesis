@@ -26,7 +26,7 @@
 #ifndef _DP_IN_H
 #define _DP_IN_H
 
-#include "material/Surface.h"
+#include "material/surface.h"
 
 class DP_in: public Surface
 {

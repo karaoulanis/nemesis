@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#include "material/DP_in.h"
+#include "material/dp_in.h"
 
 DP_in::DP_in()
 {

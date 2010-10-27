@@ -34,10 +34,10 @@
 // Project files (alphabetically)
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "numeric/Lapack.h"
+#include "numeric/lapack.h"
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
-#include "containers/Containers.h"
+#include "containers/containers.h"
 
 // Forward declarations
 class Analysis;

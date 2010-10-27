@@ -26,7 +26,7 @@
 #ifndef _REVERSECUTHILLMCKEE_H
 #define _REVERSECUTHILLMCKEE_H
 
-#include "reorderer/Reorderer.h"
+#include "reorderer/reorderer.h"
 
 class ReverseCuthillMckee: public Reorderer
 {
