@@ -32,7 +32,7 @@
 // Project files
 #include "domain/domain.h"
 #include "domain/domain_object.h"
-#include "node/Node.h"
+#include "node/node.h"
 
 // Forward declarations
 class Domain;
