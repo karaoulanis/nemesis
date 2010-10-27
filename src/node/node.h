@@ -34,7 +34,7 @@
 #include "elements/element.h"
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
-#include "tracker/Tracker.h"
+#include "tracker/tracker.h"
 
 class Domain;
 class Element;
