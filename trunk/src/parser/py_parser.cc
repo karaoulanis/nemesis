@@ -2389,7 +2389,7 @@ int PyParser::initModules()
 	PyRun_SimpleString("import sens");
 	PyRun_SimpleString("import crack");
 //	PyRun_SimpleString("import tracker");
-	PyRun_SimpleString("import nemesis");
+//	PyRun_SimpleString("import nemesis");
 	
 	Py_InitModule("log",logMethods);
 	PyRun_SimpleString(	"import log\n"
