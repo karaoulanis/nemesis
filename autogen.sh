@@ -8,9 +8,6 @@ echo -e "AUTOMAKE_OPTIONS = subdir-objects" >> Makefile.am
 echo -e "\n# Define executable target" >> Makefile.am
 echo -e "bin_PROGRAMS = nemesis" >> Makefile.am
 
-echo -e "\n# Command line flags for the compiler" >> Makefile.am
-echo -e "AM_CXXFLAGS = -O2"               >> Makefile.am
-
 echo -e "\n# Command line flags for the preprocessor" >> Makefile.am
 echo -e "AM_CPPFLAGS = -Isrc \\"          >> Makefile.am
 echo -e "\t\$(PYTHON_CPPFLAGS) \\"        >> Makefile.am
@@ -45,39 +42,8 @@ echo -e "\t\$(PYTHON_LIBS) \\"            >> Makefile.am
 echo -e "\t\$(SQLITE3_LIBS) \\"           >> Makefile.am
 echo -e "\t\$(ACML_LIBS)"                 >> Makefile.am
 
+
+echo -e "\n# Command line flags for the compiler" >> Makefile.am
+echo -e "nemesis_CXXFLAGS = -Wall -Wextra"               >> Makefile.am
+
 autoreconf --force --install --verbose
-exit
-
-#~ DATA=$CPPFLAGS
-#~ DATA+='\n\n'
-#~ DATA+='bin_PROGRAMS = nemesis \n'
-#~ DATA+=$SOURCES
-
-#~ DATA+='\n\n'
-#~ DATA+="nemesis_LDFLAGS ="
-#~ DATA+=' \\'
-#~ DATA+="\n\t-L/usr/lib"
-#~ DATA+=' \\'
-#~ DATA+="\n\t-L/opt/acml4.4.0/gfortran64_mp/lib"
-#~ DATA+=' \\'
-#~ DATA+="\n\t-lpython2.6"
-#~ DATA+=' \\'
-#~ DATA+="\n\t-lsqlite3"
-#~ DATA+=' \\'
-#~ DATA+="\n\t-lacml_mp -lacml_mv"
-#~ DATA+=' \\'
-#~ DATA+="\n\t-lgfortran -lgomp -lrt -lm"
-#~ #DATA+='\n\n'
-#~ #DATA+='\n\n'
-#~ #DATA+="nemesis_LDADD ="
-#~ #DATA+=' \\'
-#~ #DATA+="\n\tlibpython2.6.a"
-
-#~ echo -e $DATA > Makefile.am
-
-
-###############################################################################
-# autoreconf
-###############################################################################
-#~ autoreconf --force --install --verbose
-
