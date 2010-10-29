@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ANALYSISOBJECT_H
-#define _ANALYSISOBJECT_H
+#ifndef NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_
+#define NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_
 
 #include "feobject/fe_object.h"
 
@@ -40,4 +40,4 @@ public:
 	virtual ~AnalysisObject();
 	void setAnalysis(Analysis* pAnalysis);
 };
-#endif
+#endif //NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_

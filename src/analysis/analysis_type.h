@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ANALYSISTYPE_H
-#define _ANALYSISTYPE_H
+#ifndef NEMESIS_ANALYSIS_ANALYSIS_TYPE_H_
+#define NEMESIS_ANALYSIS_ANALYSIS_TYPE_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -37,4 +37,4 @@ public:
 	virtual int run(int nLC,int nLoadSteps)=0;
 };
 
-#endif
+#endif //NEMESIS_ANALYSIS_ANALYSIS_TYPE_H_

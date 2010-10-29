@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LOADCONTROL_H
-#define _LOADCONTROL_H
+#ifndef NEMESIS_CONTROL_LOAD_CONTROL_H_
+#define NEMESIS_CONTROL_LOAD_CONTROL_H_
 
 #include "control/static_control.h"
 
@@ -51,4 +51,4 @@ public:
 	void correct();
 };
 
-#endif
+#endif //NEMESIS_CONTROL_LOAD_CONTROL_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _NEWTONRAPHSONALGORITHMFULL_H
-#define _NEWTONRAPHSONALGORITHMFULL_H
+#ifndef NEMESIS_ALGORITHM_NEWTON_RAPHSON_FULL_H_
+#define NEMESIS_ALGORITHM_NEWTON_RAPHSON_FULL_H_
 
 #include "algorithm/algorithm.h"
 
@@ -36,4 +36,4 @@ public:
 
 	int solveStep(int n);
 };
-#endif 
+#endif //NEMESIS_ALGORITHM_NEWTON_RAPHSON_FULL_H_

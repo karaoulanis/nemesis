@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MOHRCOULOMB_H
-#define _MOHRCOULOMB_H
+#ifndef NEMESIS_MATERIAL_MOHR_COULOMB_H_
+#define NEMESIS_MATERIAL_MOHR_COULOMB_H_
 
 #include "material/multiaxial_elastic_plastic.h"
 
@@ -53,4 +53,4 @@ public:
 	// Tracker member functions
 	void track();
 };
-#endif
+#endif //NEMESIS_MATERIAL_MOHR_COULOMB_H_

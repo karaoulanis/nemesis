@@ -25,8 +25,8 @@
 //            E.A. Paraskevopoulos (eapcivil@yahoo.gr)
 //*****************************************************************************
 
-#ifndef _ARCLENGTHUNP_H
-#define _ARCLENGTHUNP_H
+#ifndef NEMESIS_CONTROL_ARC_LENGTH_UNP_H_
+#define NEMESIS_CONTROL_ARC_LENGTH_UNP_H_
 
 #include "control/static_control.h"
 
@@ -53,4 +53,4 @@ public:
 	void correct();
 };
 
-#endif
+#endif //NEMESIS_CONTROL_ARC_LENGTH_UNP_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _PLANESTRESS_H
-#define _PLANESTRESS_H
+#ifndef NEMESIS_MATERIAL_PLANE_STRESS_H_
+#define NEMESIS_MATERIAL_PLANE_STRESS_H_
 
 #include "material/multiaxial_elastic.h"
 
@@ -39,4 +39,4 @@ public:
 	MultiaxialMaterial* getClone();
 	const Matrix& getC();
 };
-#endif
+#endif //NEMESIS_MATERIAL_PLANE_STRESS_H_

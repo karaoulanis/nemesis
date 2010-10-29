@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MC_H
-#define _MC_H
+#ifndef NEMESIS_MATERIAL_MC_H_
+#define NEMESIS_MATERIAL_MC_H_
 
 #include "material/surface.h"
 #include "numeric/vector.h"
@@ -42,4 +42,4 @@ public:
 	~MC();
 	double get_f(const Vector& s,const double q);
 };
-#endif
+#endif //NEMESIS_MATERIAL_MC_H_

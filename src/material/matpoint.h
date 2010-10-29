@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MATPOINT_H
-#define _MATPOINT_H
+#ifndef NEMESIS_MATERIAL_MATPOINT_H_
+#define NEMESIS_MATERIAL_MATPOINT_H_
 
 #include "domain/domain_object.h"
 #include "loadcase/initial_stresses.h"
@@ -64,4 +64,4 @@ public:
 	void setPacket(const Packet& /*p*/)	{/*does nothing*/	}
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_MATPOINT_H_

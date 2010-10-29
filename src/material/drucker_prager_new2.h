@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _DRUCKERPRAGERNEW2_H
-#define _DRUCKERPRAGERNEW2_H
+#ifndef NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW2_H_
+#define NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW2_H_
 
 #include "material/hardening.h"
 #include "material/multiaxial_material.h"
@@ -60,4 +60,4 @@ public:
 	// Tracker member functions
 	void track();
 };
-#endif
+#endif //NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW2_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _DOMAINOBJECT_H
-#define _DOMAINOBJECT_H
+#ifndef NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
+#define NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
 
 #include <iostream>
 #include "feobject/fe_object.h"
@@ -56,4 +56,4 @@ public:
 
 	void setDomain(Domain* pDomain);
 };
-#endif
+#endif //NEMESIS_DOMAIN_DOMAIN_OBJECT_H_

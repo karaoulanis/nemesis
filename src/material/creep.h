@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _CREEP_H
-#define _CREEP_H
+#ifndef NEMESIS_MATERIAL_CREEP_H_
+#define NEMESIS_MATERIAL_CREEP_H_
 
 #include "material/multiaxial_material.h"
 /**
@@ -55,4 +55,4 @@ public:
 	// Tracker member functions
 	void track();
 };
-#endif
+#endif //NEMESIS_MATERIAL_CREEP_H_

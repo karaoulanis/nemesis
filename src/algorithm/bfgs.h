@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BFGS_H
-#define _BFGS_H
+#ifndef NEMESIS_ALGORITHM_BFGS_H_
+#define NEMESIS_ALGORITHM_BFGS_H_
 
 #include "algorithm/algorithm.h"
 
@@ -47,4 +47,4 @@ public:
 	int solveStep(int n);
 	void lineSearch(double s0,double s1,const Vector& du);
 };
-#endif 
+#endif //NEMESIS_ALGORITHM_BFGS_H_ 

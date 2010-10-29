@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SPRINGELASTIC_H
-#define _SPRINGELASTIC_H
+#ifndef NEMESIS_MATERIAL_SPRING_ELASTIC_H_
+#define NEMESIS_MATERIAL_SPRING_ELASTIC_H_
 
 #include "material/spring_material.h"
 
@@ -42,4 +42,4 @@ public:
 	void setStrain(const Vector& De);
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_SPRING_ELASTIC_H_

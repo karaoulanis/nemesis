@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ANALYSIS_H
-#define _ANALYSIS_H
+#ifndef NEMESIS_ANALYSIS_ANALYSIS_H_
+#define NEMESIS_ANALYSIS_ANALYSIS_H_
 
 #include "algorithm/algorithm.h"
 #include "analysis/analysis_type.h"
@@ -81,4 +81,4 @@ public:
 	int analyze(int lcID,int nLoadSteps);
 	void clear();
 };
-#endif
+#endif //NEMESIS_ANALYSIS_ANALYSIS_H_

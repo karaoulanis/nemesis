@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _DOMAIN_H
-#define _DOMAIN_H
+#ifndef NEMESIS_DOMAIN_DOMAIN_H_
+#define NEMESIS_DOMAIN_DOMAIN_H_
 
 #include <map>
 #include "constraints/constraint.h"
@@ -209,4 +209,4 @@ public:
 	}
 };
 
-#endif
+#endif //NEMESIS_DOMAIN_DOMAIN_H_

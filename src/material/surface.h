@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SURFACE_H
-#define _SURFACE_H
+#ifndef NEMESIS_MATERIAL_SURFACE_H_
+#define NEMESIS_MATERIAL_SURFACE_H_
 
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
@@ -56,4 +56,4 @@ public:
 	void setActive(bool b)	{active=b;}
 	bool isActive()			{return active;}
 };
-#endif
+#endif //NEMESIS_MATERIAL_SURFACE_H_

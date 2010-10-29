@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _VONMISES_H
-#define _VONMISES_H
+#ifndef NEMESIS_MATERIAL_VON_MISES_H_
+#define NEMESIS_MATERIAL_VON_MISES_H_
 
 #include "material/multiaxial_elastic_plastic.h"
 
@@ -40,4 +40,4 @@ public:
 	MultiaxialMaterial* getClone();
 	~VonMises();
 };
-#endif
+#endif //NEMESIS_MATERIAL_VON_MISES_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _VM_H
-#define _VM_H
+#ifndef NEMESIS_MATERIAL_VM_H_
+#define NEMESIS_MATERIAL_VM_H_
 
 #include "material/surface.h"
 
@@ -44,4 +44,4 @@ public:
 	const Vector& get_df2dsa(const Vector& s,const double a);
 	double get_df2daa(const Vector& s,const double a);
 };
-#endif
+#endif //NEMESIS_MATERIAL_VM_H_

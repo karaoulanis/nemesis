@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TRESCA_H
-#define _TRESCA_H
+#ifndef NEMESIS_MATERIAL_TRESCA_H_
+#define NEMESIS_MATERIAL_TRESCA_H_
 
 #include "material/multiaxial_material.h"
 
@@ -53,4 +53,4 @@ public:
 	// Tracker member functions
 	void track();
 };
-#endif
+#endif //NEMESIS_MATERIAL_TRESCA_H_

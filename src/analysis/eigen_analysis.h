@@ -24,8 +24,8 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#ifndef _EIGENANALYIS_H
-#define _EIGENANALYIS_H
+#ifndef NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_
+#define NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_
 
 #include "analysis/analysis_type.h"
 #include "control/eigen_control.h"
@@ -42,4 +42,4 @@ public:
 	int run(int nLC,int nLoadSteps);
 };
 
-#endif
+#endif //NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_

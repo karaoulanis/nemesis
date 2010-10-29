@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _CONTROL_H
-#define _CONTROL_H
+#ifndef NEMESIS_CONTROL_CONTROL_H_
+#define NEMESIS_CONTROL_CONTROL_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -60,4 +60,4 @@ public:
 	virtual void commit()=0;
 	virtual void rollback()=0;
 };
-#endif
+#endif //NEMESIS_CONTROL_CONTROL_H_

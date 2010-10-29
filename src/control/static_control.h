@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _STATICCONTROL_H
-#define _STATICCONTROL_H
+#ifndef NEMESIS_CONTROL_STATIC_CONTROL_H_
+#define NEMESIS_CONTROL_STATIC_CONTROL_H_
 
 #include "control/control.h"
 
@@ -80,4 +80,4 @@ public:
 	virtual void rollback();
 };
 
-#endif
+#endif //NEMESIS_CONTROL_STATIC_CONTROL_H_

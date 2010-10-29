@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _NEWMARK_H
-#define _NEWMARK_H
+#ifndef NEMESIS_CONTROL_NEWMARK_H_
+#define NEMESIS_CONTROL_NEWMARK_H_
 
 #include "control/transient_control.h"
 
@@ -47,4 +47,4 @@ public:
 	void correct();
 };
 
-#endif
+#endif //NEMESIS_CONTROL_NEWMARK_H_

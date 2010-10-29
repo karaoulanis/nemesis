@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _CROSSSECTION_H
-#define _CROSSSECTION_H
+#ifndef NEMESIS_CROSSSECTION_CROSS_SECTION_H_
+#define NEMESIS_CROSSSECTION_CROSS_SECTION_H_
 
 #include "domain/domain_object.h"
 
@@ -90,4 +90,4 @@ public:
 	~UserDefinedCrossSection() {}
 };
 
-#endif
+#endif //NEMESIS_CROSSSECTION_CROSS_SECTION_H_

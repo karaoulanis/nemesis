@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MC_2_H
-#define _MC_2_H
+#ifndef NEMESIS_MATERIAL_MC_2_H_
+#define NEMESIS_MATERIAL_MC_2_H_
 
 #include "material/mc.h"
 
@@ -37,4 +37,4 @@ public:
 	MC_2(double c_,double phi_);
 	~MC_2();
 };
-#endif
+#endif //NEMESIS_MATERIAL_MC_2_H_
