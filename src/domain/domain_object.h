@@ -51,8 +51,8 @@ public:
 
 	virtual const Packet& getPacket();
 	virtual void setPacket(const Packet& p);
-	virtual void save(std::ostream& s)	{}
-	virtual void load(std::istream& s)	{}
+	virtual void save(std::ostream& /*s*/)	{}
+	virtual void load(std::istream& /*s*/)	{}
 
 	void setDomain(Domain* pDomain);
 };
