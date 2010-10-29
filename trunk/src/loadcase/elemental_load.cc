@@ -45,7 +45,7 @@ ElementalLoad::ElementalLoad(int elemID)
 ElementalLoad::~ElementalLoad()
 {
 }
-void ElementalLoad::apply(double fact,double t)
+void ElementalLoad::apply(double fact,double /*t*/)
 {
 	myElement->addLoad(this->getP(),fact);
 }

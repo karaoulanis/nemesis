@@ -36,7 +36,7 @@ GroundMotionSin::GroundMotionSin(int dof_,double a_,double omega_,double phi_)
 	omega=omega_;
 	phi=phi_;
 }
-void GroundMotionSin::apply(double fact,double time)
+void GroundMotionSin::apply(double /*fact*/,double time)
 {
 	const std::map<int,Element*>& c=pD->getElements();
 	std::map<int,Element*>::const_iterator i;

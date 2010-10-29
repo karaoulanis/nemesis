@@ -48,10 +48,10 @@ public:
 
 	virtual double get_f(const Vector& s,const double a)=0;
 	virtual const Vector& get_dfds(const Vector& s,const double a);
-	virtual const double  get_dfda(const Vector& s,const double a);
+	virtual double  get_dfda(const Vector& s,const double a);
 	virtual const Matrix& get_df2dss(const Vector& s,const double a);
 	virtual const Vector& get_df2dsa(const Vector& s,const double a);
-	virtual const double  get_df2daa(const Vector& s,const double a);
+	virtual double  get_df2daa(const Vector& s,const double a);
 
 	void setActive(bool b)	{active=b;}
 	bool isActive()			{return active;}

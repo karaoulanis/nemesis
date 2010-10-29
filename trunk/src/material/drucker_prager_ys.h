@@ -10,10 +10,10 @@ private:
 	double c0,phi0,Kc,Kphi;
 public:
 	DruckerPragerYS(double c_,double phi_,double Kc_,double Kphi_);
-	const double getf(const Vector& sigma,const double kappa);
+	double getf(const Vector& sigma,const double kappa);
 	const Vector& getdfds(const Vector& sigma,const double kappa);
 	const Matrix& getd2fdsds(const Vector& sigma,const double kappa);
-	const double getdfdk(const Vector& sigma,const double kappa);
+	double getdfdk(const Vector& sigma,const double kappa);
 	const Vector& getf2dkds(const Vector& sigma,const double kappa);
 };
 

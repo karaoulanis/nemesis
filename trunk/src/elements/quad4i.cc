@@ -155,13 +155,15 @@ void Quad4i::update()
 		for(unsigned a=0;a<4;a++)
 		{
 			this->getBStd(Ba,a,k);
-			double dV=(pD->getFac())*detJ[k];
+			///@todo check
+			//double dV=(pD->getFac())*detJ[k];
 			add_Bv(epsilon,2*a,&perm[0],Ba,Du,1.0,1.0);
 		}
 		for(unsigned a=0;a<2;a++)
 		{
 			this->getBInc(Ba,a,k);
-			double dV=(pD->getFac())*detJ[k];
+			///@todo check
+			//double dV=(pD->getFac())*detJ[k];
 			add_Bv(epsilon,2*a,&perm[0],Ba,Da,1.0,1.0);
 		}
 		myMatPoints[k]->getMaterial()->setStrain(epsilon);

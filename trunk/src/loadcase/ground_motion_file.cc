@@ -43,13 +43,14 @@ GroundMotionFile::GroundMotionFile(int dof_,std::istream& s,double dt_,double sc
 }
 void GroundMotionFile::apply(double fact,double time)
 {
+	if(time<0.||dt<0.) throw SException("[nemesis:%d] %s",9999,"Time/dt must pe positive values.");
 	unsigned n=(int)floor(time/dt);
-	if(n<0||n>=data.size()) throw SException("[nemesis:%d] %s",9999,"Time exceeds given values.");
+	if(n>=data.size()) throw SException("[nemesis:%d] %s",9999,"Time exceeds given values.");
 	double t1=n*dt;
 	double t2=(n+1)*dt;
 	double d1=data[n];
 	double d2=data[n+1];
-    double d=d1+(time-t1)*(d2-d1)/(t2-t1);
+	double d=d1+(time-t1)*(d2-d1)/(t2-t1);
 	const std::map<int,Element*>& c=pD->getElements();
 	std::map<int,Element*>::const_iterator i;
 	for(i=c.begin();i!=c.end();i++) i->second->addGroundMotion(dof,fact*scale*d);

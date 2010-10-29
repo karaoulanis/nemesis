@@ -87,7 +87,7 @@ void UniaxialCyclic::setStrain(const double De)
 			   /((tmax+0.5*Gmax*abs(er-eTrial))*(tmax+0.5*Gmax*abs(er-eTrial)));
 	}
 }
-const double UniaxialCyclic::getC()
+double UniaxialCyclic::getC()
 {
 	///@todo
 	return Et;

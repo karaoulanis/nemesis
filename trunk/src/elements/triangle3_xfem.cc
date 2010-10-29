@@ -132,11 +132,11 @@ void Triangle3XFem::recoverStresses()
  	sigma=myMatPoints[0]->getMaterial()->getStress();
 	for(int i=0;i<3;i++) myNodes[i]->addStress(sigma);
 }
-bool Triangle3XFem::checkIfAllows(FEObject* f)
+bool Triangle3XFem::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }
-const int Triangle3XFem::getnPlasticPoints()
+int Triangle3XFem::getnPlasticPoints()
 {
 	int n=0;
 	if(myMatPoints[0]->getMaterial()->isPlastic()) n=1;

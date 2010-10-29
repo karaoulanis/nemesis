@@ -69,7 +69,7 @@ const Vector& SDofElement::getR()
 	R.clear();
 	return R;
 }
-bool SDofElement::checkIfAllows(FEObject* f)
+bool SDofElement::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }

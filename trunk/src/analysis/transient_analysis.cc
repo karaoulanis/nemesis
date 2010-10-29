@@ -30,7 +30,7 @@ TransientAnalysis::TransientAnalysis()
 {
 	myTag=TAG_ANALYSIS_TRANSIENT;
 }
-bool TransientAnalysis::checkIfAllows(FEObject* f)
+bool TransientAnalysis::checkIfAllows(FEObject* /*f*/)
 {
 /*	if(	f->getTag()==TAG_CONTROL_GENERALIZED_A				||
 		f->getTag()==TAG_ALGORITHM_LINEAR					||

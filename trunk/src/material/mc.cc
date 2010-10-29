@@ -36,7 +36,7 @@ MC::MC(double c_,double phi_)
 MC::~MC()
 {
 }
-void MC::find_C(const Vector& s,const double a)
+void MC::find_C(const Vector& s,const double /*a*/)
 {
 	double theta=s.theta();
 	double J2=s.J2();
@@ -73,7 +73,7 @@ void MC::find_C(const Vector& s,const double a)
 		//C23=0.; C32=0.; C33=0.;
 	}
 }
-double MC::get_f(const Vector& s,const double q)
+double MC::get_f(const Vector& s,const double /*q*/)
 {
 	double A,dA,d2A;
 	this->find_A(s,A,dA,d2A);

@@ -125,7 +125,7 @@ void Spring::commit()
 {
 	mySpringMaterial->commit();
 }
-bool Spring::checkIfAllows(FEObject* f)
+bool Spring::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }
@@ -179,8 +179,9 @@ const Vector& Spring::getR()
 	// Factors
 	if(!(myGroup->isActive()))	return R;
 	double facS=myGroup->getFacS();
-	double facG=myGroup->getFacG();
-	double facP=myGroup->getFacP();
+	///@todo check
+	//double facG=myGroup->getFacG();
+	//double facP=myGroup->getFacP();
 	// R = Fint - Fext 
 	Vector sigma=mySpringMaterial->getStress();
 	for(int k=0;k<nDim;k++)

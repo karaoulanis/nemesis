@@ -31,18 +31,17 @@ LinearEquivalentEL::LinearEquivalentEL()
 LinearEquivalentEL::~LinearEquivalentEL()
 {
 }
-const double LinearEquivalentEL::get_h(const Vector& v)
+double LinearEquivalentEL::get_h(const Vector& v)
 {
 	double eq=2./3.*(v[0]*v[0]+    v[1]*v[1]+    v[2]*v[2]
 			    +0.5*v[3]*v[3]+0.5*v[4]*v[4]+0.5*v[5]*v[5]);
-	//cout<<eq<<endl;
 	return eq;
 }
-const double LinearEquivalentEL::get_dhds(const Vector& sTrial,const Vector& ePTrial)
+double LinearEquivalentEL::get_dhds(const Vector& /*sTrial*/,const Vector& /*ePTrial*/)
 {
 	return 0;
 }
-const double LinearEquivalentEL::get_dhda(const Vector& sTrial,const Vector& ePTrial)
+double LinearEquivalentEL::get_dhda(const Vector& /*sTrial*/,const Vector& /*ePTrial*/)
 {
 	return 0;
 }

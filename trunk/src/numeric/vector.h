@@ -151,7 +151,7 @@ public:
 	/**
 	 * Returns the size of the Vector.
 	 */
-	inline const int size() const
+	inline int size() const
 	{
 		return size_;
 	}

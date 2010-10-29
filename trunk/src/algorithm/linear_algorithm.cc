@@ -32,7 +32,7 @@ LinearAlgorithm::LinearAlgorithm()
 LinearAlgorithm::~LinearAlgorithm()
 {
 }
-int LinearAlgorithm::solveStep(int n)
+int LinearAlgorithm::solveStep(int /*n*/)
 {
 	pA->getControl()->formTangent();
 	pA->getConvergenceNorm()->newStep();

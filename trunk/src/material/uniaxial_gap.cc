@@ -98,7 +98,7 @@ void UniaxialGap::setStrain(const double De)
 		}
 	}
 }
-const double UniaxialGap::getC()
+double UniaxialGap::getC()
 {
 	return Et;
 }

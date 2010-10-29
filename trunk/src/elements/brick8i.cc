@@ -155,13 +155,15 @@ void Brick8i::update()
 		for(unsigned a=0;a<8;a++)
 		{
 			this->getBStd(Ba,a,k);
-			double dV=(pD->getFac())*detJ[k];
+			///@todo check dV
+			//double dV=(pD->getFac())*detJ[k];
 			add_Bv(epsilon,3*a,&perm[0],Ba,Du,1.0,1.0);
 		}
 		for(unsigned a=0;a<3;a++)
 		{
 			this->getBInc(Ba,a,k);
-			double dV=(pD->getFac())*detJ[k];
+			///@todo check dV
+			//double dV=(pD->getFac())*detJ[k];
 			add_Bv(epsilon,3*a,&perm[0],Ba,Da,1.0,1.0);
 		}
 		myMatPoints[k]->getMaterial()->setStrain(epsilon);

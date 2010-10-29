@@ -53,7 +53,7 @@ LagrangeModelElement::~LagrangeModelElement()
 /**
  * 
  */
-void LagrangeModelElement::add_K(double factor)
+void LagrangeModelElement::add_K(double /*factor*/)
 {
 	myMatrix->clear();
 	for(unsigned i=0;i<theFTable.size()-1;i++)
@@ -70,19 +70,19 @@ void LagrangeModelElement::add_K(double factor)
 /**
  * 
  */
-void LagrangeModelElement::add_M(double factor)
+void LagrangeModelElement::add_M(double /*factor*/)
 {
 }
 /**
  * 
  */
-void LagrangeModelElement::add_C(double factor)
+void LagrangeModelElement::add_C(double /*factor*/)
 {
 }
 /**
  * 
  */
-void LagrangeModelElement::add_R(double factor)
+void LagrangeModelElement::add_R(double /*factor*/)
 {
 	///@todo Make this work for the non-linear multi constraint
 	// Find constraint violation
@@ -106,7 +106,7 @@ void LagrangeModelElement::add_R(double factor)
 /**
  * 
  */
-void LagrangeModelElement::add_Reff(double factor)
+void LagrangeModelElement::add_Reff(double /*factor*/)
 {
 	///@todo Make this work for the non-linear multi constraint
 	double c=myConstraint->getcVal();

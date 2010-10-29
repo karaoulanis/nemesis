@@ -51,7 +51,7 @@ void UniaxialElastic::setStrain(const double De)
 {
 	sTrial=sConvg+MatParams[0]*De;
 }
-const double UniaxialElastic::getC()
+double UniaxialElastic::getC()
 {
 	return MatParams[0];
 }

@@ -75,7 +75,7 @@ void PenaltyModelElement::add_M(double factor)
 		}
 	}
 }
-void PenaltyModelElement::add_C(double factor)
+void PenaltyModelElement::add_C(double /*factor*/)
 {
 }
 void PenaltyModelElement::add_R(double factor)

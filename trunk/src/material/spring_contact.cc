@@ -67,7 +67,7 @@ void SpringContact::setStrain(const Vector& De)
 	double Kn  =MatParams[0];
 	double Ks  =MatParams[1];
 	double mu  =MatParams[2];
-	double gap =MatParams[3];
+	//double gap =MatParams[3];
 
 	eTrial=eTotal+De;
 

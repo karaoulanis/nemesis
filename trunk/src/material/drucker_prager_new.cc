@@ -101,12 +101,6 @@ void DruckerPragerNew::setStrain(const Vector& De)
 	// material properties
 	double E = myElastic->getParam(0);
 	double nu= myElastic->getParam(1);
-	double c    = MatParams[ 0];
-	double phi  = MatParams[ 1];
-	double psi  = MatParams[ 2];
-	double Kc   = MatParams[ 3];
-	double Kphi = MatParams[ 4];
-	double T    = MatParams[ 5];
 	
 	// elasticity matrix
 	C3(0,0)=  1/E;	C3(0,1)=-nu/E;	C3(0,2)=-nu/E;

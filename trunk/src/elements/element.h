@@ -86,7 +86,7 @@ public:
 	const std::vector<Node*>& getNodes() const;
 	
 	bool isActive();
-	virtual const int getnPlasticPoints();
+	virtual int getnPlasticPoints();
 
 	// Build and return global element matrices
     virtual const Matrix& getK()=0;

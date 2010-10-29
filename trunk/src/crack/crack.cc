@@ -28,7 +28,7 @@
 Crack::Crack()
 {
 }
-Crack::Crack(int ID,double xS,double yS,double xT,double yT)
+Crack::Crack(int /*ID*/,double xS,double yS,double xT,double yT)
 {
 	myCrackPoints.push_back(new CrackPoint(xS,yS));
 	myCrackPoints.push_back(new CrackPoint(xT,yT));

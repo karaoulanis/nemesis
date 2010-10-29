@@ -45,7 +45,7 @@ public:
 	virtual void formElementalResidual(ModelElement* pModelElement,double time=0.);
 	
 	// Form residual node by node
-	void formNodalResidual(ModelNode* pModelNode)	{}
+	void formNodalResidual(ModelNode* /*pModelNode*/)	{}
 
 	// Methods that are used through analysis
 	virtual void init();

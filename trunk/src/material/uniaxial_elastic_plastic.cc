@@ -90,7 +90,7 @@ void UniaxialElastoPlastic::setStrain(const double De)
 		aTrial +=dg;
 	}
 }
-const double UniaxialElastoPlastic::getC()
+double UniaxialElastoPlastic::getC()
 {
 	// Material parameters
 	double E   =MatParams[ 0];

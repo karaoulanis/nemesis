@@ -94,8 +94,9 @@ const Vector& Quad4d::getR()
 
 	R.clear();
 	if(!(myGroup->isActive()))	return R;
-	double facS=myGroup->getFacS();
-	double facG=myGroup->getFacG();
+	///@todo check facS, facG
+	//double facS=myGroup->getFacS();
+	//double facG=myGroup->getFacG();
 	double facP=myGroup->getFacP();
 	
 	this->shapeFunctions();
@@ -129,7 +130,8 @@ void Quad4d::update()
 		for(unsigned a=0;a<myNodes.size();a++)
 		{
 			this->getB(Ba,a,k);
-			double dV=(pD->getFac())*detJ[k];
+			///@todo check dV
+			//double dV=(pD->getFac())*detJ[k];
 			add_Bv(epsilon,2*a,&perm[0],Ba,u,1.0,1.0);
 		}
 		myMatPoints[k]->getMaterial()->setStrain(epsilon);
@@ -152,8 +154,9 @@ void Quad4d::shapeFunctions()
 }
 void Quad4d::getB(Matrix& B,int node,int gPoint)
 {
-	const double dsq3=0.577350269189626;
-	static const double gCrds[4]={-dsq3,+dsq3,-dsq3,+dsq3};
+	///@todo: check gCrds
+	//const double dsq3=0.577350269189626;
+	//static const double gCrds[4]={-dsq3,+dsq3,-dsq3,+dsq3};
 
 	B.resize(4,2);
 	double Bb1=0.,Bb2=0.,vol=0.;

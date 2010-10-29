@@ -134,7 +134,7 @@ void TransientControl::formElementalTangent(ModelElement* pModelElement)
 	pModelElement->add_M(c[1]);
 	pModelElement->add_C(c[2]);
 }
-void TransientControl::formElementalResidual(ModelElement* pModelElement,double time)
+void TransientControl::formElementalResidual(ModelElement* pModelElement,double /*time*/)
 {
 	pModelElement->zeroVector();
 	pModelElement->add_Reff(1.0);

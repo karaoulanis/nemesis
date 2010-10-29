@@ -234,7 +234,7 @@ const Vector& Domain::getGravityVect()
  * Returns gravity acceleration.
  * @return Gravity acceleration
  */
-const double Domain::getGravityAccl()
+double Domain::getGravityAccl()
 {
 	return gravityAccl;
 }

@@ -59,7 +59,7 @@ const Packet& DomainObject::getPacket()
 	thePacket.zero();
 	return thePacket;
 }
-void DomainObject::setPacket(const Packet& p)
+void DomainObject::setPacket(const Packet& /*p*/)
 {
 	///@ todo When finished implementing all turn this function into pure.
 	std::cout<<"DomainObject::Not implemented yet!"<<std::endl;

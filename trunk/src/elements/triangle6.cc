@@ -221,7 +221,7 @@ void Triangle6::commit()
 	for(unsigned int i=0;i<myMatPoints.size();i++) 
 		myMatPoints[i]->getMaterial()->commit();
 }
-bool Triangle6::checkIfAllows(FEObject* f)
+bool Triangle6::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }
@@ -257,7 +257,7 @@ void Triangle6::addInitialStresses(InitialStresses* pInitialStresses)
 		for(unsigned i=0;i<myMatPoints.size();i++)
 			myMatPoints[i]->setInitialStresses(pInitialStresses);
 }
-const int Triangle6::getnPlasticPoints()
+int Triangle6::getnPlasticPoints()
 {
 	int n=0;
 	for(unsigned int i=0;i<myMatPoints.size();i++) 

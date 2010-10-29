@@ -45,7 +45,7 @@ public:
 							double sy,double Hiso,double Hkin,double eta);
 	UniaxialMaterial* getClone();
 	void setStrain(const double De);
-	const double getC();
+	double getC();
 	void commit();
 };
 

@@ -44,10 +44,10 @@ public:
 
 	virtual UniaxialMaterial* getClone()=0;
 	virtual void setStrain(const double De)=0;
-	virtual const double getC()=0;
+	virtual double getC()=0;
 	inline void setStress(const double s)	{sTrial=s;		}
 	inline void addStress(const double s)	{sTrial+=s;		}///@todo: check
-	inline const double getStress()			{return sTrial;	}
+	inline double getStress()			{return sTrial;	}
 	
 	// Tracker member functions
 	void track();

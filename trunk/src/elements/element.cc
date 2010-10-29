@@ -232,7 +232,7 @@ void Element::addLoad(const Vector& val,double fac)
 {
 	P.add_cV(fac,val);
 }
-void Element::addInitialStresses(InitialStresses* pInitialStresses)
+void Element::addInitialStresses(InitialStresses* /*pInitialStresses*/)
 {
 	// needs to be overwritten
 }
@@ -257,7 +257,7 @@ void Element::setGroup(int groupID)
 {
 		myGroup=pD->get<Group>(pD->getGroups(),groupID);
 }
-const int Element::getnPlasticPoints()
+int Element::getnPlasticPoints()
 {
 	int n=0;
 //	for(unsigned i=0;i<theMaterialItems.size();i++)
@@ -281,7 +281,7 @@ const Packet& Element::getPacket()
 	// Send data
 	return thePacket;
 }
-void Element::setPacket(const Packet& p)
+void Element::setPacket(const Packet& /*p*/)
 {
 }
 void Element::save(std::ostream& s)
@@ -297,7 +297,7 @@ void Element::save(std::ostream& s)
  * This should be overwitten depending on how an Element treats its Materials
  * @param index The index to the Element's Material
  */
-void Element::addTracker(int index)
+void Element::addTracker(int /*index*/)
 {
 }
 /**
@@ -305,7 +305,7 @@ void Element::addTracker(int index)
  * This should be overwitten depending on how an Element treats its Materials
  * @param index The index to the Element's Material
  */
-Tracker* Element::getTracker(int index)
+Tracker* Element::getTracker(int /*index*/)
 {
 	return 0;
 }
