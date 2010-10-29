@@ -146,7 +146,7 @@ PyObject* buildList(istream& s)
 /******************************************************************************
 * Database Commands
 ******************************************************************************/
-static PyObject* pyDatabase_SQLite(PyObject *self, PyObject *args)
+static PyObject* pyDatabase_SQLite(PyObject* /*self*/, PyObject* args)
 {
 	const char* s;
 	if(!PyArg_ParseTuple(args,"s",&s))	return NULL;
@@ -163,7 +163,7 @@ static PyObject* pyDatabase_SQLite(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDatabase_Store(PyObject *self, PyObject *args)
+static PyObject* pyDatabase_Store(PyObject* /*self*/, PyObject *args)
 {
  	const char* s;
 	if(!PyArg_ParseTuple(args,"s",&s))	return NULL;
@@ -180,7 +180,7 @@ static PyObject* pyDatabase_Store(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDatabase_Close(PyObject *self, PyObject *args)
+static PyObject* pyDatabase_Close(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,""))	return NULL;
 	try
@@ -196,7 +196,7 @@ static PyObject* pyDatabase_Close(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDatabase_ExportToVtk(PyObject *self, PyObject *args)
+static PyObject* pyDatabase_ExportToVtk(PyObject* /*self*/, PyObject* args)
 {
  	const char* s;
 	if(!PyArg_ParseTuple(args,"s",&s))	return NULL;
@@ -228,7 +228,7 @@ static PyMethodDef DatabaseMethods[] =
 /******************************************************************************
 * Domain Commands
 ******************************************************************************/
-static PyObject* pyDomain_Dim(PyObject *self, PyObject *args)
+static PyObject* pyDomain_Dim(PyObject* /*self*/, PyObject* args)
 {
 	int n;
     if(!PyArg_ParseTuple(args,"i",&n))	return NULL;
@@ -244,7 +244,7 @@ static PyObject* pyDomain_Dim(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_PlaneStress(PyObject *self, PyObject *args)
+static PyObject* pyDomain_PlaneStress(PyObject* /*self*/, PyObject* args)
 {
 	double t=1.0;
     if(!PyArg_ParseTuple(args,"|d",&t))	return NULL;
@@ -262,7 +262,7 @@ static PyObject* pyDomain_PlaneStress(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_PlaneStrain(PyObject *self, PyObject *args)
+static PyObject* pyDomain_PlaneStrain(PyObject* /*self*/, PyObject* args)
 {
 	double t=1.0;
     if(!PyArg_ParseTuple(args,"|d",&t))	return NULL;
@@ -280,7 +280,7 @@ static PyObject* pyDomain_PlaneStrain(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_Axisymmetric(PyObject *self, PyObject *args)
+static PyObject* pyDomain_Axisymmetric(PyObject* /*self*/, PyObject* args)
 {
 	double t=1.0;
     if(!PyArg_ParseTuple(args,"|d",&t))	return NULL;
@@ -297,7 +297,7 @@ static PyObject* pyDomain_Axisymmetric(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_RayleighDamping(PyObject *self, PyObject *args)
+static PyObject* pyDomain_RayleighDamping(PyObject* /*self*/, PyObject* args)
 {
 	double aK=0;
 	double bM=0;
@@ -309,7 +309,7 @@ static PyObject* pyDomain_RayleighDamping(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_Clear(PyObject *self, PyObject *args)
+static PyObject* pyDomain_Clear(PyObject* /*self*/, PyObject* args)
 {
     if(!PyArg_ParseTuple(args,""))	return NULL;
 	pD->clear();
@@ -317,7 +317,7 @@ static PyObject* pyDomain_Clear(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_State(PyObject *self, PyObject *args)
+static PyObject* pyDomain_State(PyObject* /*self*/, PyObject* args)
 {
 	double facD;
     if(!PyArg_ParseTuple(args,"d",&facD))	return NULL;
@@ -325,17 +325,17 @@ static PyObject* pyDomain_State(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyDomain_EigenValues(PyObject *self, PyObject *args)
+static PyObject* pyDomain_EigenValues(PyObject* /*self*/, PyObject* args)
 {
     if(!PyArg_ParseTuple(args,""))	return NULL;
     return buildList(pD->getEigenValues());
 }
-static PyObject* pyDomain_Type(PyObject *self, PyObject *args)
+static PyObject* pyDomain_Type(PyObject* /*self*/, PyObject* args)
 {
     if(!PyArg_ParseTuple(args,""))	return NULL;
 	return Py_BuildValue("i",pD->getTag());
 }
-static PyObject* pyDomain_Gravity(PyObject *self, PyObject *args)
+static PyObject* pyDomain_Gravity(PyObject* /*self*/, PyObject* args)
 {
 	double g,xG,yG,zG;
     if(!PyArg_ParseTuple(args,"d(ddd)",&g,&xG,&yG,&zG))	return NULL;
@@ -378,7 +378,7 @@ static PyMethodDef DomainMethods[] =
 /******************************************************************************
 * Node Commands
 ******************************************************************************/
-static PyObject* pyNode_Add(PyObject *self, PyObject *args)
+static PyObject* pyNode_Add(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double x1,x2=0,x3=0;
@@ -396,7 +396,7 @@ static PyObject* pyNode_Add(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
     return Py_None;
 }
-static PyObject* pyNode_Fix(PyObject *self, PyObject *args)
+static PyObject* pyNode_Fix(PyObject* /*self*/, PyObject* args)
 {
 	int nodeID,dofID;
 	double c=0.;
@@ -417,7 +417,7 @@ static PyObject* pyNode_Fix(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyNode_Data(PyObject *self, PyObject *args)
+static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args)
 {
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
@@ -435,7 +435,7 @@ static PyObject* pyNode_Data(PyObject *self, PyObject *args)
 	is.str(os.str());
 	return buildDict(is);
 }
-static PyObject* pyNode_Track(PyObject *self, PyObject *args)
+static PyObject* pyNode_Track(PyObject* /*self*/, PyObject* args)
 {
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
@@ -451,7 +451,7 @@ static PyObject* pyNode_Track(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyNode_Path(PyObject *self, PyObject *args)
+static PyObject* pyNode_Path(PyObject* /*self*/, PyObject* args)
 {
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
@@ -485,7 +485,7 @@ static PyMethodDef NodeMethods[] =
 /******************************************************************************
 * CrossSection Commands
 ******************************************************************************/
-static PyObject* pySection_Rect(PyObject *self, PyObject *args)
+static PyObject* pySection_Rect(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double w;
@@ -498,7 +498,7 @@ static PyObject* pySection_Rect(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pySection_UserDefined(PyObject *self, PyObject *args)
+static PyObject* pySection_UserDefined(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double A=0,As2=0,As3=0,J1=0,J2=0,J3=0,h2=0,h3=0;
@@ -510,11 +510,11 @@ static PyObject* pySection_UserDefined(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pySection_Rem(PyObject *self, PyObject *args)
+static PyObject* pySection_Rem(PyObject* /*self*/, PyObject* /*args*/)
 {
 	return Py_None;
 }
-static PyObject* pySection_Info(PyObject *self, PyObject *args)
+static PyObject* pySection_Info(PyObject* /*self*/, PyObject* args)
 {
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
@@ -548,7 +548,7 @@ void createGroupByMaterial(int groupId)
 	{
 	}
 }
-static PyObject* pyMaterial_SDof(PyObject *self, PyObject *args)
+static PyObject* pyMaterial_SDof(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double E,rho=0;
@@ -559,7 +559,7 @@ static PyObject* pyMaterial_SDof(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_SpringElastic(PyObject *self, PyObject *args)
+static PyObject* pyMaterial_SpringElastic(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double Kn,Ks2=0.,Ks3=0.;
@@ -571,7 +571,7 @@ static PyObject* pyMaterial_SpringElastic(PyObject *self, PyObject *args)
 	return Py_None;
 }
 
-static PyObject* pyMaterial_SpringContact(PyObject *self, PyObject *args)
+static PyObject* pyMaterial_SpringContact(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double Kn,Ks,mu,gap;
@@ -582,7 +582,7 @@ static PyObject* pyMaterial_SpringContact(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_UniaxialElastic(PyObject *self, PyObject *args)
+static PyObject* pyMaterial_UniaxialElastic(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double E=0,nu=0,rho=0,aT=0;
@@ -593,7 +593,7 @@ static PyObject* pyMaterial_UniaxialElastic(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject *self, PyObject *args)
+static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double E=0,nu=0,rho=0,aT=0,sy=0,Hiso=0,Hkin=0,eta=0;
@@ -605,7 +605,7 @@ static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject *self, PyObject *args
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_UniaxialGap(PyObject *self, PyObject *args)
+static PyObject* pyMaterial_UniaxialGap(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double E=0,nu=0,rho=0,aT=0,sy=0,gap=0;
@@ -617,7 +617,7 @@ static PyObject* pyMaterial_UniaxialGap(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_Elastic(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_Elastic(PyObject* /*self*/,PyObject *args)
 {
 	int id;
 	double E=0,nu=0,rho=0,aT=0;
@@ -634,7 +634,7 @@ static PyObject* pyMaterial_Elastic(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_DuncanChang(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_DuncanChang(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double E,nu,c,phi,m,Rf,pa,rho=0,aT=0;
@@ -646,7 +646,7 @@ static PyObject* pyMaterial_DuncanChang(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_UniaxialCyclic(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_UniaxialCyclic(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double E,nu,rho,aT,tmax,gmax;
@@ -657,7 +657,7 @@ static PyObject* pyMaterial_UniaxialCyclic(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_VonMises(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_VonMises(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double s0,K;
@@ -669,7 +669,7 @@ static PyObject* pyMaterial_VonMises(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double c,phi,alpha;
@@ -681,7 +681,7 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_Tresca(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_Tresca(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double cu;
@@ -694,7 +694,7 @@ static PyObject* pyMaterial_Tresca(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_HoekBrown(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_HoekBrown(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double si,sp,mb,mbb,alpha;
@@ -706,7 +706,7 @@ static PyObject* pyMaterial_HoekBrown(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_Creep(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_Creep(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double A,n,k;
@@ -718,7 +718,7 @@ static PyObject* pyMaterial_Creep(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_DruckerPrager(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_DruckerPrager(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId,type;
 	double c,phi,psi,T;
@@ -730,7 +730,7 @@ static PyObject* pyMaterial_DruckerPrager(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_DruckerPragerNew(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_DruckerPragerNew(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double c,phi,psi,Kphi,Kc,T;
@@ -742,7 +742,7 @@ static PyObject* pyMaterial_DruckerPragerNew(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_DruckerPragerNew2(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_DruckerPragerNew2(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double c,phi,psi,Kphi,Kc,T;
@@ -753,7 +753,7 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject *self,PyObject *args)
 	createGroupByMaterial(id);
 	Py_INCREF(Py_None);
 	return Py_None;
-}static PyObject* pyMaterial_DruckerPragerNew3(PyObject *self,PyObject *args)
+}static PyObject* pyMaterial_DruckerPragerNew3(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double c,phi,psi,Kphi,Kc,T;
@@ -765,7 +765,7 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_ModifiedCamClay(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_ModifiedCamClay(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double M,po,kappa,lambda;
@@ -777,7 +777,7 @@ static PyObject* pyMaterial_ModifiedCamClay(PyObject *self,PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyMaterial_LadeDuncan(PyObject *self,PyObject *args)
+static PyObject* pyMaterial_LadeDuncan(PyObject* /*self*/, PyObject* args)
 {
 	int id,elasticId;
 	double K;
@@ -836,7 +836,7 @@ static PyMethodDef MaterialMethods[] =
 /******************************************************************************
 * Element commands
 ******************************************************************************/
-static PyObject* pyElement_Spring(PyObject *self, PyObject *args)
+static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args)
 {
 	int id,iNode,jNode,mat;
 	double xp1=1.,xp2=0.,xp3=0.,yp1=0.,yp2=1.,yp3=0.;
@@ -856,7 +856,7 @@ static PyObject* pyElement_Spring(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Bar2s(PyObject *self, PyObject *args)
+static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args)
 {
 	int id,iNode,jNode,mat,iSec,jSec=-9999;
     if(!PyArg_ParseTuple(args,"iiiii|i",&id,&iNode,&jNode,&mat,&iSec,&jSec))
@@ -874,7 +874,7 @@ static PyObject* pyElement_Bar2s(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Bar2t(PyObject *self, PyObject *args)
+static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args)
 {
 	int id,iNode,jNode,mat,iSec,jSec=-9999;
     if(!PyArg_ParseTuple(args,"iiiii|i",&id,&iNode,&jNode,&mat,&iSec,&jSec))
@@ -893,7 +893,7 @@ static PyObject* pyElement_Bar2t(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Beam2e(PyObject *self, PyObject *args)
+static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args)
 {
 	int id,iNode,jNode,mat,sec;
     if(!PyArg_ParseTuple(args,"iiiii",&id,&iNode,&jNode,&mat,&sec))
@@ -911,7 +911,7 @@ static PyObject* pyElement_Beam2e(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
+static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args)
 {
 	int id,iNode,jNode,mat,sec,rule=-1;
     if(!PyArg_ParseTuple(args,"iiiii|i",&id,&iNode,&jNode,&mat,&sec,&rule))
@@ -930,7 +930,7 @@ static PyObject* pyElement_Beam2t(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Beam3t(PyObject *self, PyObject *args)
+static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args)
 {
 	int id,iNode,jNode,mNode,mat,sec,rule=-1;
     if(!PyArg_ParseTuple(args,"iiiiii|i",&id,&iNode,&jNode,&mNode,&mat,&sec,&rule))
@@ -949,7 +949,7 @@ static PyObject* pyElement_Beam3t(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Brick8d(PyObject *self, PyObject *args)
+static PyObject* pyElement_Brick8d(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,n5,n6,n7,n8,mat;
 	if(!PyArg_ParseTuple(args,"iiiiiiiiii",&id,&n1,&n2,&n3,&n4,&n5,&n6,&n7,&n8,&mat))
@@ -967,7 +967,7 @@ static PyObject* pyElement_Brick8d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Brick8b(PyObject *self, PyObject *args)
+static PyObject* pyElement_Brick8b(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,n5,n6,n7,n8,mat;
 	if(!PyArg_ParseTuple(args,"iiiiiiiiii",&id,&n1,&n2,&n3,&n4,&n5,&n6,&n7,&n8,&mat))
@@ -985,7 +985,7 @@ static PyObject* pyElement_Brick8b(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Brick8i(PyObject *self, PyObject *args)
+static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,n5,n6,n7,n8,mat;
 	if(!PyArg_ParseTuple(args,"iiiiiiiiii",&id,&n1,&n2,&n3,&n4,&n5,&n6,&n7,&n8,&mat))
@@ -1003,7 +1003,7 @@ static PyObject* pyElement_Brick8i(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_SDOF(PyObject *self, PyObject *args)
+static PyObject* pyElement_SDOF(PyObject* /*self*/, PyObject* args)
 {
 	int id,nodeID,dofID,matID;
     if(!PyArg_ParseTuple(args,"iiii",&id,&nodeID,&dofID,&matID))
@@ -1013,7 +1013,7 @@ static PyObject* pyElement_SDOF(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Quad4d(PyObject *self, PyObject *args)
+static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,matID;
     if(!PyArg_ParseTuple(args,"iiiiii",
@@ -1037,7 +1037,7 @@ static PyObject* pyElement_Quad4d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Quad4Test(PyObject *self, PyObject *args)
+static PyObject* pyElement_Quad4Test(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,matID;
     if(!PyArg_ParseTuple(args,"iiiiii",
@@ -1056,7 +1056,7 @@ static PyObject* pyElement_Quad4Test(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Quad4b(PyObject *self, PyObject *args)
+static PyObject* pyElement_Quad4b(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,matID;
     if(!PyArg_ParseTuple(args,"iiiiii",
@@ -1075,7 +1075,7 @@ static PyObject* pyElement_Quad4b(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Quad4i(PyObject *self, PyObject *args)
+static PyObject* pyElement_Quad4i(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,matID;
     if(!PyArg_ParseTuple(args,"iiiiii",
@@ -1094,7 +1094,7 @@ static PyObject* pyElement_Quad4i(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Quad4e(PyObject *self, PyObject *args)
+static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,matID;
     if(!PyArg_ParseTuple(args,"iiiiii",
@@ -1116,7 +1116,7 @@ static PyObject* pyElement_Quad4e(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
+static PyObject* pyElement_Triangle3d(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,matID;
     if(!PyArg_ParseTuple(args,"iiiii",&id,&n1,&n2,&n3,&matID))
@@ -1134,7 +1134,7 @@ static PyObject* pyElement_Triangle3d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Triangle3dXFem(PyObject *self, PyObject *args)
+static PyObject* pyElement_Triangle3dXFem(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,matID;
     if(!PyArg_ParseTuple(args,"iiiii",&id,&n1,&n2,&n3,&matID))
@@ -1152,7 +1152,7 @@ static PyObject* pyElement_Triangle3dXFem(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Triangle6d(PyObject *self, PyObject *args)
+static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,n5,n6,matID;
     if(!PyArg_ParseTuple(args,"iiiiiiii",&id,&n1,&n2,&n3,&n4,&n5,&n6,&matID))
@@ -1170,7 +1170,7 @@ static PyObject* pyElement_Triangle6d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Tetrahedron4d(PyObject *self, PyObject *args)
+static PyObject* pyElement_Tetrahedron4d(PyObject* /*self*/, PyObject* args)
 {
 	int id,n1,n2,n3,n4,matID;
     if(!PyArg_ParseTuple(args,"iiiiii",&id,&n1,&n2,&n3,&n4,&matID))
@@ -1188,7 +1188,7 @@ static PyObject* pyElement_Tetrahedron4d(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Data(PyObject *self, PyObject *args)
+static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args)
 {
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
@@ -1198,7 +1198,7 @@ static PyObject* pyElement_Data(PyObject *self, PyObject *args)
 	is.str(os.str());
 	return buildDict(is);
 }
-static PyObject* pyElement_Track(PyObject *self, PyObject *args)
+static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args)
 {
 	int id,index;
     if(!PyArg_ParseTuple(args,"ii",&id,&index))	return NULL;
@@ -1206,7 +1206,7 @@ static PyObject* pyElement_Track(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyElement_Path(PyObject *self, PyObject *args)
+static PyObject* pyElement_Path(PyObject* /*self*/, PyObject* args)
 {
 	int id,index;
     if(!PyArg_ParseTuple(args,"ii",&id,&index))	return NULL;
@@ -1268,7 +1268,7 @@ static PyMethodDef ElementMethods[] =
 /******************************************************************************
 * Constraint commands
 ******************************************************************************/
-static PyObject* pyConstraint_Set(PyObject *self, PyObject *args)
+static PyObject* pyConstraint_Set(PyObject* /*self*/, PyObject* args)
 {
 	int nodeID,dofID;
 	double a,c;
@@ -1282,7 +1282,7 @@ static PyObject* pyConstraint_Set(PyObject *self, PyObject *args)
 	return Py_None;
 }
 ///@todo make this one more general
-static PyObject* pyConstraint_twoDofs(PyObject *self, PyObject *args)
+static PyObject* pyConstraint_twoDofs(PyObject* /*self*/, PyObject* args)
 {
 	int node1,dof1,node2,dof2;
 	double a1,a2,c;
@@ -1296,7 +1296,7 @@ static PyObject* pyConstraint_twoDofs(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyConstraint_Linear(PyObject *self, PyObject *args)
+static PyObject* pyConstraint_Linear(PyObject* /*self*/, PyObject* args)
 {
 	double c0;
 	PyObject* cList;
@@ -1365,7 +1365,7 @@ static PyMethodDef ConstraintMethods[] =
 /******************************************************************************
 * Group commands
 ******************************************************************************/
-static PyObject* pyGroup_Define(PyObject *self, PyObject *args)
+static PyObject* pyGroup_Define(PyObject* /*self*/, PyObject* args)
 {
 	int groupId;
 	if(!PyArg_ParseTuple(args,"i",&groupId)) return NULL;
@@ -1383,7 +1383,7 @@ static PyObject* pyGroup_Define(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyGroup_Set(PyObject *self, PyObject *args)
+static PyObject* pyGroup_Set(PyObject* /*self*/, PyObject* args)
 {
 	int groupID,elemID;
 	if(!PyArg_ParseTuple(args,"ii",&groupID,&elemID)) return NULL;
@@ -1399,7 +1399,7 @@ static PyObject* pyGroup_Set(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyGroup_State(PyObject *self, PyObject *args)
+static PyObject* pyGroup_State(PyObject* /*self*/, PyObject* args)
 {
 	if(currentLC<=0)
 	{
@@ -1432,7 +1432,7 @@ static PyMethodDef GroupMethods[] =
 /******************************************************************************
 * Sensitivity commands
 ******************************************************************************/
-static PyObject* pySens_Elem(PyObject *self, PyObject *args)
+static PyObject* pySens_Elem(PyObject* /*self*/, PyObject* args)
 {
 	int elemID,param;
 	if(!PyArg_ParseTuple(args,"ii",&elemID,&param)) return NULL;
@@ -1459,7 +1459,7 @@ static PyMethodDef SensitivityMethods[] =
 /******************************************************************************
 * Load commands
 ******************************************************************************/
-static PyObject* pyLoad_NodeConstant(PyObject *self, PyObject *args)
+static PyObject* pyLoad_NodeConstant(PyObject* /*self*/, PyObject* args)
 {
 	if(currentLC<=0)
 	{
@@ -1475,7 +1475,7 @@ static PyObject* pyLoad_NodeConstant(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyLoad_Linear(PyObject *self, PyObject *args)
+static PyObject* pyLoad_Linear(PyObject* /*self*/, PyObject* args)
 {
 	if(currentLC<=0)
 	{
@@ -1491,7 +1491,7 @@ static PyObject* pyLoad_Linear(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyLoad_Sin(PyObject *self, PyObject *args)
+static PyObject* pyLoad_Sin(PyObject* /*self*/, PyObject* args)
 {
 	if(currentLC<=0)
 	{
@@ -1507,7 +1507,7 @@ static PyObject* pyLoad_Sin(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyLoad_BeamPoint(PyObject *self, PyObject *args)
+static PyObject* pyLoad_BeamPoint(PyObject* /*self*/, PyObject* args)
 {
 	try
 	{
@@ -1528,7 +1528,7 @@ static PyObject* pyLoad_BeamPoint(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyLoad_BeamUniform(PyObject *self, PyObject *args)
+static PyObject* pyLoad_BeamUniform(PyObject* /*self*/, PyObject* args)
 {
 	try
 	{
@@ -1566,7 +1566,7 @@ static PyMethodDef LoadMethods[] =
 /******************************************************************************
 * Ground Motion commands
 ******************************************************************************/
-static PyObject* pyGroundMotion_File(PyObject *self, PyObject *args)
+static PyObject* pyGroundMotion_File(PyObject* /*self*/, PyObject* args)
 {
 	try
 	{
@@ -1590,7 +1590,7 @@ static PyObject* pyGroundMotion_File(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyGroundMotion_Sin(PyObject *self, PyObject *args)
+static PyObject* pyGroundMotion_Sin(PyObject* /*self*/, PyObject* args)
 {
 	try
 	{
@@ -1621,7 +1621,7 @@ static PyMethodDef GroundMotionMethods[] =
 /******************************************************************************
 * Initial Conditions commands
 ******************************************************************************/
-static PyObject* pyInitialConditions_Disp(PyObject *self, PyObject *args)
+static PyObject* pyInitialConditions_Disp(PyObject* /*self*/, PyObject* args)
 {
 	if(currentLC<=0)
 	{
@@ -1636,7 +1636,7 @@ static PyObject* pyInitialConditions_Disp(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyInitialConditions_Velc(PyObject *self, PyObject *args)
+static PyObject* pyInitialConditions_Velc(PyObject* /*self*/, PyObject* args)
 {
 	if(currentLC<=0)
 	{
@@ -1651,7 +1651,7 @@ static PyObject* pyInitialConditions_Velc(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyInitialConditions_Stresses(PyObject *self, PyObject *args)
+static PyObject* pyInitialConditions_Stresses(PyObject* /*self*/, PyObject* args)
 {
 	if(currentLC<=0)
 	{
@@ -1687,7 +1687,7 @@ static PyMethodDef InitialConditionsMethods[] =
 /******************************************************************************
 * Crack commands
 ******************************************************************************/
-static PyObject* pyCrack_OneTip(PyObject *self, PyObject *args)
+static PyObject* pyCrack_OneTip(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	double xS,yS,xT,yT;
@@ -1706,7 +1706,7 @@ static PyMethodDef CrackMethods[] =
 /******************************************************************************
 * LoadCase commands
 ******************************************************************************/
-static PyObject* pyLC_Define(PyObject *self, PyObject *args)
+static PyObject* pyLC_Define(PyObject* /*self*/, PyObject* args)
 {
 	int id;
 	const char* name=0;
@@ -1720,7 +1720,7 @@ static PyObject* pyLC_Define(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyLC_Info(PyObject *self, PyObject *args)
+static PyObject* pyLC_Info(PyObject* /*self*/, PyObject* args)
 {
 	int id;
     if(!PyArg_ParseTuple(args,"i",&id))	return NULL;
@@ -1738,7 +1738,7 @@ static PyMethodDef LCMethods[] =
 /******************************************************************************
 * Analysis commands
 ******************************************************************************/
-static PyObject* pyAnalysis_Static(PyObject *self, PyObject *args)
+static PyObject* pyAnalysis_Static(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	AnalysisType* pType=new StaticAnalysis();
@@ -1746,7 +1746,7 @@ static PyObject* pyAnalysis_Static(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAnalysis_Transient(PyObject *self, PyObject *args)
+static PyObject* pyAnalysis_Transient(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	AnalysisType* pType=new TransientAnalysis();
@@ -1754,7 +1754,7 @@ static PyObject* pyAnalysis_Transient(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAnalysis_Eigen(PyObject *self, PyObject *args)
+static PyObject* pyAnalysis_Eigen(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	AnalysisType* pType=new EigenAnalysis();
@@ -1762,7 +1762,7 @@ static PyObject* pyAnalysis_Eigen(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAnalysis_Sensitivity(PyObject *self, PyObject *args)
+static PyObject* pyAnalysis_Sensitivity(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	AnalysisType* pType=new SensitivityStaticAnalysis();
@@ -1778,7 +1778,7 @@ static PyObject* pyAnalysis_Sensitivity(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAnalysis_XFem(PyObject *self, PyObject *args)
+static PyObject* pyAnalysis_XFem(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	AnalysisType* pType=new XFemAnalysis();
@@ -1794,7 +1794,7 @@ static PyObject* pyAnalysis_XFem(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAnalysis_Run(PyObject *self, PyObject *args)
+static PyObject* pyAnalysis_Run(PyObject* /*self*/, PyObject* args)
 {
 	int LC,steps,ret;
 	if(!PyArg_ParseTuple(args,"ii",&LC,&steps)) return NULL;
@@ -1829,7 +1829,7 @@ static PyMethodDef AnalysisMethods[] =
 /******************************************************************************
 * Imposer commands
 ******************************************************************************/
-static PyObject* pyImposer_Eliminatation(PyObject *self, PyObject *args)
+static PyObject* pyImposer_Eliminatation(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Imposer* pImposer=new EliminationImposer();
@@ -1837,7 +1837,7 @@ static PyObject* pyImposer_Eliminatation(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyImposer_Lagrange(PyObject *self, PyObject *args)
+static PyObject* pyImposer_Lagrange(PyObject* /*self*/, PyObject* args)
 {
 	double a;
 	if(!PyArg_ParseTuple(args,"",&a)) return NULL;
@@ -1846,7 +1846,7 @@ static PyObject* pyImposer_Lagrange(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyImposer_Penalty(PyObject *self, PyObject *args)
+static PyObject* pyImposer_Penalty(PyObject* /*self*/, PyObject* args)
 {
 	double a;
 	if(!PyArg_ParseTuple(args,"d",&a)) return NULL;
@@ -1868,7 +1868,7 @@ static PyMethodDef ImposerMethods[] =
 /******************************************************************************
 * Control commands
 ******************************************************************************/
-static PyObject* pyControl_Load(PyObject *self, PyObject *args)
+static PyObject* pyControl_Load(PyObject* /*self*/, PyObject* args)
 {
 	double DL0,minDL=1.,maxDL=1.,n=0.5,dt=0.;
 	int Id=1;
@@ -1878,7 +1878,7 @@ static PyObject* pyControl_Load(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyControl_ArcLength(PyObject *self, PyObject *args)
+static PyObject* pyControl_ArcLength(PyObject* /*self*/, PyObject* args)
 {
 	double DL0,minDL=1.,maxDL=1.,n=0.5,dt=0.;
 	int Id=1;
@@ -1888,7 +1888,7 @@ static PyObject* pyControl_ArcLength(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyControl_ArcLengthUNP(PyObject *self, PyObject *args)
+static PyObject* pyControl_ArcLengthUNP(PyObject* /*self*/, PyObject* args)
 {
 	double DL0,minDL=1.,maxDL=1.,n=0.5,dt=0.;
 	int Id=1;
@@ -1898,7 +1898,7 @@ static PyObject* pyControl_ArcLengthUNP(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyControl_Disp(PyObject *self, PyObject *args)
+static PyObject* pyControl_Disp(PyObject* /*self*/, PyObject* args)
 {
 	int nodeID,dofID;
 	double Du0,minDu=1.,maxDu=1.,dt=0.;
@@ -1910,7 +1910,7 @@ static PyObject* pyControl_Disp(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyControl_Newmark(PyObject *self, PyObject *args)
+static PyObject* pyControl_Newmark(PyObject* /*self*/, PyObject* args)
 {
 	double beta,gamma,dt;
 	if(!PyArg_ParseTuple(args,"ddd",&beta,&gamma,&dt)) return NULL;
@@ -1936,7 +1936,7 @@ static PyMethodDef ControlMethods[] =
 /******************************************************************************
 * Algorithm commands
 ******************************************************************************/
-static PyObject* pyAlgorithm_Linear(PyObject *self, PyObject *args)
+static PyObject* pyAlgorithm_Linear(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Algorithm* pAlgorithm=new LinearAlgorithm();
@@ -1944,7 +1944,7 @@ static PyObject* pyAlgorithm_Linear(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAlgorithm_BFGS(PyObject *self, PyObject *args)
+static PyObject* pyAlgorithm_BFGS(PyObject* /*self*/, PyObject* args)
 {
 	int m;
 	int lsearch=0;
@@ -1958,7 +1958,7 @@ static PyObject* pyAlgorithm_BFGS(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAlgorithm_FullNewtonRaphson(PyObject *self, PyObject *args)
+static PyObject* pyAlgorithm_FullNewtonRaphson(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Algorithm* pAlgorithm=new NewtonRaphsonFull();
@@ -1966,7 +1966,7 @@ static PyObject* pyAlgorithm_FullNewtonRaphson(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAlgorithm_InitialNewtonRaphson(PyObject *self, PyObject *args)
+static PyObject* pyAlgorithm_InitialNewtonRaphson(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Algorithm* pAlgorithm=new NewtonRaphsonInitial();
@@ -1974,7 +1974,7 @@ static PyObject* pyAlgorithm_InitialNewtonRaphson(PyObject *self, PyObject *args
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyAlgorithm_ModifiedNewtonRaphson(PyObject *self, PyObject *args)
+static PyObject* pyAlgorithm_ModifiedNewtonRaphson(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Algorithm* pAlgorithm=new NewtonRaphsonModified();
@@ -1999,7 +1999,7 @@ static PyMethodDef AlgorithmMethods[] =
 /******************************************************************************
 * Convergence commands
 ******************************************************************************/
-static PyObject* pyConvergence_Set(PyObject *self, PyObject *args)
+static PyObject* pyConvergence_Set(PyObject* /*self*/, PyObject* args)
 {
 	int maxIter;
 	double tolRabs;
@@ -2020,7 +2020,7 @@ static PyMethodDef ConvergenceMethods[] =
 /******************************************************************************
 * SOE commands
 ******************************************************************************/
-static PyObject* pySOE_FullLinearSOE(PyObject *self, PyObject *args)
+static PyObject* pySOE_FullLinearSOE(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	SOE* pSOE=new FullLinearSOE();
@@ -2028,7 +2028,7 @@ static PyObject* pySOE_FullLinearSOE(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pySOE_SymmLinearSOE(PyObject *self, PyObject *args)
+static PyObject* pySOE_SymmLinearSOE(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	SOE* pSOE=new SymmLinearSOE();
@@ -2036,7 +2036,7 @@ static PyObject* pySOE_SymmLinearSOE(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pySOE_BandLinearSOE(PyObject *self, PyObject *args)
+static PyObject* pySOE_BandLinearSOE(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	SOE* pSOE=new BandLinearSOE();
@@ -2044,14 +2044,14 @@ static PyObject* pySOE_BandLinearSOE(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pySOE_Info(PyObject *self, PyObject *args)
+static PyObject* pySOE_Info(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	pA->getSOE()->print();
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pySOE_PlotGraph(PyObject *self, PyObject *args)
+static PyObject* pySOE_PlotGraph(PyObject* /*self*/, PyObject* args)
 {
 	const char* s;
 	if(!PyArg_ParseTuple(args,"s",&s)) return NULL;
@@ -2084,7 +2084,7 @@ static PyMethodDef SOEMethods[] =
 /******************************************************************************
 * Reorder commands
 ******************************************************************************/
-static PyObject* pyReorder_RCM(PyObject *self, PyObject *args)
+static PyObject* pyReorder_RCM(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Reorderer* pReorderer=new ReverseCuthillMckee();
@@ -2092,7 +2092,7 @@ static PyObject* pyReorder_RCM(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyReorder_FCM(PyObject *self, PyObject *args)
+static PyObject* pyReorder_FCM(PyObject* /*self*/, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Reorderer* pReorderer=new ForwardCuthillMckee();
@@ -2100,7 +2100,7 @@ static PyObject* pyReorder_FCM(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyReorder_FSloan(PyObject *self, PyObject *args)
+static PyObject* pyReorder_FSloan(PyObject* /*self*/, PyObject* args)
 {
 	double w1=0.5,w2=0.5;
 	if(!PyArg_ParseTuple(args,"|dd",&w1,&w2)) return NULL;
@@ -2109,7 +2109,7 @@ static PyObject* pyReorder_FSloan(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyReorder_RSloan(PyObject *self, PyObject *args)
+static PyObject* pyReorder_RSloan(PyObject* /*self*/, PyObject* args)
 {
 	double w1=0.5,w2=0.5;
 	if(!PyArg_ParseTuple(args,"|dd",&w1,&w2)) return NULL;
@@ -2119,7 +2119,7 @@ static PyObject* pyReorder_RSloan(PyObject *self, PyObject *args)
 	return Py_None;
 }
 /*
-static PyObject* pyReorder_King(PyObject *self, PyObject *args)
+static PyObject* pyReorder_King(PyObject* self, PyObject* args)
 {
 	if(!PyArg_ParseTuple(args,"")) return NULL;
 	Reorderer* pReorderer=new King();
@@ -2146,7 +2146,7 @@ static PyMethodDef ReorderMethods[] =
 * Tracker commands
 ******************************************************************************/
 /*
-static PyObject* pyTracker_Node(PyObject *self, PyObject *args)
+static PyObject* pyTracker_Node(PyObject* self, PyObject* args)
 {
 	int id,nodeID;
 	if(!PyArg_ParseTuple(args,"ii",&id,&nodeID)) return NULL;
@@ -2163,7 +2163,7 @@ static PyObject* pyTracker_Node(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-static PyObject* pyTracker_Steps(PyObject *self, PyObject *args)
+static PyObject* pyTracker_Steps(PyObject* self, PyObject* args)
 {
 	int id;
 	int steps=0;
@@ -2179,7 +2179,7 @@ static PyObject* pyTracker_Steps(PyObject *self, PyObject *args)
 	}
 	return Py_BuildValue("i",steps);
 }
-static PyObject* pyTracker_Time(PyObject *self, PyObject *args)
+static PyObject* pyTracker_Time(PyObject* self, PyObject* args)
 {
 	int id;
 	int step;
@@ -2196,7 +2196,7 @@ static PyObject* pyTracker_Time(PyObject *self, PyObject *args)
 	}
 	return Py_BuildValue("d",time);
 }
-static PyObject* pyTracker_Lambda(PyObject *self, PyObject *args)
+static PyObject* pyTracker_Lambda(PyObject* self, PyObject* args)
 {
 	int id;
 	int step;
@@ -2213,7 +2213,7 @@ static PyObject* pyTracker_Lambda(PyObject *self, PyObject *args)
 	}
 	return Py_BuildValue("d",lambda);
 }
-static PyObject* pyTracker_Data(PyObject *self, PyObject *args)
+static PyObject* pyTracker_Data(PyObject* self, PyObject* args)
 {
 	int id,step;
 	if(!PyArg_ParseTuple(args,"ii",&id,&step)) return NULL;
@@ -2247,7 +2247,7 @@ static PyMethodDef TrackerMethods[] =
 /******************************************************************************
 * Log commands
 ******************************************************************************/
-PyObject* log_CaptureStdout(PyObject* self, PyObject* pArgs)
+PyObject* log_CaptureStdout(PyObject* /*self*/, PyObject* pArgs)
 {
  char* LogStr = NULL;
  if (!PyArg_ParseTuple(pArgs, "s", &LogStr)) return NULL;
@@ -2263,7 +2263,7 @@ PyObject* log_CaptureStdout(PyObject* self, PyObject* pArgs)
 }
 
 // Notice we have STDERR too.
-PyObject* log_CaptureStderr(PyObject* self, PyObject* pArgs)
+PyObject* log_CaptureStderr(PyObject* /*self*/, PyObject* pArgs)
 {
  char* LogStr = NULL;
  if (!PyArg_ParseTuple(pArgs, "s", &LogStr)) return NULL;

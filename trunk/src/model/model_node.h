@@ -54,7 +54,7 @@ public:
 	virtual void setTrialVecs(const Vector& u,const Vector& v,const Vector& a)=0;
 	
 	virtual void commit()=0;
-	virtual void commitSens(const Vector& ds,int param) {}
+	virtual void commitSens(const Vector& /*ds*/,int /*param*/) {}
 	virtual void rollback();
 };
 

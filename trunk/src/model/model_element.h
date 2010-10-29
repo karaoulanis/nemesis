@@ -55,7 +55,7 @@ public:
 	virtual void add_R(double factor=1.0)=0;
 	virtual void add_Reff(double factor=1.0)=0;
 	
-	virtual void add_Kgrad(double factor=1.0)	{};
+	virtual void add_Kgrad(double /*factor=1.0*/)	{};
 };
 
 #endif
