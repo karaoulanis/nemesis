@@ -24,8 +24,8 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#ifndef _EIGENCONTROL_H
-#define _EIGENCONTROL_H
+#ifndef NEMESIS_CONTROL_EIGEN_CONTROL_H_
+#define NEMESIS_CONTROL_EIGEN_CONTROL_H_
 
 #include "control/control.h"
 
@@ -56,4 +56,4 @@ public:
 	void rollback();
 };
 
-#endif
+#endif //NEMESIS_CONTROL_EIGEN_CONTROL_H_

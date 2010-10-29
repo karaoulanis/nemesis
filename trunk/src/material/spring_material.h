@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SPRINGMATERIAL_H
-#define _SPRINGMATERIAL_H
+#ifndef NEMESIS_MATERIAL_SPRING_MATERIAL_H_
+#define NEMESIS_MATERIAL_SPRING_MATERIAL_H_
 
 #include "material/material.h"
 
@@ -58,4 +58,4 @@ public:
 	void track();
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_SPRING_MATERIAL_H_

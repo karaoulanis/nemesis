@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TC_H
-#define _TC_H
+#ifndef NEMESIS_MATERIAL_TC_H_
+#define NEMESIS_MATERIAL_TC_H_
 
 #include "material/surface.h"
 
@@ -40,4 +40,4 @@ public:
 	double get_f(const Vector& s,const double q);
 	const Vector& get_dfds(const Vector& s,const double a);
 };
-#endif
+#endif //NEMESIS_MATERIAL_TC_H_

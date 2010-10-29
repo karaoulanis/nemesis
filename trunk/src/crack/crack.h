@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _CRACK_H
-#define _CRACK_H
+#ifndef NEMESIS_CRACK_CRACK_H_
+#define NEMESIS_CRACK_CRACK_H_
 
 #include <vector>
 #include "containers/containers.h"
@@ -56,4 +56,4 @@ public:
 	const vector<CrackPoint*>& getCrack();
 	CrackPoint* getCrackPoint(int n);
 };
-#endif
+#endif //NEMESIS_CRACK_CRACK_H_

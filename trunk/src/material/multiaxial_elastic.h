@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MULTIAXIALELASTIC_H
-#define _MULTIAXIALELASTIC_H
+#ifndef NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_H_
+#define NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_H_
 
 #include "material/multiaxial_material.h"
 
@@ -44,4 +44,4 @@ public:
 	// Tracker member functions
 	void track();
 };
-#endif
+#endif //NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SPRINGCONTACT_H
-#define _SPRINGCONTACT_H
+#ifndef NEMESIS_MATERIAL_SPRING_CONTACT_H_
+#define NEMESIS_MATERIAL_SPRING_CONTACT_H_
 
 #include "material/spring_material.h"
 
@@ -42,4 +42,4 @@ public:
 	void setStrain(const Vector& De);
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_SPRING_CONTACT_H_

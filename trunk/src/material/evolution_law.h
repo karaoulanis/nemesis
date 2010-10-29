@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _EVOLUTIONLAW_H
-#define _EVOLUTIONLAW_H
+#ifndef NEMESIS_MATERIAL_EVOLUTION_LAW_H_
+#define NEMESIS_MATERIAL_EVOLUTION_LAW_H_
 
 #include "numeric/vector.h"
 
@@ -42,4 +42,4 @@ public:
 	virtual double get_dhds(const Vector& sTrial,const Vector& ePTrial)=0;
 	virtual double get_dhda(const Vector& sTrial,const Vector& ePTrial)=0;
 };
-#endif
+#endif //NEMESIS_MATERIAL_EVOLUTION_LAW_H_

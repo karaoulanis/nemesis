@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _XFEMANALYSIS_H
-#define _XFEMANALYSIS_H
+#ifndef NEMESIS_ANALYSIS_XFEM_ANALYSIS_H_
+#define NEMESIS_ANALYSIS_XFEM_ANALYSIS_H_
 
 #include "algorithm/linear_algorithm.h"
 #include "analysis/analysis_type.h"
@@ -41,4 +41,4 @@ public:
 	int run(int nLC,int nLoadSteps);
 };
 
-#endif
+#endif //NEMESIS_ANALYSIS_XFEM_ANALYSIS_H_

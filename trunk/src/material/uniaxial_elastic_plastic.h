@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _UNIAXIALELASTOPLASTIC_H
-#define _UNIAXIALELASTOPLASTIC_H
+#ifndef NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_
+#define NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_
 
 #include "material/uniaxial_material.h"
 
@@ -49,4 +49,4 @@ public:
 	void commit();
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_

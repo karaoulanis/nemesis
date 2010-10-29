@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _CONSTRAINT_H
-#define _CONSTRAINT_H
+#ifndef NEMESIS_CONSTRAINTS_CONSTRAINT_H_
+#define NEMESIS_CONSTRAINTS_CONSTRAINT_H_
 
 // C++ system files
 #include <vector>
@@ -80,4 +80,4 @@ public:
 	void update(double f);
 	void commit();
 };
-#endif
+#endif //NEMESIS_CONSTRAINTS_CONSTRAINT_H_

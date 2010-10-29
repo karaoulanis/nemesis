@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _STATICANALYSIS_H
-#define _STATICANALYSIS_H
+#ifndef NEMESIS_ANALYSIS_STATIC_ANALYSIS_H_
+#define NEMESIS_ANALYSIS_STATIC_ANALYSIS_H_
 
 #include "algorithm/linear_algorithm.h"
 #include "analysis/analysis_type.h"
@@ -41,4 +41,4 @@ public:
 	int run(int nLC,int nLoadSteps);
 };
 
-#endif
+#endif //NEMESIS_ANALYSIS_STATIC_ANALYSIS_H_

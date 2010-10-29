@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ALGORITHM_H
-#define _ALGORITHM_H
+#ifndef NEMESIS_ALGORITHM_ALGORITHM_H_
+#define NEMESIS_ALGORITHM_ALGORITHM_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -36,4 +36,4 @@ public:
 	virtual ~Algorithm();
 	virtual int solveStep(int n)=0;
 };
-#endif 
+#endif //NEMESIS_ALGORITHM_ALGORITHM_H_

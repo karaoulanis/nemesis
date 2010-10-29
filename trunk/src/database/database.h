@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _DATABASE_H
-#define _DATABASE_H
+#ifndef NEMESIS_DATABASE_DATABASE_H_
+#define NEMESIS_DATABASE_DATABASE_H_
 
 #include "database/packet.h"
 
@@ -55,4 +55,4 @@ public:
 	virtual bool existsFile(const char* filename);
 };
 
-#endif
+#endif //NEMESIS_DATABASE_DATABASE_H_

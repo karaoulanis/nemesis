@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LINEARALGORITHM_H
-#define _LINEARALGORITHM_H
+#ifndef NEMESIS_ALGORITHM_LINEAR_ALGORITHM_H_
+#define NEMESIS_ALGORITHM_LINEAR_ALGORITHM_H_
 
 #include "algorithm/algorithm.h"
 
@@ -36,4 +36,4 @@ public:
 
 	int solveStep(int n);
 };
-#endif 
+#endif //NEMESIS_ALGORITHM_LINEAR_ALGORITHM_H_ 

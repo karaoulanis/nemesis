@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _UNIAXIALCYCLIC_H
-#define _UNIAXIALCYCLIC_H
+#ifndef NEMESIS_MATERIAL_UNIAXIAL_CYCLIC_H_
+#define NEMESIS_MATERIAL_UNIAXIAL_CYCLIC_H_
 
 #include "material/uniaxial_material.h"
 
@@ -46,4 +46,4 @@ public:
 	double getC();
 	void commit();
 };
-#endif
+#endif //NEMESIS_MATERIAL_UNIAXIAL_CYCLIC_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ARCLENGTHSPHERICALCONTROL_H
-#define _ARCLENGTHSPHERICALCONTROL_H
+#ifndef NEMESIS_CONTROL_ARC_LENGTH_SPHERICAL_H_
+#define NEMESIS_CONTROL_ARC_LENGTH_SPHERICAL_H_
 
 #include "control/static_control.h"
 /**
@@ -50,4 +50,4 @@ public:
 	void correct();
 };
 
-#endif
+#endif //NEMESIS_CONTROL_ARC_LENGTH_SPHERICAL_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TRANSIENTCONTROL_H
-#define _TRANSIENTCONTROL_H
+#ifndef NEMESIS_CONTROL_TRANSIENT_CONTROL_H_
+#define NEMESIS_CONTROL_TRANSIENT_CONTROL_H_
 
 #include "control/control.h"
 
@@ -49,4 +49,4 @@ public:
 	virtual void commit();
 	virtual void rollback();
 };
-#endif
+#endif //NEMESIS_CONTROL_TRANSIENT_CONTROL_H_

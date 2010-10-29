@@ -24,8 +24,8 @@
 //            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#ifndef _SENSITIVITYCONTROL_H
-#define _SENSITIVITYCONTROL_H
+#ifndef NEMESIS_CONTROL_SENSITIVITY_CONTROL_H_
+#define NEMESIS_CONTROL_SENSITIVITY_CONTROL_H_
 
 #include "control/control.h"
 
@@ -57,4 +57,4 @@ public:
 	virtual void formResidual(double factor);
 };
 
-#endif
+#endif //NEMESIS_CONTROL_SENSITIVITY_CONTROL_H_

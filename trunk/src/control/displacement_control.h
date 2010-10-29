@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _DISPLACEMENTCONTROL_H
-#define _DISPLACEMENTCONTROL_H
+#ifndef NEMESIS_CONTROL_DISPLACEMENT_CONTROL_H_
+#define NEMESIS_CONTROL_DISPLACEMENT_CONTROL_H_
 
 #include "control/static_control.h"
 
@@ -67,4 +67,4 @@ public:
 	void correct();
 };
 
-#endif
+#endif //NEMESIS_CONTROL_DISPLACEMENT_CONTROL_H_

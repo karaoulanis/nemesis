@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MATERIAL_H
-#define _MATERIAL_H
+#ifndef NEMESIS_MATERIAL_MATERIAL_H_
+#define NEMESIS_MATERIAL_MATERIAL_H_
 
 #include "domain/domain.h"
 #include "domain/domain_object.h"
@@ -62,4 +62,4 @@ public:
 	virtual void track();
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_MATERIAL_H_

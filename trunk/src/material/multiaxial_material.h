@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MULTIAXIALMATERIAL_H
-#define _MULTIAXIALMATERIAL_H
+#ifndef NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_
+#define NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_
 
 #include "material/material.h"
 #include "numeric/matrix.h"
@@ -54,4 +54,4 @@ public:
 	const Vector& getStress()		{return sTrial;}
 	virtual bool isPlastic()		{return false;}
 };
-#endif
+#endif //NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_

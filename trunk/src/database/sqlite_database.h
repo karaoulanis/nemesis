@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SQLITEDATABASE_H
-#define _SQLITEDATABASE_H
+#ifndef NEMESIS_DATABASE_SQLITE_DATABASE_H_
+#define NEMESIS_DATABASE_SQLITE_DATABASE_H_
 
 #include <fstream>
 #include <sqlite3.h>
@@ -57,4 +57,4 @@ public:
 
 };
 
-#endif
+#endif //NEMESIS_DATABASE_SQLITE_DATABASE_H_

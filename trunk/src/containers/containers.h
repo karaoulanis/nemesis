@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _CONTAINERS_H
-#define _CONTAINERS_H
+#ifndef NEMESIS_CONTAINERS_CONTAINERS_H_
+#define NEMESIS_CONTAINERS_CONTAINERS_H_
 
 #include <vector> 
 #include <algorithm>
@@ -73,4 +73,4 @@ namespace Containers
 		return true;
 	}
 }
-#endif
+#endif //NEMESIS_CONTAINERS_CONTAINERS_H_

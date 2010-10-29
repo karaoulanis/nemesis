@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _UNIAXIALGAP_H
-#define _UNIAXIALGAP_H
+#ifndef NEMESIS_MATERIAL_UNIAXIAL_GAP_H_
+#define NEMESIS_MATERIAL_UNIAXIAL_GAP_H_
 
 #include "material/uniaxial_material.h"
 
@@ -46,4 +46,4 @@ public:
 	void commit();
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_UNIAXIAL_GAP_H_

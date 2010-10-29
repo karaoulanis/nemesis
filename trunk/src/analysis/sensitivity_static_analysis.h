@@ -21,11 +21,10 @@
 // $LastChangedBy$
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
-//            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#ifndef _SENSITIVITYSTATICANALYSIS_H
-#define _SENSITIVITYSTATICANALYSIS_H
+#ifndef NEMESIS_ANALYSIS_SENSITIVITY_STATIC_ANALYSIS_H_
+#define NEMESIS_ANALYSIS_SENSITIVITY_STATIC_ANALYSIS_H_
 
 #include "algorithm/linear_algorithm.h"
 #include "analysis/analysis_type.h"
@@ -46,4 +45,4 @@ public:
 	int run(int nLC,int nLoadSteps);
 };
 
-#endif
+#endif //NEMESIS_ANALYSIS_SENSITIVITY_STATIC_ANALYSIS_H_

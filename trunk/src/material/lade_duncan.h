@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LADEDUNCAN_H
-#define _LADEDUNCAN_H
+#ifndef NEMESIS_MATERIAL_LADE_DUNCAN_H_
+#define NEMESIS_MATERIAL_LADE_DUNCAN_H_
 
 #include "material/multiaxial_elastic_plastic.h"
 
@@ -40,4 +40,4 @@ public:
 	MultiaxialMaterial* getClone();
 	~LadeDuncan();
 };
-#endif
+#endif //NEMESIS_MATERIAL_LADE_DUNCAN_H_

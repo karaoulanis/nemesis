@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LINEAREQUIVALENTEL_H
-#define _LINEAREQUIVALENTEL_H
+#ifndef NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_
+#define NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_
 
 #include "material/evolution_law.h"
 
@@ -42,4 +42,4 @@ public:
 	double get_dhds(const Vector& sTrial,const Vector& ePTrial);
 	double get_dhda(const Vector& sTrial,const Vector& ePTrial);
 };
-#endif
+#endif //NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_

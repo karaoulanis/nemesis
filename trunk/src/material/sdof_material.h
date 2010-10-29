@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SDOFMATERIAL_H
-#define _SDOFMATERIAL_H
+#ifndef NEMESIS_MATERIAL_SDOF_MATERIAL_H_
+#define NEMESIS_MATERIAL_SDOF_MATERIAL_H_
 
 #include "material/material.h"
 
@@ -41,4 +41,4 @@ public:
 	void commit();
 };
 
-#endif
+#endif //NEMESIS_MATERIAL_SDOF_MATERIAL_H_

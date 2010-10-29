@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LADEDUNCANSURFACE_H
-#define _LADEDUNCANSURFACE_H
+#ifndef NEMESIS_MATERIAL_LADE_DUNCAN_SURFACE_H_
+#define NEMESIS_MATERIAL_LADE_DUNCAN_SURFACE_H_
 
 #include "material/surface.h"
 
@@ -43,4 +43,4 @@ public:
 	const Vector& get_df2dsa(const Vector& s,const double a);
 	double get_df2daa(const Vector& s,const double a);
 };
-#endif
+#endif //NEMESIS_MATERIAL_LADE_DUNCAN_SURFACE_H_
