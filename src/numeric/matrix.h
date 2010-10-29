@@ -164,14 +164,14 @@ public:
 	/**
 	 * Returns the number of rows of the Matrix.
 	 */
-	inline const int rows() const
+	inline int rows() const
 	{
 		return rows_;
 	}
 	/**
 	 * Returns the number of columns of the Matrix.
 	 */
-	inline const int cols() const
+	inline int cols() const
 	{
 		return cols_;
 	}
@@ -516,10 +516,10 @@ public:
 		array_range_check(row,col+v.size(),rows_,cols_);
 		#endif
 		if(c0==0.0)
-			for(int i=0;i<v.size();i++) data_[row*cols_+i]=0.;
+			for(int i=0;i<v.size();i++) data_[row*cols_+col+i]=0.;
 		else if(c0!=1.0)
-			for(int i=0;i<v.size();i++) data_[row*cols_+i]*=c0;
-		for(int i=0;i<v.size();i++)     data_[row*cols_+i]+=c*v[i];
+			for(int i=0;i<v.size();i++) data_[row*cols_+col+i]*=c0;
+		for(int i=0;i<v.size();i++)     data_[row*cols_+col+i]+=c*v[i];
 		return *this;
 	}
 	/**

@@ -95,7 +95,7 @@ void StaticControl::formElementalTangent(ModelElement* pModelElement)
  * @param time Current(?) time.
  * @return 0 if everything is ok.
  */
-void StaticControl::formElementalResidual(ModelElement* pModelElement,double time)
+void StaticControl::formElementalResidual(ModelElement* pModelElement,double /*time*/)
 {
 	pModelElement->zeroVector();
 	pModelElement->add_R(1.0);

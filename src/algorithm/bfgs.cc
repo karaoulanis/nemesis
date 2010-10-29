@@ -42,7 +42,7 @@ BFGS::BFGS(int m_,double etaMin_,double etaMax_,double rTol_,int maxIter_)
 BFGS::~BFGS()
 {
 }
-int BFGS::solveStep(int n)
+int BFGS::solveStep(int /*n*/)
 {
 	int size=pA->getModel()->getnEquations();
 	Vector resOld(size);

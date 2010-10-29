@@ -43,11 +43,11 @@ FEObjectTag FEObject::getTag()
 	return myTag;
 }
 
-bool FEObject::checkIfAllows(FEObject* f)
+bool FEObject::checkIfAllows(FEObject* /*f*/)
 {
 	///@ todo When finished implementing all turn this function into pure.
 	return 0;
 }
-void FEObject::checkConstency(FEObject* f)
+void FEObject::checkConstency(FEObject* /*f*/)
 {
 }

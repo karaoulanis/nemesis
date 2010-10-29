@@ -34,7 +34,7 @@ Tracker::Tracker()
 Tracker::~Tracker()
 {
 }
-const int Tracker::getSteps()
+int Tracker::getSteps()
 {
 	return myRecords.size();
 }

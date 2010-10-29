@@ -51,7 +51,7 @@ public:
 	const Vector& getR();
 	const Vector& getRgrad();
 
-	bool checkIfAllows(FEObject* f)		{return true;}
+	bool checkIfAllows(FEObject* /*f*/)		{return true;}
 	void update()						{return;}
 	void commit()						{return;}
 	void recoverStresses();

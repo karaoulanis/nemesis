@@ -39,22 +39,22 @@ LagrangeModelNode::LagrangeModelNode(const IDContainer& FTable,Node* pNode,Const
 	:ModelNode(FTable,pNode,pConstraint)
 {
 }
-void LagrangeModelNode::add_R(double factor)
+void LagrangeModelNode::add_R(double /*factor*/)
 {
 }
 void LagrangeModelNode::incTrialDisp(const Vector& du)
 {
 	myConstraint->incTrialForce(du[theFTable[0]]);
 }
-void LagrangeModelNode::incTrialVecs(const Vector& du,const Vector& dv,const Vector& da)
+void LagrangeModelNode::incTrialVecs(const Vector& /*du*/,const Vector& /*dv*/,const Vector& /*da*/)
 {
 //	myConstraint->incTrialDisp(du[theFTable[0]]);
 }
-void LagrangeModelNode::setTrialDisp(const Vector& u)
+void LagrangeModelNode::setTrialDisp(const Vector& /*u*/)
 {
 //	myConstraint->setTrialDisp(u[theFTable[0]]);
 }
-void LagrangeModelNode::setTrialVecs(const Vector& u,const Vector& v,const Vector& a)
+void LagrangeModelNode::setTrialVecs(const Vector& /*u*/,const Vector& /*v*/,const Vector& /*a*/)
 {
 //	myConstraint->setTrialDisp(u[theFTable[0]]);
 }

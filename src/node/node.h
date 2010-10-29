@@ -88,8 +88,8 @@ public:
 	// Activated Dofs
 	int addDofToNode(int dof);
 	const IDContainer& getActivatedDofs() const;
-	const int getActivatedDof(int localDof) const;
-	const int getnActivatedDofs();
+	int getActivatedDof(int localDof) const;
+	int getnActivatedDofs() const;
 
 	// Loads
 	void addLoad(int dof,double value,double factor=1.0);

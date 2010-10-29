@@ -131,7 +131,7 @@ public:
 	// Gravity axis
 	void setGravity(double g,double xG,double yG,double zG);
 	const Vector& getGravityVect();
-	const double  getGravityAccl();
+	double  getGravityAccl();
 	
 	///@todo cleanup
 	double getTimeCurr()		{return timeCurr;}

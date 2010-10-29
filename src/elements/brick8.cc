@@ -274,7 +274,7 @@ void Brick8::recoverStresses()
 /**
  * Element non-linear points.
  */
-const int Brick8::getnPlasticPoints()
+int Brick8::getnPlasticPoints()
 {
 	int n=0;
 	for(unsigned i=0;i<myMatPoints.size();i++)
@@ -284,7 +284,7 @@ const int Brick8::getnPlasticPoints()
 /**
  * Element consistency.
  */
-bool Brick8::checkIfAllows(FEObject* f)
+bool Brick8::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }

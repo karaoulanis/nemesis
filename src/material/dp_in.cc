@@ -56,7 +56,7 @@ void DP_in::find_C(const Vector& s,const double a)
 	C22=-0.25*pow(s.J2(),-1.5);
 	C23=0.; C32=0.; C33=0.;
 }
-const double  DP_in::get_dfda(const Vector& s,const double a)
+double DP_in::get_dfda(const Vector& s,const double a)
 {
 	double Kf=0.;
 /*
@@ -72,7 +72,7 @@ const double  DP_in::get_dfda(const Vector& s,const double a)
 	return -2*Kf*sqrt(3.)*(cos(phi+Kf*a)*s.I1()+3*c*sin(phi+Kf*a)+c)/
 		(-10-6.*sin(phi+Kf*a)+pow(cos(phi+Kf*a),2));
 }
-const Vector& DP_in::get_df2dsa(const Vector& s,const double a)
+const Vector& DP_in::get_df2dsa(const Vector& /*s*/,const double a)
 {
 	static Vector ret(6,0.);
 	ret.clear();
@@ -93,7 +93,7 @@ const Vector& DP_in::get_df2dsa(const Vector& s,const double a)
 */
     return ret;
 }
-const double  DP_in::get_df2daa(const Vector& s,const double a)
+double DP_in::get_df2daa(const Vector& /*s*/,const double /*a*/)
 {
 	return 0.;
 }

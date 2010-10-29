@@ -97,7 +97,7 @@ void Surface::find_da(const Vector& s)
 	da3(5,0)= tzx;		da3(5,1)= 2*tzx;	da3(5,2)= tzx;		da3(5,3)= 3*tyz;	da3(5,4)= 3*txy;	da3(5,5)=-3*sy;
 	da3*=num::d23;
 }
-void Surface::find_C(const Vector& s,const double a)
+void Surface::find_C(const Vector& /*s*/,const double /*a*/)
 {
 	C11=0.; C1=0;	C2=0;	C3=0;
 	C23=0;	C32=0;	C22=0;	C33=0;
@@ -109,7 +109,7 @@ const Vector& Surface::get_dfds(const Vector& s,const double a)
 	myVector=C1*a1+C2*a2+C3*a3;
 	return myVector;
 }
-const double  Surface::get_dfda(const Vector& s,const double a)
+double Surface::get_dfda(const Vector& /*s*/,const double /*a*/)
 {
 	return 0;
 }
@@ -125,12 +125,12 @@ const Matrix& Surface::get_df2dss(const Vector& s,const double a)
 						  +C33*VVT(a3,a3);
 	return myMatrix;
 }
-const Vector& Surface::get_df2dsa(const Vector& s,const double a)
+const Vector& Surface::get_df2dsa(const Vector& /*s*/,const double /*a*/)
 {
 	myVector.clear();
 	return myVector;
 }
-const double  Surface::get_df2daa(const Vector& s,const double a)
+double  Surface::get_df2daa(const Vector& /*s*/,const double /*a*/)
 {
 	return 0;
 }

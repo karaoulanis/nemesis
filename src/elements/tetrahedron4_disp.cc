@@ -191,7 +191,7 @@ void Tetrahedron4Disp::commit()
 	for(unsigned int i=0;i<myMatPoints.size();i++) 
 		myMatPoints[i]->getMaterial()->commit();
 }
-bool Tetrahedron4Disp::checkIfAllows(FEObject* f)
+bool Tetrahedron4Disp::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }

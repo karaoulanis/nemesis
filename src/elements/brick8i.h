@@ -53,11 +53,11 @@ public:
 	~Brick8i();
 	
 	const Matrix& getK();
-    const Matrix& getM();
+	const Matrix& getM();
 	const Vector& getR();
 	void update();
 	void commit();
-	void getB(Matrix& B,int node,int gPoint) {}
+	void getB(Matrix& /*B*/,int /*node*/,int /*gPoint*/) {}
 
 };
 

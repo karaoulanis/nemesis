@@ -39,12 +39,12 @@ void SensitivityControl::formElementalTangent(ModelElement* pModelElement)
 	pModelElement->zeroMatrix();
 	pModelElement->add_K(1.0);
 }
-void SensitivityControl::formElementalResidual(ModelElement* pModelElement,double time)
+void SensitivityControl::formElementalResidual(ModelElement* pModelElement,double /*time*/)
 {
 	pModelElement->zeroVector();
 	pModelElement->add_Kgrad(1.0);
 }
-void SensitivityControl::formResidual(double factor)
+void SensitivityControl::formResidual(double /*factor*/)
 {
 	pA->getSOE()->zeroB();
 	pA->getDomain()->zeroSensitivityParameters();

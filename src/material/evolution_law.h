@@ -38,8 +38,8 @@ public:
 	EvolutionLaw();
 	virtual ~EvolutionLaw();
 	
-	virtual const double get_h(const Vector& v)=0;
-	virtual const double get_dhds(const Vector& sTrial,const Vector& ePTrial)=0;
-	virtual const double get_dhda(const Vector& sTrial,const Vector& ePTrial)=0;
+	virtual double get_h(const Vector& v)=0;
+	virtual double get_dhds(const Vector& sTrial,const Vector& ePTrial)=0;
+	virtual double get_dhda(const Vector& sTrial,const Vector& ePTrial)=0;
 };
 #endif

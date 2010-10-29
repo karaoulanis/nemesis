@@ -36,7 +36,7 @@ public:
 	UniaxialElastic(int ID,double E,double nu,double rho,double aT);
 	UniaxialMaterial* getClone();
 	void setStrain(const double De);
-	const double getC();
+	double getC();
 	void commit();
 };
 

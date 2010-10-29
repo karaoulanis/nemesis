@@ -47,7 +47,7 @@ private:
 public:
 	Tracker();
 	virtual ~Tracker();
-	const int getSteps();
+	int getSteps();
 
 	void track(double lambda_,double time_,string data_);
 	void save(std::ostream& s);

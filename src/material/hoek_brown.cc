@@ -90,23 +90,21 @@ MultiaxialMaterial* HoekBrown::getClone()
 	HoekBrown* newClone=new HoekBrown(myID,elID,sigma_ci,sp,mb,mbb,alpha);
 	return newClone;
 }
-void HoekBrown::find_f(const Vector& s,double q)
+void HoekBrown::find_f(const Vector& s,double /*q*/)
 {
 	double sigma_ci = MatParams[ 0];
 	double sp       = MatParams[ 1];
 	double mb       = MatParams[ 2];
-	double mbb      = MatParams[ 3];
 	double alpha    = MatParams[ 4];
 	f[0]=s[0]-s[2]-sigma_ci*pow(sp-mb*s[0]/sigma_ci,alpha);
 	f[1]=s[1]-s[2]-sigma_ci*pow(sp-mb*s[1]/sigma_ci,alpha);
 	f[2]=s[0]-s[1]-sigma_ci*pow(sp-mb*s[0]/sigma_ci,alpha);
 }
-void HoekBrown::find_dfds(const Vector& s,double q)
+void HoekBrown::find_dfds(const Vector& s,double /*q*/)
 {
 	double sigma_ci = MatParams[ 0];
 	double sp       = MatParams[ 1];
 	double mb       = MatParams[ 2];
-	double mbb      = MatParams[ 3];
 	double alpha    = MatParams[ 4];
 	double c0=alpha*mb*pow(sp-mb*s[0]/sigma_ci,alpha-1);
 	double c1=alpha*mb*pow(sp-mb*s[1]/sigma_ci,alpha-1);
@@ -115,12 +113,11 @@ void HoekBrown::find_dfds(const Vector& s,double q)
 	dfds[0][1]= 0.0;		dfds[1][1]= 1.0+c1;		dfds[2][1]=-1.0;	
 	dfds[0][2]=-1.0;		dfds[1][2]=-1.0;		dfds[2][2]= 0.0;
 }
-void HoekBrown::find_dgds(const Vector& s,double q)
+void HoekBrown::find_dgds(const Vector& s,double /*q*/)
 {
 	double sigma_ci = MatParams[ 0];
 	double sp       = MatParams[ 1];
 	double mb       = MatParams[ 2];
-	double mbb      = MatParams[ 3];
 	double alpha    = MatParams[ 4];
 	double c0=alpha*mb*pow(sp-mb*s[0]/sigma_ci,alpha-1);
 	double c1=alpha*mb*pow(sp-mb*s[1]/sigma_ci,alpha-1);
@@ -129,12 +126,11 @@ void HoekBrown::find_dgds(const Vector& s,double q)
 	dgds[0][1]= 0.0;		dgds[1][1]= 1.0+c1;		dgds[2][1]=-1.0;	
 	dgds[0][2]=-1.0;		dgds[1][2]=-1.0;		dgds[2][2]= 0.0;
 }
-void HoekBrown::find_d2gdsds(const Vector& s,double q)
+void HoekBrown::find_d2gdsds(const Vector& s,double /*q*/)
 {
 	double sigma_ci = MatParams[ 0];
 	double sp       = MatParams[ 1];
 	double mb       = MatParams[ 2];
-	double mbb      = MatParams[ 3];
 	double alpha    = MatParams[ 4];
 	double c00=alpha*(1-alpha)*mb*mb*pow(sp-mb*s[0]/sigma_ci,alpha-2)/sigma_ci;
 	double c11=alpha*(1-alpha)*mb*mb*pow(sp-mb*s[1]/sigma_ci,alpha-2)/sigma_ci;
@@ -153,11 +149,6 @@ void HoekBrown::setStrain(const Vector& De)
 	// material properties
 	double E = myElastic->getParam(0);
 	double nu= myElastic->getParam(1);
-	double si   = MatParams[ 0];
-	double sp   = MatParams[ 1];
-	double mb   = MatParams[ 2];
-	double mbb  = MatParams[ 3];
-	double alpha= MatParams[ 4];
 
 	// elasticity matrix
 	C3(0,0)=  1/E;	C3(0,1)=-nu/E;	C3(0,2)=-nu/E;

@@ -35,17 +35,14 @@ LadeDuncanSurface::LadeDuncanSurface(double K_)
 LadeDuncanSurface::~LadeDuncanSurface()
 {
 }
-double LadeDuncanSurface::get_f(const Vector& s,const double kappa)
+double LadeDuncanSurface::get_f(const Vector& s,const double /*kappa*/)
 {
-	//cout<<s<<endl;
-	//cout<<s.I3()<<endl;
 	double sI3=s.I3();
 	if(fabs(sI3)<1e-4) sI3=0.;
 	double f=pow(1.*sI3,num::d13)-s.I1();
-	std::cout<<sI3<<'\t'<<f<<std::endl;
 	return f;
 }
-void LadeDuncanSurface::find_C(const Vector& s,const double a)
+void LadeDuncanSurface::find_C(const Vector& s,const double /*a*/)
 {
 	C1=0.;
 	C2=sqrt(0.75)/sqrt(s.J2());
@@ -54,17 +51,17 @@ void LadeDuncanSurface::find_C(const Vector& s,const double a)
 	C22=-0.25*num::sq3*pow(s.J2(),-1.5);
 	C23=0.; C32=0.; C33=0.;
 }
-const double  LadeDuncanSurface::get_dfda(const Vector& s,const double a)
+double LadeDuncanSurface::get_dfda(const Vector& /*s*/,const double /*a*/)
 {
 	return -K;
 }
-const Vector& LadeDuncanSurface::get_df2dsa(const Vector& s,const double a)
+const Vector& LadeDuncanSurface::get_df2dsa(const Vector& /*s*/,const double /*a*/)
 {
 	static Vector ret(6,0.);
 	ret.clear();
-    return ret;
+	return ret;
 }
-const double  LadeDuncanSurface::get_df2daa(const Vector& s,const double a)
+double LadeDuncanSurface::get_df2daa(const Vector& /*s*/,const double /*a*/)
 {
 	return 0.;
 }

@@ -38,8 +38,8 @@ public:
 	LinearEquivalentEL();
 	~LinearEquivalentEL();
 	
-	const double get_h(const Vector& v);
-	const double get_dhds(const Vector& sTrial,const Vector& ePTrial);
-	const double get_dhda(const Vector& sTrial,const Vector& ePTrial);
+	double get_h(const Vector& v);
+	double get_dhds(const Vector& sTrial,const Vector& ePTrial);
+	double get_dhda(const Vector& sTrial,const Vector& ePTrial);
 };
 #endif

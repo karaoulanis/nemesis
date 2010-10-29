@@ -41,7 +41,7 @@ public:
 	void predict()		{}
 	void correct()		{}
 	void commit()		{}
-	void formResidual(double factor) {}
+	void formResidual(double /*factor*/) {}
 	void formTangent();
 
 	// Form tangent and residual element by element 

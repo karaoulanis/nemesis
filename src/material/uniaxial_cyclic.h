@@ -43,7 +43,7 @@ public:
 	~UniaxialCyclic();
 	UniaxialMaterial* getClone();
 	void setStrain(const double De);
-	const double getC();
+	double getC();
 	void commit();
 };
 #endif

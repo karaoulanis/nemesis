@@ -79,7 +79,7 @@ void Constraint::setcVal(double val)
 {
 	cVal=val;
 }
-double Constraint::getcVal(double time)
+double Constraint::getcVal(double /*time*/)
 {
 	return cVal;
 }

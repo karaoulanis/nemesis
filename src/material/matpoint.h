@@ -61,7 +61,7 @@ public:
 	inline double get_t()			{return t;}
 	inline double get_w()			{return w;}
 	const Packet& getPacket()		{return thePacket;	}
-	void setPacket(const Packet& p) {/*does nothing*/	}
+	void setPacket(const Packet& /*p*/)	{/*does nothing*/	}
 };
 
 #endif

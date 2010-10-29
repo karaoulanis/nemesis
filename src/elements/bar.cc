@@ -87,7 +87,7 @@ void Bar::commit()
 {
 	myUniMaterial->commit();
 }
-bool Bar::checkIfAllows(FEObject* f)
+bool Bar::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }

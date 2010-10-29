@@ -35,7 +35,7 @@ XFemAnalysis::XFemAnalysis()
 	pA->setAlgorithm(new LinearAlgorithm());
 	pA->setSOE(new FullLinearSOE());
 }
-bool XFemAnalysis::checkIfAllows(FEObject* f)
+bool XFemAnalysis::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }
@@ -58,7 +58,8 @@ int XFemAnalysis::run(int nLC,int nLoadSteps)
 	pA->getConvergenceNorm()->init(nLC,nLoadSteps);
 
 	// Call algorithm to solve step
-	int check=pA->getAlgorithm()->solveStep(0);
+	//int check=pA->getAlgorithm()->solveStep(0); // gives warning for check
+	pA->getAlgorithm()->solveStep(0);  ///@todo:check
 	
 	// Commit
 	pA->getControl()->commit();

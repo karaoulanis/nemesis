@@ -11,7 +11,7 @@ public:
 	Hardening();
 	double geth(const Vector& v);
 	const Vector& gethds(const Vector& sigma,const double kappa);
-	const double gethdk(const Vector& sigma,const double kappa);
+	double gethdk(const Vector& sigma,const double kappa);
 };
 
 #endif

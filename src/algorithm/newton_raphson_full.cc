@@ -32,7 +32,7 @@ NewtonRaphsonFull::NewtonRaphsonFull()
 NewtonRaphsonFull::~NewtonRaphsonFull()
 {
 }
-int NewtonRaphsonFull::solveStep(int n)
+int NewtonRaphsonFull::solveStep(int /*n*/)
 {
 	// Predictor phase
 	pA->getControl()->formTangent();

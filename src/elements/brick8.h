@@ -55,7 +55,7 @@ public:
 	bool checkIfAllows(FEObject* f);
 	void addInitialStresses(InitialStresses* pInitialStresses);	
 	void recoverStresses();
-	const int getnPlasticPoints();
+	int getnPlasticPoints();
 
 	void shapeFunctions();
 	virtual void getB(Matrix& B,int node,int gPoint)=0;

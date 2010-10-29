@@ -32,7 +32,7 @@ Quad4::Quad4()
 {
 }
 Quad4::Quad4(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int matID,
-					 int integrationRuleXi,int integrationRuleEta)
+					 int /*integrationRuleXi*/,int /*integrationRuleEta*/)
 :Element(ID,matID)
 {
 	myTag=TAG_ELEM_QUAD_4_DISP;
@@ -110,7 +110,7 @@ void Quad4::commit()
 	for(unsigned int i=0;i<myMatPoints.size();i++) 
 		myMatPoints[i]->getMaterial()->commit();
 }
-bool Quad4::checkIfAllows(FEObject* f)
+bool Quad4::checkIfAllows(FEObject* /*f*/)
 {
 	return true;
 }
@@ -188,7 +188,7 @@ void Quad4::track()
 	for(unsigned i=0;i<myMatPoints.size();i++)
 		myMatPoints[i]->getMaterial()->track();
 }
-const int Quad4::getnPlasticPoints()
+int Quad4::getnPlasticPoints()
 {
 	int n=0;
 	for(unsigned int i=0;i<myMatPoints.size();i++) 

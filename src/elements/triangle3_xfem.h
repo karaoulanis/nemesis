@@ -44,7 +44,7 @@ public:
 	~Triangle3XFem();
 
 	const Matrix& getK();
-    const Matrix& getM();
+	const Matrix& getM();
 	const Vector& getR();
 
 	void update();
@@ -53,7 +53,7 @@ public:
 	void addInitialStresses(InitialStresses* pInitialStresses);
 	bool checkIfAllows(FEObject* f);
 	void recoverStresses();
-	const int getnPlasticPoints();
+	int getnPlasticPoints();
 
 	void enrich();
 };

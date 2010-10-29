@@ -119,12 +119,12 @@ const IDContainer& Node::getActivatedDofs() const
  * Both the activated and the local dofs start from 0 and not from 1.
  * \param localDof The localdof.
  */
-const int Node::getActivatedDof(int localDof) const
+int Node::getActivatedDof(int localDof) const
 {
 	///@todo Error if localDof>MAX_NUMBER_OF_DOFS see:Constraint for e.g.
 	return myActivatedDofs[localDof];
 }
-const int Node::getnActivatedDofs()
+int Node::getnActivatedDofs() const
 {
 	return nActivatedDofs;
 }

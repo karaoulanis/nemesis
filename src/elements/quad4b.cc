@@ -147,7 +147,8 @@ void Quad4b::update()
 		for(unsigned a=0;a<myNodes.size();a++)
 		{
 			this->getB(Ba,a,k);
-			double dV=(pD->getFac())*detJ[k];
+			///@todo check dV
+			//double dV=(pD->getFac())*detJ[k];
 			add_Bv(epsilon,2*a,&perm[0],Ba,u,1.0,1.0);
 		}
 		myMatPoints[k]->getMaterial()->setStrain(epsilon);

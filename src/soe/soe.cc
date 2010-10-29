@@ -81,8 +81,8 @@ void SOE::zeroX()
 {
 	X.clear();
 }
-int SOE::insertMatrixIntoA(const Matrix& Be,const IDContainer& EFTable,
-								  const IDContainer& SFTable,double factor)
+int SOE::insertMatrixIntoA(const Matrix& /*Be*/,const IDContainer& /*EFTable*/,
+								  const IDContainer& /*SFTable*/,double /*factor*/)
 {
 /*	for(unsigned i=0;i<EFTable.size();i++)
 		for(unsigned j=0;j<SFTable.size();j++)
