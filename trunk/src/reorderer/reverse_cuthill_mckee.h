@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _REVERSECUTHILLMCKEE_H
-#define _REVERSECUTHILLMCKEE_H
+#ifndef NEMESIS_REORDERER_REVERSE_CUTHILL_MCKEE_H_
+#define NEMESIS_REORDERER_REVERSE_CUTHILL_MCKEE_H_
 
 #include "reorderer/reorderer.h"
 
@@ -35,4 +35,4 @@ public:
 	~ReverseCuthillMckee();
 	int getPerm(std::vector<int>& perm);
 };
-#endif
+#endif //NEMESIS_REORDERER_REVERSE_CUTHILL_MCKEE_H_

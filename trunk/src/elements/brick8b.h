@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BRICK8B_H
-#define _BRICK8B_H
+#ifndef NEMESIS_ELEMENTS_BRICK8B_H_
+#define NEMESIS_ELEMENTS_BRICK8B_H_
 
 #include "elements/brick8.h"
 
@@ -41,4 +41,4 @@ public:
 
 	void getB(Matrix& B,int node,int gPoint);
 };
-#endif
+#endif //NEMESIS_ELEMENTS_BRICK8B_H_ 

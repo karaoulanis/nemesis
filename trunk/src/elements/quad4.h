@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _QUAD4_H
-#define _QUAD4_H
+#ifndef NEMESIS_ELEMENTS_QUAD4_H_
+#define NEMESIS_ELEMENTS_QUAD4_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -59,4 +59,4 @@ public:
 	int getnPlasticPoints();
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_QUAD4_H_

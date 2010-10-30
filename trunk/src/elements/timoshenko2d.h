@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TIMOSHENKO2D_H
-#define _TIMOSHENKO2D_H
+#ifndef NEMESIS_ELEMENTS_TIMOSHENKO2D_H_
+#define NEMESIS_ELEMENTS_TIMOSHENKO2D_H_
 
 #include "elements/element.h"
 #include "material/uniaxial_material.h"
@@ -57,4 +57,4 @@ public:
 	void recoverStresses();
 	void shapeFunctions(int n,double xi,double &N, double &dN);
 };
-#endif
+#endif //NEMESIS_ELEMENTS_TIMOSHENKO2D_H_

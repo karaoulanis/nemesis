@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SOE_H
-#define _SOE_H
+#ifndef NEMESIS_SOE_SOE_H_
+#define NEMESIS_SOE_SOE_H_
 
 // C++ system files
 #include <cmath>
@@ -82,4 +82,4 @@ public:
 	virtual int solve()=0;
 	int plotGraph(const char* s);
 };
-#endif
+#endif //NEMESIS_SOE_SOE_H_

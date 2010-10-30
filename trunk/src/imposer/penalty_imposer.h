@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _PENALTYIMPOSER_H
-#define _PENALTYIMPOSER_H
+#ifndef NEMESIS_IMPOSER_PENALTY_IMPOSER_H_
+#define NEMESIS_IMPOSER_PENALTY_IMPOSER_H_
 
 #include "imposer/imposer.h"
 #include "model/penalty_model_element.h"
@@ -37,4 +37,4 @@ public:
 	PenaltyImposer(double amf);
 	int impose();
 };
-#endif
+#endif //NEMESIS_IMPOSER_PENALTY_IMPOSER_H_

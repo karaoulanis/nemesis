@@ -21,7 +21,6 @@
 // $LastChangedBy$
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
-//            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
 #ifndef NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_

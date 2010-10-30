@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _FEOBJECT_H
-#define _FEOBJECT_H
+#ifndef NEMESIS_FEOBJECT_FE_OBJECT_H_
+#define NEMESIS_FEOBJECT_FE_OBJECT_H_
 
 #include <vector>
 #include "database/database.h"
@@ -48,4 +48,4 @@ public:
 	virtual void checkConstency(FEObject* f);
 };
 
-#endif
+#endif //NEMESIS_FEOBJECT_FE_OBJECT_H_

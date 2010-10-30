@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ELIMINATIONMODELELEMENT_H
-#define _ELIMINATIONMODELELEMENT_H
+#ifndef NEMESIS_MODEL_ELIMINATION_MODEL_ELEMENT_H_
+#define NEMESIS_MODEL_ELIMINATION_MODEL_ELEMENT_H_
 
 #include "model/model_element.h"
 
@@ -43,4 +43,4 @@ public:
 	void add_Reff(double factor=1.0);
 	void add_Rgrad(double factor=1.0);
 };
-#endif
+#endif //NEMESIS_MODEL_ELIMINATION_MODEL_ELEMENT_H_

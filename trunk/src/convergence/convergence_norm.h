@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _CONVERGENCENORM_H
-#define _CONVERGENCENORM_H
+#ifndef NEMESIS_CONVERGENCE_CONVERGENCENORM_H_
+#define NEMESIS_CONVERGENCE_CONVERGENCENORM_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -46,4 +46,4 @@ public:
 	void newStep();
 	int update();
 };
-#endif
+#endif //NEMESIS_CONVERGENCE_CONVERGENCENORM_H_

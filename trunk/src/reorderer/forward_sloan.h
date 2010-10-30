@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _FORWARDSLOAN_H
-#define _FORWARDSLOAN_H
+#ifndef NEMESIS_REORDERER_FORWARD_SLOAN_H_
+#define NEMESIS_REORDERER_FORWARD_SLOAN_H_
 
 #include "reorderer/reorderer.h"
 
@@ -37,4 +37,4 @@ public:
 	~ForwardSloan();
 	int getPerm(std::vector<int>& perm);
 };
-#endif
+#endif //NEMESIS_REORDERER_FORWARD_SLOAN_H_

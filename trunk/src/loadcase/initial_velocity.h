@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _INITIAL_VELOCITY_H
-#define _INITIAL_VELOCITY_H
+#ifndef NEMESIS_LOADCASE_INITIAL_VELOCITY_H_
+#define NEMESIS_LOADCASE_INITIAL_VELOCITY_H_
 
 #include "loadcase/initial_condition.h"
 #include "node/node.h"
@@ -41,4 +41,4 @@ public:
 	int apply();
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_INITIAL_VELOCITY_H_

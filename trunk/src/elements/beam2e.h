@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BEAM2E_H
-#define _BEAM2E_H
+#ifndef NEMESIS_ELEMENTS_BEAM2E_H_
+#define NEMESIS_ELEMENTS_BEAM2E_H_
 
 #include "elements/element.h"
 #include "material/uniaxial_material.h"
@@ -52,4 +52,4 @@ public:
 	void commit()						{return;}
 	void recoverStresses();
 };
-#endif
+#endif //NEMESIS_ELEMENTS_BEAM2E_H_

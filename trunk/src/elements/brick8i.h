@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BRICK8I_H
-#define _BRICK8I_H
+#ifndef NEMESIS_ELEMENTS_BRICK8I_H_
+#define NEMESIS_ELEMENTS_BRICK8I_H_
 
 #include "elements/brick8.h"
 
@@ -61,4 +61,4 @@ public:
 
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_BRICK8I_H_

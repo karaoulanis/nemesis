@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _PYPARSER_H
-#define _PYPARSER_H
+#ifndef NEMESIS_PARSER_PY_PARSER_H_
+#define NEMESIS_PARSER_PY_PARSER_H_
 
 #ifdef _DEBUG
 	#include <Python.h>
@@ -46,4 +46,4 @@ public:
 	int parse();
 	int parse(char* filename);
 };
-#endif
+#endif //NEMESIS_PARSER_PY_PARSER_H_

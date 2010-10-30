@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _REODERER_H
-#define _REODERER_H
+#ifndef NEMESIS_REORDERER_REODERER_H_
+#define NEMESIS_REORDERER_REODERER_H_
 
 #include <vector>
 #include "analysis/analysis.h"
@@ -40,4 +40,4 @@ public:
 	int reorder();
 	virtual int getPerm(std::vector<int>& perm)=0;
 };
-#endif
+#endif //NEMESIS_REORDERER_REODERER_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MODEL_H
-#define _MODEL_H
+#ifndef NEMESIS_MODEL_MODEL_H_
+#define NEMESIS_MODEL_MODEL_H_
 
 #include <boost/config.hpp>
 #include <boost/graph/adjacency_list.hpp>
@@ -123,4 +123,4 @@ public:
 	// XFem (or other type) enrichment
 	void enrich();
 };
-#endif
+#endif //NEMESIS_MODEL_MODEL_H_

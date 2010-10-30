@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SEXCEPTION_H
-#define _SEXCEPTION_H
+#ifndef NEMESIS_EXCEPTION_SEXCEPTION_H_
+#define NEMESIS_EXCEPTION_SEXCEPTION_H_
 
 class SException
 {
@@ -34,4 +34,4 @@ public:
 	SException(const char* format,...);
 	const char* what();
 };
-#endif
+#endif //NEMESIS_EXCEPTION_SEXCEPTION_H_

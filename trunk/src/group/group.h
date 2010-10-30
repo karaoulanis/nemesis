@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _GROUP_H
-#define _GROUP_H
+#ifndef NEMESIS_GROUP_GROUP_H_
+#define NEMESIS_GROUP_GROUP_H_
 
 // Included files
 #include "domain/domain_object.h"
@@ -53,4 +53,4 @@ public:
 	inline double getFacP()				{return facP;}
 };
 
-#endif
+#endif //NSEMESIS_GROYP_GROUP_H_

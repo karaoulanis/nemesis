@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _UNIAXIALLOAD_H
-#define _UNIAXIALLOAD_H
+#ifndef NEMESIS_LOADCASE_UNIAXIAL_LOAD_H_
+#define NEMESIS_LOADCASE_UNIAXIAL_LOAD_H_
 
 #include "loadcase/elemental_load.h"
 
@@ -71,4 +71,4 @@ public:
  	~BeamLoadUniform();
     const Vector& getP();
 };
-#endif
+#endif //NEMESIS_LOADCASE_UNIAXIAL_LOAD_H_

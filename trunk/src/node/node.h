@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _NODE_H
-#define _NODE_H
+#ifndef NEMESIS_NODE_NODE_H_
+#define NEMESIS_NODE_NODE_H_
 
 #include <sstream>
 
@@ -145,4 +145,4 @@ public:
 
 };
 
-#endif
+#endif //NEMESIS_NODE_NODE_H_

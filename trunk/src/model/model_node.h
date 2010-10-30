@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MODELNODE_H
-#define _MODELNODE_H
+#ifndef NEMESIS_MODEL_MODEL_NODE_H_
+#define NEMESIS_MODEL_MODEL_NODE_H_
 
 #include "containers/containers.h"
 #include "model/model_object.h"
@@ -58,4 +58,4 @@ public:
 	virtual void rollback();
 };
 
-#endif
+#endif //NEMESIS_MODEL_MODEL_NODE_H_

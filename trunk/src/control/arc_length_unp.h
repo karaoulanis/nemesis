@@ -21,8 +21,6 @@
 // $LastChangedBy$
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
-//            C.G. Panagiotopoulos (pchr@civil.auth.gr)
-//            E.A. Paraskevopoulos (eapcivil@yahoo.gr)
 //*****************************************************************************
 
 #ifndef NEMESIS_CONTROL_ARC_LENGTH_UNP_H_
