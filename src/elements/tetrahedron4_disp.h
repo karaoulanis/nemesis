@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TETRAEDRON4DISP_H
-#define _TETRAEDRON4DISP_H
+#ifndef NEMESIS_ELEMENTS_TETRAEDRON4_DISP_H_
+#define NEMESIS_ELEMENTS_TETRAEDRON4_DISP_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -54,4 +54,4 @@ public:
 	bool checkIfAllows(FEObject* f);
 	void recoverStresses();
 };
-#endif
+#endif //NEMESIS_ELEMENTS_TETRAEDRON4_DISP_H_

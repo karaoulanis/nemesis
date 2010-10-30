@@ -22,11 +22,12 @@
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
-#ifndef _MATRIX_H
-#define _MATRIX_H
+
+#ifndef NEMESIS_NUMERIC_MATRIX_H_
+#define NEMESIS_NUMERIC_MATRIX_H_
 
 // Included files
-#include <exception>
+#include "exception/sexception.h"
 #include "numeric/array_check.h"
 #include "numeric/lu.h"
 #include "numeric/vector.h"
@@ -692,4 +693,4 @@ inline Matrix VVT(const Vector& v1,const Vector& v2)
 			res(i,j)=v1[i]*v2[j];
 	return res;
 }
-#endif
+#endif //NEMESIS_NUMERIC_MATRIX_H_

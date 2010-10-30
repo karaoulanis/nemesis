@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LOADCASE_H
-#define _LOADCASE_H
+#ifndef NEMESIS_LOADCASE_LOADCASE_H_
+#define NEMESIS_LOADCASE_LOADCASE_H_
 
 // Project files (alphabetically)
 #include "containers/containers.h"
@@ -83,4 +83,4 @@ public:
 	int getnSensitivityParameters();
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_LOADCASE_H_

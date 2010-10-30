@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BAR_H
-#define _BAR_H
+#ifndef NEMESIS_ELEMENTS_BAR_H_
+#define NEMESIS_ELEMENTS_BAR_H_
 
 #include "elements/element.h"
 #include "material/uniaxial_material.h"
@@ -56,4 +56,4 @@ public:
 	Tracker* getTracker(int index);
 	void track();
 };
-#endif
+#endif //NEMESIS_ELEMENTS_BAR_H_

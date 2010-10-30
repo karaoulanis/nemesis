@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LAGRANGEIMPOSER_H
-#define _LAGRANGEIMPOSER_H
+#ifndef NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_
+#define NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_
 
 #include "imposer/imposer.h"
 #include "model/lagrange_model_element.h"
@@ -38,4 +38,4 @@ public:
 	LagrangeImposer();
 	int impose();
 };
-#endif
+#endif //NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_

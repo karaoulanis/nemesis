@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ELEMENT_H
-#define _ELEMENT_H
+#ifndef NEMESIS_ELEMENTS_ELEMENT_H_
+#define NEMESIS_ELEMENTS_ELEMENT_H_
 
 // Included Files
 #include "containers/containers.h"
@@ -133,4 +133,4 @@ public:
 
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_ELEMENT_H_

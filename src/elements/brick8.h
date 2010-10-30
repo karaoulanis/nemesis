@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BRICK8_H
-#define _BRICK8_H
+#ifndef NEMESIS_ELEMENTS_BRICK8_H_
+#define NEMESIS_ELEMENTS_BRICK8_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -60,4 +60,4 @@ public:
 	void shapeFunctions();
 	virtual void getB(Matrix& B,int node,int gPoint)=0;
 };
-#endif
+#endif //NEMESIS_ELEMENTS_BRICK8_H_

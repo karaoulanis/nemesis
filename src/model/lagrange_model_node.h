@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LAGRANGEMODELNODE_H
-#define _LAGRANGEMODELNODE_H
+#ifndef NEMESIS_MODEL_LAGRANGE_MODEL_NODE_H_
+#define NEMESIS_MODEL_LAGRANGE_MODEL_NODE_H_
 
 #include "model/model_node.h"
 #include "node/node.h"
@@ -45,4 +45,4 @@ public:
 	void commit();
 };
 
-#endif
+#endif //NEMESIS_MODEL_LAGRANGE_MODEL_NODE_H_

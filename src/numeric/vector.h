@@ -22,9 +22,11 @@
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
-#ifndef __VECTOR_H
-#define __VECTOR_H
 
+#ifndef NEMESIS_NUMERIC_VECTOR_H_
+#define NEMESIS_NUMERIC_VECTOR_H_
+
+// C/C++ include files
 #include <iostream>
 #include <cmath>
 #include "numeric/array_check.h"

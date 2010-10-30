@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TRIANGLE3_H
-#define _TRIANGLE3_H
+#ifndef NEMESIS_ELEMENTS_TRIANGLE3_H_
+#define NEMESIS_ELEMENTS_TRIANGLE3_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -56,4 +56,4 @@ public:
 	int getnPlasticPoints();
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_TRIANGLE3_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LAGRANGEMODELELEMENT_H
-#define _LAGRANGEMODELELEMENT_H
+#ifndef NEMESIS_MODEL_LAGRANGE_MODEL_ELEMENT_H_
+#define NEMESIS_MODEL_LAGRANGE_MODEL_ELEMENT_H_
 
 #include "model/model_element.h"
 
@@ -42,4 +42,4 @@ public:
 	void add_R(double factor=1.0);
 	void add_Reff(double factor=1.0);
 };
-#endif
+#endif //NEMESIS_MODEL_LAGRANGE_MODEL_ELEMENT_H_

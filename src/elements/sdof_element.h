@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SDOFELEMENT_H
-#define _SDOFELEMENT_H
+#ifndef NEMESIS_ELEMENTS_SDOF_ELEMENT_H_
+#define NEMESIS_ELEMENTS_SDOF_ELEMENT_H_
 
 #include "elements/element.h"
 #include "material/sdof_material.h"
@@ -49,4 +49,4 @@ public:
 	void commit() {return;}
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_SDOF_ELEMENT_H_

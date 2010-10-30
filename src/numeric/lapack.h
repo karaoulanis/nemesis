@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LAPACK_H
-#define _LAPACK_H
+#ifndef NEMESIS_NUMERIC_LAPACK_H_
+#define NEMESIS_NUMERIC_LAPACK_H_
 
 #include <acml.h>
 
@@ -93,4 +93,4 @@
 //					  double* ALPHAR,double* ALPHAI,double* BETA,
 //					  double* VL,int* LDVL,double* VR,int* LDVR,double* WORK,int* LWORK,int* INFO);
 
-#endif
+#endif //NEMESIS_NUMERIC_LAPACK_H_

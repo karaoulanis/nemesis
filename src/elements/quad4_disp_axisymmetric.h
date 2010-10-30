@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _Quad4DispAxisymmetric_H
-#define _Quad4DispAxisymmetric_H
+#ifndef NEMESIS_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
+#define NEMESIS_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
 
 #include "elements/quad4.h"
 
@@ -44,4 +44,4 @@ public:
 	void update();
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_

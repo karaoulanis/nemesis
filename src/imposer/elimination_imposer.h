@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ELIMINATIONIMPOSER_H
-#define _ELIMINATIONIMPOSER_H
+#ifndef NEMESIS_IMPOSER_ELIMINATION_IMPOSER_H_
+#define NEMESIS_IMPOSER_ELIMINATION_IMPOSER_H_
 
 #include "imposer/imposer.h"
 #include "model/elimination_model_element.h"
@@ -39,4 +39,4 @@ public:
 	~EliminationImposer();
 	int impose();
 };
-#endif
+#endif //NEMESIS_IMPOSER_ELIMINATION_IMPOSER_H_

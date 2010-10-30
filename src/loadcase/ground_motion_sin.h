@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _GROUNDMOTIONSIN_H
-#define _GROUNDMOTIONSIN_H
+#ifndef NEMESIS_LOADCASE_GROUND_MOTION_SIN_H_
+#define NEMESIS_LOADCASE_GROUND_MOTION_SIN_H_
 
 #include <iostream>
 #include <map>
@@ -46,4 +46,4 @@ public:
 	void apply(double fact,double time);
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_GROUND_MOTION_SIN_H_

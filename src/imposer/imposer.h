@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _IMPOSER_H
-#define _IMPOSER_H
+#ifndef NEMESIS_IMPOSER_IMPOSER_H_
+#define NEMESIS_IMPOSER_IMPOSER_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -53,4 +53,4 @@ public:
 	virtual int impose()=0;
 
 };
-#endif
+#endif //NEMESIS_IMPOSER_IMPOSER_H_

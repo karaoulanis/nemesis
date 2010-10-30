@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TRIANGLE3XFEM_H
-#define _TRIANGLE3XFEM_H
+#ifndef NEMESIS_ELEMENTS_TRIANGLE3_XFEM_H_
+#define NEMESIS_ELEMENTS_TRIANGLE3_XFEM_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -58,4 +58,4 @@ public:
 	void enrich();
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_TRIANGLE3_XFEM_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _BAR2S_H
-#define _BAR2S_H
+#ifndef NEMESIS_ELEMENTS_BAR2S_H_
+#define NEMESIS_ELEMENTS_BAR2S_H_
 
 #include "elements/bar.h"
 
@@ -42,4 +42,4 @@ public:
 	const Vector& getRgrad();
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_BAR2S_H_

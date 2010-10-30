@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _INITIAL_STRESSES_H
-#define _INITIAL_STRESSES_H
+#ifndef NEMESIS_LOADCASE_INITIAL_STRESSES_H_
+#define NEMESIS_LOADCASE_INITIAL_STRESSES_H_
 
 #include "loadcase/initial_condition.h"
 #include "elements/element.h"
@@ -55,4 +55,4 @@ public:
 	int apply();
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_INITIAL_STRESSES_H_

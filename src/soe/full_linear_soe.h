@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _FULL_LINEAR_SOE_H
-#define _FULL_LINEAR_SOE_H
+#ifndef NEMESIS_SOE_FULL_LINEAR_SOE_H_
+#define NEMESIS_SOE_FULL_LINEAR_SOE_H_
 
 #include "soe/soe.h"
 
@@ -42,4 +42,4 @@ public:
 	void print();
 	int getEigenSign();
 };
-#endif
+#endif //NEMESIS_SOE_FULL_LINEAR_SOE_H_

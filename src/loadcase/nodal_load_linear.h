@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _NODALLOADLINEAR_H
-#define _NODALLOADLINEAR_H
+#ifndef NEMESIS_LOADCASE_NODAL_LOAD_LINEAR_H_
+#define NEMESIS_LOADCASE_NODAL_LOAD_LINEAR_H_
 
 #include "loadcase/nodal_load.h"
 
@@ -40,4 +40,4 @@ public:
 	double getValue(double time);
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_NODAL_LOAD_LINEAR_H_

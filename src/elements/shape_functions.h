@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SHAPEFUNCTIONS_H
-#define _SHAPEFUNCTIONS_H
+#ifndef NEMESIS_ELEMENTS_SHAPE_FUNCTIONS_H_
+#define NEMESIS_ELEMENTS_SHAPE_FUNCTIONS_H_
 
 #include "numeric/matrix.h"
 
@@ -33,4 +33,4 @@ void shape8(const Matrix& x,double shp[8][4][8],double detJ[8]);
 void shapeQM6(const Matrix& x,double shpQM6[2][3][4]);
 void shapeQM9(const Matrix& x,double shpQM9[3][4][8]);
 
-#endif
+#endif //NEMESIS_ELEMENTS_SHAPE_FUNCTIONS_H_

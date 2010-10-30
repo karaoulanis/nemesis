@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _NUMERIC_H
-#define _NUMERIC_H
+#ifndef NEMESIS_NUMERIC_NUMERIC_H_
+#define NEMESIS_NUMERIC_NUMERIC_H_
 
 // C++ system files
 #include <cmath>
@@ -88,4 +88,4 @@ namespace num
 		return d<0	? -1 : 1;
 	}
 }
-#endif
+#endif //NEMESIS_NUMERIC_NUMERIC_H_

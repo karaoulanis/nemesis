@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _GROUP_STATE_H
-#define _GROUP_STATE_H
+#ifndef NEMESIS_LOADCASE_GROUP_STATE_H_
+#define NEMESIS_LOADCASE_GROUP_STATE_H_
 
 #include "domain/domain.h"
 #include "domain/domain_object.h"
@@ -54,4 +54,4 @@ public:
 	inline double getFacP()				{return facP;}
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_GROUP_STATE_H_

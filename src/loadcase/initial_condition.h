@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _INITIAL_CONDITION_H
-#define _INITIAL_CONDITION_H
+#ifndef NEMESIS_LOADCASE_INITIAL_CONDITION_H_
+#define NEMESIS_LOADCASE_INITIAL_CONDITION_H_
 
 #include "domain/domain_object.h"
 
@@ -37,4 +37,4 @@ public:
 	virtual int apply()=0;
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_INITIAL_CONDITION_H_

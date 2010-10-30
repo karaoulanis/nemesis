@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _SPRING_H
-#define _SPRING_H
+#ifndef NEMESIS_ELEMENTS_SPRING_H_
+#define NEMESIS_ELEMENTS_SPRING_H_
 
 #include "elements/element.h"
 #include "material/spring_material.h"
@@ -59,4 +59,4 @@ public:
 	Tracker* getTracker(int index);
 	void track();
 };
-#endif
+#endif //NEMESIS_ELEMENTS_SPRING_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _TRACKER_H
-#define _TRACKER_H
+#ifndef NEMESIS_TRACKER_TRACKER_H_
+#define NEMESIS_TRACKER_TRACKER_H_
 
 // C++ system files
 #include <vector>
@@ -53,4 +53,4 @@ public:
 	void save(std::ostream& s);
 };
 
-#endif
+#endif //NEMESIS_TRACKER_TRACKER_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LU_H
-#define _LU_H
+#ifndef NEMESIS_NUMERIC_LU_H_
+#define NEMESIS_NUMERIC_LU_H_
 
 #include "numeric/numeric.h"
 
@@ -138,4 +138,4 @@ namespace LU
 		return det;
 	}
 }
-#endif
+#endif //NEMESIS_NUMERIC_LU_H_

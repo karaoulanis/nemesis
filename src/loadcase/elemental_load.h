@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ELEMENTALLOAD_H
-#define _ELEMENTALLOAD_H
+#ifndef NEMESIS_LOADCASE_ELEMENTAL_LOAD_H_
+#define NEMESIS_LOADCASE_ELEMENTAL_LOAD_H_
 
 #include "elements/element.h"
 #include "loadcase/load.h"
@@ -60,4 +60,4 @@ public:
 };
 
 
-#endif
+#endif //NEMESIS_LOADCASE_ELEMENTAL_LOAD_H_

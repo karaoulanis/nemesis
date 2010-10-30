@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _STANDARDStandardModelNode_H
-#define _STANDARDStandardModelNode_H
+#ifndef NEMESIS_MODEL_STANDARD_MODEL_NODE_H_
+#define NEMESIS_MODEL_STANDARD_MODEL_NODE_H_
 
 #include "model/model_node.h"
 
@@ -46,4 +46,4 @@ public:
 	void commitSens(const Vector& X,int param);
 };
 
-#endif
+#endif //NEMESIS_MODEL_STANDARD_MODEL_NODE_H_

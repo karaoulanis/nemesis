@@ -21,11 +21,10 @@
 // $LastChangedBy$
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
-//            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#ifndef _ELEMENTSENSITIVEPARAMETER_H
-#define _ELEMENTSENSITIVEPARAMETER_H
+#ifndef NEMESIS_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_
+#define NEMESIS_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_
 
 #include "elements/element.h"
 
@@ -41,4 +40,4 @@ public:
 	int apply();
 };
 
-#endif
+#endif //NEMESIS_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_

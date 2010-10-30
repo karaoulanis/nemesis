@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _NEMESIS_DEBUG
-#define _NEMESIS_DEBUG
+#ifndef NEMESIS_MAIN_NEMESIS_DEBUG_H_
+#define NEMESIS_MAIN_NEMESIS_DEBUG_H_
 
 // C++ system files
 #include <iostream>
@@ -86,4 +86,4 @@ void add_BTv (Vector& R,int row,const int* perm,const Matrix& B,const Vector& v,
 void add_Bv  (Vector& R,int row,const int* perm,const Matrix& B,const Vector& v,double c1,double c0=0.);
 
 void spectralDecomposition(const Vector& s, Vector& sP,Matrix& sV);
-#endif
+#endif //NEMESIS_MAIN_NEMESIS_DEBUG_H_

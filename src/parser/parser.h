@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _PARSER_H
-#define _PARSER_H
+#ifndef NEMESIS_PARSER_PARSER_H_
+#define NEMESIS_PARSER_PARSER_H_
 
 #include "algorithm/bfgs.h"
 #include "algorithm/linear_algorithm.h"
@@ -128,4 +128,4 @@ public:
 	virtual int parse(char* filename)=0;
 };
 
-#endif
+#endif //NEMESIS_PARSER_PARSER_H_

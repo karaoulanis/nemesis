@@ -21,11 +21,10 @@
 // $LastChangedBy$
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
-//            C.G. Panagiotopoulos (pchr@civil.auth.gr)
 //*****************************************************************************
 
-#ifndef _FULL_EIGEN_SOE_H
-#define _FULL_EIGEN_SOE_H
+#ifndef NEMESIS_SOE_FULL_EIGEN_SOE_H_
+#define NEMESIS_SOE_FULL_EIGEN_SOE_H_
 
 #include "soe/soe.h"
 
@@ -55,4 +54,4 @@ public:
 	void print();
 	int getEigenSign();
 };
-#endif
+#endif //NEMESIS_SOE_FULL_EIGEN_SOE_H_

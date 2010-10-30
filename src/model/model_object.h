@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MODELOBJECT_H
-#define _MODELOBJECT_H
+#ifndef NEMESIS_MODEL_MODEL_OBJECT_H_
+#define NEMESIS_MODEL_MODEL_OBJECT_H_
 
 #include "elements/element.h"
 
@@ -53,4 +53,4 @@ public:
 	inline const Vector& getVector() const	{return *myVector; }
 };
 
-#endif
+#endif //NEMESIS_MODEL_MODEL_OBJECT_H_

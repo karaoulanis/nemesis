@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _MODELELEMENT_H
-#define _MODELELEMENT_H
+#ifndef NEMESIS_MODEL_MODEL_ELEMENT_H_
+#define NEMESIS_MODEL_MODEL_ELEMENT_H_
 
 #include "model/model_object.h"
 
@@ -58,4 +58,4 @@ public:
 	virtual void add_Kgrad(double /*factor=1.0*/)	{};
 };
 
-#endif
+#endif //NEMESIS_MODEL_MODEL_ELEMENT_H_

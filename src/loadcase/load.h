@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _LOAD_H
-#define _LOAD_H
+#ifndef NEMESIS_LOADCASE_LOAD_H_
+#define NEMESIS_LOADCASE_LOAD_H_
 
 #include "domain/domain_object.h"
 
@@ -36,4 +36,4 @@ public:
 	Load();
 	virtual void apply(double fact,double t)=0;
 };
-#endif
+#endif //NEMESIS_LOADCASE_LOAD_H_

@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _ARRAY_CHECK_H
-#define _ARRAY_CHECK_H
+#ifndef NEMESIS_NUMERIC_ARRAY_CHECK_H_
+#define NEMESIS_NUMERIC_ARRAY_CHECK_H_
 
 #include "exception/sexception.h"
 
@@ -49,4 +49,4 @@ inline void array_size_check(int n,int m,int size1,int size2)
 	if(n!=size1||m!=size2)		
 		throw SException("[nemesis:%d] %s",1005,"Sizes do not match.");
 }
-#endif
+#endif //NEMESIS_NUMERIC_ARRAY_CHECK_H_

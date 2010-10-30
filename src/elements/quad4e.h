@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 //*****************************************************************************
 
-#ifndef _QUAD4E_H
-#define _QUAD4E_H
+#ifndef NEMESIS_ELEMENTS_QUAD4E_H_
+#define NEMESIS_ELEMENTS_QUAD4E_H_
 
 #include "elements/quad4.h"
 
@@ -56,4 +56,4 @@ public:
 	void formT0(double xi,double eta);
 };
 
-#endif
+#endif //NEMESIS_ELEMENTS_QUAD4E_H_
