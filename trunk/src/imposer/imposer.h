@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -36,21 +36,20 @@
 class Model;
 class Domain;
 
-class Imposer: public AnalysisObject
-{
-protected:
-	Model* theModel;
-	Domain* theDomain;
-	ConstraintContainer* theConstraints;
-	IDContainer myNodalIDs;
-	IDContainer theNodalGlobalDofs;
-public:
-	Imposer();
-	virtual ~Imposer();
-	int createGlobalDofNumbering();
-	int getGlobalDof(int NodeID,int localDof);
-	const IDContainer getGlobalDofs(int NodeID);
-	virtual int impose()=0;
+class Imposer: public AnalysisObject {
+ protected:
+  Model* theModel;
+  Domain* theDomain;
+  ConstraintContainer* theConstraints;
+  IDContainer myNodalIDs;
+  IDContainer theNodalGlobalDofs;
+  public:
+  Imposer();
+  virtual ~Imposer();
+  int createGlobalDofNumbering();
+  int getGlobalDof(int NodeID, int localDof);
+  const IDContainer getGlobalDofs(int NodeID);
+  virtual int impose()=0;
 
 };
-#endif //NEMESIS_IMPOSER_IMPOSER_H_
+#endif  // NEMESIS_IMPOSER_IMPOSER_H_

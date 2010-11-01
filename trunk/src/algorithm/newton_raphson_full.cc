@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,15 +25,12 @@
 
 #include "algorithm/newton_raphson_full.h"
 
-NewtonRaphsonFull::NewtonRaphsonFull()
-{
+NewtonRaphsonFull::NewtonRaphsonFull() {
   myTag = TAG_ALGORITHM_NEWTON_RAPHSON_FULL;
 }
-NewtonRaphsonFull::~NewtonRaphsonFull()
-{
+NewtonRaphsonFull::~NewtonRaphsonFull() {
 }
-int NewtonRaphsonFull::solveStep(int /*n*/)
-{
+int NewtonRaphsonFull::solveStep(int /*n*/) {
   // Predictor phase
   pA->getControl()->formTangent();
   pA->getControl()->predict();

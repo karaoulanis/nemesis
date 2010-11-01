@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,19 +28,18 @@
 
 #include "model/model_element.h"
 
-class EliminationModelElement : public ModelElement
-{
-private:
-public:
-	EliminationModelElement();
-	EliminationModelElement(const IDContainer& FTable,Element* pElement);
-	~EliminationModelElement();
-	
-	void add_K(double factor=1.0);
-	void add_M(double factor=1.0);
-	void add_C(double factor=1.0);
-	void add_R(double factor=1.0);
-	void add_Reff(double factor=1.0);
-	void add_Rgrad(double factor=1.0);
+class EliminationModelElement : public ModelElement {
+  private:
+  public:
+  EliminationModelElement();
+  EliminationModelElement(const IDContainer& FTable, Element* pElement);
+  ~EliminationModelElement();
+  
+  void add_K(double factor = 1.0);
+  void add_M(double factor = 1.0);
+  void add_C(double factor = 1.0);
+  void add_R(double factor = 1.0);
+  void add_Reff(double factor = 1.0);
+  void add_Rgrad(double factor = 1.0);
 };
-#endif //NEMESIS_MODEL_ELIMINATION_MODEL_ELEMENT_H_
+#endif  // NEMESIS_MODEL_ELIMINATION_MODEL_ELEMENT_H_

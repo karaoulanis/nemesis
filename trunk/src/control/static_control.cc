@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,108 +28,107 @@
 /**
  * Constructor.
  */
-StaticControl::StaticControl()
-{
+StaticControl::StaticControl() {
 }
 /**
  * Constructor.
- * \param D0			Initial Delta.
- * \param minD			Lower bound for Delta.
- * \param maxD			Upper bound for Delta.
- * \param n				Exponent parameter.
- * \param IterDesired	Desired number of iterations.
+ * \param D0      Initial Delta.
+ * \param minD      Lower bound for Delta.
+ * \param maxD      Upper bound for Delta.
+ * \param n       Exponent parameter.
+ * \param IterDesired Desired number of iterations.
  * \param DeltaTime     Timestep for viscoplastic solutions.
  */
-StaticControl::StaticControl(double D0,double minD,double maxD,
-								   int IterDesired,double n,double DeltaTime)
-:Delta0(D0),minDelta(fabs(minD)),maxDelta(fabs(maxD)),
-Io(IterDesired),Id(IterDesired),nExp(n)
-{
-	DLambda=D0;
-	if(minDelta>maxDelta)		throw SException("[nemesis:%d] %s",9999,"'max' cannot be less than 'min'.");
-	if(IterDesired<=0)			throw SException("[nemesis:%d] %s",9999,"'Id' should be greater than 0.");
-	Dt=DeltaTime;
+StaticControl::StaticControl(double D0, double minD, double maxD,
+                   int IterDesired, double n, double DeltaTime)
+:Delta0(D0), minDelta(fabs(minD)), maxDelta(fabs(maxD)),
+Io(IterDesired), Id(IterDesired), nExp(n) {
+  DLambda = D0;
+  if (minDelta>maxDelta)
+    throw SException("[nemesis:%d] %s", 9999, "'max' cannot be less than 'min'.");
+  if (IterDesired <= 0)
+    throw SException("[nemesis:%d] %s", 9999, "'Id' should be greater than 0.");
+  Dt = DeltaTime;
 }
 /**
  * Destructor.
  */
-StaticControl::~StaticControl()
-{
+StaticControl::~StaticControl() {
 }
 /**
  * Initializes the vectors used in the Static Control. Also finds the 
  * vector of external forces and initializes the norm.
  * @return 0 if everything is ok.
  */
-void StaticControl::init()
-{
-	// Check the size
-	int size=pA->getModel()->getnEquations();
-	qRef.resize(size);		qRef.clear();
-	Du.resize(size);		Du.clear();
-	du.resize(size);		du.clear();
-	duBar.resize(size);		duBar.clear();
-	duT.resize(size);		duT.clear();
+void StaticControl::init() {
+  // Check the size
+  int size = pA->getModel()->getnEquations();
+  ///@todo resize(size, 0.)
+  qRef.resize(size);
+  qRef.clear();
+  Du.resize(size);
+  Du.clear();
+  du.resize(size);
+  du.clear();
+  duBar.resize(size);
+  duBar.clear();
+  duT.resize(size);
+  duT.clear();
 
-	this->formResidual(1.0);
-	qRef=pA->getSOE()->getB();
-	
-	lambdaTrial=0;
-	lambdaConvg=0;
-	dLambda=0;
-	pA->getDomain()->incTime(Dt);
+  this->formResidual(1.0);
+  qRef = pA->getSOE()->getB();
+
+  lambdaTrial = 0;
+  lambdaConvg = 0;
+  dLambda = 0;
+  pA->getDomain()->incTime(Dt);
 }
 /**
  * Forms the elemental tangent for a static analysis, element by element.
- * @param pModelElement	A pointer to the ModelElement that is treated.
+ * @param pModelElement A pointer to the ModelElement that is treated.
  * @return 0 if everything is ok.
  */
-void StaticControl::formElementalTangent(ModelElement* pModelElement) 
-{
-	pModelElement->zeroMatrix();
-	pModelElement->add_K(1.0);
+void StaticControl::formElementalTangent(ModelElement* pModelElement)  {
+  pModelElement->zeroMatrix();
+  pModelElement->add_K(1.0);
 }
 /**
  * Forms the elemental residual for a static analysis, element by element.
- * @param pModelElement	A pointer to the ModelElement that is treated.
+ * @param pModelElement A pointer to the ModelElement that is treated.
  * @param time Current(?) time.
  * @return 0 if everything is ok.
  */
-void StaticControl::formElementalResidual(ModelElement* pModelElement,double /*time*/)
-{
-	pModelElement->zeroVector();
-	pModelElement->add_R(1.0);
+void StaticControl::formElementalResidual(ModelElement* pModelElement,
+                                          double /*time*/) {
+  pModelElement->zeroVector();
+  pModelElement->add_R(1.0);
 }
 /**
  * Forms the nodal tangent for a static analysis, node by node.
  * @param pModelNode A pointer to the ModelNode that is treated.
  * @return 0 if everything is ok.
  */
-void StaticControl::formNodalResidual(ModelNode* pModelNode)
-{
-	pModelNode->zeroVector();
-	pModelNode->add_R(1.0);
+void StaticControl::formNodalResidual(ModelNode* pModelNode) {
+  pModelNode->zeroVector();
+  pModelNode->add_R(1.0);
 }
-void StaticControl::formResidual(double fac)	
-{
-	pA->getSOE()->zeroB();
-	pA->getDomain()->zeroLoads();
-	pA->getDomain()->applyLoads(fac,0.);
+void StaticControl::formResidual(double fac)   {
+  pA->getSOE()->zeroB();
+  pA->getDomain()->zeroLoads();
+  pA->getDomain()->applyLoads(fac, 0.);
 
-	// Take contribution from Nodes
-	for(unsigned i=0;i<pA->getModel()->getModelNodes().size();i++)		
-	{
-		ModelNode* p=pA->getModel()->getModelNodes()[i];
-		this->formNodalResidual(p);
-		pA->getSOE()->insertVectorIntoB(p->getVector(),p->getFTable(),-1.0);
-	}
-	// Take contribution from Elements
-	for(unsigned i=0;i<pA->getModel()->getModelElements().size();i++)		
-	{
-		ModelElement* p=pA->getModel()->getModelElements()[i];
-		this->formElementalResidual(p);
-		pA->getSOE()->insertVectorIntoB(p->getVector(),p->getFTable(),-1.0);
-	}
+  // Take contribution from Nodes
+  for (unsigned i = 0; i < pA->getModel()->getModelNodes().size(); i++) {
+    ModelNode* p = pA->getModel()->getModelNodes()[i];
+    this->formNodalResidual(p);
+    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+  }
+  // Take contribution from Elements
+  for (unsigned i = 0; i < pA->getModel()->getModelElements().size(); i++) {
+    ModelElement* p = pA->getModel()->getModelElements()[i];
+    this->formElementalResidual(p);
+    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+  }
 }
 /**
  * Commits displacements.
@@ -137,12 +136,11 @@ void StaticControl::formResidual(double fac)
  * converged. Time and lambda are committed to Domain.
  * @return 0 if everything is ok.
  */
-void StaticControl::commit()
-{
-	lambdaConvg=lambdaTrial;
-	pA->getDomain()->setLambda(lambdaConvg);
-//	pA->getDomain()->commit(); ///@todo this commits only domains time!
-	pA->getModel()->commit();
+void StaticControl::commit() {
+  lambdaConvg = lambdaTrial;
+  pA->getDomain()->setLambda(lambdaConvg);
+  // pA->getDomain()->commit(); ///@todo this commits only domains time!
+  pA->getModel()->commit();
 }
 /**
  * Aborts step.
@@ -150,9 +148,8 @@ void StaticControl::commit()
  * previous converged step. 
  * @return 0 if everything is ok.
  */
-void StaticControl::rollback()
-{
-//	pA->getModel()->rollBack();
-	lambdaTrial=lambdaConvg;
+void StaticControl::rollback() {
+  // pA->getModel()->rollBack();
+  lambdaTrial = lambdaConvg;
 }
 

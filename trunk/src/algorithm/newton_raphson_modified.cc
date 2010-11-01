@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,28 +25,24 @@
 
 #include "algorithm/newton_raphson_modified.h"
 
-NewtonRaphsonModified::NewtonRaphsonModified()
-{
-	myTag=TAG_ALGORITHM_NEWTON_RAPHSON_MODIFED;
+NewtonRaphsonModified::NewtonRaphsonModified() {
+  myTag = TAG_ALGORITHM_NEWTON_RAPHSON_MODIFED;
 }
-NewtonRaphsonModified::~NewtonRaphsonModified()
-{
+NewtonRaphsonModified::~NewtonRaphsonModified() {
 }
-int NewtonRaphsonModified::solveStep(int /*n*/)
-{
-	// Predictor phase
-	pA->getControl()->formTangent();
-	pA->getControl()->predict();
-	pA->getConvergenceNorm()->newStep();
-	pA->getControl()->formResidual(pA->getControl()->getLambda());
+int NewtonRaphsonModified::solveStep(int /*n*/) {
+  // Predictor phase
+  pA->getControl()->formTangent();
+  pA->getControl()->predict();
+  pA->getConvergenceNorm()->newStep();
+  pA->getControl()->formResidual(pA->getControl()->getLambda());
 
-	// Corrector phase
-	int check;
-	while((check=pA->getConvergenceNorm()->update())>0)
-	{
-		pA->getSOE()->solve();
-		pA->getControl()->correct();
- 		pA->getControl()->formResidual(pA->getControl()->getLambda());
-	}
-	return check;
+  // Corrector phase
+  int check;
+  while ((check=pA->getConvergenceNorm()->update()) > 0) {
+    pA->getSOE()->solve();
+    pA->getControl()->correct();
+    pA->getControl()->formResidual(pA->getControl()->getLambda());
+  }
+  return check;
 }

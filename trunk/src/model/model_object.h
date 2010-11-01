@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,29 +28,28 @@
 
 #include "elements/element.h"
 
-class ModelObject
-{
-protected:
-	IDContainer theFTable;
-	static Matrix** theStaticMatrices;
-	static Vector** theStaticVectors;
-	Matrix* myMatrix;
-	Vector* myVector;
-public:
-	// Constructors
-	ModelObject();
-	ModelObject(const IDContainer& FTable);
-	virtual ~ModelObject();
-	
-	// Access to data members
-	const IDContainer& getFTable() const;
-	void setFTable(const IDContainer& FTable);
-	void setFTable(int index,int val);
+class ModelObject {
+ protected:
+  IDContainer theFTable;
+  static Matrix** theStaticMatrices;
+  static Vector** theStaticVectors;
+  Matrix* myMatrix;
+  Vector* myVector;
+  public:
+  // Constructors
+  ModelObject();
+  ModelObject(const IDContainer& FTable);
+  virtual ~ModelObject();
+  
+  // Access to data members
+  const IDContainer& getFTable() const;
+  void setFTable(const IDContainer& FTable);
+  void setFTable(int index, int val);
 
-	inline void zeroMatrix()				{myMatrix->clear();}
-	inline void zeroVector()				{myVector->clear();}
-	inline const Matrix& getMatrix() const	{return *myMatrix; }
-	inline const Vector& getVector() const	{return *myVector; }
+  inline void zeroMatrix()        {myMatrix->clear();}
+  inline void zeroVector()        {myVector->clear();}
+  inline const Matrix& getMatrix() const  {return *myMatrix; }
+  inline const Vector& getVector() const  {return *myVector; }
 };
 
-#endif //NEMESIS_MODEL_MODEL_OBJECT_H_
+#endif  // NEMESIS_MODEL_MODEL_OBJECT_H_

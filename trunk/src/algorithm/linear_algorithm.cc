@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,19 +25,16 @@
 
 #include "algorithm/linear_algorithm.h"
 
-LinearAlgorithm::LinearAlgorithm()
-{
-	myTag=TAG_ALGORITHM_LINEAR;
+LinearAlgorithm::LinearAlgorithm() {
+  myTag = TAG_ALGORITHM_LINEAR;
 }
-LinearAlgorithm::~LinearAlgorithm()
-{
+LinearAlgorithm::~LinearAlgorithm() {
 }
-int LinearAlgorithm::solveStep(int /*n*/)
-{
-	pA->getControl()->formTangent();
-	pA->getConvergenceNorm()->newStep();
-	pA->getControl()->predict();
-	pA->getControl()->formResidual(pA->getControl()->getLambda());
-	pA->getConvergenceNorm()->update();
-	return 0;
+int LinearAlgorithm::solveStep(int /*n*/) {
+  pA->getControl()->formTangent();
+  pA->getConvergenceNorm()->newStep();
+  pA->getControl()->predict();
+  pA->getControl()->formResidual(pA->getControl()->getLambda());
+  pA->getConvergenceNorm()->update();
+  return 0;
 }

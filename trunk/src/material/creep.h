@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -30,29 +30,28 @@
 /**
  * The Creep Class.
  */
-class Creep: public MultiaxialMaterial
-{
-protected:
-	MultiaxialMaterial* myElastic;
+class Creep: public MultiaxialMaterial {
+ protected:
+  MultiaxialMaterial* myElastic;
 
-	static Matrix C;
-	Vector eCTrial,eCConvg;
-	double A;
-	double n;
-	double k;
-public:
-	Creep();
-	Creep(int ID,int elasticID,double A,double n,double k);
-	~Creep();
-	
-	void setStrain(const Vector& De);
-	void commit();
-	const Matrix& getC();
-	bool isPlastic()							{return false;}
+  static Matrix C;
+  Vector eCTrial, eCConvg;
+  double A;
+  double n;
+  double k;
+  public:
+  Creep();
+  Creep(int ID, int elasticID, double A, double n, double k);
+  ~Creep();
+  
+  void setStrain(const Vector& De);
+  void commit();
+  const Matrix& getC();
+  bool isPlastic()              {return false;}
 
-	MultiaxialMaterial* getClone();
-	
-	// Tracker member functions
-	void track();
+  MultiaxialMaterial* getClone();
+  
+  // Tracker member functions
+  void track();
 };
-#endif //NEMESIS_MATERIAL_CREEP_H_
+#endif  // NEMESIS_MATERIAL_CREEP_H_

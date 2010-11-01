@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,19 +25,16 @@
 
 #include "material/multiaxial_material.h"
 
-Matrix MultiaxialMaterial::C(6,6);
+Matrix MultiaxialMaterial::C(6, 6);
 
-MultiaxialMaterial::MultiaxialMaterial()
-{
+MultiaxialMaterial::MultiaxialMaterial() {
 }
-MultiaxialMaterial::MultiaxialMaterial(int ID,double rho,double aT)
-:Material(ID,rho,aT)
-{
-	sTrial.resize(6,0.);
-	sConvg.resize(6,0.);
-	eTrial.resize(6,0.);
-	eTotal.resize(6,0.);
+MultiaxialMaterial::MultiaxialMaterial(int ID, double rho, double aT)
+:Material(ID, rho, aT) {
+  sTrial.resize(6, 0.);
+  sConvg.resize(6, 0.);
+  eTrial.resize(6, 0.);
+  eTotal.resize(6, 0.);
 }
-MultiaxialMaterial::~MultiaxialMaterial()
-{
+MultiaxialMaterial::~MultiaxialMaterial() {
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,262 +29,240 @@
 
 double Brick8::detJ[8];
 double Brick8::shp[8][4][8];
-std::vector<int> Brick8::perm(8);
+std::vector < int > Brick8::perm(8);
 
 /**
  * Default constructor.
  */
-Brick8::Brick8()
-{
+Brick8::Brick8() {
 }
 /**
  * Constructor.
  */
 Brick8::Brick8(int ID,
-					   int Node_1,int Node_2,int Node_3,int Node_4,
-					   int Node_5,int Node_6,int Node_7,int Node_8,
-					   int matID)
-:Element(ID,matID)
-{
-	// Get nodal data
-	myNodalIDs.resize(8);
-	myNodalIDs[0]=Node_1;
-	myNodalIDs[1]=Node_2;
-	myNodalIDs[2]=Node_3;
-	myNodalIDs[3]=Node_4;
-	myNodalIDs[4]=Node_5;
-	myNodalIDs[5]=Node_6;
-	myNodalIDs[6]=Node_7;
-	myNodalIDs[7]=Node_8;
-	
-	// Set local nodal dofs
-	myLocalNodalDofs.resize(3);
-	myLocalNodalDofs[0]=0;
-	myLocalNodalDofs[1]=1;	
-	myLocalNodalDofs[2]=2;	
-	
-	// Handle common info
-	this->handleCommonInfo();
+             int Node_1, int Node_2, int Node_3, int Node_4,
+             int Node_5, int Node_6, int Node_7, int Node_8,
+             int matID)
+:Element(ID, matID) {
+  // Get nodal data
+  myNodalIDs.resize(8);
+  myNodalIDs[0]=Node_1;
+  myNodalIDs[1]=Node_2;
+  myNodalIDs[2]=Node_3;
+  myNodalIDs[3]=Node_4;
+  myNodalIDs[4]=Node_5;
+  myNodalIDs[5]=Node_6;
+  myNodalIDs[6]=Node_7;
+  myNodalIDs[7]=Node_8;
+  
+  // Set local nodal dofs
+  myLocalNodalDofs.resize(3);
+  myLocalNodalDofs[0]=0;
+  myLocalNodalDofs[1]=1;  
+  myLocalNodalDofs[2]=2;  
+  
+  // Handle common info
+  this->handleCommonInfo();
 
-	// Materials
-	myMatPoints.resize(8);
-	MultiaxialMaterial* pMat=static_cast<MultiaxialMaterial*>(myMaterial); 
-	myMatPoints[0]=new MatPoint(pMat,1,1,1,2,2,2);
-	myMatPoints[1]=new MatPoint(pMat,2,1,1,2,2,2);
-	myMatPoints[2]=new MatPoint(pMat,2,2,1,2,2,2);
-	myMatPoints[3]=new MatPoint(pMat,1,2,1,2,2,2);
-	myMatPoints[4]=new MatPoint(pMat,1,1,2,2,2,2);
-	myMatPoints[5]=new MatPoint(pMat,2,1,2,2,2,2);
-	myMatPoints[6]=new MatPoint(pMat,2,2,2,2,2,2);
-	myMatPoints[7]=new MatPoint(pMat,1,2,2,2,2,2);
-	
-	// Find shape functions for all GaussPoints (double shp[node][N,i][GPoint])
-	this->shapeFunctions();
+  // Materials
+  myMatPoints.resize(8);
+  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial); 
+  myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 2, 2, 2);
+  myMatPoints[1]=new MatPoint(pMat, 2, 1, 1, 2, 2, 2);
+  myMatPoints[2]=new MatPoint(pMat, 2, 2, 1, 2, 2, 2);
+  myMatPoints[3]=new MatPoint(pMat, 1, 2, 1, 2, 2, 2);
+  myMatPoints[4]=new MatPoint(pMat, 1, 1, 2, 2, 2, 2);
+  myMatPoints[5]=new MatPoint(pMat, 2, 1, 2, 2, 2, 2);
+  myMatPoints[6]=new MatPoint(pMat, 2, 2, 2, 2, 2, 2);
+  myMatPoints[7]=new MatPoint(pMat, 1, 2, 2, 2, 2, 2);
+  
+  // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
+  this->shapeFunctions();
 
-	// Materials coordinates
-	for(unsigned k=0;k<myMatPoints.size();k++)
-	{
-		double xG=0,yG=0,zG=0;
-		for(unsigned a=0;a<myNodes.size();a++)
-		{
-			xG+=shp[a][0][k]*x(a,0);
-			yG+=shp[a][0][k]*x(a,1);
-			zG+=shp[a][0][k]*x(a,2);
-		}
-		myMatPoints[k]->setX(xG,yG,zG);
-	}
+  // Materials coordinates
+  for (unsigned k = 0; k < myMatPoints.size(); k++) {
+    double xG = 0, yG = 0, zG = 0;
+    for (unsigned a = 0; a < myNodes.size(); a++) {
+      xG+=shp[a][0][k]*x(a, 0);
+      yG+=shp[a][0][k]*x(a, 1);
+      zG+=shp[a][0][k]*x(a, 2);
+    }
+    myMatPoints[k]->setX(xG, yG, zG);
+  }
 
-	// Permutation index
-	for(int i=0;i<8;i++) perm[i]=i;
+  // Permutation index
+  for (int i = 0;i < 8;i++) perm[i]=i;
 }
 /**
  * Destructor.
  */
-Brick8::~Brick8()
-{
-	Containers::vector_delete(myMatPoints);
+Brick8::~Brick8() {
+  Containers::vector_delete(myMatPoints);
 }
 /**
  * Element stiffness matrix.
  */
-const Matrix& Brick8::getK()
-{
-	// Static variables and references
-	static Matrix Ba;
-	static Matrix Bb;
-	Matrix &K=*myMatrix;
-	// Find shape functions for all GaussPoints (double shp[node][N,i][GPoint])
-	this->shapeFunctions();
-	// Stiffness matrix K+=B[a]T.C.B[b].dV (for each GaussPoint)
-	K.clear();
-	for(unsigned k=0;k<myMatPoints.size();k++)
-	{
-		const Matrix& C=myMatPoints[k]->getMaterial()->getC();
-		double dV=detJ[k];
-		for(unsigned a=0;a<myNodes.size();a++)
-		{
-			this->getB(Ba,a,k);
-			for(unsigned b=0;b<myNodes.size();b++)
-			{
-				this->getB(Bb,b,k);
-				K.add_BTCB(3*a,3*b,&perm[0],Ba,C,Bb,dV,1.0);
-			}
-		}
-	}
-	// Multiply by facK (active/deactivated)
-	double facK=1e-7;
-	if(myGroup->isActive()) facK=myGroup->getFacK();
-	K*=facK;
-	return K;
+const Matrix& Brick8::getK() {
+  // Static variables and references
+  static Matrix Ba;
+  static Matrix Bb;
+  Matrix &K=*myMatrix;
+  // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
+  this->shapeFunctions();
+  // Stiffness matrix K+=B[a]T.C.B[b].dV (for each GaussPoint)
+  K.clear();
+  for (unsigned k = 0; k < myMatPoints.size(); k++) {
+    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    double dV = detJ[k];
+    for (unsigned a = 0; a < myNodes.size(); a++) {
+      this->getB(Ba, a, k);
+      for (unsigned b = 0; b < myNodes.size(); b++) {
+        this->getB(Bb, b, k);
+        K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+      }
+    }
+  }
+  // Multiply by facK (active/deactivated)
+  double facK = 1e-7;
+  if (myGroup->isActive()) facK = myGroup->getFacK();
+  K*=facK;
+  return K;
 }
 /**
  * Element mass matrix.
  */
-const Matrix& Brick8::getM()
-{
-	Matrix &M=*myMatrix;
-	M.clear();
-	return M;
+const Matrix& Brick8::getM() {
+  Matrix &M=*myMatrix;
+  M.clear();
+  return M;
 }
 /**
  * Element residual vector.
  */
-const Vector& Brick8::getR()
-{
-	// Static variables and references
-	static Vector sigma(6);
-	static Matrix Ba(6,3);
-	Vector& R=*myVector;
-	R.clear();
-	// Factors
-	if(!(myGroup->isActive()))	return R;
-	double facS=myGroup->getFacS();
-	double facG=myGroup->getFacG();
-	double facP=myGroup->getFacP();
-	// Find shape functions for all GaussPoints (double shp[node][N,i][GPoint])
-	this->shapeFunctions();
-	// R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
-	for(unsigned k=0;k<myMatPoints.size();k++)
-	{
-		sigma=myMatPoints[k]->getMaterial()->getStress();
-		double dV=detJ[k];
-		for(unsigned a=0;a<myNodes.size();a++)
-		{
-			// +facS*Fint
-			this->getB(Ba,a,k);
-			add_BTv(R,3*a,&perm[0],Ba,sigma,facS*dV,1.0);
-			// -facG*SelfWeigth
-			for(int i=0;i<3;i++)
-				R[3*a+i]-=facG*shp[a][0][k]*b[i]*dV;
-		}
-	}
-	// -facP*ElementalLoads
-	R-=facP*P;
-	// Return
-	return R;
+const Vector& Brick8::getR() {
+  // Static variables and references
+  static Vector sigma(6);
+  static Matrix Ba(6, 3);
+  Vector& R=*myVector;
+  R.clear();
+  // Factors
+  if (!(myGroup->isActive()))  return R;
+  double facS = myGroup->getFacS();
+  double facG = myGroup->getFacG();
+  double facP = myGroup->getFacP();
+  // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
+  this->shapeFunctions();
+  // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
+  for (unsigned k = 0; k < myMatPoints.size(); k++) {
+    sigma = myMatPoints[k]->getMaterial()->getStress();
+    double dV = detJ[k];
+    for (unsigned a = 0; a < myNodes.size(); a++) {
+      // +facS*Fint
+      this->getB(Ba, a, k);
+      add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
+      // -facG*SelfWeigth
+      for (int i = 0;i < 3;i++)
+        R[3*a+i]-=facG*shp[a][0][k]*b[i]*dV;
+    }
+  }
+  // -facP*ElementalLoads
+  R-=facP*P;
+  // Return
+  return R;
 }
 /**
  * Element update.
  */
-void Brick8::update()
-{
-	// Static variables and references
-	static Vector u(24);
-	static Vector epsilon(6);
-	static Matrix B;
-	// Check if active
-	if(!(myGroup->isActive()))	return;
-	// Get incremental displacements
-	u=this->getDispIncrm();
-	// Find shape functions for all GaussPoints (double shp[node][N,i][GPoint])
-	this->shapeFunctions();
-	// Incremental strains: De+=B[a].Du  (for each GaussPoint)
-	for(unsigned k=0;k<myMatPoints.size();k++)
-	{
-		epsilon.clear();
-		for(unsigned a=0;a<myNodes.size();a++)
-		{
-			this->getB(B,a,k);
-			add2(epsilon,3*a,B,u,1.0,1.0);
-		}
-		myMatPoints[k]->getMaterial()->setStrain(epsilon);
-	}
+void Brick8::update() {
+  // Static variables and references
+  static Vector u(24);
+  static Vector epsilon(6);
+  static Matrix B;
+  // Check if active
+  if (!(myGroup->isActive()))  return;
+  // Get incremental displacements
+  u = this->getDispIncrm();
+  // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
+  this->shapeFunctions();
+  // Incremental strains: De+=B[a].Du  (for each GaussPoint)
+  for (unsigned k = 0; k < myMatPoints.size(); k++) {
+    epsilon.clear();
+    for (unsigned a = 0; a < myNodes.size(); a++) {
+      this->getB(B, a, k);
+      add2(epsilon, 3*a, B, u, 1.0, 1.0);
+    }
+    myMatPoints[k]->getMaterial()->setStrain(epsilon);
+  }
 }
 /**
  * Element commit.
  */
-void Brick8::commit()
-{
-	for(unsigned int i=0;i<myMatPoints.size();i++) 
-		myMatPoints[i]->getMaterial()->commit();
+void Brick8::commit() {
+  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+    myMatPoints[i]->getMaterial()->commit();
 }
 /**
  * Element shape functions.
  */
-void Brick8::shapeFunctions()
-{
-	shape8(x,shp,detJ);
+void Brick8::shapeFunctions() {
+  shape8(x, shp, detJ);
 }
 /**
  * Element initial stresses.
  */
-void Brick8::addInitialStresses(InitialStresses* pInitialStresses)
-{
-	if(myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
-		for(unsigned i=0;i<myMatPoints.size();i++)
-			myMatPoints[i]->setInitialStresses(pInitialStresses);
+void Brick8::addInitialStresses(InitialStresses* pInitialStresses) {
+  if (myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
+    for (unsigned i = 0;i < myMatPoints.size();i++)
+      myMatPoints[i]->setInitialStresses(pInitialStresses);
 }
 /**
  * Element stress recovery.
  */
-void Brick8::recoverStresses()
-{
- 	static Vector sigma(6);
- 	static Matrix E(8,8);
-	const double d=0.125;
-	const double a=1+num::sq3;
-	const double b=1-num::sq3;
+void Brick8::recoverStresses() {
+  static Vector sigma(6);
+  static Matrix E(8, 8);
+  const double d = 0.125;
+  const double a = 1+num::sq3;
+  const double b = 1-num::sq3;
 
-	E(0,0)=a*a*a*d; E(0,1)=b*a*a*d; E(0,2)=b*b*a*d; E(0,3)=b*a*a*d;
-	E(1,0)=b*a*a*d; E(1,1)=a*a*a*d; E(1,2)=b*a*a*d; E(1,3)=b*b*a*d;
-	E(2,0)=b*b*a*d; E(2,1)=b*a*a*d; E(2,2)=a*a*a*d; E(2,3)=b*a*a*d;
-	E(3,0)=b*a*a*d; E(3,1)=b*b*a*d; E(3,2)=b*a*a*d; E(3,3)=a*a*a*d;
-	E(4,0)=b*a*a*d; E(4,1)=b*b*a*d; E(4,2)=b*b*b*d; E(4,3)=b*b*a*d;
-	E(5,0)=b*b*a*d; E(5,1)=b*a*a*d; E(5,2)=b*b*a*d; E(5,3)=b*b*b*d;
-	E(6,0)=b*b*b*d; E(6,1)=b*b*a*d; E(6,2)=b*a*a*d; E(6,3)=b*b*a*d;
-	E(7,0)=b*b*a*d; E(7,1)=b*b*b*d; E(7,2)=b*b*a*d; E(7,3)=b*a*a*d;
-	E(0,4)=b*a*a*d; E(0,5)=b*b*a*d; E(0,6)=b*b*b*d; E(0,7)=b*b*a*d;
-	E(1,4)=b*b*a*d; E(1,5)=b*a*a*d; E(1,6)=b*b*a*d; E(1,7)=b*b*b*d;
-	E(2,4)=b*b*b*d; E(2,5)=b*b*a*d; E(2,6)=b*a*a*d; E(2,7)=b*b*a*d;
-	E(3,4)=b*b*a*d; E(3,5)=b*b*b*d; E(3,6)=b*b*a*d; E(3,7)=b*a*a*d;
-	E(4,4)=a*a*a*d; E(4,5)=b*a*a*d; E(4,6)=b*b*a*d; E(4,7)=b*a*a*d;
-	E(5,4)=b*a*a*d; E(5,5)=a*a*a*d; E(5,6)=b*a*a*d; E(5,7)=b*b*a*d;
-	E(6,4)=b*b*a*d; E(6,5)=b*a*a*d; E(6,6)=a*a*a*d; E(6,7)=b*a*a*d;
-	E(7,4)=b*a*a*d; E(7,5)=b*b*a*d; E(7,6)=b*a*a*d; E(7,7)=a*a*a*d;
+  E(0, 0)=a*a*a*d; E(0, 1)=b*a*a*d; E(0, 2)=b*b*a*d; E(0, 3)=b*a*a*d;
+  E(1, 0)=b*a*a*d; E(1, 1)=a*a*a*d; E(1, 2)=b*a*a*d; E(1, 3)=b*b*a*d;
+  E(2, 0)=b*b*a*d; E(2, 1)=b*a*a*d; E(2, 2)=a*a*a*d; E(2, 3)=b*a*a*d;
+  E(3, 0)=b*a*a*d; E(3, 1)=b*b*a*d; E(3, 2)=b*a*a*d; E(3, 3)=a*a*a*d;
+  E(4, 0)=b*a*a*d; E(4, 1)=b*b*a*d; E(4, 2)=b*b*b*d; E(4, 3)=b*b*a*d;
+  E(5, 0)=b*b*a*d; E(5, 1)=b*a*a*d; E(5, 2)=b*b*a*d; E(5, 3)=b*b*b*d;
+  E(6, 0)=b*b*b*d; E(6, 1)=b*b*a*d; E(6, 2)=b*a*a*d; E(6, 3)=b*b*a*d;
+  E(7, 0)=b*b*a*d; E(7, 1)=b*b*b*d; E(7, 2)=b*b*a*d; E(7, 3)=b*a*a*d;
+  E(0, 4)=b*a*a*d; E(0, 5)=b*b*a*d; E(0, 6)=b*b*b*d; E(0, 7)=b*b*a*d;
+  E(1, 4)=b*b*a*d; E(1, 5)=b*a*a*d; E(1, 6)=b*b*a*d; E(1, 7)=b*b*b*d;
+  E(2, 4)=b*b*b*d; E(2, 5)=b*b*a*d; E(2, 6)=b*a*a*d; E(2, 7)=b*b*a*d;
+  E(3, 4)=b*b*a*d; E(3, 5)=b*b*b*d; E(3, 6)=b*b*a*d; E(3, 7)=b*a*a*d;
+  E(4, 4)=a*a*a*d; E(4, 5)=b*a*a*d; E(4, 6)=b*b*a*d; E(4, 7)=b*a*a*d;
+  E(5, 4)=b*a*a*d; E(5, 5)=a*a*a*d; E(5, 6)=b*a*a*d; E(5, 7)=b*b*a*d;
+  E(6, 4)=b*b*a*d; E(6, 5)=b*a*a*d; E(6, 6)=a*a*a*d; E(6, 7)=b*a*a*d;
+  E(7, 4)=b*a*a*d; E(7, 5)=b*b*a*d; E(7, 6)=b*a*a*d; E(7, 7)=a*a*a*d;
 
-	for(unsigned i=0;i<8;i++)			// nodes
-	{
-		sigma.clear();
-		for(unsigned j=0;j<6;j++)		// sigma
-			for(unsigned k=0;k<8;k++)	// material points
-				sigma[j]+=E(i,k)*(myMatPoints[k]->getMaterial()->getStress())[j];
-		myNodes[i]->addStress(sigma);
-	}
+  for (unsigned i = 0;i < 8;i++)     // nodes
+  {
+    sigma.clear();
+    for (unsigned j = 0;j < 6;j++)   // sigma
+      for (unsigned k = 0;k < 8;k++) // material points
+        sigma[j]+=E(i, k)*(myMatPoints[k]->getMaterial()->getStress())[j];
+    myNodes[i]->addStress(sigma);
+  }
 }
 /**
  * Element non-linear points.
  */
-int Brick8::getnPlasticPoints()
-{
-	int n=0;
-	for(unsigned i=0;i<myMatPoints.size();i++)
-		if(myMatPoints[i]->getMaterial()->isPlastic()) n+=1;
-	return n;
+int Brick8::getnPlasticPoints() {
+  int n = 0;
+  for (unsigned i = 0;i < myMatPoints.size();i++)
+    if (myMatPoints[i]->getMaterial()->isPlastic()) n+=1;
+  return n;
 }
 /**
  * Element consistency.
  */
-bool Brick8::checkIfAllows(FEObject* /*f*/)
-{
-	return true;
+bool Brick8::checkIfAllows(FEObject* /*f*/) {
+  return true;
 }

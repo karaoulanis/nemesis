@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,37 +26,33 @@
 #include "material/modified_cam_clay.h"
 #include "material/mcc.h"
 
-ModifiedCamClay::ModifiedCamClay()
-{
+ModifiedCamClay::ModifiedCamClay() {
 }
-ModifiedCamClay::ModifiedCamClay(int ID,int elasticID,double M,double po,double kappa,double lambda)
-:MultiaxialElastoPlastic(ID,elasticID)
-{
-	// Material parameters
-	MatParams[0]=M;
-	MatParams[1]=po;
-	MatParams[2]=kappa;
-	MatParams[3]=lambda;
-	// Yield/potential surfaces
-	fSurfaces.push_back(new MCC(M,po,kappa,lambda));
-	gSurfaces.push_back(new MCC(M,po,kappa,lambda));
-	// Material tag
-	myTag=TAG_NONE;
-	nHardeningVariables=1;
+ModifiedCamClay::ModifiedCamClay(int ID, int elasticID, double M, double po, double kappa, double lambda)
+:MultiaxialElastoPlastic(ID, elasticID) {
+  // Material parameters
+  MatParams[0]=M;
+  MatParams[1]=po;
+  MatParams[2]=kappa;
+  MatParams[3]=lambda;
+  // Yield/potential surfaces
+  fSurfaces.push_back(new MCC(M, po, kappa, lambda));
+  gSurfaces.push_back(new MCC(M, po, kappa, lambda));
+  // Material tag
+  myTag = TAG_NONE;
+  nHardeningVariables = 1;
 }
-ModifiedCamClay::~ModifiedCamClay()
-{
+ModifiedCamClay::~ModifiedCamClay() {
 }
-MultiaxialMaterial* ModifiedCamClay::getClone()
-{
-	// Material parameters
-	int myID      = this->getID();
-	int elID      = myElastic->getID();
-	double M      = MatParams[ 0];
-	double po     = MatParams[ 1];
-	double kappa  = MatParams[ 2];
-	double lambda = MatParams[ 3];
-	// Create clone and return
-	ModifiedCamClay* newClone=new ModifiedCamClay(myID,elID,M,po,kappa,lambda);
-	return newClone;
+MultiaxialMaterial* ModifiedCamClay::getClone() {
+  // Material parameters
+  int myID      = this->getID();
+  int elID      = myElastic->getID();
+  double M      = MatParams[ 0];
+  double po     = MatParams[ 1];
+  double kappa  = MatParams[ 2];
+  double lambda = MatParams[ 3];
+  // Create clone and return
+  ModifiedCamClay* newClone = new ModifiedCamClay(myID, elID, M, po, kappa, lambda);
+  return newClone;
 }

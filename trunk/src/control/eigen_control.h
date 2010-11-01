@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,31 +28,30 @@
 
 #include "control/control.h"
 
-class EigenControl :public Control
-{
-public:
+class EigenControl :public Control {
+  public:
 
-	// Constructors and destructor
-	EigenControl();
-	~EigenControl();
+  // Constructors and destructor
+  EigenControl();
+  ~EigenControl();
 
-	void init()			{}
-	void predict()		{}
-	void correct()		{}
-	void commit()		{}
-	void formResidual(double /*factor*/) {}
-	void formTangent();
+  void init()     {}
+  void predict()    {}
+  void correct()    {}
+  void commit()   {}
+  void formResidual(double /*factor*/) {}
+  void formTangent();
 
-	// Form tangent and residual element by element 
-	void formElementalTangent(ModelElement* pModelElement);
-	void formElementalMassMatrix(ModelElement* pModelElement);
-	void formElementalResidual(ModelElement* pModelElement,double time=0.);
-	
-	// Form residual node by node
-	void formNodalResidual(ModelNode* pModelNode);
+  // Form tangent and residual element by element 
+  void formElementalTangent(ModelElement* pModelElement);
+  void formElementalMassMatrix(ModelElement* pModelElement);
+  void formElementalResidual(ModelElement* pModelElement, double time = 0.);
+  
+  // Form residual node by node
+  void formNodalResidual(ModelNode* pModelNode);
 
-	// Methods that are used through analysis
-	void rollback();
+  // Methods that are used through analysis
+  void rollback();
 };
 
-#endif //NEMESIS_CONTROL_EIGEN_CONTROL_H_
+#endif  // NEMESIS_CONTROL_EIGEN_CONTROL_H_

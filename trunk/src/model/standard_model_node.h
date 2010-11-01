@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,22 +28,21 @@
 
 #include "model/model_node.h"
 
-class StandardModelNode :public ModelNode
-{
-protected:
-public:
-	// Constructors
-	StandardModelNode();
-	StandardModelNode(const IDContainer& FTable,Node* pNode);
-	~StandardModelNode();
-	
-	void add_R(double factor);
-	void incTrialDisp(const Vector& du);
-	void incTrialVecs(const Vector& du,const Vector& dv,const Vector& da);
-	void setTrialDisp(const Vector& u);
-	void setTrialVecs(const Vector& u,const Vector& v,const Vector& a);
-	void commit();
-	void commitSens(const Vector& X,int param);
+class StandardModelNode :public ModelNode {
+ protected:
+  public:
+  // Constructors
+  StandardModelNode();
+  StandardModelNode(const IDContainer& FTable, Node* pNode);
+  ~StandardModelNode();
+  
+  void add_R(double factor);
+  void incTrialDisp(const Vector& du);
+  void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
+  void setTrialDisp(const Vector& u);
+  void setTrialVecs(const Vector& u, const Vector& v, const Vector& a);
+  void commit();
+  void commitSens(const Vector& X, int param);
 };
 
-#endif //NEMESIS_MODEL_STANDARD_MODEL_NODE_H_
+#endif  // NEMESIS_MODEL_STANDARD_MODEL_NODE_H_

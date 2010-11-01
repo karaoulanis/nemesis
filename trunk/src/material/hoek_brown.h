@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,38 +31,37 @@
 /**
  * The Hoek-Brown Class.
  */
-class HoekBrown: public MultiaxialMaterial
-{
-private:
-	MultiaxialMaterial* myElastic;
-	static Matrix C;
-	static Matrix C3;
-	bool plastic;
-	int inaccurate;
+class HoekBrown: public MultiaxialMaterial {
+  private:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  static Matrix C3;
+  bool plastic;
+  int inaccurate;
 
-	Vector f;
-	vector<Vector> dfds;
-	vector<Vector> dgds;
-	vector<Matrix> d2gdsds;
+  Vector f;
+  vector < Vector > dfds;
+  vector < Vector > dgds;
+  vector < Matrix > d2gdsds;
 
-	double aTrial,aConvg;
-public:
-	HoekBrown();
-	HoekBrown(int ID,int elasticID,double si,double sp,double mb,double mbb,double alpha);
-	~HoekBrown();
+  double aTrial, aConvg;
+  public:
+  HoekBrown();
+  HoekBrown(int ID, int elasticID, double si, double sp, double mb, double mbb, double alpha);
+  ~HoekBrown();
 
-	MultiaxialMaterial* getClone();
-	void setStrain(const Vector& De);
-	void commit();
-	const Matrix& getC();
-	bool isPlastic();
+  MultiaxialMaterial* getClone();
+  void setStrain(const Vector& De);
+  void commit();
+  const Matrix& getC();
+  bool isPlastic();
 
-	void find_f(const Vector& s,double q);
-	void find_dfds(const Vector& s,double q);
-	void find_dgds(const Vector& s,double q);
-	void find_d2gdsds(const Vector& s,double q);
+  void find_f(const Vector& s, double q);
+  void find_dfds(const Vector& s, double q);
+  void find_dgds(const Vector& s, double q);
+  void find_d2gdsds(const Vector& s, double q);
 
-	// Tracker member functions
-	void track();
+  // Tracker member functions
+  void track();
 };
-#endif //NEMESIS_MATERIAL_HOEK_BROWN_H_
+#endif  // NEMESIS_MATERIAL_HOEK_BROWN_H_

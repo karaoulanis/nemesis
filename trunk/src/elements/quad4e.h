@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,32 +28,31 @@
 
 #include "elements/quad4.h"
 
-class Quad4e: public Quad4
-{
-private:
-	static Matrix Bu;
-	static Matrix Be;
-	static Matrix T0;
-	static Vector Nu;
-	Vector alpha;
-public:
-	// Constructors and Destructor
-	Quad4e();
-	Quad4e(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID);
-	~Quad4e();
-	
-	const Matrix& getK();
+class Quad4e: public Quad4 {
+  private:
+  static Matrix Bu;
+  static Matrix Be;
+  static Matrix T0;
+  static Vector Nu;
+  Vector alpha;
+  public:
+  // Constructors and Destructor
+  Quad4e();
+  Quad4e(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
+  ~Quad4e();
+  
+  const Matrix& getK();
     const Matrix& getM();
-	const Vector& getR();
+  const Vector& getR();
 
-	void update();
-	void formKR();
-	double getJ(double xi,double eta);
-	void formTo(double xi,double eta);
-	void formNu(double xi,double eta);
-	void formBu(double xi,double eta);
-	void formBe(double xi,double eta);
-	void formT0(double xi,double eta);
+  void update();
+  void formKR();
+  double getJ(double xi, double eta);
+  void formTo(double xi, double eta);
+  void formNu(double xi, double eta);
+  void formBu(double xi, double eta);
+  void formBe(double xi, double eta);
+  void formT0(double xi, double eta);
 };
 
-#endif //NEMESIS_ELEMENTS_QUAD4E_H_
+#endif  // NEMESIS_ELEMENTS_QUAD4E_H_

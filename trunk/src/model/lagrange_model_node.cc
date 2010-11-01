@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,36 +29,28 @@
  * Default constructor.
  */
 LagrangeModelNode::LagrangeModelNode()
-:ModelNode()
-{
+:ModelNode() {
 }
 /**
  * Constructor.
  */
-LagrangeModelNode::LagrangeModelNode(const IDContainer& FTable,Node* pNode,Constraint* pConstraint)
-	:ModelNode(FTable,pNode,pConstraint)
-{
+LagrangeModelNode::LagrangeModelNode(const IDContainer& FTable, Node* pNode, Constraint* pConstraint)
+  :ModelNode(FTable, pNode, pConstraint) {
 }
-void LagrangeModelNode::add_R(double /*factor*/)
-{
+void LagrangeModelNode::add_R(double /*factor*/) {
 }
-void LagrangeModelNode::incTrialDisp(const Vector& du)
-{
-	myConstraint->incTrialForce(du[theFTable[0]]);
+void LagrangeModelNode::incTrialDisp(const Vector& du) {
+  myConstraint->incTrialForce(du[theFTable[0]]);
 }
-void LagrangeModelNode::incTrialVecs(const Vector& /*du*/,const Vector& /*dv*/,const Vector& /*da*/)
-{
-//	myConstraint->incTrialDisp(du[theFTable[0]]);
+void LagrangeModelNode::incTrialVecs(const Vector& /*du*/, const Vector& /*dv*/, const Vector& /*da*/) {
+//  myConstraint->incTrialDisp(du[theFTable[0]]);
 }
-void LagrangeModelNode::setTrialDisp(const Vector& /*u*/)
-{
-//	myConstraint->setTrialDisp(u[theFTable[0]]);
+void LagrangeModelNode::setTrialDisp(const Vector& /*u*/) {
+//  myConstraint->setTrialDisp(u[theFTable[0]]);
 }
-void LagrangeModelNode::setTrialVecs(const Vector& /*u*/,const Vector& /*v*/,const Vector& /*a*/)
-{
-//	myConstraint->setTrialDisp(u[theFTable[0]]);
+void LagrangeModelNode::setTrialVecs(const Vector& /*u*/, const Vector& /*v*/, const Vector& /*a*/) {
+//  myConstraint->setTrialDisp(u[theFTable[0]]);
 }
-void LagrangeModelNode::commit()
-{
-	myConstraint->commit();
+void LagrangeModelNode::commit() {
+  myConstraint->commit();
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -43,41 +43,40 @@
  * \li 6. It should return to the previous converged step, if the current 
  * step fails.
  */
-class StaticControl :public Control
-{
-protected:
-	double Delta0;				///< Initial Delta
-	double minDelta;			///< Lower bound for Delta (absolute);
-	double maxDelta;			///< Upper bound for Delta (absolute);
-	Vector du;					///< Iterative displacements
-	Vector duT;					///< SOE solution for q        
-	Vector duBar;				///< SOE solution for lambda*q
-	Vector Du;					///< Accumulative solution within each step
-	int Io;						///< Number of iterations in the last step
-	int Id;						///< Desired number of iterations in this step
-	double nExp;				///< Exponent for the auto incrementation				
-	double Dt;					///< Timestep for viscoplastic solutions				
-public:
+class StaticControl :public Control {
+ protected:
+  double Delta0;        ///< Initial Delta
+  double minDelta;      ///< Lower bound for Delta (absolute);
+  double maxDelta;      ///< Upper bound for Delta (absolute);
+  Vector du;          ///< Iterative displacements
+  Vector duT;         ///< SOE solution for q        
+  Vector duBar;       ///< SOE solution for lambda*q
+  Vector Du;          ///< Accumulative solution within each step
+  int Io;           ///< Number of iterations in the last step
+  int Id;           ///< Desired number of iterations in this step
+  double nExp;        ///< Exponent for the auto incrementation       
+  double Dt;          ///< Timestep for viscoplastic solutions        
+  public:
 
-	// Constructors and destructor
-	StaticControl();
-	StaticControl(double D0,double minD,double maxD,
-		int IterDesired,double n,double DeltaTime);
-	virtual ~StaticControl();
+  // Constructors and destructor
+  StaticControl();
+  StaticControl(double D0, double minD, double maxD,
+    int IterDesired, double n, double DeltaTime);
+  virtual ~StaticControl();
 
-	void formResidual(double factor);
+  void formResidual(double factor);
 
-	// Form tangent and residual element by element 
-	virtual void formElementalTangent(ModelElement* pModelElement);
-	virtual void formElementalResidual(ModelElement* pModelElement,double time=0.);
-	
-	// Form residual node by node
-	void formNodalResidual(ModelNode* pModelNode);
+  // Form tangent and residual element by element 
+  virtual void formElementalTangent(ModelElement* pModelElement);
+  virtual void formElementalResidual(ModelElement* pModelElement, double time = 0.);
+  
+  // Form residual node by node
+  void formNodalResidual(ModelNode* pModelNode);
 
-	// Methods that are used through analysis
-	virtual void init();
-	virtual void commit();
-	virtual void rollback();
+  // Methods that are used through analysis
+  virtual void init();
+  virtual void commit();
+  virtual void rollback();
 };
 
-#endif //NEMESIS_CONTROL_STATIC_CONTROL_H_
+#endif  // NEMESIS_CONTROL_STATIC_CONTROL_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,23 +25,20 @@
 
 #include "loadcase/initial_velocity.h"
 
-InitialVelocity::InitialVelocity()
-{
+InitialVelocity::InitialVelocity() {
 }
-InitialVelocity::InitialVelocity(int nodeID,int DofID,double v)
-	:InitialCondition()
-{
-	myTag=TAG_INITIAL_VELOCITY;
-	// Retrieve node from the domain
-	myNode=pD->get<Node>(pD->getNodes(),nodeID);
-	// Check if dof is activated
-	dof=DofID-1;
-	if(myNode->getActivatedDof(dof)<0) 
-		throw SException("[nemesis:%d] %s",9999,"Dof is not activated.");
-	velc=v;
+InitialVelocity::InitialVelocity(int nodeID, int DofID, double v)
+  :InitialCondition() {
+  myTag = TAG_INITIAL_VELOCITY;
+  // Retrieve node from the domain
+  myNode = pD->get < Node>(pD->getNodes(), nodeID);
+  // Check if dof is activated
+  dof = DofID-1;
+  if (myNode->getActivatedDof(dof)<0) 
+    throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
+  velc = v;
 }
-int InitialVelocity::apply()
-{
-	myNode->addInitialVelc(dof,velc);
-	return 0;
+int InitialVelocity::apply() {
+  myNode->addInitialVelc(dof, velc);
+  return 0;
 }

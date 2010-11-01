@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -33,25 +33,24 @@
 /**
  * The Multiaxial Material Class.                                                
  */
-class MultiaxialMaterial: public Material
-{
-protected:
-	Vector sTrial;
-	Vector sConvg;
-	Vector eTrial;
-	Vector eTotal;
-	static Matrix C;
-public:
-	MultiaxialMaterial();
-	MultiaxialMaterial(int ID,double rho,double aT);
-	~MultiaxialMaterial();
+class MultiaxialMaterial: public Material {
+ protected:
+  Vector sTrial;
+  Vector sConvg;
+  Vector eTrial;
+  Vector eTotal;
+  static Matrix C;
+  public:
+  MultiaxialMaterial();
+  MultiaxialMaterial(int ID, double rho, double aT);
+  ~MultiaxialMaterial();
 
-	virtual MultiaxialMaterial* getClone()=0;
-	virtual void setStrain(const Vector& De)=0;
-	virtual const Matrix& getC()=0;
-	void  setStress(const Vector& s){sTrial =s; sConvg =s;}
-	void  addStress(const Vector& s){sTrial+=s; sConvg+=s;}
-	const Vector& getStress()		{return sTrial;}
-	virtual bool isPlastic()		{return false;}
+  virtual MultiaxialMaterial* getClone()=0;
+  virtual void setStrain(const Vector& De)=0;
+  virtual const Matrix& getC()=0;
+  void  setStress(const Vector& s){sTrial =s; sConvg =s;}
+  void  addStress(const Vector& s){sTrial+=s; sConvg+=s;}
+  const Vector& getStress()   {return sTrial;}
+  virtual bool isPlastic()    {return false;}
 };
-#endif //NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_
+#endif  // NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_

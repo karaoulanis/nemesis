@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,17 +29,16 @@
 #include "node/node.h"
 #include "loadcase/load.h"
 
-class NodalLoad: public Load
-{
-protected:
-	int dof;
-	Node* myNode;
-public:
-	NodalLoad();
-	NodalLoad(int nodeID,int dofID);
+class NodalLoad: public Load {
+ protected:
+  int dof;
+  Node* myNode;
+  public:
+  NodalLoad();
+  NodalLoad(int nodeID, int dofID);
 
-	void apply(double fact,double time);
-	virtual double getValue(double time)=0;
+  void apply(double fact, double time);
+  virtual double getValue(double time)=0;
 };
 
-#endif //NEMESIS_LOADCASE_NODAL_LOAD_H_
+#endif  // NEMESIS_LOADCASE_NODAL_LOAD_H_

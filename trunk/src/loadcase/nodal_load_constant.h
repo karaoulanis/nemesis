@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,15 +28,14 @@
 
 #include "loadcase/nodal_load.h"
 
-class NodalLoadConstant: public NodalLoad
-{
-private:
-	double theValue;
-public:
-	NodalLoadConstant();
-	NodalLoadConstant(int nodeID,int DofID, double val);
+class NodalLoadConstant: public NodalLoad {
+  private:
+  double theValue;
+  public:
+  NodalLoadConstant();
+  NodalLoadConstant(int nodeID, int DofID, double val);
 
-	double getValue(double time);
+  double getValue(double time);
 };
 
-#endif //NEMESIS_LOADCASE_NODAL_LOAD_CONSTANT_H_
+#endif  // NEMESIS_LOADCASE_NODAL_LOAD_CONSTANT_H_

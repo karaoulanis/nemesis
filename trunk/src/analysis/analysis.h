@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -45,40 +45,39 @@ class Model;
 class Reorderer;
 class SOE;
 
-class Analysis
-{
-private:
-	Model M;
-	Domain* theDomain;
-	AnalysisType* theAnalysisType;
-	Algorithm* theAlgorithm;
-	Control* theControl;
-	SOE* theSOE;
-	Imposer* theImposer;
-	ConvergenceNorm* theNorm;
-	Reorderer* theReorderer;
-public:
-	Analysis(Domain* pDomain);
-	~Analysis();
-	
-	inline Model* getModel()						{return &M;}
-	inline AnalysisType* getAnalysisType()			{return theAnalysisType;}
-	inline Algorithm* getAlgorithm()				{return theAlgorithm;}
-	inline Control* getControl()					{return theControl;}
-	inline Imposer* getImposer()					{return theImposer;}
-	inline ConvergenceNorm* getConvergenceNorm()	{return theNorm;}
-	inline Reorderer* getReorderer()				{return theReorderer;}
-	inline SOE* getSOE()							{return theSOE;}
-	inline Domain* getDomain()						{return theDomain;}
+class Analysis {
+  private:
+  Model M;
+  Domain* theDomain;
+  AnalysisType* theAnalysisType;
+  Algorithm* theAlgorithm;
+  Control* theControl;
+  SOE* theSOE;
+  Imposer* theImposer;
+  ConvergenceNorm* theNorm;
+  Reorderer* theReorderer;
+  public:
+  Analysis(Domain* pDomain);
+  ~Analysis();
 
-	void setAnalysisType(AnalysisType* p);
-	void setAlgorithm(Algorithm* p);
-	void setControl(Control* p);
-	void setImposer(Imposer* p);
-	void setReorderer(Reorderer* p);
-	void setSOE(SOE* p);
+  inline Model* getModel()                      {return &M;}
+  inline AnalysisType* getAnalysisType()        {return theAnalysisType;}
+  inline Algorithm* getAlgorithm()              {return theAlgorithm;}
+  inline Control* getControl()                  {return theControl;}
+  inline Imposer* getImposer()                  {return theImposer;}
+  inline ConvergenceNorm* getConvergenceNorm()  {return theNorm;}
+  inline Reorderer* getReorderer()              {return theReorderer;}
+  inline SOE* getSOE()                          {return theSOE;}
+  inline Domain* getDomain()                    {return theDomain;}
 
-	int analyze(int lcID,int nLoadSteps);
-	void clear();
+  void setAnalysisType(AnalysisType* p);
+  void setAlgorithm(Algorithm* p);
+  void setControl(Control* p);
+  void setImposer(Imposer* p);
+  void setReorderer(Reorderer* p);
+  void setSOE(SOE* p);
+
+  int analyze(int lcID, int nLoadSteps);
+  void clear();
 };
-#endif //NEMESIS_ANALYSIS_ANALYSIS_H_
+#endif  // NEMESIS_ANALYSIS_ANALYSIS_H_

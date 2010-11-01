@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,35 +26,34 @@
 #ifndef NEMESIS_DATABASE_SQLITE_DATABASE_H_
 #define NEMESIS_DATABASE_SQLITE_DATABASE_H_
 
-#include <fstream>
-#include <sqlite3.h>
+#include < fstream>
+#include < sqlite3.h>
 #include "containers/containers.h"
 #include "database/database.h"
 
-class SQLiteDatabase: public Database
-{
-private:
-	sqlite3* db;
-	int executeQuery(const char* query);
-	static int callback(void *NotUsed,int argc,char **argv,char **azColName);
-public:
-	SQLiteDatabase();
-	SQLiteDatabase(const char* workname);
-	~SQLiteDatabase();
+class SQLiteDatabase: public Database {
+  private:
+  sqlite3* db;
+  int executeQuery(const char* query);
+  static int callback(void *NotUsed, int argc, char **argv, char **azColName);
+  public:
+  SQLiteDatabase();
+  SQLiteDatabase(const char* workname);
+  ~SQLiteDatabase();
 
-	int closeDB();
-	int createTable(const char* tableName);
-	int deleteTable(const char* tableName);
-	bool existsTable(const char* tableName);
-	int useTable(const char* tableName);
-	int storeData(const Packet& p);
-	const Packet& retrieveData(int tag,int id);
+  int closeDB();
+  int createTable(const char* tableName);
+  int deleteTable(const char* tableName);
+  bool existsTable(const char* tableName);
+  int useTable(const char* tableName);
+  int storeData(const Packet& p);
+  const Packet& retrieveData(int tag, int id);
 
-	int beginTransaction();
-	int commitTransaction();
+  int beginTransaction();
+  int commitTransaction();
 
-	void exportToVtk(const char* tableName);
+  void exportToVtk(const char* tableName);
 
 };
 
-#endif //NEMESIS_DATABASE_SQLITE_DATABASE_H_
+#endif  // NEMESIS_DATABASE_SQLITE_DATABASE_H_

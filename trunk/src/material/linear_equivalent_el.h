@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,15 +31,14 @@
 /**
  * The Linear Equivalent Evolution Law Class.
  */
-class LinearEquivalentEL: public EvolutionLaw
-{
-private:
-public:
-	LinearEquivalentEL();
-	~LinearEquivalentEL();
-	
-	double get_h(const Vector& v);
-	double get_dhds(const Vector& sTrial,const Vector& ePTrial);
-	double get_dhda(const Vector& sTrial,const Vector& ePTrial);
+class LinearEquivalentEL: public EvolutionLaw {
+  private:
+  public:
+  LinearEquivalentEL();
+  ~LinearEquivalentEL();
+  
+  double get_h(const Vector& v);
+  double get_dhds(const Vector& sTrial, const Vector& ePTrial);
+  double get_dhda(const Vector& sTrial, const Vector& ePTrial);
 };
-#endif //NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_
+#endif  // NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_

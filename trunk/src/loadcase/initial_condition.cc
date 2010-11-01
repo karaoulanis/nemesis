@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,9 +25,8 @@
 
 #include "loadcase/initial_condition.h"
 
-int InitialCondition::nInitialConditions=0;
+int InitialCondition::nInitialConditions = 0;
 
 InitialCondition::InitialCondition()
-	:DomainObject(++nInitialConditions)
-{
+  :DomainObject(++nInitialConditions) {
 }

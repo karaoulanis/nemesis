@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,13 +31,12 @@
 /**
  * The Lade-Duncan Material Class.
  */
-class LadeDuncan: public MultiaxialElastoPlastic
-{
-private:
-public:
-	LadeDuncan();
-	LadeDuncan(int ID,int elasticID,double K);
-	MultiaxialMaterial* getClone();
-	~LadeDuncan();
+class LadeDuncan: public MultiaxialElastoPlastic {
+  private:
+  public:
+  LadeDuncan();
+  LadeDuncan(int ID, int elasticID, double K);
+  MultiaxialMaterial* getClone();
+  ~LadeDuncan();
 };
-#endif //NEMESIS_MATERIAL_LADE_DUNCAN_H_
+#endif  // NEMESIS_MATERIAL_LADE_DUNCAN_H_

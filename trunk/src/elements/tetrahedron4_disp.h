@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,29 +29,28 @@
 #include "elements/element.h"
 #include "material/matpoint.h"
 
-class Tetrahedron4Disp: public Element
-{
-protected:
-	static Matrix N;
-	static double V;
-	std::vector<MatPoint*> myMatPoints;
-public:
-	// Constructors and Destructor
-	Tetrahedron4Disp();
-	Tetrahedron4Disp(int ID,
-				int Node_1,int Node_2,int Node_3,int Node_4,	
-				int matID);	
-	~Tetrahedron4Disp();
+class Tetrahedron4Disp: public Element {
+ protected:
+  static Matrix N;
+  static double V;
+  std::vector < MatPoint*> myMatPoints;
+  public:
+  // Constructors and Destructor
+  Tetrahedron4Disp();
+  Tetrahedron4Disp(int ID,
+        int Node_1, int Node_2, int Node_3, int Node_4,  
+        int matID); 
+  ~Tetrahedron4Disp();
 
-	const Matrix& getK();
+  const Matrix& getK();
     const Matrix& getM();
-	const Vector& getR();
+  const Vector& getR();
 
-	void update();
-	void commit();
-	
-	void findShapeFunctions();
-	bool checkIfAllows(FEObject* f);
-	void recoverStresses();
+  void update();
+  void commit();
+  
+  void findShapeFunctions();
+  bool checkIfAllows(FEObject* f);
+  void recoverStresses();
 };
-#endif //NEMESIS_ELEMENTS_TETRAEDRON4_DISP_H_
+#endif  // NEMESIS_ELEMENTS_TETRAEDRON4_DISP_H_

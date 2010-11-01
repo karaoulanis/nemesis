@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,16 +29,15 @@
 #include "loadcase/initial_condition.h"
 #include "node/node.h"
 
-class InitialVelocity: public InitialCondition
-{
-private:
-	int dof;
-	Node* myNode;
-	double velc;
-public:
-	InitialVelocity();
-	InitialVelocity(int nodeID,int DofID,double v);
-	int apply();
+class InitialVelocity: public InitialCondition {
+  private:
+  int dof;
+  Node* myNode;
+  double velc;
+  public:
+  InitialVelocity();
+  InitialVelocity(int nodeID, int DofID, double v);
+  int apply();
 };
 
-#endif //NEMESIS_LOADCASE_INITIAL_VELOCITY_H_
+#endif  // NEMESIS_LOADCASE_INITIAL_VELOCITY_H_

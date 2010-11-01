@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,33 +31,32 @@
 #include "model/model_element.h"
 #include "model/model_node.h"
 
-class Control: public AnalysisObject
-{
-protected:
-	double lambdaTrial;
-	double lambdaConvg;
-	double DLambda;
-	double dLambda;
-	Vector qRef;
-public:
-	Control();
-	virtual ~Control();
+class Control: public AnalysisObject {
+ protected:
+  double lambdaTrial;
+  double lambdaConvg;
+  double DLambda;
+  double dLambda;
+  Vector qRef;
+  public:
+  Control();
+  virtual ~Control();
 
-	virtual void formTangent();    
-	virtual void formResidual(double factor)=0;
+  virtual void formTangent();    
+  virtual void formResidual(double factor)=0;
 
-	// Functions to build Element by Element or Node by Node it's contribution
-	virtual void formElementalTangent(ModelElement* pModelElement)=0;
-	virtual void formElementalResidual(ModelElement* pModelElement,double time=0.)=0;
-	virtual void formNodalResidual(ModelNode* pModelNode)=0;
+  // Functions to build Element by Element or Node by Node it's contribution
+  virtual void formElementalTangent(ModelElement* pModelElement)=0;
+  virtual void formElementalResidual(ModelElement* pModelElement, double time = 0.)=0;
+  virtual void formNodalResidual(ModelNode* pModelNode)=0;
 
-	virtual double getLambda();
-	virtual double getTime() {return 0;} ///@todo: implement this better
-	
-	virtual void init()=0;
-	virtual void predict()=0;
-	virtual void correct()=0;
-	virtual void commit()=0;
-	virtual void rollback()=0;
+  virtual double getLambda();
+  virtual double getTime() {return 0;} ///@todo: implement this better
+  
+  virtual void init()=0;
+  virtual void predict()=0;
+  virtual void correct()=0;
+  virtual void commit()=0;
+  virtual void rollback()=0;
 };
-#endif //NEMESIS_CONTROL_CONTROL_H_
+#endif  // NEMESIS_CONTROL_CONTROL_H_

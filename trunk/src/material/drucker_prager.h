@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,14 +31,13 @@
 /**
  * The Von-Mises Material Class.
  */
-class DruckerPrager: public MultiaxialElastoPlastic
-{
-private:
-	int type;
-public:
-	DruckerPrager();
-	DruckerPrager(int ID,int elasticID,int type_,double c,double phi,double psi,double T);
-	MultiaxialMaterial* getClone();
-	~DruckerPrager();
+class DruckerPrager: public MultiaxialElastoPlastic {
+  private:
+  int type;
+  public:
+  DruckerPrager();
+  DruckerPrager(int ID, int elasticID, int type_, double c, double phi, double psi, double T);
+  MultiaxialMaterial* getClone();
+  ~DruckerPrager();
 };
-#endif //NEMESIS_MATERIAL_DRUCKER_PRAGER_H_
+#endif  // NEMESIS_MATERIAL_DRUCKER_PRAGER_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,7 +26,7 @@
 #ifndef NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
 #define NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
 
-#include <iostream>
+#include < iostream>
 #include "feobject/fe_object.h"
 
 // Forward declarations
@@ -35,25 +35,24 @@ class Domain;
 /**
  * The DomainObject Class.                                                
  */
-class DomainObject: public FEObject
-{
-protected:
-	int myID;
-	static Packet thePacket;
-	static Domain* pD;
-public:
-	// Constructors
-	DomainObject();		
-	DomainObject(int ID);	
-	virtual ~DomainObject();
+class DomainObject: public FEObject {
+ protected:
+  int myID;
+  static Packet thePacket;
+  static Domain* pD;
+  public:
+  // Constructors
+  DomainObject();   
+  DomainObject(int ID); 
+  virtual ~DomainObject();
 
-	virtual int getID();
+  virtual int getID();
 
-	virtual const Packet& getPacket();
-	virtual void setPacket(const Packet& p);
-	virtual void save(std::ostream& /*s*/)	{}
-	virtual void load(std::istream& /*s*/)	{}
+  virtual const Packet& getPacket();
+  virtual void setPacket(const Packet& p);
+  virtual void save(std::ostream& /*s*/)  {}
+  virtual void load(std::istream& /*s*/)  {}
 
-	void setDomain(Domain* pDomain);
+  void setDomain(Domain* pDomain);
 };
-#endif //NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
+#endif  // NEMESIS_DOMAIN_DOMAIN_OBJECT_H_

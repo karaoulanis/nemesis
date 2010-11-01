@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,24 +26,23 @@
 #ifndef NEMESIS_LOADCASE_GROUND_MOTION_FILE_H_
 #define NEMESIS_LOADCASE_GROUND_MOTION_FILE_H_
 
-#include <iostream>
-#include <map>
-#include <vector>
+#include < iostream>
+#include < map>
+#include < vector>
 #include "loadcase/load.h"
 #include "elements/element.h"
 
-class GroundMotionFile: public Load
-{
-protected:
-	int dof;
-	std::vector<double> data;	// use stl because of resize (todo)
-	double dt;
-	double scale;
-public:
-	GroundMotionFile();
-	GroundMotionFile(int dof_,std::istream& s,double dt_,double scale_=1.0);
+class GroundMotionFile: public Load {
+ protected:
+  int dof;
+  std::vector < double > data; // use stl because of resize (todo)
+  double dt;
+  double scale;
+  public:
+  GroundMotionFile();
+  GroundMotionFile(int dof_, std::istream& s, double dt_, double scale_ = 1.0);
 
-	void apply(double fact,double time);
+  void apply(double fact, double time);
 };
 
-#endif //NEMESIS_LOADCASE_GROUND_MOTION_FILE_H_
+#endif  // NEMESIS_LOADCASE_GROUND_MOTION_FILE_H_

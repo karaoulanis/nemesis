@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,31 +29,30 @@
 #include "elements/element.h"
 #include "material/matpoint.h"
 
-class Triangle3: public Element
-{
-protected:
-	double a1,a2,a3;
-	double b1,b2,b3;
-	double c1,c2,c3;
-	double A;
-	std::vector<MatPoint*> myMatPoints;
-public:
-	// Constructors and Destructor
-	Triangle3();
-	Triangle3(int ID,int Node_1,int Node_2,int Node_3,int matID);
-	~Triangle3();
+class Triangle3: public Element {
+ protected:
+  double a1, a2, a3;
+  double b1, b2, b3;
+  double c1, c2, c3;
+  double A;
+  std::vector < MatPoint*> myMatPoints;
+  public:
+  // Constructors and Destructor
+  Triangle3();
+  Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID);
+  ~Triangle3();
 
-	const Matrix& getK();
-	const Matrix& getM();
-	const Vector& getR();
+  const Matrix& getK();
+  const Matrix& getM();
+  const Vector& getR();
 
-	void update();
-	void commit();
-	
-	void addInitialStresses(InitialStresses* pInitialStresses);
-	bool checkIfAllows(FEObject* f);
-	void recoverStresses();
-	int getnPlasticPoints();
+  void update();
+  void commit();
+  
+  void addInitialStresses(InitialStresses* pInitialStresses);
+  bool checkIfAllows(FEObject* f);
+  void recoverStresses();
+  int getnPlasticPoints();
 };
 
-#endif //NEMESIS_ELEMENTS_TRIANGLE3_H_
+#endif  // NEMESIS_ELEMENTS_TRIANGLE3_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,47 +26,46 @@
 #include "main/nemesis_config.h"
 #include "parser/py_parser.h"
 
-int main(int argc,char* argv[])
-{
-	/*****************************************************************************
-	* Info
-	*****************************************************************************/
-	cout<<"nemesis-"<<_NEMESIS_VERSION
-	    <<"[nemesis-project.org] Copyright (C) 2004-2010 F.E. Karaoulanis."<<endl;
-	cout<<"Built on "	<<_NEMESIS_PLATFORM
-		<<" with "		<<_NEMESIS_COMPILER_NAME
-		<<" ver."		<<_NEMESIS_COMPILER_VERSION
-		<<" on "		<<__DATE__
-		<<" at "		<<__TIME__<<"."<<endl;
-	cout<<"Licensed under GPL v3.0; provided \"AS IS\"; comes with ABSOLUTELY NO WARRANTY."<<endl;
-	/*****************************************************************************
-	* Python parser interactive
-	*****************************************************************************/
-	if(argc==1)
-	{
-		cout<<"Type help(nemesis) for additional info."<<endl;
-		cout<<"Use Ctrl-Z plus Return to exit."<<endl;
-		Parser* theParser=new PyParser();
-		theParser->parse();
-		delete theParser;
-	}
-	/*****************************************************************************
-	// Python parser with file
-	*****************************************************************************/
-	else if(argc==3 && !strcmp(argv[1],"-p"))
-	{
-		Parser* theParser=new PyParser();
-		theParser->parse(argv[2]);
-		delete theParser;
-	}
-	/*****************************************************************************
-	// Wrong arguments
-	*****************************************************************************/
-	else
-	{
-		cout<<"\nUsage: nemesis"<<endl
-			<<"         nemesis -p file"<<endl<<endl;
-	}
-	// Exit
-	return 0;
+int main(int argc, char* argv[]) {
+  /*****************************************************************************
+  * Info
+  *****************************************************************************/
+  cout << "nemesis-"<<_NEMESIS_VERSION
+      <<"[nemesis-project.org] Copyright (C) 2004-2010 F.E. Karaoulanis."<<endl;
+  cout << "Built on " <<_NEMESIS_PLATFORM
+    <<" with "    <<_NEMESIS_COMPILER_NAME
+    <<" ver."   <<_NEMESIS_COMPILER_VERSION
+    <<" on "    <<__DATE__
+    <<" at "    <<__TIME__ << " ."<<endl;
+  cout << "Licensed under GPL v3.0; provided \"AS IS\"; comes with ABSOLUTELY NO WARRANTY."<<endl;
+  /*****************************************************************************
+  * Python parser interactive
+  *****************************************************************************/
+  if (argc == 1)
+  {
+    cout << "Type help(nemesis) for additional info."<<endl;
+    cout << "Use Ctrl-Z plus Return to exit."<<endl;
+    Parser* theParser = new PyParser();
+    theParser->parse();
+    delete theParser;
+  }
+  /*****************************************************************************
+  // Python parser with file
+  *****************************************************************************/
+  else if (argc == 3 && !strcmp(argv[1], "-p"))
+  {
+    Parser* theParser = new PyParser();
+    theParser->parse(argv[2]);
+    delete theParser;
+  }
+  /*****************************************************************************
+  // Wrong arguments
+  *****************************************************************************/
+  else
+  {
+    cout << "\nUsage: nemesis"<<endl
+      <<"         nemesis -p file"<<endl << endl;
+  }
+  // Exit
+  return 0;
 }

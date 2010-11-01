@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -24,42 +24,37 @@
 // *****************************************************************************
 
 #include "reorderer/reorderer.h"
-#include <fstream>
+#include < fstream>
 #include "exception/sexception.h"
 
-Reorderer::Reorderer()
-{
-	pA->getModel()->setReordered(false);
+Reorderer::Reorderer() {
+  pA->getModel()->setReordered(false);
 }
-Reorderer::~Reorderer()
-{
+Reorderer::~Reorderer() {
 }
-int Reorderer::reorder()
-{
-	if(pA->getModel()->isReordered()) return 0;
-	std::vector<int> perm;
-	// Get the permutation matrix
-	if(this->getPerm(perm)>0)
-	{
-		// Reorder Model Nodes
-		for(unsigned k=0;k<pA->getModel()->getModelNodes().size();k++) 
-		{
-			ModelNode* pModelNode=pA->getModel()->getModelNodes()[k];
-			for(unsigned i=0;i<pModelNode->getFTable().size();i++)
-				if(pModelNode->getFTable()[i]>=0)
-					pModelNode->setFTable(i,perm[pModelNode->getFTable()[i]]);
-		}
-		// Reorder Model Elements
-		for(unsigned k=0;k<pA->getModel()->getModelElements().size();k++) 
-		{
-			ModelElement* pModelElem=pA->getModel()->getModelElements()[k];
-			for(unsigned i=0;i<pModelElem->getFTable().size();i++)
-				if(pModelElem->getFTable()[i]>=0)
-					pModelElem->setFTable(i,perm[pModelElem->getFTable()[i]]);
-		}
-		cout<<"reo: Optimization returned successfully."<<endl;
-	}
-	else cout<<"reo: Optimization failed."<<endl;
-	pA->getModel()->setReordered(true);
-	return 0;
+int Reorderer::reorder() {
+  if (pA->getModel()->isReordered()) return 0;
+  std::vector < int > perm;
+  // Get the permutation matrix
+  if (this->getPerm(perm)>0)
+  {
+    // Reorder Model Nodes
+    for (unsigned k = 0; k < pA->getModel()->getModelNodes().size(); k++) {
+      ModelNode* pModelNode = pA->getModel()->getModelNodes()[k];
+      for (unsigned i = 0;i < pModelNode->getFTable().size();i++)
+        if (pModelNode->getFTable()[i]>=0)
+          pModelNode->setFTable(i, perm[pModelNode->getFTable()[i]]);
+    }
+    // Reorder Model Elements
+    for (unsigned k = 0; k < pA->getModel()->getModelElements().size(); k++) {
+      ModelElement* pModelElem = pA->getModel()->getModelElements()[k];
+      for (unsigned i = 0;i < pModelElem->getFTable().size();i++)
+        if (pModelElem->getFTable()[i]>=0)
+          pModelElem->setFTable(i, perm[pModelElem->getFTable()[i]]);
+    }
+    cout << "reo: Optimization returned successfully."<<endl;
+  }
+  else cout << "reo: Optimization failed."<<endl;
+  pA->getModel()->setReordered(true);
+  return 0;
 }

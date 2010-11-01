@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include <cstring>
-#include <fstream>
+#include < cstring>
+#include < fstream>
 #include "database/database.h"
 
 using namespace std;
@@ -32,30 +32,25 @@ using namespace std;
 Packet Database::myPacket;
 
 Database::Database()
-	:isConnected(false)
-{
+  :isConnected(false) {
 }
-Database::~Database()
-{
+Database::~Database() {
 }
-bool Database::existsFile(const char* filename)
-{
-	bool ret=true;
-	fstream tmpFile;
-	tmpFile.open(filename,ios::binary|ios::in);
-	if(tmpFile.fail())
-	{
-		tmpFile.clear();
-		ret=false;
-	}
-	tmpFile.close();
-	return ret;
+bool Database::existsFile(const char* filename) {
+  bool ret = true;
+  fstream tmpFile;
+  tmpFile.open(filename, ios::binary|ios::in);
+  if (tmpFile.fail())
+  {
+    tmpFile.clear();
+    ret = false;
+  }
+  tmpFile.close();
+  return ret;
 }
-int Database::beginTransaction()
-{
-	return 0;
+int Database::beginTransaction() {
+  return 0;
 }
-int Database::commitTransaction()
-{
-	return 0;
+int Database::commitTransaction() {
+  return 0;
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,12 +29,11 @@
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 
-class AnalysisType: public AnalysisObject
-{
-public:
-	AnalysisType();
-	~AnalysisType();
-	virtual int run(int nLC,int nLoadSteps)=0;
+class AnalysisType: public AnalysisObject {
+  public:
+  AnalysisType();
+  ~AnalysisType();
+  virtual int run(int nLC, int nLoadSteps)=0;
 };
 
-#endif //NEMESIS_ANALYSIS_ANALYSIS_TYPE_H_
+#endif  // NEMESIS_ANALYSIS_ANALYSIS_TYPE_H_

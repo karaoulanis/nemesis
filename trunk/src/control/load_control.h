@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -38,17 +38,16 @@
  * \f$\lambda_n\f$ is in fact a trial \f$\lambda_n\f$, and becomes 
  * \f$\lambda_o\f$ for the next step if and only if this step converges.\n
  */
-class LoadControl :public StaticControl
-{
-private:
-public:
-	// Constructor and destructor
-	LoadControl(double DL0,double minDL,double maxDL,int IterDesired,double n,double DeltaTime);
-	~LoadControl();
+class LoadControl :public StaticControl {
+  private:
+  public:
+  // Constructor and destructor
+  LoadControl(double DL0, double minDL, double maxDL, int IterDesired, double n, double DeltaTime);
+  ~LoadControl();
 
-	// Methods for incremental/iterative algorithms
-	void predict();
-	void correct();
+  // Methods for incremental/iterative algorithms
+  void predict();
+  void correct();
 };
 
-#endif //NEMESIS_CONTROL_LOAD_CONTROL_H_
+#endif  // NEMESIS_CONTROL_LOAD_CONTROL_H_

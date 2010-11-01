@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,8 +28,7 @@
 /**
  * Default constructor.
  */
-ModelElement::ModelElement()
-{
+ModelElement::ModelElement() {
 }
 /**
  * Simple constructor.
@@ -38,21 +37,17 @@ ModelElement::ModelElement()
  * other objects than elements (such as constraints) will need to occupy a 
  * ModelNode.
  */
-ModelElement::ModelElement(const IDContainer& FTable,Element* pElement,Constraint* pConstraint)
-	:ModelObject(FTable),myElement(pElement),myConstraint(pConstraint)
-{
+ModelElement::ModelElement(const IDContainer& FTable, Element* pElement, Constraint* pConstraint)
+  :ModelObject(FTable), myElement(pElement), myConstraint(pConstraint) {
 }
 /**
  * Destructor.
  */
-ModelElement::~ModelElement()
-{
+ModelElement::~ModelElement() {
 }
-void ModelElement::update()
-{
-	if(myElement!=0) myElement->update();
+void ModelElement::update() {
+  if (myElement != 0) myElement->update();
 }
-void ModelElement::commit()
-{
-	if(myElement!=0) myElement->commit();
+void ModelElement::commit() {
+  if (myElement != 0) myElement->commit();
 }

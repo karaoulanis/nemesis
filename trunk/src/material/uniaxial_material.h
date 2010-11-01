@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,26 +31,25 @@
 /**
  * The Uniaxial Material Class.                                                
  */
-class UniaxialMaterial: public Material
-{
-protected:
-	double sTrial;
-	double sConvg;
-	double eTotal;
-public:
-	UniaxialMaterial();
-	UniaxialMaterial(int ID,double rho,double aT);
-	~UniaxialMaterial();
+class UniaxialMaterial: public Material {
+ protected:
+  double sTrial;
+  double sConvg;
+  double eTotal;
+  public:
+  UniaxialMaterial();
+  UniaxialMaterial(int ID, double rho, double aT);
+  ~UniaxialMaterial();
 
-	virtual UniaxialMaterial* getClone()=0;
-	virtual void setStrain(const double De)=0;
-	virtual double getC()=0;
-	inline void setStress(const double s)	{sTrial=s;		}
-	inline void addStress(const double s)	{sTrial+=s;		}///@todo: check
-	inline double getStress()			{return sTrial;	}
-	
-	// Tracker member functions
-	void track();
+  virtual UniaxialMaterial* getClone()=0;
+  virtual void setStrain(const double De)=0;
+  virtual double getC()=0;
+  inline void setStress(const double s) {sTrial = s;    }
+  inline void addStress(const double s) {sTrial+=s;   }///@todo: check
+  inline double getStress()     {return sTrial; }
+  
+  // Tracker member functions
+  void track();
 };
 
-#endif //NEMESIS_MATERIAL_UNIAXIAL_MATERIAL_H_
+#endif  // NEMESIS_MATERIAL_UNIAXIAL_MATERIAL_H_

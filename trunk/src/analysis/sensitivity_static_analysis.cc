@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,77 +26,73 @@
 #include "analysis/sensitivity_static_analysis.h"
 
 SensitivityStaticAnalysis::SensitivityStaticAnalysis()
-	:AnalysisType()
-{
-	myTag=TAG_ANALYSIS_STATIC;
-	// defaults
-	pA->setImposer(new EliminationImposer());
-	pA->setControl(new LoadControl(1.,1.,1.,1,0.5,0.));
-	pA->setAlgorithm(new LinearAlgorithm());
-	pA->setSOE(new FullLinearSOE());
-	theSensitivityControl=new SensitivityControl;
+  :AnalysisType() {
+  myTag = TAG_ANALYSIS_STATIC;
+  // defaults
+  pA->setImposer(new EliminationImposer());
+  pA->setControl(new LoadControl(1., 1., 1., 1, 0.5, 0.));
+  pA->setAlgorithm(new LinearAlgorithm());
+  pA->setSOE(new FullLinearSOE());
+  theSensitivityControl = new SensitivityControl;
 }
-SensitivityStaticAnalysis::~SensitivityStaticAnalysis()
-{
-	delete theSensitivityControl;
+SensitivityStaticAnalysis::~SensitivityStaticAnalysis() {
+  delete theSensitivityControl;
 }
-bool SensitivityStaticAnalysis::checkIfAllows(FEObject* /*f*/)
-{
-	return false;
+bool SensitivityStaticAnalysis::checkIfAllows(FEObject* /*f*/) {
+  return false;
 }
-int SensitivityStaticAnalysis::run(int nLC,int nLoadSteps)
-{
+int SensitivityStaticAnalysis::run(int nLC, int nLoadSteps) {
+  // Create model by applying the constraints
+  pA->getImposer()->impose();
 
-	// Create model by applying the constraints
-	pA->getImposer()->impose();
+  // Now that model is complete, reorder the model
+  if (pA->getReorderer() != 0) pA->getReorderer()->reorder();
 
-	// Now that model is complete, reorder the model
-	if(pA->getReorderer()!=0) pA->getReorderer()->reorder();
+  // Now that model is complete, the SOE can be initialized
+  pA->getSOE()->setTheSize();
 
-	// Now that model is complete, the SOE can be initialized
-	pA->getSOE()->setTheSize();
-	
-	// Apply the loads carried by the given loadcase
-//	pA->getControl()->
-///		setTheLoadCase(pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC));
-//	theSensitivityControl->setTheLoadCase(pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC));
+  // Apply the loads carried by the given loadcase
+  //  pA->getControl()->setTheLoadCase(pA->getDomain()->get<LoadCase>(
+  //    pA->getDomain()->getLoadCases(), nLC));
+  //  theSensitivityControl->setTheLoadCase(pA->getDomain()->get<LoadCase>(
+  //    pA->getDomain()->getLoadCases(), nLC));
 
-	// Initialize control
-	pA->getControl()->init();
-	theSensitivityControl->init();
+  // Initialize control
+  pA->getControl()->init();
+  theSensitivityControl->init();
 
-	// Initialize the convergence check
-	pA->getConvergenceNorm()->init(nLC,nLoadSteps);
+  // Initialize the convergence check
+  pA->getConvergenceNorm()->init(nLC, nLoadSteps);
 
-	int ret=0;
-	for(int i=0;i<nLoadSteps;i++)
-	{
-		// Call algorithm to solve step
-		int check=pA->getAlgorithm()->solveStep(i);
-		// Algorithm failed
-		if(check<0)
-		{
-			if(check==-1)		cout<<"Warning  : Solution is diverging."<<endl;
-			else if(check==-2)	cout<<"Warning  : Maximum number of iteration was exceeded."<<endl;
-			ret=-1;
-		}
-		// Algorithm succeeded
-		pA->getControl()->commit();
-		
-		// Sensitivity
-		int nParams=pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->getnSensitivityParameters();
-		for(int j=0;j<nParams;j++)
-		{
-			theSensitivityControl->formTangent();
-			theSensitivityControl->formResidual(0.);
-			//pA->getSOE()->print();
-			pA->getSOE()->solve();
-			//cout<<pA->getSOE()->getX();
-			theSensitivityControl->commit();
-		}
-	}
+  int ret = 0;
+  for (int i = 0; i < nLoadSteps; i++) {
+    // Call algorithm to solve step
+    int check = pA->getAlgorithm()->solveStep(i);
+    // Algorithm failed
+    if (check < 0) {
+      if (check == -1)
+        cout << "Warning  : Solution is diverging." << endl;
+      else if (check == -2)
+        cout << "Warning  : Maximum number of iteration was exceeded." << endl;
+      ret=-1;
+    }
+    // Algorithm succeeded
+    pA->getControl()->commit();
 
-	// Finalize loadcase
-	pA->getModel()->setNodalStress();
-	return ret;
+    // Sensitivity
+    int nParams = pA->getDomain()->get<LoadCase>(
+      pA->getDomain()->getLoadCases(), nLC)->getnSensitivityParameters();
+    for (int j = 0; j < nParams; j++) {
+      theSensitivityControl->formTangent();
+      theSensitivityControl->formResidual(0.);
+      // pA->getSOE()->print();
+      pA->getSOE()->solve();
+      // cout << pA->getSOE()->getX();
+      theSensitivityControl->commit();
+    }
+  }
+
+  // Finalize loadcase
+  pA->getModel()->setNodalStress();
+  return ret;
 }

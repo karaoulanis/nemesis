@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,13 +28,12 @@
 
 #include "material/mc.h"
 
-class MC_2: public MC
-{
-private:
-	void find_A(const Vector& s,double& A,double& dA,double& d2A);
-public:
-	MC_2();
-	MC_2(double c_,double phi_);
-	~MC_2();
+class MC_2: public MC {
+  private:
+  void find_A(const Vector& s, double& A, double& dA, double& d2A);
+  public:
+  MC_2();
+  MC_2(double c_, double phi_);
+  ~MC_2();
 };
-#endif //NEMESIS_MATERIAL_MC_2_H_
+#endif  // NEMESIS_MATERIAL_MC_2_H_

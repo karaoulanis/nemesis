@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,96 +26,83 @@
 #include "soe/eigen_soe.h"
 
 EigenSOE::EigenSOE()
-	:SOE()
-{
-	myTag=TAG_NONE;
+  :SOE() {
+  myTag = TAG_NONE;
 }
-EigenSOE::~EigenSOE()
-{
+EigenSOE::~EigenSOE() {
 }
 int EigenSOE::
-insertMatrixIntoA(const Matrix& Ke,const IDContainer& EFTable,double factor)
-{
-	isLUFactored=false;
-	for(unsigned i=0;i<EFTable.size();i++)
-		for(unsigned j=0;j<EFTable.size();j++)
-		{
-			if((EFTable[i])<0) continue;
-			if((EFTable[j])<0) continue;
-			A[EFTable[j]*theSize+EFTable[i]]+=factor*Ke(i,j);
-		}
-	return 0;
+insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
+  isLUFactored = false;
+  for (unsigned i = 0;i < EFTable.size();i++)
+    for (unsigned j = 0; j < EFTable.size(); j++) {
+      if ((EFTable[i])<0) continue;
+      if ((EFTable[j])<0) continue;
+      A[EFTable[j]*theSize+EFTable[i]]+=factor*Ke(i, j);
+    }
+  return 0;
 }
 int EigenSOE::
-insertMatrixIntoM(const Matrix& Ke,const IDContainer& EFTable,double factor)
-{
-	isLUFactored=false;
-	for(unsigned i=0;i<EFTable.size();i++)
-		for(unsigned j=0;j<EFTable.size();j++)
-		{
-			if((EFTable[i])<0) continue;
-			if((EFTable[j])<0) continue;
-			M[EFTable[j]*theSize+EFTable[i]]+=factor*Ke(i,j);
-		}
-	return 0;
+insertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable, double factor) {
+  isLUFactored = false;
+  for (unsigned i = 0;i < EFTable.size();i++)
+    for (unsigned j = 0; j < EFTable.size(); j++) {
+      if ((EFTable[i])<0) continue;
+      if ((EFTable[j])<0) continue;
+      M[EFTable[j]*theSize+EFTable[i]]+=factor*Ke(i, j);
+    }
+  return 0;
 }
-void EigenSOE::setTheSize()
-{
-	// If the size has not changed do not resize arrays
-	if(theSize==pA->getModel()->getnEquations()) return;
-	else theSize=pA->getModel()->getnEquations();
-	A.resize(theSize*theSize); 
-	M.resize(theSize*theSize);
-	X.resize(theSize);
-	ALPHAR.resize(theSize); 
-	ALPHAI.resize(theSize); 
-	BETA.resize(theSize); 
-	VL.resize(theSize*theSize);
-	VR.resize(theSize*theSize); 
-	WORK.resize(8*theSize);
+void EigenSOE::setTheSize() {
+  // If the size has not changed do not resize arrays
+  if (theSize == pA->getModel()->getnEquations()) return;
+  else theSize = pA->getModel()->getnEquations();
+  A.resize(theSize*theSize); 
+  M.resize(theSize*theSize);
+  X.resize(theSize);
+  ALPHAR.resize(theSize); 
+  ALPHAI.resize(theSize); 
+  BETA.resize(theSize); 
+  VL.resize(theSize*theSize);
+  VR.resize(theSize*theSize); 
+  WORK.resize(8*theSize);
 
-	double d=(4*theSize*theSize+9*theSize)*sizeof(double);
-	double i=theSize*sizeof(int);
-	printf("soe: Allocated %6.2fmb of memory.\n",(d+i)/(1024*1024));
+  double d=(4*theSize*theSize+9*theSize)*sizeof(double);
+  double i = theSize*sizeof(int);
+  printf("soe: Allocated %6.2fmb of memory.\n", (d+i)/(1024*1024));
 }
-void EigenSOE::print()
-{
-	cout<<"A"<<endl;
-	for(int i=0;i<theSize;i++)
-	{
-		for(int j=0;j<theSize;j++)	cout<<A[j*theSize+i]<<' ';
-		cout<<endl;
-	}
-	cout<<"M"<<endl;
-	for(int i=0;i<theSize;i++)
-	{
-		for(int j=0;j<theSize;j++)	cout<<M[j*theSize+i]<<' ';
-		cout<<endl;
-	}
+void EigenSOE::print() {
+  cout << "A"<<endl;
+  for (int i = 0; i < theSize; i++) {
+    for (int j = 0;j < theSize;j++)  cout << A[j*theSize+i]<<' ';
+    cout << endl;
+  }
+  cout << "M"<<endl;
+  for (int i = 0; i < theSize; i++) {
+    for (int j = 0;j < theSize;j++)  cout << M[j*theSize+i]<<' ';
+    cout << endl;
+  }
 }
-int EigenSOE::getEigenSign()
-{
-	return 1;
+int EigenSOE::getEigenSign() {
+  return 1;
 }
-void EigenSOE::zeroM()
-{
-	for(unsigned i=0;i<M.size();i++) M[i]=0;
+void EigenSOE::zeroM() {
+  for (unsigned i = 0;i < M.size();i++) M[i]=0;
 }
-int EigenSOE::solve()
-{
-	char JOBVL='N';
-	char JOBVR='V';
-	int N = theSize;
-	int LDA = N;
-	int LDB = N;
-	int LDVL = N;
-	int LDVR = N;
-	int LWORK = 8*N;
-	int INFO;
-	dggev(&JOBVL,&JOBVR,&N,&A[0],&LDA,&M[0],&LDB,&ALPHAR[0],&ALPHAI[0],&BETA[0],
-					  &VL[0],&LDVL,&VR[0],&LDVR,&WORK[0],&LWORK,&INFO,1,1);
-	if(INFO!=0)	
-		throw SException("[nemesis:%d] %s",1110,"SOE: lapack DSYGV failed.");
-	for(int i=0;i<theSize;i++) X[i]=ALPHAR[i]/BETA[i];
+int EigenSOE::solve() {
+  char JOBVL='N';
+  char JOBVR='V';
+  int N = theSize;
+  int LDA = N;
+  int LDB = N;
+  int LDVL = N;
+  int LDVR = N;
+  int LWORK = 8*N;
+  int INFO;
+  dggev(&JOBVL, &JOBVR, &N, &A[0], &LDA, &M[0], &LDB, &ALPHAR[0], &ALPHAI[0],
+    &BETA[0], &VL[0], &LDVL, &VR[0], &LDVR, &WORK[0], &LWORK, &INFO, 1, 1);
+  if (INFO != 0) 
+    throw SException("[nemesis:%d] %s", 1110, "SOE: lapack DSYGV failed.");
+  for (int i = 0;i < theSize;i++) X[i]=ALPHAR[i]/BETA[i];
     return 0;
 }

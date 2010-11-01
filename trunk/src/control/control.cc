@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -24,30 +24,25 @@
 // *****************************************************************************
 
 #include "control/control.h"
-#include <cmath>
+#include < cmath>
 
-Control::Control()
-{
-	lambdaTrial=0;
-	lambdaConvg=0;
-	DLambda=0;
-	dLambda=0;
+Control::Control() {
+  lambdaTrial = 0;
+  lambdaConvg = 0;
+  DLambda = 0;
+  dLambda = 0;
 }
-Control::~Control()
-{
+Control::~Control() {
 }
-void Control::formTangent()
-{
-	pA->getSOE()->zeroA();
-	int n=pA->getModel()->getModelElements().size();
-	for(int i=0;i<n;i++)
-	{
-		ModelElement* p=pA->getModel()->getModelElements()[i];
-		this->formElementalTangent(p);
-		pA->getSOE()->insertMatrixIntoA(p->getMatrix(),p->getFTable(),1.0);
-	}
+void Control::formTangent() {
+  pA->getSOE()->zeroA();
+  int n = pA->getModel()->getModelElements().size();
+  for (int i = 0; i < n; i++) {
+    ModelElement* p = pA->getModel()->getModelElements()[i];
+    this->formElementalTangent(p);
+    pA->getSOE()->insertMatrixIntoA(p->getMatrix(), p->getFTable(), 1.0);
+  }
 }
-double Control::getLambda()
-{
-	return lambdaTrial;
+double Control::getLambda() {
+  return lambdaTrial;
 }

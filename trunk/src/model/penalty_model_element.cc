@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -30,89 +30,73 @@
  * Default constructor
  */
 PenaltyModelElement::PenaltyModelElement()
-	:ModelElement()
-{
+  :ModelElement() {
 }
 /**
  * Constructor
  */
 PenaltyModelElement::PenaltyModelElement(const IDContainer& FTable,
-											 Constraint* pConstraint,
-											 double aFactor)
-	:ModelElement(FTable,0,pConstraint)
-{
-	a=aFactor;
-	myMatrix=theStaticMatrices[FTable.size()];
-	myVector=theStaticVectors[FTable.size()];
+                       Constraint* pConstraint,
+                       double aFactor)
+  :ModelElement(FTable, 0, pConstraint) {
+  a = aFactor;
+  myMatrix = theStaticMatrices[FTable.size()];
+  myVector = theStaticVectors[FTable.size()];
 }
 /**
  * Destructor
  */
-PenaltyModelElement::~PenaltyModelElement()
-{
+PenaltyModelElement::~PenaltyModelElement() {
 }
-void PenaltyModelElement::add_K(double factor)
-{
-	for(unsigned int i=0;i<theFTable.size();i++)
-	{
-		for(unsigned int j=0;j<theFTable.size();j++)
-		{
-			double ci=myConstraint->getcDof(i).coeff;
-			double cj=myConstraint->getcDof(j).coeff;
-			(*myMatrix)(i,j)+=factor*a*ci*cj;
-		}
-	}
+void PenaltyModelElement::add_K(double factor) {
+  for (unsigned int i = 0; i < theFTable.size(); i++) {
+    for (unsigned int j = 0; j < theFTable.size(); j++) {
+      double ci = myConstraint->getcDof(i).coeff;
+      double cj = myConstraint->getcDof(j).coeff;
+      (*myMatrix)(i, j)+=factor*a*ci*cj;
+    }
+  }
 }
-void PenaltyModelElement::add_M(double factor)
-{
-	for(unsigned int i=0;i<theFTable.size();i++)
-	{
-		for(unsigned int j=0;j<theFTable.size();j++)
-		{
-			double ci=myConstraint->getcDof(i).coeff;
-			double cj=myConstraint->getcDof(j).coeff;
-			(*myMatrix)(i,j)+=factor*a*ci*cj;
-		}
-	}
+void PenaltyModelElement::add_M(double factor) {
+  for (unsigned int i = 0; i < theFTable.size(); i++) {
+    for (unsigned int j = 0; j < theFTable.size(); j++) {
+      double ci = myConstraint->getcDof(i).coeff;
+      double cj = myConstraint->getcDof(j).coeff;
+      (*myMatrix)(i, j)+=factor*a*ci*cj;
+    }
+  }
 }
-void PenaltyModelElement::add_C(double /*factor*/)
-{
+void PenaltyModelElement::add_C(double /*factor*/) {
 }
-void PenaltyModelElement::add_R(double factor)
-{
-	// Find constraint violation
-	double c=myConstraint->getcVal(0.);
-	double cv=0.;
-	for(unsigned i=0;i<theFTable.size();i++)
-	{
-		double ci=myConstraint->getcDof(i).coeff;
-		double ui=myConstraint->getDisp(i);
-		cv+=a*ci*ui;
-	}
-	cv-=a*c;
-	// Add to constraint load vector
-	for(unsigned i=0;i<theFTable.size();i++)
-	{
-		double ci=myConstraint->getcDof(i).coeff;
-		(*myVector)[i]=+factor*ci*cv;
-	}
+void PenaltyModelElement::add_R(double factor) {
+  // Find constraint violation
+  double c = myConstraint->getcVal(0.);
+  double cv = 0.;
+  for (unsigned i = 0; i < theFTable.size(); i++) {
+    double ci = myConstraint->getcDof(i).coeff;
+    double ui = myConstraint->getDisp(i);
+    cv+=a*ci*ui;
+  }
+  cv-=a*c;
+  // Add to constraint load vector
+  for (unsigned i = 0; i < theFTable.size(); i++) {
+    double ci = myConstraint->getcDof(i).coeff;
+    (*myVector)[i]=+factor*ci*cv;
+  }
 }
-void PenaltyModelElement::add_Reff(double factor)
-{
-	// Find constraint violation
-	double c=myConstraint->getcVal(0.);
-	double cv=0.;
-	for(unsigned i=0;i<theFTable.size();i++)
-	{
-		double ci=myConstraint->getcDof(i).coeff;
-		double ui=myConstraint->getDisp(i);
-		cv+=a*ci*ui;
-	}
-	cv-=a*c;
-	// Add to constraint load vector
-	for(unsigned i=0;i<theFTable.size();i++)
-	{
-		double ci=myConstraint->getcDof(i).coeff;
-		(*myVector)[i]=+factor*ci*cv;
-	}
+void PenaltyModelElement::add_Reff(double factor) {
+  // Find constraint violation
+  double c = myConstraint->getcVal(0.);
+  double cv = 0.;
+  for (unsigned i = 0; i < theFTable.size(); i++) {
+    double ci = myConstraint->getcDof(i).coeff;
+    double ui = myConstraint->getDisp(i);
+    cv+=a*ci*ui;
+  }
+  cv-=a*c;
+  // Add to constraint load vector
+  for (unsigned i = 0; i < theFTable.size(); i++) {
+    double ci = myConstraint->getcDof(i).coeff;
+    (*myVector)[i]=+factor*ci*cv;
+  }
 }

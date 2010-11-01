@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,14 +27,13 @@
 #include "material/material.h"
 
 // Variable initialization
-int Material::counter=0;
+int Material::counter = 0;
 
 /**
  * Default constructor.
  */
-Material::Material()
-{
-	myTracker=0;
+Material::Material() {
+  myTracker = 0;
 }
 /**
  * Constructor.
@@ -43,32 +42,29 @@ Material::Material()
  * @param rho Density.
  * @param aT Thermal coefficient.
  */
-Material::Material(int ID,double rho,double aT)
-:DomainObject(ID)
-{
-	index=counter++;
-	MatParams.resize(32);
-	MatParams[30]=rho;
-	MatParams[31]=aT;
-	myTracker=0;
+Material::Material(int ID, double rho, double aT)
+:DomainObject(ID) {
+  index = counter++;
+  MatParams.resize(32);
+  MatParams[30]=rho;
+  MatParams[31]=aT;
+  myTracker = 0;
 }
 /**
  * Destructor.
  * Deletes only \a myTracker if exists. No other objects created here.
  */
-Material::~Material()
-{
-	if(myTracker!=0) delete myTracker;
+Material::~Material() {
+  if (myTracker != 0) delete myTracker;
 }
 /**
  * Set global coordinates to material.
  * This is useful in case where material is position depended.
  */
-void Material::setX(double x1_,double x2_,double x3_)
-{
-	x=x1_;
-	y=x2_;
-	z=x3_;
+void Material::setX(double x1_, double x2_, double x3_) {
+  x = x1_;
+  y = x2_;
+  z = x3_;
 }
 /**
  * Add a Tracker to a Material.
@@ -78,11 +74,10 @@ void Material::setX(double x1_,double x2_,double x3_)
  * Then track is called, in order to initialize the tracker.
  * @todo Check tracker initialization.
  */
-void Material::addTracker()
-{
-	if(myTracker!=0) return;
-    myTracker=new Tracker();
-	this->track();
+void Material::addTracker() {
+  if (myTracker != 0) return;
+    myTracker = new Tracker();
+  this->track();
 }
 /**
  * Get the Tracker.
@@ -90,14 +85,12 @@ void Material::addTracker()
  * @todo Change this to a constant pointer.
  * @return  pointer to \a myTracker.
  */
-Tracker* Material::getTracker()
-{
-	return myTracker;
+Tracker* Material::getTracker() {
+  return myTracker;
 }
 /**
  * Add a record to the tracker.
  * This function should be overwritten in derived classes.
  */
-void Material::track()
-{
+void Material::track() {
 }

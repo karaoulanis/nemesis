@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,32 +28,31 @@
 
 #include "control/control.h"
 
-class SensitivityControl :public Control
-{
-protected:
-	Vector ds;
-	int currParameter;
-public:
+class SensitivityControl :public Control {
+ protected:
+  Vector ds;
+  int currParameter;
+  public:
 
-	// Constructors and destructor
-	SensitivityControl();
-	virtual ~SensitivityControl();
+  // Constructors and destructor
+  SensitivityControl();
+  virtual ~SensitivityControl();
 
-	// Form tangent and residual element by element 
-	virtual void formElementalTangent(ModelElement* pModelElement);
-	virtual void formElementalResidual(ModelElement* pModelElement,double time=0.);
-	
-	// Form residual node by node
-	void formNodalResidual(ModelNode* /*pModelNode*/)	{}
+  // Form tangent and residual element by element 
+  virtual void formElementalTangent(ModelElement* pModelElement);
+  virtual void formElementalResidual(ModelElement* pModelElement, double time = 0.);
+  
+  // Form residual node by node
+  void formNodalResidual(ModelNode* /*pModelNode*/) {}
 
-	// Methods that are used through analysis
-	virtual void init();
-	virtual void predict()							{}
-	virtual void correct()							{}
-	virtual void commit();
-	virtual void rollback()							{}
+  // Methods that are used through analysis
+  virtual void init();
+  virtual void predict()              {}
+  virtual void correct()              {}
+  virtual void commit();
+  virtual void rollback()             {}
 
-	virtual void formResidual(double factor);
+  virtual void formResidual(double factor);
 };
 
-#endif //NEMESIS_CONTROL_SENSITIVITY_CONTROL_H_
+#endif  // NEMESIS_CONTROL_SENSITIVITY_CONTROL_H_

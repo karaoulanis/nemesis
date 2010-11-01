@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -33,31 +33,30 @@
 /**
  * The Drucker-Prager Class.
  */
-class DruckerPragerNew: public MultiaxialMaterial
-{
-private:
-	MultiaxialMaterial* myElastic;
-	static Matrix C;
-	static Matrix C3;
-	bool plastic;
-	int inaccurate;
-	double aTrial,aConvg;
+class DruckerPragerNew: public MultiaxialMaterial {
+  private:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  static Matrix C3;
+  bool plastic;
+  int inaccurate;
+  double aTrial, aConvg;
 
-	vector<YS*> fSurfaces;
-	vector<YS*> gSurfaces;
-	Hardening EL;
-public:
-	DruckerPragerNew();
-	DruckerPragerNew(int ID,int elasticID,double c,double phi,double psi,double Kci,double Kphi,double T);
-	~DruckerPragerNew();
+  vector < YS*> fSurfaces;
+  vector < YS*> gSurfaces;
+  Hardening EL;
+  public:
+  DruckerPragerNew();
+  DruckerPragerNew(int ID, int elasticID, double c, double phi, double psi, double Kci, double Kphi, double T);
+  ~DruckerPragerNew();
 
-	MultiaxialMaterial* getClone();
-	void setStrain(const Vector& De);
-	void commit();
-	const Matrix& getC();
-	bool isPlastic();
+  MultiaxialMaterial* getClone();
+  void setStrain(const Vector& De);
+  void commit();
+  const Matrix& getC();
+  bool isPlastic();
 
-	// Tracker member functions
-	void track();
+  // Tracker member functions
+  void track();
 };
-#endif //NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW_H_
+#endif  // NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW_H_

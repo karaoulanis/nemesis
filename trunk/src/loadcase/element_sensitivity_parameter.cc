@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,20 +25,17 @@
 
 #include "loadcase/element_sensitivity_parameter.h"
 
-int ElementSensitivityParameter::nSensitivityParameters=0;
+int ElementSensitivityParameter::nSensitivityParameters = 0;
 
 ElementSensitivityParameter::ElementSensitivityParameter()
-	:DomainObject()
-{
+  :DomainObject() {
 }
-ElementSensitivityParameter::ElementSensitivityParameter(int elemID,int param)
-	:DomainObject(++nSensitivityParameters)
-{
-	myElement=pD->get<Element>(pD->getElements(),elemID);	
-	parameter=param;
+ElementSensitivityParameter::ElementSensitivityParameter(int elemID, int param)
+  :DomainObject(++nSensitivityParameters) {
+  myElement = pD->get < Element>(pD->getElements(), elemID); 
+  parameter = param;
 }
-int ElementSensitivityParameter::apply()
-{
-	myElement->activateParameter(parameter);
-	return 0;
+int ElementSensitivityParameter::apply() {
+  myElement->activateParameter(parameter);
+  return 0;
 }

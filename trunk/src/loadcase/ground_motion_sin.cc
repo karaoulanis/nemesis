@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,20 +25,17 @@
 
 #include "loadcase/ground_motion_sin.h"
 
-GroundMotionSin::GroundMotionSin()
-{
+GroundMotionSin::GroundMotionSin() {
 }
-GroundMotionSin::GroundMotionSin(int dof_,double a_,double omega_,double phi_)
-	:Load()
-{
-	dof=dof_-1;
-	a=a_;
-	omega=omega_;
-	phi=phi_;
+GroundMotionSin::GroundMotionSin(int dof_, double a_, double omega_, double phi_)
+  :Load() {
+  dof = dof_-1;
+  a = a_;
+  omega = omega_;
+  phi = phi_;
 }
-void GroundMotionSin::apply(double /*fact*/,double time)
-{
-	const std::map<int,Element*>& c=pD->getElements();
-	std::map<int,Element*>::const_iterator i;
-	for(i=c.begin();i!=c.end();i++) i->second->addGroundMotion(dof,a*sin(omega*time+phi));
+void GroundMotionSin::apply(double /*fact*/, double time) {
+  const std::map < int, Element*>& c = pD->getElements();
+  std::map < int, Element*>::const_iterator i;
+  for (i = c.begin();i != c.end();i++) i->second->addGroundMotion(dof, a*sin(omega*time+phi));
 }

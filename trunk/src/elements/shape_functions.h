@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,9 +28,9 @@
 
 #include "numeric/matrix.h"
 
-void shape4(const Matrix& x,double shp[4][3][4],double detJ[4]);
-void shape8(const Matrix& x,double shp[8][4][8],double detJ[8]);
-void shapeQM6(const Matrix& x,double shpQM6[2][3][4]);
-void shapeQM9(const Matrix& x,double shpQM9[3][4][8]);
+void shape4(const Matrix& x, double shp[4][3][4], double detJ[4]);
+void shape8(const Matrix& x, double shp[8][4][8], double detJ[8]);
+void shapeQM6(const Matrix& x, double shpQM6[2][3][4]);
+void shapeQM9(const Matrix& x, double shpQM9[3][4][8]);
 
-#endif //NEMESIS_ELEMENTS_SHAPE_FUNCTIONS_H_
+#endif  // NEMESIS_ELEMENTS_SHAPE_FUNCTIONS_H_

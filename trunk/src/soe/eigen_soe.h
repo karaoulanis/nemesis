@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,30 +28,29 @@
 
 #include "soe/soe.h"
 
-class EigenSOE: public SOE
-{
-protected:
-	valarray<double> M;
-	valarray<double> ALPHAR;
-	valarray<double> ALPHAI;
-	valarray<double> BETA;
-	valarray<double> VL;
-	valarray<double> VR;
-	valarray<double> WORK;
-public:
-	// Constructor and destructor
-	EigenSOE();
-	~EigenSOE();
+class EigenSOE: public SOE {
+ protected:
+  valarray < double > M;
+  valarray < double > ALPHAR;
+  valarray < double > ALPHAI;
+  valarray < double > BETA;
+  valarray < double > VL;
+  valarray < double > VR;
+  valarray < double > WORK;
+  public:
+  // Constructor and destructor
+  EigenSOE();
+  ~EigenSOE();
 
-	int insertMatrixIntoA(const Matrix& Ke,const IDContainer& EFTable, 
-							double factor=1.0);
-	int insertMatrixIntoM(const Matrix& Ke,const IDContainer& EFTable, 
-							double factor=1.0);
-	
-	void zeroM();
-	int solve();
-	void setTheSize();
-	void print();
-	int getEigenSign();
+  int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, 
+              double factor = 1.0);
+  int insertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable, 
+              double factor = 1.0);
+  
+  void zeroM();
+  int solve();
+  void setTheSize();
+  void print();
+  int getEigenSign();
 };
-#endif //NEMESIS_SOE_FULL_EIGEN_SOE_H_
+#endif  // NEMESIS_SOE_FULL_EIGEN_SOE_H_

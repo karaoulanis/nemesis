@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,13 +28,12 @@
 
 #include "domain/domain_object.h"
 
-class InitialCondition: public DomainObject
-{
-private:
-	static int nInitialConditions;
-public:
-	InitialCondition();
-	virtual int apply()=0;
+class InitialCondition: public DomainObject {
+  private:
+  static int nInitialConditions;
+  public:
+  InitialCondition();
+  virtual int apply()=0;
 };
 
-#endif //NEMESIS_LOADCASE_INITIAL_CONDITION_H_
+#endif  // NEMESIS_LOADCASE_INITIAL_CONDITION_H_

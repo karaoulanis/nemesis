@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,17 +25,14 @@
 
 #include "loadcase/nodal_load_linear.h"
 
-NodalLoadLinear::NodalLoadLinear()
-{
+NodalLoadLinear::NodalLoadLinear() {
 }
-NodalLoadLinear::NodalLoadLinear(int nodeID,int DofID, double val,double grad)
-	:NodalLoad(nodeID,DofID)
-{
-	myTag=TAG_NODAL_LOAD_CONSTANT;
-	theValue=val;
-	theGradient=grad;
+NodalLoadLinear::NodalLoadLinear(int nodeID, int DofID, double val, double grad)
+  :NodalLoad(nodeID, DofID) {
+  myTag = TAG_NODAL_LOAD_CONSTANT;
+  theValue = val;
+  theGradient = grad;
 }
-double NodalLoadLinear::getValue(double time)
-{
-	return theValue+theGradient*time;
+double NodalLoadLinear::getValue(double time) {
+  return theValue+theGradient*time;
 }

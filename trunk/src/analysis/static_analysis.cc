@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,105 +26,101 @@
 #include "analysis/static_analysis.h"
 
 StaticAnalysis::StaticAnalysis()
-	:AnalysisType()
-{
-	myTag=TAG_ANALYSIS_STATIC;
-	// defaults
-	pA->setImposer(new EliminationImposer());
-	pA->setControl(new LoadControl(1.,1.,1.,1,0.5,0.));
-	pA->setAlgorithm(new LinearAlgorithm());
-	pA->setSOE(new FullLinearSOE());
+  :AnalysisType() {
+  myTag = TAG_ANALYSIS_STATIC;
+  // defaults
+  pA->setImposer(new EliminationImposer());
+  pA->setControl(new LoadControl(1., 1., 1., 1, 0.5, 0.));
+  pA->setAlgorithm(new LinearAlgorithm());
+  pA->setSOE(new FullLinearSOE());
 }
-bool StaticAnalysis::checkIfAllows(FEObject* f)
-{
-	if(	f->getTag()==TAG_CONTROL_LOAD						||
-		f->getTag()==TAG_CONTROL_DISPLACEMENT				||
-		f->getTag()==TAG_CONTROL_ARC_LENGTH_SPHERICAL		||
-		f->getTag()==TAG_CONTROL_ARC_LENGTH_UNP				||
-		f->getTag()==TAG_ALGORITHM_LINEAR					||
-		f->getTag()==TAG_ALGORITHM_NEWTON_RAPHSON_FULL		||
-		f->getTag()==TAG_ALGORITHM_NEWTON_RAPHSON_MODIFED	||
-		f->getTag()==TAG_ALGORITHM_NEWTON_RAPHSON_INITIAL	||
-		f->getTag()==TAG_ALGORITHM_NEWTON_RAPHSON_PERIODIC	||
-		f->getTag()==TAG_IMPOSER_PENALTY					||
-		f->getTag()==TAG_IMPOSER_LAGRANGE					||
-		f->getTag()==TAG_SOE_FULL_GENERIC_POSITIVE_DEFINE	||
-		f->getTag()==TAG_SOE_LINEAR_FULL					||
-		f->getTag()==TAG_SOE_LINEAR_SYMM					||
-		f->getTag()==TAG_SOE_LINEAR_BAND					||
-		f->getTag()==TAG_CONVERGENCE_NORM_EUCLIDEAN			||
-		f->getTag()==TAG_CONVERGENCE_NORM_MAXIMUM			||
-		f->getTag()==TAG_REORDERER_NONE						||
-		f->getTag()==TAG_REORDERER_FORWARD_CUTHILL_MCKEE	||
-		f->getTag()==TAG_REORDERER_REVERSE_CUTHILL_MCKEE	||
-		f->getTag()==TAG_REORDERER_FORWARD_SLOAN			||
-		f->getTag()==TAG_REORDERER_REVERSE_SLOAN			 )
-
-			return true;
-	return false;
+bool StaticAnalysis::checkIfAllows(FEObject* f) {
+  if (f->getTag() == TAG_CONTROL_LOAD                      ||
+      f->getTag() == TAG_CONTROL_DISPLACEMENT              ||
+      f->getTag() == TAG_CONTROL_ARC_LENGTH_SPHERICAL      ||
+      f->getTag() == TAG_CONTROL_ARC_LENGTH_UNP            ||
+      f->getTag() == TAG_ALGORITHM_LINEAR                  ||
+      f->getTag() == TAG_ALGORITHM_NEWTON_RAPHSON_FULL     ||
+      f->getTag() == TAG_ALGORITHM_NEWTON_RAPHSON_MODIFED  ||
+      f->getTag() == TAG_ALGORITHM_NEWTON_RAPHSON_INITIAL  ||
+      f->getTag() == TAG_ALGORITHM_NEWTON_RAPHSON_PERIODIC ||
+      f->getTag() == TAG_IMPOSER_PENALTY                   ||
+      f->getTag() == TAG_IMPOSER_LAGRANGE                  ||
+      f->getTag() == TAG_SOE_FULL_GENERIC_POSITIVE_DEFINE  ||
+      f->getTag() == TAG_SOE_LINEAR_FULL                   ||
+      f->getTag() == TAG_SOE_LINEAR_SYMM                   ||
+      f->getTag() == TAG_SOE_LINEAR_BAND                   ||
+      f->getTag() == TAG_CONVERGENCE_NORM_EUCLIDEAN        ||
+      f->getTag() == TAG_CONVERGENCE_NORM_MAXIMUM          ||
+      f->getTag() == TAG_REORDERER_NONE                    ||
+      f->getTag() == TAG_REORDERER_FORWARD_CUTHILL_MCKEE   ||
+      f->getTag() == TAG_REORDERER_REVERSE_CUTHILL_MCKEE   ||
+      f->getTag() == TAG_REORDERER_FORWARD_SLOAN           ||
+      f->getTag() == TAG_REORDERER_REVERSE_SLOAN           )
+      return true;
+  return false;
 }
-int StaticAnalysis::run(int nLC,int nLoadSteps)
-{
-	// Check the imposer
-	if(pA->getImposer()==0) 
-		throw SException("[nemesis:%d] %s",9999,"No imposer has been set.");
-	if(!this->checkIfAllows(pA->getImposer()))
-		throw SException("[nemesis:%d] %s",9999,"The imposer type is incorrect.");
-	// Check the control
-	if(pA->getControl()==0) 
-		throw SException("[nemesis:%d] %s",9999,"No control has been set.");
-	if(!this->checkIfAllows(pA->getControl()))
-		throw SException("[nemesis:%d] %s",9999,"The control type is incorrect.");
-	// Check the algorithm
-	if(pA->getAlgorithm()==0) 
-		throw SException("[nemesis:%d] %s",9999,"No algorithm has been set.");
-	if(!this->checkIfAllows(pA->getAlgorithm()))
-		throw SException("[nemesis:%d] %s",9999,"The algorithm type is incorrect.");
-	// Check the SOE
-	if(pA->getSOE()==0) 
-		throw SException("[nemesis:%d] %s",9999,"No soe has been set.");
-	if(!this->checkIfAllows(pA->getSOE()))
-		throw SException("[nemesis:%d] %s",9999,"The soe type is incorrect.");
-	// Check the Reorderer
-	if(pA->getReorderer()!=0&&(!this->checkIfAllows(pA->getReorderer())))
-		throw SException("[nemesis:%d] %s",9999,"The reorderer type is incorrect.");
+int StaticAnalysis::run(int nLC, int nLoadSteps) {
+  // Check the imposer
+  if (pA->getImposer() == 0)
+    throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
+  if (!this->checkIfAllows(pA->getImposer()))
+    throw SException("[nemesis:%d] %s", 9999, "The imposer type is incorrect.");
+  // Check the control
+  if (pA->getControl() == 0)
+    throw SException("[nemesis:%d] %s", 9999, "No control has been set.");
+  if (!this->checkIfAllows(pA->getControl()))
+    throw SException("[nemesis:%d] %s", 9999, "The control type is incorrect.");
+  // Check the algorithm
+  if (pA->getAlgorithm() == 0)
+    throw SException("[nemesis:%d] %s", 9999, "No algorithm has been set.");
+  if (!this->checkIfAllows(pA->getAlgorithm()))
+    throw SException("[nemesis:%d] %s", 9999, "The algorithm type is incorrect.");
+  // Check the SOE
+  if (pA->getSOE() == 0)
+    throw SException("[nemesis:%d] %s", 9999, "No soe has been set.");
+  if (!this->checkIfAllows(pA->getSOE()))
+    throw SException("[nemesis:%d] %s", 9999, "The soe type is incorrect.");
+  // Check the Reorderer
+  if ((pA->getReorderer() != 0) && (!this->checkIfAllows(pA->getReorderer())))
+    throw SException("[nemesis:%d] %s", 9999, "The reorderer type is incorrect.");
 
-	// Create model by applying the constraints
-	pA->getImposer()->impose();
+  // Create model by applying the constraints
+  pA->getImposer()->impose();
 
-	// Now that model is complete, reorder the model
-	if(pA->getReorderer()!=0) pA->getReorderer()->reorder();
+  // Now that model is complete, reorder the model
+  if (pA->getReorderer() !=0 ) pA->getReorderer()->reorder();
 
-	// Now that model is complete, the SOE can be initialized
-	pA->getSOE()->setTheSize();
-	
-	// Initialize
-	pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->init();
-	pA->getControl()->init();
-	pA->getConvergenceNorm()->init(nLC,nLoadSteps);
+  // Now that model is complete, the SOE can be initialized
+  pA->getSOE()->setTheSize();
 
-	int ret=0;
-	for(int i=0;i<nLoadSteps;i++)
-	{
-		// Call algorithm to solve step
-		int check=pA->getAlgorithm()->solveStep(i);
-		// Algorithm failed
-		if(check<0)
-		{
-			if(check==-1)		cout<<"Warning  : Solution is diverging."<<endl;
-			else if(check==-2)	cout<<"Warning  : Maximum number of iteration was exceeded."<<endl;
-//			pA->getControl()->returnToConverged();
-//			pA->getControl()->commit();
-//			break;
-			ret=-1;
-//			return -1;
-		}
-		// Algorithm succeeded
-		pA->getControl()->commit();
-	}
-	// Finalize
-	pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->commit();
-	pA->getModel()->setNodalStress();
-	pA->getDomain()->commit(); ///@todo For commiting time; find a more elegant way.
-	return ret;
+  // Initialize
+  pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(), nLC)->init();
+  pA->getControl()->init();
+  pA->getConvergenceNorm()->init(nLC, nLoadSteps);
+
+  int ret = 0;
+  for (int i = 0; i < nLoadSteps; i++) {
+    // Call algorithm to solve step
+    int check = pA->getAlgorithm()->solveStep(i);
+    // Algorithm failed
+    if (check < 0) {
+      if (check == -1)
+        cout << "Warning  : Solution is diverging." << endl;
+      else if (check == -2)
+        cout << "Warning  : Maximum number of iteration was exceeded." << endl;
+      // pA->getControl()->returnToConverged();
+      // pA->getControl()->commit();
+      // break;
+      ret = -1;
+      // return -1;
+    }
+    // Algorithm succeeded
+    pA->getControl()->commit();
+  }
+  // Finalize
+  pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(), nLC)->commit();
+  pA->getModel()->setNodalStress();
+  pA->getDomain()->commit(); ///@todo For commiting time; find more elegant way.
+  return ret;
 }

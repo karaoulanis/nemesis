@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,17 +29,16 @@
 #include "material/surface.h"
 #include "numeric/vector.h"
 
-class MC: public Surface
-{
-protected:
-	double c;
-	double phi;
-	void find_C(const Vector& s,const double a);
-	virtual void find_A(const Vector& s,double& A,double& dA,double& d2A)=0;
-public:
-	MC();
-	MC(double c_,double phi_);
-	~MC();
-	double get_f(const Vector& s,const double q);
+class MC: public Surface {
+ protected:
+  double c;
+  double phi;
+  void find_C(const Vector& s, const double a);
+  virtual void find_A(const Vector& s, double& A, double& dA, double& d2A)=0;
+  public:
+  MC();
+  MC(double c_, double phi_);
+  ~MC();
+  double get_f(const Vector& s, const double q);
 };
-#endif //NEMESIS_MATERIAL_MC_H_
+#endif  // NEMESIS_MATERIAL_MC_H_

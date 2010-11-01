@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,53 +25,45 @@
 
 #include "control/sensitivity_control.h"
 
-SensitivityControl::SensitivityControl()
-{
+SensitivityControl::SensitivityControl() {
 }
-SensitivityControl::~SensitivityControl()
-{
+SensitivityControl::~SensitivityControl() {
 }
 
-// Form tangent and residual element by element 
-void SensitivityControl::formElementalTangent(ModelElement* pModelElement)
-{
-	pModelElement->zeroMatrix();
-	pModelElement->add_K(1.0);
+// Form tangent and residual element by element
+void SensitivityControl::formElementalTangent(ModelElement* pModelElement) {
+  pModelElement->zeroMatrix();
+  pModelElement->add_K(1.0);
 }
-void SensitivityControl::formElementalResidual(ModelElement* pModelElement,double /*time*/)
-{
-	pModelElement->zeroVector();
-	pModelElement->add_Kgrad(1.0);
+void SensitivityControl::formElementalResidual(ModelElement* pModelElement,
+                                               double /*time*/) {
+  pModelElement->zeroVector();
+  pModelElement->add_Kgrad(1.0);
 }
-void SensitivityControl::formResidual(double /*factor*/)
-{
-	pA->getSOE()->zeroB();
-	pA->getDomain()->zeroSensitivityParameters();
-//	theLoadCase->applySensitivityParameter(currParameter);
-	// Take contribution from Elements
-	for(unsigned i=0;i<pA->getModel()->getModelElements().size();i++)		
-	{
-		ModelElement* p=pA->getModel()->getModelElements()[i];
-		this->formElementalResidual(p);
-		pA->getSOE()->insertVectorIntoB(p->getVector(),p->getFTable(),-1.0);
-	}
+void SensitivityControl::formResidual(double /*factor*/) {
+  pA->getSOE()->zeroB();
+  pA->getDomain()->zeroSensitivityParameters();
+  // theLoadCase->applySensitivityParameter(currParameter);
+  // Take contribution from Elements
+  for (unsigned i = 0; i < pA->getModel()->getModelElements().size(); i++) {
+    ModelElement* p = pA->getModel()->getModelElements()[i];
+    this->formElementalResidual(p);
+    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+  }
 }
-void SensitivityControl::init()
-{
-	currParameter=0;
-	int size=pA->getModel()->getnEquations();
-	ds.resize(size);
-	ds.clear();
-	for(unsigned i=0;i<pA->getModel()->getModelNodes().size();i++)		
-	{
-//		ModelNode* p=pA->getModel()->getModelNodes()[i];
-		///@todo  initSensitivityMatrix stupid
-//		p->getNode()->initSensitivityMatrix(theLoadCase->getnSensitivityParameters());
-	}
+void SensitivityControl::init() {
+  currParameter = 0;
+  int size = pA->getModel()->getnEquations();
+  ds.resize(size);
+  ds.clear();
+  for (unsigned i = 0; i < pA->getModel()->getModelNodes().size(); i++) {
+    // ModelNode* p = pA->getModel()->getModelNodes()[i];
+    ///@todo  initSensitivityMatrix stupid
+    // p->getNode()->initSensitivityMatrix(theLoadCase->getnSensitivityParameters());
+  }
 }
-void SensitivityControl::commit()
-{
-	ds=pA->getSOE()->getX();
-	pA->getModel()->commitSens(ds,currParameter);
-	currParameter++;
+void SensitivityControl::commit() {
+  ds = pA->getSOE()->getX();
+  pA->getModel()->commitSens(ds, currParameter);
+  currParameter++;
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,11 +29,10 @@
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 
-class Algorithm: public AnalysisObject
-{
-public:
-	Algorithm();
-	virtual ~Algorithm();
-	virtual int solveStep(int n)=0;
+class Algorithm: public AnalysisObject {
+ public:
+  Algorithm();
+  virtual ~Algorithm();
+  virtual int solveStep(int n)=0;
 };
-#endif //NEMESIS_ALGORITHM_ALGORITHM_H_
+#endif  // NEMESIS_ALGORITHM_ALGORITHM_H_

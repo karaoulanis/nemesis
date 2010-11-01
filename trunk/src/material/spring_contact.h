@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,15 +31,14 @@
 /**
  * The Elastic Spring Material Class.                                                
  */
-class SpringContact: public SpringMaterial
-{
-private:
-public:
-	SpringContact();
-	SpringContact(int ID,double Kn,double Ks,double mu,double gap);
+class SpringContact: public SpringMaterial {
+  private:
+  public:
+  SpringContact();
+  SpringContact(int ID, double Kn, double Ks, double mu, double gap);
 
-	SpringMaterial* getClone();
-	void setStrain(const Vector& De);
+  SpringMaterial* getClone();
+  void setStrain(const Vector& De);
 };
 
-#endif //NEMESIS_MATERIAL_SPRING_CONTACT_H_
+#endif  // NEMESIS_MATERIAL_SPRING_CONTACT_H_

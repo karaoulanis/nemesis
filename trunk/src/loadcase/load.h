@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,12 +28,11 @@
 
 #include "domain/domain_object.h"
 
-class Load: public DomainObject
-{
-protected:
-	static int nLoads;
-public:
-	Load();
-	virtual void apply(double fact,double t)=0;
+class Load: public DomainObject {
+ protected:
+  static int nLoads;
+  public:
+  Load();
+  virtual void apply(double fact, double t)=0;
 };
-#endif //NEMESIS_LOADCASE_LOAD_H_
+#endif  // NEMESIS_LOADCASE_LOAD_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,85 +25,79 @@
 
 #include "material/uniaxial_gap.h"
 
-UniaxialGap::UniaxialGap()
-{
+UniaxialGap::UniaxialGap() {
 }
-UniaxialGap::UniaxialGap(int ID,double E,double nu,double rho,double aT,double sy_,double gap_)
-:UniaxialMaterial(ID,rho,aT)
-{
-	gap=gap_;
-	sy=sy_;
-	eElastMin=gap;
-	eElastMax=gap+sy/E;
-	Et=E;
+UniaxialGap::UniaxialGap(int ID, double E, double nu, double rho, double aT, double sy_, double gap_)
+:UniaxialMaterial(ID, rho, aT) {
+  gap = gap_;
+  sy = sy_;
+  eElastMin = gap;
+  eElastMax = gap+sy/E;
+  Et = E;
 
-	// Material parameters
-	MatParams[0]=E;
-	MatParams[1]=nu;
-	MatParams[2]=sy;
-	MatParams[3]=gap;
-	myTag=TAG_MATERIAL_UNIAXIAL_ELASTIC;
+  // Material parameters
+  MatParams[0]=E;
+  MatParams[1]=nu;
+  MatParams[2]=sy;
+  MatParams[3]=gap;
+  myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
-UniaxialMaterial* UniaxialGap::getClone()
-{
-	// Material parameters
-	double E   =MatParams[ 0];
-	double nu  =MatParams[ 1];
-	double sy  =MatParams[ 2];
-	double gap =MatParams[ 3];
-	double rho =MatParams[30];
-	double aT  =MatParams[31];
-	// Create clone and return
-	UniaxialMaterial* clone=new UniaxialGap(myID,E,nu,rho,aT,sy,gap);
-	return clone;
+UniaxialMaterial* UniaxialGap::getClone() {
+  // Material parameters
+  double E   =MatParams[ 0];
+  double nu  =MatParams[ 1];
+  double sy  =MatParams[ 2];
+  double gap =MatParams[ 3];
+  double rho =MatParams[30];
+  double aT  =MatParams[31];
+  // Create clone and return
+  UniaxialMaterial* clone = new UniaxialGap(myID, E, nu, rho, aT, sy, gap);
+  return clone;
 }
-void UniaxialGap::setStrain(const double De)
-{
-	double E=MatParams[ 0];
-	eTrial=eTotal+De;
-	if(sy>=0)
-	{
-		if(eTrial<eElastMin)
-		{
-			sTrial=0.;
-			Et=0.;
-		}
-		else if(eTrial>eElastMax)
-		{
-			sTrial=sy;
-			Et=0.;
-		}
-		else
-		{
-			sTrial=E*(eTrial-eElastMin);
-			Et=E;
-		}
-	}
-	else
-	{
-		if(eTrial>eElastMin)
-		{
-			sTrial=0.;
-			Et=0.;
-		}
-		else if(eTrial<eElastMax)
-		{
-			sTrial=sy;
-			Et=0.;
-		}
-		else
-		{
-			sTrial=E*(eTrial-eElastMin);
-			Et=E;
-		}
-	}
+void UniaxialGap::setStrain(const double De) {
+  double E = MatParams[ 0];
+  eTrial = eTotal+De;
+  if (sy >= 0)
+  {
+    if (eTrial < eElastMin)
+    {
+      sTrial = 0.;
+      Et = 0.;
+    }
+    else if (eTrial>eElastMax)
+    {
+      sTrial = sy;
+      Et = 0.;
+    }
+    else
+    {
+      sTrial = E*(eTrial-eElastMin);
+      Et = E;
+    }
+  }
+  else
+  {
+    if (eTrial>eElastMin)
+    {
+      sTrial = 0.;
+      Et = 0.;
+    }
+    else if (eTrial < eElastMax)
+    {
+      sTrial = sy;
+      Et = 0.;
+    }
+    else
+    {
+      sTrial = E*(eTrial-eElastMin);
+      Et = E;
+    }
+  }
 }
-double UniaxialGap::getC()
-{
-	return Et;
+double UniaxialGap::getC() {
+  return Et;
 }
-void UniaxialGap::commit()
-{
-	sConvg=sTrial;
-	eTotal=eTrial;
+void UniaxialGap::commit() {
+  sConvg = sTrial;
+  eTotal = eTrial;
 }

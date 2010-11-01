@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,20 +29,19 @@
 #include "model/model_node.h"
 #include "node/node.h"
 
-class LagrangeModelNode: public ModelNode
-{
-private:
-public:
-	// Constructors
-	LagrangeModelNode();
-	LagrangeModelNode(const IDContainer& FTable,Node* pNode,Constraint* pConstraint);
-	
-	void add_R(double factor);
-	void incTrialDisp(const Vector& du);
-	void incTrialVecs(const Vector& du,const Vector& dv,const Vector& da);
-	void setTrialDisp(const Vector& u);
-	void setTrialVecs(const Vector& u,const Vector& v,const Vector& a);
-	void commit();
+class LagrangeModelNode: public ModelNode {
+  private:
+  public:
+  // Constructors
+  LagrangeModelNode();
+  LagrangeModelNode(const IDContainer& FTable, Node* pNode, Constraint* pConstraint);
+  
+  void add_R(double factor);
+  void incTrialDisp(const Vector& du);
+  void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
+  void setTrialDisp(const Vector& u);
+  void setTrialVecs(const Vector& u, const Vector& v, const Vector& a);
+  void commit();
 };
 
-#endif //NEMESIS_MODEL_LAGRANGE_MODEL_NODE_H_
+#endif  // NEMESIS_MODEL_LAGRANGE_MODEL_NODE_H_

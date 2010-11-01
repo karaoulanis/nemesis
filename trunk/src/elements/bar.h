@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,31 +29,30 @@
 #include "elements/element.h"
 #include "material/uniaxial_material.h"
 
-class Bar: public Element
-{
-protected:
-	int nDim;
-	CrossSection* iSection;
-	CrossSection* jSection;
-	double L0;
-	double A0;
-	Vector cosX;
-	UniaxialMaterial* myUniMaterial;
-public:
-	// Constructors and Destructor
-	Bar();
-	Bar(int ID,int Node_1,int Node_2,int matID,int iSecID,int jSecID);
-	~Bar();
-	void update();
-	void commit();
-	bool checkIfAllows(FEObject* f);
+class Bar: public Element {
+ protected:
+  int nDim;
+  CrossSection* iSection;
+  CrossSection* jSection;
+  double L0;
+  double A0;
+  Vector cosX;
+  UniaxialMaterial* myUniMaterial;
+  public:
+  // Constructors and Destructor
+  Bar();
+  Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID);
+  ~Bar();
+  void update();
+  void commit();
+  bool checkIfAllows(FEObject* f);
     const Matrix& getM();
-	const Vector& getReff();
-	void recoverStresses();
-	
-	// Tracker member functions
-	void addTracker(int index);
-	Tracker* getTracker(int index);
-	void track();
+  const Vector& getReff();
+  void recoverStresses();
+  
+  // Tracker member functions
+  void addTracker(int index);
+  Tracker* getTracker(int index);
+  void track();
 };
-#endif //NEMESIS_ELEMENTS_BAR_H_
+#endif  // NEMESIS_ELEMENTS_BAR_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,12 +31,11 @@
 /**
  * The Elastic Class.
  */
-class PlaneStress: public MultiaxialElastic
-{
-public:
-	PlaneStress();
-	PlaneStress(int ID,double E,double nu,double rho,double aT);
-	MultiaxialMaterial* getClone();
-	const Matrix& getC();
+class PlaneStress: public MultiaxialElastic {
+  public:
+  PlaneStress();
+  PlaneStress(int ID, double E, double nu, double rho, double aT);
+  MultiaxialMaterial* getClone();
+  const Matrix& getC();
 };
-#endif //NEMESIS_MATERIAL_PLANE_STRESS_H_
+#endif  // NEMESIS_MATERIAL_PLANE_STRESS_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,20 +31,19 @@
 /**
  * The Newmark Class.
   */
-class Newmark :public TransientControl
-{
-private:
-	double beta;
-	double gamma;
-	double dt;
-public:
-	// Constructor and destructor
-	Newmark(double beta_,double gamma_,double dt_);
-	~Newmark();
+class Newmark :public TransientControl {
+  private:
+  double beta;
+  double gamma;
+  double dt;
+  public:
+  // Constructor and destructor
+  Newmark(double beta_, double gamma_, double dt_);
+  ~Newmark();
 
-	// Methods for incremental/iterative algorithms
-	void predict();
-	void correct();
+  // Methods for incremental/iterative algorithms
+  void predict();
+  void correct();
 };
 
-#endif //NEMESIS_CONTROL_NEWMARK_H_
+#endif  // NEMESIS_CONTROL_NEWMARK_H_

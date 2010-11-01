@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,13 +26,13 @@
 #ifndef NEMESIS_MODEL_MODEL_H_
 #define NEMESIS_MODEL_MODEL_H_
 
-#include <boost/config.hpp>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/properties.hpp>
-#include <boost/graph/bandwidth.hpp>
-#include <boost/graph/profile.hpp>
-#include <boost/graph/wavefront.hpp>
-#include <boost/graph/graphviz.hpp>
+#include < boost/config.hpp>
+#include < boost/graph/adjacency_list.hpp>
+#include < boost/graph/properties.hpp>
+#include < boost/graph/bandwidth.hpp>
+#include < boost/graph/profile.hpp>
+#include < boost/graph/wavefront.hpp>
+#include < boost/graph/graphviz.hpp>
 
 #include "analysis/analysis_object.h"
 #include "domain/domain.h"
@@ -57,70 +57,69 @@ using boost::property;
 using boost::property_map;
 using boost::graph_traits;
 
-typedef adjacency_list<	vecS,vecS,directedS, 
-	property<vertex_color_t,default_color_type,	
-	property<vertex_degree_t,int,
-	property<vertex_priority_t,double > > > > DirectedGraph;
-typedef adjacency_list<	vecS,vecS,undirectedS, 
-	property<vertex_color_t, default_color_type,	
-	property<vertex_degree_t,int,
-	property<vertex_priority_t,double > > > > UndirectedGraph;
+typedef adjacency_list < vecS, vecS, directedS, 
+  property < vertex_color_t, default_color_type, 
+  property < vertex_degree_t, int,
+  property < vertex_priority_t, double > > > > DirectedGraph;
+typedef adjacency_list < vecS, vecS, undirectedS, 
+  property < vertex_color_t, default_color_type,  
+  property < vertex_degree_t, int,
+  property < vertex_priority_t, double > > > > UndirectedGraph;
 
-typedef std::vector<ModelNode*>						ModelNodeContainer;
-typedef std::vector<ModelElement*>					ModelElementContainer;
-typedef std::vector<ModelNode*>::const_iterator		ModelNodeIterator;
+typedef std::vector < ModelNode*>           ModelNodeContainer;
+typedef std::vector < ModelElement*>          ModelElementContainer;
+typedef std::vector < ModelNode*>::const_iterator   ModelNodeIterator;
 
-class Model: public AnalysisObject
-{
-private:
-	Domain* theDomain;
-	ModelNodeContainer	  theModelNodes;
-	ModelElementContainer theModelElements;
-	int nEquations;
-	bool constrained;
-	bool reordered;
-public:
-	// Contructor and destructor
-	Model(Domain* pDomain);
-	virtual ~Model();
+class Model: public AnalysisObject {
+  private:
+  Domain* theDomain;
+  ModelNodeContainer    theModelNodes;
+  ModelElementContainer theModelElements;
+  int nEquations;
+  bool constrained;
+  bool reordered;
+  public:
+  // Contructor and destructor
+  Model(Domain* pDomain);
+  virtual ~Model();
 
-	void setConstrained(bool b);
-	bool isConstrained();
-	void setReordered(bool b);
-	bool isReordered();
+  void setConstrained(bool b);
+  bool isConstrained();
+  void setReordered(bool b);
+  bool isReordered();
 
-	int getSOEDof(int NodeID,int localDof);
+  int getSOEDof(int NodeID, int localDof);
 
-	// Retrieve data needed from the Domain concering Nodes and Elements
-	int getnNodes();
-	int getnElements();
-	
-	// Retrieve data from the Model concering ModelNodes and ModelElements
-	int addModelNode(ModelNode* pModelNode);
-	int addModelElement(ModelElement* pModelElement);
-	const ModelNodeContainer& getModelNodes() const;
-	const ModelElementContainer& getModelElements() const;
+  // Retrieve data needed from the Domain concering Nodes and Elements
+  int getnNodes();
+  int getnElements();
+  
+  // Retrieve data from the Model concering ModelNodes and ModelElements
+  int addModelNode(ModelNode* pModelNode);
+  int addModelElement(ModelElement* pModelElement);
+  const ModelNodeContainer& getModelNodes() const;
+  const ModelElementContainer& getModelElements() const;
 
-	// Handle the number of the system equations 
-	void setEquations(int n);
-	int getnEquations();
+  // Handle the number of the system equations 
+  void setEquations(int n);
+  int getnEquations();
 
-	void incTrialDisp(const Vector& du);
-	void incTrialVecs(const Vector& du,const Vector& dv,const Vector& da);
-	void setTrialDisp(const Vector& u);
-	void setTrialVecs(const Vector& u,const Vector& v,const Vector& a);
-	void update();
-	void commit();
-	void clear();
+  void incTrialDisp(const Vector& du);
+  void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
+  void setTrialDisp(const Vector& u);
+  void setTrialVecs(const Vector& u, const Vector& v, const Vector& a);
+  void update();
+  void commit();
+  void clear();
 
-	void commitSens(const Vector& ds,int param);
-	
-	void setNodalStress();
+  void commitSens(const Vector& ds, int param);
+  
+  void setNodalStress();
 
-	int getDirectedGraph(DirectedGraph& G);
-	int getUndirectedGraph(UndirectedGraph& G);
+  int getDirectedGraph(DirectedGraph& G);
+  int getUndirectedGraph(UndirectedGraph& G);
 
-	// XFem (or other type) enrichment
-	void enrich();
+  // XFem (or other type) enrichment
+  void enrich();
 };
-#endif //NEMESIS_MODEL_MODEL_H_
+#endif  // NEMESIS_MODEL_MODEL_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -32,13 +32,12 @@
 #include "soe/eigen_soe.h"
 
 class Analysis;
-class EigenAnalysis :public AnalysisType
-{
-public:
-	EigenAnalysis();
-	~EigenAnalysis();
-	bool checkIfAllows(FEObject* f);
-	int run(int nLC,int nLoadSteps);
+class EigenAnalysis :public AnalysisType {
+  public:
+  EigenAnalysis();
+  ~EigenAnalysis();
+  bool checkIfAllows(FEObject* f);
+  int run(int nLC, int nLoadSteps);
 };
 
-#endif //NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_
+#endif  // NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_

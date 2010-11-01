@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,35 +26,29 @@
 #include "tracker/tracker.h"
 
 // C++ files
-#include <iostream>
+#include < iostream>
 
-Tracker::Tracker()
-{
+Tracker::Tracker() {
 }
-Tracker::~Tracker()
-{
+Tracker::~Tracker() {
 }
-int Tracker::getSteps()
-{
-	return myRecords.size();
+int Tracker::getSteps() {
+  return myRecords.size();
 }
-void Tracker::track(double lambda_,double time_,string data_)
-{
-	TrackerRecord record;
-	record.lambda=lambda_;
-	record.time=time_;
-	record.data=data_;
-	myRecords.push_back(record);
+void Tracker::track(double lambda_, double time_, string data_) {
+  TrackerRecord record;
+  record.lambda = lambda_;
+  record.time = time_;
+  record.data = data_;
+  myRecords.push_back(record);
 }
-void Tracker::save(std::ostream& s)
-{
-	s<<"TRACKER "	<<' ';
-	s<<"steps "	<<1000<<' '<<myRecords.size()<<' ';
-	for(unsigned i=0;i<myRecords.size();i++)
-	{
-		s<<"lambda "	<<1010<<' '<<myRecords[i].lambda	<<' ';
-		s<<"time "		<<1010<<' '<<myRecords[i].time		<<' ';
-		s<<"data "		<<1020<<' '<<myRecords[i].data		<<' ';
-	}
-	s<<"END "<<' ';
+void Tracker::save(std::ostream& s) {
+  s << "TRACKER " << ' ';
+  s << "steps " << 1000 << ' ' << myRecords.size() << ' ';
+  for (unsigned i = 0; i < myRecords.size(); i++) {
+    s << "lambda "  << 1010 << ' ' <<myRecords[i].lambda  << ' ';
+    s << "time "    << 1010 << ' ' <<myRecords[i].time    << ' ';
+    s << "data "    << 1020 << ' ' <<myRecords[i].data    << ' ';
+  }
+  s << "END " << ' ';
 }

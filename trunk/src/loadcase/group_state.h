@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -32,26 +32,25 @@
 
 class Group;
 
-class GroupState: public DomainObject
-{
-private:
-	static int nGroupStates;
-	Group* myGroup;
-	bool active;
-	double facK;
-	double facS;
-	double facG;
-	double facP;
-public:
-	GroupState();
-	GroupState(int groupID,int active_,
-		double facK_,double facS_,double facG_,double facP_);
-	int apply();
-	inline bool getActive()				{return active;}
-	inline double getFacK()				{return facK;}
-	inline double getFacS()				{return facS;}
-	inline double getFacG()				{return facG;}
-	inline double getFacP()				{return facP;}
+class GroupState: public DomainObject {
+  private:
+  static int nGroupStates;
+  Group* myGroup;
+  bool active;
+  double facK;
+  double facS;
+  double facG;
+  double facP;
+  public:
+  GroupState();
+  GroupState(int groupID, int active_,
+    double facK_, double facS_, double facG_, double facP_);
+  int apply();
+  inline bool getActive()       {return active;}
+  inline double getFacK()       {return facK;}
+  inline double getFacS()       {return facS;}
+  inline double getFacG()       {return facG;}
+  inline double getFacP()       {return facP;}
 };
 
-#endif //NEMESIS_LOADCASE_GROUP_STATE_H_
+#endif  // NEMESIS_LOADCASE_GROUP_STATE_H_

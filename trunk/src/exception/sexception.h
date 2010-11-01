@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,12 +26,11 @@
 #ifndef NEMESIS_EXCEPTION_SEXCEPTION_H_
 #define NEMESIS_EXCEPTION_SEXCEPTION_H_
 
-class SException
-{
-private:
-	char errMsg[1024];
-public:
-	SException(const char* format,...);
-	const char* what();
+class SException {
+  private:
+  char errMsg[1024];
+  public:
+  SException(const char* format, ...);
+  const char* what();
 };
-#endif //NEMESIS_EXCEPTION_SEXCEPTION_H_
+#endif  // NEMESIS_EXCEPTION_SEXCEPTION_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -24,65 +24,61 @@
 // *****************************************************************************
 
 #include "control/newmark.h"
-#include <cmath>
+#include < cmath>
 
 /**
  * Constructor.
  */
-Newmark::Newmark(double beta_,double gamma_,double dt_)
-:TransientControl()
-{
-	myTag=TAG_CONTROL_LOAD;
-	beta=beta_;
-	gamma=gamma_;
-	dt=dt_;
-	c[0]=1.0;
-    c[1]=1.0/(beta*dt*dt);
-    c[2]=gamma/(beta*dt);
+Newmark::Newmark(double beta_, double gamma_, double dt_)
+:TransientControl() {
+  myTag = TAG_CONTROL_LOAD;
+  beta = beta_;
+  gamma = gamma_;
+  dt = dt_;
+  c[0]=1.0;
+  c[1]=1.0/(beta*dt*dt);
+  c[2]=gamma/(beta*dt);
 }
 /**
  * Destructor.
  */
-Newmark::~Newmark()
-{
+Newmark::~Newmark() {
 }
 /**
  *
  */
-void Newmark::predict()
-{
-	pA->getDomain()->incTime(dt);	
-	ut=u;
-	vt=v;
-	at=a;
-    double c1= 1.0-gamma/beta; 
-    double c2= dt*(1.0-0.5*gamma/beta);
-    double c3=-1.0/(beta*dt);
-    double c4= 1.0-0.5/beta;
-    v=c1*v+c2*at;
-    a=c4*a+c3*vt;
+void Newmark::predict() {
+  pA->getDomain()->incTime(dt);
+  ut = u;
+  vt = v;
+  at = a;
+  double c1 = 1.0-gamma/beta;
+  double c2 = dt*(1.0-0.5*gamma/beta);
+  double c3 = -1.0/(beta*dt);
+  double c4 = 1.0-0.5/beta;
+  v = c1*v+c2*at;
+  a = c4*a+c3*vt;
 
-	pA->getModel()->setTrialVecs(u,v,a);
-	pA->getModel()->update();
-	
-	this->formResidual(1.0);
-	pA->getSOE()->solve();
+  pA->getModel()->setTrialVecs(u, v, a);
+  pA->getModel()->update();
 
-    u=u+(pA->getSOE()->getX());
-    v=v+c[2]*(pA->getSOE()->getX());
-    a=a+c[1]*(pA->getSOE()->getX());
-	pA->getModel()->setTrialVecs(u,v,a);
-	pA->getModel()->update();
+  this->formResidual(1.0);
+  pA->getSOE()->solve();
+
+  u = u+(pA->getSOE()->getX());
+  v = v+c[2]*(pA->getSOE()->getX());
+  a = a+c[1]*(pA->getSOE()->getX());
+  pA->getModel()->setTrialVecs(u, v, a);
+  pA->getModel()->update();
 }
 /**
  *
  */
-void Newmark::correct()
-{
-    u=u+(pA->getSOE()->getX());
-    v=v+c[2]*(pA->getSOE()->getX());
-    a=a+c[1]*(pA->getSOE()->getX());
+void Newmark::correct() {
+  u = u+(pA->getSOE()->getX());
+  v = v+c[2]*(pA->getSOE()->getX());
+  a = a+c[1]*(pA->getSOE()->getX());
 
-	pA->getModel()->setTrialVecs(u,v,a);
-	pA->getModel()->update();
+  pA->getModel()->setTrialVecs(u, v, a);
+  pA->getModel()->update();
 }

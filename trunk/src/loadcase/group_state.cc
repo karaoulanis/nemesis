@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,25 +25,22 @@
 
 #include "loadcase/group_state.h"
 
-int GroupState::nGroupStates=0;
+int GroupState::nGroupStates = 0;
 
 GroupState::GroupState()
-	:DomainObject()
-{
+  :DomainObject() {
 }
-GroupState::GroupState(int groupID,int active_,
-				double facK_,double facS_,double facG_,double facP_)
-	:DomainObject(++nGroupStates)
-{
-	myGroup=pD->get<Group>(pD->getGroups(),groupID);	
-	active_==0 ? active=false : active=true;
-	facK=facK_;
-	facS=facS_;
-	facG=facG_;
-	facP=facP_;
+GroupState::GroupState(int groupID, int active_,
+        double facK_, double facS_, double facG_, double facP_)
+  :DomainObject(++nGroupStates) {
+  myGroup = pD->get < Group>(pD->getGroups(), groupID);  
+  active_ == 0 ? active = false : active = true;
+  facK = facK_;
+  facS = facS_;
+  facG = facG_;
+  facP = facP_;
 }
-int GroupState::apply()
-{
-	myGroup->setState(this);
-	return 0;
+int GroupState::apply() {
+  myGroup->setState(this);
+  return 0;
 }

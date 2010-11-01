@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,17 +28,16 @@
 
 #include "material/ys.h"
 
-class TensionCutOffYS: public YS
-{
-private:
-	double T;
-public:
-	TensionCutOffYS(double T_);
-	double getf(const Vector& sigma,const double kappa);
-	const Vector& getdfds(const Vector& sigma,const double kappa);
-	const Matrix& getd2fdsds(const Vector& sigma,const double kappa);
-	double getdfdk(const Vector& sigma,const double kappa);
-	const Vector& getf2dkds(const Vector& sigma,const double kappa);
+class TensionCutOffYS: public YS {
+  private:
+  double T;
+  public:
+  TensionCutOffYS(double T_);
+  double getf(const Vector& sigma, const double kappa);
+  const Vector& getdfds(const Vector& sigma, const double kappa);
+  const Matrix& getd2fdsds(const Vector& sigma, const double kappa);
+  double getdfdk(const Vector& sigma, const double kappa);
+  const Vector& getf2dkds(const Vector& sigma, const double kappa);
 };
 
-#endif //NEMESIS_MATERIAL_TENSION_CUTOFF_YS_H_
+#endif  // NEMESIS_MATERIAL_TENSION_CUTOFF_YS_H_

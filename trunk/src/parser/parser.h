@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -113,19 +113,18 @@
 #include "soe/symm_linear_soe.h"
 #include "soe/band_linear_soe.h"
 
-class Parser
-{
-protected:
-	Domain D;
-	Analysis A;    
-public:
-	// Constructors and destructor
-	Parser();
-	virtual ~Parser();
+class Parser {
+ protected:
+  Domain D;
+  Analysis A;    
+  public:
+  // Constructors and destructor
+  Parser();
+  virtual ~Parser();
 
-	// Parse the problem
-	virtual int parse()=0;
-	virtual int parse(char* filename)=0;
+  // Parse the problem
+  virtual int parse()=0;
+  virtual int parse(char* filename)=0;
 };
 
-#endif //NEMESIS_PARSER_PARSER_H_
+#endif  // NEMESIS_PARSER_PARSER_H_

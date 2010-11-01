@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,18 +28,17 @@
 
 #include "elements/bar.h"
 
-class Bar2s: public Bar
-{
-private:
-public:
-	// Constructors and Destructor
-	Bar2s();
-	Bar2s(int ID,int Node_1,int Node_2,int matID,int iSecID,int jSecID);
-	~Bar2s();
-	
+class Bar2s: public Bar {
+  private:
+  public:
+  // Constructors and Destructor
+  Bar2s();
+  Bar2s(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID);
+  ~Bar2s();
+  
     const Matrix& getK();
-	const Vector& getR();
-	const Vector& getRgrad();
+  const Vector& getR();
+  const Vector& getRgrad();
 };
 
-#endif //NEMESIS_ELEMENTS_BAR2S_H_
+#endif  // NEMESIS_ELEMENTS_BAR2S_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -30,47 +30,38 @@
  * Default constructor
  */
 EliminationModelElement::EliminationModelElement()
-	:ModelElement()
-{
+  :ModelElement() {
 }
 /**
  * Constructor
  */
 EliminationModelElement::EliminationModelElement(const IDContainer& FTable,
-											 Element* pElement)
-	:ModelElement(FTable,pElement,0)
-{
-	myMatrix=theStaticMatrices[FTable.size()];
-	myVector=theStaticVectors[FTable.size()];
+                       Element* pElement)
+  :ModelElement(FTable, pElement, 0) {
+  myMatrix = theStaticMatrices[FTable.size()];
+  myVector = theStaticVectors[FTable.size()];
 }
 /**
  * Destructor
  */
-EliminationModelElement::~EliminationModelElement()
-{
+EliminationModelElement::~EliminationModelElement() {
 }
 
-void EliminationModelElement::add_K(double factor)
-{
-	myMatrix->add_cM(factor,myElement->getK());
+void EliminationModelElement::add_K(double factor) {
+  myMatrix->add_cM(factor, myElement->getK());
 }
-void EliminationModelElement::add_M(double factor)
-{
-	myMatrix->add_cM(factor,myElement->getM());
+void EliminationModelElement::add_M(double factor) {
+  myMatrix->add_cM(factor, myElement->getM());
 }
-void EliminationModelElement::add_C(double factor)
-{
-	myMatrix->add_cM(factor,myElement->getC());
+void EliminationModelElement::add_C(double factor) {
+  myMatrix->add_cM(factor, myElement->getC());
 }
-void EliminationModelElement::add_R(double factor)
-{
-	myVector->add_cV(factor,myElement->getR());
+void EliminationModelElement::add_R(double factor) {
+  myVector->add_cV(factor, myElement->getR());
 }
-void EliminationModelElement::add_Reff(double factor)
-{
-	myVector->add_cV(factor,myElement->getReff());
+void EliminationModelElement::add_Reff(double factor) {
+  myVector->add_cV(factor, myElement->getReff());
 }
-void EliminationModelElement::add_Rgrad(double factor)
-{
-	myVector->add_cV(factor,myElement->getRgrad());
+void EliminationModelElement::add_Rgrad(double factor) {
+  myVector->add_cV(factor, myElement->getRgrad());
 }

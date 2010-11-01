@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -32,22 +32,21 @@
  * ArcLengthSpherical is a static control that is based on Crisfield's 
  * book "Non-linear Finite Element Analysis of Solids and Strucures", Vol.1.
  * For more details see:
- * \li Theory p.274-275	\n
- * \li Implementation p.276-278	\n
- * \li Predictor p.285-286	\n
+ * \li Theory p.274-275 \n
+ * \li Implementation p.276-278 \n
+ * \li Predictor p.285-286  \n
  */
-class ArcLengthSpherical :public StaticControl
-{
-private:
-	double DeltaL;				///< Current Delta l for this step
-public:
-	ArcLengthSpherical(double DL0,double minDL,double maxDL,
-									int IterDesired,double n,double DeltaTime);
-	~ArcLengthSpherical();
+class ArcLengthSpherical :public StaticControl {
+  private:
+  double DeltaL;        ///< Current Delta l for this step
+  public:
+  ArcLengthSpherical(double DL0, double minDL, double maxDL,
+                  int IterDesired, double n, double DeltaTime);
+  ~ArcLengthSpherical();
 
-	// Methods for incremental/iterative algorithms
-	void predict();
-	void correct();
+  // Methods for incremental/iterative algorithms
+  void predict();
+  void correct();
 };
 
-#endif //NEMESIS_CONTROL_ARC_LENGTH_SPHERICAL_H_
+#endif  // NEMESIS_CONTROL_ARC_LENGTH_SPHERICAL_H_

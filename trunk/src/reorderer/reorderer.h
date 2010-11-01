@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,18 +26,17 @@
 #ifndef NEMESIS_REORDERER_REODERER_H_
 #define NEMESIS_REORDERER_REODERER_H_
 
-#include <vector>
+#include < vector>
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 #include "model/model.h"
 
-class Reorderer: public AnalysisObject
-{
-protected:
-public:
-	Reorderer();
-	virtual ~Reorderer();
-	int reorder();
-	virtual int getPerm(std::vector<int>& perm)=0;
+class Reorderer: public AnalysisObject {
+ protected:
+  public:
+  Reorderer();
+  virtual ~Reorderer();
+  int reorder();
+  virtual int getPerm(std::vector < int>& perm)=0;
 };
-#endif //NEMESIS_REORDERER_REODERER_H_
+#endif  // NEMESIS_REORDERER_REODERER_H_
