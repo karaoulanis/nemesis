@@ -99,8 +99,9 @@ double UniaxialElastoPlastic::getC()
 	double eta =MatParams[ 5];
 	//double dt=pD->getTimeIncr();
 	double dt=1.;
-	if(fTrial<=0)	return E;
-	else			return E*(Hkin+Hiso+eta/dt)/(E+Hkin+Hiso+eta/dt);
+	if(fTrial>0) {
+		E=E*(Hkin+Hiso+eta/dt)/(E+Hkin+Hiso+eta/dt);
+	}
 	return E;
 }
 void UniaxialElastoPlastic::commit()

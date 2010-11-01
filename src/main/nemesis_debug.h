@@ -63,7 +63,7 @@ public:
 	LogFile& operator>>(LogFile& (*f)(LogFile&))	{f(*this);return *this;}
 	LogFile& flush()								{log.flush();return *this;}
 	void width(int n)								{log.width(n);}
-	void fill(int n)								{log.fill(n);}
+	void fill(char n)								{log.fill(n);}
 	void write(const Vector& v)						{log<<v<<std::endl;}
 	void write(const Matrix& m)						{log<<m<<std::endl;}
 };
