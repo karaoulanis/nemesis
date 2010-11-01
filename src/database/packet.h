@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,24 +26,23 @@
 #ifndef NEMESIS_DATABASE_PACKET_H_
 #define NEMESIS_DATABASE_PACKET_H_
 
-#include <cstring>
+#include < cstring>
 
-struct Packet
-{
-	const static int dblSize=64;
-	const static int intSize=32;
-	const static int chrSize=32;
-	const static int size=1+1+dblSize+chrSize+1;
-	const static double dblDefault;
-	const static int    intDefault;
+struct Packet {
+  const static int dblSize = 64;
+  const static int intSize = 32;
+  const static int chrSize = 32;
+  const static int size = 1+1+dblSize+chrSize+1;
+  const static double dblDefault;
+  const static int    intDefault;
 
-	int		tag;
-	int		id;
-	double	dblArray[dblSize];
-	int		intArray[intSize];
-	char	chrArray[chrSize];
+  int   tag;
+  int   id;
+  double  dblArray[dblSize];
+  int   intArray[intSize];
+  char  chrArray[chrSize];
 
-	void zero();
-	void print();
+  void zero();
+  void print();
 };
-#endif //NEMESIS_DATABASE_PACKET_H_
+#endif  // NEMESIS_DATABASE_PACKET_H_

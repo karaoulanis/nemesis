@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -32,32 +32,31 @@
 
 class Element;
 
-class ElementalLoad: public Load
-{
-protected:
-	Element* myElement;		/// A pointer to the corresponding Element.
-	static Vector P;
-public:
-	// Constructor and destructors
-	ElementalLoad();
-	ElementalLoad(int elemID);
-	virtual ~ElementalLoad();
+class ElementalLoad: public Load {
+ protected:
+  Element* myElement;   /// A pointer to the corresponding Element.
+  static Vector P;
+  public:
+  // Constructor and destructors
+  ElementalLoad();
+  ElementalLoad(int elemID);
+  virtual ~ElementalLoad();
 /*
-	// Access to member data
-	int setTheLoadDirection(LoadDirection direction);
-	int setTheUserDirection(Vector* direction);
-	void setA(Vector& aValues);
-	void setP(Vector& pValues);
+  // Access to member data
+  int setTheLoadDirection(LoadDirection direction);
+  int setTheUserDirection(Vector* direction);
+  void setA(Vector& aValues);
+  void setP(Vector& pValues);
 
-	LoadDirection getTheLoadDirection();
-	Vector* getTheUserDirection();
-	const Vector& getA();
-	const Vector& getP();
-*/	
-	// Apply load
-	virtual const Vector& getP()=0;
-	void apply(double fact,double t);
+  LoadDirection getTheLoadDirection();
+  Vector* getTheUserDirection();
+  const Vector& getA();
+  const Vector& getP();
+*/  
+  // Apply load
+  virtual const Vector& getP()=0;
+  void apply(double fact, double t);
 };
 
 
-#endif //NEMESIS_LOADCASE_ELEMENTAL_LOAD_H_
+#endif  // NEMESIS_LOADCASE_ELEMENTAL_LOAD_H_

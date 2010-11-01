@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,17 +28,16 @@
 
 #include "elements/brick8.h"
 
-class Brick8d: public Brick8
-{
-public:
-	// Constructors and Destructor
-	Brick8d();
-	Brick8d(int ID,
-				int Node_1,int Node_2,int Node_3,int Node_4,	
-				int Node_5,int Node_6,int Node_7,int Node_8,
-				int matID);	
-	~Brick8d();
+class Brick8d: public Brick8 {
+  public:
+  // Constructors and Destructor
+  Brick8d();
+  Brick8d(int ID,
+        int Node_1, int Node_2, int Node_3, int Node_4,  
+        int Node_5, int Node_6, int Node_7, int Node_8,
+        int matID); 
+  ~Brick8d();
 
-	void getB(Matrix& B,int node,int gPoint);
+  void getB(Matrix& B, int node, int gPoint);
 };
-#endif //NEMESIS_ELEMENTS_BRICK8D_H_
+#endif  // NEMESIS_ELEMENTS_BRICK8D_H_

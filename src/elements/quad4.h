@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,34 +29,33 @@
 #include "elements/element.h"
 #include "material/matpoint.h"
 
-class Quad4: public Element
-{
-protected:
-	int p1;									// Integration rule xi
-	int p2;									// Integration rule eta
-	static Matrix N;
-	static double detJ;
-	std::vector<MatPoint*> myMatPoints;
-public:
-	// Constructors and Destructor
-	Quad4();
-	Quad4(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int matID,
-				 int integrationRuleXi,int integrationRuleEta);
-	~Quad4();
+class Quad4: public Element {
+ protected:
+  int p1;                 // Integration rule xi
+  int p2;                 // Integration rule eta
+  static Matrix N;
+  static double detJ;
+  std::vector < MatPoint*> myMatPoints;
+  public:
+  // Constructors and Destructor
+  Quad4();
+  Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
+         int integrationRuleXi, int integrationRuleEta);
+  ~Quad4();
 
-	void commit();
-	
-	void findShapeFunctionsAt(MatPoint* pMatPoint);
-	bool checkIfAllows(FEObject* f);
-	void addInitialStresses(InitialStresses* pInitialStresses);	
-	void recoverStresses();
-	
-	// Tracker member functions
-	void addTracker(int index);
-	Tracker* getTracker(int index);
-	void track();
-	
-	int getnPlasticPoints();
+  void commit();
+  
+  void findShapeFunctionsAt(MatPoint* pMatPoint);
+  bool checkIfAllows(FEObject* f);
+  void addInitialStresses(InitialStresses* pInitialStresses); 
+  void recoverStresses();
+  
+  // Tracker member functions
+  void addTracker(int index);
+  Tracker* getTracker(int index);
+  void track();
+  
+  int getnPlasticPoints();
 };
 
-#endif //NEMESIS_ELEMENTS_QUAD4_H_
+#endif  // NEMESIS_ELEMENTS_QUAD4_H_

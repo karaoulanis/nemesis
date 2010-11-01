@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,13 +31,12 @@
 /**
  * The Von-Mises Material Class.
  */
-class VonMises: public MultiaxialElastoPlastic
-{
-private:
-public:
-	VonMises();
-	VonMises(int ID,int elasticID,double s0,double K);
-	MultiaxialMaterial* getClone();
-	~VonMises();
+class VonMises: public MultiaxialElastoPlastic {
+  private:
+  public:
+  VonMises();
+  VonMises(int ID, int elasticID, double s0, double K);
+  MultiaxialMaterial* getClone();
+  ~VonMises();
 };
-#endif //NEMESIS_MATERIAL_VON_MISES_H_
+#endif  // NEMESIS_MATERIAL_VON_MISES_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,20 +25,17 @@
 
 #include "loadcase/nodal_load.h"
 
-NodalLoad::NodalLoad()
-{
+NodalLoad::NodalLoad() {
 }
-NodalLoad::NodalLoad(int nodeID,int dofID)
-	:Load()
-{
-	// Retrieve node from the domain and check if exists
-	myNode=pD->get<Node>(pD->getNodes(),nodeID);
-	// Set the dof and check if activated
-	dof=dofID-1;
-	if(myNode->getActivatedDof(dof)<0) 
-		throw SException("[nemesis:%d] %s",9999,"Dof is not activated.");
+NodalLoad::NodalLoad(int nodeID, int dofID)
+  :Load() {
+  // Retrieve node from the domain and check if exists
+  myNode = pD->get < Node>(pD->getNodes(), nodeID);
+  // Set the dof and check if activated
+  dof = dofID-1;
+  if (myNode->getActivatedDof(dof)<0) 
+    throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
 }
-void NodalLoad::apply(double fact,double time)
-{
-	myNode->addLoad(dof,this->getValue(time),fact);
+void NodalLoad::apply(double fact, double time) {
+  myNode->addLoad(dof, this->getValue(time), fact);
 }

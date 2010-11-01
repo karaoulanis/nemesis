@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,8 +28,7 @@
 /**
  * Default constructor.
  */
-Bar2t::Bar2t()	
-{
+Bar2t::Bar2t()   {
 }
 /**
  * Constructor.
@@ -37,96 +36,89 @@ Bar2t::Bar2t()
  * Material are stored. Only when this element is added to the Domain, the 
  * pointers concerning the Nodes and the Material are initiated.
  */
-Bar2t::Bar2t(int ID,int Node_1,int Node_2,int matID,int iSecID,int jSecID)	
-	:Bar(ID,Node_1,Node_2,matID,iSecID,jSecID)
-{
-	myTag=TAG_ELEM_BAR_2D_TOTAL_LAGRANGIAN;
-	cosX.resize(nDim);
-	cosX.clear();
+Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)  
+  :Bar(ID, Node_1, Node_2, matID, iSecID, jSecID) {
+  myTag = TAG_ELEM_BAR_2D_TOTAL_LAGRANGIAN;
+  cosX.resize(nDim);
+  cosX.clear();
 }
 /**
  * Destructor.
  */
-Bar2t::~Bar2t()	
-{
+Bar2t::~Bar2t()  {
 }
-const Matrix& Bar2t::getK()
-{
-	Matrix& K=*myMatrix;
+const Matrix& Bar2t::getK() {
+  Matrix& K=*myMatrix;
 
-	// Directional cosines, L^2 and strain (in the current configuration)
-	static Vector du(2*nDim);
-	du=this->getDispTrial();
-	for(int i=0;i<nDim;i++) cosX[i]=(x(1,i)-x(0,i)+du[i+nDim]-du[i])/L0;
-	double L2=0;
-	for(int i=0;i<nDim;i++) 
-		L2+=(x(1,i)-x(0,i)+du[i+nDim]-du[i])*(x(1,i)-x(0,i)+du[i+nDim]-du[i]);
-	double e=(L2-L0*L0)/(2*L0*L0);
+  // Directional cosines, L^2 and strain (in the current configuration)
+  static Vector du(2*nDim);
+  du = this->getDispTrial();
+  for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
+  double L2 = 0;
+  for (int i = 0;i < nDim;i++) 
+    L2+=(x(1, i)-x(0, i)+du[i+nDim]-du[i])*(x(1, i)-x(0, i)+du[i+nDim]-du[i]);
+  double e=(L2-L0*L0)/(2*L0*L0);
 
-	// Matrix KM
-	K.clear();
-	double E=myUniMaterial->getC();
-	double K0=E*A0/L0;
-	double d;
-	for(int i=0;i<nDim;i++)
-		for(int j=0;j<nDim;j++) 
-		{
-			d=cosX[i]*cosX[j]*K0;
-			K(i     ,j   )   = d;
-			K(i+nDim,j   )   =-d;
-			K(i     ,j+nDim) =-d;
-			K(i+nDim,j+nDim) = d;
- 		}
-	// Matrix KG
-	K0=E*A0*e/L0;
-	int ii;
-	for(int i=0;i<nDim;i++)
-	{
-		i<nDim ? ii=i+nDim : ii=i-nDim;
-		K(i,i )+= K0;
-		K(i,ii)+=-K0;
- 	}
-	
-	///@todo Add nodal transformations
-	double facK=1e-7;
-	if(myGroup->isActive()) facK=myGroup->getFacK();
-	K*=facK;
-	return K;
+  // Matrix KM
+  K.clear();
+  double E = myUniMaterial->getC();
+  double K0 = E*A0/L0;
+  double d;
+  for (int i = 0;i < nDim;i++)
+    for (int j = 0; j < nDim; j++) {
+      d = cosX[i]*cosX[j]*K0;
+      K(i     , j   )   = d;
+      K(i+nDim, j   )   =-d;
+      K(i     , j+nDim) =-d;
+      K(i+nDim, j+nDim) = d;
+    }
+  // Matrix KG
+  K0 = E*A0*e/L0;
+  int ii;
+  for (int i = 0; i < nDim; i++) {
+    i < nDim ? ii = i+nDim : ii = i-nDim;
+    K(i, i )+= K0;
+    K(i, ii)+=-K0;
+  }
+  
+  ///@todo Add nodal transformations
+  double facK = 1e-7;
+  if (myGroup->isActive()) facK = myGroup->getFacK();
+  K*=facK;
+  return K;
 }
-const Vector& Bar2t::getR()
-{
-	Vector& R=*myVector;
-	R.clear();
+const Vector& Bar2t::getR() {
+  Vector& R=*myVector;
+  R.clear();
 
-	// Factors
-	if(!(myGroup->isActive()))	return R;
-	double facS=myGroup->getFacS();
-	double facG=myGroup->getFacG();
-	double facP=myGroup->getFacP();
+  // Factors
+  if (!(myGroup->isActive()))  return R;
+  double facS = myGroup->getFacS();
+  double facG = myGroup->getFacG();
+  double facP = myGroup->getFacP();
 
-	// Directional cosines, L^2 and strain (in the current configuration)
-	static Vector du(2*nDim);
-	du=this->getDispTrial();
-	for(int i=0;i<nDim;i++) cosX[i]=(x(1,i)-x(0,i)+du[i+nDim]-du[i])/L0;
-	double L2=0;
-	for(int i=0;i<nDim;i++) 
-		L2+=(x(1,i)-x(0,i)+du[i+nDim]-du[i])*(x(1,i)-x(0,i)+du[i+nDim]-du[i]);
-	double e=(L2-L0*L0)/(2*L0*L0);
-	double E=myUniMaterial->getC();
-	double N=E*A0*e;
-	for(int i=0;i<nDim;i++)
-	{
-		double d=facS*cosX[i]*N;
-		R[i]      =-d - facP*P[i];
-		R[i+nDim] = d - facP*P[i+nDim];
-	}
-	// Self-weigth (only in y todo: check this)
-	if(!num::tiny(facG) && nDim>1)
-	{
-		double b=-facG*0.5*(myUniMaterial->getRho())*A0*L0;
-		R[1]-=b;
-		R[1+nDim]-=b;
-	}
-	///@todo Add nodal transformations
-	return R;
+  // Directional cosines, L^2 and strain (in the current configuration)
+  static Vector du(2*nDim);
+  du = this->getDispTrial();
+  for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
+  double L2 = 0;
+  for (int i = 0;i < nDim;i++) 
+    L2+=(x(1, i)-x(0, i)+du[i+nDim]-du[i])*(x(1, i)-x(0, i)+du[i+nDim]-du[i]);
+  double e=(L2-L0*L0)/(2*L0*L0);
+  double E = myUniMaterial->getC();
+  double N = E*A0*e;
+  for (int i = 0; i < nDim; i++) {
+    double d = facS*cosX[i]*N;
+    R[i]      =-d - facP*P[i];
+    R[i+nDim] = d - facP*P[i+nDim];
+  }
+  // Self-weigth (only in y todo: check this)
+  if (!num::tiny(facG) && nDim>1)
+  {
+    double b=-facG*0.5*(myUniMaterial->getRho())*A0*L0;
+    R[1]-=b;
+    R[1+nDim]-=b;
+  }
+  ///@todo Add nodal transformations
+  return R;
 }

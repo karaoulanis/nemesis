@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,14 +31,13 @@
 /**
  * The Single Dof Material Class.                                                
  */
-class SDofMaterial: public Material
-{
-protected:
-public:
-	SDofMaterial();
-	SDofMaterial(int ID,double E,double rho);
-	SDofMaterial* getClone();
-	void commit();
+class SDofMaterial: public Material {
+ protected:
+  public:
+  SDofMaterial();
+  SDofMaterial(int ID, double E, double rho);
+  SDofMaterial* getClone();
+  void commit();
 };
 
-#endif //NEMESIS_MATERIAL_SDOF_MATERIAL_H_
+#endif  // NEMESIS_MATERIAL_SDOF_MATERIAL_H_

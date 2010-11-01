@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,33 +26,29 @@
 #include "material/vm.h"
 #include "material/von_mises.h"
 
-VonMises::VonMises()
-{
+VonMises::VonMises() {
 }
-VonMises::VonMises(int ID,int elasticID,double s0,double K)
-:MultiaxialElastoPlastic(ID,elasticID)
-{
-	// Material parameters
-	MatParams[0]=s0;
-	MatParams[1]=K;
-	// Yield/potential surfaces
-	fSurfaces.push_back(new VM(s0,K));
-	gSurfaces.push_back(new VM(s0,K));
-	// Material tag
-	//myTag=TAG_MATERIAL_MOHR_COULOMB;
-	nHardeningVariables=1;
+VonMises::VonMises(int ID, int elasticID, double s0, double K)
+:MultiaxialElastoPlastic(ID, elasticID) {
+  // Material parameters
+  MatParams[0]=s0;
+  MatParams[1]=K;
+  // Yield/potential surfaces
+  fSurfaces.push_back(new VM(s0, K));
+  gSurfaces.push_back(new VM(s0, K));
+  // Material tag
+  //myTag = TAG_MATERIAL_MOHR_COULOMB;
+  nHardeningVariables = 1;
 }
-VonMises::~VonMises()
-{
+VonMises::~VonMises() {
 }
-MultiaxialMaterial* VonMises::getClone()
-{
-	// Material parameters
-	int myID    = this->getID();
-	int elID    = myElastic->getID();
-	double s0   = MatParams[ 0];
-	double K    = MatParams[ 1];
-	// Create clone and return
-	VonMises* newClone=new VonMises(myID,elID,s0,K);
-	return newClone;
+MultiaxialMaterial* VonMises::getClone() {
+  // Material parameters
+  int myID    = this->getID();
+  int elID    = myElastic->getID();
+  double s0   = MatParams[ 0];
+  double K    = MatParams[ 1];
+  // Create clone and return
+  VonMises* newClone = new VonMises(myID, elID, s0, K);
+  return newClone;
 }

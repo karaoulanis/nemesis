@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,46 +25,39 @@
 
 #include "domain/domain_object.h"
 
-Domain* DomainObject::pD=0;
+Domain* DomainObject::pD = 0;
 Packet DomainObject::thePacket;
 
 /**
  * Default Constructor.
  */
-DomainObject::DomainObject()
-{
-	// Does nothing.
+DomainObject::DomainObject() {
+  // Does nothing.
 }
 /**
  * Constructor. 
  * Construct a DomainObject for a given ID.
  * @param ID An integer that initialize a DomainObject.
  */
-DomainObject::DomainObject(int ID)
-{
-	myID=ID;
+DomainObject::DomainObject(int ID) {
+  myID = ID;
 }
-DomainObject::~DomainObject()
-{
-	// Nothing to destruct here.
+DomainObject::~DomainObject() {
+  // Nothing to destruct here.
 }
-int DomainObject::getID()					
-{
-	return myID;
+int DomainObject::getID()          {
+  return myID;
 }
-const Packet& DomainObject::getPacket()
-{
-	///@ todo When finished implementing all turn this function into pure.
-	std::cout<<"DomainObject::Not implemented yet!"<<std::endl;
-	thePacket.zero();
-	return thePacket;
+const Packet& DomainObject::getPacket() {
+  ///@ todo When finished implementing all turn this function into pure.
+  std::cout << "DomainObject::Not implemented yet!"<<std::endl;
+  thePacket.zero();
+  return thePacket;
 }
-void DomainObject::setPacket(const Packet& /*p*/)
-{
-	///@ todo When finished implementing all turn this function into pure.
-	std::cout<<"DomainObject::Not implemented yet!"<<std::endl;
+void DomainObject::setPacket(const Packet& /*p*/) {
+  ///@ todo When finished implementing all turn this function into pure.
+  std::cout << "DomainObject::Not implemented yet!"<<std::endl;
 }
-void DomainObject::setDomain(Domain* pDomain)
-{
-	pD=pDomain;
+void DomainObject::setDomain(Domain* pDomain) {
+  pD = pDomain;
 }

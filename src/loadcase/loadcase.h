@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -45,42 +45,41 @@ class Load;
 class NodalLoad;
 
 // Type definitions 
-typedef std::vector<Load*>								LoadVector;
-typedef std::vector<InitialCondition*>					InitialConditionVector;
-typedef std::vector<GroupState* >						GroupStateVector;
-typedef std::vector<ElementSensitivityParameter* >		SensitivityParameterVector;
-typedef std::map<int,Group*>							GroupContainer;
+typedef std::vector < Load*>                LoadVector;
+typedef std::vector < InitialCondition*>          InitialConditionVector;
+typedef std::vector < GroupState* >           GroupStateVector;
+typedef std::vector < ElementSensitivityParameter* >    SensitivityParameterVector;
+typedef std::map < int, Group*>              GroupContainer;
 
-class LoadCase: public DomainObject
-{
-private:
-	char myLabel[512];
-	double myFac;
-	int active;
-	LoadVector					myLoads;
-	GroupStateVector			myGroupStates;
-	InitialConditionVector		myInitialConditions;
-	SensitivityParameterVector	mySensitivityParameters;
-public:
-	// Constructors and destructor
-	LoadCase();
-	LoadCase(int ID,const char* label);
-	~LoadCase();
+class LoadCase: public DomainObject {
+  private:
+  char myLabel[512];
+  double myFac;
+  int active;
+  LoadVector          myLoads;
+  GroupStateVector      myGroupStates;
+  InitialConditionVector    myInitialConditions;
+  SensitivityParameterVector  mySensitivityParameters;
+  public:
+  // Constructors and destructor
+  LoadCase();
+  LoadCase(int ID, const char* label);
+  ~LoadCase();
 
-	// Initialize loadcase
-	void init();
-	void commit();
+  // Initialize loadcase
+  void init();
+  void commit();
 
-	// Add member functions
-	void addLoad(Load* pLoad);
-	void addGroupState(GroupState* pGroupState);
-	void addInitialCondition(InitialCondition* pInitialCondition);
-	void addSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter);
+  // Add member functions
+  void addLoad(Load* pLoad);
+  void addGroupState(GroupState* pGroupState);
+  void addInitialCondition(InitialCondition* pInitialCondition);
+  void addSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter);
 
-	// Apply member functions
-	void applyLoads(double lambda_,double time_);
-	void applySensitivityParameter(int param);
-	int getnSensitivityParameters();
+  // Apply member functions
+  void applyLoads(double lambda_, double time_);
+  void applySensitivityParameter(int param);
+  int getnSensitivityParameters();
 };
 
-#endif //NEMESIS_LOADCASE_LOADCASE_H_
+#endif  // NEMESIS_LOADCASE_LOADCASE_H_

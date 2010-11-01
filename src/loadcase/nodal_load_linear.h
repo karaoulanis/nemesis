@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,16 +28,15 @@
 
 #include "loadcase/nodal_load.h"
 
-class NodalLoadLinear: public NodalLoad
-{
-private:
-	double theValue;
-	double theGradient;
-public:
-	NodalLoadLinear();
-	NodalLoadLinear(int nodeID,int DofID, double val,double grad);
+class NodalLoadLinear: public NodalLoad {
+  private:
+  double theValue;
+  double theGradient;
+  public:
+  NodalLoadLinear();
+  NodalLoadLinear(int nodeID, int DofID, double val, double grad);
 
-	double getValue(double time);
+  double getValue(double time);
 };
 
-#endif //NEMESIS_LOADCASE_NODAL_LOAD_LINEAR_H_
+#endif  // NEMESIS_LOADCASE_NODAL_LOAD_LINEAR_H_

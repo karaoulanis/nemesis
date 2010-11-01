@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,20 +28,19 @@
 
 #include "elements/quad4.h"
 
-class Quad4DispPlain: public Quad4
-{
-public:
-	// Constructors and Destructor
-	Quad4DispPlain();
-	Quad4DispPlain(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID,
-				 int integrationRuleXi,int integrationRuleEta);
-	~Quad4DispPlain();
-	
-	const Matrix& getK();
+class Quad4DispPlain: public Quad4 {
+  public:
+  // Constructors and Destructor
+  Quad4DispPlain();
+  Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID,
+         int integrationRuleXi, int integrationRuleEta);
+  ~Quad4DispPlain();
+  
+  const Matrix& getK();
     const Matrix& getM();
-	const Vector& getR();
+  const Vector& getR();
 
-	void update();
+  void update();
 };
 
-#endif //NEMESIS_ELEMENTS_QUAD4_DISP_PLAIN_H_
+#endif  // NEMESIS_ELEMENTS_QUAD4_DISP_PLAIN_H_

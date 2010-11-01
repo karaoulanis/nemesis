@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,21 +34,20 @@
  * Crisfield's book "Non-linear Finite Element Analysis of Solids and 
  * Strucures", Vol.1.
  * For more details see:
- * \li Theory p.274	\n
+ * \li Theory p.274 \n
  * \li Implementation p.276-278 (Similar to AecLengthSpherical)\n
- * \li Predictor p.285-286	\n
+ * \li Predictor p.285-286  \n
  */
-class ArcLengthUNP :public StaticControl
-{
-private:
-public:
-	ArcLengthUNP(double DL0,double minDL,double maxDL,
-								int IterDesired,double n,double DeltaTime);
-	~ArcLengthUNP();
+class ArcLengthUNP :public StaticControl {
+  private:
+  public:
+  ArcLengthUNP(double DL0, double minDL, double maxDL,
+                int IterDesired, double n, double DeltaTime);
+  ~ArcLengthUNP();
 
-	// Methods for incremental/iterative algorithms
-	void predict();
-	void correct();
+  // Methods for incremental/iterative algorithms
+  void predict();
+  void correct();
 };
 
-#endif //NEMESIS_CONTROL_ARC_LENGTH_UNP_H_
+#endif  // NEMESIS_CONTROL_ARC_LENGTH_UNP_H_

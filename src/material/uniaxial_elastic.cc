@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,37 +25,31 @@
 
 #include "material/uniaxial_elastic.h"
 
-UniaxialElastic::UniaxialElastic()
-{
+UniaxialElastic::UniaxialElastic() {
 }
-UniaxialElastic::UniaxialElastic(int ID,double E,double nu,double rho,double aT)
-:UniaxialMaterial(ID,rho,aT)
-{
-	// Material parameters
-	MatParams[0]=E;
-	MatParams[1]=nu;
-	myTag=TAG_MATERIAL_UNIAXIAL_ELASTIC;
+UniaxialElastic::UniaxialElastic(int ID, double E, double nu, double rho, double aT)
+:UniaxialMaterial(ID, rho, aT) {
+  // Material parameters
+  MatParams[0]=E;
+  MatParams[1]=nu;
+  myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
-UniaxialMaterial* UniaxialElastic::getClone()
-{
-	// Material parameters
-	double E   =MatParams[ 0];
-	double nu  =MatParams[ 1];
-	double rho =MatParams[30];
-	double aT  =MatParams[31];
-	// Create clone and return
-	UniaxialMaterial* clone=new UniaxialElastic(myID,E,nu,rho,aT);
-	return clone;
+UniaxialMaterial* UniaxialElastic::getClone() {
+  // Material parameters
+  double E   =MatParams[ 0];
+  double nu  =MatParams[ 1];
+  double rho =MatParams[30];
+  double aT  =MatParams[31];
+  // Create clone and return
+  UniaxialMaterial* clone = new UniaxialElastic(myID, E, nu, rho, aT);
+  return clone;
 }
-void UniaxialElastic::setStrain(const double De)
-{
-	sTrial=sConvg+MatParams[0]*De;
+void UniaxialElastic::setStrain(const double De) {
+  sTrial = sConvg+MatParams[0]*De;
 }
-double UniaxialElastic::getC()
-{
-	return MatParams[0];
+double UniaxialElastic::getC() {
+  return MatParams[0];
 }
-void UniaxialElastic::commit()
-{
-	sConvg=sTrial;
+void UniaxialElastic::commit() {
+  sConvg = sTrial;
 }

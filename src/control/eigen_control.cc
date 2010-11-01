@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,71 +28,63 @@
 /**
  * Constructor.
  */
-EigenControl::EigenControl()
-{
+EigenControl::EigenControl() {
 }
 /**
  * Destructor.
  */
-EigenControl::~EigenControl()
-{
+EigenControl::~EigenControl() {
 }
 /**
  * Forms the elemental tangent for a static analysis, element by element.
- * @param pModelElement	A pointer to the ModelElement that is treated.
+ * @param pModelElement A pointer to the ModelElement that is treated.
  * @return 0 if everything is ok.
  */
-void EigenControl::formElementalTangent(ModelElement* pModelElement) 
-{
-	pModelElement->zeroMatrix();
-	pModelElement->add_K(1.0);
+void EigenControl::formElementalTangent(ModelElement* pModelElement)  {
+  pModelElement->zeroMatrix();
+  pModelElement->add_K(1.0);
 }
 /**
  * Forms the elemental tangent for a static analysis, element by element.
- * @param pModelElement	A pointer to the ModelElement that is treated.
+ * @param pModelElement A pointer to the ModelElement that is treated.
  * @return 0 if everything is ok.
  */
-void EigenControl::formElementalMassMatrix(ModelElement* pModelElement) 
-{
-	pModelElement->zeroMatrix();
-	pModelElement->add_M(1.0);
+void EigenControl::formElementalMassMatrix(ModelElement* pModelElement)  {
+  pModelElement->zeroMatrix();
+  pModelElement->add_M(1.0);
 }
 /**
  * Forms the elemental residual for a static analysis, element by element.
- * @param pModelElement	A pointer to the ModelElement that is treated.
+ * @param pModelElement A pointer to the ModelElement that is treated.
  * @param time Current(?) time.
  * @return 0 if everything is ok.
  */
-void EigenControl::formElementalResidual(ModelElement* pModelElement,double /*time*/)
-{
-	pModelElement->zeroVector();
-	pModelElement->add_R(1.0);
+void EigenControl::formElementalResidual(ModelElement* pModelElement, double /*time*/) {
+  pModelElement->zeroVector();
+  pModelElement->add_R(1.0);
 }
 /**
  * Forms the nodal tangent for a static analysis, node by node.
  * @param pModelNode A pointer to the ModelNode that is treated.
  * @return 0 if everything is ok.
  */
-void EigenControl::formNodalResidual(ModelNode* pModelNode)
-{
-	pModelNode->zeroVector();
-	pModelNode->add_R(1.0);
+void EigenControl::formNodalResidual(ModelNode* pModelNode) {
+  pModelNode->zeroVector();
+  pModelNode->add_R(1.0);
 }
-void EigenControl::formTangent()
-{
-	EigenSOE* pSOE=static_cast<EigenSOE*>(pA->getSOE());
-	pSOE->zeroA();
-	pSOE->zeroM();
+void EigenControl::formTangent() {
+  EigenSOE* pSOE = static_cast < EigenSOE*>(pA->getSOE());
+  pSOE->zeroA();
+  pSOE->zeroM();
 
-	int n=pA->getModel()->getModelElements().size();
-	for(int i=0;i<n;i++)
-	{
-		ModelElement* p=pA->getModel()->getModelElements()[i];
-		this->formElementalTangent(p);
-		pSOE->insertMatrixIntoA(p->getMatrix(),p->getFTable(),1.0);
-		this->formElementalMassMatrix(p);
-		pSOE->insertMatrixIntoM(p->getMatrix(),p->getFTable(),1.0);
-	}
+  int n = pA->getModel()->getModelElements().size();
+  for (int i = 0; i < n; i++) {
+    ModelElement* p = pA->getModel()->getModelElements()[i];
+    this->formElementalTangent(p);
+    pSOE->insertMatrixIntoA(p->getMatrix(), p->getFTable(), 1.0);
+    this->formElementalMassMatrix(p);
+    pSOE->insertMatrixIntoM(p->getMatrix(), p->getFTable(), 1.0);
+  }
 }
 /**
  * Aborts step.
@@ -100,7 +92,6 @@ void EigenControl::formTangent()
  * previous converged step. This happens throught the ModelNodes. 
  * @return 0 if everything is ok.
  */
-void EigenControl::rollback()
-{
+void EigenControl::rollback() {
 }
 

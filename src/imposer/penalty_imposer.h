@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,12 +29,11 @@
 #include "imposer/imposer.h"
 #include "model/penalty_model_element.h"
 
-class PenaltyImposer: public Imposer
-{
-private:
-	double a;
-public:
-	PenaltyImposer(double amf);
-	int impose();
+class PenaltyImposer: public Imposer {
+  private:
+  double a;
+  public:
+  PenaltyImposer(double amf);
+  int impose();
 };
-#endif //NEMESIS_IMPOSER_PENALTY_IMPOSER_H_
+#endif  // NEMESIS_IMPOSER_PENALTY_IMPOSER_H_

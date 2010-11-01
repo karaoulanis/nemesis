@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,25 +25,21 @@
 
 #include "material/sdof_material.h"
 
-SDofMaterial::SDofMaterial()
-{
+SDofMaterial::SDofMaterial() {
 }
-SDofMaterial::SDofMaterial(int ID,double E,double rho)
-:Material(ID,rho,0.)
-{
-	// Material parameters
-	MatParams[0]=E;
-	myTag=TAG_MATERIAL_SINGLE_DOF;
+SDofMaterial::SDofMaterial(int ID, double E, double rho)
+:Material(ID, rho, 0.) {
+  // Material parameters
+  MatParams[0]=E;
+  myTag = TAG_MATERIAL_SINGLE_DOF;
 }
-SDofMaterial* SDofMaterial::getClone()
-{
-	// Material parameters
-	double E   =MatParams[ 0];
-	double rho =MatParams[30];
-	// Create clone and return
-	SDofMaterial* clone=new SDofMaterial(myID,E,rho);
-	return clone;
+SDofMaterial* SDofMaterial::getClone() {
+  // Material parameters
+  double E   =MatParams[ 0];
+  double rho =MatParams[30];
+  // Create clone and return
+  SDofMaterial* clone = new SDofMaterial(myID, E, rho);
+  return clone;
 }
-void SDofMaterial::commit()
-{
+void SDofMaterial::commit() {
 }

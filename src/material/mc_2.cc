@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,20 +25,16 @@
 
 #include "material/mc_2.h"
 
-MC_2::MC_2()
-{
+MC_2::MC_2() {
 }
-MC_2::MC_2(double c_,double phi_)
-:MC(c_,phi_)
-{
+MC_2::MC_2(double c_, double phi_)
+:MC(c_, phi_) {
 }
-MC_2::~MC_2()
-{
+MC_2::~MC_2() {
 }
-void MC_2::find_A(const Vector& s,double& A,double& dA,double& d2A)
-{
-	double theta=s.theta();
-	A  = 0.5*cos(theta)*(1.+sin(phi))+0.5*sin(theta)/num::sq3*(sin(phi)-3.);
-	dA =-0.5*sin(theta)*(1.+sin(phi))+0.5*cos(theta)/num::sq3*(sin(phi)-3.);
-	d2A=-0.5*cos(theta)*(1.+sin(phi))-0.5*sin(theta)/num::sq3*(sin(phi)-3.);
+void MC_2::find_A(const Vector& s, double& A, double& dA, double& d2A) {
+  double theta = s.theta();
+  A  = 0.5*cos(theta)*(1.+sin(phi))+0.5*sin(theta)/num::sq3*(sin(phi)-3.);
+  dA =-0.5*sin(theta)*(1.+sin(phi))+0.5*cos(theta)/num::sq3*(sin(phi)-3.);
+  d2A=-0.5*cos(theta)*(1.+sin(phi))-0.5*sin(theta)/num::sq3*(sin(phi)-3.);
 }

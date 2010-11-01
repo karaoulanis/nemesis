@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,12 +28,11 @@
 
 #include "algorithm/algorithm.h"
 
-class NewtonRaphsonModified :public Algorithm
-{
-public:
-	NewtonRaphsonModified();
-	~NewtonRaphsonModified();
+class NewtonRaphsonModified :public Algorithm {
+ public:
+  NewtonRaphsonModified();
+  ~NewtonRaphsonModified();
 
-	int solveStep(int n);
+  int solveStep(int n);
 };
-#endif //NEMESIS_ALGORITHM_NEWTON_RAPHSON_MODIFIED_H_ 
+#endif  // NEMESIS_ALGORITHM_NEWTON_RAPHSON_MODIFIED_H_ 

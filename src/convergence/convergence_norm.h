@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -30,20 +30,19 @@
 #include "analysis/analysis_object.h"
 #include "numeric/vector.h"
 
-class ConvergenceNorm: public AnalysisObject
-{
-protected:
-	Vector tol;
-	int maxIter;
-	int iter;
-	double ro,uo,wo;
-	int LC,nSteps,step;
-public:
-	ConvergenceNorm();
-	~ConvergenceNorm();
-	void setCheck(int maxIterations,double tolRabs,double tolRrel,double tolWrel);
-	void init(int LCid,int steps);
-	void newStep();
-	int update();
+class ConvergenceNorm: public AnalysisObject {
+ protected:
+  Vector tol;
+  int maxIter;
+  int iter;
+  double ro, uo, wo;
+  int LC, nSteps, step;
+  public:
+  ConvergenceNorm();
+  ~ConvergenceNorm();
+  void setCheck(int maxIterations, double tolRabs, double tolRrel, double tolWrel);
+  void init(int LCid, int steps);
+  void newStep();
+  int update();
 };
-#endif //NEMESIS_CONVERGENCE_CONVERGENCENORM_H_
+#endif  // NEMESIS_CONVERGENCE_CONVERGENCENORM_H_

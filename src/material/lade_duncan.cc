@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,31 +26,27 @@
 #include "material/lade_duncan.h"
 #include "material/lade_duncan_surface.h"
 
-LadeDuncan::LadeDuncan()
-{
+LadeDuncan::LadeDuncan() {
 }
-LadeDuncan::LadeDuncan(int ID,int elasticID,double K)
-:MultiaxialElastoPlastic(ID,elasticID)
-{
-	// Material parameters
-	MatParams[0]=K;
-	// Yield/potential surfaces
-	fSurfaces.push_back(new LadeDuncanSurface(K));
-	gSurfaces.push_back(new LadeDuncanSurface(K));
-	// Material tag
-	//myTag=TAG_MATERIAL_MOHR_COULOMB;
-	nHardeningVariables=1;
+LadeDuncan::LadeDuncan(int ID, int elasticID, double K)
+:MultiaxialElastoPlastic(ID, elasticID) {
+  // Material parameters
+  MatParams[0]=K;
+  // Yield/potential surfaces
+  fSurfaces.push_back(new LadeDuncanSurface(K));
+  gSurfaces.push_back(new LadeDuncanSurface(K));
+  // Material tag
+  //myTag = TAG_MATERIAL_MOHR_COULOMB;
+  nHardeningVariables = 1;
 }
-LadeDuncan::~LadeDuncan()
-{
+LadeDuncan::~LadeDuncan() {
 }
-MultiaxialMaterial* LadeDuncan::getClone()
-{
-	// Material parameters
-	int myID    = this->getID();
-	int elID    = myElastic->getID();
-	double K    = MatParams[ 0];
-	// Create clone and return
-	LadeDuncan* newClone=new LadeDuncan(myID,elID,K);
-	return newClone;
+MultiaxialMaterial* LadeDuncan::getClone() {
+  // Material parameters
+  int myID    = this->getID();
+  int elID    = myElastic->getID();
+  double K    = MatParams[ 0];
+  // Create clone and return
+  LadeDuncan* newClone = new LadeDuncan(myID, elID, K);
+  return newClone;
 }

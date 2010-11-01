@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,16 +28,15 @@
 
 #include "material/uniaxial_material.h"
 
-class UniaxialElastic: public UniaxialMaterial
-{
-private:
-public:
-	UniaxialElastic();
-	UniaxialElastic(int ID,double E,double nu,double rho,double aT);
-	UniaxialMaterial* getClone();
-	void setStrain(const double De);
-	double getC();
-	void commit();
+class UniaxialElastic: public UniaxialMaterial {
+  private:
+  public:
+  UniaxialElastic();
+  UniaxialElastic(int ID, double E, double nu, double rho, double aT);
+  UniaxialMaterial* getClone();
+  void setStrain(const double De);
+  double getC();
+  void commit();
 };
 
-#endif //NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_H_
+#endif  // NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_H_

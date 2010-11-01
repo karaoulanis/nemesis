@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,47 +26,44 @@
 #include "analysis/xfem_analysis.h"
 
 XFemAnalysis::XFemAnalysis()
-	:AnalysisType()
-{
-	myTag=TAG_ANALYSIS_STATIC;
-	// defaults
-	pA->setImposer(new EliminationImposer());
-	pA->setControl(new LoadControl(1.,1.,1.,1,0.5,0.));
-	pA->setAlgorithm(new LinearAlgorithm());
-	pA->setSOE(new FullLinearSOE());
+  :AnalysisType() {
+  myTag = TAG_ANALYSIS_STATIC;
+  // defaults
+  pA->setImposer(new EliminationImposer());
+  pA->setControl(new LoadControl(1., 1., 1., 1, 0.5, 0.));
+  pA->setAlgorithm(new LinearAlgorithm());
+  pA->setSOE(new FullLinearSOE());
 }
-bool XFemAnalysis::checkIfAllows(FEObject* /*f*/)
-{
-	return true;
+bool XFemAnalysis::checkIfAllows(FEObject* /*f*/) {
+  return true;
 }
-int XFemAnalysis::run(int nLC,int nLoadSteps)
-{
-	///@todo Checks
+int XFemAnalysis::run(int nLC, int nLoadSteps) {
+  ///@todo Checks
 
-	// Create model by applying the constraints
-	pA->getImposer()->impose();
+  // Create model by applying the constraints
+  pA->getImposer()->impose();
 
-	// Now that model is complete, reorder the model
-	if(pA->getReorderer()!=0) pA->getReorderer()->reorder();
+  // Now that model is complete, reorder the model
+  if (pA->getReorderer() !=0 ) pA->getReorderer()->reorder();
 
-	// Now that model is complete, the SOE can be initialized
-	pA->getSOE()->setTheSize();
-	
-	// Initialize
-	pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->init();
-	pA->getControl()->init();
-	pA->getConvergenceNorm()->init(nLC,nLoadSteps);
+  // Now that model is complete, the SOE can be initialized
+  pA->getSOE()->setTheSize();
 
-	// Call algorithm to solve step
-	//int check=pA->getAlgorithm()->solveStep(0); // gives warning for check
-	pA->getAlgorithm()->solveStep(0);  ///@todo:check
-	
-	// Commit
-	pA->getControl()->commit();
-	
-	// Finalize
-	pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(),nLC)->commit();
-	pA->getModel()->setNodalStress();
-	pA->getDomain()->commit(); ///@todo For commiting time; find a more elegant way.
-	return 0;
+  // Initialize
+  pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(), nLC)->init();
+  pA->getControl()->init();
+  pA->getConvergenceNorm()->init(nLC, nLoadSteps);
+
+  // Call algorithm to solve step
+  // int check = pA->getAlgorithm()->solveStep(0); // gives warning for check
+  pA->getAlgorithm()->solveStep(0);  ///@todo:check
+
+  // Commit
+  pA->getControl()->commit();
+
+  // Finalize
+  pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(), nLC)->commit();
+  pA->getModel()->setNodalStress();
+  pA->getDomain()->commit(); ///@todo For commiting time; find more elegant way.
+  return 0;
 }

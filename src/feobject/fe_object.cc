@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,31 +23,25 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include <iostream>
+#include < iostream>
 #include "feobject/fe_object.h"
 
-FEObject::FEObject()
-{
-	myTag=TAG_NONE;
-	strcpy(myLabel,"Unnamed");
+FEObject::FEObject() {
+  myTag = TAG_NONE;
+  strcpy(myLabel, "Unnamed");
 }
-FEObject::FEObject(FEObjectTag tag)
-{
-	myTag=tag;
+FEObject::FEObject(FEObjectTag tag) {
+  myTag = tag;
 }
-FEObject::~FEObject()
-{
+FEObject::~FEObject() {
 }
-FEObjectTag FEObject::getTag()
-{
-	return myTag;
+FEObjectTag FEObject::getTag() {
+  return myTag;
 }
 
-bool FEObject::checkIfAllows(FEObject* /*f*/)
-{
-	///@ todo When finished implementing all turn this function into pure.
-	return 0;
+bool FEObject::checkIfAllows(FEObject* /*f*/) {
+  ///@ todo When finished implementing all turn this function into pure.
+  return 0;
 }
-void FEObject::checkConstency(FEObject* /*f*/)
-{
+void FEObject::checkConstency(FEObject* /*f*/) {
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,31 +28,30 @@
 
 #include "database/packet.h"
 
-class Database
-{
-protected:
-	char dbName[512];
-	char tableInUse[512];
-	bool isConnected;
-	static Packet myPacket;
-public:
-	Database();
-	virtual ~Database();
-	virtual int closeDB()=0;
+class Database {
+ protected:
+  char dbName[512];
+  char tableInUse[512];
+  bool isConnected;
+  static Packet myPacket;
+  public:
+  Database();
+  virtual ~Database();
+  virtual int closeDB()=0;
 
-	virtual int createTable(const char* tableName)=0;
-	virtual int deleteTable(const char* tableName)=0;
-	virtual int useTable(const char* tableName)=0;
-	virtual int storeData(const Packet& p)=0;
-	virtual bool existsTable(const char* tableName)=0;
-	virtual const Packet& retrieveData(int tag,int id)=0;
+  virtual int createTable(const char* tableName)=0;
+  virtual int deleteTable(const char* tableName)=0;
+  virtual int useTable(const char* tableName)=0;
+  virtual int storeData(const Packet& p)=0;
+  virtual bool existsTable(const char* tableName)=0;
+  virtual const Packet& retrieveData(int tag, int id)=0;
 
-	virtual void exportToVtk(const char* tableName)=0;
+  virtual void exportToVtk(const char* tableName)=0;
 
-	virtual int beginTransaction();
-	virtual int commitTransaction();
+  virtual int beginTransaction();
+  virtual int commitTransaction();
 
-	virtual bool existsFile(const char* filename);
+  virtual bool existsFile(const char* filename);
 };
 
-#endif //NEMESIS_DATABASE_DATABASE_H_
+#endif  // NEMESIS_DATABASE_DATABASE_H_

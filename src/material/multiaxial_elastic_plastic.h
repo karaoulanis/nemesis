@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -32,44 +32,43 @@
 /**
  * The MultiaxialElastoPlastic Class.
  */
-class MultiaxialElastoPlastic: public MultiaxialMaterial
-{
-protected:
-	MultiaxialMaterial* myElastic;
+class MultiaxialElastoPlastic: public MultiaxialMaterial {
+ protected:
+  MultiaxialMaterial* myElastic;
 
-	static Matrix C;
-	Vector ePTrial,ePConvg;
-	Vector qTrial,qConvg;
-	double aTrial,aConvg;
-	bool plastic;
-	int nHardeningVariables;
+  static Matrix C;
+  Vector ePTrial, ePConvg;
+  Vector qTrial, qConvg;
+  double aTrial, aConvg;
+  bool plastic;
+  int nHardeningVariables;
 
-	std::vector<Surface*> fSurfaces;
-	std::vector<Surface*> gSurfaces;
-	EvolutionLaw* EL;
+  std::vector < Surface*> fSurfaces;
+  std::vector < Surface*> gSurfaces;
+  EvolutionLaw* EL;
 
-	inline std::vector<Surface*> getfSurfaces()		{return fSurfaces;}
-	inline std::vector<Surface*> getgSurfaces()		{return gSurfaces;}
-	void returnMapSYS(const Vector& De);
-	void returnMapSYS2(const Vector& De);
+  inline std::vector < Surface*> getfSurfaces()   {return fSurfaces;}
+  inline std::vector < Surface*> getgSurfaces()   {return gSurfaces;}
+  void returnMapSYS(const Vector& De);
+  void returnMapSYS2(const Vector& De);
 
-	void returnMapTest(const Vector& De);
-	void returnMapMYS(const Vector& De);
-	void returnMapMYS2(const Vector& De);
-	void returnMapMYS3(const Vector& De);
-public:
-	MultiaxialElastoPlastic();
-	MultiaxialElastoPlastic(int ID,int elasticID);
-	~MultiaxialElastoPlastic();
-	
-	void setStrain(const Vector& De);
-	void commit();
-	const Matrix& getC();
-	bool isPlastic()							{return plastic;}
+  void returnMapTest(const Vector& De);
+  void returnMapMYS(const Vector& De);
+  void returnMapMYS2(const Vector& De);
+  void returnMapMYS3(const Vector& De);
+  public:
+  MultiaxialElastoPlastic();
+  MultiaxialElastoPlastic(int ID, int elasticID);
+  ~MultiaxialElastoPlastic();
+  
+  void setStrain(const Vector& De);
+  void commit();
+  const Matrix& getC();
+  bool isPlastic()              {return plastic;}
 
-	void updateStateVariable();
-	
-	// Tracker member functions
-	void track();
+  void updateStateVariable();
+  
+  // Tracker member functions
+  void track();
 };
-#endif //NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
+#endif  // NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_

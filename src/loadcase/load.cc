@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,8 +25,7 @@
 
 #include "loadcase/load.h"
 
-int Load::nLoads=0;
+int Load::nLoads = 0;
 Load::Load()
-:DomainObject(++nLoads)
-{
+:DomainObject(++nLoads) {
 }

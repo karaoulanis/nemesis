@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,33 +25,29 @@
 
 #include "group/group.h"
 
-Group::Group()
-{
+Group::Group() {
 }
 Group::Group(int ID)
 :DomainObject(ID)
-{	
-	active=true;
-	facK=1.;
-	facS=1.;
-	facG=1.;
-	facP=1.;
+{ 
+  active = true;
+  facK = 1.;
+  facS = 1.;
+  facG = 1.;
+  facP = 1.;
 }
-Group::~Group()
-{
+Group::~Group() {
 }
-void Group::setDefault()
-{
-	facK=1.;
-	facS=1.;
-	facG=1.;
-	facP=1.;
+void Group::setDefault() {
+  facK = 1.;
+  facS = 1.;
+  facG = 1.;
+  facP = 1.;
 }
-void Group::setState(GroupState* g)
-{
-	active=g->getActive();
-	facK=g->getFacK();
-	facS=g->getFacS();
-	facG=g->getFacG();
-	facP=g->getFacP();
+void Group::setState(GroupState* g) {
+  active = g->getActive();
+  facK = g->getFacK();
+  facS = g->getFacS();
+  facG = g->getFacG();
+  facP = g->getFacP();
 }

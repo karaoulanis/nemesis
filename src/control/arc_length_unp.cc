@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -24,29 +24,27 @@
 // *****************************************************************************
 
 #include "control/arc_length_unp.h"
-#include <cmath>
+#include < cmath>
 
 /**
  * Constructor.
- * \param DL0			Initial Dl.
- * \param minDL			Lower bound for Dl.
- * \param maxDL			Upper bound for Dl.
- * \param IterDesired	Desired number of iterations.
- * \param n				Exponent parameter.
+ * \param DL0     Initial Dl.
+ * \param minDL     Lower bound for Dl.
+ * \param maxDL     Upper bound for Dl.
+ * \param IterDesired Desired number of iterations.
+ * \param n       Exponent parameter.
  * \param DeltaTime     Timestep for viscoplastic solutions
  */
-ArcLengthUNP::ArcLengthUNP(double DL0,double minDL,double maxDL,
-									   int IterDesired,double n,double DeltaTime)
-:StaticControl(DL0,minDL,maxDL,IterDesired,n,DeltaTime)
-{
-	myTag=TAG_CONTROL_ARC_LENGTH_UNP;
+ArcLengthUNP::ArcLengthUNP(double DL0, double minDL, double maxDL,
+                     int IterDesired, double n, double DeltaTime)
+:StaticControl(DL0, minDL, maxDL, IterDesired, n, DeltaTime) {
+  myTag = TAG_CONTROL_ARC_LENGTH_UNP;
 }
 /**
  * Destructor.
  */
-ArcLengthUNP::~ArcLengthUNP()
-{
-	// Does nothing
+ArcLengthUNP::~ArcLengthUNP() {
+  // Does nothing
 }
 /**
  * Creates new step for a Arc Length UNP control based static analysis.
@@ -55,8 +53,8 @@ ArcLengthUNP::~ArcLengthUNP()
  * \f$\Delta\lambda\f$ at each new step is given as decribed in "Non-linear 
  * Finite Element Analysis of Solids and Strucures", Vol.1, p.287, by (9.40):
  * \f[\Delta\lambda_{n}=\Delta\lambda_{0}
- *						\left(
- *						\frac{I_d}{I_o}
+ *            \left(
+ *            \frac{I_d}{I_o}
  *                      \right)^n
  * \f]
  * \f$I_d\f$ is the desired number of iterations within each step (Crisfield 
@@ -72,65 +70,63 @@ ArcLengthUNP::~ArcLengthUNP()
  * p.285-286 of Cridfield's book. As soon this is computed the domain is 
  * updated.
  */
-void ArcLengthUNP::predict()
-{
-	// Find DLambda
-	///@todo Auto-incrementation involves abs() and this might be a problem...
-//	DLambda=DLambda*pow(((double)Id/(double)Io),nExp);
-//	if(fabs(DLambda)<minDelta)		DLambda=minDelta;
-//	else if(fabs(DLambda)>maxDelta) DLambda=maxDelta;
+void ArcLengthUNP::predict() {
+  // Find DLambda
+  ///@todo Auto-incrementation involves abs() and this might be a problem...
+//  DLambda = DLambda*pow(((double)Id/(double)Io), nExp);
+//  if (fabs(DLambda)<minDelta)    DLambda = minDelta;
+//  else if (fabs(DLambda)>maxDelta) DLambda = maxDelta;
 
-	// Find duT (tangent du)
-	pA->getSOE()->setB(qRef);
-	pA->getSOE()->solve();
-	duT=pA->getSOE()->getX();
+  // Find duT (tangent du)
+  pA->getSOE()->setB(qRef);
+  pA->getSOE()->solve();
+  duT = pA->getSOE()->getX();
 
-	// Now DLambda can be found
-	///@todo rewrite eigenSign
-	int sign=pA->getSOE()->getEigenSign();
-	//if(sign==0) exit(-11111);
-	DLambda*=sign;
-	lambdaTrial+=DLambda;
+  // Now DLambda can be found
+  ///@todo rewrite eigenSign
+  int sign = pA->getSOE()->getEigenSign();
+  //if (sign == 0) exit(-11111);
+  DLambda*=sign;
+  lambdaTrial+=DLambda;
 
 
-	// Find displacement vectors and update the model
-	du=DLambda*duT;
-	Du=du;
-	pA->getModel()->incTrialDisp(du);
-	pA->getModel()->update();
+  // Find displacement vectors and update the model
+  du = DLambda*duT;
+  Du = du;
+  pA->getModel()->incTrialDisp(du);
+  pA->getModel()->update();
 
-	// Set num of achieved iterations to one
-	Io=1;
+  // Set num of achieved iterations to one
+  Io = 1;
 
-	// Set du to the SOE so the norm can find it there
-	pA->getSOE()->setX(du);
+  // Set du to the SOE so the norm can find it there
+  pA->getSOE()->setX(du);
 }
 /**
  * Updates that occur within each iterative step.
  * In this case only one root is taken, so no criterion is needed.
  */
-void ArcLengthUNP::correct()
-{
-	// Find du_bar
-	duBar=pA->getSOE()->getX();
+void ArcLengthUNP::correct() {
+  // Find du_bar
+  duBar = pA->getSOE()->getX();
 
-	// Find duT
-	pA->getSOE()->setB(qRef);
-	pA->getSOE()->solve();
-	duT=pA->getSOE()->getX();
-	
-	dLambda=-Du*duBar/(Du*duT+DLambda);
-	DLambda+=dLambda;
-	Du+=du;
-	
-	// Update lambdaTrial and Du
-	lambdaTrial+=dLambda;
-	du=duBar+dLambda*duT;
+  // Find duT
+  pA->getSOE()->setB(qRef);
+  pA->getSOE()->solve();
+  duT = pA->getSOE()->getX();
 
-	// Update displacements in the model
-	pA->getModel()->incTrialDisp(du);
-	pA->getModel()->update();
+  dLambda=-Du*duBar/(Du*duT+DLambda);
+  DLambda+=dLambda;
+  Du+=du;
 
-	// Increase number of iterations
-	Io++;
+  // Update lambdaTrial and Du
+  lambdaTrial+=dLambda;
+  du = duBar+dLambda*duT;
+
+  // Update displacements in the model
+  pA->getModel()->incTrialDisp(du);
+  pA->getModel()->update();
+
+  // Increase number of iterations
+  Io++;
 }

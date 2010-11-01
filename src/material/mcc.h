@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,21 +29,20 @@
 #include "material/surface.h"
 #include "numeric/vector.h"
 
-class MCC: public Surface
-{
-protected:
-	double M;
-	double po;
-	double kappa;
-	double lambda;
-	void find_C(const Vector& s,const double a);
-public:
-	MCC();
-	MCC(double M_,double po_,double kappa_,double lambda_);
-	~MCC();
-	double get_f(const Vector& s,const double q);
-	double get_dfda(const Vector& s,const double a);
-	const Vector& get_df2dsa(const Vector& s,const double a);
-	double get_df2daa(const Vector& s,const double a);
+class MCC: public Surface {
+ protected:
+  double M;
+  double po;
+  double kappa;
+  double lambda;
+  void find_C(const Vector& s, const double a);
+  public:
+  MCC();
+  MCC(double M_, double po_, double kappa_, double lambda_);
+  ~MCC();
+  double get_f(const Vector& s, const double q);
+  double get_dfda(const Vector& s, const double a);
+  const Vector& get_df2dsa(const Vector& s, const double a);
+  double get_df2daa(const Vector& s, const double a);
 };
-#endif //NEMESIS_MATERIAL_MCC_H_
+#endif  // NEMESIS_MATERIAL_MCC_H_

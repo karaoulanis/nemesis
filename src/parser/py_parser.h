@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,23 +27,22 @@
 #define NEMESIS_PARSER_PY_PARSER_H_
 
 #ifdef _DEBUG
-	#include <Python.h>
-	#undef Py_DEBUG
+  #include < Python.h>
+  #undef Py_DEBUG
 #else
-	#include <Python.h>
+  #include < Python.h>
 #endif
 
 #include "parser/parser.h"
 
-class PyParser: public Parser
-{
-private:
-	int initModules();
-public:
-	// Constructors and destructor
-	PyParser();
-	virtual ~PyParser();
-	int parse();
-	int parse(char* filename);
+class PyParser: public Parser {
+  private:
+  int initModules();
+  public:
+  // Constructors and destructor
+  PyParser();
+  virtual ~PyParser();
+  int parse();
+  int parse(char* filename);
 };
-#endif //NEMESIS_PARSER_PY_PARSER_H_
+#endif  // NEMESIS_PARSER_PY_PARSER_H_

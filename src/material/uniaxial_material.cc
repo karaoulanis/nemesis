@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,15 +26,12 @@
 
 #include "material/uniaxial_material.h"
 
-UniaxialMaterial::UniaxialMaterial()
-{
+UniaxialMaterial::UniaxialMaterial() {
 }
-UniaxialMaterial::UniaxialMaterial(int ID,double rho,double aT)
-:Material(ID,rho,aT),sTrial(0.),sConvg(0.),eTotal(0.)
-{
+UniaxialMaterial::UniaxialMaterial(int ID, double rho, double aT)
+:Material(ID, rho, aT), sTrial(0.), sConvg(0.), eTotal(0.) {
 }
-UniaxialMaterial::~UniaxialMaterial()
-{
+UniaxialMaterial::~UniaxialMaterial() {
 }
 /**
  * Add a record to the tracker.
@@ -42,13 +39,12 @@ UniaxialMaterial::~UniaxialMaterial()
  * Otherwise gather info and send them to the tracker.
  * The domain should be already updated!
  */
-void UniaxialMaterial::track()
-{
-	if(myTracker==0) return;
-	ostringstream s;
-	s<<"DATA "	<<' ';
-	s<<"sigm "	<<1020<<' '<<sConvg<<' ';
-	s<<"epst "	<<1020<<' '<<eTotal<<' ';
-	s<<"END "<<' ';
-	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
+void UniaxialMaterial::track() {
+  if (myTracker == 0) return;
+  ostringstream s;
+  s << "DATA "  <<' ';
+  s << "sigm "  <<1020<<' '<<sConvg<<' ';
+  s << "epst "  <<1020<<' '<<eTotal<<' ';
+  s << "END "<<' ';
+  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
 }

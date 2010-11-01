@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,23 +25,18 @@
 
 #include "crack/crack.h"
 
-Crack::Crack()
-{
+Crack::Crack() {
 }
-Crack::Crack(int /*ID*/,double xS,double yS,double xT,double yT)
-{
-	myCrackPoints.push_back(new CrackPoint(xS,yS));
-	myCrackPoints.push_back(new CrackPoint(xT,yT));
+Crack::Crack(int /*ID*/, double xS, double yS, double xT, double yT) {
+  myCrackPoints.push_back(new CrackPoint(xS, yS));
+  myCrackPoints.push_back(new CrackPoint(xT, yT));
 }
-Crack::~Crack()
-{
-	Containers::vector_delete(myCrackPoints);
+Crack::~Crack() {
+  Containers::vector_delete(myCrackPoints);
 }
-const vector<CrackPoint*>& Crack::getCrack()
-{
-	return myCrackPoints;
+const vector < CrackPoint*>& Crack::getCrack() {
+  return myCrackPoints;
 }
-CrackPoint* Crack::getCrackPoint(int n)
-{
-	return myCrackPoints[n];
+CrackPoint* Crack::getCrackPoint(int n) {
+  return myCrackPoints[n];
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,15 +25,12 @@
 
 #include "analysis/analysis_object.h"
 
-Analysis* AnalysisObject::pA=0;
+Analysis* AnalysisObject::pA = 0;
 
-AnalysisObject::AnalysisObject()
-{
+AnalysisObject::AnalysisObject() {
 }
-AnalysisObject::~AnalysisObject()
-{
+AnalysisObject::~AnalysisObject() {
 }
-void AnalysisObject::setAnalysis(Analysis* pAnalysis)
-{
-	pA=pAnalysis;
+void AnalysisObject::setAnalysis(Analysis* pAnalysis) {
+  pA = pAnalysis;
 }

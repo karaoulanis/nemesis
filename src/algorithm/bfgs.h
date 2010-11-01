@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,23 +28,22 @@
 
 #include "algorithm/algorithm.h"
 
-class BFGS :public Algorithm
-{
-private:
-	int m;
-	double etaMin;
-	double etaMax;
-	double rTol;
-	int maxIter;
+class BFGS :public Algorithm {
+ private:
+  int m;
+  double etaMin;
+  double etaMax;
+  double rTol;
+  int maxIter;
     bool isLineSearchActive;
-	std::vector<Vector> s;
-	std::vector<Vector> y;
-public:
-	BFGS(int m_=10);
-	BFGS(int m_,double etaMin_,double etaMax_,double rTol_,int maxIter_);
-	~BFGS();
+  std::vector < Vector > s;
+  std::vector < Vector > y;
+ public:
+  BFGS(int m_ = 10);
+  BFGS(int m_, double etaMin_, double etaMax_, double rTol_, int maxIter_);
+  ~BFGS();
 
-	int solveStep(int n);
-	void lineSearch(double s0,double s1,const Vector& du);
+  int solveStep(int n);
+  void lineSearch(double s0, double s1, const Vector& du);
 };
-#endif //NEMESIS_ALGORITHM_BFGS_H_ 
+#endif  // NEMESIS_ALGORITHM_BFGS_H_ 

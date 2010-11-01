@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,34 +28,33 @@
 
 #include "model/model_object.h"
 
-class ModelElement : public ModelObject
-{
-private:
+class ModelElement : public ModelObject {
+  private:
 
-protected:
-	Element* myElement;
-	Constraint* myConstraint;
-public:
-	// Constructors
-	ModelElement();
-	ModelElement(const IDContainer& FTable,Element* pElement,Constraint* pConstraint);
+ protected:
+  Element* myElement;
+  Constraint* myConstraint;
+  public:
+  // Constructors
+  ModelElement();
+  ModelElement(const IDContainer& FTable, Element* pElement, Constraint* pConstraint);
 
-	virtual ~ModelElement();
+  virtual ~ModelElement();
 
-	// Access to data members
-	Element* getElement()		{return myElement;}
-	Constraint* getConstraint()	{return myConstraint;}
+  // Access to data members
+  Element* getElement()   {return myElement;}
+  Constraint* getConstraint() {return myConstraint;}
 
-	virtual void update();
-	virtual void commit();
+  virtual void update();
+  virtual void commit();
 
-	virtual void add_K(double factor=1.0)=0;
-	virtual void add_M(double factor=1.0)=0;
-	virtual void add_C(double factor=1.0)=0;
-	virtual void add_R(double factor=1.0)=0;
-	virtual void add_Reff(double factor=1.0)=0;
-	
-	virtual void add_Kgrad(double /*factor=1.0*/)	{};
+  virtual void add_K(double factor = 1.0)=0;
+  virtual void add_M(double factor = 1.0)=0;
+  virtual void add_C(double factor = 1.0)=0;
+  virtual void add_R(double factor = 1.0)=0;
+  virtual void add_Reff(double factor = 1.0)=0;
+  
+  virtual void add_Kgrad(double /*factor = 1.0*/) {};
 };
 
-#endif //NEMESIS_MODEL_MODEL_ELEMENT_H_
+#endif  // NEMESIS_MODEL_MODEL_ELEMENT_H_

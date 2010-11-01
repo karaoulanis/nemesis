@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -32,25 +32,24 @@
 
 class GroupState;
 
-class Group: public DomainObject
-{
-private:
-	bool active;
-	double facK;
-	double facS;
-	double facG;
-	double facP;
-public:
-	Group();
-	~Group();
-	Group(int ID);
-	void setDefault();
-	void setState(GroupState* g);
-	inline bool isActive()				{return active;}
-	inline double getFacK()				{return facK;}
-	inline double getFacS()				{return facS;}
-	inline double getFacG()				{return facG;}
-	inline double getFacP()				{return facP;}
+class Group: public DomainObject {
+  private:
+  bool active;
+  double facK;
+  double facS;
+  double facG;
+  double facP;
+  public:
+  Group();
+  ~Group();
+  Group(int ID);
+  void setDefault();
+  void setState(GroupState* g);
+  inline bool isActive()        {return active;}
+  inline double getFacK()       {return facK;}
+  inline double getFacS()       {return facS;}
+  inline double getFacG()       {return facG;}
+  inline double getFacP()       {return facP;}
 };
 
-#endif //NSEMESIS_GROYP_GROUP_H_
+#endif  // NSEMESIS_GROYP_GROUP_H_

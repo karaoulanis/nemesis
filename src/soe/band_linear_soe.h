@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,22 +28,21 @@
 
 #include "soe/soe.h"
 
-class BandLinearSOE: public SOE
-{
-private:
-	int lowerBandwidth;
-	int upperBandwidth;
-	int nRows;
-public:
-	// Constructor and destructor
-	BandLinearSOE();
-	~BandLinearSOE();
+class BandLinearSOE: public SOE {
+  private:
+  int lowerBandwidth;
+  int upperBandwidth;
+  int nRows;
+  public:
+  // Constructor and destructor
+  BandLinearSOE();
+  ~BandLinearSOE();
 
-	int insertMatrixIntoA(const Matrix& Ke,const IDContainer& EFTable, 
-							double factor=1.0);
-	int solve();
-	void setTheSize();
-	void print();
-	int getEigenSign();
+  int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, 
+              double factor = 1.0);
+  int solve();
+  void setTheSize();
+  void print();
+  int getEigenSign();
 };
-#endif //NEMESIS_SOE_BAND_LINEAR_SOE_H_
+#endif  // NEMESIS_SOE_BAND_LINEAR_SOE_H_

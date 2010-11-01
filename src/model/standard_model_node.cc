@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,59 +28,49 @@
 /**
  * Default constructor.
  */
-StandardModelNode::StandardModelNode()
-{
+StandardModelNode::StandardModelNode() {
 }
 /**
  * Constructor.
  * Initializes the ModelObject, which in turn initializes the FEObject, passes
  * the FTable to the ModelObject and copies the address of it's node.
  */
-StandardModelNode::StandardModelNode(const IDContainer& FTable,Node* pNode)
-	:ModelNode(FTable,pNode)
-{
+StandardModelNode::StandardModelNode(const IDContainer& FTable, Node* pNode)
+  :ModelNode(FTable, pNode) {
 }
-StandardModelNode::~StandardModelNode()
-{
+StandardModelNode::~StandardModelNode() {
 }
-void StandardModelNode::incTrialDisp(const Vector& du)
-{
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
-	myNode->incTrialDisp(*myVector);
+void StandardModelNode::incTrialDisp(const Vector& du) {
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
+  myNode->incTrialDisp(*myVector);
 }
-void StandardModelNode::incTrialVecs(const Vector& du,const Vector& dv,const Vector& da)
-{
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
-	myNode->incTrialDisp(*myVector);
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=dv[theFTable[i]];
-	myNode->addTrialVelc(*myVector);
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=da[theFTable[i]];
-	myNode->addTrialAccl(*myVector);
+void StandardModelNode::incTrialVecs(const Vector& du, const Vector& dv, const Vector& da) {
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
+  myNode->incTrialDisp(*myVector);
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=dv[theFTable[i]];
+  myNode->addTrialVelc(*myVector);
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=da[theFTable[i]];
+  myNode->addTrialAccl(*myVector);
 }
-void StandardModelNode::setTrialDisp(const Vector& u)
-{
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
-	myNode->setTrialDisp(*myVector);
+void StandardModelNode::setTrialDisp(const Vector& u) {
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
+  myNode->setTrialDisp(*myVector);
 }
-void StandardModelNode::setTrialVecs(const Vector& u,const Vector& v,const Vector& a)
-{
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
-	myNode->setTrialDisp(*myVector);
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=v[theFTable[i]];
-	myNode->setTrialVelc(*myVector);
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=a[theFTable[i]];
-	myNode->setTrialAccl(*myVector);
+void StandardModelNode::setTrialVecs(const Vector& u, const Vector& v, const Vector& a) {
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
+  myNode->setTrialDisp(*myVector);
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=v[theFTable[i]];
+  myNode->setTrialVelc(*myVector);
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=a[theFTable[i]];
+  myNode->setTrialAccl(*myVector);
 }
-void StandardModelNode::commit()
-{
-	myNode->commit();
+void StandardModelNode::commit() {
+  myNode->commit();
 }
-void StandardModelNode::commitSens(const Vector& X,int param)
-{
-	for(unsigned i=0;i<theFTable.size();i++) (*myVector)[i]=X[theFTable[i]];
-	myNode->commitSens(*myVector,param);
+void StandardModelNode::commitSens(const Vector& X, int param) {
+  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=X[theFTable[i]];
+  myNode->commitSens(*myVector, param);
 }
-void StandardModelNode::add_R(double factor)
-{
-	if(myNode->existsLoad()) myVector->add_cV(factor,myNode->getR());
+void StandardModelNode::add_R(double factor) {
+  if (myNode->existsLoad()) myVector->add_cV(factor, myNode->getR());
 }

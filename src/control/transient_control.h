@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,25 +28,24 @@
 
 #include "control/control.h"
 
-class TransientControl :public Control
-{
-protected:
-	Vector u,v,a,ut,vt,at;
-	double c[3];
-public:
+class TransientControl :public Control {
+ protected:
+  Vector u, v, a, ut, vt, at;
+  double c[3];
+  public:
 
-	// Constructors and destructor
-	TransientControl();
-	virtual ~TransientControl();
+  // Constructors and destructor
+  TransientControl();
+  virtual ~TransientControl();
 
-	// Form tangent and residuals
-	virtual void formElementalTangent(ModelElement* pModelElement);
-	virtual void formElementalResidual(ModelElement* pModelElement,double time=0.);
-	virtual void formNodalResidual(ModelNode* pModelNode);
-	virtual void formResidual(double factor);
-	
-	virtual void init();
-	virtual void commit();
-	virtual void rollback();
+  // Form tangent and residuals
+  virtual void formElementalTangent(ModelElement* pModelElement);
+  virtual void formElementalResidual(ModelElement* pModelElement, double time = 0.);
+  virtual void formNodalResidual(ModelNode* pModelNode);
+  virtual void formResidual(double factor);
+  
+  virtual void init();
+  virtual void commit();
+  virtual void rollback();
 };
-#endif //NEMESIS_CONTROL_TRANSIENT_CONTROL_H_
+#endif  // NEMESIS_CONTROL_TRANSIENT_CONTROL_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,11 +28,10 @@
 
 #include "reorderer/reorderer.h"
 
-class ForwardCuthillMckee: public Reorderer
-{
-public:
-	ForwardCuthillMckee();
-	~ForwardCuthillMckee();
-	int getPerm(std::vector<int>& perm);
+class ForwardCuthillMckee: public Reorderer {
+  public:
+  ForwardCuthillMckee();
+  ~ForwardCuthillMckee();
+  int getPerm(std::vector < int>& perm);
 };
-#endif //NEMESIS_REORDERER_FORWARD_CUTHILL_MCKEE_H_
+#endif  // NEMESIS_REORDERER_FORWARD_CUTHILL_MCKEE_H_

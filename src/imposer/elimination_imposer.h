@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -30,13 +30,12 @@
 #include "model/elimination_model_element.h"
 #include "model/elimination_model_node.h"
 
-class EliminationImposer: public Imposer
-{
-private:
-	IDContainer theNewDofs;
-public:
-	EliminationImposer();
-	~EliminationImposer();
-	int impose();
+class EliminationImposer: public Imposer {
+  private:
+  IDContainer theNewDofs;
+  public:
+  EliminationImposer();
+  ~EliminationImposer();
+  int impose();
 };
-#endif //NEMESIS_IMPOSER_ELIMINATION_IMPOSER_H_
+#endif  // NEMESIS_IMPOSER_ELIMINATION_IMPOSER_H_

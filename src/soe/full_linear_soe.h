@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,18 +28,17 @@
 
 #include "soe/soe.h"
 
-class FullLinearSOE: public SOE
-{
-public:
-	// Constructor and destructor
-	FullLinearSOE();
-	~FullLinearSOE();
+class FullLinearSOE: public SOE {
+  public:
+  // Constructor and destructor
+  FullLinearSOE();
+  ~FullLinearSOE();
 
-	int insertMatrixIntoA(const Matrix& Ke,const IDContainer& EFTable, 
-							double factor=1.0);
-	int solve();
-	void setTheSize();
-	void print();
-	int getEigenSign();
+  int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, 
+              double factor = 1.0);
+  int solve();
+  void setTheSize();
+  void print();
+  int getEigenSign();
 };
-#endif //NEMESIS_SOE_FULL_LINEAR_SOE_H_
+#endif  // NEMESIS_SOE_FULL_LINEAR_SOE_H_

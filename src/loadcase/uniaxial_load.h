@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,44 +31,41 @@
 /******************************************************************************
 * Uniaxial Load
 ******************************************************************************/
-class UniaxialLoad: public ElementalLoad
-{
-protected:
-	Vector myDirection;
-	Vector projections;
-	double L;
-public:
-	UniaxialLoad();
-	UniaxialLoad(int elemID,const char* dir);
-	~UniaxialLoad();
+class UniaxialLoad: public ElementalLoad {
+ protected:
+  Vector myDirection;
+  Vector projections;
+  double L;
+  public:
+  UniaxialLoad();
+  UniaxialLoad(int elemID, const char* dir);
+  ~UniaxialLoad();
 };
 
 /******************************************************************************
 * Beam load point
 ******************************************************************************/
-class BeamLoadPoint: public UniaxialLoad
-{
-private:
-	double a0;
-	double p0;
-public:
-	BeamLoadPoint();
-	BeamLoadPoint(int elemID,const char* dir,double a0,double p0);
- 	~BeamLoadPoint();
-	const Vector& getP();
+class BeamLoadPoint: public UniaxialLoad {
+  private:
+  double a0;
+  double p0;
+  public:
+  BeamLoadPoint();
+  BeamLoadPoint(int elemID, const char* dir, double a0, double p0);
+  ~BeamLoadPoint();
+  const Vector& getP();
 };
 
 /******************************************************************************
 * Beam load uniform
 ******************************************************************************/
-class BeamLoadUniform: public UniaxialLoad
-{
-private:
-	double p0;
-public:
-	BeamLoadUniform();
-	BeamLoadUniform(int elemID,const char* dir,double p0);
- 	~BeamLoadUniform();
+class BeamLoadUniform: public UniaxialLoad {
+  private:
+  double p0;
+  public:
+  BeamLoadUniform();
+  BeamLoadUniform(int elemID, const char* dir, double p0);
+  ~BeamLoadUniform();
     const Vector& getP();
 };
-#endif //NEMESIS_LOADCASE_UNIAXIAL_LOAD_H_
+#endif  // NEMESIS_LOADCASE_UNIAXIAL_LOAD_H_

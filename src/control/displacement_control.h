@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -36,8 +36,8 @@
  * Analysis of Solids and Strucures", Vol.1.\n
  * Auto incrementation is done here similarly to that used in LoadControl, i.e.
  * \f[\Delta u_{n}=\Delta u_{0}
- *						\left(
- *						\frac{I_d}{I_o}
+ *            \left(
+ *            \frac{I_d}{I_o}
  *                      \right)^n
  * \f]
  * \f$I_d\f$ is the desired number of
@@ -48,23 +48,22 @@
  * max\f$\Delta u\f$. By setting those equal to \f$\Delta u_0\f$, then no 
  * auto-incrementation takes place and \f$\Delta u=\Delta u_0\f$. 
  */
-class DisplacementControl :public StaticControl
-{
-private:
-	double DeltaU;				///< Current Delta u for this step
-	double Du_k;				///< Accumulative Delta u at k
-	double duT_k;				///< Tangent delta u at k
-	int theNodeID;				///< The Node that determines the Du
-	int theDofID;				///< The local Dof that determines the Du
-	int theRefDof;				///< From Node and Dof comes the global dof
-public:
-	DisplacementControl(int nodeID,int dofID,
-		double Du0,double minDu,double maxDu,int IterDesired,double n,double DeltaTime);
-	~DisplacementControl();
+class DisplacementControl :public StaticControl {
+  private:
+  double DeltaU;        ///< Current Delta u for this step
+  double Du_k;        ///< Accumulative Delta u at k
+  double duT_k;       ///< Tangent delta u at k
+  int theNodeID;        ///< The Node that determines the Du
+  int theDofID;       ///< The local Dof that determines the Du
+  int theRefDof;        ///< From Node and Dof comes the global dof
+  public:
+  DisplacementControl(int nodeID, int dofID,
+    double Du0, double minDu, double maxDu, int IterDesired, double n, double DeltaTime);
+  ~DisplacementControl();
 
-	// Methods for incremental/iterative algorithms
-	void predict();
-	void correct();
+  // Methods for incremental/iterative algorithms
+  void predict();
+  void correct();
 };
 
-#endif //NEMESIS_CONTROL_DISPLACEMENT_CONTROL_H_
+#endif  // NEMESIS_CONTROL_DISPLACEMENT_CONTROL_H_

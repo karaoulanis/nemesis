@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,27 +29,26 @@
 #include "elements/element.h"
 #include "material/uniaxial_material.h"
 
-class Beam2e: public Element
-{
-protected:
-	double cosX[2];
-	int mySecID;
-	CrossSection* mySection;
-	double L;
-	UniaxialMaterial* myUniMaterial;
-public:
-	Beam2e();
-	Beam2e(int ID,int Node_1,int Node_2,int matID,int secID);	
-	~Beam2e();
+class Beam2e: public Element {
+ protected:
+  double cosX[2];
+  int mySecID;
+  CrossSection* mySection;
+  double L;
+  UniaxialMaterial* myUniMaterial;
+  public:
+  Beam2e();
+  Beam2e(int ID, int Node_1, int Node_2, int matID, int secID); 
+  ~Beam2e();
 
-	const Matrix& getK();
+  const Matrix& getK();
     const Matrix& getM();
-	const Vector& getR();
-	const Vector& getRgrad();
+  const Vector& getR();
+  const Vector& getRgrad();
 
-	bool checkIfAllows(FEObject* /*f*/)		{return true;}
-	void update()						{return;}
-	void commit()						{return;}
-	void recoverStresses();
+  bool checkIfAllows(FEObject* /*f*/)   {return true;}
+  void update()           {return;}
+  void commit()           {return;}
+  void recoverStresses();
 };
-#endif //NEMESIS_ELEMENTS_BEAM2E_H_
+#endif  // NEMESIS_ELEMENTS_BEAM2E_H_

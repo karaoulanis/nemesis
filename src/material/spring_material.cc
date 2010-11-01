@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,33 +25,29 @@
 
 #include "material/spring_material.h"
 
-SpringMaterial::SpringMaterial()
-{
+SpringMaterial::SpringMaterial() {
 }
 SpringMaterial::SpringMaterial(int ID)
-:Material(ID,0.,0.)
-{
-	// Initialize vectors
-	nDim=pD->getnDim();
-	sTrial.resize(nDim,0.);
-	sConvg.resize(nDim,0.);
-	eTrial.resize(nDim,0.);
-	eTotal.resize(nDim,0.);
-	Ct.resize(3,3,0.);
+:Material(ID, 0., 0.) {
+  // Initialize vectors
+  nDim = pD->getnDim();
+  sTrial.resize(nDim, 0.);
+  sConvg.resize(nDim, 0.);
+  eTrial.resize(nDim, 0.);
+  eTotal.resize(nDim, 0.);
+  Ct.resize(3, 3, 0.);
 }
 /**
  */
-const Matrix& SpringMaterial::getC()
-{
-	return Ct;
+const Matrix& SpringMaterial::getC() {
+  return Ct;
 }
 /**
  */
-void SpringMaterial::commit()
-{
-	sConvg=sTrial;
-	eTotal=eTrial;
-	this->track();
+void SpringMaterial::commit() {
+  sConvg = sTrial;
+  eTotal = eTrial;
+  this->track();
 }
 /**
  * Add a record to the tracker.
@@ -60,13 +56,12 @@ void SpringMaterial::commit()
  * The domain should be already updated!
  * @todo
  */
-void SpringMaterial::track()
-{
-	if(myTracker==0) return;
-	ostringstream s;
-	s<<"DATA "	<<' ';
-//	s<<"sigm "	<<1020<<' '<<sConvg<<' ';
-//	s<<"epst "	<<1020<<' '<<eTotal<<' ';
-	s<<"END "<<' ';
-	myTracker->track(pD->getLambda(),pD->getTimeCurr(),s.str());
+void SpringMaterial::track() {
+  if (myTracker == 0) return;
+  ostringstream s;
+  s << "DATA "  <<' ';
+//  s << "sigm "  <<1020<<' '<<sConvg<<' ';
+//  s << "epst "  <<1020<<' '<<eTotal<<' ';
+  s << "END "<<' ';
+  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,14 +28,13 @@
 
 #include "numeric/matrix.h"
 
-class Hardening
-{
-private:
-public:
-	Hardening();
-	double geth(const Vector& v);
-	const Vector& gethds(const Vector& sigma,const double kappa);
-	double gethdk(const Vector& sigma,const double kappa);
+class Hardening {
+  private:
+  public:
+  Hardening();
+  double geth(const Vector& v);
+  const Vector& gethds(const Vector& sigma, const double kappa);
+  double gethdk(const Vector& sigma, const double kappa);
 };
 
-#endif //NEMESIS_MATERIAL_HARDENING_H_
+#endif  // NEMESIS_MATERIAL_HARDENING_H_

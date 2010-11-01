@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,31 +31,30 @@
 /**
  * The Single Dof Material Class.                                                
  */
-class SpringMaterial: public Material
-{
-protected:
-	Vector sTrial;
-	Vector sConvg;
-	Vector eTrial;
-	Vector eTotal;
-	Matrix Ct;
-	int nDim;
-public:
-	SpringMaterial();
-	SpringMaterial(int ID);
+class SpringMaterial: public Material {
+ protected:
+  Vector sTrial;
+  Vector sConvg;
+  Vector eTrial;
+  Vector eTotal;
+  Matrix Ct;
+  int nDim;
+  public:
+  SpringMaterial();
+  SpringMaterial(int ID);
 
-	// Get clone
-	virtual SpringMaterial* getClone()=0;
-	virtual void setStrain(const Vector& De)=0;
+  // Get clone
+  virtual SpringMaterial* getClone()=0;
+  virtual void setStrain(const Vector& De)=0;
 
-	const Matrix& getC();
-	void commit();
-	inline void setStress(const Vector& s)	{sTrial=s;		}
-	inline void addStress(const Vector& s)	{sTrial+=s;		}
-	inline const Vector& getStress()		{return sTrial;	}
+  const Matrix& getC();
+  void commit();
+  inline void setStress(const Vector& s)  {sTrial = s;    }
+  inline void addStress(const Vector& s)  {sTrial+=s;   }
+  inline const Vector& getStress()    {return sTrial; }
 
-	// Tracker member functions
-	void track();
+  // Tracker member functions
+  void track();
 };
 
-#endif //NEMESIS_MATERIAL_SPRING_MATERIAL_H_
+#endif  // NEMESIS_MATERIAL_SPRING_MATERIAL_H_

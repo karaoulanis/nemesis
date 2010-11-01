@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,27 +25,23 @@
 
 #include "loadcase/elemental_load.h"
 
-Vector ElementalLoad::P(0,0.);
+Vector ElementalLoad::P(0, 0.);
 
 /**
  * Default constructor.
  */
-ElementalLoad::ElementalLoad()
-{
+ElementalLoad::ElementalLoad() {
 }
 /**
  * Constructor.
  * Set the the Element ID and the LoadType. 
  * @param elemID    The id of the Element.
  */
-ElementalLoad::ElementalLoad(int elemID)
-{
-	myElement=pD->get<Element>(pD->getElements(),elemID);
+ElementalLoad::ElementalLoad(int elemID) {
+  myElement = pD->get < Element>(pD->getElements(), elemID);
 }
-ElementalLoad::~ElementalLoad()
-{
+ElementalLoad::~ElementalLoad() {
 }
-void ElementalLoad::apply(double fact,double /*t*/)
-{
-	myElement->addLoad(this->getP(),fact);
+void ElementalLoad::apply(double fact, double /*t*/) {
+  myElement->addLoad(this->getP(), fact);
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,13 +31,12 @@
 // Forward declarations
 class Analysis;
 
-class AnalysisObject: public FEObject
-{
-protected:
-	static Analysis* pA;
-public:
-	AnalysisObject();
-	virtual ~AnalysisObject();
-	void setAnalysis(Analysis* pAnalysis);
+class AnalysisObject: public FEObject {
+ protected:
+  static Analysis* pA;
+  public:
+  AnalysisObject();
+  virtual ~AnalysisObject();
+  void setAnalysis(Analysis* pAnalysis);
 };
-#endif //NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_
+#endif  // NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,14 +28,13 @@
 
 #include "reorderer/reorderer.h"
 
-class ReverseSloan: public Reorderer
-{
-private:
-	double weight1;
-	double weight2;
-public:
-	ReverseSloan(double w1=0.5,double w2=0.5);
-	~ReverseSloan();
-	int getPerm(std::vector<int>& perm);
+class ReverseSloan: public Reorderer {
+  private:
+  double weight1;
+  double weight2;
+  public:
+  ReverseSloan(double w1 = 0.5, double w2 = 0.5);
+  ~ReverseSloan();
+  int getPerm(std::vector < int>& perm);
 };
-#endif //NEMESIS_REORDERER_REVERSE_SLOAN_H_
+#endif  // NEMESIS_REORDERER_REVERSE_SLOAN_H_

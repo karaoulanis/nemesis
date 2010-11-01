@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,24 +28,23 @@
 
 #include "elements/quad4.h"
 
-class Quad4d: public Quad4
-{
-private:
-	static double shp[4][3][4];
-	static double detJ[4];
-	static std::vector<int> perm;
-public:
-	// Constructors and Destructor
-	Quad4d();
-	Quad4d(int ID,int Node_1,int Node_2,int Node_3,int Node_4,int MatID);
-	~Quad4d();
-	
-	const Matrix& getK();
+class Quad4d: public Quad4 {
+  private:
+  static double shp[4][3][4];
+  static double detJ[4];
+  static std::vector < int > perm;
+  public:
+  // Constructors and Destructor
+  Quad4d();
+  Quad4d(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
+  ~Quad4d();
+  
+  const Matrix& getK();
     const Matrix& getM();
-	const Vector& getR();
-	void getB(Matrix& B,int node,int gPoint);
-	void shapeFunctions();
-	void update();
+  const Vector& getR();
+  void getB(Matrix& B, int node, int gPoint);
+  void shapeFunctions();
+  void update();
 };
 
-#endif //NEMESIS_ELEMENTS_QUAD4D_H_
+#endif  // NEMESIS_ELEMENTS_QUAD4D_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,17 +31,16 @@
 /**
  * The Elastic Class.
  */
-class MultiaxialElastic: public MultiaxialMaterial
-{
-public:
-	MultiaxialElastic();
-	MultiaxialElastic(int ID,double E,double nu,double rho,double aT,
-		double kx,double ky,double kz);
-	MultiaxialMaterial* getClone();
-	void setStrain(const Vector& De);
-	const Matrix& getC();
-	void commit();
-	// Tracker member functions
-	void track();
+class MultiaxialElastic: public MultiaxialMaterial {
+  public:
+  MultiaxialElastic();
+  MultiaxialElastic(int ID, double E, double nu, double rho, double aT,
+    double kx, double ky, double kz);
+  MultiaxialMaterial* getClone();
+  void setStrain(const Vector& De);
+  const Matrix& getC();
+  void commit();
+  // Tracker member functions
+  void track();
 };
-#endif //NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_H_
+#endif  // NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_H_

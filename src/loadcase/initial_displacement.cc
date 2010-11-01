@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,23 +25,20 @@
 
 #include "loadcase/initial_displacement.h"
 
-InitialDisplacement::InitialDisplacement()
-{
+InitialDisplacement::InitialDisplacement() {
 }
-InitialDisplacement::InitialDisplacement(int nodeID,int dofID,double u)
-	:InitialCondition()
-{
-	myTag=TAG_INITIAL_DISPLACEMENT;
-	// Retrieve node from the domain
-	myNode=pD->get<Node>(pD->getNodes(),nodeID);
-	dof=dofID-1;
-	// Check if dof is activated
-	if(myNode->getActivatedDof(dof)<0) 
-		throw SException("[nemesis:%d] %s",9999,"Dof is not activated.");
-	disp=u;
+InitialDisplacement::InitialDisplacement(int nodeID, int dofID, double u)
+  :InitialCondition() {
+  myTag = TAG_INITIAL_DISPLACEMENT;
+  // Retrieve node from the domain
+  myNode = pD->get < Node>(pD->getNodes(), nodeID);
+  dof = dofID-1;
+  // Check if dof is activated
+  if (myNode->getActivatedDof(dof)<0) 
+    throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
+  disp = u;
 }
-int InitialDisplacement::apply()
-{
-	myNode->addInitialDisp(dof,disp);
-	return 0;
+int InitialDisplacement::apply() {
+  myNode->addInitialDisp(dof, disp);
+  return 0;
 }

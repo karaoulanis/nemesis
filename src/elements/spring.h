@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,34 +29,33 @@
 #include "elements/element.h"
 #include "material/spring_material.h"
 
-class Spring: public Element
-{
-protected:
-	int nDim;
-	//double gap;
-	SpringMaterial* mySpringMaterial;
-	Matrix T;
-public:
-	// Constructors and Destructor
-	Spring();
-	Spring(int ID,int Node_1,int Node_2,int matID,
-		   double xp1=1,double xp2=0,double xp3=0,
-		   double yp1=0,double yp2=1,double yp3=0);
-	~Spring();
-	void update();
-	void commit();
-	bool checkIfAllows(FEObject* f);
-	void recoverStresses();
-	
+class Spring: public Element {
+ protected:
+  int nDim;
+  //double gap;
+  SpringMaterial* mySpringMaterial;
+  Matrix T;
+  public:
+  // Constructors and Destructor
+  Spring();
+  Spring(int ID, int Node_1, int Node_2, int matID,
+       double xp1 = 1, double xp2 = 0, double xp3 = 0,
+       double yp1 = 0, double yp2 = 1, double yp3 = 0);
+  ~Spring();
+  void update();
+  void commit();
+  bool checkIfAllows(FEObject* f);
+  void recoverStresses();
+  
     const Matrix& getM();
     const Matrix& getK();
-	const Vector& getR();
-	const Vector& getReff();
-	const Vector& getRgrad();
+  const Vector& getR();
+  const Vector& getReff();
+  const Vector& getRgrad();
 
-	// Tracker member functions
-	void addTracker(int index);
-	Tracker* getTracker(int index);
-	void track();
+  // Tracker member functions
+  void addTracker(int index);
+  Tracker* getTracker(int index);
+  void track();
 };
-#endif //NEMESIS_ELEMENTS_SPRING_H_
+#endif  // NEMESIS_ELEMENTS_SPRING_H_

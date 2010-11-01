@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,7 +27,7 @@
 #define NEMESIS_CONSTRAINTS_CONSTRAINT_H_
 
 // C++ system files
-#include <vector>
+#include < vector>
 
 // Project files
 #include "domain/domain.h"
@@ -38,46 +38,44 @@
 class Domain;
 class Node;
 
-struct cDof
-{
-	Node* pNode;
-	int dof;
-	double coeff;
+struct cDof {
+  Node* pNode;
+  int dof;
+  double coeff;
 };
 
 /**
  * The Constraint class.
  */
-class Constraint: public DomainObject
-{
-protected:
-	static int nConstraints;
+class Constraint: public DomainObject {
+ protected:
+  static int nConstraints;
 
-	std::vector<cDof> theCDofs;
-	double cVal;
-	double fTrial;
-	double fConvg;
-public:
-	// Constructors
-	Constraint();
+  std::vector < cDof > theCDofs;
+  double cVal;
+  double fTrial;
+  double fConvg;
+  public:
+  // Constructors
+  Constraint();
 
-	void setcDof(int NodeID,int dof,double coeff);
-	void setcVal(double val);
+  void setcDof(int NodeID, int dof, double coeff);
+  void setcVal(double val);
 
-	int getncDofs();
-	const cDof& getcDof(int i);
-	virtual double getcVal(double time=0.);
+  int getncDofs();
+  const cDof& getcDof(int i);
+  virtual double getcVal(double time = 0.);
 
-	void incTrialForce(double f);
-	double getDisp(int i);
-	double getVelc(int i);
-	double getDispConvg(int i);
-	double getDispTrial(int i);
-	double getVelcConvg(int i);
-	double getAcclConvg(int i);
-	double getF();
+  void incTrialForce(double f);
+  double getDisp(int i);
+  double getVelc(int i);
+  double getDispConvg(int i);
+  double getDispTrial(int i);
+  double getVelcConvg(int i);
+  double getAcclConvg(int i);
+  double getF();
 
-	void update(double f);
-	void commit();
+  void update(double f);
+  void commit();
 };
-#endif //NEMESIS_CONSTRAINTS_CONSTRAINT_H_
+#endif  // NEMESIS_CONSTRAINTS_CONSTRAINT_H_

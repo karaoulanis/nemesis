@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,18 +25,15 @@
 
 #include "loadcase/nodal_load_sin.h"
 
-NodalLoadSin::NodalLoadSin()
-{
+NodalLoadSin::NodalLoadSin() {
 }
-NodalLoadSin::NodalLoadSin(int nodeID,int DofID,double a_,double omega_,double phi_)
-	:NodalLoad(nodeID,DofID)
-{
-	myTag=TAG_NODAL_LOAD_SIN;
-	a=a_;
-	omega=omega_;
-	phi=phi_;
+NodalLoadSin::NodalLoadSin(int nodeID, int DofID, double a_, double omega_, double phi_)
+  :NodalLoad(nodeID, DofID) {
+  myTag = TAG_NODAL_LOAD_SIN;
+  a = a_;
+  omega = omega_;
+  phi = phi_;
 }
-double NodalLoadSin::getValue(double time)
-{
-	return a*sin(omega*time+phi);
+double NodalLoadSin::getValue(double time) {
+  return a*sin(omega*time+phi);
 }

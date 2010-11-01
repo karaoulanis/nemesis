@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -30,12 +30,11 @@
 #include "model/lagrange_model_element.h"
 #include "model/lagrange_model_node.h"
 
-class LagrangeImposer: public Imposer
-{
-private:
+class LagrangeImposer: public Imposer {
+  private:
 
-public:
-	LagrangeImposer();
-	int impose();
+  public:
+  LagrangeImposer();
+  int impose();
 };
-#endif //NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_
+#endif  // NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_

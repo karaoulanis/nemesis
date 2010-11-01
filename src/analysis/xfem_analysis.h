@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -33,12 +33,11 @@
 #include "soe/full_linear_soe.h"
 
 class Analysis;
-class XFemAnalysis :public AnalysisType
-{
-public:
-	XFemAnalysis();
-	bool checkIfAllows(FEObject* f);
-	int run(int nLC,int nLoadSteps);
+class XFemAnalysis :public AnalysisType {
+  public:
+  XFemAnalysis();
+  bool checkIfAllows(FEObject* f);
+  int run(int nLC, int nLoadSteps);
 };
 
-#endif //NEMESIS_ANALYSIS_XFEM_ANALYSIS_H_
+#endif  // NEMESIS_ANALYSIS_XFEM_ANALYSIS_H_

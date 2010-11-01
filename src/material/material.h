@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -36,30 +36,29 @@ class Domain;
 /**
  * The Material Class.                                                
  */
-class Material: public DomainObject
-{
-protected:
-	static int counter;
-	int index;
-	Vector MatParams;
-	Tracker* myTracker;
-	double x,y,z;
-public:
-	Material();
-	Material(int ID,double rho,double aT);
-	virtual ~Material();
+class Material: public DomainObject {
+ protected:
+  static int counter;
+  int index;
+  Vector MatParams;
+  Tracker* myTracker;
+  double x, y, z;
+  public:
+  Material();
+  Material(int ID, double rho, double aT);
+  virtual ~Material();
 
-	void setX(double x1_,double x2_=0,double x3_=0);
-	inline void   setParam(int i,double d)	{MatParams[i]=d;}
-	inline double getParam(int i)			{return MatParams[i];}
-	inline double getRho()					{return MatParams[30];}
-	inline double getaT()					{return MatParams[31];}
-	virtual void commit()=0;
+  void setX(double x1_, double x2_ = 0, double x3_ = 0);
+  inline void   setParam(int i, double d)  {MatParams[i]=d;}
+  inline double getParam(int i)     {return MatParams[i];}
+  inline double getRho()          {return MatParams[30];}
+  inline double getaT()         {return MatParams[31];}
+  virtual void commit()=0;
 
-	// Tracker member functions
-	void addTracker();
-	Tracker* getTracker();
-	virtual void track();
+  // Tracker member functions
+  void addTracker();
+  Tracker* getTracker();
+  virtual void track();
 };
 
-#endif //NEMESIS_MATERIAL_MATERIAL_H_
+#endif  // NEMESIS_MATERIAL_MATERIAL_H_

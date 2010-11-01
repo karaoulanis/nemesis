@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,23 +34,21 @@
 using std::string;
 using std::vector;
 
-class Tracker
-{
-private:
-	struct TrackerRecord
-	{
-		double lambda;
-		double time;
-		string data;
-	};
-	vector<TrackerRecord> myRecords;
-public:
-	Tracker();
-	virtual ~Tracker();
-	int getSteps();
+class Tracker {
+  private:
+  struct TrackerRecord {
+    double lambda;
+    double time;
+    string data;
+  };
+  vector < TrackerRecord > myRecords;
+  public:
+  Tracker();
+  virtual ~Tracker();
+  int getSteps();
 
-	void track(double lambda_,double time_,string data_);
-	void save(std::ostream& s);
+  void track(double lambda_, double time_, string data_);
+  void save(std::ostream& s);
 };
 
-#endif //NEMESIS_TRACKER_TRACKER_H_
+#endif  // NEMESIS_TRACKER_TRACKER_H_

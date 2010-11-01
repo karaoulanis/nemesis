@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,16 +28,15 @@
 
 #include "elements/element.h"
 
-class ElementSensitivityParameter: public DomainObject
-{
-private:
-	static int nSensitivityParameters;
-	Element* myElement;
-	int parameter;
-public:
-	ElementSensitivityParameter();
-	ElementSensitivityParameter(int elemID,int param);
-	int apply();
+class ElementSensitivityParameter: public DomainObject {
+  private:
+  static int nSensitivityParameters;
+  Element* myElement;
+  int parameter;
+  public:
+  ElementSensitivityParameter();
+  ElementSensitivityParameter(int elemID, int param);
+  int apply();
 };
 
-#endif //NEMESIS_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_
+#endif  // NEMESIS_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_

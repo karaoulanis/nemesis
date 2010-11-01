@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -29,24 +29,23 @@
 #include "elements/element.h"
 #include "material/sdof_material.h"
 
-class SDofElement: public Element
-{
-private:
-	SDofMaterial* mySDofMaterial;
-public:
-	// Constructors and Destructor
-	SDofElement();
-	SDofElement(int ID,int NodeID,int dofID,int matID);
-	~SDofElement();
-	
+class SDofElement: public Element {
+  private:
+  SDofMaterial* mySDofMaterial;
+  public:
+  // Constructors and Destructor
+  SDofElement();
+  SDofElement(int ID, int NodeID, int dofID, int matID);
+  ~SDofElement();
+  
     const Matrix& getK();
-	const Matrix& getM();
+  const Matrix& getM();
     const Vector& getR();
-	
-	
-	bool checkIfAllows(FEObject* f);
-	void update() {return;}
-	void commit() {return;}
+  
+  
+  bool checkIfAllows(FEObject* f);
+  void update() {return;}
+  void commit() {return;}
 };
 
-#endif //NEMESIS_ELEMENTS_SDOF_ELEMENT_H_
+#endif  // NEMESIS_ELEMENTS_SDOF_ELEMENT_H_

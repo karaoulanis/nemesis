@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,26 +31,25 @@
 /**
  * The Tresca Material Class.                                                
  */
-class Tresca: public MultiaxialMaterial
-{
-protected:
-	MultiaxialMaterial* myElastic;
-	static Matrix C;
-	static Matrix C3;
-	bool plastic;
-	int inaccurate;
-public:
-	Tresca();
-	Tresca(int ID,int elasticID,double sy,double kx,double ky,double kz);
-	~Tresca();
-	
-	MultiaxialMaterial* getClone();
-	void setStrain(const Vector& De);
-	void commit();
-	const Matrix& getC();
-	bool isPlastic();
+class Tresca: public MultiaxialMaterial {
+ protected:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  static Matrix C3;
+  bool plastic;
+  int inaccurate;
+  public:
+  Tresca();
+  Tresca(int ID, int elasticID, double sy, double kx, double ky, double kz);
+  ~Tresca();
+  
+  MultiaxialMaterial* getClone();
+  void setStrain(const Vector& De);
+  void commit();
+  const Matrix& getC();
+  bool isPlastic();
 
-	// Tracker member functions
-	void track();
+  // Tracker member functions
+  void track();
 };
-#endif //NEMESIS_MATERIAL_TRESCA_H_
+#endif  // NEMESIS_MATERIAL_TRESCA_H_

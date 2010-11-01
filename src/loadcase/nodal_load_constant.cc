@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -25,16 +25,13 @@
 
 #include "loadcase/nodal_load_constant.h"
 
-NodalLoadConstant::NodalLoadConstant()
-{
+NodalLoadConstant::NodalLoadConstant() {
 }
-NodalLoadConstant::NodalLoadConstant(int nodeID,int DofID,double val)
-	:NodalLoad(nodeID,DofID)
-{
-	myTag=TAG_NODAL_LOAD_CONSTANT;
-	theValue=val;
+NodalLoadConstant::NodalLoadConstant(int nodeID, int DofID, double val)
+  :NodalLoad(nodeID, DofID) {
+  myTag = TAG_NODAL_LOAD_CONSTANT;
+  theValue = val;
 }
-double NodalLoadConstant::getValue(double /*time*/)
-{
-	return theValue;
+double NodalLoadConstant::getValue(double /*time*/) {
+  return theValue;
 }

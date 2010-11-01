@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,9 +27,9 @@
 #define NEMESIS_SOE_SOE_H_
 
 // C++ system files
-#include <cmath>
-#include <iostream>
-#include <valarray>
+#include < cmath>
+#include < iostream>
+#include < valarray>
 
 // Project files (alphabetically)
 #include "analysis/analysis.h"
@@ -43,43 +43,42 @@
 class Analysis;
 class Model;
 
-class SOE: public AnalysisObject
-{
-protected:
-	int theSize;
-	valarray<double> A;
-	Vector X;
-	Vector B;
-	bool isLUFactored;
-	valarray<int> IPIV;
-public:
-	SOE();
-	virtual ~SOE();
+class SOE: public AnalysisObject {
+ protected:
+  int theSize;
+  valarray < double > A;
+  Vector X;
+  Vector B;
+  bool isLUFactored;
+  valarray < int > IPIV;
+  public:
+  SOE();
+  virtual ~SOE();
 
-	virtual int insertMatrixIntoA(const Matrix& Ke,const IDContainer& EFTable,
-								  double factor=1.0)=0;
-	virtual int insertVectorIntoB(const Vector& Ve,const IDContainer& EFTable,
-								  double factor=1.0);
-	virtual int insertMatrixIntoA(const Matrix& Be,const IDContainer& EFTable,
-								  const IDContainer& SFTable,double factor=1.0);
+  virtual int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
+                  double factor = 1.0)=0;
+  virtual int insertVectorIntoB(const Vector& Ve, const IDContainer& EFTable,
+                  double factor = 1.0);
+  virtual int insertMatrixIntoA(const Matrix& Be, const IDContainer& EFTable,
+                  const IDContainer& SFTable, double factor = 1.0);
 
-	virtual void zeroA();
-	virtual void zeroB();	
-	virtual void zeroX();
-	virtual void zero();
+  virtual void zeroA();
+  virtual void zeroB(); 
+  virtual void zeroX();
+  virtual void zero();
 
-	const Vector& getX();
-	const Vector& getB();
-	void addB(const Vector& v);
-	void setB(const Vector& v);
-	void setX(const Vector& v);
+  const Vector& getX();
+  const Vector& getB();
+  void addB(const Vector& v);
+  void setB(const Vector& v);
+  void setX(const Vector& v);
 
-	virtual void setTheSize()=0;
-	virtual int getEigenSign()=0;
-	virtual void print()=0;
-	virtual void printSolution();
+  virtual void setTheSize()=0;
+  virtual int getEigenSign()=0;
+  virtual void print()=0;
+  virtual void printSolution();
 
-	virtual int solve()=0;
-	int plotGraph(const char* s);
+  virtual int solve()=0;
+  int plotGraph(const char* s);
 };
-#endif //NEMESIS_SOE_SOE_H_
+#endif  // NEMESIS_SOE_SOE_H_

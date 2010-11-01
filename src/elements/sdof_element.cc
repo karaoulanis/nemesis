@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,48 +28,42 @@
 /**
  * Default constructor.
  */
-SDofElement::SDofElement()	
-{
+SDofElement::SDofElement()   {
 }
 /**
  * Constructor.
  */
-SDofElement::SDofElement(int ID,int NodeID,int dofID,int matID)	
-	:Element(ID,matID)
-{
-	// The dofs needed for this element
-	myNodalIDs.resize(1);
-	myNodalIDs[0]=NodeID;
-	myLocalNodalDofs.resize(1);
-	myLocalNodalDofs[0]=dofID-1;
-	// Handle common info
+SDofElement::SDofElement(int ID, int NodeID, int dofID, int matID) 
+  :Element(ID, matID) {
+  // The dofs needed for this element
+  myNodalIDs.resize(1);
+  myNodalIDs[0]=NodeID;
+  myLocalNodalDofs.resize(1);
+  myLocalNodalDofs[0]=dofID-1;
+  // Handle common info
     this->handleCommonInfo();
-	mySDofMaterial=static_cast<SDofMaterial*>(myMaterial)->getClone();
+  mySDofMaterial = static_cast < SDofMaterial*>(myMaterial)->getClone();
 }
-SDofElement::~SDofElement()
-{
+SDofElement::~SDofElement() {
 }
-const Matrix& SDofElement::getK()
-{
-	Matrix& K=*myMatrix;
-	double facK=1e-7;
-	if(myGroup->isActive()) facK=myGroup->getFacK();
-	K(0,0)=facK*(mySDofMaterial->getParam(0));
-	return K;
+const Matrix& SDofElement::getK() {
+  Matrix& K=*myMatrix;
+  double facK = 1e-7;
+  if (myGroup->isActive()) facK = myGroup->getFacK();
+  K(0, 0)=facK*(mySDofMaterial->getParam(0));
+  return K;
 }
-const Matrix& SDofElement::getM()
-{
-	Matrix& M=*myMatrix;
-	M(0,0)=mySDofMaterial->getRho();
-	return M;
+const Matrix& SDofElement::getM() {
+  Matrix& M=*myMatrix;
+  M(0, 0)=mySDofMaterial->getRho();
+  return M;
 }
 const Vector& SDofElement::getR()
-{	
-	Vector& R=*myVector;
-	R.clear();
-	return R;
+{ 
+  Vector& R=*myVector;
+  R.clear();
+  return R;
 }
-bool SDofElement::checkIfAllows(FEObject* /*f*/)
-{
-	return true;
+bool SDofElement::checkIfAllows(FEObject* /*f*/) {
+  return true;
 }
