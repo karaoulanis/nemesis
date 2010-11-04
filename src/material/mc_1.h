@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,17 +23,17 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_MC_1_H_
-#define NEMESIS_MATERIAL_MC_1_H_
+#ifndef SRC_MATERIAL_MC_1_H_
+#define SRC_MATERIAL_MC_1_H_
 
 #include "material/mc.h"
 
 class MC_1: public MC {
-  private:
+ private:
   void find_A(const Vector& s, double& A, double& dA, double& d2A);
   public:
   MC_1();
   MC_1(double c_, double phi_);
   ~MC_1();
 };
-#endif  // NEMESIS_MATERIAL_MC_1_H_
+#endif  // SRC_MATERIAL_MC_1_H_

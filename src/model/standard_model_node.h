@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,19 +23,19 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MODEL_STANDARD_MODEL_NODE_H_
-#define NEMESIS_MODEL_STANDARD_MODEL_NODE_H_
+#ifndef SRC_MODEL_STANDARD_MODEL_NODE_H_
+#define SRC_MODEL_STANDARD_MODEL_NODE_H_
 
 #include "model/model_node.h"
 
 class StandardModelNode :public ModelNode {
  protected:
-  public:
+ public:
   // Constructors
   StandardModelNode();
   StandardModelNode(const IDContainer& FTable, Node* pNode);
   ~StandardModelNode();
-  
+
   void add_R(double factor);
   void incTrialDisp(const Vector& du);
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
@@ -45,4 +45,4 @@ class StandardModelNode :public ModelNode {
   void commitSens(const Vector& X, int param);
 };
 
-#endif  // NEMESIS_MODEL_STANDARD_MODEL_NODE_H_
+#endif  // SRC_MODEL_STANDARD_MODEL_NODE_H_

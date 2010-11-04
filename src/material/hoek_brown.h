@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_HOEK_BROWN_H_
-#define NEMESIS_MATERIAL_HOEK_BROWN_H_
+#ifndef SRC_MATERIAL_HOEK_BROWN_H_
+#define SRC_MATERIAL_HOEK_BROWN_H_
 
 #include "material/multiaxial_elastic_plastic.h"
 
@@ -32,7 +32,7 @@
  * The Hoek-Brown Class.
  */
 class HoekBrown: public MultiaxialMaterial {
-  private:
+ private:
   MultiaxialMaterial* myElastic;
   static Matrix C;
   static Matrix C3;
@@ -40,14 +40,15 @@ class HoekBrown: public MultiaxialMaterial {
   int inaccurate;
 
   Vector f;
-  vector < Vector > dfds;
-  vector < Vector > dgds;
-  vector < Matrix > d2gdsds;
+  vector<Vector> dfds;
+  vector<Vector> dgds;
+  vector<Matrix> d2gdsds;
 
   double aTrial, aConvg;
-  public:
+ public:
   HoekBrown();
-  HoekBrown(int ID, int elasticID, double si, double sp, double mb, double mbb, double alpha);
+  HoekBrown(int ID, int elasticID, double si, double sp, double mb, double mbb,
+            double alpha);
   ~HoekBrown();
 
   MultiaxialMaterial* getClone();
@@ -64,4 +65,4 @@ class HoekBrown: public MultiaxialMaterial {
   // Tracker member functions
   void track();
 };
-#endif  // NEMESIS_MATERIAL_HOEK_BROWN_H_
+#endif  // SRC_MATERIAL_HOEK_BROWN_H_

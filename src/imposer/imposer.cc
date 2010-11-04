@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -51,18 +51,18 @@ int Imposer::createGlobalDofNumbering() {
   theNodalGlobalDofs.resize(nNodes);
   int k = 0;
   for (NodeIterator nIter = theDomain->getNodes().begin();
-    nIter != theDomain->getNodes().end();nIter++)
-  {
-    // Get the next node from the node container stored in the domain 
+          nIter != theDomain->getNodes().end(); nIter++) {
+    // Get the next node from the node container stored in the domain
     Node* pNode = nIter->second;
     // Store the nodal id
     myNodalIDs[k]=pNode->getID();
     // Sore the number of activated dofs
     int nActivatedDofs = pNode->getnActivatedDofs();
-    if (k == 0)  
+    if (k == 0) {
       theNodalGlobalDofs[0]=nActivatedDofs;
-    else    
+    } else {
       theNodalGlobalDofs[k]=theNodalGlobalDofs[k-1]+nActivatedDofs;
+    }
     k++;
   }
   return theNodalGlobalDofs[theNodalGlobalDofs.size()-1];
@@ -85,8 +85,8 @@ int Imposer::getGlobalDof(int NodeID, int localDof) {
   int index = Containers::index_find(myNodalIDs, NodeID);
   int globalDof = 0;
   if (index>0) globalDof = theNodalGlobalDofs[index-1];
-  Node* pNode = theDomain->get < Node>(theDomain->getNodes(), NodeID);
-  if (pNode->getActivatedDof(localDof)<0) return -1;
+  Node* pNode = theDomain->get<Node>(theDomain->getNodes(), NodeID);
+  if (pNode->getActivatedDof(localDof) < 0) return -1;
   globalDof+=pNode->getActivatedDof(localDof);
   return globalDof;
 }
@@ -105,8 +105,11 @@ const IDContainer Imposer::getGlobalDofs(int NodeID) {
     theDomain->get < Node>(theDomain->getNodes(), NodeID)->getnActivatedDofs();
   IDContainer globalDofs(nActivatedDofs);
   int startDof;
-  if (index == 0)  startDof = 0;
-  else      startDof = theNodalGlobalDofs[index-1];
+  if (index == 0) {
+    startDof = 0;
+  } else {
+    startDof = theNodalGlobalDofs[index-1];
+  }
   for (int i = 0;i < nActivatedDofs;i++) globalDofs[i]=startDof+i;
   return globalDofs;
 }

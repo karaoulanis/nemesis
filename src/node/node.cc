@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -37,8 +37,8 @@ Node::Node() {
  */
 Node::Node(int ID, double xc1, double xc2, double xc3)
 :DomainObject(ID),
- myActivatedDofs(MAX_NUMBER_OF_DOFS, -1),
- myConstrainedDofs(MAX_NUMBER_OF_DOFS, 0) {
+  myActivatedDofs(MAX_NUMBER_OF_DOFS, -1),
+  myConstrainedDofs(MAX_NUMBER_OF_DOFS, 0) {
   myTag = TAG_NODE;
   x1 = xc1;
   x2 = xc2;
@@ -88,16 +88,23 @@ const IDContainer& Node::getConnectedElements() const {
  * \param dof The dof that should be activated.
  */
 int Node::addDofToNode(int dof) {
-  if (myActivatedDofs.at(dof)<0)
-  {
+  if (myActivatedDofs.at(dof) < 0) {
+    ///@todo use resize(size, 0.)
     myActivatedDofs[dof]=nActivatedDofs++;
-    velcConvg.resize(nActivatedDofs); velcConvg.clear();
-    acclTrial.resize(nActivatedDofs); acclTrial.clear();
-    velcTrial.resize(nActivatedDofs); velcTrial.clear();
-    acclConvg.resize(nActivatedDofs); acclConvg.clear();
-    dispTrial.resize(nActivatedDofs); dispTrial.clear();
-    dispConvg.resize(nActivatedDofs); dispConvg.clear();
-    P.resize(nActivatedDofs);     P.clear();
+    velcConvg.resize(nActivatedDofs);
+    velcConvg.clear();
+    acclTrial.resize(nActivatedDofs);
+    acclTrial.clear();
+    velcTrial.resize(nActivatedDofs);
+    velcTrial.clear();
+    acclConvg.resize(nActivatedDofs);
+    acclConvg.clear();
+    dispTrial.resize(nActivatedDofs);
+    dispTrial.clear();
+    dispConvg.resize(nActivatedDofs);
+    dispConvg.clear();
+    P.resize(nActivatedDofs);
+    P.clear();
   }
   return 0;
 }
@@ -156,13 +163,13 @@ const Packet& Node::getPacket() {
   thePacket.dblArray[0]=x1;
   thePacket.dblArray[1]=x2;
   thePacket.dblArray[2]=x3;
-  for (unsigned i = 0;i < myActivatedDofs.size();i++)
-      if (myActivatedDofs[i]>=0)
-      {
-        thePacket.dblArray[i+3]=dispConvg[myActivatedDofs[i]];
-        thePacket.dblArray[i+3+MAX_NUMBER_OF_DOFS]=velcConvg[myActivatedDofs[i]];
-        thePacket.dblArray[i+3+2*MAX_NUMBER_OF_DOFS]=acclConvg[myActivatedDofs[i]];
-      }
+  for (unsigned i = 0;i < myActivatedDofs.size();i++) {
+    if (myActivatedDofs[i] >= 0) {
+      thePacket.dblArray[i+3]=dispConvg[myActivatedDofs[i]];
+      thePacket.dblArray[i+3+MAX_NUMBER_OF_DOFS]=velcConvg[myActivatedDofs[i]];
+      thePacket.dblArray[i+3+2*MAX_NUMBER_OF_DOFS]=acclConvg[myActivatedDofs[i]];
+    }
+  }
   if (avgStress>0) stress*=1.0/avgStress;
   for (int i = 0;i < 6;i++)
       thePacket.dblArray[i+3+3*MAX_NUMBER_OF_DOFS]=stress[i];
@@ -170,7 +177,7 @@ const Packet& Node::getPacket() {
 }
 void Node::setPacket(const Packet& p) {
   for (int i = 0; i < MAX_NUMBER_OF_DOFS; i++) {
-    if (myActivatedDofs[i]<0) continue;
+    if (myActivatedDofs[i] < 0) continue;
     dispConvg[myActivatedDofs[i]]=p.dblArray[i+3];
     velcConvg[myActivatedDofs[i]]=p.dblArray[i+3+MAX_NUMBER_OF_DOFS];
     acclConvg[myActivatedDofs[i]]=p.dblArray[i+3+2*MAX_NUMBER_OF_DOFS];
@@ -184,18 +191,18 @@ void Node::save(std::ostream& s) {
   crds[0]=x1;
   crds[1]=x2;
   crds[2]=x3;
-  s << "NODE "  <<' ';
-  s << "tag " <<1000<<' '<<myTag<<' ';
-  s << "id "  <<1000<<' '<<myID<<' ';
-  s << "crds "  <<' '<<crds;
-  s << "disp "  <<' '<<dispConvg;
-  s << "velc "  <<' '<<velcConvg;
-  s << "accl "  <<' '<<acclConvg;
-  s << "stress "<<' '<<stress;
-  s << "strain "<<' '<<strain;
-  s << "dsens  "<<' '<<dispSensi;
-  s << "eigen  "<<' '<<eigenVecs;
-  s << "END "<<' ';
+  s << "NODE "   << ' ';
+  s << "tag "    << 1000 << ' ' << myTag << ' ';
+  s << "id "     << 1000 << ' ' << myID  << ' ';
+  s << "crds "   << ' ' << crds;
+  s << "disp "   << ' ' << dispConvg;
+  s << "velc "   << ' ' << velcConvg;
+  s << "accl "   << ' ' << acclConvg;
+  s << "stress " << ' ' << stress;
+  s << "strain " << ' ' << strain;
+  s << "dsens  " << ' ' << dispSensi;
+  s << "eigen  " << ' ' << eigenVecs;
+  s << "END "    << ' ';
 }
 void Node::incTrialDisp(const Vector& du) {
   dispTrial+=du;
@@ -299,11 +306,11 @@ Tracker* Node::getTracker() {
 void Node::track() {
   if (myTracker == 0) return;
   ostringstream s;
-  s << "DATA "  <<' ';
-  s << "disp "  <<' '<<dispConvg;
-  s << "velc "  <<' '<<velcConvg;
-  s << "accl "  <<' '<<acclConvg;
-  s << "END "<<' ';
+  s << "DATA " << ' ';
+  s << "disp " << ' ' << dispConvg;
+  s << "velc " << ' ' << velcConvg;
+  s << "accl " << ' ' << acclConvg;
+  s << "END "  <<' ';
   myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
 }
 // Sensitivity functions

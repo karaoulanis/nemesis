@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_REORDERER_REVERSE_CUTHILL_MCKEE_H_
-#define NEMESIS_REORDERER_REVERSE_CUTHILL_MCKEE_H_
+#ifndef SRC_REORDERER_REVERSE_CUTHILL_MCKEE_H_
+#define SRC_REORDERER_REVERSE_CUTHILL_MCKEE_H_
 
 #include "reorderer/reorderer.h"
 
@@ -34,4 +34,4 @@ class ReverseCuthillMckee: public Reorderer {
   ~ReverseCuthillMckee();
   int getPerm(std::vector < int>& perm);
 };
-#endif  // NEMESIS_REORDERER_REVERSE_CUTHILL_MCKEE_H_
+#endif  // SRC_REORDERER_REVERSE_CUTHILL_MCKEE_H_

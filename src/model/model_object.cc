@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -40,8 +40,7 @@ ModelObject::ModelObject() {
 ModelObject::ModelObject(const IDContainer& FTable) {
 //  :FEObject()
   // Create static matrices and static vectors
-  if (allocatedArrays == false)
-  {
+  if (allocatedArrays == false) {
     theStaticVectors = new Vector*[64];
     theStaticMatrices = new Matrix*[64];
     for (int i = 0; i < 64; i++) {
@@ -56,8 +55,7 @@ ModelObject::ModelObject(const IDContainer& FTable) {
  * Destructor.
  */
 ModelObject::~ModelObject() {
-  if (allocatedArrays == true)
-  {
+  if (allocatedArrays == true) {
     for (int i = 0; i < 64; i++) {
       delete theStaticVectors[i];
       delete theStaticMatrices[i];

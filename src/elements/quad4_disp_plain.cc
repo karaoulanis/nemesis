@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,8 +27,9 @@
 
 Quad4DispPlain::Quad4DispPlain() {
 }
-Quad4DispPlain::Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID,
-                int integrationRuleXi, int integrationRuleEta)
+Quad4DispPlain::Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3,
+                               int Node_4, int MatID,
+                               int integrationRuleXi, int integrationRuleEta)
 :Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, integrationRuleXi, integrationRuleEta) {
 }
 Quad4DispPlain::~Quad4DispPlain() {
@@ -73,7 +74,7 @@ const Matrix& Quad4DispPlain::getM() {
   double volume = 0.;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
-    volume+=detJ*(pD->getFac())*(myMatPoints[k]->get_w()); 
+    volume+=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;

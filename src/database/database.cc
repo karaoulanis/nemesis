@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,7 +27,8 @@
 #include < fstream>
 #include "database/database.h"
 
-using namespace std;
+using std::fstream;
+using std::ios;
 
 Packet Database::myPacket;
 
@@ -40,8 +41,7 @@ bool Database::existsFile(const char* filename) {
   bool ret = true;
   fstream tmpFile;
   tmpFile.open(filename, ios::binary|ios::in);
-  if (tmpFile.fail())
-  {
+  if (tmpFile.fail()) {
     tmpFile.clear();
     ret = false;
   }

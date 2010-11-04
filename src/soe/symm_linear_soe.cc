@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -61,7 +61,7 @@ void SymmLinearSOE::setTheSize() {
   IPIV.resize(theSize);
 
   double d = ((int)(0.5*theSize*(theSize+1))+theSize+theSize)*sizeof(double);
-  double i = theSize*sizeof(theSize);
+  double i = theSize*sizeof(int);
   printf("soe: Allocated %6.2fmb of memory for %ddofs.\n", (d+i)/(1024*1024),
     theSize);
 }

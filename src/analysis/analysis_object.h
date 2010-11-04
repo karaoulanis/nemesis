@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_
-#define NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_
+#ifndef SRC_ANALYSIS_ANALYSIS_OBJECT_H_
+#define SRC_ANALYSIS_ANALYSIS_OBJECT_H_
 
 #include "feobject/fe_object.h"
 
@@ -39,4 +39,4 @@ class AnalysisObject: public FEObject {
   virtual ~AnalysisObject();
   void setAnalysis(Analysis* pAnalysis);
 };
-#endif  // NEMESIS_ANALYSIS_ANALYSIS_OBJECT_H_
+#endif  // SRC_ANALYSIS_ANALYSIS_OBJECT_H_

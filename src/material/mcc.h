@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_MCC_H_
-#define NEMESIS_MATERIAL_MCC_H_
+#ifndef SRC_MATERIAL_MCC_H_
+#define SRC_MATERIAL_MCC_H_
 
 #include "material/surface.h"
 #include "numeric/vector.h"
@@ -45,4 +45,4 @@ class MCC: public Surface {
   const Vector& get_df2dsa(const Vector& s, const double a);
   double get_df2daa(const Vector& s, const double a);
 };
-#endif  // NEMESIS_MATERIAL_MCC_H_
+#endif  // SRC_MATERIAL_MCC_H_

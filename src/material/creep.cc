@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -33,8 +33,9 @@ Creep::Creep(int ID, int elasticID, double A, double n, double k)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
   Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag()!=TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999, "Multiaxial elastic material expected.");
+  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+    throw SException("[nemesis:%d] %s", 9999,
+                     "Multiaxial elastic material expected.");
   myElastic = static_cast < MultiaxialMaterial*>(p)->getClone();
   MatParams[ 0]=A;
   MatParams[ 1]=n;
@@ -56,8 +57,8 @@ Creep::~Creep() {
 void Creep::setStrain(const Vector& De) {
   double Dt = pD->getTimeIncr();
   eTrial = eTotal+De;
-  //sTrial = sConvg+(myElastic->getC())*De;
-  sTrial=(myElastic->getC())*(eTotal-eCConvg);
+  // sTrial = sConvg+(myElastic->getC())*De;
+  sTrial = (myElastic->getC())*(eTotal-eCConvg);
   double d = eCConvg.twonorm()*sqrt(3./2.);
   Vector beta(6, 0);
   beta = k*pow(A, 1./k)*d*sTrial;
@@ -68,7 +69,7 @@ void Creep::setStrain(const Vector& De) {
  * Commit material state.
  */
 void Creep::commit() {
-  eTotal = eTrial; ///@todo
+  eTotal = eTrial;  ///@todo
   eCConvg = eCTrial;
   sConvg = sTrial;
   this->track();
@@ -102,13 +103,13 @@ MultiaxialMaterial* Creep::getClone() {
 void Creep::track() {
   if (myTracker == 0) return;
   ostringstream s;
-  s << "DATA "  <<' ';
-  s << "sigm "  <<' '<<sConvg;
-  s << "epst "  <<' '<<eTotal;
-  s << "epsp "  <<' '<<eCConvg;
-  s << "epsv "  <<1020<<' '<<eTotal[0]+eTotal[1]+eTotal[2]<<' ';
-  s << "p "     <<1020<<' '<<sConvg.p()<<' ';
-  s << "q "     <<1020<<' '<<sConvg.q()<<' ';
-  s << "END "<<' ';
+  s << "DATA "  << ' ';
+  s << "sigm "  << ' ' <<sConvg;
+  s << "epst "  << ' ' <<eTotal;
+  s << "epsp "  << ' ' <<eCConvg;
+  s << "epsv "  << 1020 << ' ' <<eTotal[0]+eTotal[1]+eTotal[2] << ' ';
+  s << "p "     << 1020 << ' ' <<sConvg.p() << ' ';
+  s << "q "     << 1020 << ' ' <<sConvg.q() << ' ';
+  s << "END " <<' ';
   myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
 }

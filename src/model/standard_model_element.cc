@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -38,7 +38,8 @@ StandardModelElement::StandardModelElement()
  * Initializes the ModelObject, which in turn initializes the FEObject, passes
  * the FTable to the ModelObject and copies the address of it's element.
  */
-StandardModelElement::StandardModelElement(const IDContainer& FTable, Element* pElement)
+StandardModelElement::StandardModelElement(const IDContainer& FTable,
+                                           Element* pElement)
   :ModelElement(FTable, pElement, 0) {
   myMatrix = theStaticMatrices[FTable.size()];
   myVector = theStaticVectors[FTable.size()];

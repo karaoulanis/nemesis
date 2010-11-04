@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,27 +31,28 @@ Matrix Tresca::C3(3, 3, 0.);
 
 Tresca::Tresca() {
 }
-Tresca::Tresca(int ID, int elasticID, double cu, double kx, double ky, double kz)
+Tresca::Tresca(int ID, int elasticID, double cu, double kx, double ky,
+               double kz)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag()!=TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+  Material* p = pD->get<Material>(pD->getMaterials(), elasticID);
+  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999, "Multiaxial elastic material expected.");
   myElastic = static_cast < MultiaxialMaterial*>(p)->getClone();
-  MatParams[30]=myElastic->getParam(30);
-  MatParams[31]=myElastic->getParam(31);
+  MatParams[30] = myElastic->getParam(30);
+  MatParams[31] = myElastic->getParam(31);
 
   // Material properties
-  MatParams[0]=cu;
-  MatParams[1]=kx;
-  MatParams[2]=ky;
-  MatParams[3]=kz;
-  
+  MatParams[0] = cu;
+  MatParams[1] = kx;
+  MatParams[2] = ky;
+  MatParams[3] = kz;
+
   // Material state
-//  ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
-//  qTrial.resize(6, 0.);  qConvg.resize(6, 0.);
-//  aTrial = 0.;        aConvg = 0.;
-  
+  // ePTrial.resize(6, 0.);  ePConvg.resize(6, 0.);
+  // qTrial.resize(6, 0.);   qConvg.resize(6, 0.);
+  // aTrial = 0.;            aConvg = 0.;
+
   plastic = false;
   inaccurate = 0;
 }
@@ -75,12 +76,12 @@ MultiaxialMaterial* Tresca::getClone() {
  * @param De Vector containing total strain increment.
  */ 
 void Tresca::setStrain(const Vector& De) {
-  std::vector < Vector > df(3);
+  std::vector<Vector> df(3);
   df[0].resize(3);  df[1].resize(3);  df[2].resize(3);
-  df[0][0]= 1.0;    df[0][1]= 0.0;    df[0][2]=-1.0;  
-  df[1][0]= 1.0;    df[1][1]=-1.0;    df[1][2]= 0.0;  
-  df[2][0]= 0.0;    df[2][1]= 1.0;    df[2][2]=-1.0;  
-  
+  df[0][0]= 1.0;    df[0][1]= 0.0;    df[0][2]=-1.0;
+  df[1][0]= 1.0;    df[1][1]=-1.0;    df[1][2]= 0.0;
+  df[2][0]= 0.0;    df[2][1]= 1.0;    df[2][2]=-1.0;
+
   double E = myElastic->getParam(0);
   double nu= myElastic->getParam(1);
   double kx   = MatParams[ 1];
@@ -96,23 +97,23 @@ void Tresca::setStrain(const Vector& De) {
   eTrial = eTotal+De;
   sTrial = sConvg+(this->getC())*De;
   spectralDecomposition(sTrial, s, sV);
-  //Vector tempS(3);
-  //tempS = sTrial;
+  // Vector tempS(3);
+  // tempS = sTrial;
 
   static Vector f(3);
   f[0]=s[0]-s[2]-2.*cu;
   f[1]=s[0]-s[1]-2.*cu;
   f[2]=s[1]-s[2]-2.*cu;
-  //report(f, "Yield fun", true, 12);
+  // report(f, "Yield fun", true, 12);
   double theta = sTrial.theta();
-  //report(2.*sqrt(sTrial.J2())*cos(theta)-cu, "f");
+  // report(2.*sqrt(sTrial.J2())*cos(theta)-cu, "f");
 
   std::vector < int > active;
   for (unsigned i = 0;i < 3;i++)
     if (f[i]>0.) active.push_back(i);
 
   // Elastic case
-  if (active.size()==0) return;
+  if (active.size() == 0) return;
   plastic = true;
 
   // Plastic case
@@ -128,39 +129,38 @@ void Tresca::setStrain(const Vector& De) {
     x.resize(3+active.size());
     R.resize(3+active.size());
     R.clear();
-    
+
     A.append(C3, 0, 0);
     for (unsigned i = 0; i < active.size(); i++) {
       A.appendCol(df[active[i]],  0, 3+i);
       A.appendRow(df[active[i]], 3+i,  0);
       R[3+i]=-f[active[i]];
     }
-    
+
     // solve
-    //report(A, "A");
-    //report(R);
+    // report(A, "A");
+    // report(R);
     A.solve(x, R);
-    //report(x);
+    // report(x);
 
     // check
     bool restart = false;
     for (unsigned i = 0; i < active.size(); i++) {
-      if (x[3+i]<0.)
-      {
+      if (x[3+i] < 0.) {
         active.erase(active.begin()+i, active.begin()+i+1);
         restart = true;
       }
     }
     if (restart) continue;
-    
+
     // update
     for (int i = 0;i < 3;i++) s[i]+=x[i];
     break;
   }
 
-//  cout << s[0]-s[2]-cu << endl;
-//  cout << s[0]-s[1]-cu << endl;
-//  cout << s[1]-s[2]-cu << endl;
+  // cout << s[0]-s[2]-cu << endl;
+  // cout << s[0]-s[1]-cu << endl;
+  // cout << s[1]-s[2]-cu << endl;
   // coordinate transformation
   sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
   sTrial[1]=s[0]*sV(0, 1)*sV(0, 1)+s[1]*sV(1, 1)*sV(1, 1)+s[2]*sV(2, 1)*sV(2, 1);
@@ -170,23 +170,22 @@ void Tresca::setStrain(const Vector& De) {
   sTrial[5]=s[0]*sV(0, 0)*sV(0, 2)+s[1]*sV(1, 0)*sV(1, 2)+s[2]*sV(2, 0)*sV(2, 2);
 
   theta = sTrial.theta();
-  if ((2.*sqrt(sTrial.J2())*cos(theta)-2*cu)>1e-6) 
-  {
-    //inaccurate++;
-    //cout << "error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu << endl;
-    //report(tempS, "sTrial");
-    //report(f,    "yield");
-    //report(x,    "solns", 20, 15);
-        //exit(0);
-  }
-  //for (unsigned i = 0;i < active.size();i++)
-  //  cout << active[i]<<endl;
+  //  if ((2.*sqrt(sTrial.J2())*cos(theta)-2*cu) > 1e-6) {
+  //    inaccurate++;
+  //    cout << "error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu << endl;
+  //    report(tempS, "sTrial");
+  //    report(f,    "yield");
+  //    report(x,    "solns", 20, 15);
+  //    exit(0);
+  //  }
+  //  for (unsigned i = 0;i < active.size();i++)
+  //    cout << active[i]<<endl;
 }
 /**
  * Commit material state.
  */
 void Tresca::commit() {
-  //report(inaccurate);
+  // report(inaccurate);
   inaccurate = 0;
   eTotal = eTrial; ///@todo
   sConvg = sTrial;

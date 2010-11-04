@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -37,7 +37,8 @@ int ReverseSloan::getPerm(std::vector < int>& perm) {
   // Create the Graph and additional vectors
   UndirectedGraph G(pA->getModel()->getnEquations());
   pA->getModel()->getUndirectedGraph(G);
-  property_map < UndirectedGraph, vertex_index_t>::type index_map = get(vertex_index, G);
+  property_map < UndirectedGraph, vertex_index_t>::type
+    index_map = get(vertex_index, G);
   std::vector < int > inv_perm(num_vertices(G));
   perm.resize(num_vertices(G));
 
@@ -45,35 +46,40 @@ int ReverseSloan::getPerm(std::vector < int>& perm) {
   int oldBandwidth = bandwidth(G);
   int oldProfile = profile(G);
   ///@todo check for warnings in wavefront()
-//  double oldMaxWavefront = max_wavefront(G);
-//  double oldAverWavefront = aver_wavefront(G);
-//  double oldRmsWavefront = rms_wavefront(G);
+  // double oldMaxWavefront = max_wavefront(G);
+  // double oldAverWavefront = aver_wavefront(G);
+  // double oldRmsWavefront = rms_wavefront(G);
 
   // Call Sloan algorithm
   sloan_ordering(G, inv_perm.rbegin(), get(vertex_color, G),
     make_degree_map(G), get(vertex_priority, G), weight1, weight2);
-  for (unsigned k = 0;k != inv_perm.size();k++) perm[index_map[inv_perm[k]]]=k;
+  for (unsigned k = 0; k != inv_perm.size(); k++)
+    perm[index_map[inv_perm[k]]]=k;
 
   // Find new bandwidth and profile
-  int newBandwidth = bandwidth(G, make_iterator_property_map(&perm[0], index_map, perm[0]));
+  int newBandwidth = bandwidth(G, make_iterator_property_map(&perm[0],
+                               index_map, perm[0]));
   int newProfile = profile(G, make_iterator_property_map(&perm[0], index_map));
-//  double newMaxWavefront = max_wavefront(G, make_iterator_property_map(&perm[0], index_map));
-//  double newAverWavefront = aver_wavefront(G, make_iterator_property_map(&perm[0], index_map));
-//  double newRmsWavefront = rms_wavefront(G, make_iterator_property_map(&perm[0], index_map));
+  // double newMaxWavefront = max_wavefront(G,
+  //                          make_iterator_property_map(&perm[0], index_map));
+  // double newAverWavefront = aver_wavefront(G,
+  //                          make_iterator_property_map(&perm[0], index_map));
+  // double newRmsWavefront = rms_wavefront(G,
+  //                          make_iterator_property_map(&perm[0], index_map));
 
   // Print optimized sizes
-  cout << "reo: Optimized (original) bandwidth : "  
-    <<newBandwidth  <<" ("<<oldBandwidth<<")" <<endl;
-  cout << "reo: Optimized (original) profile   : "
-    <<newProfile  <<" ("<<oldProfile  <<")" <<endl;
-//  cout << "rSloan: Optimized (original) maximum wavefront   : " 
-//    <<newMaxWavefront <<" ("<<oldMaxWavefront << ")"  <<endl;
-//  cout << "rSloan: Optimized (original) average wavefront   : "
-//    <<newAverWavefront  <<" ("<<oldAverWavefront  <<")" <<endl;
-//  cout << "rSloan: Optimized (original) rms wavefront       : "
-//    <<newRmsWavefront <<" ("<<oldRmsWavefront <<")" <<endl;
+  cout  << "reo: Optimized (original) bandwidth : "
+        << newBandwidth  << " (" << oldBandwidth << ")" << endl;
+  cout  << "reo: Optimized (original) profile   : "
+        <<newProfile    << " (" << oldProfile  << ")"  << endl;
+  // cout   << "rSloan: Optimized (original) maximum wavefront   : "
+  //        <<newMaxWavefront   << " (" << oldMaxWavefront   << ")" << endl;
+  // cout   << "rSloan: Optimized (original) average wavefront   : "
+  //        <<newAverWavefront  << " (" << oldAverWavefront  << ")" << endl;
+  // cout   << "rSloan: Optimized (original) rms wavefront       : "
+  //        << newRmsWavefront  << " (" << oldRmsWavefront   << ")" << endl;
 
   // Check if optimization is needed
-  if (newBandwidth < oldBandwidth) return 1;
-  else return -1;
+  if (newBandwidth > oldBandwidth) return -1;
+  return 1;
 }

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_EVOLUTION_LAW_H_
-#define NEMESIS_MATERIAL_EVOLUTION_LAW_H_
+#ifndef SRC_MATERIAL_EVOLUTION_LAW_H_
+#define SRC_MATERIAL_EVOLUTION_LAW_H_
 
 #include "numeric/vector.h"
 
@@ -32,13 +32,12 @@
  * The Evolution Law Class.
  */
 class EvolutionLaw {
-  private:
-  public:
+ public:
   EvolutionLaw();
   virtual ~EvolutionLaw();
-  
+
   virtual double get_h(const Vector& v)=0;
   virtual double get_dhds(const Vector& sTrial, const Vector& ePTrial)=0;
   virtual double get_dhda(const Vector& sTrial, const Vector& ePTrial)=0;
 };
-#endif  // NEMESIS_MATERIAL_EVOLUTION_LAW_H_
+#endif  // SRC_MATERIAL_EVOLUTION_LAW_H_

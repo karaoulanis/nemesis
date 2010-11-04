@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -44,15 +44,18 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
 }
 void FullLinearSOE::setTheSize() {
   // If the size has not changed do not resize arrays
-  if (theSize == pA->getModel()->getnEquations()) return;
-  else theSize = pA->getModel()->getnEquations();
+  if (theSize == pA->getModel()->getnEquations()) {
+    return;
+  } else {
+    theSize = pA->getModel()->getnEquations();
+  }
   A.resize(theSize*theSize);
   B.resize(theSize);
   X.resize(theSize);
   IPIV.resize(theSize);
 
   double d = ((int)(theSize*theSize+2*theSize))*sizeof(double);
-  double i = theSize*sizeof(theSize);
+  double i = theSize*sizeof(int);
   printf("soe: Allocated %6.2fmb of memory for %ddofs.\n", (d+i)/(1024*1024),
     theSize);
 }

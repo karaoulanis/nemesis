@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -42,7 +42,9 @@ void VM::find_C(const Vector& s, const double /*a*/) {
   C3 = 0.;
   C11 = 0.;
   C22=-0.25*num::sq3*pow(s.J2(), -1.5);
-  C23 = 0.; C32 = 0.; C33 = 0.;
+  C23 = 0.;
+  C32 = 0.;
+  C33 = 0.;
 }
 double VM::get_dfda(const Vector& /*s*/, const double /*a*/) {
   return -K;

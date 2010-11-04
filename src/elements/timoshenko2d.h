@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_TIMOSHENKO2D_H_
-#define NEMESIS_ELEMENTS_TIMOSHENKO2D_H_
+#ifndef SRC_ELEMENTS_TIMOSHENKO2D_H_
+#define SRC_ELEMENTS_TIMOSHENKO2D_H_
 
 #include "elements/element.h"
 #include "material/uniaxial_material.h"
@@ -41,8 +41,9 @@ class Timoshenko2d: public Element {
   int gPoints;
   public:
   Timoshenko2d();
-  Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID, int rule);  
-  Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3, int matID, int secID, int rule); 
+  Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID, int rule);
+  Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3, int matID, int secID,
+               int rule);
   ~Timoshenko2d();
 
   const Matrix& getK();
@@ -56,4 +57,4 @@ class Timoshenko2d: public Element {
   void recoverStresses();
   void shapeFunctions(int n, double xi, double &N, double &dN);
 };
-#endif  // NEMESIS_ELEMENTS_TIMOSHENKO2D_H_
+#endif  // SRC_ELEMENTS_TIMOSHENKO2D_H_

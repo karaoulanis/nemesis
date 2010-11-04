@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_NODE_NODE_H_
-#define NEMESIS_NODE_NODE_H_
+#ifndef SRC_NODE_NODE_H_
+#define SRC_NODE_NODE_H_
 
 #include < sstream>
 
@@ -44,10 +44,10 @@ const int MAX_NUMBER_OF_DOFS = 16;
  * The Node class.                                                
  */
 class Node: public DomainObject {
-  private:
-  double x1, x2, x3;          // The nodal coordinates      
+ private:
+  double x1, x2, x3;                // The nodal coordinates
   IDContainer myConnectedElements;  // Array of ID's of connected elements
-  IDContainer myActivatedDofs;    // Array of activated dofs
+  IDContainer myActivatedDofs;      // Array of activated dofs
   IDContainer myConstrainedDofs;    // Array of constrained dofs
   int nActivatedDofs;
 
@@ -63,7 +63,7 @@ class Node: public DomainObject {
 
   Tracker* myTracker;
 
-  int avgStress; ///@todo: remove this when full nodal recovering is implemented.
+  int avgStress; ///@todo: remove this when full nodal recovering is implemented
   Vector stress;
   Vector strain;
   bool isLoadApplied;
@@ -125,7 +125,7 @@ class Node: public DomainObject {
   void zeroStress();
   void addStress(const Vector& s);
   void multDisp(double facD);
-  
+
   const Packet& getPacket();
   void setPacket(const Packet& p);
   void save(std::ostream& s);
@@ -141,7 +141,5 @@ class Node: public DomainObject {
 
   // Enrichment functions
   void evalLevelSets();
-
 };
-
-#endif  // NEMESIS_NODE_NODE_H_
+#endif  // SRC_NODE_NODE_H_

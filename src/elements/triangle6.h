@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_TRIANGLE6_H_
-#define NEMESIS_ELEMENTS_TRIANGLE6_H_
+#ifndef SRC_ELEMENTS_TRIANGLE6_H_
+#define SRC_ELEMENTS_TRIANGLE6_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -35,7 +35,7 @@ class Triangle6: public Element {
   double b1, b2, b3;
   double c1, c2, c3;
   double A;
-  std::vector < MatPoint*> myMatPoints;
+  std::vector<MatPoint*> myMatPoints;
   public:
   // Constructors and Destructor
   Triangle6();
@@ -49,7 +49,7 @@ class Triangle6: public Element {
 
   void update();
   void commit();
-  
+
   void getShapeFunctions(MatPoint* pMatPoint, Matrix& N, double& detJ);
   void addInitialStresses(InitialStresses* pInitialStresses);
   bool checkIfAllows(FEObject* f);
@@ -57,4 +57,4 @@ class Triangle6: public Element {
   int getnPlasticPoints();
 };
 
-#endif  // NEMESIS_ELEMENTS_TRIANGLE6_H_
+#endif  // SRC_ELEMENTS_TRIANGLE6_H_

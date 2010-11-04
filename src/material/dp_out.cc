@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -39,10 +39,12 @@ double DP_out::get_f(const Vector& s, const double /*q*/) {
   return D*s.I1()+sqrt(s.J2())-so;
 }
 void DP_out::find_C(const Vector& s, const double /*a*/) {
-  C1 = 2*sin(phi)/(num::sq3*(3-sin(phi)));
-  C2 = 0.5/sqrt(s.J2());
-  C3 = 0.;
+  C1  = 2*sin(phi)/(num::sq3*(3-sin(phi)));
+  C2  = 0.5/sqrt(s.J2());
+  C3  = 0.;
   C11 = 0.;
-  C22=-0.25*pow(s.J2(), -1.5);
-  C23 = 0.; C32 = 0.; C33 = 0.;
+  C22 =-0.25*pow(s.J2(), -1.5);
+  C23 = 0.;
+  C32 = 0.;
+  C33 = 0.;
 }

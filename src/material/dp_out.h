@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_DP_OUT_H_
-#define NEMESIS_MATERIAL_DP_OUT_H_
+#ifndef SRC_MATERIAL_DP_OUT_H_
+#define SRC_MATERIAL_DP_OUT_H_
 
 #include "material/surface.h"
 
@@ -37,7 +37,7 @@ class DP_out: public Surface {
   DP_out();
   DP_out(double c_, double phi_);
   ~DP_out();
-  
+
   double get_f(const Vector& s, const double q);
 };
-#endif  // NEMESIS_MATERIAL_DP_OUT_H_
+#endif  // SRC_MATERIAL_DP_OUT_H_

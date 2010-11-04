@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -31,29 +31,28 @@ Matrix MohrCoulomb::C3(3, 3, 0.);
 
 MohrCoulomb::MohrCoulomb() {
 }
-MohrCoulomb::MohrCoulomb(int ID, int elasticID, double c, double phi, double alpha)
+MohrCoulomb::MohrCoulomb(int ID, int elasticID, double c, double phi,
+                         double alpha)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
   Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag()!=TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999, "Multiaxial elastic material expected.");
-  myElastic = static_cast < MultiaxialMaterial*>(p)->getClone();
-  MatParams[30]=myElastic->getParam(30);
-  MatParams[31]=myElastic->getParam(31);
-
+  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+    throw SException("[nemesis:%d] %s", 9999,
+                      "Multiaxial elastic material expected.");
+  myElastic = static_cast<MultiaxialMaterial*>(p)->getClone();
+  MatParams[30] = myElastic->getParam(30);
+  MatParams[31] = myElastic->getParam(31);
   // Material properties
-  MatParams[0]=c;
-  MatParams[1]=phi;
-  MatParams[2]=alpha;
-  
+  MatParams[0] = c;
+  MatParams[1] = phi;
+  MatParams[2] = alpha;
   // Material state
-//  ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
-//  qTrial.resize(6, 0.);  qConvg.resize(6, 0.);
-//  aTrial = 0.;        aConvg = 0.;
-  
+  // ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
+  // qTrial.resize(6, 0.);  qConvg.resize(6, 0.);
+  // aTrial = 0.;           aConvg = 0.;
+  // plastic info
   plastic = false;
   inaccurate = 0;
-
   // Material tag
   myTag = TAG_MATERIAL_MOHR_COULOMB;
 }
@@ -82,19 +81,19 @@ void MohrCoulomb::setStrain(const Vector& De) {
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double alpha= MatParams[ 2];
-  
-  // derivatives
-  std::vector < Vector > df(3);
-  df[0].resize(3);      df[1].resize(3);      df[2].resize(3);      //df[3].resize(3);
-  df[0][0]= 1.0+sin(phi);   df[1][0]= 0.0;        df[2][0]= 1.0+sin(phi);   //df[3][0]=+1.0;
-  df[0][1]= 0.0;        df[1][1]= 1.0+sin(phi);   df[2][1]=-1.0+sin(phi);   //df[3][1]=+1.0;
-  df[0][2]=-1.0+sin(phi);   df[1][2]=-1.0+sin(phi);   df[2][2]= 0.0;        //df[3][2]=+1.0;  
 
-  std::vector < Vector > dg(3);
-  dg[0].resize(3);      dg[1].resize(3);      dg[2].resize(3);      //df[3].resize(3);
-  dg[0][0]= 1.0+sin(alpha); dg[1][0]= 0.0;        dg[2][0]= 1.0+sin(alpha); //df[3][0]=+1.0;
-  dg[0][1]= 0.0;        dg[1][1]= 1.0+sin(alpha); dg[2][1]=-1.0+sin(alpha); //df[3][1]=+1.0;
-  dg[0][2]=-1.0+sin(alpha); dg[1][2]=-1.0+sin(alpha); dg[2][2]= 0.0;        //df[3][2]=+1.0;  
+  // derivatives
+  std::vector<Vector> df(3);
+  df[0].resize(3);          df[1].resize(3);          df[2].resize(3);           // df[3].resize(3);
+  df[0][0]= 1.0+sin(phi);   df[1][0]= 0.0;            df[2][0]= 1.0+sin(phi);    // df[3][0]=+1.0;
+  df[0][1]= 0.0;            df[1][1]= 1.0+sin(phi);   df[2][1]=-1.0+sin(phi);    // df[3][1]=+1.0;
+  df[0][2]=-1.0+sin(phi);   df[1][2]=-1.0+sin(phi);   df[2][2]= 0.0;             // df[3][2]=+1.0;
+
+  std::vector<Vector> dg(3);
+  dg[0].resize(3);          dg[1].resize(3);          dg[2].resize(3);           // df[3].resize(3);
+  dg[0][0]= 1.0+sin(alpha); dg[1][0]= 0.0;            dg[2][0]= 1.0+sin(alpha);  // df[3][0]=+1.0;
+  dg[0][1]= 0.0;            dg[1][1]= 1.0+sin(alpha); dg[2][1]=-1.0+sin(alpha);  // df[3][1]=+1.0;
+  dg[0][2]=-1.0+sin(alpha); dg[1][2]=-1.0+sin(alpha); dg[2][2]= 0.0;             // df[3][2]=+1.0;
 
   // elasticity matrix
   C3(0, 0)=  1/E;  C3(0, 1)=-nu/E;  C3(0, 2)=-nu/E;
@@ -110,18 +109,18 @@ void MohrCoulomb::setStrain(const Vector& De) {
 
   // yield function
   static Vector f(3);
-  f[0]=(s[0]-s[2])+(s[0]+s[2])*sin(phi)-2*c*cos(phi);
-  f[1]=(s[1]-s[2])+(s[1]+s[2])*sin(phi)-2*c*cos(phi);
-  f[2]=(s[0]-s[1])+(s[0]+s[1])*sin(phi)-2*c*cos(phi);
-  
-  //if (f[0]>0. && f[1]>0. && f[2]>0.) f[2]=-1.;
+  f[0] = (s[0]-s[2])+(s[0]+s[2])*sin(phi)-2*c*cos(phi);
+  f[1] = (s[1]-s[2])+(s[1]+s[2])*sin(phi)-2*c*cos(phi);
+  f[2] = (s[0]-s[1])+(s[0]+s[1])*sin(phi)-2*c*cos(phi);
+
+  // if (f[0]>0. && f[1]>0. && f[2]>0.) f[2]=-1.;
 
   std::vector < int > active;
   for (unsigned i = 0;i < 3;i++)
-    if (f[i]>0.) active.push_back(i);
+  if (f[i]>0.) active.push_back(i);
 
   // Elastic case
-  if (active.size()==0) return;
+  if (active.size() == 0) return;
   plastic = true;
 
   // Plastic case
@@ -129,36 +128,33 @@ void MohrCoulomb::setStrain(const Vector& De) {
   static Vector x;
   static Vector R;
 
-    active.clear();
-    for (unsigned i = 0;i < 3;i++)
-      if (f[i]>0.) active.push_back(i);
+  active.clear();
+  for (unsigned i = 0;i < 3;i++) {
+    if (f[i]>0.) active.push_back(i);
+  }
+
   for (int k = 0; k < 4; k++) {
     A.resize(3+active.size(), 3+active.size(), 0.);
     x.resize(3+active.size());
     R.resize(3+active.size());
     R.clear();
-    
     A.append(C3, 0, 0);
     for (unsigned i = 0; i < active.size(); i++) {
       A.appendCol(dg[active[i]],  0, 3+i);
       A.appendRow(df[active[i]], 3+i,  0);
       R[3+i]=-f[active[i]];
     }
-    
     // solve
     A.solve(x, R);
-
     // check
     bool restart = false;
     for (unsigned i = 0; i < active.size(); i++) {
-      if (x[3+i]<0.)
-      {
+      if (x[3+i] < 0.) {
         active.erase(active.begin()+i, active.begin()+i+1);
         restart = true;
       }
     }
     if (restart) continue;
-    
     // update
     for (int i = 0;i < 3;i++) s[i]+=x[i];
     break;
@@ -177,16 +173,16 @@ void MohrCoulomb::setStrain(const Vector& De) {
   f[1]=(s[1]-s[2])+(s[1]+s[2])*sin(phi)-2*c*cos(phi);
   f[2]=(s[0]-s[1])+(s[0]+s[1])*sin(phi)-2*c*cos(phi);
 
-  //if (f[0]>1e-8 || f[1]>1e-8 || f[2]>1e-8)
-  //  cout << "inacurate : "<<s[0]<<"\t"<<s[1]<<"\t"<<s[2]<<"\t"<<endl;
+  // if (f[0]>1e-8 || f[1]>1e-8 || f[2]>1e-8)
+  //   cout << "inacurate : "<<s[0]<<"\t"<<s[1]<<"\t"<<s[2]<<"\t"<<endl;
 }
 /**
  * Commit material state.
  */
 void MohrCoulomb::commit() {
-  //report(inaccurate);
+  // report(inaccurate);
   inaccurate = 0;
-  eTotal = eTrial; ///@todo
+  eTotal = eTrial;  ///@todo
   sConvg = sTrial;
   this->track();
 }

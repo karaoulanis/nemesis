@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
-#define NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
+#ifndef SRC_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
+#define SRC_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
 
 #include "material/multiaxial_material.h"
 #include "material/linear_equivalent_el.h"
@@ -47,8 +47,8 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
   std::vector < Surface*> gSurfaces;
   EvolutionLaw* EL;
 
-  inline std::vector < Surface*> getfSurfaces()   {return fSurfaces;}
-  inline std::vector < Surface*> getgSurfaces()   {return gSurfaces;}
+  inline std::vector<Surface*> getfSurfaces()   {return fSurfaces;}
+  inline std::vector<Surface*> getgSurfaces()   {return gSurfaces;}
   void returnMapSYS(const Vector& De);
   void returnMapSYS2(const Vector& De);
 
@@ -56,19 +56,19 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
   void returnMapMYS(const Vector& De);
   void returnMapMYS2(const Vector& De);
   void returnMapMYS3(const Vector& De);
-  public:
+ public:
   MultiaxialElastoPlastic();
   MultiaxialElastoPlastic(int ID, int elasticID);
   ~MultiaxialElastoPlastic();
-  
+
   void setStrain(const Vector& De);
   void commit();
   const Matrix& getC();
   bool isPlastic()              {return plastic;}
 
   void updateStateVariable();
-  
+
   // Tracker member functions
   void track();
 };
-#endif  // NEMESIS_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
+#endif  // SRC_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_CONTROL_CONTROL_H_
-#define NEMESIS_CONTROL_CONTROL_H_
+#ifndef SRC_CONTROL_CONTROL_H_
+#define SRC_CONTROL_CONTROL_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -59,4 +59,4 @@ class Control: public AnalysisObject {
   virtual void commit()=0;
   virtual void rollback()=0;
 };
-#endif  // NEMESIS_CONTROL_CONTROL_H_
+#endif  // SRC_CONTROL_CONTROL_H_

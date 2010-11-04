@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -44,7 +44,8 @@ void StandardModelNode::incTrialDisp(const Vector& du) {
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
   myNode->incTrialDisp(*myVector);
 }
-void StandardModelNode::incTrialVecs(const Vector& du, const Vector& dv, const Vector& da) {
+void StandardModelNode::incTrialVecs(const Vector& du, const Vector& dv,
+                                     const Vector& da) {
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
   myNode->incTrialDisp(*myVector);
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=dv[theFTable[i]];
@@ -56,7 +57,8 @@ void StandardModelNode::setTrialDisp(const Vector& u) {
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
   myNode->setTrialDisp(*myVector);
 }
-void StandardModelNode::setTrialVecs(const Vector& u, const Vector& v, const Vector& a) {
+void StandardModelNode::setTrialVecs(const Vector& u, const Vector& v,
+                                     const Vector& a) {
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
   myNode->setTrialDisp(*myVector);
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=v[theFTable[i]];

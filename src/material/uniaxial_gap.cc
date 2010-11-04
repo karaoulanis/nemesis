@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,7 +27,8 @@
 
 UniaxialGap::UniaxialGap() {
 }
-UniaxialGap::UniaxialGap(int ID, double E, double nu, double rho, double aT, double sy_, double gap_)
+UniaxialGap::UniaxialGap(int ID, double E, double nu, double rho, double aT,
+                         double sy_, double gap_)
 :UniaxialMaterial(ID, rho, aT) {
   gap = gap_;
   sy = sy_;
@@ -57,38 +58,25 @@ UniaxialMaterial* UniaxialGap::getClone() {
 void UniaxialGap::setStrain(const double De) {
   double E = MatParams[ 0];
   eTrial = eTotal+De;
-  if (sy >= 0)
-  {
-    if (eTrial < eElastMin)
-    {
+  if (sy >= 0) {
+    if (eTrial < eElastMin) {
       sTrial = 0.;
       Et = 0.;
-    }
-    else if (eTrial>eElastMax)
-    {
+    } else if (eTrial>eElastMax) {
       sTrial = sy;
       Et = 0.;
-    }
-    else
-    {
+    } else {
       sTrial = E*(eTrial-eElastMin);
       Et = E;
     }
-  }
-  else
-  {
-    if (eTrial>eElastMin)
-    {
+  } else {
+    if (eTrial>eElastMin) {
       sTrial = 0.;
       Et = 0.;
-    }
-    else if (eTrial < eElastMax)
-    {
+    } else if (eTrial < eElastMax) {
       sTrial = sy;
       Et = 0.;
-    }
-    else
-    {
+    } else {
       sTrial = E*(eTrial-eElastMin);
       Et = E;
     }

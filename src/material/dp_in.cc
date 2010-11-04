@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -35,7 +35,7 @@ DP_in::~DP_in() {
 }
 double DP_in::get_f(const Vector& s, const double a) {
   double Kf = 0.2;
-  //cout << phi<<'\t'<<Kf*a << endl;
+  // cout << phi<< '\t' << Kf*a << endl;
   double Kc= 0.;
   double D= 3*2*sin(phi+Kf*a)/(num::sq3*(3+sin(phi+Kf*a)));
   double so = 6*(c+Kc*a)*cos(phi-Kf*a)/(num::sq3*(3+sin(phi-Kf*a)));
@@ -44,12 +44,14 @@ double DP_in::get_f(const Vector& s, const double a) {
 void DP_in::find_C(const Vector& s, const double a) {
   double Kf = 0.;
   C1 = 2*sin(phi+Kf*a)/(num::sq3*(3+sin(phi+Kf*a)));
-  //C1 = 2*sin(phi)/(num::sq3*(3+sin(phi)));
-  C2 = 0.5/sqrt(s.J2());
-  C3 = 0.;
+  // C1 = 2*sin(phi)/(num::sq3*(3+sin(phi)));
+  C2  = 0.5/sqrt(s.J2());
+  C3  = 0.;
   C11 = 0.;
-  C22=-0.25*pow(s.J2(), -1.5);
-  C23 = 0.; C32 = 0.; C33 = 0.;
+  C22 =-0.25*pow(s.J2(), -1.5);
+  C23 = 0.;
+  C32 = 0.;
+  C33 = 0.;
 }
 double DP_in::get_dfda(const Vector& s, const double a) {
   double Kf = 0.;
@@ -70,7 +72,8 @@ const Vector& DP_in::get_df2dsa(const Vector& /*s*/, const double a) {
   static Vector ret(6, 0.);
   ret.clear();
   double Kf = 0.;
-  double d=-2*Kf*sqrt(3.)*cos(phi+Kf*a)/(-10.-6.*sin(phi+Kf*a)+pow(cos(phi+Kf*a), 2));
+  double d=-2*Kf*sqrt(3.)*cos(phi+Kf*a)/
+          (-10.-6.*sin(phi+Kf*a)+pow(cos(phi+Kf*a), 2));
   ret[0]=d;
   ret[1]=d;
   ret[2]=d;

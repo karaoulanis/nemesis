@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,11 +28,11 @@
 #include "exception/sexception.h"
 
 SException::SException(const char* format, ...) {
-  ///@todo buffer overflow if message>1024b (see _vscprintf).  
+  ///@todo buffer overflow if message>1024b (see _vscprintf).
   va_list args;
   va_start(args, format);
   vsprintf(errMsg, format, args);
 }
-const char* SException::what()     {
+const char* SException::what() {
   return errMsg;
 }

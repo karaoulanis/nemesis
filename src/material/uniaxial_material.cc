@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -42,9 +42,9 @@ UniaxialMaterial::~UniaxialMaterial() {
 void UniaxialMaterial::track() {
   if (myTracker == 0) return;
   ostringstream s;
-  s << "DATA "  <<' ';
-  s << "sigm "  <<1020<<' '<<sConvg<<' ';
-  s << "epst "  <<1020<<' '<<eTotal<<' ';
-  s << "END "<<' ';
+  s << "DATA "  << ' ';
+  s << "sigm "  << 1020 << ' ' << sConvg << ' ';
+  s << "epst "  << 1020 << ' ' << eTotal << ' ';
+  s << "END " <<' ';
   myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
 }

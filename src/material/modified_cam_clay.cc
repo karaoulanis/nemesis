@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -28,7 +28,8 @@
 
 ModifiedCamClay::ModifiedCamClay() {
 }
-ModifiedCamClay::ModifiedCamClay(int ID, int elasticID, double M, double po, double kappa, double lambda)
+ModifiedCamClay::ModifiedCamClay(int ID, int elasticID, double M, double po,
+                                 double kappa, double lambda)
 :MultiaxialElastoPlastic(ID, elasticID) {
   // Material parameters
   MatParams[0]=M;
@@ -53,6 +54,7 @@ MultiaxialMaterial* ModifiedCamClay::getClone() {
   double kappa  = MatParams[ 2];
   double lambda = MatParams[ 3];
   // Create clone and return
-  ModifiedCamClay* newClone = new ModifiedCamClay(myID, elID, M, po, kappa, lambda);
+  ModifiedCamClay* newClone = new ModifiedCamClay(myID, elID, M, po, kappa,
+                                                  lambda);
   return newClone;
 }

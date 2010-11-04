@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MODEL_MODEL_ELEMENT_H_
-#define NEMESIS_MODEL_MODEL_ELEMENT_H_
+#ifndef SRC_MODEL_MODEL_ELEMENT_H_
+#define SRC_MODEL_MODEL_ELEMENT_H_
 
 #include "model/model_object.h"
 
@@ -53,8 +53,8 @@ class ModelElement : public ModelObject {
   virtual void add_C(double factor = 1.0)=0;
   virtual void add_R(double factor = 1.0)=0;
   virtual void add_Reff(double factor = 1.0)=0;
-  
-  virtual void add_Kgrad(double /*factor = 1.0*/) {};
+
+  virtual void add_Kgrad(double /*factor = 1.0*/) {}
 };
 
-#endif  // NEMESIS_MODEL_MODEL_ELEMENT_H_
+#endif  // SRC_MODEL_MODEL_ELEMENT_H_

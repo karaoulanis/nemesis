@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_SDOF_ELEMENT_H_
-#define NEMESIS_ELEMENTS_SDOF_ELEMENT_H_
+#ifndef SRC_ELEMENTS_SDOF_ELEMENT_H_
+#define SRC_ELEMENTS_SDOF_ELEMENT_H_
 
 #include "elements/element.h"
 #include "material/sdof_material.h"
@@ -37,15 +37,14 @@ class SDofElement: public Element {
   SDofElement();
   SDofElement(int ID, int NodeID, int dofID, int matID);
   ~SDofElement();
-  
-    const Matrix& getK();
+
+  const Matrix& getK();
   const Matrix& getM();
-    const Vector& getR();
-  
-  
+  const Vector& getR();
+
   bool checkIfAllows(FEObject* f);
   void update() {return;}
   void commit() {return;}
 };
 
-#endif  // NEMESIS_ELEMENTS_SDOF_ELEMENT_H_
+#endif  // SRC_ELEMENTS_SDOF_ELEMENT_H_

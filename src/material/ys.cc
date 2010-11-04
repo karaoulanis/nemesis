@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -56,7 +56,7 @@ void YS::setSigma(const Vector& s) {
   da2(0, 0)=+2.;  da2(0, 1)=-1.;  da2(0, 2)=-1.;
   da2(1, 0)=-1.;  da2(1, 1)=+2.;  da2(1, 2)=-1.;
   da2(2, 0)=-1.;  da2(2, 1)=-1.;  da2(2, 2)=+2.;
-  da2*=1/3.;    
+  da2*=1/3.;
   // Matrix dI1/dsigma * dI1/dsigma
   da11(0, 0)=1.;  da11(0, 1)=1.;  da11(0, 2)=1.;
   da11(1, 0)=1.;  da11(1, 1)=1.;  da11(1, 2)=1.;

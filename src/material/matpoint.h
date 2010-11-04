@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_MATPOINT_H_
-#define NEMESIS_MATERIAL_MATPOINT_H_
+#ifndef SRC_MATERIAL_MATPOINT_H_
+#define SRC_MATERIAL_MATPOINT_H_
 
 #include "domain/domain_object.h"
 #include "loadcase/initial_stresses.h"
@@ -43,7 +43,8 @@ class MatPoint: public DomainObject {
   MatPoint();
   MatPoint(MultiaxialMaterial* mat, int index, int p1);
   MatPoint(MultiaxialMaterial* mat, int index1, int index2, int p1, int p2);
-  MatPoint(MultiaxialMaterial* mat, int index1, int index2, int index3, int p1, int p2, int p3);
+  MatPoint(MultiaxialMaterial* mat, int index1, int index2, int index3,
+                                                    int p1, int p2, int p3);
   MatPoint(MultiaxialMaterial* mat, double r_, double s_, double t_, double w_);
   ~MatPoint();
 
@@ -63,4 +64,4 @@ class MatPoint: public DomainObject {
   void setPacket(const Packet& /*p*/) {/*does nothing*/ }
 };
 
-#endif  // NEMESIS_MATERIAL_MATPOINT_H_
+#endif  // SRC_MATERIAL_MATPOINT_H_

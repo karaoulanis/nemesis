@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -33,7 +33,7 @@ SDofElement::SDofElement()   {
 /**
  * Constructor.
  */
-SDofElement::SDofElement(int ID, int NodeID, int dofID, int matID) 
+SDofElement::SDofElement(int ID, int NodeID, int dofID, int matID)
   :Element(ID, matID) {
   // The dofs needed for this element
   myNodalIDs.resize(1);
@@ -58,8 +58,7 @@ const Matrix& SDofElement::getM() {
   M(0, 0)=mySDofMaterial->getRho();
   return M;
 }
-const Vector& SDofElement::getR()
-{ 
+const Vector& SDofElement::getR() {
   Vector& R=*myVector;
   R.clear();
   return R;

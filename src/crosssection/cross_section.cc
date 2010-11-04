@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -26,7 +26,8 @@
 #include "crosssection/cross_section.h"
 #include "numeric/numeric.h"
 
-RectangularCrossSection::RectangularCrossSection(int ID, double width, double height)
+RectangularCrossSection::RectangularCrossSection(int ID, double width,
+                                                 double height)
 :CrossSection(ID) {
   w = width;
   h = height;

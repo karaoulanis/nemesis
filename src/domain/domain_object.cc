@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -50,13 +50,13 @@ int DomainObject::getID()          {
 }
 const Packet& DomainObject::getPacket() {
   ///@ todo When finished implementing all turn this function into pure.
-  std::cout << "DomainObject::Not implemented yet!"<<std::endl;
+  std::cout << "DomainObject::Not implemented yet!" << std::endl;
   thePacket.zero();
   return thePacket;
 }
 void DomainObject::setPacket(const Packet& /*p*/) {
   ///@ todo When finished implementing all turn this function into pure.
-  std::cout << "DomainObject::Not implemented yet!"<<std::endl;
+  std::cout << "DomainObject::Not implemented yet!" << std::endl;
 }
 void DomainObject::setDomain(Domain* pDomain) {
   pD = pDomain;

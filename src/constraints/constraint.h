@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,11 +23,11 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_CONSTRAINTS_CONSTRAINT_H_
-#define NEMESIS_CONSTRAINTS_CONSTRAINT_H_
+#ifndef SRC_CONSTRAINTS_CONSTRAINT_H_
+#define SRC_CONSTRAINTS_CONSTRAINT_H_
 
 // C++ system files
-#include < vector>
+#include <vector>
 
 // Project files
 #include "domain/domain.h"
@@ -51,7 +51,7 @@ class Constraint: public DomainObject {
  protected:
   static int nConstraints;
 
-  std::vector < cDof > theCDofs;
+  std::vector <cDof> theCDofs;
   double cVal;
   double fTrial;
   double fConvg;
@@ -78,4 +78,4 @@ class Constraint: public DomainObject {
   void update(double f);
   void commit();
 };
-#endif  // NEMESIS_CONSTRAINTS_CONSTRAINT_H_
+#endif  // SRC_CONSTRAINTS_CONSTRAINT_H_

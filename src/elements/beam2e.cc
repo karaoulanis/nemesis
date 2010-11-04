@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -145,7 +145,7 @@ const Vector& Beam2e::getR() {
   double s = cosX[1];
   static Vector u(6);
   u = this->getDispIncrm();
-  
+
   // Global u to local u
   double u0= cosX[0]*u[0]+cosX[1]*u[1];
   double u1=-cosX[1]*u[0]+cosX[0]*u[1];
@@ -174,7 +174,7 @@ const Vector& Beam2e::getR() {
   R[4]=facS*(- K12*u[1] - K6*u[2] + K12*u[4] - K6*u[5]) - facG*( 0.5*b[1]*L);
   R[5]=facS*(  K6*u[1]  + K2*u[2] - K6*u[4]  + K4*u[5]) - facG*(-b[1]*L*L/12.);
   R-=facP*P;
-  
+
   // Local R to global R
   double R0 = c*R[0]-s*R[1];
   double R1 = s*R[0]+c*R[1];

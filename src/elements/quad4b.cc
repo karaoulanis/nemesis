@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -33,7 +33,8 @@ std::vector < int > Quad4b::perm(4);
 
 Quad4b::Quad4b() {
 }
-Quad4b::Quad4b(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID)
+Quad4b::Quad4b(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
+               int MatID)
 :Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, 2, 2) {
   perm[0]=0;
   perm[1]=1;
@@ -70,10 +71,10 @@ const Matrix& Quad4b::getM() {
   M.clear();
   double rho = myMaterial->getRho();
   double volume = 0.;
-  
+
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++)
-    volume+=detJ[k]*(pD->getFac())*(myMatPoints[k]->get_w()); 
+    volume+=detJ[k]*(pD->getFac())*(myMatPoints[k]->get_w());
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
   return M;
@@ -87,13 +88,13 @@ const Vector& Quad4b::getR() {
   static Matrix Ba;
   Vector& R=*myVector;
   R.clear();
-  
+
   // Factors
   if (!(myGroup->isActive()))  return R;
   double facS = myGroup->getFacS();
   double facG = myGroup->getFacG();
   double facP = myGroup->getFacP();
-  
+
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
 
@@ -134,7 +135,7 @@ void Quad4b::update() {
     for (unsigned a = 0; a < myNodes.size(); a++) {
       this->getB(Ba, a, k);
       ///@todo check dV
-      //double dV=(pD->getFac())*detJ[k];
+      // double dV=(pD->getFac())*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
     }
     myMatPoints[k]->getMaterial()->setStrain(epsilon);
@@ -143,13 +144,12 @@ void Quad4b::update() {
 void Quad4b::shapeFunctions() {
   shape4(x, shp, detJ);
   // Axisymmetry
-  if (pD->getTag()==TAG_DOMAIN_AXISYMMETRIC)
-  {
-    for (int k = 0;k < 4;k++)    // matpoints
-    {
+  if (pD->getTag() == TAG_DOMAIN_AXISYMMETRIC) {
+    for (int k = 0; k < 4; k++) {    // matpoints
       double r = 0.;
-      for (int i = 0;i < 4;i++)  // nodes
+      for (int i = 0; i < 4; i++) {  // nodes
           r+=x(i, 0)*shp[i][0][k];
+      }
       detJ[k]*=r;
     }
   }
@@ -157,8 +157,7 @@ void Quad4b::shapeFunctions() {
 void Quad4b::getB(Matrix& B, int node, int gPoint) {
   B.resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
-  for (int k = 0;k < 4;k++)  //matpoints
-  {
+  for (int k = 0;k < 4;k++) {  // matpoints
     double dV = detJ[k]*(pD->getFac());
     Bb1+=shp[node][1][k]*dV;
     Bb2+=shp[node][2][k]*dV;
@@ -166,30 +165,30 @@ void Quad4b::getB(Matrix& B, int node, int gPoint) {
   }
   Bb1/=vol;
   Bb2/=vol;
-  
-    double B0 = 0., Bb0 = 0.;
+
+  double B0 = 0., Bb0 = 0.;
   // Axisymmetry
   double r = 0.;
-  if (pD->getTag()==TAG_DOMAIN_AXISYMMETRIC)
-  {
-    for (int i = 0;i < 4;i++)    // nodes
+  if (pD->getTag() == TAG_DOMAIN_AXISYMMETRIC) {
+    for (int i = 0;i < 4;i++) {
           r+=x(i, 0)*shp[i][0][gPoint];
+    }
     B0 = shp[node][0][gPoint]/r;
-    for (int k = 0;k < 4;k++)    // matpoints
-    {
+    for (int k = 0;k < 4;k++) {
       r = 0.;
-      for (int i = 0;i < 4;i++)  // nodes
+      for (int i = 0;i < 4;i++) {
           r+=x(i, 0)*shp[i][0][k];
+      }
       Bb0+=shp[node][0][k]*detJ[k]*(pD->getFac())/vol/r;
     }
   }
 
   // B-factors
-  double B1 = shp[node][1][gPoint];
-  double B2 = shp[node][2][gPoint];
-  double B4=(Bb1-B1)/3.;
-  double B6=(Bb2-B2)/3.;
-  double B7 = B2+B6;
+  double B1  = shp[node][1][gPoint];
+  double B2  = shp[node][2][gPoint];
+  double B4  = (Bb1-B1)/3.;
+  double B6  = (Bb2-B2)/3.;
+  double B7  = B2+B6;
   double B10 = B4+(Bb0-B0)/3.;
   double B11 = B0+B10;
   double B12 = B1+B10;

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,13 +23,13 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MAIN_NEMESIS_DEBUG_H_
-#define NEMESIS_MAIN_NEMESIS_DEBUG_H_
+#ifndef SRC_MAIN_NEMESIS_DEBUG_H_
+#define SRC_MAIN_NEMESIS_DEBUG_H_
 
 // C++ system files
-#include < iostream>
-#include < fstream>
-#include < string>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 // Project files (alphabetically)
 #include "numeric/matrix.h"
@@ -67,11 +67,11 @@ class LogFile {
   void write(const Matrix& m)           {log << m << std::endl;}
 };
 
-//namespace Counters
-//{
-//  int c1;
-//  int c2;
-//};
+// namespace Counters
+// {
+//   int c1;
+//   int c2;
+// };
 void report(const double  d, const char* name="Noname", int total = 8, int decimal = 4);
 void report(const Matrix& m, const char* name="Noname", int total = 8, int decimal = 4);
 void report(const Vector& v, const char* name="Noname", int total = 8, int decimal = 4);
@@ -85,4 +85,4 @@ void add_BTv (Vector& R, int row, const int* perm, const Matrix& B, const Vector
 void add_Bv  (Vector& R, int row, const int* perm, const Matrix& B, const Vector& v, double c1, double c0 = 0.);
 
 void spectralDecomposition(const Vector& s, Vector& sP, Matrix& sV);
-#endif  // NEMESIS_MAIN_NEMESIS_DEBUG_H_
+#endif  // SRC_MAIN_NEMESIS_DEBUG_H_

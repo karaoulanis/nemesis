@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -43,7 +43,7 @@ Quad4::Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
   // Set local nodal dofs
   myLocalNodalDofs.resize(2);
   myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;  
+  myLocalNodalDofs[1]=1;
   // Handle common info
   this->handleCommonInfo();
 
@@ -53,7 +53,7 @@ Quad4::Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
   p1 = 2;
   p2 = 2;
   myMatPoints.resize(4);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial); 
+  MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, p1, p2);
   myMatPoints[1]=new MatPoint(pMat, 2, 1, p1, p2);
   myMatPoints[2]=new MatPoint(pMat, 2, 2, p1, p2);
@@ -84,31 +84,31 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
   J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
 
   detJ = J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);     // detJ
-  if (detJ < 0.) cout << myNodes[0]->getID()<<endl;
+  if (detJ < 0.) cout << myNodes[0]->getID() << endl;
   double dxidx  = J(1, 1)/detJ;
   double detadx =-J(1, 0)/detJ;
   double dxidy  =-J(0, 1)/detJ;
   double detady = J(0, 0)/detJ;
 
-    N(1, 0)=-0.25*(1-eta)*dxidx -0.25*(1-xi)*detadx; // N1, 1
-    N(1, 1)=+0.25*(1-eta)*dxidx -0.25*(1+xi)*detadx; // N2, 1
-    N(1, 2)=+0.25*(1+eta)*dxidx +0.25*(1+xi)*detadx; // N3, 1
-    N(1, 3)=-0.25*(1+eta)*dxidx +0.25*(1-xi)*detadx; // N4, 1
+  N(1, 0)=-0.25*(1-eta)*dxidx -0.25*(1-xi)*detadx;  // N1, 1
+  N(1, 1)=+0.25*(1-eta)*dxidx -0.25*(1+xi)*detadx;  // N2, 1
+  N(1, 2)=+0.25*(1+eta)*dxidx +0.25*(1+xi)*detadx;  // N3, 1
+  N(1, 3)=-0.25*(1+eta)*dxidx +0.25*(1-xi)*detadx;  // N4, 1
 
-    N(2, 0)=-0.25*(1-eta)*dxidy -0.25*(1-xi)*detady; // N1, 2
-    N(2, 1)=+0.25*(1-eta)*dxidy -0.25*(1+xi)*detady; // N2, 2
-    N(2, 2)=+0.25*(1+eta)*dxidy +0.25*(1+xi)*detady; // N3, 2
-    N(2, 3)=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady; // N4, 2
+  N(2, 0)=-0.25*(1-eta)*dxidy -0.25*(1-xi)*detady;  // N1, 2
+  N(2, 1)=+0.25*(1-eta)*dxidy -0.25*(1+xi)*detady;  // N2, 2
+  N(2, 2)=+0.25*(1+eta)*dxidy +0.25*(1+xi)*detady;  // N3, 2
+  N(2, 3)=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady;  // N4, 2
 }
 void Quad4::commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->getMaterial()->commit();
 }
 bool Quad4::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
 void Quad4::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
+  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID())
     for (unsigned i = 0;i < myMatPoints.size();i++)
       myMatPoints[i]->setInitialStresses(pInitialStresses);
 }
@@ -118,10 +118,10 @@ void Quad4::recoverStresses() {
   double sq3 = 1.7320508075688772935274463415059;
   static Vector sigma(6);
   static Matrix E(4, 4);
-  E(0, 0)=1+.5*sq3;  E(0, 1)=-.5;     E(0, 2)=1-.5*sq3;  E(0, 3)=-.5;
-  E(1, 0)=-.5;     E(1, 1)=1+.5*sq3;  E(1, 2)=-.5;     E(1, 3)=1-.5*sq3;
-  E(2, 0)=1-.5*sq3;  E(2, 1)=-.5;     E(2, 2)=1+.5*sq3;  E(2, 3)=-.5;
-  E(3, 0)=-.5;     E(3, 1)=1-.5*sq3;  E(3, 2)=-.5;     E(3, 3)=1+.5*sq3;
+  E(0, 0)=1+.5*sq3;   E(0, 1)=-.5;      E(0, 2)=1-.5*sq3;     E(0, 3)=-.5;
+  E(1, 0)=-.5;        E(1, 1)=1+.5*sq3;   E(1, 2)=-.5;        E(1, 3)=1-.5*sq3;
+  E(2, 0)=1-.5*sq3;   E(2, 1)=-.5;        E(2, 2)=1+.5*sq3;   E(2, 3)=-.5;
+  E(3, 0)=-.5;        E(3, 1)=1-.5*sq3;   E(3, 2)=-.5;        E(3, 3)=1+.5*sq3;
 
   sigma.clear();
   for (unsigned i = 0; i < 4; i++) {
@@ -163,7 +163,7 @@ void Quad4::addTracker(int index) {
 Tracker* Quad4::getTracker(int index) {
   if (index < 0 || index>(int)myMatPoints.size()-1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (myMatPoints[index]->getMaterial()->getTracker()==0)
+  if (myMatPoints[index]->getMaterial()->getTracker() == 0)
     throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
   return myMatPoints[index]->getMaterial()->getTracker();
 }
@@ -177,7 +177,8 @@ void Quad4::track() {
 }
 int Quad4::getnPlasticPoints() {
   int n = 0;
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++) {
     if (myMatPoints[i]->getMaterial()->isPlastic()) n++;
+  }
   return n;
 }

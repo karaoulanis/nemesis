@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -98,7 +98,9 @@ void LagrangeModelElement::add_R(double /*factor*/) {
 void LagrangeModelElement::add_Reff(double /*factor*/) {
   ///@todo Make this work for the non-linear multi constraint
   double c = myConstraint->getcVal();
-  double u = myConstraint->getDisp(0); //wrong
-  for (unsigned i = 0;i < theFTable.size()-1;i++) (*myVector)[i]=myConstraint->getF();
+  double u = myConstraint->getDisp(0); // wrong
+  for (unsigned i = 0;i < theFTable.size()-1;i++) {
+    (*myVector)[i]=myConstraint->getF();
+  }
   (*myVector)[theFTable.size()-1]=u-c;
 }

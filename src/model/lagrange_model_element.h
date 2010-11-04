@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,22 +23,22 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MODEL_LAGRANGE_MODEL_ELEMENT_H_
-#define NEMESIS_MODEL_LAGRANGE_MODEL_ELEMENT_H_
+#ifndef SRC_MODEL_LAGRANGE_MODEL_ELEMENT_H_
+#define SRC_MODEL_LAGRANGE_MODEL_ELEMENT_H_
 
 #include "model/model_element.h"
 
 class LagrangeModelElement : public ModelElement {
-  private:
-  public:
+ private:
+ public:
   LagrangeModelElement();
   LagrangeModelElement(const IDContainer& FTable, Constraint* pConstraint);
   ~LagrangeModelElement();
-  
+
   void add_K(double factor = 1.0);
   void add_M(double factor = 1.0);
   void add_C(double factor = 1.0);
   void add_R(double factor = 1.0);
   void add_Reff(double factor = 1.0);
 };
-#endif  // NEMESIS_MODEL_LAGRANGE_MODEL_ELEMENT_H_
+#endif  // SRC_MODEL_LAGRANGE_MODEL_ELEMENT_H_

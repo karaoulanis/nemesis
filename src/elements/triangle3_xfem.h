@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_TRIANGLE3_XFEM_H_
-#define NEMESIS_ELEMENTS_TRIANGLE3_XFEM_H_
+#ifndef SRC_ELEMENTS_TRIANGLE3_XFEM_H_
+#define SRC_ELEMENTS_TRIANGLE3_XFEM_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -57,4 +57,4 @@ class Triangle3XFem: public Element {
   void enrich();
 };
 
-#endif  // NEMESIS_ELEMENTS_TRIANGLE3_XFEM_H_
+#endif  // SRC_ELEMENTS_TRIANGLE3_XFEM_H_

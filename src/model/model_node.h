@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MODEL_MODEL_NODE_H_
-#define NEMESIS_MODEL_MODEL_NODE_H_
+#ifndef SRC_MODEL_MODEL_NODE_H_
+#define SRC_MODEL_MODEL_NODE_H_
 
 #include "containers/containers.h"
 #include "model/model_object.h"
@@ -39,7 +39,7 @@ class ModelNode :public ModelObject {
   ModelNode();
   ModelNode(const IDContainer& FTable, Node* pNode = 0, Constraint* pConstraint = 0);
   virtual ~ModelNode();
-  
+
   // Access to data members
   Node* getNode()     {return myNode;}
 
@@ -51,10 +51,10 @@ class ModelNode :public ModelObject {
   virtual void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da)=0;
   virtual void setTrialDisp(const Vector& u)=0;
   virtual void setTrialVecs(const Vector& u, const Vector& v, const Vector& a)=0;
-  
+
   virtual void commit()=0;
   virtual void commitSens(const Vector& /*ds*/, int /*param*/) {}
   virtual void rollback();
 };
 
-#endif  // NEMESIS_MODEL_MODEL_NODE_H_
+#endif  // SRC_MODEL_MODEL_NODE_H_

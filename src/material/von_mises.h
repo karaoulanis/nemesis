@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_VON_MISES_H_
-#define NEMESIS_MATERIAL_VON_MISES_H_
+#ifndef SRC_MATERIAL_VON_MISES_H_
+#define SRC_MATERIAL_VON_MISES_H_
 
 #include "material/multiaxial_elastic_plastic.h"
 
@@ -32,11 +32,10 @@
  * The Von-Mises Material Class.
  */
 class VonMises: public MultiaxialElastoPlastic {
-  private:
-  public:
+ public:
   VonMises();
   VonMises(int ID, int elasticID, double s0, double K);
   MultiaxialMaterial* getClone();
   ~VonMises();
 };
-#endif  // NEMESIS_MATERIAL_VON_MISES_H_
+#endif  // SRC_MATERIAL_VON_MISES_H_

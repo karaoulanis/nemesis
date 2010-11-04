@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_LOADCASE_NODAL_LOAD_H_
-#define NEMESIS_LOADCASE_NODAL_LOAD_H_
+#ifndef SRC_LOADCASE_NODAL_LOAD_H_
+#define SRC_LOADCASE_NODAL_LOAD_H_
 
 #include "node/node.h"
 #include "loadcase/load.h"
@@ -41,4 +41,4 @@ class NodalLoad: public Load {
   virtual double getValue(double time)=0;
 };
 
-#endif  // NEMESIS_LOADCASE_NODAL_LOAD_H_
+#endif  // SRC_LOADCASE_NODAL_LOAD_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,7 +27,8 @@
 
 Timoshenko2d::Timoshenko2d() {
 }
-Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID, int rule)
+Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID,
+                           int rule)
 :Element(ID, matID) {
   myTag = TAG_ELEM_BEAM_2D_TIMOSHENKO_2;
   myNodalIDs.resize(2);
@@ -54,9 +55,11 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID,
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
   b[1]=-cosX[1]*b0A+cosX[0]*b1A;
   gPoints = rule;
-  if (rule != 1&&rule != 2) throw SException("[nemesis:%d] %s", 9999, "Integration rule should be 1 or 2.");
+  if (rule != 1&&rule != 2)
+    throw SException("[nemesis:%d] %s", 9999, "Integration rule should be 1 or 2.");
 }
-Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3, int matID, int secID, int rule)
+Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
+                           int matID, int secID, int rule)
 :Element(ID, matID) {
   myTag = TAG_ELEM_BEAM_2D_TIMOSHENKO_3;
   myNodalIDs.resize(3);
@@ -84,7 +87,8 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3, int matID
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
   b[1]=-cosX[1]*b0A+cosX[0]*b1A;
   gPoints = rule;
-  if (rule != 2&&rule != 3) throw SException("[nemesis:%d] %s", 9999, "Integration rule should be 2 or 3.");
+  if (rule != 2&&rule != 3)
+    throw SException("[nemesis:%d] %s", 9999, "Integration rule should be 2 or 3.");
 }
 /**
  * Destructor.
@@ -92,16 +96,27 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3, int matID
 Timoshenko2d::~Timoshenko2d() {
 }
 void Timoshenko2d::shapeFunctions(int n, double xi, double &N, double &dN) {
-  switch(myNodes.size())
-  {
+  switch (myNodes.size()) {
     case 2:
-      if (n == 0)    {N = 0.5*(1-xi);  dN=-1/L;}
-      else      {N = 0.5*(1+xi);  dN=+1/L;}
+      if (n == 0) {
+        N = 0.5*(1-xi);
+        dN=-1/L;
+      } else {
+        N = 0.5*(1+xi);
+        dN=+1/L;
+      }
       break;
     case 3:
-      if (n == 0)    {N =-0.5*xi*(1-xi); dN=(-1+2*xi)/L;}
-      else if (n == 1) {N = 0.5*xi*(1+xi); dN=(+1+2*xi)/L;}
-      else      {N = (1+xi)*(1-xi); dN=-4*xi/L;}
+      if (n == 0) {
+        N =-0.5*xi*(1-xi);
+        dN=(-1+2*xi)/L;
+      } else if (n == 1) {
+        N = 0.5*xi*(1+xi);
+        dN=(+1+2*xi)/L;
+      } else {
+        N = (1+xi)*(1-xi);
+        dN=-4*xi/L;
+      }
       break;
     default:
       break;
@@ -130,15 +145,15 @@ const Matrix& Timoshenko2d::getK() {
         double Ni, Nj, dNi, dNj;
         this->shapeFunctions(i, xi, Ni, dNi);
         this->shapeFunctions(j, xi, Nj, dNj);
-        K(3*i+0, 3*j+0)+=(dNi*dNj*(C1*c*c+C3-c*c*C3)  )*dx;
-        K(3*i+0, 3*j+1)+=(c*dNi*dNj*s*(-C3+C1)    )*dx;
-        K(3*i+0, 3*j+2)+=(s*dNi*C3*Nj         )*dx;
-        K(3*i+1, 3*j+0)+=(c*dNi*dNj*s*(-C3+C1)    )*dx;
+        K(3*i+0, 3*j+0)+=(dNi*dNj*(C1*c*c+C3-c*c*C3))*dx;
+        K(3*i+0, 3*j+1)+=(c*dNi*dNj*s*(-C3+C1))*dx;
+        K(3*i+0, 3*j+2)+=(s*dNi*C3*Nj)*dx;
+        K(3*i+1, 3*j+0)+=(c*dNi*dNj*s*(-C3+C1))*dx;
         K(3*i+1, 3*j+1)+=(-dNi*dNj*(-c*c*C3-C1+C1*c*c))*dx;
-        K(3*i+1, 3*j+2)+=(-c*dNi*C3*Nj        )*dx;
-        K(3*i+2, 3*j+0)+=(Ni*C3*dNj*s         )*dx;
-        K(3*i+2, 3*j+1)+=(-Ni*C3*dNj*c        )*dx;
-        K(3*i+2, 3*j+2)+=(dNi*C2*dNj+Ni*C3*Nj     )*dx;
+        K(3*i+1, 3*j+2)+=(-c*dNi*C3*Nj)*dx;
+        K(3*i+2, 3*j+0)+=(Ni*C3*dNj*s)*dx;
+        K(3*i+2, 3*j+1)+=(-Ni*C3*dNj*c)*dx;
+        K(3*i+2, 3*j+2)+=(dNi*C2*dNj+Ni*C3*Nj)*dx;
       }
     }
   }
@@ -171,13 +186,13 @@ const Vector& Timoshenko2d::getR() {
   double c = cosX[0];
   double s = cosX[1];
   double Ni, dNi;
-  
+
   Vector u(3*myNodes.size());
   static Vector epsilon(3);
   u = this->getDispTrial();
   R.clear();  // getDispTrial() and R use the same static matrix
   for (int k = 0; k < gPoints; k++) {
-    // Find epsilon 
+    // Find epsilon
     ///@todo This should happen to update() for elastoplastic computations
     double xi = GaussCoords[gPoints][k+1];
     double dx = GaussWeights[gPoints][k+1]*0.5*L;
@@ -203,8 +218,7 @@ const Vector& Timoshenko2d::getR() {
     }
   }
   // R = R - Fext(Gravity)
-  switch(myNodes.size())
-  {
+  switch (myNodes.size()) {
     case 2:
       R[0]-=facG*(0.5*b[0]*L);
       R[1]-=facG*(0.5*b[1]*L);
@@ -224,7 +238,7 @@ const Vector& Timoshenko2d::getR() {
   }
   // R = R - Fext(Loads)
   R-=facP*P;
-  
+
   // Local R to global R
   for (unsigned i = 0; i < myNodes.size(); i++) {
     double d1 = c*R[3*i+0]-s*R[3*i+1];
@@ -238,13 +252,13 @@ void Timoshenko2d::recoverStresses() {
   ///@todo This might affect nodal stresses.
   return;
 }
-const double Timoshenko2d::GaussCoords[4][4]=  {{ 0.000000000000000,  // Rule 0
-                                                  0.000000000000000, 
-                                                  0.000000000000000, 
+const double Timoshenko2d::GaussCoords[4][4]= {{ 0.000000000000000,  // Rule 0
+                                                  0.000000000000000,
+                                                  0.000000000000000,
                           0.000000000000000}, //_______
                         { 0.000000000000000,  // Rule 1
-                                                  0.000000000000000,  // [1][1] 
-                                                  0.000000000000000, 
+                                                  0.000000000000000,  // [1][1]
+                                                  0.000000000000000,
                           0.000000000000000}, //_______
                                                 { 0.000000000000000,  // Rule 2
                                                  -0.577350269189626,  // [2][1]
@@ -254,14 +268,14 @@ const double Timoshenko2d::GaussCoords[4][4]=  {{ 0.000000000000000,  // Rule 0
                                                  -0.774596669241483,  // [3][1]
                                                   0.000000000000000,  // [3][2]
                          +0.774596669241483}};// [3][3]
- 
+
 const double Timoshenko2d::GaussWeights[4][4]= {{ 0.000000000000000,  // Rule 0
-                                                  0.000000000000000, 
-                                                  0.000000000000000, 
+                                                  0.000000000000000,
+                                                  0.000000000000000,
                                                   0.000000000000000}, //_______
                                                 { 0.000000000000000,  // Rule 1
-                                                 +2.000000000000000,  // [1][1] 
-                                                  0.000000000000000, 
+                                                 +2.000000000000000,  // [1][1]
+                                                  0.000000000000000,
                           0.000000000000000}, //_______
                                                 { 0.000000000000000,  // Rule 2
                                                  +1.000000000000000,  // [2][1]

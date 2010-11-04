@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_NUMERIC_LAPACK_H_
-#define NEMESIS_NUMERIC_LAPACK_H_
+#ifndef SRC_NUMERIC_LAPACK_H_
+#define SRC_NUMERIC_LAPACK_H_
 
 #include < acml.h>
 
@@ -59,38 +59,38 @@
   #define dggev DGGEV
 #endif
 
-//extern "C" void dgesv(int *N, int *NRHS, double *A, int *LDA, 
+// extern "C" void dgesv(int *N, int *NRHS, double *A, int *LDA,
 //            int *IPIV, double *B, int *LDB, int *INFO);
-//extern "C" void dspsv(char* UPLO, int *N, int *NRHS, double *AP, 
+// extern "C" void dspsv(char* UPLO, int *N, int *NRHS, double *AP,
 //            int *IPIV, double *B, int *LDB, int *INFO);
-//extern "C" void dgbsv(int *N, int* KL, int* KU, int *NRHS, double *AB, int *LDAB, 
+// extern "C" void dgbsv(int *N, int* KL, int* KU, int *NRHS, double *AB, int *LDAB,
 //            int *IPIV, double *B, int *LDB, int *INFO);
-//extern "C" void dsyev(char* JOBZ, char* UPLO, int* N, double* A, int* LDA,
+// extern "C" void dsyev(char* JOBZ, char* UPLO, int* N, double* A, int* LDA,
 //            double* W, double* WORK, int* LWORK, int* INFO);
-// 
+//
 // // Generic
-//extern "C" void dgetrf(int* M, int* N, double* A, int* LDA, int* IPIV, int* INFO);
-//extern "C" void dgetrs(char* TRANS, int* N, int* NRHS, double* A, int* LDA,
+// extern "C" void dgetrf(int* M, int* N, double* A, int* LDA, int* IPIV, int* INFO);
+// extern "C" void dgetrs(char* TRANS, int* N, int* NRHS, double* A, int* LDA,
 //          int* IPIV, double* B, int* LDB, int* INFO);
 //
-// 
-////Symmetric
-//extern "C" void dsptrf(char* UPLO, int* N, double* AP, int* IPIV, int* INFO);
-//extern "C" void dsptrs(char* UPLO, int* N, int* NRHS, double* AP,
+//
+// //Symmetric
+// extern "C" void dsptrf(char* UPLO, int* N, double* AP, int* IPIV, int* INFO);
+// extern "C" void dsptrs(char* UPLO, int* N, int* NRHS, double* AP,
 //            int* IPIV, double* B, int* LDB, int* INFO);
-// 
-//// Band
-//extern "C" void dgbtrf(int* M, int* N, int* KL, int* KU, double* AB,
+//
+// // Band
+// extern "C" void dgbtrf(int* M, int* N, int* KL, int* KU, double* AB,
 //          int* LDAB, int* IPIV, int* INFO);
-//extern "C" void dgbtrs(char* TRANS, int* N, int* KL, int* KU, int* NRHS, double* AB,
+// extern "C" void dgbtrs(char* TRANS, int* N, int* KL, int* KU, int* NRHS, double* AB,
 //          int* LDAB, int* IPIV, double* B, int* LDB, int* INFO);
 //
-//// Generalized eigenvalue
-//extern "C" void dsygv(int* ITYPE, char* JOBZ, char* UPLO, int* N, double* A,
+// // Generalized eigenvalue
+// extern "C" void dsygv(int* ITYPE, char* JOBZ, char* UPLO, int* N, double* A,
 //            int* LDA, double* B, int* LDB, double* W, double* WORK, int* LWORK, int* INFO);
-//extern "C" void dggev(char* JOBVL, char* JOBVR, int* N, double* A,
+// extern "C" void dggev(char* JOBVL, char* JOBVR, int* N, double* A,
 //            int* LDA, double* B, int* LDB,
 //            double* ALPHAR, double* ALPHAI, double* BETA,
 //            double* VL, int* LDVL, double* VR, int* LDVR, double* WORK, int* LWORK, int* INFO);
 
-#endif  // NEMESIS_NUMERIC_LAPACK_H_
+#endif  // SRC_NUMERIC_LAPACK_H_

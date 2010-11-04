@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,22 +34,25 @@ LadeDuncanSurface::~LadeDuncanSurface() {
 }
 double LadeDuncanSurface::get_f(const Vector& s, const double /*kappa*/) {
   double sI3 = s.I3();
-  if (fabs(sI3)<1e-4) sI3 = 0.;
+  if (fabs(sI3) < 1e-4) sI3 = 0.;
   double f = pow(1.*sI3, num::d13)-s.I1();
   return f;
 }
 void LadeDuncanSurface::find_C(const Vector& s, const double /*a*/) {
-  C1 = 0.;
-  C2 = sqrt(0.75)/sqrt(s.J2());
-  C3 = 0.;
+  C1  = 0.;
+  C2  = sqrt(0.75)/sqrt(s.J2());
+  C3  = 0.;
   C11 = 0.;
-  C22=-0.25*num::sq3*pow(s.J2(), -1.5);
-  C23 = 0.; C32 = 0.; C33 = 0.;
+  C22 =-0.25*num::sq3*pow(s.J2(), -1.5);
+  C23 = 0.;
+  C32 = 0.;
+  C33 = 0.;
 }
 double LadeDuncanSurface::get_dfda(const Vector& /*s*/, const double /*a*/) {
   return -K;
 }
-const Vector& LadeDuncanSurface::get_df2dsa(const Vector& /*s*/, const double /*a*/) {
+const Vector& LadeDuncanSurface::get_df2dsa(const Vector& /*s*/,
+                                            const double /*a*/) {
   static Vector ret(6, 0.);
   ret.clear();
   return ret;

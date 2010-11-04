@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_
-#define NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_
+#ifndef SRC_MATERIAL_MULTIAXIAL_MATERIAL_H_
+#define SRC_MATERIAL_MULTIAXIAL_MATERIAL_H_
 
 #include "material/material.h"
 #include "numeric/matrix.h"
@@ -48,9 +48,9 @@ class MultiaxialMaterial: public Material {
   virtual MultiaxialMaterial* getClone()=0;
   virtual void setStrain(const Vector& De)=0;
   virtual const Matrix& getC()=0;
-  void  setStress(const Vector& s){sTrial =s; sConvg =s;}
-  void  addStress(const Vector& s){sTrial+=s; sConvg+=s;}
-  const Vector& getStress()   {return sTrial;}
-  virtual bool isPlastic()    {return false;}
+  void  setStress(const Vector& s)  {sTrial =s; sConvg =s;}
+  void  addStress(const Vector& s)  {sTrial+=s; sConvg+=s;}
+  const Vector& getStress()         {return sTrial;}
+  virtual bool isPlastic()          {return false;}
 };
-#endif  // NEMESIS_MATERIAL_MULTIAXIAL_MATERIAL_H_
+#endif  // SRC_MATERIAL_MULTIAXIAL_MATERIAL_H_

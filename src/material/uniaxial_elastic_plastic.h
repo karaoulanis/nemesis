@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_
-#define NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_
+#ifndef SRC_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_
+#define SRC_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_
 
 #include "material/uniaxial_material.h"
 
@@ -48,4 +48,4 @@ class UniaxialElastoPlastic: public UniaxialMaterial {
   void commit();
 };
 
-#endif  // NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_
+#endif  // SRC_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_

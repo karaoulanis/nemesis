@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW2_H_
-#define NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW2_H_
+#ifndef SRC_MATERIAL_DRUCKER_PRAGER_NEW2_H_
+#define SRC_MATERIAL_DRUCKER_PRAGER_NEW2_H_
 
 #include "material/hardening.h"
 #include "material/multiaxial_material.h"
@@ -34,7 +34,7 @@
  * The Drucker-Prager Class.
  */
 class DruckerPragerNew2: public MultiaxialMaterial {
-  private:
+ private:
   MultiaxialMaterial* myElastic;
   static Matrix C;
   static Matrix C3;
@@ -42,12 +42,13 @@ class DruckerPragerNew2: public MultiaxialMaterial {
   int inaccurate;
   double aTrial, aConvg;
 
-  vector < YS*> fSurfaces;
-  vector < YS*> gSurfaces;
+  vector<YS*> fSurfaces;
+  vector<YS*> gSurfaces;
   Hardening EL;
-  public:
+ public:
   DruckerPragerNew2();
-  DruckerPragerNew2(int ID, int elasticID, double c, double phi, double psi, double Kci, double Kphi, double T);
+  DruckerPragerNew2(int ID, int elasticID, double c, double phi, double psi,
+    double Kci, double Kphi, double T);
   ~DruckerPragerNew2();
 
   MultiaxialMaterial* getClone();
@@ -59,4 +60,4 @@ class DruckerPragerNew2: public MultiaxialMaterial {
   // Tracker member functions
   void track();
 };
-#endif  // NEMESIS_MATERIAL_DRUCKER_PRAGER_NEW2_H_
+#endif  // SRC_MATERIAL_DRUCKER_PRAGER_NEW2_H_

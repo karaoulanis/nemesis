@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -36,7 +36,7 @@ LadeDuncan::LadeDuncan(int ID, int elasticID, double K)
   fSurfaces.push_back(new LadeDuncanSurface(K));
   gSurfaces.push_back(new LadeDuncanSurface(K));
   // Material tag
-  //myTag = TAG_MATERIAL_MOHR_COULOMB;
+  // myTag = TAG_MATERIAL_MOHR_COULOMB;
   nHardeningVariables = 1;
 }
 LadeDuncan::~LadeDuncan() {

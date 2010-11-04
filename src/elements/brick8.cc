@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -54,19 +54,19 @@ Brick8::Brick8(int ID,
   myNodalIDs[5]=Node_6;
   myNodalIDs[6]=Node_7;
   myNodalIDs[7]=Node_8;
-  
+
   // Set local nodal dofs
   myLocalNodalDofs.resize(3);
   myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;  
-  myLocalNodalDofs[2]=2;  
-  
+  myLocalNodalDofs[1]=1;
+  myLocalNodalDofs[2]=2;
+
   // Handle common info
   this->handleCommonInfo();
 
   // Materials
   myMatPoints.resize(8);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial); 
+  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 2, 2, 2);
   myMatPoints[1]=new MatPoint(pMat, 2, 1, 1, 2, 2, 2);
   myMatPoints[2]=new MatPoint(pMat, 2, 2, 1, 2, 2, 2);
@@ -75,7 +75,7 @@ Brick8::Brick8(int ID,
   myMatPoints[5]=new MatPoint(pMat, 2, 1, 2, 2, 2, 2);
   myMatPoints[6]=new MatPoint(pMat, 2, 2, 2, 2, 2, 2);
   myMatPoints[7]=new MatPoint(pMat, 1, 2, 2, 2, 2, 2);
-  
+
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
   this->shapeFunctions();
 
@@ -198,7 +198,7 @@ void Brick8::update() {
  * Element commit.
  */
 void Brick8::commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->getMaterial()->commit();
 }
 /**
@@ -211,9 +211,11 @@ void Brick8::shapeFunctions() {
  * Element initial stresses.
  */
 void Brick8::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
-    for (unsigned i = 0;i < myMatPoints.size();i++)
+  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID()) {
+    for (unsigned i = 0;i < myMatPoints.size();i++) {
       myMatPoints[i]->setInitialStresses(pInitialStresses);
+    }
+  }
 }
 /**
  * Element stress recovery.
@@ -242,12 +244,13 @@ void Brick8::recoverStresses() {
   E(6, 4)=b*b*a*d; E(6, 5)=b*a*a*d; E(6, 6)=a*a*a*d; E(6, 7)=b*a*a*d;
   E(7, 4)=b*a*a*d; E(7, 5)=b*b*a*d; E(7, 6)=b*a*a*d; E(7, 7)=a*a*a*d;
 
-  for (unsigned i = 0;i < 8;i++)     // nodes
-  {
+  for (unsigned i = 0;i < 8;i++) {      // nodes
     sigma.clear();
-    for (unsigned j = 0;j < 6;j++)   // sigma
-      for (unsigned k = 0;k < 8;k++) // material points
+    for (unsigned j = 0;j < 6;j++) {    // sigma
+      for (unsigned k = 0;k < 8;k++) {  // material points
         sigma[j]+=E(i, k)*(myMatPoints[k]->getMaterial()->getStress())[j];
+      }
+    }
     myNodes[i]->addStress(sigma);
   }
 }

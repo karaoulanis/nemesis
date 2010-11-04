@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_MOHR_COULOMB_H_
-#define NEMESIS_MATERIAL_MOHR_COULOMB_H_
+#ifndef SRC_MATERIAL_MOHR_COULOMB_H_
+#define SRC_MATERIAL_MOHR_COULOMB_H_
 
 #include "material/multiaxial_elastic_plastic.h"
 
@@ -52,4 +52,4 @@ class MohrCoulomb: public MultiaxialMaterial {
   // Tracker member functions
   void track();
 };
-#endif  // NEMESIS_MATERIAL_MOHR_COULOMB_H_
+#endif  // SRC_MATERIAL_MOHR_COULOMB_H_

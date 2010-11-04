@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,10 +23,10 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_YS_H_
-#define NEMESIS_MATERIAL_YS_H_
+#ifndef SRC_MATERIAL_YS_H_
+#define SRC_MATERIAL_YS_H_
 
-#include < vector>
+#include <vector>
 
 #include "main/nemesis_debug.h"
 #include "numeric/matrix.h"
@@ -49,4 +49,4 @@ class YS {
   virtual double getdfdk(const Vector& sigma, const double kappa)=0;
   virtual const Vector& getf2dkds(const Vector& sigma, const double kappa)=0;
 };
-#endif  // NEMESIS_MATERIAL_YS_H_
+#endif  // SRC_MATERIAL_YS_H_
