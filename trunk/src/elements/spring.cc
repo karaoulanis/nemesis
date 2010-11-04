@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -36,13 +36,13 @@ Spring::Spring()   {
  * Creates a Bar Element. 
  */
 Spring::Spring(int ID, int Node_1, int Node_2, int matID,
-         double xp1, double xp2, double xp3,
-           double yp1, double yp2, double yp3)
+                double xp1, double xp2, double xp3,
+                double yp1, double yp2, double yp3)
 :Element(ID, matID) {
   myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
   // Get dimension
   nDim = pD->getnDim();
-  
+
   // Store the nodes
   myNodalIDs.resize(2);
   myNodalIDs[0]=Node_1;
@@ -53,50 +53,49 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
   for (int i = 0;i < nDim;i++) myLocalNodalDofs[i]=i;
 
   // Handle common info
-    this->handleCommonInfo();
-  
+  this->handleCommonInfo();
+
   // Store material information
   mySpringMaterial = static_cast < SpringMaterial*>(myMaterial)->getClone();
 
   // Find gap
-  //gap = sqrt((x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0))
-  //    +(x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
-  //    +(x(1, 2)-x(0, 2))*(x(1, 2)-x(0, 2)));
+  // gap = sqrt((x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0))
+  //      +(x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
+  //      +(x(1, 2)-x(0, 2))*(x(1, 2)-x(0, 2)));
   // Define transformations
   T.resize(nDim, nDim, 0.);
   static Vector xp, yp, zp;
-  switch(nDim)
-  {
-  case 1:
-    T(0, 0)=1.;
-    break;
-  case 2:
-    xp.resize(2);
-    yp.resize(2);
-    xp[0]= xp1; xp[1]= xp2;
-    yp[0]=-xp2; yp[1]= xp1;
-    xp.normalize();
-    yp.normalize();
-    T.appendRow(xp, 0, 0);
-    T.appendRow(yp, 1, 0);
-    break;
-  case 3:
-    xp.resize(3);
-    yp.resize(3);
-    zp.resize(3);
-    xp[0]=xp1; xp[1]=xp2; xp[2]=xp3;
-    yp[0]=yp1; yp[1]=yp2; yp[2]=yp3;
-    zp = cross(xp, yp);
-    yp = cross(zp, xp);
-    xp.normalize();
-    yp.normalize();
-    zp.normalize();
-    T.appendRow(xp, 0, 0);
-    T.appendRow(yp, 1, 0);
-    T.appendRow(zp, 2, 0);
-    break;
-  default:
-    break;
+  switch (nDim) {
+    case 1:
+      T(0, 0)=1.;
+      break;
+    case 2:
+      xp.resize(2);
+      yp.resize(2);
+      xp[0]= xp1; xp[1]= xp2;
+      yp[0]=-xp2; yp[1]= xp1;
+      xp.normalize();
+      yp.normalize();
+      T.appendRow(xp, 0, 0);
+      T.appendRow(yp, 1, 0);
+      break;
+    case 3:
+      xp.resize(3);
+      yp.resize(3);
+      zp.resize(3);
+      xp[0]=xp1; xp[1]=xp2; xp[2]=xp3;
+      yp[0]=yp1; yp[1]=yp2; yp[2]=yp3;
+      zp = cross(xp, yp);
+      yp = cross(zp, xp);
+      xp.normalize();
+      yp.normalize();
+      zp.normalize();
+      T.appendRow(xp, 0, 0);
+      T.appendRow(yp, 1, 0);
+      T.appendRow(zp, 2, 0);
+      break;
+    default:
+      break;
   }
 }
 /**
@@ -114,7 +113,7 @@ void Spring::update() {
   for (int k = 0;k < nDim;k++)
     for (int i = 0;i < nDim;i++)
       de[i]+=T(i, k)*(du[k+nDim]-du[k]);
-  //report(de, "de");
+  // report(de, "de");
   mySpringMaterial->setStrain(de);
 }
 void Spring::commit() {
@@ -135,7 +134,7 @@ const Matrix& Spring::getK() {
   double facK = 1e-7;
   if (myGroup->isActive()) facK = myGroup->getFacK();
   K*=facK;
-  //report(K, "K", 14, 1);
+  // report(K, "K", 14, 1);
   return K;
 
 /*  Matrix& K=*myMatrix;
@@ -156,8 +155,7 @@ const Matrix& Spring::getK() {
   K*=facK;
   return K;*/
 }
-const Matrix& Spring::getM()
-{   
+const Matrix& Spring::getM() {
   Matrix& M=*myMatrix;
   M.clear();
   return M;
@@ -169,9 +167,9 @@ const Vector& Spring::getR() {
   if (!(myGroup->isActive()))  return R;
   double facS = myGroup->getFacS();
   ///@todo check
-  //double facG = myGroup->getFacG();
-  //double facP = myGroup->getFacP();
-  // R = Fint - Fext 
+  // double facG = myGroup->getFacG();
+  // double facP = myGroup->getFacP();
+  // R = Fint - Fext
   Vector sigma = mySpringMaterial->getStress();
   for (int k = 0; k < nDim; k++) {
     for (int i = 0; i < nDim; i++) {
@@ -222,7 +220,7 @@ void Spring::addTracker(int index) {
 Tracker* Spring::getTracker(int index) {
   if (index != 1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (mySpringMaterial->getTracker()==0)
+  if (mySpringMaterial->getTracker() == 0)
     throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
   return mySpringMaterial->getTracker();
 }

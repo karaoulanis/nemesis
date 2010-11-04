@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -44,14 +44,14 @@ Tetrahedron4Disp::Tetrahedron4Disp(int ID,
   // Set local nodal dofs
   myLocalNodalDofs.resize(3);
   myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;  
-  myLocalNodalDofs[2]=2;  
+  myLocalNodalDofs[1]=1;
+  myLocalNodalDofs[2]=2;
   // Handle common info
   this->handleCommonInfo();
 
   // Materials
   myMatPoints.resize(1);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial); 
+  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 1, 1, 1);
 }
 Tetrahedron4Disp::~Tetrahedron4Disp() {
@@ -136,7 +136,7 @@ const Vector& Tetrahedron4Disp::getR() {
   R.clear();
   if (!(myGroup->isActive()))  return R;
   double facS = myGroup->getFacS();
-  //double facG = myGroup->getFacG();
+  // double facG = myGroup->getFacG();
   double facP = myGroup->getFacP();
   sigma = myMatPoints[0]->getMaterial()->getStress();
   this->findShapeFunctions();
@@ -146,9 +146,9 @@ const Vector& Tetrahedron4Disp::getR() {
     R[ii+1]+=facS*(N(i, 2)*sigma[1]+N(i, 1)*sigma[3]+N(i, 3)*sigma[4])*V;
     R[ii+2]+=facS*(N(i, 3)*sigma[2]+N(i, 2)*sigma[4]+N(i, 1)*sigma[5])*V;
     ///@todo check
-    //R[ii  ]-=facG*(N(0, i)*b[0]*dV);
-    //R[ii+1]-=facG*(N(0, i)*b[1]*dV);
-    //R[ii+1]-=facG*(N(0, i)*b[2]*dV);
+    // R[ii  ]-=facG*(N(0, i)*b[0]*dV);
+    // R[ii+1]-=facG*(N(0, i)*b[1]*dV);
+    // R[ii+1]-=facG*(N(0, i)*b[2]*dV);
     ii+=3;
   }
 
@@ -176,7 +176,7 @@ void Tetrahedron4Disp::update() {
   myMatPoints[0]->getMaterial()->setStrain(epsilon);
 }
 void Tetrahedron4Disp::commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->getMaterial()->commit();
 }
 bool Tetrahedron4Disp::checkIfAllows(FEObject* /*f*/) {

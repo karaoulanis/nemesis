@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -50,8 +50,7 @@ int PenaltyImposer::impose() {
   // Create Standard ModelNodes
   //=========================================================================
   for (NodeIterator nIter = pA->getDomain()->getNodes().begin();
-    nIter != pA->getDomain()->getNodes().end();nIter++) 
-  {
+            nIter != pA->getDomain()->getNodes().end(); nIter++) {
     // Get a pointer to a node
     pNode = nIter->second;
     // Get the nodal id
@@ -64,8 +63,7 @@ int PenaltyImposer::impose() {
   // Create Standard ModelElements
   //=========================================================================
   for (ElementIterator eIter = pA->getDomain()->getElements().begin();
-    eIter != pA->getDomain()->getElements().end();eIter++) 
-  {
+            eIter != pA->getDomain()->getElements().end();eIter++) {
     // Get next (randomly chosen) element
     pElement = eIter->second;
     // Get the ids of the nodes
@@ -91,18 +89,18 @@ int PenaltyImposer::impose() {
   // Constraints
   //=========================================================================
   for (ConstraintIterator cIter = theConstraints->begin();
-    cIter != theConstraints->end();cIter++)
-  {
+            cIter != theConstraints->end(); cIter++) {
     pConstraint = cIter->second;
-    if (pConstraint->getncDofs()==0) continue;
+    if (pConstraint->getncDofs() == 0) continue;
     int nCDofs = pConstraint->getncDofs();
     IDContainer cFTable(nCDofs);
-    for (int j = 0;j < nCDofs;j++)
-      cFTable[j]=this->getGlobalDof(
-        pConstraint->getcDof(j).pNode->getID(), pConstraint->getcDof(j).dof);
+    for (int j = 0;j < nCDofs;j++) {
+      cFTable[j]=this->getGlobalDof(pConstraint->getcDof(j).pNode->getID(),
+                                    pConstraint->getcDof(j).dof);
+    }
     pPenModelElement = new PenaltyModelElement(cFTable, pConstraint, a);
     theModel->addModelElement(pPenModelElement);
   }
-  theModel->setConstrained(true); ///todo remove 
+  theModel->setConstrained(true);  ///@todo remove
   return 0;
 }

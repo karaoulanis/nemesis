@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_SURFACE_H_
-#define NEMESIS_MATERIAL_SURFACE_H_
+#ifndef SRC_MATERIAL_SURFACE_H_
+#define SRC_MATERIAL_SURFACE_H_
 
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
@@ -55,4 +55,4 @@ class Surface {
   void setActive(bool b)  {active = b;}
   bool isActive()     {return active;}
 };
-#endif  // NEMESIS_MATERIAL_SURFACE_H_
+#endif  // SRC_MATERIAL_SURFACE_H_

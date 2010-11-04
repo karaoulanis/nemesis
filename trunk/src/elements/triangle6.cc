@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -44,13 +44,13 @@ Triangle6::Triangle6(int ID,
   // Set local nodal dofs
   myLocalNodalDofs.resize(2);
   myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;  
+  myLocalNodalDofs[1]=1;
   // Handle common info
   this->handleCommonInfo();
 
   // Materials
   myMatPoints.resize(3);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial); 
+  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, num::d23, num::d16, num::d16, num::d13);
   myMatPoints[1]=new MatPoint(pMat, num::d16, num::d23, num::d16, num::d13);
   myMatPoints[2]=new MatPoint(pMat, num::d16, num::d16, num::d23, num::d13);
@@ -202,7 +202,7 @@ void Triangle6::update() {
   }
 }
 void Triangle6::commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->getMaterial()->commit();
 }
 bool Triangle6::checkIfAllows(FEObject* /*f*/) {
@@ -232,13 +232,13 @@ void Triangle6::recoverStresses() {
   }
 }
 void Triangle6::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
+  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID())
     for (unsigned i = 0;i < myMatPoints.size();i++)
       myMatPoints[i]->setInitialStresses(pInitialStresses);
 }
 int Triangle6::getnPlasticPoints() {
   int n = 0;
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++)
     if (myMatPoints[i]->getMaterial()->isPlastic()) n++;
   return n;
 }

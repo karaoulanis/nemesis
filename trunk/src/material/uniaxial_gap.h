@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_UNIAXIAL_GAP_H_
-#define NEMESIS_MATERIAL_UNIAXIAL_GAP_H_
+#ifndef SRC_MATERIAL_UNIAXIAL_GAP_H_
+#define SRC_MATERIAL_UNIAXIAL_GAP_H_
 
 #include "material/uniaxial_material.h"
 
@@ -38,11 +38,12 @@ class UniaxialGap: public UniaxialMaterial {
   double Et;
   public:
   UniaxialGap();
-  UniaxialGap(int ID, double E, double nu, double rho, double aT, double sy_, double gap_ = 0.);
+  UniaxialGap(int ID, double E, double nu, double rho, double aT, double sy_,
+              double gap_ = 0.);
   UniaxialMaterial* getClone();
   void setStrain(const double De);
   double getC();
   void commit();
 };
 
-#endif  // NEMESIS_MATERIAL_UNIAXIAL_GAP_H_
+#endif  // SRC_MATERIAL_UNIAXIAL_GAP_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_CONTROL_ARC_LENGTH_UNP_H_
-#define NEMESIS_CONTROL_ARC_LENGTH_UNP_H_
+#ifndef SRC_CONTROL_ARC_LENGTH_UNP_H_
+#define SRC_CONTROL_ARC_LENGTH_UNP_H_
 
 #include "control/static_control.h"
 
@@ -50,4 +50,4 @@ class ArcLengthUNP :public StaticControl {
   void correct();
 };
 
-#endif  // NEMESIS_CONTROL_ARC_LENGTH_UNP_H_
+#endif  // SRC_CONTROL_ARC_LENGTH_UNP_H_

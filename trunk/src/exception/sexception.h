@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_EXCEPTION_SEXCEPTION_H_
-#define NEMESIS_EXCEPTION_SEXCEPTION_H_
+#ifndef SRC_EXCEPTION_SEXCEPTION_H_
+#define SRC_EXCEPTION_SEXCEPTION_H_
 
 class SException {
   private:
@@ -33,4 +33,4 @@ class SException {
   SException(const char* format, ...);
   const char* what();
 };
-#endif  // NEMESIS_EXCEPTION_SEXCEPTION_H_
+#endif  // SRC_EXCEPTION_SEXCEPTION_H_

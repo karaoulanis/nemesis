@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_LOADCASE_LOADCASE_H_
-#define NEMESIS_LOADCASE_LOADCASE_H_
+#ifndef SRC_LOADCASE_LOADCASE_H_
+#define SRC_LOADCASE_LOADCASE_H_
 
 // Project files (alphabetically)
 #include "containers/containers.h"
@@ -82,4 +82,4 @@ class LoadCase: public DomainObject {
   int getnSensitivityParameters();
 };
 
-#endif  // NEMESIS_LOADCASE_LOADCASE_H_
+#endif  // SRC_LOADCASE_LOADCASE_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MODEL_MODEL_OBJECT_H_
-#define NEMESIS_MODEL_MODEL_OBJECT_H_
+#ifndef SRC_MODEL_MODEL_OBJECT_H_
+#define SRC_MODEL_MODEL_OBJECT_H_
 
 #include "elements/element.h"
 
@@ -40,7 +40,7 @@ class ModelObject {
   ModelObject();
   ModelObject(const IDContainer& FTable);
   virtual ~ModelObject();
-  
+
   // Access to data members
   const IDContainer& getFTable() const;
   void setFTable(const IDContainer& FTable);
@@ -52,4 +52,4 @@ class ModelObject {
   inline const Vector& getVector() const  {return *myVector; }
 };
 
-#endif  // NEMESIS_MODEL_MODEL_OBJECT_H_
+#endif  // SRC_MODEL_MODEL_OBJECT_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ALGORITHM_ALGORITHM_H_
-#define NEMESIS_ALGORITHM_ALGORITHM_H_
+#ifndef SRC_ALGORITHM_ALGORITHM_H_
+#define SRC_ALGORITHM_ALGORITHM_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -35,4 +35,4 @@ class Algorithm: public AnalysisObject {
   virtual ~Algorithm();
   virtual int solveStep(int n)=0;
 };
-#endif  // NEMESIS_ALGORITHM_ALGORITHM_H_
+#endif  // SRC_ALGORITHM_ALGORITHM_H_

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -97,8 +97,7 @@ int Model::getSOEDof(int NodeID, int localDof) {
   Node* pNode = 0;
   ModelNode* pModelNode = 0;
   for (int i = 0; i < n; i++) {
-    if (theModelNodes[i]->getNode()->getID()==NodeID)
-    {
+    if (theModelNodes[i]->getNode()->getID() == NodeID) {
       pModelNode = getModelNodes()[i];
       pNode = pModelNode->getNode();
       break;
@@ -111,8 +110,7 @@ int Model::getSOEDof(int NodeID, int localDof) {
 void Model::setEquations(int n) {
   nEquations = n;
 }
-int Model::getnEquations()
-{   
+int Model::getnEquations() {
   return nEquations;
 }
 void Model::incTrialDisp(const Vector& du) {
@@ -132,17 +130,20 @@ void Model::setTrialVecs(const Vector& u, const Vector& a, const Vector& v) {
     theModelNodes[i]->setTrialVecs(u, a, v);
 }
 void Model::update() {
-  for (unsigned i = 0;i < theModelElements.size();i++) theModelElements[i]->update();
+  for (unsigned i = 0;i < theModelElements.size();i++)
+    theModelElements[i]->update();
 }
 void Model::commit() {
-  for (unsigned i = 0;i < theModelNodes.size();i++)  theModelNodes[i]->commit();
-  for (unsigned i = 0;i < theModelElements.size();i++) theModelElements[i]->commit();
+  for (unsigned i = 0;i < theModelNodes.size();i++)
+    theModelNodes[i]->commit();
+  for (unsigned i = 0;i < theModelElements.size();i++)
+    theModelElements[i]->commit();
 }
 void Model::commitSens(const Vector& ds, int param) {
-  for (unsigned i = 0;i < theModelNodes.size();i++) theModelNodes[i]->commitSens(ds, param);
+  for (unsigned i = 0;i < theModelNodes.size();i++)
+    theModelNodes[i]->commitSens(ds, param);
 }
-void Model::clear()
-{ 
+void Model::clear() {
   Containers::vector_delete(theModelNodes);
   Containers::vector_delete(theModelElements);
   nEquations = 0;
@@ -189,23 +190,23 @@ int Model::getUndirectedGraph(UndirectedGraph& G) {
       }
   }
   std::set < Pair>::iterator iEdges;
-  for (iEdges = theEdges.begin();iEdges != theEdges.end();iEdges++)
+  for (iEdges = theEdges.begin(); iEdges != theEdges.end(); iEdges++)
     add_edge(iEdges->first, iEdges->second, G);
   return 0;
 }
 void Model::setNodalStress() {
   theDomain->zeroNodalStress();
   for (ElementIterator eIter = theDomain->getElements().begin();
-    eIter != theDomain->getElements().end();eIter++) 
+    eIter != theDomain->getElements().end(); eIter++)
       eIter->second->recoverStresses();
 }
 void Model::enrich() {
   // First enrich nodes (Level set initialization)
   for (NodeIterator nIter = theDomain->getNodes().begin();
-    nIter != theDomain->getNodes().end();nIter++) 
+    nIter != theDomain->getNodes().end(); nIter++)
       nIter->second->evalLevelSets();
   // And then enrich elements
   for (ElementIterator eIter = theDomain->getElements().begin();
-    eIter != theDomain->getElements().end();eIter++) 
+    eIter != theDomain->getElements().end(); eIter++)
       eIter->second->enrich();
 }

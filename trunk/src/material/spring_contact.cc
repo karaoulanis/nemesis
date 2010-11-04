@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,7 +27,8 @@
 
 SpringContact::SpringContact() {
 }
-SpringContact::SpringContact(int ID, double Kn, double Ks, double mu, double gap)
+SpringContact::SpringContact(int ID, double Kn, double Ks, double mu,
+                             double gap)
 :SpringMaterial(ID) {
   // Material parameters
   MatParams[0]=Kn;
@@ -43,70 +44,65 @@ SpringContact::SpringContact(int ID, double Kn, double Ks, double mu, double gap
   Ct(2, 2)=Ks;
 
   if (gap != 0.)
-    cout << "Warning  : Gap is not yet implemented."<<endl;
+    cout << "Warning  : Gap is not yet implemented." << endl;
   ///@todo gap.
-  //eTotal.clear();
-  //eTotal[0]=gap;
+  // eTotal.clear();
+  // eTotal[0]=gap;
 }
 SpringMaterial* SpringContact::getClone() {
   // Material parameters
-  double Kn  =MatParams[0];
-  double Ks  =MatParams[1];
-  double mu  =MatParams[2];
-  double gap =MatParams[3];
+  double Kn  = MatParams[0];
+  double Ks  = MatParams[1];
+  double mu  = MatParams[2];
+  double gap = MatParams[3];
 
   // Create clone and return
   SpringMaterial* clone = new SpringContact(myID, Kn, Ks, mu, gap);
   return clone;
 }
 void SpringContact::setStrain(const Vector& De) {
-  double Kn  =MatParams[0];
-  double Ks  =MatParams[1];
-  double mu  =MatParams[2];
-  //double gap =MatParams[3];
+  double Kn  = MatParams[0];
+  double Ks  = MatParams[1];
+  double mu  = MatParams[2];
+  // double gap =MatParams[3];
 
   eTrial = eTotal+De;
 
-  double Fn =Kn*eTrial[0];
+  double Fn  = Kn*eTrial[0];
   double Fs2 = Ks*eTrial[1];
   double Fs3 = Ks*eTrial[2];
-  double f1 = Fn;
-  double f2 = sqrt(Fs2*Fs2+Fs3*Fs3)+mu*Fn;
+  double f1  = Fn;
+  double f2  = sqrt(Fs2*Fs2+Fs3*Fs3)+mu*Fn;
 
   Ct.clear();
   sTrial.clear();
-  // Case 1: Closed and sticking
-  if (f1 < 0. && f2 < 0.)
-  {
-    cout << "Spring : "<<myID<<" Closed and sticking."<<endl;
-    sTrial[0]=Kn*eTrial[0];
-    sTrial[1]=Ks*eTrial[1];
-    sTrial[2]=Ks*eTrial[2];
-    Ct(0, 0)=Kn;
-    Ct(1, 1)=Ks;
-    Ct(2, 2)=Ks; 
-  }
-  // Case 2: Closed and sliding
-  else if (f1 < 0. && f2 >= 0.)
-  {
-    cout << "Spring : "<<myID<<" Closed and sliding."<<endl;
-    sTrial[0]=Kn*eTrial[0];
-    sTrial[1]=0.;
-    sTrial[2]=0.;
-    Ct(0, 0)=Kn;
-    Ct(1, 1)=0.;
-    Ct(2, 2)=0.; 
-  }
-  // Case 3: Open
-  else
-  {
-    cout << "Spring : "<<myID<<" Open."<<endl;
-    sTrial[0]=0.;
-    sTrial[1]=0.;
-    sTrial[2]=0.;
-    Ct(0, 0)=0.;
-    Ct(1, 1)=0.;
-    Ct(2, 2)=0.; 
-  }
 
+  if (f1 < 0. && f2 < 0.) {
+  // Case 1: Closed and sticking
+    cout << "Spring : " << myID << " Closed and sticking." << endl;
+    sTrial[0] = Kn*eTrial[0];
+    sTrial[1] = Ks*eTrial[1];
+    sTrial[2] = Ks*eTrial[2];
+    Ct(0, 0) = Kn;
+    Ct(1, 1) = Ks;
+    Ct(2, 2) = Ks;
+  } else if (f1 < 0. && f2 >= 0.)  {
+    // Case 2: Closed and sliding
+    cout << "Spring : " << myID << " Closed and sliding." << endl;
+    sTrial[0] = Kn*eTrial[0];
+    sTrial[1] = 0.;
+    sTrial[2] = 0.;
+    Ct(0, 0) = Kn;
+    Ct(1, 1) = 0.;
+    Ct(2, 2) = 0.;
+  } else {
+  // Case 3: Open
+    cout << "Spring : " << myID << " Open." << endl;
+    sTrial[0] = 0.;
+    sTrial[1] = 0.;
+    sTrial[2] = 0.;
+    Ct(0, 0) = 0.;
+    Ct(1, 1) = 0.;
+    Ct(2, 2) = 0.;
+  }
 }

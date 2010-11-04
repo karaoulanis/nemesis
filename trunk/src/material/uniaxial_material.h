@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_UNIAXIAL_MATERIAL_H_
-#define NEMESIS_MATERIAL_UNIAXIAL_MATERIAL_H_
+#ifndef SRC_MATERIAL_UNIAXIAL_MATERIAL_H_
+#define SRC_MATERIAL_UNIAXIAL_MATERIAL_H_
 
 #include "material/material.h"
 
@@ -44,12 +44,12 @@ class UniaxialMaterial: public Material {
   virtual UniaxialMaterial* getClone()=0;
   virtual void setStrain(const double De)=0;
   virtual double getC()=0;
-  inline void setStress(const double s) {sTrial = s;    }
-  inline void addStress(const double s) {sTrial+=s;   }///@todo: check
-  inline double getStress()     {return sTrial; }
-  
+  inline void setStress(const double s) {sTrial = s;}
+  inline void addStress(const double s) {sTrial+= s;}  ///@todo: check
+  inline double getStress()             {return sTrial;}
+
   // Tracker member functions
   void track();
 };
 
-#endif  // NEMESIS_MATERIAL_UNIAXIAL_MATERIAL_H_
+#endif  // SRC_MATERIAL_UNIAXIAL_MATERIAL_H_

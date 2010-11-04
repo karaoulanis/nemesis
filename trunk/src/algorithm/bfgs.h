@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ALGORITHM_BFGS_H_
-#define NEMESIS_ALGORITHM_BFGS_H_
+#ifndef SRC_ALGORITHM_BFGS_H_
+#define SRC_ALGORITHM_BFGS_H_
 
 #include "algorithm/algorithm.h"
 
@@ -46,4 +46,4 @@ class BFGS :public Algorithm {
   int solveStep(int n);
   void lineSearch(double s0, double s1, const Vector& du);
 };
-#endif  // NEMESIS_ALGORITHM_BFGS_H_ 
+#endif  // SRC_ALGORITHM_BFGS_H_

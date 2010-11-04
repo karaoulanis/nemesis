@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -48,8 +48,10 @@ const Matrix& PlaneStress::getC() {
   double nu  =MatParams[ 1];
   // Find and return C
   double Em = E/(1-nu*nu);
-  C(0, 0)=Em;    C(0, 1)=Em*nu;
-  C(1, 0)=Em*nu; C(1, 1)=Em;    
+  C(0, 0)=Em;
+  C(0, 1)=Em*nu;
+  C(1, 0)=Em*nu;
+  C(1, 1)=Em;
   C(3, 3)=Em*0.5*(1.-nu);
   return C;
 }

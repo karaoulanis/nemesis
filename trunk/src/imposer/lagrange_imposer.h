@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_
-#define NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_
+#ifndef SRC_IMPOSER_LAGRANGE_IMPOSER_H_
+#define SRC_IMPOSER_LAGRANGE_IMPOSER_H_
 
 #include "imposer/imposer.h"
 #include "model/lagrange_model_element.h"
@@ -37,4 +37,4 @@ class LagrangeImposer: public Imposer {
   LagrangeImposer();
   int impose();
 };
-#endif  // NEMESIS_IMPOSER_LAGRANGE_IMPOSER_H_
+#endif  // SRC_IMPOSER_LAGRANGE_IMPOSER_H_

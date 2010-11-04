@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,9 +34,11 @@ double LinearEquivalentEL::get_h(const Vector& v) {
           +0.5*v[3]*v[3]+0.5*v[4]*v[4]+0.5*v[5]*v[5]);
   return eq;
 }
-double LinearEquivalentEL::get_dhds(const Vector& /*sTrial*/, const Vector& /*ePTrial*/) {
+double LinearEquivalentEL::get_dhds(const Vector& /*sTrial*/,
+                                    const Vector& /*ePTrial*/) {
   return 0;
 }
-double LinearEquivalentEL::get_dhda(const Vector& /*sTrial*/, const Vector& /*ePTrial*/) {
+double LinearEquivalentEL::get_dhda(const Vector& /*sTrial*/,
+                                    const Vector& /*ePTrial*/) {
   return 0;
 }

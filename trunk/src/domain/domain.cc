@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -83,11 +83,15 @@ void Domain::clear() {
  * @return An integer implying if something is wrong. 
  */
 int Domain::setnDim(int nDimensions) {
-  if (nDim != 0) 
-    throw SException("[nemesis:%d] %s", 9999, "Domain must be cleared before changing dim."); 
-  else if ((nDimensions < 1)||(nDimensions>3))
-    throw SException("[nemesis:%d] %s", 9999, "Dim value 1, 2 or 3 is only allowed.");
-  else nDim = nDimensions;
+  if (nDim != 0) {
+    throw SException("[nemesis:%d] %s", 9999,
+      "Domain must be cleared before changing dim.");
+  } else if ((nDimensions < 1)||(nDimensions>3)) {
+    throw SException("[nemesis:%d] %s", 9999,
+      "Dim value 1, 2 or 3 is only allowed.");
+  } else {
+    nDim = nDimensions;
+  }
   return 0;
 }
 /**
@@ -106,17 +110,17 @@ Database* Domain::getDatabase() {
 }
 void Domain::zeroNodalStress() {
   for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end();nIter++) 
+    nIter != theNodes.end(); nIter++)
       nIter->second->zeroStress();
 }
 void Domain::state(double facD) {
   for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end();nIter++) 
+    nIter != theNodes.end(); nIter++)
       nIter->second->multDisp(facD);
 }
 void Domain::zeroSensitivityParameters() {
   for (ElementIterator eIter = theElements.begin();
-    eIter != theElements.end();eIter++)
+    eIter != theElements.end(); eIter++)
       eIter->second->activateParameter(0);
 }
 int Domain::storeState(const char* tableName) {
@@ -126,12 +130,12 @@ int Domain::storeState(const char* tableName) {
   theDatabase->useTable(tableName);
   // Store nodes
   for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end();nIter++) 
+    nIter != theNodes.end(); nIter++)
     if (nIter->second->isActive())
       theDatabase->storeData(nIter->second->getPacket());
   // Store elements
   for (ElementIterator eIter = theElements.begin();
-    eIter != theElements.end();eIter++)
+    eIter != theElements.end(); eIter++)
     if (eIter->second->isActive())
       theDatabase->storeData(eIter->second->getPacket());
   // Commit transaction
@@ -143,9 +147,9 @@ int Domain::restoreState(const char* tableName) {
   theDatabase->beginTransaction();
   theDatabase->useTable(tableName);
   // Restore the nodes
-  for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end();nIter++)
-      nIter->second->setPacket(theDatabase->retrieveData(nIter->second->getTag(), nIter->second->getID()));
+  for (NodeIterator nIter = theNodes.begin(); nIter != theNodes.end(); nIter++)
+      nIter->second->setPacket(theDatabase->retrieveData(nIter->second->getTag(),
+        nIter->second->getID()));
   theDatabase->commitTransaction();
   return 0;
 }
@@ -167,20 +171,20 @@ const Vector& Domain::getEigenValues() {
 }
 void Domain::applyLoads(double lambda_, double time_) {
   for (LoadCaseIterator lcIter = theLoadCases.begin();
-    lcIter != theLoadCases.end();lcIter++) 
+    lcIter != theLoadCases.end(); lcIter++)
       lcIter->second->applyLoads(lambda_, time_);
 }
 void Domain::zeroLoads() {
   for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end();nIter++) 
+    nIter != theNodes.end(); nIter++)
       nIter->second->zeroLoad();
   for (ElementIterator eIter = theElements.begin();
-    eIter != theElements.end();eIter++) 
+    eIter != theElements.end(); eIter++)
       eIter->second->zeroLoad();
 }
 void Domain::zeroGroups() {
   GroupIterator gi;
-  for (gi = theGroups.begin();gi != theGroups.end();gi++) 
+  for (gi = theGroups.begin(); gi != theGroups.end(); gi++)
     gi->second->setDefault();
 }
 /**

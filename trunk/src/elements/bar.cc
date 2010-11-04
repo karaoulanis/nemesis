@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,11 +34,11 @@ Bar::Bar()   {
  * Constructor.
  * Creates a Bar Element. 
  */
-Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)  
+Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
 :Element(ID, matID) {
   // Get dimension
   nDim = pD->getnDim();
-  
+
   // Store the nodes
   myNodalIDs.resize(2);
   myNodalIDs[0]=Node_1;
@@ -49,14 +49,15 @@ Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
   for (int i = 0;i < nDim;i++) myLocalNodalDofs[i]=i;
 
   // Handle common info
-    this->handleCommonInfo();
-  
+  this->handleCommonInfo();
+
   // Find length
   L0 = 0.;
   for (int i = 0;i < nDim;i++) L0+=(x(1, i)-x(0, i))*(x(1, i)-x(0, i));
   L0 = sqrt(L0);
-  if (num::tiny(L0)) throw SException("[nemesis:%d] %s", 9999, "Zero length bar is not permitted");
-  
+  if (num::tiny(L0))
+    throw SException("[nemesis:%d] %s", 9999, "Zero length bar is not allowed");
+
   // Retrieve the CrossSection pointers and get A0
   iSection = pD->get < CrossSection>(pD->getCrossSections(), iSecID);
   jSection = pD->get < CrossSection>(pD->getCrossSections(), jSecID);
@@ -85,8 +86,7 @@ void Bar::commit() {
 bool Bar::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
-const Matrix& Bar::getM()
-{   
+const Matrix& Bar::getM() {
   Matrix& M=*myMatrix;
   M.clear();
   double rho = myUniMaterial->getRho();
@@ -107,8 +107,7 @@ const Vector& Bar::getReff() {
   double mass = 0.5*rho*L0;
   const Vector& a0 = myNodes[0]->getAcclTrial();
   const Vector& a1 = myNodes[1]->getAcclTrial();
-  for (int i = 0;i < nDim;i++)
-  {
+  for (int i = 0;i < nDim;i++) {
       Reff[i]      += mass*a0[i];
       Reff[i+nDim] += mass*a1[i];
   }
@@ -141,7 +140,7 @@ void Bar::addTracker(int index) {
 Tracker* Bar::getTracker(int index) {
   if (index != 1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (myUniMaterial->getTracker()==0)
+  if (myUniMaterial->getTracker() == 0)
     throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
   return myUniMaterial->getTracker();
 }

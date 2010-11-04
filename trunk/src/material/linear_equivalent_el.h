@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_
-#define NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_
+#ifndef SRC_MATERIAL_LINEAR_EQUIVALENT_EL_H_
+#define SRC_MATERIAL_LINEAR_EQUIVALENT_EL_H_
 
 #include "material/evolution_law.h"
 
@@ -36,9 +36,9 @@ class LinearEquivalentEL: public EvolutionLaw {
   public:
   LinearEquivalentEL();
   ~LinearEquivalentEL();
-  
+
   double get_h(const Vector& v);
   double get_dhds(const Vector& sTrial, const Vector& ePTrial);
   double get_dhda(const Vector& sTrial, const Vector& ePTrial);
 };
-#endif  // NEMESIS_MATERIAL_LINEAR_EQUIVALENT_EL_H_
+#endif  // SRC_MATERIAL_LINEAR_EQUIVALENT_EL_H_

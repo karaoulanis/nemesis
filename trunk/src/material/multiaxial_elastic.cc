@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,8 +27,8 @@
 
 MultiaxialElastic::MultiaxialElastic() {
 }
-MultiaxialElastic::MultiaxialElastic(int ID, double E, double nu, double rho, double aT,
-                   double kx, double ky, double kz)
+MultiaxialElastic::MultiaxialElastic(int ID, double E, double nu, double rho,
+                                     double aT, double kx, double ky, double kz)
 :MultiaxialMaterial(ID, rho, aT) {
   // Material parameters
   MatParams[0]=E;
@@ -49,12 +49,13 @@ MultiaxialMaterial* MultiaxialElastic::getClone() {
   double rho =MatParams[30];
   double aT  =MatParams[31];
   // Create clone and return
-  MultiaxialElastic* newClone = new MultiaxialElastic(myID, E, nu, rho, aT, kx, ky, kz);
+  MultiaxialElastic* newClone =
+    new MultiaxialElastic(myID, E, nu, rho, aT, kx, ky, kz);
   return newClone;
 }
 void MultiaxialElastic::setStrain(const Vector& De) {
   eTrial = eTotal+De;
-  //sTrial=(this->getC())*eTrial;
+  // sTrial=(this->getC())*eTrial;
   sTrial = sConvg+(this->getC())*De;
 }
 const Matrix& MultiaxialElastic::getC() {
@@ -67,9 +68,9 @@ const Matrix& MultiaxialElastic::getC() {
   double nu  =MatParams[ 1];
   // Find and return C
   double Em = E/((1.+nu)*(1.-2*nu));
-  C(0, 0)=Em*(1.-nu);    C(0, 1)=Em*nu;   C(0, 2)=Em*nu;   
-  C(1, 0)=Em*nu;     C(1, 1)=Em*(1.-nu);  C(1, 2)=Em*nu;   
-  C(2, 0)=Em*nu;     C(2, 1)=Em*nu;   C(2, 2)=Em*(1.-nu);  
+  C(0, 0)=Em*(1.-nu);     C(0, 1)=Em*nu;        C(0, 2)=Em*nu;
+  C(1, 0)=Em*nu;          C(1, 1)=Em*(1.-nu);   C(1, 2)=Em*nu;
+  C(2, 0)=Em*nu;          C(2, 1)=Em*nu;        C(2, 2)=Em*(1.-nu);
   C(3, 3)=Em*0.5*(1.-2*nu);
   C(4, 4)=Em*0.5*(1.-2*nu);
   C(5, 5)=Em*0.5*(1.-2*nu);
@@ -89,13 +90,13 @@ void MultiaxialElastic::commit() {
 void MultiaxialElastic::track() {
   if (myTracker == 0) return;
   ostringstream s;
-  s << "DATA "  <<' ';
-  s << "sigm "  <<' '<<sConvg;
-  s << "epst "  <<' '<<eTotal;
-//  s << "epsp "  <<' '<<ePConvg; ///@todo
-//  s << "epsv "  <<1020<<' '<<eTotal[0]+eTotal[1]+eTotal[2]<<' ';
-  s << "p "     <<1020<<' '<<sConvg.p()<<' ';
-  s << "q "     <<1020<<' '<<sConvg.q()<<' ';
-  s << "END "<<' ';
+  s << "DATA "  << ' ';
+  s << "sigm "  << ' ' << sConvg;
+  s << "epst "  << ' ' << eTotal;
+  // s << "epsp "  << ' ' << ePConvg;  ///@todo
+  // s << "epsv "  << 1020 <<' ' << eTotal[0]+eTotal[1]+eTotal[2] << ' ';
+  s << "p "     << 1020 << ' ' << sConvg.p() << ' ';
+  s << "q "     << 1020 << ' ' << sConvg.q() << ' ';
+  s << "END " << ' ';
   myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
 }

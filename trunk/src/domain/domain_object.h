@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
-#define NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
+#ifndef SRC_DOMAIN_DOMAIN_OBJECT_H_
+#define SRC_DOMAIN_DOMAIN_OBJECT_H_
 
 #include < iostream>
 #include "feobject/fe_object.h"
@@ -42,8 +42,8 @@ class DomainObject: public FEObject {
   static Domain* pD;
   public:
   // Constructors
-  DomainObject();   
-  DomainObject(int ID); 
+  DomainObject();
+  DomainObject(int ID);
   virtual ~DomainObject();
 
   virtual int getID();
@@ -55,4 +55,4 @@ class DomainObject: public FEObject {
 
   void setDomain(Domain* pDomain);
 };
-#endif  // NEMESIS_DOMAIN_DOMAIN_OBJECT_H_
+#endif  // SRC_DOMAIN_DOMAIN_OBJECT_H_

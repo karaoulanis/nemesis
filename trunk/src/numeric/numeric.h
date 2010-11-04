@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,13 +23,13 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_NUMERIC_NUMERIC_H_
-#define NEMESIS_NUMERIC_NUMERIC_H_
+#ifndef SRC_NUMERIC_NUMERIC_H_
+#define SRC_NUMERIC_NUMERIC_H_
 
 // C++ system files
-#include < cmath>
-#include < cstdio>
-#include < limits>
+#include <cmath>
+#include <cstdio>
+#include <limits>
 
 namespace num {
   const double pi = 4.*std::atan(1.0);
@@ -40,51 +40,48 @@ namespace num {
   const double d23 = 2./3.;
   const double d43 = 4./3.;
   const double d16 = 1./6.;
-  const double eps = std::numeric_limits < double>::epsilon();
-  inline bool equal(double d1, double d2)
-  {
-    return std::fabs(d2-d1)<eps ? true : false;
+  const double eps = std::numeric_limits <double>::epsilon();
+  inline bool equal(double d1, double d2) {
+    return std::fabs(d2-d1) < eps ? true : false;
   }
-  inline bool smaller(double d1, double e)
-  {
-    return std::fabs(d1)<e    ? true : false;
+  inline bool smaller(double d1, double e) {
+    return std::fabs(d1)    < e   ? true : false;
   }
-  inline bool smaller(double d1, double d2, double e)
-  {
-    return std::fabs(d1-d2)<e ? true : false;
+  inline bool smaller(double d1, double d2, double e) {
+    return std::fabs(d1-d2) < e   ? true : false;
   }
-  inline bool tiny(double d)
-  {
-    return std::fabs(d)<eps   ? true : false;
+  inline bool tiny(double d) {
+    return std::fabs(d)     < eps ? true : false;
   }
-  inline double deg2rad(double d)
-  {
+  inline double deg2rad(double d) {
     return d*pi/180.;
   }
-  inline double rad2deg(double d)
-  {
+  inline double rad2deg(double d) {
     return d*180./pi;
   }
-  inline void print_d(double d, int total, int decimal)
-  {
+  inline void print_d(double d, int total, int decimal) {
     char format[64];
     sprintf(format, "%% %d.%df", total, decimal);
     int fw = total-1-1-decimal;
-    if (fabs(d)<pow(10.0, (double)fw))  printf(format, d);
-    else for (int i = 0;i < total;i++)   printf("*");
+    if (fabs(d) < pow(10.0, (double)fw)) {
+      printf(format, d);
+    } else {
+      for (int i = 0; i < total; i++) printf("*");
+    }
   }
-  inline void print_i(int n, int total)
-  {
+  inline void print_i(int n, int total) {
     char format[64];
     sprintf(format, "%% %dd", total);
     int fw = total-1;
     ///@todo Check for abs(int)
-    if (fabs((double)n)<pow(10.0, (double)fw))  printf(format, n);
-    else for (int i = 0;i < total;i++)   printf("*");
+    if (fabs((double)n) < pow(10.0, (double)fw)) {
+      printf(format, n);
+    } else {
+      for (int i = 0;i < total; i++) printf("*");
+    }
   }
-  inline double sign(double d)
-  {
+  inline double sign(double d) {
     return d < 0  ? -1 : 1;
   }
 }
-#endif  // NEMESIS_NUMERIC_NUMERIC_H_
+#endif  // SRC_NUMERIC_NUMERIC_H_

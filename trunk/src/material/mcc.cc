@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -38,7 +38,7 @@ MCC::~MCC() {
 double MCC::get_f(const Vector& s, const double /*q_*/) {
   double q = s.q();
   double p = s.p();
-  double pc = 0.;//po*exp(e.I1()/(kappa+lambda));
+  double pc = 0.;  // po*exp(e.I1()/(kappa+lambda));
   return q*q+M*M*p*(p-pc);
 }
 void MCC::find_C(const Vector& s, const double /*a*/) {
@@ -47,26 +47,29 @@ void MCC::find_C(const Vector& s, const double /*a*/) {
   C3 = 0.;
   C11 = 2./9.*M*M;
   C22 = 3.;
-  C23 = 0.; C32 = 0.; C33 = 0.;
+  C23 = 0.;
+  C32 = 0.;
+  C33 = 0.;
 }
 double MCC::get_dfda(const Vector& /*s*/, const double /*a*/) {
-//  double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
-//  return num::d13*M*M*s.I1()*dfda;
+  // double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
+  // return num::d13*M*M*s.I1()*dfda;
   return 0;
 }
 const Vector& MCC::get_df2dsa(const Vector& /*s*/, const double /*a*/) {
-//  double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
-//  double c = num::d13*M*M*s.I1()*dfda;
+  // double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
+  // double c = num::d13*M*M*s.I1()*dfda;
   static Vector ret(6, 0.);
   ret.clear();
-  ret[0]=1.0; ret[1]=1.0; ret[2]=1.0;
-//  ret*=c;
-    return ret;
+  ret[0]=1.0;
+  ret[1]=1.0;
+  ret[2]=1.0;
+  // ret*=c;
+  return ret;
 }
 double MCC::get_df2daa(const Vector& /*s*/, const double /*a*/) {
-//  double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
-//  double d2fda2=(po/(lambda-kappa))*dfda;
-//  return num::d13*M*M*s.I1()*d2fda2;
+  // double dfda=(po/(lambda-kappa))*exp(e.I1()/(lambda-kappa));
+  // double d2fda2=(po/(lambda-kappa))*dfda;
+  // return num::d13*M*M*s.I1()*d2fda2;
   return 0;
 }
-

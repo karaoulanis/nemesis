@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,7 +27,8 @@
 
 Triangle3XFem::Triangle3XFem() {
 }
-Triangle3XFem::Triangle3XFem(int ID, int Node_1, int Node_2, int Node_3, int matID)
+Triangle3XFem::Triangle3XFem(int ID, int Node_1, int Node_2, int Node_3,
+                             int matID)
 :Element(ID, matID) {
   myTag = TAG_ELEM_TRIANGLE_3_PRESSURE;
   // Get nodal data
@@ -38,26 +39,35 @@ Triangle3XFem::Triangle3XFem(int ID, int Node_1, int Node_2, int Node_3, int mat
   // Set local nodal dofs
   myLocalNodalDofs.resize(2);
   myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;  
+  myLocalNodalDofs[1]=1;
   // Handle common info
   this->handleCommonInfo();
 
   // Find geometrical relations
-  a1 = x(1, 0)*x(2, 1)-x(2, 0)*x(1, 1);   b1 = x(1, 1)-x(2, 1); c1 = x(2, 0)-x(1, 0);
-  a2 = x(2, 0)*x(0, 1)-x(0, 0)*x(2, 1);   b2 = x(2, 1)-x(0, 1); c2 = x(0, 0)-x(2, 0);
-  a3 = x(0, 0)*x(1, 1)-x(1, 0)*x(0, 1);   b3 = x(0, 1)-x(1, 1); c3 = x(1, 0)-x(0, 0);
-  A = 0.5*(x(1, 0)*x(2, 1)-x(2, 0)*x(1, 1)+x(2, 0)*x(0, 1)-x(0, 0)*x(2, 1)+x(0, 0)*x(1, 1)-x(1, 0)*x(0, 1));
+  a1 = x(1, 0)*x(2, 1)-x(2, 0)*x(1, 1);
+  a2 = x(2, 0)*x(0, 1)-x(0, 0)*x(2, 1);
+  a3 = x(0, 0)*x(1, 1)-x(1, 0)*x(0, 1);
+  b1 = x(1, 1)-x(2, 1);
+  b2 = x(2, 1)-x(0, 1);
+  b3 = x(0, 1)-x(1, 1);
+  c1 = x(2, 0)-x(1, 0);
+  c2 = x(0, 0)-x(2, 0);
+  c3 = x(1, 0)-x(0, 0);
+  A = 0.5*(x(1, 0)*x(2, 1)-x(2, 0)*x(1, 1)
+          +x(2, 0)*x(0, 1)-x(0, 0)*x(2, 1)
+          +x(0, 0)*x(1, 1)-x(1, 0)*x(0, 1));
 
   // Material
   myMatPoints.resize(1);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial); 
+  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 1);
-  myMatPoints[0]->setX(num::d13*(x(0, 0)+x(1, 0)+x(2, 0)), num::d13*(x(0, 1)+x(1, 1)+x(2, 1)));
+  myMatPoints[0]->setX(num::d13*(x(0, 0)+x(1, 0)+x(2, 0)),
+                       num::d13*(x(0, 1)+x(1, 1)+x(2, 1)));
 }
 Triangle3XFem::~Triangle3XFem() {
 }
 void Triangle3XFem::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID()==myGroup->getID())
+  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID())
     for (unsigned i = 0;i < myMatPoints.size();i++)
       myMatPoints[i]->setInitialStresses(pInitialStresses);
 }
@@ -65,12 +75,42 @@ const Matrix& Triangle3XFem::getK() {
   Matrix& K=*myMatrix;
   const Matrix& C = myMatPoints[0]->getMaterial()->getC();
   double coeff = pD->getFac()*0.25/A;
-  K(0, 0)=coeff*((b1*C(0, 0)+c1*C(3, 0))*b1+(b1*C(0, 3)+c1*C(3, 3))*c1); K(0, 1)=coeff*((b1*C(0, 1)+c1*C(3, 1))*c1+(b1*C(0, 3)+c1*C(3, 3))*b1); K(0, 2)=coeff*((b1*C(0, 0)+c1*C(3, 0))*b2+(b1*C(0, 3)+c1*C(3, 3))*c2); K(0, 3)=coeff*((b1*C(0, 1)+c1*C(3, 1))*c2+(b1*C(0, 3)+c1*C(3, 3))*b2); K(0, 4)=coeff*((b1*C(0, 0)+c1*C(3, 0))*b3+(b1*C(0, 3)+c1*C(3, 3))*c3); K(0, 5)=coeff*((b1*C(0, 1)+c1*C(3, 1))*c3+(b1*C(0, 3)+c1*C(3, 3))*b3);
-  K(1, 0)=coeff*((c1*C(1, 0)+b1*C(3, 0))*b1+(c1*C(1, 3)+b1*C(3, 3))*c1); K(1, 1)=coeff*((c1*C(1, 1)+b1*C(3, 1))*c1+(c1*C(1, 3)+b1*C(3, 3))*b1); K(1, 2)=coeff*((c1*C(1, 0)+b1*C(3, 0))*b2+(c1*C(1, 3)+b1*C(3, 3))*c2); K(1, 3)=coeff*((c1*C(1, 1)+b1*C(3, 1))*c2+(c1*C(1, 3)+b1*C(3, 3))*b2); K(1, 4)=coeff*((c1*C(1, 0)+b1*C(3, 0))*b3+(c1*C(1, 3)+b1*C(3, 3))*c3); K(1, 5)=coeff*((c1*C(1, 1)+b1*C(3, 1))*c3+(c1*C(1, 3)+b1*C(3, 3))*b3);
-  K(2, 0)=coeff*((b2*C(0, 0)+c2*C(3, 0))*b1+(b2*C(0, 3)+c2*C(3, 3))*c1); K(2, 1)=coeff*((b2*C(0, 1)+c2*C(3, 1))*c1+(b2*C(0, 3)+c2*C(3, 3))*b1); K(2, 2)=coeff*((b2*C(0, 0)+c2*C(3, 0))*b2+(b2*C(0, 3)+c2*C(3, 3))*c2); K(2, 3)=coeff*((b2*C(0, 1)+c2*C(3, 1))*c2+(b2*C(0, 3)+c2*C(3, 3))*b2); K(2, 4)=coeff*((b2*C(0, 0)+c2*C(3, 0))*b3+(b2*C(0, 3)+c2*C(3, 3))*c3); K(2, 5)=coeff*((b2*C(0, 1)+c2*C(3, 1))*c3+(b2*C(0, 3)+c2*C(3, 3))*b3);
-  K(3, 0)=coeff*((c2*C(1, 0)+b2*C(3, 0))*b1+(c2*C(1, 3)+b2*C(3, 3))*c1); K(3, 1)=coeff*((c2*C(1, 1)+b2*C(3, 1))*c1+(c2*C(1, 3)+b2*C(3, 3))*b1); K(3, 2)=coeff*((c2*C(1, 0)+b2*C(3, 0))*b2+(c2*C(1, 3)+b2*C(3, 3))*c2); K(3, 3)=coeff*((c2*C(1, 1)+b2*C(3, 1))*c2+(c2*C(1, 3)+b2*C(3, 3))*b2); K(3, 4)=coeff*((c2*C(1, 0)+b2*C(3, 0))*b3+(c2*C(1, 3)+b2*C(3, 3))*c3); K(3, 5)=coeff*((c2*C(1, 1)+b2*C(3, 1))*c3+(c2*C(1, 3)+b2*C(3, 3))*b3);
-  K(4, 0)=coeff*((b3*C(0, 0)+c3*C(3, 0))*b1+(b3*C(0, 3)+c3*C(3, 3))*c1); K(4, 1)=coeff*((b3*C(0, 1)+c3*C(3, 1))*c1+(b3*C(0, 3)+c3*C(3, 3))*b1); K(4, 2)=coeff*((b3*C(0, 0)+c3*C(3, 0))*b2+(b3*C(0, 3)+c3*C(3, 3))*c2); K(4, 3)=coeff*((b3*C(0, 1)+c3*C(3, 1))*c2+(b3*C(0, 3)+c3*C(3, 3))*b2); K(4, 4)=coeff*((b3*C(0, 0)+c3*C(3, 0))*b3+(b3*C(0, 3)+c3*C(3, 3))*c3); K(4, 5)=coeff*((b3*C(0, 1)+c3*C(3, 1))*c3+(b3*C(0, 3)+c3*C(3, 3))*b3);
-  K(5, 0)=coeff*((c3*C(1, 0)+b3*C(3, 0))*b1+(c3*C(1, 3)+b3*C(3, 3))*c1); K(5, 1)=coeff*((c3*C(1, 1)+b3*C(3, 1))*c1+(c3*C(1, 3)+b3*C(3, 3))*b1); K(5, 2)=coeff*((c3*C(1, 0)+b3*C(3, 0))*b2+(c3*C(1, 3)+b3*C(3, 3))*c2); K(5, 3)=coeff*((c3*C(1, 1)+b3*C(3, 1))*c2+(c3*C(1, 3)+b3*C(3, 3))*b2); K(5, 4)=coeff*((c3*C(1, 0)+b3*C(3, 0))*b3+(c3*C(1, 3)+b3*C(3, 3))*c3); K(5, 5)=coeff*((c3*C(1, 1)+b3*C(3, 1))*c3+(c3*C(1, 3)+b3*C(3, 3))*b3);
+  K(0, 0) = coeff*((b1*C(0, 0)+c1*C(3, 0))*b1+(b1*C(0, 3)+c1*C(3, 3))*c1);
+  K(0, 1) = coeff*((b1*C(0, 1)+c1*C(3, 1))*c1+(b1*C(0, 3)+c1*C(3, 3))*b1);
+  K(0, 2) = coeff*((b1*C(0, 0)+c1*C(3, 0))*b2+(b1*C(0, 3)+c1*C(3, 3))*c2);
+  K(0, 3) = coeff*((b1*C(0, 1)+c1*C(3, 1))*c2+(b1*C(0, 3)+c1*C(3, 3))*b2);
+  K(0, 4) = coeff*((b1*C(0, 0)+c1*C(3, 0))*b3+(b1*C(0, 3)+c1*C(3, 3))*c3);
+  K(0, 5) = coeff*((b1*C(0, 1)+c1*C(3, 1))*c3+(b1*C(0, 3)+c1*C(3, 3))*b3);
+  K(1, 0) = coeff*((c1*C(1, 0)+b1*C(3, 0))*b1+(c1*C(1, 3)+b1*C(3, 3))*c1);
+  K(1, 1) = coeff*((c1*C(1, 1)+b1*C(3, 1))*c1+(c1*C(1, 3)+b1*C(3, 3))*b1);
+  K(1, 2) = coeff*((c1*C(1, 0)+b1*C(3, 0))*b2+(c1*C(1, 3)+b1*C(3, 3))*c2);
+  K(1, 3) = coeff*((c1*C(1, 1)+b1*C(3, 1))*c2+(c1*C(1, 3)+b1*C(3, 3))*b2);
+  K(1, 4) = coeff*((c1*C(1, 0)+b1*C(3, 0))*b3+(c1*C(1, 3)+b1*C(3, 3))*c3);
+  K(1, 5) = coeff*((c1*C(1, 1)+b1*C(3, 1))*c3+(c1*C(1, 3)+b1*C(3, 3))*b3);
+  K(2, 0) = coeff*((b2*C(0, 0)+c2*C(3, 0))*b1+(b2*C(0, 3)+c2*C(3, 3))*c1);
+  K(2, 1) = coeff*((b2*C(0, 1)+c2*C(3, 1))*c1+(b2*C(0, 3)+c2*C(3, 3))*b1);
+  K(2, 2) = coeff*((b2*C(0, 0)+c2*C(3, 0))*b2+(b2*C(0, 3)+c2*C(3, 3))*c2);
+  K(2, 3) = coeff*((b2*C(0, 1)+c2*C(3, 1))*c2+(b2*C(0, 3)+c2*C(3, 3))*b2);
+  K(2, 4) = coeff*((b2*C(0, 0)+c2*C(3, 0))*b3+(b2*C(0, 3)+c2*C(3, 3))*c3);
+  K(2, 5) = coeff*((b2*C(0, 1)+c2*C(3, 1))*c3+(b2*C(0, 3)+c2*C(3, 3))*b3);
+  K(3, 0) = coeff*((c2*C(1, 0)+b2*C(3, 0))*b1+(c2*C(1, 3)+b2*C(3, 3))*c1);
+  K(3, 1) = coeff*((c2*C(1, 1)+b2*C(3, 1))*c1+(c2*C(1, 3)+b2*C(3, 3))*b1);
+  K(3, 2) = coeff*((c2*C(1, 0)+b2*C(3, 0))*b2+(c2*C(1, 3)+b2*C(3, 3))*c2);
+  K(3, 3) = coeff*((c2*C(1, 1)+b2*C(3, 1))*c2+(c2*C(1, 3)+b2*C(3, 3))*b2);
+  K(3, 4) = coeff*((c2*C(1, 0)+b2*C(3, 0))*b3+(c2*C(1, 3)+b2*C(3, 3))*c3);
+  K(3, 5) = coeff*((c2*C(1, 1)+b2*C(3, 1))*c3+(c2*C(1, 3)+b2*C(3, 3))*b3);
+  K(4, 0) = coeff*((b3*C(0, 0)+c3*C(3, 0))*b1+(b3*C(0, 3)+c3*C(3, 3))*c1);
+  K(4, 1) = coeff*((b3*C(0, 1)+c3*C(3, 1))*c1+(b3*C(0, 3)+c3*C(3, 3))*b1);
+  K(4, 2) = coeff*((b3*C(0, 0)+c3*C(3, 0))*b2+(b3*C(0, 3)+c3*C(3, 3))*c2);
+  K(4, 3) = coeff*((b3*C(0, 1)+c3*C(3, 1))*c2+(b3*C(0, 3)+c3*C(3, 3))*b2);
+  K(4, 4) = coeff*((b3*C(0, 0)+c3*C(3, 0))*b3+(b3*C(0, 3)+c3*C(3, 3))*c3);
+  K(4, 5) = coeff*((b3*C(0, 1)+c3*C(3, 1))*c3+(b3*C(0, 3)+c3*C(3, 3))*b3);
+  K(5, 0) = coeff*((c3*C(1, 0)+b3*C(3, 0))*b1+(c3*C(1, 3)+b3*C(3, 3))*c1);
+  K(5, 1) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c1+(c3*C(1, 3)+b3*C(3, 3))*b1);
+  K(5, 2) = coeff*((c3*C(1, 0)+b3*C(3, 0))*b2+(c3*C(1, 3)+b3*C(3, 3))*c2);
+  K(5, 3) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c2+(c3*C(1, 3)+b3*C(3, 3))*b2);
+  K(5, 4) = coeff*((c3*C(1, 0)+b3*C(3, 0))*b3+(c3*C(1, 3)+b3*C(3, 3))*c3);
+  K(5, 5) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c3+(c3*C(1, 3)+b3*C(3, 3))*b3);
   double facK = 1e-7;
   if (myGroup->isActive()) facK = myGroup->getFacK();
   K*=facK;

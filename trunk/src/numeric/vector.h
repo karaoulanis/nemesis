@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_NUMERIC_VECTOR_H_
-#define NEMESIS_NUMERIC_VECTOR_H_
+#ifndef SRC_NUMERIC_VECTOR_H_
+#define SRC_NUMERIC_VECTOR_H_
 
 // C/C++ include files
 #include < iostream>
@@ -34,10 +34,10 @@
 #include "numeric/lapack.h"
 
 class Vector {
- protected: 
+ protected:
   int size_;
   double* data_;
-  public: 
+ public:
   /**
    * Default constructor.
    * Initializes everything to zero.
@@ -104,9 +104,10 @@ class Vector {
       throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
       }
       for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
+    } else {
+      data_ = 0;
     }
-    else data_ = 0;
-  } 
+  }
   /**
    * Destructor.
    */
@@ -123,7 +124,7 @@ class Vector {
     #ifdef _DEBUG
     array_size_check(v.size_, size_);
     #endif
-    if (this!=&v) 
+    if (this != &v)
       for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
     return *this;
   }
@@ -137,7 +138,7 @@ class Vector {
     array_range_check(i, size_);
     #endif
     return data_[i];
-  } 
+  }
   /**
    * Implements [i] operator: v[i]
    * Range checking is provided for the debug version.
@@ -148,7 +149,7 @@ class Vector {
     array_range_check(i, size_);
     #endif
     return data_[i];
-  } 
+  }
   /**
    * Returns the size of the Vector.
    */
@@ -274,7 +275,7 @@ class Vector {
     inline friend Vector operator*(const double c, const Vector& v)
   {
     return v*c;
-  } 
+  }
   /**
    * Implements / operator: v = this/c.
    * A temporary object is created.
@@ -283,7 +284,7 @@ class Vector {
   {
     Vector res(*this);
     res/=c;
-    return res; 
+    return res;
   }
   /**
    * Implements += operator: this+=v.
@@ -399,40 +400,38 @@ class Vector {
   {
     if (size_ == 0) return 0;
     double norm = fabs(data_[0]);
-    for (int i = 1;i < size_;i++) 
-    {
+    for (int i = 1;i < size_;i++) {
       double vi = fabs(data_[i]);
-      if (norm < 100) 
-      {
+      if (norm < 100) {
         norm = sqrt(norm*norm+vi*vi);
-      }
-      else 
-      {  
+      } else {
         double temp = vi/norm;
         norm*=sqrt(1.0+temp*temp);
       }
-    } 
+    }
     return norm;
   }
   /**
    * Implements maximum norm.
    */
-  inline double maxnorm() const 
+  inline double maxnorm() const
   {
     if (size_ == 0) return 0;
     double norm = fabs(data_[0]);
-    for (int i = 1;i < size_;i++) if (norm < fabs(data_[i])) norm = fabs(data_[i]);
+    for (int i = 1;i < size_;i++)
+      if (norm < fabs(data_[i]))
+        norm = fabs(data_[i]);
     return norm;
   }
   /**
    * Returns the normal of a Vector.
    * Provides check for zero division.
    */
-  inline Vector& normalize() 
+  inline Vector& normalize()
   {
     double norm = twonorm();
     if (num::tiny(norm))
-      throw SException("[nemesis:%d] %s", 9999, "Zero vector length encountered.");
+      throw SException("[nemesis:%d] %s", 9999, "Zero vector length.");
     for (int i = 0;i < size_;i++) data_[i]/=norm;
     return *this;
   }
@@ -444,7 +443,7 @@ class Vector {
    * @param c A factor to be multiplied with the appended entries.
    * @param c0 A factor to be multiplied with the existing entries.
    */
-  inline Vector& append(const Vector& v, int row, double c = 1.0, double c0 = 0.)
+  inline Vector& append(const Vector& v, int row, double c = 1., double c0 = 0.)
   {
     #ifdef _DEBUG
     array_range_check(row+v.size_, size_);
@@ -460,7 +459,7 @@ class Vector {
     if (denom == 0.) return -360.;
     double beta=(v1*v2)/denom;
     if (beta >= 1.) beta= 0.999999999999999999;
-    if (beta<=-1.) beta=-0.999999999999999999;
+    if (beta <=-1.) beta=-0.999999999999999999;
     return acos(beta)*180/num::pi;
   }
   /**
@@ -583,9 +582,9 @@ class Vector {
     }
     double arg;
     if (facSqJ2 < 1e-12) arg= 0.0;
-    else        arg= (-1.5*sqrt(3.)*facJ3/(facSqJ2*facSqJ2*facSqJ2));
-    if (arg>1.0)     arg= 1.0;
-    else if (arg<-1.)  arg=-1.0;
+    else                 arg= (-1.5*sqrt(3.)*facJ3/(facSqJ2*facSqJ2*facSqJ2));
+    if (arg > 1.0)       arg= 1.0;
+    else if (arg < -1.)  arg=-1.0;
     return asin(arg)/3.0;
   }
   /**
@@ -673,11 +672,13 @@ class Vector {
     res.clear();
 
     A[0]=data_[0];  A[1]=data_[3];  A[2]=data_[5];
-    A[3]=0.;    A[4]=data_[1];  A[5]=data_[4];
-    A[6]=0.;    A[7]=0.;    A[8]=data_[2];
+    A[3]=0.;        A[4]=data_[1];  A[5]=data_[4];
+    A[6]=0.;        A[7]=0.;        A[8]=data_[2];
 
-    dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK, &INFO, 1, 1);
-  //  dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK, &INFO);
+    dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK,
+          &INFO, 1, 1);
+  //  dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK,
+  //        &INFO);
   //  cout << "Optimal LWORK : "<<WORK[0]<<endl;
     double d = res[0];
     res[0]=res[2];
@@ -686,10 +687,9 @@ class Vector {
   }
   inline friend std::ostream& operator<<(std::ostream& s, const Vector& v)
   {
-    s << 1100<<' '<<v.size_<<' ';
-    for (int i = 0;i < v.size_;i++) s << v.data_[i]<<' ';
+    s << 1100 << ' ' << v.size_ << ' ';
+    for (int i = 0; i < v.size_; i++) s << v.data_[i] << ' ';
     return s;
   }
-
 };
-#endif
+#endif  // SRC_NUMERIC_VECTOR_H_

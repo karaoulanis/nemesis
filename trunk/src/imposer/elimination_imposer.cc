@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,31 +34,30 @@ EliminationImposer::~EliminationImposer() {
 int EliminationImposer::impose() {
   if (theModel->isConstrained()) return 0;
 
-  Node* pNode;                  
-  Element* pElement;                
+  Node* pNode;
+  Element* pElement;
   Constraint* pConstraint;
-  StandardModelNode* pStdModelNode;       
-  StandardModelElement* pStdModelElement;     
-  EliminationModelNode* pElimModelNode;     
-  EliminationModelElement* pElimModelElement;   
+  StandardModelNode* pStdModelNode;
+  StandardModelElement* pStdModelElement;
+  EliminationModelNode* pElimModelNode;
+  EliminationModelElement* pElimModelElement;
 
-  //-------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Find nodal global numbering and store it
-  //-------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   theModel->clear();
   int nDofs = this->createGlobalDofNumbering();
 
-  //-------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Number constraints with global numbering
-  //-------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   theNewDofs.resize(nDofs);
   for (int i = 0;i < nDofs;i++) theNewDofs[i]=1;
   for (ConstraintIterator cIter = theConstraints->begin();
-    cIter != theConstraints->end();cIter++)
-  { 
-    pConstraint = cIter->second;;
-    if (pConstraint->getncDofs()==0) continue;
-    if (pConstraint->getncDofs()>1) 
+              cIter != theConstraints->end(); cIter++) {
+    pConstraint = cIter->second;
+    if (pConstraint->getncDofs() == 0) continue;
+    if (pConstraint->getncDofs() > 1)
       throw SException("[nemesis:%d] %s", 9999,
       "Elimination method cannot be used for MultiFreedom constraints.");
     int globalDof = this->getGlobalDof(
@@ -74,12 +73,11 @@ int EliminationImposer::impose() {
   for (int i = 0;i < nDofs;i++) if (theNewDofs[i]>0) theNewDofs[i]=nEquations++;
   theModel->setEquations(nEquations);
 
-  //=========================================================================
+  // ===========================================================================
   // Create ModelNodes
-  //=========================================================================
+  // ===========================================================================
   for (NodeIterator nIter = pA->getDomain()->getNodes().begin();
-    nIter != pA->getDomain()->getNodes().end();nIter++) 
-  {
+            nIter != pA->getDomain()->getNodes().end(); nIter++) {
     static IDContainer oldFTable;
     static IDContainer newFTable;
     // Get a pointer to a node
@@ -87,29 +85,25 @@ int EliminationImposer::impose() {
     oldFTable = this->getGlobalDofs(pNode->getID());
     newFTable.resize(oldFTable.size());
     // Map old dofs to new ones
-    for (unsigned i = 0;i < oldFTable.size();i++) 
+    for (unsigned i = 0;i < oldFTable.size();i++)
       newFTable[i]=theNewDofs[oldFTable[i]];
     // If constraints are found within the FTable
-    if (Containers::all_positive(newFTable)) 
-    {
+    if (Containers::all_positive(newFTable)) {
       // Create StandardModelNode
       pStdModelNode = new StandardModelNode(newFTable, pNode);
       theModel->addModelNode(pStdModelNode);
-    }
-    else
-    {
+    } else {
       // Create EliminationModelNode
       pElimModelNode = new EliminationModelNode(newFTable, pNode);
       pElimModelNode->setTheOldFTable(oldFTable);
       theModel->addModelNode(pElimModelNode);
     }
-  } 
-  //=========================================================================
+  }
+  // ===========================================================================
   // Create ModelElements
-  //=========================================================================
+  // ===========================================================================
   for (ElementIterator eIter = pA->getDomain()->getElements().begin();
-    eIter != pA->getDomain()->getElements().end();eIter++) 
-  {
+    eIter != pA->getDomain()->getElements().end(); eIter++) {
     ///@todo Needs speed improvements
     // Get next (randomly chosen) element
     pElement = eIter->second;
@@ -130,14 +124,11 @@ int EliminationImposer::impose() {
       }
     }
     // Check if constraint found
-    if (Containers::all_positive(elemFTable)) 
-    {
+    if (Containers::all_positive(elemFTable)) {
       // Create StandardModelElement
       pStdModelElement = new StandardModelElement(elemFTable, pElement);
       theModel->addModelElement(pStdModelElement);
-    }
-    else
-    {
+    } else {
       // Create EliminationModelElement
       pElimModelElement = new EliminationModelElement(elemFTable, pElement);
       theModel->addModelElement(pElimModelElement);

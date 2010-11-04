@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_SPRING_CONTACT_H_
-#define NEMESIS_MATERIAL_SPRING_CONTACT_H_
+#ifndef SRC_MATERIAL_SPRING_CONTACT_H_
+#define SRC_MATERIAL_SPRING_CONTACT_H_
 
 #include "material/spring_material.h"
 
@@ -32,8 +32,7 @@
  * The Elastic Spring Material Class.                                                
  */
 class SpringContact: public SpringMaterial {
-  private:
-  public:
+ public:
   SpringContact();
   SpringContact(int ID, double Kn, double Ks, double mu, double gap);
 
@@ -41,4 +40,4 @@ class SpringContact: public SpringMaterial {
   void setStrain(const Vector& De);
 };
 
-#endif  // NEMESIS_MATERIAL_SPRING_CONTACT_H_
+#endif  // SRC_MATERIAL_SPRING_CONTACT_H_

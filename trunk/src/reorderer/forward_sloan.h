@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,17 +23,18 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_REORDERER_FORWARD_SLOAN_H_
-#define NEMESIS_REORDERER_FORWARD_SLOAN_H_
+#ifndef SRC_REORDERER_FORWARD_SLOAN_H_
+#define SRC_REORDERER_FORWARD_SLOAN_H_
 
 #include "reorderer/reorderer.h"
 
 class ForwardSloan: public Reorderer {
+ private:
   double weight1;
   double weight2;
-  public:
+ public:
   ForwardSloan(double w1 = 0.5, double w2 = 0.5);
   ~ForwardSloan();
-  int getPerm(std::vector < int>& perm);
+  int getPerm(std::vector<int>& perm);
 };
-#endif  // NEMESIS_REORDERER_FORWARD_SLOAN_H_
+#endif  // SRC_REORDERER_FORWARD_SLOAN_H_

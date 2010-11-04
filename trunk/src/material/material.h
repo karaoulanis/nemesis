@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_MATERIAL_H_
-#define NEMESIS_MATERIAL_MATERIAL_H_
+#ifndef SRC_MATERIAL_MATERIAL_H_
+#define SRC_MATERIAL_MATERIAL_H_
 
 #include "domain/domain.h"
 #include "domain/domain_object.h"
@@ -61,4 +61,4 @@ class Material: public DomainObject {
   virtual void track();
 };
 
-#endif  // NEMESIS_MATERIAL_MATERIAL_H_
+#endif  // SRC_MATERIAL_MATERIAL_H_

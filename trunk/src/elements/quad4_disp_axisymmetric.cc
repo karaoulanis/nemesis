@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,8 +27,10 @@
 
 Quad4DispAxisymmetric::Quad4DispAxisymmetric() {
 }
-Quad4DispAxisymmetric::Quad4DispAxisymmetric(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID,
-           int integrationRuleXi, int integrationRuleEta)
+Quad4DispAxisymmetric::Quad4DispAxisymmetric(int ID, int Node_1, int Node_2,
+                                             int Node_3, int Node_4, int MatID,
+                                             int integrationRuleXi,
+                                             int integrationRuleEta)
 :Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, integrationRuleXi, integrationRuleEta) {
 }
 Quad4DispAxisymmetric::~Quad4DispAxisymmetric() {
@@ -46,7 +48,7 @@ const Matrix& Quad4DispAxisymmetric::getK() {
       int jj = 0;
       for (int j = 0; j < 4; j++) {
         static Matrix CB(4, 2);
-        
+
         CB(0, 0)=C(0, 0)*N(1, j) + C(0, 2)*N(0, j)/r + C(0, 3)*N(2, j);
         CB(1, 0)=C(1, 0)*N(1, j) + C(1, 2)*N(0, j)/r + C(1, 3)*N(2, j);
         CB(2, 0)=C(2, 0)*N(1, j) + C(2, 2)*N(0, j)/r + C(2, 3)*N(2, j);
@@ -59,8 +61,8 @@ const Matrix& Quad4DispAxisymmetric::getK() {
 
         K(ii  , jj  ) += (N(1, i)*CB(0, 0) + N(0, i)/r*CB(2, 0) + N(2, i)*CB(3, 0))*dV;
         K(ii  , jj+1) += (N(1, i)*CB(0, 1) + N(0, i)/r*CB(2, 1) + N(2, i)*CB(3, 1))*dV;
-        K(ii+1, jj  ) += (N(2, i)*CB(1, 0)                    + N(1, i)*CB(3, 0))*dV;
-        K(ii+1, jj+1) += (N(2, i)*CB(1, 1)                    + N(1, i)*CB(3, 1))*dV;
+        K(ii+1, jj  ) += (N(2, i)*CB(1, 0)                      + N(1, i)*CB(3, 0))*dV;
+        K(ii+1, jj+1) += (N(2, i)*CB(1, 1)                      + N(1, i)*CB(3, 1))*dV;
         jj+=2;
       }
       ii+=2;
@@ -101,8 +103,8 @@ const Vector& Quad4DispAxisymmetric::getR() {
     double dV = detJ*r*(pD->getFac())*(myMatPoints[k]->get_w());
     int ii = 0;
     for (int i = 0; i < 4; i++) {
-      R[ii  ]+=facS*(N(1, i)*sigma[0] + N(0, i)/r*sigma[2] + N(2, i)*sigma[3])*dV;
-      R[ii+1]+=facS*(N(2, i)*sigma[1]                     + N(1, i)*sigma[3])*dV;
+      R[ii  ]+=facS*(N(1, i)*sigma[0] + N(0, i)/r*sigma[2]  + N(2, i)*sigma[3])*dV;
+      R[ii+1]+=facS*(N(2, i)*sigma[1]                       + N(1, i)*sigma[3])*dV;
       R[ii  ]-=facG*(N(0, i)*b[0]*dV);
       R[ii+1]-=facG*(N(0, i)*b[1]*dV);
       ii+=2;

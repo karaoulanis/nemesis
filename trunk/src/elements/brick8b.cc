@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -43,8 +43,7 @@ void Brick8b::getB(Matrix& B, int node, int gPoint) {
 
   // Find B-bar coefficients
   double Bb1 = 0., Bb2 = 0., Bb3 = 0., vol = 0.;
-  for (unsigned k = 0;k < myMatPoints.size();k++)  //matpoints
-  {
+  for (unsigned k = 0;k < myMatPoints.size();k++) {  // matpoints
     double dV = detJ[k]*(pD->getFac());
     Bb1+=shp[node][1][k]*dV;
     Bb2+=shp[node][2][k]*dV;

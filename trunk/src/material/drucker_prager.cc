@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -30,7 +30,8 @@
 
 DruckerPrager::DruckerPrager() {
 }
-DruckerPrager::DruckerPrager(int ID, int elasticID, int type_, double c, double phi, double psi, double T)
+DruckerPrager::DruckerPrager(int ID, int elasticID, int type_, double c,
+                             double phi, double psi, double T)
 :MultiaxialElastoPlastic(ID, elasticID) {
   // Material parameters
   MatParams[0]=c;
@@ -39,30 +40,29 @@ DruckerPrager::DruckerPrager(int ID, int elasticID, int type_, double c, double 
   MatParams[3]=T;
   type = type_;
   // Yield/potential surfaces
-  switch(type)
-  {
-  case 1: // Inner no Tension cut-off
-    fSurfaces.push_back(new DP_in(c, phi));
-    gSurfaces.push_back(new DP_in(c, psi));
-    break;
-  case 2: // Inner with Tension cut-off
-    fSurfaces.push_back(new DP_in(c, phi));
-    gSurfaces.push_back(new DP_in(c, psi));
-    fSurfaces.push_back(new TC(T));
-    gSurfaces.push_back(new TC(T));
-    break;
-  case 3: // Outer no Tension cut-off
-    fSurfaces.push_back(new DP_in(c, phi));
-    gSurfaces.push_back(new DP_in(c, psi));
-    break;
-  case 4: // Outer with Tension cut-off
-    fSurfaces.push_back(new DP_in(c, phi));
-    gSurfaces.push_back(new DP_in(c, psi));
-    fSurfaces.push_back(new TC(T));
-    gSurfaces.push_back(new TC(T));
-    break;
-  default:
-    throw SException("[nemesis:%d] %s", 9999, "Invalid index %d.\n", type);
+  switch (type) {
+    case 1:  // Inner no Tension cut-off
+     fSurfaces.push_back(new DP_in(c, phi));
+      gSurfaces.push_back(new DP_in(c, psi));
+      break;
+    case 2:  // Inner with Tension cut-off
+      fSurfaces.push_back(new DP_in(c, phi));
+      gSurfaces.push_back(new DP_in(c, psi));
+      fSurfaces.push_back(new TC(T));
+      gSurfaces.push_back(new TC(T));
+      break;
+    case 3:  // Outer no Tension cut-off
+      fSurfaces.push_back(new DP_in(c, phi));
+      gSurfaces.push_back(new DP_in(c, psi));
+      break;
+    case 4:  // Outer with Tension cut-off
+      fSurfaces.push_back(new DP_in(c, phi));
+      gSurfaces.push_back(new DP_in(c, psi));
+      fSurfaces.push_back(new TC(T));
+      gSurfaces.push_back(new TC(T));
+      break;
+    default:
+      throw SException("[nemesis:%d] %s", 9999, "Invalid index %d.\n", type);
   }
   nHardeningVariables = 1;
   // Material tag

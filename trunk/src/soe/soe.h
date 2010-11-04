@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_SOE_SOE_H_
-#define NEMESIS_SOE_SOE_H_
+#ifndef SRC_SOE_SOE_H_
+#define SRC_SOE_SOE_H_
 
 // C++ system files
 #include < cmath>
@@ -81,4 +81,4 @@ class SOE: public AnalysisObject {
   virtual int solve()=0;
   int plotGraph(const char* s);
 };
-#endif  // NEMESIS_SOE_SOE_H_
+#endif  // SRC_SOE_SOE_H_

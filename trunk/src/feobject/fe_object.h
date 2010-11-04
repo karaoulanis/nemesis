@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,10 +23,10 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_FEOBJECT_FE_OBJECT_H_
-#define NEMESIS_FEOBJECT_FE_OBJECT_H_
+#ifndef SRC_FEOBJECT_FE_OBJECT_H_
+#define SRC_FEOBJECT_FE_OBJECT_H_
 
-#include < vector>
+#include <vector>
 #include "database/database.h"
 #include "database/packet.h"
 #include "feobject/fe_object_tags.h"
@@ -35,7 +35,7 @@
 class FEObject {
  protected:
   FEObjectTag myTag;
-  std::vector < FEObjectTag > consistentTags;
+  std::vector<FEObjectTag> consistentTags;
   char myLabel[64];
   public:
   FEObject();
@@ -47,4 +47,4 @@ class FEObject {
   virtual void checkConstency(FEObject* f);
 };
 
-#endif  // NEMESIS_FEOBJECT_FE_OBJECT_H_
+#endif  // SRC_FEOBJECT_FE_OBJECT_H_

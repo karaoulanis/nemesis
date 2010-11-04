@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_
-#define NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_
+#ifndef SRC_ANALYSIS_EIGEN_ANALYSIS_H_
+#define SRC_ANALYSIS_EIGEN_ANALYSIS_H_
 
 #include "analysis/analysis_type.h"
 #include "control/eigen_control.h"
@@ -40,4 +40,4 @@ class EigenAnalysis :public AnalysisType {
   int run(int nLC, int nLoadSteps);
 };
 
-#endif  // NEMESIS_ANALYSIS_EIGEN_ANALYIS_H_
+#endif  // SRC_ANALYSIS_EIGEN_ANALYSIS_H_

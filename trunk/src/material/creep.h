@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_CREEP_H_
-#define NEMESIS_MATERIAL_CREEP_H_
+#ifndef SRC_MATERIAL_CREEP_H_
+#define SRC_MATERIAL_CREEP_H_
 
 #include "material/multiaxial_material.h"
 /**
@@ -39,19 +39,19 @@ class Creep: public MultiaxialMaterial {
   double A;
   double n;
   double k;
-  public:
+ public:
   Creep();
   Creep(int ID, int elasticID, double A, double n, double k);
   ~Creep();
-  
+
   void setStrain(const Vector& De);
   void commit();
   const Matrix& getC();
   bool isPlastic()              {return false;}
 
   MultiaxialMaterial* getClone();
-  
+
   // Tracker member functions
   void track();
 };
-#endif  // NEMESIS_MATERIAL_CREEP_H_
+#endif  // SRC_MATERIAL_CREEP_H_

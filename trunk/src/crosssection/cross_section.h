@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_CROSSSECTION_CROSS_SECTION_H_
-#define NEMESIS_CROSSSECTION_CROSS_SECTION_H_
+#ifndef SRC_CROSSSECTION_CROSS_SECTION_H_
+#define SRC_CROSSSECTION_CROSS_SECTION_H_
 
 #include "domain/domain_object.h"
 
@@ -68,7 +68,6 @@ class RectangularCrossSection: public CrossSection {
   public:
   RectangularCrossSection(int ID, double width, double height);
   ~RectangularCrossSection() {}
-
 };
 //=============================================================
 // User Defined CrossSection
@@ -87,4 +86,4 @@ class UserDefinedCrossSection: public CrossSection {
   ~UserDefinedCrossSection() {}
 };
 
-#endif  // NEMESIS_CROSSSECTION_CROSS_SECTION_H_
+#endif  // SRC_CROSSSECTION_CROSS_SECTION_H_

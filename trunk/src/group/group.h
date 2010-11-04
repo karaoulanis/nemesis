@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_GROUP_GROUP_H_
-#define NEMESIS_GROUP_GROUP_H_
+#ifndef SRC_GROUP_GROUP_H_
+#define SRC_GROUP_GROUP_H_
 
 // Included files
 #include "domain/domain_object.h"
@@ -52,4 +52,4 @@ class Group: public DomainObject {
   inline double getFacP()       {return facP;}
 };
 
-#endif  // NSEMESIS_GROYP_GROUP_H_
+#endif  // SRC_GROUP_GROUP_H_

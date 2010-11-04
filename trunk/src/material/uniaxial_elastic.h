@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,14 +23,13 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_H_
-#define NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_H_
+#ifndef SRC_MATERIAL_UNIAXIAL_ELASTIC_H_
+#define SRC_MATERIAL_UNIAXIAL_ELASTIC_H_
 
 #include "material/uniaxial_material.h"
 
 class UniaxialElastic: public UniaxialMaterial {
-  private:
-  public:
+ public:
   UniaxialElastic();
   UniaxialElastic(int ID, double E, double nu, double rho, double aT);
   UniaxialMaterial* getClone();
@@ -39,4 +38,4 @@ class UniaxialElastic: public UniaxialMaterial {
   void commit();
 };
 
-#endif  // NEMESIS_MATERIAL_UNIAXIAL_ELASTIC_H_
+#endif  // SRC_MATERIAL_UNIAXIAL_ELASTIC_H_

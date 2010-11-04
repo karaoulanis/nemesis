@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_QUAD4_H_
-#define NEMESIS_ELEMENTS_QUAD4_H_
+#ifndef SRC_ELEMENTS_QUAD4_H_
+#define SRC_ELEMENTS_QUAD4_H_
 
 #include "elements/element.h"
 #include "material/matpoint.h"
@@ -35,7 +35,7 @@ class Quad4: public Element {
   int p2;                 // Integration rule eta
   static Matrix N;
   static double detJ;
-  std::vector < MatPoint*> myMatPoints;
+  std::vector<MatPoint*> myMatPoints;
   public:
   // Constructors and Destructor
   Quad4();
@@ -44,18 +44,18 @@ class Quad4: public Element {
   ~Quad4();
 
   void commit();
-  
+
   void findShapeFunctionsAt(MatPoint* pMatPoint);
   bool checkIfAllows(FEObject* f);
-  void addInitialStresses(InitialStresses* pInitialStresses); 
+  void addInitialStresses(InitialStresses* pInitialStresses);
   void recoverStresses();
-  
+
   // Tracker member functions
   void addTracker(int index);
   Tracker* getTracker(int index);
   void track();
-  
+
   int getnPlasticPoints();
 };
 
-#endif  // NEMESIS_ELEMENTS_QUAD4_H_
+#endif  // SRC_ELEMENTS_QUAD4_H_

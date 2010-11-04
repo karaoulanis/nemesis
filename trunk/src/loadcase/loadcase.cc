@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,9 +34,12 @@ LoadCase::LoadCase() {
  * Constructor.
  */
 LoadCase::LoadCase(int ID, const char* label)
-  :DomainObject(ID) {
-  if (!strcmp(label, "default"))  sprintf(myLabel, "LC_%04d", ID);
-  else              sprintf(myLabel, "%s", label);
+:DomainObject(ID) {
+  if (!strcmp(label, "default")) {
+    sprintf(myLabel, "LC_%04d", ID);
+  } else {
+    sprintf(myLabel, "%s", label);
+  }
   active=-1;
   myFac = 0;
 }
@@ -56,7 +59,7 @@ void LoadCase::init() {
   // Apply group states
   for (unsigned i = 0;i < myGroupStates.size();i++) myGroupStates[i]->apply();
   // Apply initial conditions
-  for (unsigned int i = 0;i < myInitialConditions.size();i++) 
+  for (unsigned int i = 0;i < myInitialConditions.size();i++)
     myInitialConditions[i]->apply();
   // Increase domain time
 }
@@ -89,10 +92,11 @@ void LoadCase::addGroupState(GroupState* pGroupState) {
  */
 void LoadCase::applyLoads(double lambda_, double time_) {
   if (lambda_ == 0.) return;
-  if (active==-1)  return;
+  if (active  ==-1)  return;
   else if (active == 0) myFac = lambda_;
   // Apply nodal and elemental loads
-  for (unsigned int i = 0;i < myLoads.size();i++) myLoads[i]->apply(myFac, time_);
+  for (unsigned int i = 0;i < myLoads.size();i++)
+    myLoads[i]->apply(myFac, time_);
 }
 /**
  * Commit.

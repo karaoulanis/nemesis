@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,20 +23,19 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_NUMERIC_LU_H_
-#define NEMESIS_NUMERIC_LU_H_
+#ifndef SRC_NUMERIC_LU_H_
+#define SRC_NUMERIC_LU_H_
 
 #include "numeric/numeric.h"
 
 namespace LU {
   ///@todo check and comment the algorithm
-  inline int decomposition(double* data, int n, double* vv, int* index, double& d) 
-  {
+  inline int decomposition(double* data, int n, double* vv, int* index, double& d) {
     int i, imax, j, k;
     double big, sum, temp;
     d = 1;
-    //search for the largest element in each row; save the scaling in the 
-    //temporary array vv and return -1 if the matrix is singular
+    // search for the largest element in each row; save the scaling in the
+    // temporary array vv and return -1 if the matrix is singular
     for (i = 0; i < n; i++) {
       big = 0.;
       for (j = 0;j < n;j++) if ((temp = fabs(data[i*n+j]))>big) big = temp;
@@ -60,43 +59,39 @@ namespace LU {
         for (k = 0;k < j;k++) sum-=data[i*n+k]*data[k*n+j];
         data[i*n+j]=sum;
         /* is the figure of merit for the pivot better than the best so far? */
-        if ((temp = vv[i]*fabs(sum))>=big) 
-        {
+        if ((temp = vv[i]*fabs(sum)) >= big) {
           big = temp;
           imax = i;
         }
       }
       /* interchange n, if needed, change parity and the scale factor */
-      if (imax != j) 
-      {
+      if (imax != j) {
         for (k = 0; k < n; k++) {
           temp = data[imax*n+k];
           data[imax*n+k]=data[j*n+k];
           data[j*n+k]=temp;
         }
         d*=-1.0;
-        vv[imax]=vv[j];
+        vv[imax] = vv[j];
       }
       /* store the index */
       index[j]=imax;
       /* if the pivot element is zero, the matrix is singular but for some 
       applications a tiny number is desirable instead */
-      if (data[j*n+j]==0.) data[j*n+j]=num::eps;
+      if (data[j*n+j] == 0.) data[j*n+j]=num::eps;
       /* finally, divide by the pivot element */
-      if (j < n-1) 
-      {
+      if (j < n-1) {
         temp = 1./data[j*n+j];
         for (i = j+1;i < n;i++) data[i*n+j]*=temp;
       }
     }
     return 0;
   }
-  inline void backsubstitution(double* data, int n, int* index, double* b) 
-  {
+  inline void backsubstitution(double* data, int n, int* index, double* b) {
     int i, j, ip, ii=-1;
     double sum;
-    // First step of backsubstitution; the only wrinkle is to unscramble 
-    // the permutation order. Note: the algorithm is optimized for a 
+    // First step of backsubstitution; the only wrinkle is to unscramble
+    // the permutation order. Note: the algorithm is optimized for a
     // possibility of large amount of zeroes in b
     for (i = 0; i < n; i++) {
       ip = index[i];
@@ -113,8 +108,7 @@ namespace LU {
       b[i]=sum/data[i*n+i];
     }
   }
-  inline void inverse(double* data, int n, int* index, double* inv, double *col)
-  {
+  inline void inverse(double* data, int n, int* index, double* inv, double *col) {
     for (int j = 0; j < n; j++) {
       for (int i = 0;i < n;i++) col[i]=0.;
       col[j]=1.;
@@ -122,11 +116,10 @@ namespace LU {
       for (int i = 0;i < n;i++) inv[i*n+j]=col[i];
     }
   }
-  inline double determinant(double* data, int n, double& d) 
-  {
+  inline double determinant(double* data, int n, double& d) {
     double det = d;
     for (int j = 0;j < n;j++) det*=data[j*n+j];
     return det;
   }
 }
-#endif  // NEMESIS_NUMERIC_LU_H_
+#endif  // SRC_NUMERIC_LU_H_

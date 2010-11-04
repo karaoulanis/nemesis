@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -36,7 +36,7 @@ Bar2t::Bar2t()   {
  * Material are stored. Only when this element is added to the Domain, the 
  * pointers concerning the Nodes and the Material are initiated.
  */
-Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)  
+Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
   :Bar(ID, Node_1, Node_2, matID, iSecID, jSecID) {
   myTag = TAG_ELEM_BAR_2D_TOTAL_LAGRANGIAN;
   cosX.resize(nDim);
@@ -55,7 +55,7 @@ const Matrix& Bar2t::getK() {
   du = this->getDispTrial();
   for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
   double L2 = 0;
-  for (int i = 0;i < nDim;i++) 
+  for (int i = 0;i < nDim;i++)
     L2+=(x(1, i)-x(0, i)+du[i+nDim]-du[i])*(x(1, i)-x(0, i)+du[i+nDim]-du[i]);
   double e=(L2-L0*L0)/(2*L0*L0);
 
@@ -80,7 +80,7 @@ const Matrix& Bar2t::getK() {
     K(i, i )+= K0;
     K(i, ii)+=-K0;
   }
-  
+
   ///@todo Add nodal transformations
   double facK = 1e-7;
   if (myGroup->isActive()) facK = myGroup->getFacK();
@@ -102,7 +102,7 @@ const Vector& Bar2t::getR() {
   du = this->getDispTrial();
   for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
   double L2 = 0;
-  for (int i = 0;i < nDim;i++) 
+  for (int i = 0;i < nDim;i++)
     L2+=(x(1, i)-x(0, i)+du[i+nDim]-du[i])*(x(1, i)-x(0, i)+du[i+nDim]-du[i]);
   double e=(L2-L0*L0)/(2*L0*L0);
   double E = myUniMaterial->getC();
@@ -113,8 +113,7 @@ const Vector& Bar2t::getR() {
     R[i+nDim] = d - facP*P[i+nDim];
   }
   // Self-weigth (only in y todo: check this)
-  if (!num::tiny(facG) && nDim>1)
-  {
+  if (!num::tiny(facG) && nDim>1) {
     double b=-facG*0.5*(myUniMaterial->getRho())*A0*L0;
     R[1]-=b;
     R[1+nDim]-=b;

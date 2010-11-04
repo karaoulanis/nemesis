@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_PARSER_PY_PARSER_H_
-#define NEMESIS_PARSER_PY_PARSER_H_
+#ifndef SRC_PARSER_PY_PARSER_H_
+#define SRC_PARSER_PY_PARSER_H_
 
 #ifdef _DEBUG
   #include < Python.h>
@@ -45,4 +45,4 @@ class PyParser: public Parser {
   int parse();
   int parse(char* filename);
 };
-#endif  // NEMESIS_PARSER_PY_PARSER_H_
+#endif  // SRC_PARSER_PY_PARSER_H_

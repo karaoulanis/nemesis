@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -34,7 +34,7 @@ Bar2s::Bar2s()   {
  * Constructor.
  * Creates a Bar2s Element.
  */
-Bar2s::Bar2s(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)  
+Bar2s::Bar2s(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
   :Bar(ID, Node_1, Node_2, matID, iSecID, jSecID) {
   myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
   // Find directional cosines
@@ -55,10 +55,10 @@ const Matrix& Bar2s::getK() {
   for (int i = 0;i < nDim;i++)
     for (int j = 0; j < nDim; j++) {
       d = cosX[i]*cosX[j]*K0;
-      K(i     , j   )   = d;
-      K(i+nDim, j   )   =-d;
-      K(i     , j+nDim) =-d;
-      K(i+nDim, j+nDim) = d;
+      K(i     , j   )   =  d;
+      K(i+nDim, j   )   = -d;
+      K(i     , j+nDim) = -d;
+      K(i+nDim, j+nDim) =  d;
     }
   ///@todo Add nodal transformations
   double facK = 1e-7;
@@ -70,8 +70,7 @@ const Vector& Bar2s::getRgrad() {
   double E = myUniMaterial->getC();
   Matrix& K=*myMatrix;
   double K0;
-  switch(activeParameter)
-  {
+  switch (activeParameter) {
   case 1:  K0 = A0/L0; break;  // E is the active parameter
   case 2:  K0= E/L0; break;  // A is the active parameter
   case 0:
@@ -101,7 +100,7 @@ const Vector& Bar2s::getR() {
   double facS = myGroup->getFacS();
   double facG = myGroup->getFacG();
   double facP = myGroup->getFacP();
-  // R = Fint - Fext 
+  // R = Fint - Fext
   double F0 = A0*(myUniMaterial->getStress());
   for (int i = 0; i < nDim; i++) {
     double d = facS*cosX[i]*F0;
@@ -109,8 +108,7 @@ const Vector& Bar2s::getR() {
     R[i+nDim] = d - facP*P[i+nDim];
   }
   // Self-weigth (only in y todo: check this)
-  if (!num::tiny(facG) && nDim>1)
-  {
+  if (!num::tiny(facG) && nDim>1) {
     double b=-facG*0.5*(myUniMaterial->getRho())*A0*L0;
     R[1]-=b;
     R[1+nDim]-=b;

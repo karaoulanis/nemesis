@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -37,7 +37,8 @@ ModelElement::ModelElement() {
  * other objects than elements (such as constraints) will need to occupy a 
  * ModelNode.
  */
-ModelElement::ModelElement(const IDContainer& FTable, Element* pElement, Constraint* pConstraint)
+ModelElement::ModelElement(const IDContainer& FTable, Element* pElement,
+                           Constraint* pConstraint)
   :ModelObject(FTable), myElement(pElement), myConstraint(pConstraint) {
 }
 /**

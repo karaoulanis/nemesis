@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_LOADCASE_GROUP_STATE_H_
-#define NEMESIS_LOADCASE_GROUP_STATE_H_
+#ifndef SRC_LOADCASE_GROUP_STATE_H_
+#define SRC_LOADCASE_GROUP_STATE_H_
 
 #include "domain/domain.h"
 #include "domain/domain_object.h"
@@ -53,4 +53,4 @@ class GroupState: public DomainObject {
   inline double getFacP()       {return facP;}
 };
 
-#endif  // NEMESIS_LOADCASE_GROUP_STATE_H_
+#endif  // SRC_LOADCASE_GROUP_STATE_H_

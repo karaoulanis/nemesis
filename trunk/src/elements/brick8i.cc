@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -73,12 +73,14 @@ const Matrix& Brick8i::getM() {
   double rho = myMaterial->getRho();
   double volume = 0.;
   this->shapeFunctions();
-  for (unsigned k = 0;k < myMatPoints.size();k++)
-    volume+=detJ[k]*(pD->getFac())*(myMatPoints[k]->get_w()); 
+  for (unsigned k = 0;k < myMatPoints.size();k++) {
+    volume+=detJ[k]*(pD->getFac())*(myMatPoints[k]->get_w());
+  }
   double mass = rho*volume;
   // Set corresponding mass to diagonal terms
-  for (int i = 0;i < 24;i++) 
+  for (int i = 0;i < 24;i++) {
     M(i, i)=0.25*mass;
+  }
   // Return M
   return M;
 }
@@ -97,7 +99,7 @@ const Vector& Brick8i::getR() {
   double facS = myGroup->getFacS();
   double facG = myGroup->getFacG();
   double facP = myGroup->getFacP();
-  
+
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
 
@@ -145,13 +147,13 @@ void Brick8i::update() {
     for (unsigned a = 0; a < 8; a++) {
       this->getBStd(Ba, a, k);
       ///@todo check dV
-      //double dV=(pD->getFac())*detJ[k];
+      // double dV=(pD->getFac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 3; a++) {
       this->getBInc(Ba, a, k);
       ///@todo check dV
-      //double dV=(pD->getFac())*detJ[k];
+      // double dV=(pD->getFac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Da, 1.0, 1.0);
     }
     myMatPoints[k]->getMaterial()->setStrain(epsilon);
@@ -163,8 +165,9 @@ void Brick8i::update() {
  * be commited. This takes place in element level.
  */
 void Brick8i::commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++) {
     myMatPoints[i]->getMaterial()->commit();
+  }
   aConvg = aTrial;
 }
 /**
@@ -238,7 +241,6 @@ void Brick8i::getKdd(Matrix& K) {
       }
     }
   }
-
 }
 /**
  * Get Kda Matrix.

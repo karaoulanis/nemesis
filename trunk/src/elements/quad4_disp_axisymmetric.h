@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
-#define NEMESIS_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
+#ifndef SRC_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
+#define SRC_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
 
 #include "elements/quad4.h"
 
@@ -32,15 +32,16 @@ class Quad4DispAxisymmetric: public Quad4 {
   public:
   // Constructors and Destructor
   Quad4DispAxisymmetric();
-  Quad4DispAxisymmetric(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID,
-         int integrationRuleXi, int integrationRuleEta);
+  Quad4DispAxisymmetric(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
+                        int MatID,
+                        int integrationRuleXi, int integrationRuleEta);
   ~Quad4DispAxisymmetric();
-  
+
   const Matrix& getK();
-    const Matrix& getM();
+  const Matrix& getM();
   const Vector& getR();
 
   void update();
 };
 
-#endif  // NEMESIS_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
+#endif  // SRC_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_

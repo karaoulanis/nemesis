@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MODEL_MODEL_H_
-#define NEMESIS_MODEL_MODEL_H_
+#ifndef SRC_MODEL_MODEL_H_
+#define SRC_MODEL_MODEL_H_
 
 #include < boost/config.hpp>
 #include < boost/graph/adjacency_list.hpp>
@@ -57,28 +57,28 @@ using boost::property;
 using boost::property_map;
 using boost::graph_traits;
 
-typedef adjacency_list < vecS, vecS, directedS, 
-  property < vertex_color_t, default_color_type, 
-  property < vertex_degree_t, int,
-  property < vertex_priority_t, double > > > > DirectedGraph;
-typedef adjacency_list < vecS, vecS, undirectedS, 
-  property < vertex_color_t, default_color_type,  
-  property < vertex_degree_t, int,
-  property < vertex_priority_t, double > > > > UndirectedGraph;
+typedef adjacency_list<vecS, vecS, directedS,
+  property<vertex_color_t, default_color_type,
+  property<vertex_degree_t, int,
+  property<vertex_priority_t, double> > > > DirectedGraph;
+typedef adjacency_list<vecS, vecS, undirectedS,
+  property<vertex_color_t, default_color_type,
+  property<vertex_degree_t, int,
+  property<vertex_priority_t, double> > > > UndirectedGraph;
 
-typedef std::vector < ModelNode*>           ModelNodeContainer;
-typedef std::vector < ModelElement*>          ModelElementContainer;
-typedef std::vector < ModelNode*>::const_iterator   ModelNodeIterator;
+typedef std::vector<ModelNode*>                   ModelNodeContainer;
+typedef std::vector<ModelElement*>                ModelElementContainer;
+typedef std::vector<ModelNode*>::const_iterator   ModelNodeIterator;
 
 class Model: public AnalysisObject {
-  private:
+ private:
   Domain* theDomain;
   ModelNodeContainer    theModelNodes;
   ModelElementContainer theModelElements;
   int nEquations;
   bool constrained;
   bool reordered;
-  public:
+ public:
   // Contructor and destructor
   Model(Domain* pDomain);
   virtual ~Model();
@@ -93,14 +93,14 @@ class Model: public AnalysisObject {
   // Retrieve data needed from the Domain concering Nodes and Elements
   int getnNodes();
   int getnElements();
-  
+
   // Retrieve data from the Model concering ModelNodes and ModelElements
   int addModelNode(ModelNode* pModelNode);
   int addModelElement(ModelElement* pModelElement);
   const ModelNodeContainer& getModelNodes() const;
   const ModelElementContainer& getModelElements() const;
 
-  // Handle the number of the system equations 
+  // Handle the number of the system equations
   void setEquations(int n);
   int getnEquations();
 
@@ -113,7 +113,7 @@ class Model: public AnalysisObject {
   void clear();
 
   void commitSens(const Vector& ds, int param);
-  
+
   void setNodalStress();
 
   int getDirectedGraph(DirectedGraph& G);
@@ -122,4 +122,4 @@ class Model: public AnalysisObject {
   // XFem (or other type) enrichment
   void enrich();
 };
-#endif  // NEMESIS_MODEL_MODEL_H_
+#endif  // SRC_MODEL_MODEL_H_

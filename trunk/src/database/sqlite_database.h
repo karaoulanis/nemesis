@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_DATABASE_SQLITE_DATABASE_H_
-#define NEMESIS_DATABASE_SQLITE_DATABASE_H_
+#ifndef SRC_DATABASE_SQLITE_DATABASE_H_
+#define SRC_DATABASE_SQLITE_DATABASE_H_
 
 #include < fstream>
 #include < sqlite3.h>
@@ -56,4 +56,4 @@ class SQLiteDatabase: public Database {
 
 };
 
-#endif  // NEMESIS_DATABASE_SQLITE_DATABASE_H_
+#endif  // SRC_DATABASE_SQLITE_DATABASE_H_

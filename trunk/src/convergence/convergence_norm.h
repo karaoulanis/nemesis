@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_CONVERGENCE_CONVERGENCENORM_H_
-#define NEMESIS_CONVERGENCE_CONVERGENCENORM_H_
+#ifndef SRC_CONVERGENCE_CONVERGENCE_NORM_H_
+#define SRC_CONVERGENCE_CONVERGENCE_NORM_H_
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
@@ -40,9 +40,10 @@ class ConvergenceNorm: public AnalysisObject {
   public:
   ConvergenceNorm();
   ~ConvergenceNorm();
-  void setCheck(int maxIterations, double tolRabs, double tolRrel, double tolWrel);
+  void setCheck(int maxIterations, double tolRabs, double tolRrel,
+                double tolWrel);
   void init(int LCid, int steps);
   void newStep();
   int update();
 };
-#endif  // NEMESIS_CONVERGENCE_CONVERGENCENORM_H_
+#endif  // SRC_CONVERGENCE_CONVERGENCE_NORM_H_

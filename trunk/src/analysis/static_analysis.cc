@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -44,6 +44,7 @@ bool StaticAnalysis::checkIfAllows(FEObject* f) {
       f->getTag() == TAG_ALGORITHM_NEWTON_RAPHSON_MODIFED  ||
       f->getTag() == TAG_ALGORITHM_NEWTON_RAPHSON_INITIAL  ||
       f->getTag() == TAG_ALGORITHM_NEWTON_RAPHSON_PERIODIC ||
+      f->getTag() == TAG_IMPOSER_ELIMINATION               ||
       f->getTag() == TAG_IMPOSER_PENALTY                   ||
       f->getTag() == TAG_IMPOSER_LAGRANGE                  ||
       f->getTag() == TAG_SOE_FULL_GENERIC_POSITIVE_DEFINE  ||

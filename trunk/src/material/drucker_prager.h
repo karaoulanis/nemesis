@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_DRUCKER_PRAGER_H_
-#define NEMESIS_MATERIAL_DRUCKER_PRAGER_H_
+#ifndef SRC_MATERIAL_DRUCKER_PRAGER_H_
+#define SRC_MATERIAL_DRUCKER_PRAGER_H_
 
 #include "material/multiaxial_elastic_plastic.h"
 
@@ -36,8 +36,9 @@ class DruckerPrager: public MultiaxialElastoPlastic {
   int type;
   public:
   DruckerPrager();
-  DruckerPrager(int ID, int elasticID, int type_, double c, double phi, double psi, double T);
+  DruckerPrager(int ID, int elasticID, int type_, double c, double phi,
+                double psi, double T);
   MultiaxialMaterial* getClone();
   ~DruckerPrager();
 };
-#endif  // NEMESIS_MATERIAL_DRUCKER_PRAGER_H_
+#endif  // SRC_MATERIAL_DRUCKER_PRAGER_H_

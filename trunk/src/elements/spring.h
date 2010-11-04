@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_SPRING_H_
-#define NEMESIS_ELEMENTS_SPRING_H_
+#ifndef SRC_ELEMENTS_SPRING_H_
+#define SRC_ELEMENTS_SPRING_H_
 
 #include "elements/element.h"
 #include "material/spring_material.h"
@@ -46,9 +46,9 @@ class Spring: public Element {
   void commit();
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
-  
-    const Matrix& getM();
-    const Matrix& getK();
+
+  const Matrix& getM();
+  const Matrix& getK();
   const Vector& getR();
   const Vector& getReff();
   const Vector& getRgrad();
@@ -58,4 +58,4 @@ class Spring: public Element {
   Tracker* getTracker(int index);
   void track();
 };
-#endif  // NEMESIS_ELEMENTS_SPRING_H_
+#endif  // SRC_ELEMENTS_SPRING_H_

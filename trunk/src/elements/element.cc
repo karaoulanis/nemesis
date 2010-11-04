@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -45,8 +45,7 @@ Element::Element() {
 Element::Element(int ID, int matID)
 :DomainObject(ID), myMaterial(0), activeParameter(0) {
   // Create static Matrices/vectors if they do not exist yet
-  if (theStaticMatrices == 0)
-  {
+  if (theStaticMatrices == 0) {
     theStaticMatrices = new Matrix*[64];
     for (int i = 1;i < 64;i++) theStaticMatrices[i]=new Matrix(i, i, 0.);
     theStaticVectors = new Vector*[64];
@@ -62,8 +61,7 @@ Element::Element(int ID, int matID)
     myGroup = pD->get < Group>(pD->getGroups(), pD->getCurrentGroup());
 }
 Element::~Element() {
-  if (theStaticMatrices != 0)
-  {
+  if (theStaticMatrices != 0) {
     for (int i = 1;i < 64;i++) delete theStaticMatrices[i];
     for (int i = 1;i < 64;i++) delete theStaticVectors[i];
     delete[] theStaticMatrices;
@@ -77,10 +75,9 @@ const Matrix& Element::getC() {
   int nDofs = myNodalIDs.size()*myLocalNodalDofs.size();
   C.resize(nDofs, nDofs, 0.);
   Vector RayleighFactors = pD->getRayleighFactors();
-  if (RayleighFactors.size()==0)
+  if (RayleighFactors.size() == 0) {
     C.clear();
-  else
-  {
+  } else {
     C.add_cM(RayleighFactors[0], this->getK());
     C.add_cM(RayleighFactors[1], this->getM());
   }
@@ -111,14 +108,13 @@ int Element::handleCommonInfo() {
   // Inform each of the nodes that an element is connected to them
   for (int i = 0;i < nNodes;i++) myNodes[i]->addEleToNode(this);
   // Inform the nodes that the corresponding Dof's must be activated
-  for (int i = 0;i < nNodes;i++) 
-    for (int j = 0;j < nLocalDofs;j++) 
+  for (int i = 0;i < nNodes;i++)
+    for (int j = 0;j < nLocalDofs;j++)
       myNodes[i]->addDofToNode(myLocalNodalDofs[j]);
   // Create load vector
   for (int i = 0;i < nDofs;i++) P[i]=0;
   // Get Material related info
-  if (myMaterial->getID()>0)
-  {
+  if (myMaterial->getID()>0) {
     // Check if the material can be assigned
     this->checkIfAllows(myMaterial);
     // Self weight
@@ -247,7 +243,8 @@ const Packet& Element::getPacket() {
   thePacket.id = this->getID();
   // Store nodes
   thePacket.intArray[0]=myNodalIDs.size();
-  for (unsigned i = 0;i < myNodalIDs.size();i++) thePacket.intArray[i+1]=myNodalIDs[i];
+  for (unsigned i = 0;i < myNodalIDs.size();i++)
+    thePacket.intArray[i+1]=myNodalIDs[i];
   // Store nDofs
   thePacket.intArray[28]=myNodalIDs.size()*myLocalNodalDofs.size();
   // Store plastic points
@@ -261,10 +258,10 @@ void Element::setPacket(const Packet& /*p*/) {
 }
 void Element::save(std::ostream& s) {
   s << "ELEMENT " <<' ';
-  s << "tag " <<1000<<' '<<myTag<<' ';
-  s << "id "  <<1000<<' '<<myID<<' ';
-  s << "mat " <<1000<<' '<<myMaterial->getID()<<' ';
-  s << "END "<<' ';
+  s << "tag " << 1000 <<' ' <<myTag <<' ';
+  s << "id "  << 1000 <<' ' <<myID  << ' ';
+  s << "mat " << 1000 <<' ' << myMaterial->getID() << ' ';
+  s << "END " << ' ';
 }
 /**
  * Add a Tracker to an Element's Material.

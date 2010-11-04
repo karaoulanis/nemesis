@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_ELEMENTS_ELEMENT_H_
-#define NEMESIS_ELEMENTS_ELEMENT_H_
+#ifndef SRC_ELEMENTS_ELEMENT_H_
+#define SRC_ELEMENTS_ELEMENT_H_
 
 // Included Files
 #include "containers/containers.h"
@@ -58,7 +58,7 @@ class Element: public DomainObject {
   IDContainer myLocalNodalDofs;
   std::vector < Node*> myNodes;
   Group* myGroup;
-  
+
   // Materials
   Material* myMaterial;
 
@@ -74,7 +74,7 @@ class Element: public DomainObject {
   int handleCommonInfo();
   int activeParameter;
 
-  public:
+ public:
   // Constructors and Destructor
   Element();
   Element(int ID, int matID);
@@ -82,24 +82,24 @@ class Element: public DomainObject {
 
   const IDContainer& getNodalIDs() const;
   const IDContainer& getLocalNodalDofs() const;
-  const std::vector < Node*>& getNodes() const;
-  
+  const std::vector<Node*>& getNodes() const;
+
   bool isActive();
   virtual int getnPlasticPoints();
 
   // Build and return global element matrices
-    virtual const Matrix& getK()=0;
-    virtual const Matrix& getM()=0;
-    virtual const Matrix& getC();
-    virtual const Vector& getR()=0;
-    virtual const Vector& getReff()   {myVector->clear(); return *myVector;}
+  virtual const Matrix& getK()=0;
+  virtual const Matrix& getM()=0;
+  virtual const Matrix& getC();
+  virtual const Vector& getR()=0;
+  virtual const Vector& getReff()   {myVector->clear(); return *myVector;}
   virtual const Vector& getRgrad()  {myVector->clear(); return *myVector;}
 
   // Handle elemental loads
   void addLoad(const Vector& val, double fac = 1.0);
   void zeroLoad();
-  void addGroundMotion(int dof, double val); 
-  virtual void addInitialStresses(InitialStresses* pInitialStresses); 
+  void addGroundMotion(int dof, double val);
+  virtual void addInitialStresses(InitialStresses* pInitialStresses);
 
   virtual void update()=0;
   virtual void commit()=0;
@@ -114,14 +114,14 @@ class Element: public DomainObject {
 
   void setGroup(int groupID);
   virtual void recoverStresses() {}
- 
+
   // Send and receive packet
   const Packet& getPacket();
   void setPacket(const Packet& p);
   void save(std::ostream& s);
 
   void activateParameter(int param) {activeParameter = param;}
-  
+
   // Tracker member functions
   virtual void addTracker(int index);
   virtual Tracker* getTracker(int index);
@@ -129,7 +129,6 @@ class Element: public DomainObject {
 
   // Enrichment functions
   virtual void enrich();
-
 };
 
-#endif  // NEMESIS_ELEMENTS_ELEMENT_H_
+#endif  // SRC_ELEMENTS_ELEMENT_H_

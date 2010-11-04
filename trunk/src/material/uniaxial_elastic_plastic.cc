@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,8 +27,10 @@
 
 UniaxialElastoPlastic::UniaxialElastoPlastic() {
 }
-UniaxialElastoPlastic::UniaxialElastoPlastic(int ID, double E, double nu, double rho, double aT,
-                  double sy, double Hiso, double Hkin, double eta)
+UniaxialElastoPlastic::UniaxialElastoPlastic(int ID, double E, double nu,
+                                             double rho, double aT, double sy,
+                                             double Hiso, double Hkin,
+                                             double eta)
 :UniaxialMaterial(ID, rho, aT) {
   // Material parameters
   MatParams[0]=E;
@@ -55,32 +57,32 @@ UniaxialMaterial* UniaxialElastoPlastic::getClone() {
   double rho =MatParams[30];
   double aT  =MatParams[31];
   // Create clone and return
-  UniaxialElastoPlastic* clone = new UniaxialElastoPlastic(myID, E, nu, rho, aT, sy, Hiso, Hkin, eta);
+  UniaxialElastoPlastic* clone =
+    new UniaxialElastoPlastic(myID, E, nu, rho, aT, sy, Hiso, Hkin, eta);
   return clone;
 }
 void UniaxialElastoPlastic::setStrain(const double De) {
   // Material parameters
   eTrial = eTotal+De;
-  double E   =MatParams[ 0];
-  double sy  =MatParams[ 2];
+  double E    = MatParams[ 0];
+  double sy   = MatParams[ 2];
   double Hiso = MatParams[ 3];
-  //double Hkin = MatParams[ 4];
+  // double Hkin = MatParams[ 4];
   double eta =MatParams[ 5];
 
   // Return mapping
   ///@todo: implement kinematic hardening+viscoplasticity
   sTrial = sConvg+E*De;
-  double xi = sTrial;//-Hkin*q;
-  //double dt = pD->getTimeIncr();
+  double xi = sTrial;  // -Hkin*q;
+  // double dt = pD->getTimeIncr();
   fTrial = fabs(xi)-(Hiso*aConvg+sy);
   aTrial = aConvg;
   ePTrial = ePConvg;
-  if (fTrial >= 0)
-  {
+  if (fTrial >= 0) {
     double dt = pD->getTimeIncr();
     dt = 1.0;
     double dg = fTrial/(E+Hiso+eta/dt);
-    //double dg = fTrial/(E+Hiso);
+    // double dg = fTrial/(E+Hiso);
     sTrial -=dg*E*num::sign(xi);
     ePTrial+=dg*num::sign(xi);
     aTrial +=dg;
@@ -88,11 +90,11 @@ void UniaxialElastoPlastic::setStrain(const double De) {
 }
 double UniaxialElastoPlastic::getC() {
   // Material parameters
-  double E   =MatParams[ 0];
+  double E    = MatParams[ 0];
   double Hiso = MatParams[ 3];
   double Hkin = MatParams[ 4];
-  double eta =MatParams[ 5];
-  //double dt = pD->getTimeIncr();
+  double eta  = MatParams[ 5];
+  // double dt = pD->getTimeIncr();
   double dt = 1.;
   if (fTrial>0) {
     E = E*(Hkin+Hiso+eta/dt)/(E+Hkin+Hiso+eta/dt);

@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -27,7 +27,8 @@
 
 UniaxialElastic::UniaxialElastic() {
 }
-UniaxialElastic::UniaxialElastic(int ID, double E, double nu, double rho, double aT)
+UniaxialElastic::UniaxialElastic(int ID, double E, double nu, double rho,
+                                 double aT)
 :UniaxialMaterial(ID, rho, aT) {
   // Material parameters
   MatParams[0]=E;

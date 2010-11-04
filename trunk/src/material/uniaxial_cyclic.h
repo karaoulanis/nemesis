@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef NEMESIS_MATERIAL_UNIAXIAL_CYCLIC_H_
-#define NEMESIS_MATERIAL_UNIAXIAL_CYCLIC_H_
+#ifndef SRC_MATERIAL_UNIAXIAL_CYCLIC_H_
+#define SRC_MATERIAL_UNIAXIAL_CYCLIC_H_
 
 #include "material/uniaxial_material.h"
 
@@ -38,11 +38,12 @@ class UniaxialCyclic: public UniaxialMaterial {
   bool reversed;
   public:
   UniaxialCyclic();
-  UniaxialCyclic(int ID, double E, double nu, double rho, double aT, double tmax, double Gmax);
+  UniaxialCyclic(int ID, double E, double nu, double rho, double aT,
+                 double tmax, double Gmax);
   ~UniaxialCyclic();
   UniaxialMaterial* getClone();
   void setStrain(const double De);
   double getC();
   void commit();
 };
-#endif  // NEMESIS_MATERIAL_UNIAXIAL_CYCLIC_H_
+#endif  // SRC_MATERIAL_UNIAXIAL_CYCLIC_H_

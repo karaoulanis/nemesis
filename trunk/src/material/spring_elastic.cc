@@ -12,7 +12,7 @@
 * GNU General Public License for more details.                                 *
 *                                                                              *
 * You should have received a copy of the GNU General Public License            *
-* along with this program.  If not, see < http://www.gnu.org/licenses/>.        *
+* along with this program.  If not, see < http://www.gnu.org/licenses/>.       *
 *******************************************************************************/
 
 // *****************************************************************************
@@ -55,8 +55,7 @@ void SpringElastic::setStrain(const Vector& De) {
   double Ks2 =MatParams[1];
   double Ks3 =MatParams[2];
   eTrial = eTotal+De;
-  switch(nDim)
-  {
+  switch (nDim) {
   case 3:
     sTrial[2]=Ks3*eTrial[2];
   case 2:
