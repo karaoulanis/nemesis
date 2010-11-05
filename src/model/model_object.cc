@@ -69,12 +69,12 @@ ModelObject::~ModelObject() {
  * Get the freedom table.
  * @return A reference to the FTable.
  */
-const IDContainer& ModelObject::getFTable() const {
+const IDContainer& ModelObject::get_FTable() const {
   return theFTable;
 }
-void ModelObject::setFTable(const IDContainer& FTable) {
+void ModelObject::set_FTable(const IDContainer& FTable) {
   theFTable = FTable;
 }
-void ModelObject::setFTable(int index, int val) {
+void ModelObject::set_FTable(int index, int val) {
   theFTable[index]=val;
 }

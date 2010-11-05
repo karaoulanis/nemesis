@@ -38,7 +38,7 @@ class NodalLoad: public Load {
   NodalLoad(int nodeID, int dofID);
 
   void apply(double fact, double time);
-  virtual double getValue(double time)=0;
+  virtual double get_value(double time)=0;
 };
 
 #endif  // SRC_LOADCASE_NODAL_LOAD_H_

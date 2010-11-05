@@ -38,10 +38,10 @@ ElementalLoad::ElementalLoad() {
  * @param elemID    The id of the Element.
  */
 ElementalLoad::ElementalLoad(int elemID) {
-  myElement = pD->get < Element>(pD->getElements(), elemID);
+  myElement = pD->get < Element>(pD->get_elements(), elemID);
 }
 ElementalLoad::~ElementalLoad() {
 }
 void ElementalLoad::apply(double fact, double /*t*/) {
-  myElement->addLoad(this->getP(), fact);
+  myElement->addLoad(this->get_P(), fact);
 }

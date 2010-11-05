@@ -36,13 +36,13 @@ DruckerPragerNew::DruckerPragerNew(int ID, int elasticID, double c, double phi,
                                    double psi, double Kc, double Kphi, double T)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+  Material* p = pD->get < Material>(pD->get_materials(), elasticID);
+  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999,
                      "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->getClone();
-  MatParams[30] = myElastic->getParam(30);
-  MatParams[31] = myElastic->getParam(31);
+  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
+  MatParams[30] = myElastic->get_param(30);
+  MatParams[31] = myElastic->get_param(31);
 
   // Material properties
   MatParams[0] = c;
@@ -71,10 +71,10 @@ DruckerPragerNew::DruckerPragerNew(int ID, int elasticID, double c, double phi,
 DruckerPragerNew::~DruckerPragerNew() {
   delete myElastic;
 }
-MultiaxialMaterial* DruckerPragerNew::getClone() {
+MultiaxialMaterial* DruckerPragerNew::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double psi  = MatParams[ 2];
@@ -92,10 +92,10 @@ MultiaxialMaterial* DruckerPragerNew::getClone() {
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
  */ 
-void DruckerPragerNew::setStrain(const Vector& De) {
+void DruckerPragerNew::set_strain(const Vector& De) {
   // material properties
-  double E = myElastic->getParam(0);
-  double nu= myElastic->getParam(1);
+  double E = myElastic->get_param(0);
+  double nu= myElastic->get_param(1);
 
   // elasticity matrix
   C3(0, 0)=  1/E;  C3(0, 1)=-nu/E;  C3(0, 2)=-nu/E;
@@ -107,7 +107,7 @@ void DruckerPragerNew::setStrain(const Vector& De) {
   Matrix sV(3, 3), eV(3, 3);
   aTrial = aConvg;
   eTrial = eTotal+De;
-  sTrial = sConvg+(this->getC())*De;
+  sTrial = sConvg+(this->get_C())*De;
   spectralDecomposition(sTrial, s, sV);
   Vector eTrial3 = C3*s;
 
@@ -117,10 +117,10 @@ void DruckerPragerNew::setStrain(const Vector& De) {
   // Find active surfaces
   vector < int > activeS;
   for (unsigned i = 0;i < 2;i++)
-    if (fSurfaces[i]->getf(s, aTrial)>1e-9)
+    if (fSurfaces[i]->get_f(s, aTrial)>1e-9)
       activeS.push_back(i);
 
-  // cout << fSurfaces[0]->getf(s, aTrial) << ' ' << aTrial << endl;
+  // cout << fSurfaces[0]->get_f(s, aTrial) << ' ' << aTrial << endl;
   // Elastic (quick return)
   if (activeS.size() == 0)
     return;
@@ -150,22 +150,22 @@ void DruckerPragerNew::setStrain(const Vector& De) {
       YS* ys =fSurfaces[activeS[i]];
       YS* ps =gSurfaces[activeS[i]];
       double DL = DLambda[activeS[i]];
-      A.append(DL*(ps->getd2fdsds(s, aTrial)),   0,   0, 1., 1.);
-      A.appendCol(ps->getdfds(s, aTrial),        0, 3+i, 1., 0.);
-      A.appendRow(ys->getdfds(s, aTrial),      3+i,   0, 1., 0.);
-      R.append(DL*(ps->getdfds(s, aTrial)),           0, 1., 1.);
-      R[3+i]=-(ys->getf(s, aTrial));
-      A.appendCol(DL*(ps->getf2dkds(s, aTrial)), 0, 3+nA, 1., 1.);
-      A(3+i, 3+nA)+=ys->getdfdk(s, aTrial);
+      A.append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
+      A.appendCol(ps->get_dfds(s, aTrial),        0, 3+i, 1., 0.);
+      A.appendRow(ys->get_dfds(s, aTrial),      3+i,   0, 1., 0.);
+      R.append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
+      R[3+i]=-(ys->get_f(s, aTrial));
+      A.appendCol(DL*(ps->get_f2dkds(s, aTrial)), 0, 3+nA, 1., 1.);
+      A(3+i, 3+nA)+=ys->get_dfdk(s, aTrial);
     }
     // hardening
-    A.appendRow(DLambda[0]*(gSurfaces[0]->getdfds(s, aTrial)), 3+nA, 0, 1., 0.);
+    A.appendRow(DLambda[0]*(gSurfaces[0]->get_dfds(s, aTrial)), 3+nA, 0, 1., 0.);
 
-    A(3+nA, 3+nA-1) = -EL.geth(gSurfaces[0]->getdfds(s, aTrial));
+    A(3+nA, 3+nA-1) = -EL.get_h(gSurfaces[0]->get_dfds(s, aTrial));
     // A(3+nA, 3+nA-1)=-DLambda[0]*sqrt(2./3.);
     A(3+nA, 3+nA) = 1.;
 
-    R[3+nA]=-aTrial+aConvg+DLambda[0]*(EL.geth(gSurfaces[0]->getdfds(s, aTrial)));
+    R[3+nA]=-aTrial+aConvg+DLambda[0]*(EL.get_h(gSurfaces[0]->get_dfds(s, aTrial)));
     // R[3+nA]=-aTrial+aConvg+DLambda[0]*sqrt(2./3.);
 
     // solve
@@ -185,7 +185,7 @@ void DruckerPragerNew::setStrain(const Vector& De) {
     // check f
     int check = 0;
     for (int i = 0; i < nA; i++) {
-      if (fSurfaces[activeS[i]]->getf(s, aTrial)>1e-9)
+      if (fSurfaces[activeS[i]]->get_f(s, aTrial)>1e-9)
         check++;
     }
 
@@ -210,16 +210,16 @@ void DruckerPragerNew::setStrain(const Vector& De) {
       YS* ys =fSurfaces[activeS[i]];
       YS* ps =gSurfaces[activeS[i]];
       double DL = DLambda[activeS[i]];
-      R.append(DL*(ps->getdfds(s, aTrial)),          0, 1., 1.);
-      R[3+i]=-(ys->getf(s, aTrial));
+      R.append(DL*(ps->get_dfds(s, aTrial)),          0, 1., 1.);
+      R[3+i]=-(ys->get_f(s, aTrial));
     }
 
     if (check == 0 && restart == false) break;
   }
   if (R.twonorm()>1.e-12) report(R, "error");
   // report(R);
-  // cout << fSurfaces[0]->getf(s, 0.) << endl;
-  // cout << fSurfaces[1]->getf(s, 0.) << endl;
+  // cout << fSurfaces[0]->get_f(s, 0.) << endl;
+  // cout << fSurfaces[1]->get_f(s, 0.) << endl;
   // coordinate transformation
   sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
   sTrial[1]=s[0]*sV(0, 1)*sV(0, 1)+s[1]*sV(1, 1)*sV(1, 1)+s[2]*sV(2, 1)*sV(2, 1);
@@ -244,8 +244,8 @@ void DruckerPragerNew::commit() {
  * @todo fill it
  * @return A reference to the tangent material matrix.
  */
-const Matrix& DruckerPragerNew::getC() {
-  return myElastic->getC();
+const Matrix& DruckerPragerNew::get_C() {
+  return myElastic->get_C();
 }
 bool DruckerPragerNew::isPlastic() {
   return plastic;
@@ -267,5 +267,5 @@ void DruckerPragerNew::track() {
 //  s << "p "     <<1020<<' '<<sConvg.p()<<' ';
 //  s << "q "     <<1020<<' '<<sConvg.q()<<' ';
 //  s << "END "<<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

@@ -36,9 +36,9 @@ class Quad4DispPlain: public Quad4 {
          int integrationRuleXi, int integrationRuleEta);
   ~Quad4DispPlain();
   
-  const Matrix& getK();
-    const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+    const Matrix& get_M();
+  const Vector& get_R();
 
   void update();
 };

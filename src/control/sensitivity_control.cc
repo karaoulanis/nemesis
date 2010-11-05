@@ -41,29 +41,29 @@ void SensitivityControl::formElementalResidual(ModelElement* pModelElement,
   pModelElement->add_Kgrad(1.0);
 }
 void SensitivityControl::formResidual(double /*factor*/) {
-  pA->getSOE()->zeroB();
-  pA->getDomain()->zeroSensitivityParameters();
+  pA->get_soe()->zeroB();
+  pA->get_domain()->zeroSensitivityParameters();
   // theLoadCase->applySensitivityParameter(currParameter);
   // Take contribution from Elements
-  for (unsigned i = 0; i < pA->getModel()->getModelElements().size(); i++) {
-    ModelElement* p = pA->getModel()->getModelElements()[i];
+  for (unsigned i = 0; i < pA->get_model()->get_model_elements().size(); i++) {
+    ModelElement* p = pA->get_model()->get_model_elements()[i];
     this->formElementalResidual(p);
-    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+    pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
 }
 void SensitivityControl::init() {
   currParameter = 0;
-  int size = pA->getModel()->getnEquations();
+  int size = pA->get_model()->get_num_eqns();
   ds.resize(size);
   ds.clear();
-  for (unsigned i = 0; i < pA->getModel()->getModelNodes().size(); i++) {
-    // ModelNode* p = pA->getModel()->getModelNodes()[i];
+  for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
+    // ModelNode* p = pA->get_model()->get_model_nodes()[i];
     ///@todo  initSensitivityMatrix stupid
-    // p->getNode()->initSensitivityMatrix(theLoadCase->getnSensitivityParameters());
+    // p->get_node()->initSensitivityMatrix(theLoadCase->get_num_sens_param());
   }
 }
 void SensitivityControl::commit() {
-  ds = pA->getSOE()->getX();
-  pA->getModel()->commitSens(ds, currParameter);
+  ds = pA->get_soe()->get_X();
+  pA->get_model()->commitSens(ds, currParameter);
   currParameter++;
 }

@@ -42,14 +42,14 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID,
   // Handle common info
   this->handleCommonInfo();
   mySecID = secID;
-  mySection = pD->get < CrossSection>(pD->getCrossSections(), mySecID);
+  mySection = pD->get<CrossSection>(pD->get_cross_sections(), mySecID);
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
   myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
   ///@todo: check this
-  double A = mySection->getA();
+  double A = mySection->get_A();
   double b0A = b[0]*A;
   double b1A = b[1]*A;
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
@@ -74,14 +74,14 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
   // Handle common info
   this->handleCommonInfo();
   mySecID = secID;
-  mySection = pD->get < CrossSection>(pD->getCrossSections(), mySecID);
+  mySection = pD->get<CrossSection>(pD->get_cross_sections(), mySecID);
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
   myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
   ///@todo: check this
-  double A = mySection->getA();
+  double A = mySection->get_A();
   double b0A = b[0]*A;
   double b1A = b[1]*A;
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
@@ -122,13 +122,13 @@ void Timoshenko2d::shapeFunctions(int n, double xi, double &N, double &dN) {
       break;
   }
 }
-const Matrix& Timoshenko2d::getK() {
+const Matrix& Timoshenko2d::get_K() {
   Matrix& K=*myMatrix;
   K.clear();
-  double E =myUniMaterial->getParam(0);
-  double nu = myUniMaterial->getParam(1);
-  double A =mySection->getA();
-  double J =mySection->getJ3();
+  double E =myUniMaterial->get_param(0);
+  double nu = myUniMaterial->get_param(1);
+  double A =mySection->get_A();
+  double J =mySection->get_J3();
   double a =5./6.; ///@todo
 
   double c = cosX[0];
@@ -157,31 +157,31 @@ const Matrix& Timoshenko2d::getK() {
       }
     }
   }
-  if (myGroup->isActive()) K*=myGroup->getFacK();
+  if (myGroup->isActive()) K*=myGroup->get_fac_K();
   else          K*=1e-12;
   return K;
 }
-const Matrix& Timoshenko2d::getM() {
+const Matrix& Timoshenko2d::get_M() {
   Matrix& M=*myMatrix;
   M.clear();
   return M;
 }
-const Vector& Timoshenko2d::getRgrad() {
+const Vector& Timoshenko2d::get_Rgrad() {
   myVector->clear();
   return *myVector;
 }
-const Vector& Timoshenko2d::getR() {
+const Vector& Timoshenko2d::get_R() {
   Vector& R=*myVector;
   R.clear();
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
 
-  double E =myUniMaterial->getParam(0);
-  double nu = myUniMaterial->getParam(1);
-  double A =mySection->getA();
-  double J =mySection->getJ3();
+  double E =myUniMaterial->get_param(0);
+  double nu = myUniMaterial->get_param(1);
+  double A =mySection->get_A();
+  double J =mySection->get_J3();
   double a =5./6.; ///@todo
   double c = cosX[0];
   double s = cosX[1];
@@ -189,8 +189,8 @@ const Vector& Timoshenko2d::getR() {
 
   Vector u(3*myNodes.size());
   static Vector epsilon(3);
-  u = this->getDispTrial();
-  R.clear();  // getDispTrial() and R use the same static matrix
+  u = this->get_disp_trial();
+  R.clear();  // get_disp_trial() and R use the same static matrix
   for (int k = 0; k < gPoints; k++) {
     // Find epsilon
     ///@todo This should happen to update() for elastoplastic computations

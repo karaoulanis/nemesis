@@ -28,35 +28,35 @@
 #include "exception/sexception.h"
 
 Reorderer::Reorderer() {
-  pA->getModel()->setReordered(false);
+  pA->get_model()->set_reordered(false);
 }
 Reorderer::~Reorderer() {
 }
 int Reorderer::reorder() {
-  if (pA->getModel()->isReordered()) return 0;
+  if (pA->get_model()->isReordered()) return 0;
   std::vector < int > perm;
   // Get the permutation matrix
-  if (this->getPerm(perm)>0) {
+  if (this->get_perm(perm)>0) {
     // Reorder Model Nodes
-    for (unsigned k = 0; k < pA->getModel()->getModelNodes().size(); k++) {
-      ModelNode* pModelNode = pA->getModel()->getModelNodes()[k];
-      for (unsigned i = 0; i < pModelNode->getFTable().size(); i++) {
-        if (pModelNode->getFTable()[i] >= 0)
-          pModelNode->setFTable(i, perm[pModelNode->getFTable()[i]]);
+    for (unsigned k = 0; k < pA->get_model()->get_model_nodes().size(); k++) {
+      ModelNode* pModelNode = pA->get_model()->get_model_nodes()[k];
+      for (unsigned i = 0; i < pModelNode->get_FTable().size(); i++) {
+        if (pModelNode->get_FTable()[i] >= 0)
+          pModelNode->set_FTable(i, perm[pModelNode->get_FTable()[i]]);
       }
     }
     // Reorder Model Elements
-    for (unsigned k = 0; k < pA->getModel()->getModelElements().size(); k++) {
-      ModelElement* pModelElem = pA->getModel()->getModelElements()[k];
-      for (unsigned i = 0;i < pModelElem->getFTable().size();i++) {
-        if (pModelElem->getFTable()[i] >= 0)
-          pModelElem->setFTable(i, perm[pModelElem->getFTable()[i]]);
+    for (unsigned k = 0; k < pA->get_model()->get_model_elements().size(); k++) {
+      ModelElement* pModelElem = pA->get_model()->get_model_elements()[k];
+      for (unsigned i = 0;i < pModelElem->get_FTable().size();i++) {
+        if (pModelElem->get_FTable()[i] >= 0)
+          pModelElem->set_FTable(i, perm[pModelElem->get_FTable()[i]]);
       }
     }
     cout << "reo: Optimization returned successfully." << endl;
   } else {
     cout << "reo: Optimization failed." <<endl;
   }
-  pA->getModel()->setReordered(true);
+  pA->get_model()->set_reordered(true);
   return 0;
 }

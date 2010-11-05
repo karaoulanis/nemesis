@@ -47,15 +47,15 @@ class Spring: public Element {
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
 
-  const Matrix& getM();
-  const Matrix& getK();
-  const Vector& getR();
-  const Vector& getReff();
-  const Vector& getRgrad();
+  const Matrix& get_M();
+  const Matrix& get_K();
+  const Vector& get_R();
+  const Vector& get_Reff();
+  const Vector& get_Rgrad();
 
   // Tracker member functions
   void addTracker(int index);
-  Tracker* getTracker(int index);
+  Tracker* get_tracker(int index);
   void track();
 };
 #endif  // SRC_ELEMENTS_SPRING_H_

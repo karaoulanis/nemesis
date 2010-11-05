@@ -42,10 +42,10 @@ ModelNode::ModelNode(const IDContainer& FTable, Node* pNode, Constraint* pConstr
 ModelNode::~ModelNode() {
 }
 void ModelNode::add_uTrial(double factor) {
-  if (myNode != 0) myVector->add_cV(factor, myNode->getDispTrial());
+  if (myNode != 0) myVector->add_cV(factor, myNode->get_disp_trial());
 }
 void ModelNode::add_vTrial(double factor) {
-  if (myNode != 0) myVector->add_cV(factor, myNode->getVelcTrial());
+  if (myNode != 0) myVector->add_cV(factor, myNode->get_velc_trial());
 }
 void ModelNode::rollback() {
   if (myNode != 0) myNode->rollback();

@@ -31,7 +31,7 @@ PlaneStress::PlaneStress() {
 PlaneStress::PlaneStress(int ID, double E, double nu, double rho, double aT)
 :MultiaxialElastic(ID, E, nu, rho, aT, 0., 0., 0.) {
 }
-MultiaxialMaterial* PlaneStress::getClone() {
+MultiaxialMaterial* PlaneStress::get_clone() {
   // Material parameters
   double E   =MatParams[ 0];
   double nu  =MatParams[ 1];
@@ -41,7 +41,7 @@ MultiaxialMaterial* PlaneStress::getClone() {
   PlaneStress* newClone = new PlaneStress(myID, E, nu, rho, aT);
   return newClone;
 }
-const Matrix& PlaneStress::getC() {
+const Matrix& PlaneStress::get_C() {
   C.clear();
   // Material parameters
   double E   =MatParams[ 0];

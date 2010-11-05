@@ -38,7 +38,7 @@ class DruckerPrager: public MultiaxialElastoPlastic {
   DruckerPrager();
   DruckerPrager(int ID, int elasticID, int type_, double c, double phi,
                 double psi, double T);
-  MultiaxialMaterial* getClone();
+  MultiaxialMaterial* get_clone();
   ~DruckerPrager();
 };
 #endif  // SRC_MATERIAL_DRUCKER_PRAGER_H_

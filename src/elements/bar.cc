@@ -37,7 +37,7 @@ Bar::Bar()   {
 Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
 :Element(ID, matID) {
   // Get dimension
-  nDim = pD->getnDim();
+  nDim = pD->get_dim();
 
   // Store the nodes
   myNodalIDs.resize(2);
@@ -59,12 +59,12 @@ Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
     throw SException("[nemesis:%d] %s", 9999, "Zero length bar is not allowed");
 
   // Retrieve the CrossSection pointers and get A0
-  iSection = pD->get < CrossSection>(pD->getCrossSections(), iSecID);
-  jSection = pD->get < CrossSection>(pD->getCrossSections(), jSecID);
-  A0 = 0.5*(iSection->getA()+jSection->getA());
+  iSection = pD->get<CrossSection>(pD->get_cross_sections(), iSecID);
+  jSection = pD->get<CrossSection>(pD->get_cross_sections(), jSecID);
+  A0 = 0.5*(iSection->get_A()+jSection->get_A());
 
   // Store material information
-  myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial)->getClone();
+  myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial)->get_clone();
 }
 /**
  * Destructor.
@@ -74,11 +74,11 @@ Bar::~Bar() {
 }
 void Bar::update() {
   static Vector du(2*nDim);
-  du = this->getDispIncrm();
+  du = this->get_disp_incrm();
     double dL = 0;
   for (int i = 0;i < nDim;i++) dL+=(du[i+nDim]-du[i])*cosX[i];
     double de = dL/L0;
-  myUniMaterial->setStrain(de);
+  myUniMaterial->set_strain(de);
 }
 void Bar::commit() {
   myUniMaterial->commit();
@@ -86,10 +86,10 @@ void Bar::commit() {
 bool Bar::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
-const Matrix& Bar::getM() {
+const Matrix& Bar::get_M() {
   Matrix& M=*myMatrix;
   M.clear();
-  double rho = myUniMaterial->getRho();
+  double rho = myUniMaterial->get_rho();
   double mass = 0.5*L0*A0*rho;
   for (int i = 0; i < nDim; i++) {
     M(i     , i     ) = mass;
@@ -97,27 +97,27 @@ const Matrix& Bar::getM() {
   }
   return M;
 }
-const Vector& Bar::getReff() {
-  Vector velc = this->getVelcTrial(); ///@todo: problem with memory sharing otherwise
+const Vector& Bar::get_Reff() {
+  Vector velc = this->get_velc_trial(); ///@todo: problem with memory sharing otherwise
   Vector& Reff=*myVector;
   // +Fint-Fext
-  this->getR();
+  this->get_R();
   // +M*aTrial
-  double rho = myUniMaterial->getRho();
+  double rho = myUniMaterial->get_rho();
   double mass = 0.5*rho*L0;
-  const Vector& a0 = myNodes[0]->getAcclTrial();
-  const Vector& a1 = myNodes[1]->getAcclTrial();
+  const Vector& a0 = myNodes[0]->get_accl_trial();
+  const Vector& a1 = myNodes[1]->get_accl_trial();
   for (int i = 0;i < nDim;i++) {
       Reff[i]      += mass*a0[i];
       Reff[i+nDim] += mass*a1[i];
   }
-  Reff+=(this->getC())*(velc);
+  Reff+=(this->get_C())*(velc);
   return Reff;
 }
 void Bar::recoverStresses() {
   ///@todo Stresses from bar to nodes
   static Vector s(6);
-  s[0]=myUniMaterial->getStress();
+  s[0]=myUniMaterial->get_stress();
   myNodes[0]->addStress(s);
   myNodes[1]->addStress(s);
 }
@@ -137,12 +137,12 @@ void Bar::addTracker(int index) {
  * An exception is thrown if no tracker is set.
  * @param index The index to the Element's Material.
  */
-Tracker* Bar::getTracker(int index) {
+Tracker* Bar::get_tracker(int index) {
   if (index != 1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (myUniMaterial->getTracker() == 0)
+  if (myUniMaterial->get_tracker() == 0)
     throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
-  return myUniMaterial->getTracker();
+  return myUniMaterial->get_tracker();
 }
 /**
  * Add a record to the tracker.

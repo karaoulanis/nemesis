@@ -45,17 +45,17 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     }
   return 0;
 }
-void BandLinearSOE::setTheSize() {
+void BandLinearSOE::set_size() {
   UndirectedGraph G;
-  pA->getModel()->getUndirectedGraph(G);
+  pA->get_model()->get_undirected_graph(G);
   lowerBandwidth = bandwidth(G);
   upperBandwidth = lowerBandwidth;
 
   // If the size has not changed do not resize arrays
-  if (theSize == pA->getModel()->getnEquations()) {
+  if (theSize == pA->get_model()->get_num_eqns()) {
     return;
   } else {
-    theSize = pA->getModel()->getnEquations();
+    theSize = pA->get_model()->get_num_eqns();
   }
   nRows = 2*lowerBandwidth+upperBandwidth+1;
   A.resize(nRows*theSize);
@@ -74,7 +74,7 @@ void BandLinearSOE::print() {
         cout << " | " << B[i] << endl;
   }
 }
-int BandLinearSOE::getEigenSign() {
+int BandLinearSOE::get_eigen_sign() {
   for (int i = 0;i < theSize;i++)
     if (fabs(A[lowerBandwidth+upperBandwidth+i*theSize]) < 1e-12)  return  0;
     else if (A[lowerBandwidth+upperBandwidth+i*theSize]  < 0)      return -1;

@@ -37,6 +37,6 @@ class AnalysisObject: public FEObject {
   public:
   AnalysisObject();
   virtual ~AnalysisObject();
-  void setAnalysis(Analysis* pAnalysis);
+  void set_analysis(Analysis* pAnalysis);
 };
 #endif  // SRC_ANALYSIS_ANALYSIS_OBJECT_H_

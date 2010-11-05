@@ -45,7 +45,7 @@ class Tracker {
   public:
   Tracker();
   virtual ~Tracker();
-  int getSteps();
+  int get_steps();
 
   void track(double lambda_, double time_, string data_);
   void save(std::ostream& s);

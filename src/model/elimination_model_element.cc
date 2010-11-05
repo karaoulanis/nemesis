@@ -48,20 +48,20 @@ EliminationModelElement::~EliminationModelElement() {
 }
 
 void EliminationModelElement::add_K(double factor) {
-  myMatrix->add_cM(factor, myElement->getK());
+  myMatrix->add_cM(factor, myElement->get_K());
 }
 void EliminationModelElement::add_M(double factor) {
-  myMatrix->add_cM(factor, myElement->getM());
+  myMatrix->add_cM(factor, myElement->get_M());
 }
 void EliminationModelElement::add_C(double factor) {
-  myMatrix->add_cM(factor, myElement->getC());
+  myMatrix->add_cM(factor, myElement->get_C());
 }
 void EliminationModelElement::add_R(double factor) {
-  myVector->add_cV(factor, myElement->getR());
+  myVector->add_cV(factor, myElement->get_R());
 }
 void EliminationModelElement::add_Reff(double factor) {
-  myVector->add_cV(factor, myElement->getReff());
+  myVector->add_cV(factor, myElement->get_Reff());
 }
 void EliminationModelElement::add_Rgrad(double factor) {
-  myVector->add_cV(factor, myElement->getRgrad());
+  myVector->add_cV(factor, myElement->get_Rgrad());
 }

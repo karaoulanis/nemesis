@@ -49,7 +49,7 @@ SpringContact::SpringContact(int ID, double Kn, double Ks, double mu,
   // eTotal.clear();
   // eTotal[0]=gap;
 }
-SpringMaterial* SpringContact::getClone() {
+SpringMaterial* SpringContact::get_clone() {
   // Material parameters
   double Kn  = MatParams[0];
   double Ks  = MatParams[1];
@@ -60,7 +60,7 @@ SpringMaterial* SpringContact::getClone() {
   SpringMaterial* clone = new SpringContact(myID, Kn, Ks, mu, gap);
   return clone;
 }
-void SpringContact::setStrain(const Vector& De) {
+void SpringContact::set_strain(const Vector& De) {
   double Kn  = MatParams[0];
   double Ks  = MatParams[1];
   double mu  = MatParams[2];

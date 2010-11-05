@@ -29,10 +29,10 @@ XFemAnalysis::XFemAnalysis()
   :AnalysisType() {
   myTag = TAG_ANALYSIS_STATIC;
   // defaults
-  pA->setImposer(new EliminationImposer());
-  pA->setControl(new LoadControl(1., 1., 1., 1, 0.5, 0.));
-  pA->setAlgorithm(new LinearAlgorithm());
-  pA->setSOE(new FullLinearSOE());
+  pA->set_imposer(new EliminationImposer());
+  pA->set_control(new LoadControl(1., 1., 1., 1, 0.5, 0.));
+  pA->set_algorithm(new LinearAlgorithm());
+  pA->set_soe(new FullLinearSOE());
 }
 bool XFemAnalysis::checkIfAllows(FEObject* /*f*/) {
   return true;
@@ -41,29 +41,29 @@ int XFemAnalysis::run(int nLC, int nLoadSteps) {
   ///@todo Checks
 
   // Create model by applying the constraints
-  pA->getImposer()->impose();
+  pA->get_imposer()->impose();
 
   // Now that model is complete, reorder the model
-  if (pA->getReorderer() !=0 ) pA->getReorderer()->reorder();
+  if (pA->get_reorderer() !=0 ) pA->get_reorderer()->reorder();
 
   // Now that model is complete, the SOE can be initialized
-  pA->getSOE()->setTheSize();
+  pA->get_soe()->set_size();
 
   // Initialize
-  pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(), nLC)->init();
-  pA->getControl()->init();
-  pA->getConvergenceNorm()->init(nLC, nLoadSteps);
+  pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->init();
+  pA->get_control()->init();
+  pA->get_convergence_norm()->init(nLC, nLoadSteps);
 
   // Call algorithm to solve step
-  // int check = pA->getAlgorithm()->solveStep(0); // gives warning for check
-  pA->getAlgorithm()->solveStep(0);  ///@todo:check
+  // int check = pA->get_algorithm()->solveStep(0); // gives warning for check
+  pA->get_algorithm()->solveStep(0);  ///@todo:check
 
   // Commit
-  pA->getControl()->commit();
+  pA->get_control()->commit();
 
   // Finalize
-  pA->getDomain()->get<LoadCase>(pA->getDomain()->getLoadCases(), nLC)->commit();
-  pA->getModel()->setNodalStress();
-  pA->getDomain()->commit(); ///@todo For commiting time; find more elegant way.
+  pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->commit();
+  pA->get_model()->set_nodal_stress();
+  pA->get_domain()->commit(); ///@todo For commiting time; find more elegant way.
   return 0;
 }

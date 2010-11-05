@@ -33,6 +33,6 @@ NodalLoadLinear::NodalLoadLinear(int nodeID, int DofID, double val, double grad)
   theValue = val;
   theGradient = grad;
 }
-double NodalLoadLinear::getValue(double time) {
+double NodalLoadLinear::get_value(double time) {
   return theValue+theGradient*time;
 }

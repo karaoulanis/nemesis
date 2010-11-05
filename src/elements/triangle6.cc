@@ -57,18 +57,18 @@ Triangle6::Triangle6(int ID,
   static Matrix N(6, 3);
   static double detJ;
   for (unsigned i = 0; i < 3; i++) {
-    this->getShapeFunctions(myMatPoints[i], N, detJ);
+    this->get_shape_functions(myMatPoints[i], N, detJ);
     double xG = N(0, 0)*x(0, 0)+N(1, 0)*x(2, 0)+N(1, 0)*x(2, 0)
            +N(3, 0)*x(3, 0)+N(4, 0)*x(4, 0)+N(5, 0)*x(5, 0);
     double yG = N(0, 0)*x(0, 1)+N(1, 0)*x(1, 1)+N(2, 0)*x(2, 1)
            +N(3, 0)*x(3, 1)+N(4, 0)*x(4, 1)+N(5, 0)*x(5, 1);
-    myMatPoints[i]->setX(xG, yG);
+    myMatPoints[i]->set_X(xG, yG);
   }
 }
 Triangle6::~Triangle6() {
   Containers::vector_delete(myMatPoints);
 }
-void Triangle6::getShapeFunctions(MatPoint* pMatPoint, Matrix& N, double& detJ) {
+void Triangle6::get_shape_functions(MatPoint* pMatPoint, Matrix& N, double& detJ) {
   double z1 = pMatPoint->get_r();
   double z2 = pMatPoint->get_s();
   double z3 = pMatPoint->get_t();
@@ -112,15 +112,15 @@ void Triangle6::getShapeFunctions(MatPoint* pMatPoint, Matrix& N, double& detJ) 
   N(4, 2)=J*4*(z3*Jx13+z2*Jx21);
   N(5, 2)=J*4*(z1*Jx21+z3*Jx32);
 }
-const Matrix& Triangle6::getK() {
+const Matrix& Triangle6::get_K() {
   Matrix &K=*myMatrix;
   K.clear();
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     static Matrix N(6, 3);
     static double detJ;
-    this->getShapeFunctions(myMatPoints[k], N, detJ);
-    double dV = detJ*(pD->getFac())*(myMatPoints[k]->get_w());
-    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    this->get_shape_functions(myMatPoints[k], N, detJ);
+    double dV = detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
+    const Matrix& C = myMatPoints[k]->get_material()->get_C();
     int ii = 0;
     for (int i = 0; i < 6; i++) {
       int jj = 0;
@@ -143,31 +143,31 @@ const Matrix& Triangle6::getK() {
     }
   }
   double facK = 1e-9;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
-const Matrix& Triangle6::getM() {
+const Matrix& Triangle6::get_M() {
   Matrix &M=*myMatrix;
   M.clear();
   return M;
 }
-const Vector& Triangle6::getR() {
+const Vector& Triangle6::get_R() {
   Vector& R=*myVector;
   R.clear();
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     // Get B-matrix
     static Matrix N(6, 3);
     static double detJ;
-    this->getShapeFunctions(myMatPoints[k], N, detJ);
-    double dV = detJ*(pD->getFac())*(myMatPoints[k]->get_w());
+    this->get_shape_functions(myMatPoints[k], N, detJ);
+    double dV = detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
     // Get stress vector
     static Vector sigma(6);
-    sigma = myMatPoints[k]->getMaterial()->getStress();
+    sigma = myMatPoints[k]->get_material()->get_stress();
     int ii = 0;
     for (int i = 0; i < 6; i++) {
       R[ii  ]+=facS*(N(i, 1)*sigma[0]+N(i, 2)*sigma[3])*dV;
@@ -183,13 +183,13 @@ const Vector& Triangle6::getR() {
 void Triangle6::update() {
   if (!(myGroup->isActive()))  return;
   Vector& u=*myVector;
-  u = this->getDispIncrm();
+  u = this->get_disp_incrm();
   // For each material point
   for (unsigned int i = 0; i < myMatPoints.size(); i++) {
     // Get B-matrix
     static Matrix N(6, 3);
     static double detJ;
-    this->getShapeFunctions(myMatPoints[i], N, detJ);
+    this->get_shape_functions(myMatPoints[i], N, detJ);
     // Determine the strain
     static Vector epsilon(6);
       epsilon.clear();
@@ -198,12 +198,12 @@ void Triangle6::update() {
     epsilon[3]=N(0, 2)*u[ 0]+N(0, 1)*u[ 1]+N(1, 2)*u[ 2]+N(1, 1)*u[ 3]+N(2, 2)*u[ 4]+N(2, 1)*u[ 5]+
              N(3, 2)*u[ 6]+N(3, 1)*u[ 7]+N(4, 2)*u[ 8]+N(4, 1)*u[ 9]+N(5, 2)*u[10]+N(5, 1)*u[11];
     // And send it to the material point
-    myMatPoints[i]->getMaterial()->setStrain(epsilon);
+    myMatPoints[i]->get_material()->set_strain(epsilon);
   }
 }
 void Triangle6::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->getMaterial()->commit();
+    myMatPoints[i]->get_material()->commit();
 }
 bool Triangle6::checkIfAllows(FEObject* /*f*/) {
   return true;
@@ -226,19 +226,19 @@ void Triangle6::recoverStresses() {
   for (unsigned i = 0; i < 6; i++) {
     sigma.clear();
     for (unsigned j = 0; j < 3; j++) {
-      sigma+=xi(i, j)*(myMatPoints[j]->getMaterial()->getStress());
+      sigma+=xi(i, j)*(myMatPoints[j]->get_material()->get_stress());
     }
     myNodes[i]->addStress(sigma);
   }
 }
 void Triangle6::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID())
+  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id())
     for (unsigned i = 0;i < myMatPoints.size();i++)
-      myMatPoints[i]->setInitialStresses(pInitialStresses);
+      myMatPoints[i]->set_initial_stresses(pInitialStresses);
 }
-int Triangle6::getnPlasticPoints() {
+int Triangle6::get_num_plastic_points() {
   int n = 0;
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    if (myMatPoints[i]->getMaterial()->isPlastic()) n++;
+    if (myMatPoints[i]->get_material()->isPlastic()) n++;
   return n;
 }

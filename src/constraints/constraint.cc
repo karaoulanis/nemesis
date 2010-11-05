@@ -27,84 +27,84 @@
 #include "constraints/constraint.h"
 
 // Initialize variables
-int Constraint::nConstraints = 0;
+int Constraint::num_constraints_ = 0;
 
 /**
  * Constructor.
  */
 Constraint::Constraint()
-  :DomainObject(++nConstraints), cVal(0), fTrial(0), fConvg(0) {
+  :DomainObject(++num_constraints_), val_(0), f_trial_(0), f_convg_(0) {
 }
 /**
  * Create a constrained dof.
- * Check if \a nodeID and \a dof is valid; otherwise throw an exception.
- * @param nodeID The nodal id to be constrained.
+ * Check if \a node_id and \a dof is valid; otherwise throw an exception.
+ * @param node_id The nodal id to be constrained.
  * @param dof The nodal dof to be constrained.
  * @param coeff The Constraint's coefficient.
  */
-void Constraint::setcDof(int nodeID, int dof, double coeff) {
-  static cDof newCDof;
+void Constraint::set_cdof(int node_id, int dof, double coeff) {
+  static CDof cdof;
   // Get node; if does not exists re-throw the exception
   Node* pNode;
   try {
-    pNode = pD->get < Node>(pD->getNodes(), nodeID);
+    pNode = pD->get<Node>(pD->get_nodes(), node_id);
   } catch(SException) {
     throw;
   }
   // Check if dof is active
-  if (pNode->getActivatedDof(dof-1) < 0) {
+  if (pNode->get_activated_dof(dof-1) < 0) {
     throw SException("[nemesis:%d] Node %d dof %d is not yet active.\n", 1110,
-      pNode->getID(), dof);
-    // Containers::vector_print(pNode->getConnectedElements());cout << endl;
+      pNode->get_id(), dof);
+    // Containers::vector_print(pNode->get_connected_elements());cout << endl;
     // return;
   }
   // Now it is ok to continue
-  newCDof.pNode = pNode;
-  newCDof.dof = dof-1;
+  cdof.pNode_ = pNode;
+  cdof.dof_   = dof-1;
   // Add the coeffiecient
-  newCDof.coeff = coeff;
+  cdof.coeff_ = coeff;
   // Keep constrained dof
-  theCDofs.push_back(newCDof);
+  cdofs_.push_back(cdof);
 }
-const cDof& Constraint::getcDof(int i) {
-  return theCDofs[i];
+const CDof& Constraint::get_cdof(int i) {
+  return cdofs_[i];
 }
-void Constraint::setcVal(double val) {
-  cVal = val;
+void Constraint::set_val(double val) {
+  val_ = val;
 }
-double Constraint::getcVal(double /*time*/) {
-  return cVal;
+double Constraint::get_val(double /*time*/) {
+  return val_;
 }
-int Constraint::getncDofs() {
-  return theCDofs.size();
+int Constraint::get_num_cdofs() {
+  return cdofs_.size();
 }
-double Constraint::getDisp(int i) {
-  return theCDofs[i].pNode->getDispTrialAtDof(theCDofs[i].dof);
+double Constraint::get_disp(int i) {
+  return cdofs_[i].pNode_->get_disp_trial_at_dof(cdofs_[i].dof_);
 }
-double Constraint::getVelc(int i) {
-  return theCDofs[i].pNode->getVelcTrialAtDof(theCDofs[i].dof);
+double Constraint::get_velc(int i) {
+  return cdofs_[i].pNode_->get_velc_trial_at_dof(cdofs_[i].dof_);
 }
-double Constraint::getDispConvg(int i) {
-  return theCDofs[i].pNode->getDispConvgAtDof(theCDofs[i].dof);
+double Constraint::get_disp_convg(int i) {
+  return cdofs_[i].pNode_->get_disp_convg_at_dof(cdofs_[i].dof_);
 }
-double Constraint::getDispTrial(int i) {
-  return theCDofs[i].pNode->getDispTrialAtDof(theCDofs[i].dof);
+double Constraint::get_disp_trial(int i) {
+  return cdofs_[i].pNode_->get_disp_trial_at_dof(cdofs_[i].dof_);
 }
-double Constraint::getVelcConvg(int i) {
-  return theCDofs[i].pNode->getVelcConvgAtDof(theCDofs[i].dof);
+double Constraint::get_velc_convg(int i) {
+  return cdofs_[i].pNode_->get_velc_convg_at_dof(cdofs_[i].dof_);
 }
-double Constraint::getAcclConvg(int i) {
-  return theCDofs[i].pNode->getAcclConvgAtDof(theCDofs[i].dof);
+double Constraint::get_accl_convg(int i) {
+  return cdofs_[i].pNode_->get_accl_convg_at_dof(cdofs_[i].dof_);
 }
-void Constraint::incTrialForce(double f) {
-  fTrial+=f;
+void Constraint::inc_trial_force(double f) {
+  f_trial_+=f;
 }
 void Constraint::update(double f)  {
-  fTrial+=f;
+  f_trial_+=f;
 }
 void Constraint::commit() {
-  fConvg = fTrial;
+  f_convg_ = f_trial_;
 }
-double Constraint::getF() {
-  return fTrial;
+double Constraint::get_F() {
+  return f_trial_;
 }

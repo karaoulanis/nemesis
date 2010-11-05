@@ -62,7 +62,7 @@ StaticControl::~StaticControl() {
  */
 void StaticControl::init() {
   // Check the size
-  int size = pA->getModel()->getnEquations();
+  int size = pA->get_model()->get_num_eqns();
   ///@todo resize(size, 0.)
   qRef.resize(size);
   qRef.clear();
@@ -76,12 +76,12 @@ void StaticControl::init() {
   duT.clear();
 
   this->formResidual(1.0);
-  qRef = pA->getSOE()->getB();
+  qRef = pA->get_soe()->get_B();
 
   lambdaTrial = 0;
   lambdaConvg = 0;
   dLambda = 0;
-  pA->getDomain()->incTime(Dt);
+  pA->get_domain()->incTime(Dt);
 }
 /**
  * Forms the elemental tangent for a static analysis, element by element.
@@ -113,21 +113,21 @@ void StaticControl::formNodalResidual(ModelNode* pModelNode) {
   pModelNode->add_R(1.0);
 }
 void StaticControl::formResidual(double fac)   {
-  pA->getSOE()->zeroB();
-  pA->getDomain()->zeroLoads();
-  pA->getDomain()->applyLoads(fac, 0.);
+  pA->get_soe()->zeroB();
+  pA->get_domain()->zeroLoads();
+  pA->get_domain()->applyLoads(fac, 0.);
 
   // Take contribution from Nodes
-  for (unsigned i = 0; i < pA->getModel()->getModelNodes().size(); i++) {
-    ModelNode* p = pA->getModel()->getModelNodes()[i];
+  for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
+    ModelNode* p = pA->get_model()->get_model_nodes()[i];
     this->formNodalResidual(p);
-    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+    pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
   // Take contribution from Elements
-  for (unsigned i = 0; i < pA->getModel()->getModelElements().size(); i++) {
-    ModelElement* p = pA->getModel()->getModelElements()[i];
+  for (unsigned i = 0; i < pA->get_model()->get_model_elements().size(); i++) {
+    ModelElement* p = pA->get_model()->get_model_elements()[i];
     this->formElementalResidual(p);
-    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+    pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
 }
 /**
@@ -138,9 +138,9 @@ void StaticControl::formResidual(double fac)   {
  */
 void StaticControl::commit() {
   lambdaConvg = lambdaTrial;
-  pA->getDomain()->setLambda(lambdaConvg);
-  // pA->getDomain()->commit(); ///@todo this commits only domains time!
-  pA->getModel()->commit();
+  pA->get_domain()->set_lambda(lambdaConvg);
+  // pA->get_domain()->commit(); ///@todo this commits only domains time!
+  pA->get_model()->commit();
 }
 /**
  * Aborts step.
@@ -149,7 +149,7 @@ void StaticControl::commit() {
  * @return 0 if everything is ok.
  */
 void StaticControl::rollback() {
-  // pA->getModel()->rollBack();
+  // pA->get_model()->rollBack();
   lambdaTrial = lambdaConvg;
 }
 

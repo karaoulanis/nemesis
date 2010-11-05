@@ -36,7 +36,7 @@ class SDofMaterial: public Material {
   public:
   SDofMaterial();
   SDofMaterial(int ID, double E, double rho);
-  SDofMaterial* getClone();
+  SDofMaterial* get_clone();
   void commit();
 };
 

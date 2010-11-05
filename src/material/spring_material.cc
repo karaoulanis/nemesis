@@ -30,7 +30,7 @@ SpringMaterial::SpringMaterial() {
 SpringMaterial::SpringMaterial(int ID)
 :Material(ID, 0., 0.) {
   // Initialize vectors
-  nDim = pD->getnDim();
+  nDim = pD->get_dim();
   sTrial.resize(nDim, 0.);
   sConvg.resize(nDim, 0.);
   eTrial.resize(nDim, 0.);
@@ -39,7 +39,7 @@ SpringMaterial::SpringMaterial(int ID)
 }
 /**
  */
-const Matrix& SpringMaterial::getC() {
+const Matrix& SpringMaterial::get_C() {
   return Ct;
 }
 /**
@@ -63,5 +63,5 @@ void SpringMaterial::track() {
   // s << "sigm "  << 1020 << ' ' << sConvg << ' ';
   // s << "epst "  << 1020 << ' ' << eTotal << ' ';
   s << "END " <<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

@@ -60,22 +60,22 @@ class Analysis {
   Analysis(Domain* pDomain);
   ~Analysis();
 
-  inline Model* getModel()                      {return &M;}
-  inline AnalysisType* getAnalysisType()        {return theAnalysisType;}
-  inline Algorithm* getAlgorithm()              {return theAlgorithm;}
-  inline Control* getControl()                  {return theControl;}
-  inline Imposer* getImposer()                  {return theImposer;}
-  inline ConvergenceNorm* getConvergenceNorm()  {return theNorm;}
-  inline Reorderer* getReorderer()              {return theReorderer;}
-  inline SOE* getSOE()                          {return theSOE;}
-  inline Domain* getDomain()                    {return theDomain;}
+  inline Model* get_model()                      {return &M;}
+  inline AnalysisType* get_analysis_type()        {return theAnalysisType;}
+  inline Algorithm* get_algorithm()              {return theAlgorithm;}
+  inline Control* get_control()                  {return theControl;}
+  inline Imposer* get_imposer()                  {return theImposer;}
+  inline ConvergenceNorm* get_convergence_norm()  {return theNorm;}
+  inline Reorderer* get_reorderer()              {return theReorderer;}
+  inline SOE* get_soe()                          {return theSOE;}
+  inline Domain* get_domain()                    {return theDomain;}
 
-  void setAnalysisType(AnalysisType* p);
-  void setAlgorithm(Algorithm* p);
-  void setControl(Control* p);
-  void setImposer(Imposer* p);
-  void setReorderer(Reorderer* p);
-  void setSOE(SOE* p);
+  void set_analysis_type(AnalysisType* p);
+  void set_algorithm(Algorithm* p);
+  void set_control(Control* p);
+  void set_imposer(Imposer* p);
+  void set_reorderer(Reorderer* p);
+  void set_soe(SOE* p);
 
   int analyze(int lcID, int nLoadSteps);
   void clear();

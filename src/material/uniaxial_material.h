@@ -41,12 +41,12 @@ class UniaxialMaterial: public Material {
   UniaxialMaterial(int ID, double rho, double aT);
   ~UniaxialMaterial();
 
-  virtual UniaxialMaterial* getClone()=0;
-  virtual void setStrain(const double De)=0;
-  virtual double getC()=0;
-  inline void setStress(const double s) {sTrial = s;}
+  virtual UniaxialMaterial* get_clone()=0;
+  virtual void set_strain(const double De)=0;
+  virtual double get_C()=0;
+  inline void set_stress(const double s) {sTrial = s;}
   inline void addStress(const double s) {sTrial+= s;}  ///@todo: check
-  inline double getStress()             {return sTrial;}
+  inline double get_stress()             {return sTrial;}
 
   // Tracker member functions
   void track();

@@ -46,13 +46,13 @@ class Bar: public Element {
   void update();
   void commit();
   bool checkIfAllows(FEObject* f);
-  const Matrix& getM();
-  const Vector& getReff();
+  const Matrix& get_M();
+  const Vector& get_Reff();
   void recoverStresses();
 
   // Tracker member functions
   void addTracker(int index);
-  Tracker* getTracker(int index);
+  Tracker* get_tracker(int index);
   void track();
 };
 #endif  // SRC_ELEMENTS_BAR_H_

@@ -51,10 +51,10 @@ class DruckerPragerNew2: public MultiaxialMaterial {
     double Kci, double Kphi, double T);
   ~DruckerPragerNew2();
 
-  MultiaxialMaterial* getClone();
-  void setStrain(const Vector& De);
+  MultiaxialMaterial* get_clone();
+  void set_strain(const Vector& De);
   void commit();
-  const Matrix& getC();
+  const Matrix& get_C();
   bool isPlastic();
 
   // Tracker member functions

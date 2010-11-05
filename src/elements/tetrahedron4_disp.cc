@@ -79,11 +79,11 @@ void Tetrahedron4Disp::findShapeFunctions() {
   N(2, 3)=( x(0, 0)*(x(3, 1)-x(1, 1))-x(1, 0)*(x(3, 1)-x(0, 1))+x(3, 0)*(x(1, 1)-x(0, 1)))*V6;
   N(3, 3)=(-x(0, 0)*(x(2, 1)-x(1, 1))+x(1, 0)*(x(2, 1)-x(0, 1))-x(2, 0)*(x(1, 1)-x(0, 1)))*V6;
 }
-const Matrix& Tetrahedron4Disp::getK() {
+const Matrix& Tetrahedron4Disp::get_K() {
   Matrix &K=*myMatrix;
   K.clear();
   this->findShapeFunctions();
-  const Matrix& C = myMatPoints[0]->getMaterial()->getC();
+  const Matrix& C = myMatPoints[0]->get_material()->get_C();
   static Matrix CB(6, 3);
   int ii = 0;
   for (int i = 0; i < 4; i++) {
@@ -121,24 +121,24 @@ const Matrix& Tetrahedron4Disp::getK() {
     ii+=3;
   }
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
-const Matrix& Tetrahedron4Disp::getM() {
+const Matrix& Tetrahedron4Disp::get_M() {
   Matrix &M=*myMatrix;
   M.clear();
   return M;
 }
-const Vector& Tetrahedron4Disp::getR() {
+const Vector& Tetrahedron4Disp::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
   R.clear();
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  // double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
-  sigma = myMatPoints[0]->getMaterial()->getStress();
+  double facS = myGroup->get_fac_S();
+  // double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
+  sigma = myMatPoints[0]->get_material()->get_stress();
   this->findShapeFunctions();
   int ii = 0;
   for (int i = 0; i < 4; i++) {
@@ -158,7 +158,7 @@ const Vector& Tetrahedron4Disp::getR() {
 void Tetrahedron4Disp::update() {
   if (!(myGroup->isActive()))  return;
   static Vector u(12);
-  u = this->getDispIncrm();
+  u = this->get_disp_incrm();
   // For each material point
   this->findShapeFunctions();
   // Determine the strain
@@ -173,17 +173,17 @@ void Tetrahedron4Disp::update() {
   epsilon[5]=N(0, 3)*u[0]+N(0, 1)*u[2]+N(1, 3)*u[3]+N(1, 1)*u[5]+
         N(2, 3)*u[6]+N(2, 1)*u[8]+N(3, 3)*u[9]+N(3, 1)*u[11];
   // And send it to the material point
-  myMatPoints[0]->getMaterial()->setStrain(epsilon);
+  myMatPoints[0]->get_material()->set_strain(epsilon);
 }
 void Tetrahedron4Disp::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->getMaterial()->commit();
+    myMatPoints[i]->get_material()->commit();
 }
 bool Tetrahedron4Disp::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
 void Tetrahedron4Disp::recoverStresses() {
   static Vector sigma(6);
-  sigma = myMatPoints[0]->getMaterial()->getStress();
+  sigma = myMatPoints[0]->get_material()->get_stress();
   for (int i = 0;i < 4;i++) myNodes[i]->addStress(sigma);
 }

@@ -70,10 +70,10 @@ DruckerPrager::DruckerPrager(int ID, int elasticID, int type_, double c,
 }
 DruckerPrager::~DruckerPrager() {
 }
-MultiaxialMaterial* DruckerPrager::getClone() {
+MultiaxialMaterial* DruckerPrager::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double psi  = MatParams[ 2];

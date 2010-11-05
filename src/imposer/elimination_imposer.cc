@@ -56,33 +56,33 @@ int EliminationImposer::impose() {
   for (ConstraintIterator cIter = theConstraints->begin();
               cIter != theConstraints->end(); cIter++) {
     pConstraint = cIter->second;
-    if (pConstraint->getncDofs() == 0) continue;
-    if (pConstraint->getncDofs() > 1)
+    if (pConstraint->get_num_cdofs() == 0) continue;
+    if (pConstraint->get_num_cdofs() > 1)
       throw SException("[nemesis:%d] %s", 9999,
       "Elimination method cannot be used for MultiFreedom constraints.");
-    int globalDof = this->getGlobalDof(
-      pConstraint->getcDof(0).pNode->getID(), pConstraint->getcDof(0).dof);
+    int globalDof = this->get_global_dof(
+      pConstraint->get_cdof(0).pNode_->get_id(), pConstraint->get_cdof(0).dof_);
     // Check if dof is activated
     if (globalDof < 0) continue;
-    theNewDofs[globalDof]=-pConstraint->getID();
-    if (fabs(pConstraint->getcVal())>1e-18)
+    theNewDofs[globalDof]=-pConstraint->get_id();
+    if (fabs(pConstraint->get_val())>1e-18)
       throw SException("[nemesis:%d] %s", 9999,
       "Elimination method cannot be used for non homogeneous constraints.");
   }
   int nEquations = 0;
   for (int i = 0;i < nDofs;i++) if (theNewDofs[i]>0) theNewDofs[i]=nEquations++;
-  theModel->setEquations(nEquations);
+  theModel->set_equations(nEquations);
 
   // ===========================================================================
   // Create ModelNodes
   // ===========================================================================
-  for (NodeIterator nIter = pA->getDomain()->getNodes().begin();
-            nIter != pA->getDomain()->getNodes().end(); nIter++) {
+  for (NodeIterator nIter = pA->get_domain()->get_nodes().begin();
+            nIter != pA->get_domain()->get_nodes().end(); nIter++) {
     static IDContainer oldFTable;
     static IDContainer newFTable;
     // Get a pointer to a node
     pNode = nIter->second;
-    oldFTable = this->getGlobalDofs(pNode->getID());
+    oldFTable = this->get_global_dofs(pNode->get_id());
     newFTable.resize(oldFTable.size());
     // Map old dofs to new ones
     for (unsigned i = 0;i < oldFTable.size();i++)
@@ -95,22 +95,22 @@ int EliminationImposer::impose() {
     } else {
       // Create EliminationModelNode
       pElimModelNode = new EliminationModelNode(newFTable, pNode);
-      pElimModelNode->setTheOldFTable(oldFTable);
+      pElimModelNode->set_old_FTable(oldFTable);
       theModel->addModelNode(pElimModelNode);
     }
   }
   // ===========================================================================
   // Create ModelElements
   // ===========================================================================
-  for (ElementIterator eIter = pA->getDomain()->getElements().begin();
-    eIter != pA->getDomain()->getElements().end(); eIter++) {
+  for (ElementIterator eIter = pA->get_domain()->get_elements().begin();
+    eIter != pA->get_domain()->get_elements().end(); eIter++) {
     ///@todo Needs speed improvements
     // Get next (randomly chosen) element
     pElement = eIter->second;
     // Get the ids of the nodes
-    IDContainer myNodalIDs = pElement->getNodalIDs();
+    IDContainer myNodalIDs = pElement->get_nodal_ids();
     // Get the local dofs of each node of the element
-    IDContainer theNodalLocalDofs = pElement->getLocalNodalDofs();
+    IDContainer theNodalLocalDofs = pElement->get_local_nodal_dofs();
     // Create an element freedom table
     IDContainer elemFTable(myNodalIDs.size()*theNodalLocalDofs.size());
 
@@ -118,7 +118,7 @@ int EliminationImposer::impose() {
       int NodeID = myNodalIDs[j];
       for (unsigned k = 0; k < theNodalLocalDofs.size(); k++) {
         int localDof = theNodalLocalDofs[k];
-        int globalDof = this->getGlobalDof(NodeID, localDof);
+        int globalDof = this->get_global_dof(NodeID, localDof);
         int newGlobalDof = theNewDofs[globalDof];
         elemFTable[j*theNodalLocalDofs.size()+k]=newGlobalDof;
       }
@@ -134,6 +134,6 @@ int EliminationImposer::impose() {
       theModel->addModelElement(pElimModelElement);
     }
   }
-  theModel->setConstrained(true);
+  theModel->set_constrained(true);
   return 0;
 }

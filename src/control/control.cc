@@ -35,14 +35,14 @@ Control::Control() {
 Control::~Control() {
 }
 void Control::formTangent() {
-  pA->getSOE()->zeroA();
-  int n = pA->getModel()->getModelElements().size();
+  pA->get_soe()->zeroA();
+  int n = pA->get_model()->get_model_elements().size();
   for (int i = 0; i < n; i++) {
-    ModelElement* p = pA->getModel()->getModelElements()[i];
+    ModelElement* p = pA->get_model()->get_model_elements()[i];
     this->formElementalTangent(p);
-    pA->getSOE()->insertMatrixIntoA(p->getMatrix(), p->getFTable(), 1.0);
+    pA->get_soe()->insertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
   }
 }
-double Control::getLambda() {
+double Control::get_lambda() {
   return lambdaTrial;
 }

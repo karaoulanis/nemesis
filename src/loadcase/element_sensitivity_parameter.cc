@@ -32,7 +32,7 @@ ElementSensitivityParameter::ElementSensitivityParameter()
 }
 ElementSensitivityParameter::ElementSensitivityParameter(int elemID, int param)
   :DomainObject(++nSensitivityParameters) {
-  myElement = pD->get < Element>(pD->getElements(), elemID); 
+  myElement = pD->get < Element>(pD->get_elements(), elemID); 
   parameter = param;
 }
 int ElementSensitivityParameter::apply() {

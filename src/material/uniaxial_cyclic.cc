@@ -48,7 +48,7 @@ UniaxialCyclic::UniaxialCyclic(int ID, double E, double nu, double rho,
 }
 UniaxialCyclic::~UniaxialCyclic() {
 }
-UniaxialMaterial* UniaxialCyclic::getClone() {
+UniaxialMaterial* UniaxialCyclic::get_clone() {
   double E   =MatParams[0];
   double nu  =MatParams[1];
   double tmax = MatParams[2];
@@ -59,7 +59,7 @@ UniaxialMaterial* UniaxialCyclic::getClone() {
                                                   Gmax);
   return newClone;
 }
-void UniaxialCyclic::setStrain(const double De) {
+void UniaxialCyclic::set_strain(const double De) {
   double tmax = MatParams[2];
   double Gmax = MatParams[3];
   // At first step check if reversed
@@ -84,7 +84,7 @@ void UniaxialCyclic::setStrain(const double De) {
         ((tmax+0.5*Gmax*abs(er-eTrial))*(tmax+0.5*Gmax*abs(er-eTrial)));
   }
 }
-double UniaxialCyclic::getC() {
+double UniaxialCyclic::get_C() {
   ///@todo
   return Et;
 }

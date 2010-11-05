@@ -138,7 +138,7 @@ static PyObject* pyDatabase_SQLite(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "s", &s))  return NULL;
   try {
     Database* pDB = new SQLiteDatabase(s);
-    pD->setDatabase(pDB);
+    pD->set_database(pDB);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -150,7 +150,7 @@ static PyObject* pyDatabase_Store(PyObject* /*self*/, PyObject *args) {
   const char* s;
   if (!PyArg_ParseTuple(args, "s", &s))  return NULL;
   try {
-    if (pD->getDatabase() == 0)
+    if (pD->get_database() == 0)
       throw SException("[nemesis:%d] %s", 1110, "No database set.");
     pD->storeState(s);
   } catch(SException e) {
@@ -163,9 +163,9 @@ static PyObject* pyDatabase_Store(PyObject* /*self*/, PyObject *args) {
 static PyObject* pyDatabase_Close(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, ""))  return NULL;
   try {
-    if (pD->getDatabase() == 0)
+    if (pD->get_database() == 0)
       throw SException("[nemesis:%d] %s", 1110, "No database set.");
-    pD->getDatabase()->closeDB();
+    pD->get_database()->closeDB();
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -177,9 +177,9 @@ static PyObject* pyDatabase_ExportToVtk(PyObject* /*self*/, PyObject* args) {
   const char* s;
   if (!PyArg_ParseTuple(args, "s", &s))  return NULL;
   try {
-    if (pD->getDatabase() == 0)
+    if (pD->get_database() == 0)
       throw SException("[nemesis:%d] %s", 1110, "No database set yet.");
-    pD->getDatabase()->exportToVtk(s);
+    pD->get_database()->exportToVtk(s);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -205,7 +205,7 @@ static PyObject* pyDomain_Dim(PyObject* /*self*/, PyObject* args) {
   int n;
   if (!PyArg_ParseTuple(args, "i", &n))  return NULL;
   try {
-    pD->setnDim(n);
+    pD->set_dim(n);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -219,7 +219,7 @@ static PyObject* pyDomain_PlaneStress(PyObject* /*self*/, PyObject* args) {
   try {
     pD->setTag(TAG_DOMAIN_PLANE_STRESS);
     pD->setFac(t);
-    pD->setnDim(2);
+    pD->set_dim(2);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -233,7 +233,7 @@ static PyObject* pyDomain_PlaneStrain(PyObject* /*self*/, PyObject* args) {
   try {
     pD->setTag(TAG_DOMAIN_PLANE_STRAIN);
     pD->setFac(t);
-    pD->setnDim(2);
+    pD->set_dim(2);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -281,11 +281,11 @@ static PyObject* pyDomain_State(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyDomain_EigenValues(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
-  return buildList(pD->getEigenValues());
+  return buildList(pD->get_eigen_values());
 }
 static PyObject* pyDomain_Type(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
-  return Py_BuildValue("i", pD->getTag());
+  return Py_BuildValue("i", pD->get_tag());
 }
 static PyObject* pyDomain_Gravity(PyObject* /*self*/, PyObject* args) {
   double g, xG, yG, zG;
@@ -331,7 +331,7 @@ static PyObject* pyNode_Add(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "id|dd", &id, &x1, &x2, &x3)) return NULL;
   try {
     Node* pNode = new Node(id, x1, x2, x3);
-    pD->add(pD->getNodes(), pNode);
+    pD->add(pD->get_nodes(), pNode);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -345,14 +345,14 @@ static PyObject* pyNode_Fix(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii|d", &nodeID, &dofID, &c))  return NULL;
   Constraint* pConstraint = new Constraint;
   try {
-    pConstraint->setcDof(nodeID, dofID, 1.0);
+    pConstraint->set_cdof(nodeID, dofID, 1.0);
   } catch(SException e) {
     delete pConstraint;
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  pConstraint->setcVal(c);
-  pD->add(pD->getConstraints(), pConstraint);
+  pConstraint->set_val(c);
+  pD->add(pD->get_constraints(), pConstraint);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -361,7 +361,7 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   ostringstream os;
   try {
-    pD->get < Node>(pD->getNodes(), id)->save(os);
+    pD->get < Node>(pD->get_nodes(), id)->save(os);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -374,7 +374,7 @@ static PyObject* pyNode_Track(PyObject* /*self*/, PyObject* args) {
   int id;
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   try {
-    pD->get < Node>(pD->getNodes(), id)->addTracker();
+    pD->get < Node>(pD->get_nodes(), id)->addTracker();
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -387,7 +387,7 @@ static PyObject* pyNode_Path(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   ostringstream os;
   try {
-    pD->get < Node>(pD->getNodes(), id)->getTracker()->save(os);
+    pD->get < Node>(pD->get_nodes(), id)->get_tracker()->save(os);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -417,7 +417,7 @@ static PyObject* pySection_Rect(PyObject* /*self*/, PyObject* args) {
   double h;
   if (!PyArg_ParseTuple(args, "idd", &id, &w, &h)) return NULL;
   CrossSection* pSection = new RectangularCrossSection(id, w, h);
-  pD->add(pD->getCrossSections(), pSection);
+  pD->add(pD->get_cross_sections(), pSection);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -428,7 +428,7 @@ static PyObject* pySection_UserDefined(PyObject* /*self*/, PyObject* args) {
     return NULL;
   CrossSection* pSection=
     new UserDefinedCrossSection(id, A, As2, As3, J1, J2, J3, h2, h3);
-  pD->add(pD->getCrossSections(), pSection);
+  pD->add(pD->get_cross_sections(), pSection);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -458,7 +458,7 @@ static PyMethodDef SectionMethods[] =  {
 void createGroupByMaterial(int groupId) {
   try {
     Group* pGroup = new Group(groupId);
-    pD->add(pD->getGroups(), pGroup);
+    pD->add(pD->get_groups(), pGroup);
     pD->setCurrentGroup(groupId);
   } catch(SException /*e*/) {
     ///@todo
@@ -469,7 +469,7 @@ static PyObject* pyMaterial_SDof(PyObject* /*self*/, PyObject* args) {
   double E, rho = 0;
     if (!PyArg_ParseTuple(args, "id|d", &id, &E, &rho))return NULL;
   Material* pMaterial = new SDofMaterial(id, E, rho);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -479,7 +479,7 @@ static PyObject* pyMaterial_SpringElastic(PyObject* /*self*/, PyObject* args) {
   double Kn, Ks2 = 0., Ks3 = 0.;
     if (!PyArg_ParseTuple(args, "id|dd", &id, &Kn, &Ks2, &Ks3))return NULL;
   Material* pMaterial = new SpringElastic(id, Kn, Ks2, Ks3);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -490,7 +490,7 @@ static PyObject* pyMaterial_SpringContact(PyObject* /*self*/, PyObject* args) {
   double Kn, Ks, mu, gap;
     if (!PyArg_ParseTuple(args, "idddd", &id, &Kn, &Ks, &mu, &gap))return NULL;
   Material* pMaterial = new SpringContact(id, Kn, Ks, mu, gap);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -501,7 +501,7 @@ static PyObject* pyMaterial_UniaxialElastic(PyObject* /*self*/,
   double E = 0, nu = 0, rho = 0, aT = 0;
     if (!PyArg_ParseTuple(args, "id|ddd", &id, &E, &nu, &rho, &aT))return NULL;
   Material* pMaterial = new UniaxialElastic(id, E, nu, rho, aT);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -513,7 +513,7 @@ static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject* /*self*/,
   if (!PyArg_ParseTuple(args, "iddddddd|d", &id, &E, &nu, &rho, &aT, &sy, &Hiso, &Hkin, &eta))
     return NULL;
   Material* pMaterial = new UniaxialElastoPlastic(id, E, nu, rho, aT, sy, Hiso, Hkin, eta);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -524,7 +524,7 @@ static PyObject* pyMaterial_UniaxialGap(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "idddddd", &id, &E, &nu, &rho, &aT, &sy, &gap))
     return NULL;
   Material* pMaterial = new UniaxialGap(id, E, nu, rho, aT, sy, gap);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -536,11 +536,11 @@ static PyObject* pyMaterial_Elastic(PyObject* /*self*/, PyObject *args) {
   if (!PyArg_ParseTuple(args, "idd|ddddd", &id, &E, &nu, &rho, &aT, &kx, &ky, &kz))
     return NULL;
   Material* pMaterial;
-  if (pD->getTag() == TAG_DOMAIN_PLANE_STRESS)
+  if (pD->get_tag() == TAG_DOMAIN_PLANE_STRESS)
     pMaterial = new PlaneStress(id, E, nu, rho, aT);
   else
     pMaterial = new MultiaxialElastic(id, E, nu, rho, aT, kx, ky, kz);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -551,7 +551,7 @@ static PyObject* pyMaterial_DuncanChang(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iddddddd|dd", &id, &E, &nu, &c, &phi, &m, &Rf, &pa, &rho, &aT))
     return NULL;
   Material* pMaterial = new DuncanChang(id, E, nu, c, phi, m, Rf, pa, rho, aT);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -562,7 +562,7 @@ static PyObject* pyMaterial_UniaxialCyclic(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "idddddd", &id, &E, &nu, &rho, &aT, &tmax, &gmax))
     return NULL;
   Material* pMaterial = new UniaxialCyclic(id, E, nu, rho, aT, tmax, gmax);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -573,7 +573,7 @@ static PyObject* pyMaterial_VonMises(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iidd", &id, &elasticId, &s0, &K))
     return NULL;
   Material* pMaterial = new VonMises(id, elasticId, s0, K);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -584,7 +584,7 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iiddd", &id, &elasticId, &c, &phi, &alpha))
     return NULL;
   Material* pMaterial = new MohrCoulomb(id, elasticId, c, phi, alpha);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -596,7 +596,7 @@ static PyObject* pyMaterial_Tresca(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iid|ddd", &id, &elasticId, &cu, &kx, &ky, &kz))
     return NULL;
   Material* pMaterial = new Tresca(id, elasticId, cu, kx, ky, kz);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -607,7 +607,7 @@ static PyObject* pyMaterial_HoekBrown(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iiddddd", &id, &elasticId, &si, &sp, &mb, &mbb, &alpha))
     return NULL;
   Material* pMaterial = new HoekBrown(id, elasticId, si, sp, mb, mbb, alpha);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -618,7 +618,7 @@ static PyObject* pyMaterial_Creep(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iiddd", &id, &elasticId, &A, &n, &k))
     return NULL;
   Material* pMaterial = new Creep(id, elasticId, A, n, k);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -629,7 +629,7 @@ static PyObject* pyMaterial_DruckerPrager(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iiidddd", &id, &elasticId, &type, &c, &phi, &psi, &T))
     return NULL;
   Material* pMaterial = new DruckerPrager(id, elasticId, type, c, phi, psi, T);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -641,7 +641,7 @@ static PyObject* pyMaterial_DruckerPragerNew(PyObject* /*self*/,
   if (!PyArg_ParseTuple(args, "iidddddd", &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T))
     return NULL;
   Material* pMaterial = new DruckerPragerNew(id, elasticId, c, phi, psi, Kc, Kphi, T);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -653,7 +653,7 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject* /*self*/,
   if (!PyArg_ParseTuple(args, "iidddddd", &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T))
     return NULL;
   Material* pMaterial = new DruckerPragerNew2(id, elasticId, c, phi, psi, Kc, Kphi, T);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -664,7 +664,7 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject* /*self*/,
   if (!PyArg_ParseTuple(args, "iidddddd", &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T))
     return NULL;
   Material* pMaterial = new DruckerPragerNew3(id, elasticId, c, phi, psi, Kc, Kphi, T);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -676,7 +676,7 @@ static PyObject* pyMaterial_ModifiedCamClay(PyObject* /*self*/,
   if (!PyArg_ParseTuple(args, "iidddd", &id, &elasticId, &M, &po, &kappa, &lambda))
     return NULL;
   Material* pMaterial = new ModifiedCamClay(id, elasticId, M, po, kappa, lambda);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -687,7 +687,7 @@ static PyObject* pyMaterial_LadeDuncan(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iid", &id, &elasticId, &K))
     return NULL;
   Material* pMaterial = new LadeDuncan(id, elasticId, K);
-  pD->add(pD->getMaterials(), pMaterial);
+  pD->add(pD->get_materials(), pMaterial);
   createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
@@ -746,7 +746,7 @@ static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Spring(id, iNode, jNode, mat, xp1, xp2, xp3, yp1, yp2, yp3);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -762,7 +762,7 @@ static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args) {
     if (jSec == -9999)
       jSec = iSec;
     Element* pElement = new Bar2s(id, iNode, jNode, mat, iSec, jSec);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -778,7 +778,7 @@ static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args) {
     if (jSec == -9999)
       jSec = iSec;
     Element* pElement = new Bar2t(id, iNode, jNode, mat, iSec, jSec);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -792,7 +792,7 @@ static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Beam2e(id, iNode, jNode, mat, sec);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -808,7 +808,7 @@ static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
     if (rule == -1)
       rule = 1;
     Element* pElement = new Timoshenko2d(id, iNode, jNode, mat, sec, rule);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -824,7 +824,7 @@ static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args) {
     if (rule == -1)
       rule = 2;
     Element* pElement = new Timoshenko2d(id, iNode, jNode, mNode, mat, sec, rule);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -838,7 +838,7 @@ static PyObject* pyElement_Brick8d(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Brick8d(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -852,7 +852,7 @@ static PyObject* pyElement_Brick8b(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Brick8b(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -866,7 +866,7 @@ static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Brick8i(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -879,7 +879,7 @@ static PyObject* pyElement_SDOF(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iiii", &id, &nodeID, &dofID, &matID))
     return NULL;
   Element* pElement = new SDofElement(id, nodeID, dofID, matID);
-  pD->add(pD->getElements(), pElement);
+  pD->add(pD->get_elements(), pElement);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -889,16 +889,16 @@ static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement;
-    if (pD->getTag() == TAG_DOMAIN_PLANE_STRAIN ||
-        pD->getTag() == TAG_DOMAIN_PLANE_STRESS) {
+    if (pD->get_tag() == TAG_DOMAIN_PLANE_STRAIN ||
+        pD->get_tag() == TAG_DOMAIN_PLANE_STRESS) {
           pElement = new Quad4DispPlain(id, n1, n2, n3, n4, matID, 2, 2);
-    } else if (pD->getTag() == TAG_DOMAIN_AXISYMMETRIC) {
+    } else if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
       pElement = new Quad4DispAxisymmetric(id, n1, n2, n3, n4, matID, 2, 2);
     } else {
       throw SException("[nemesis:%d] %s", 1110,
         "A quad4d can be used only in plane strain/stress/axisymmetry.");
     }
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -912,7 +912,7 @@ static PyObject* pyElement_Quad4Test(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Quad4d(id, n1, n2, n3, n4, matID);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -926,7 +926,7 @@ static PyObject* pyElement_Quad4b(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Quad4b(id, n1, n2, n3, n4, matID);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -940,7 +940,7 @@ static PyObject* pyElement_Quad4i(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Quad4i(id, n1, n2, n3, n4, matID);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -954,14 +954,14 @@ static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement;
-    if (pD->getTag() == TAG_DOMAIN_PLANE_STRAIN||
-        pD->getTag() == TAG_DOMAIN_PLANE_STRESS) {
+    if (pD->get_tag() == TAG_DOMAIN_PLANE_STRAIN||
+        pD->get_tag() == TAG_DOMAIN_PLANE_STRESS) {
           pElement = new Quad4e(id, n1, n2, n3, n4, matID);
     } else {
       throw SException("[nemesis:%d] %s", 1110,
         "A quad4e can be used only in plane strain/stress.");
     }
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -975,7 +975,7 @@ static PyObject* pyElement_Triangle3d(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Triangle3(id, n1, n2, n3, matID);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -989,7 +989,7 @@ static PyObject* pyElement_Triangle3dXFem(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Triangle3XFem(id, n1, n2, n3, matID);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1003,7 +1003,7 @@ static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Triangle6(id, n1, n2, n3, n4, n5, n6, matID);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1017,7 +1017,7 @@ static PyObject* pyElement_Tetrahedron4d(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Element* pElement = new Tetrahedron4Disp(id, n1, n2, n3, n4, matID);
-    pD->add(pD->getElements(), pElement);
+    pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1029,7 +1029,7 @@ static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
   int id;
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   ostringstream os;
-  pD->get<Element>(pD->getElements(), id)->save(os);
+  pD->get<Element>(pD->get_elements(), id)->save(os);
   static istringstream is;
   is.str(os.str());
   return buildDict(is);
@@ -1037,7 +1037,7 @@ static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
   int id, index;
     if (!PyArg_ParseTuple(args, "ii", &id, &index)) return NULL;
-  pD->get<Element>(pD->getElements(), id)->addTracker(index);
+  pD->get<Element>(pD->get_elements(), id)->addTracker(index);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1045,7 +1045,7 @@ static PyObject* pyElement_Path(PyObject* /*self*/, PyObject* args) {
   int id, index;
   if (!PyArg_ParseTuple(args, "ii", &id, &index)) return NULL;
   ostringstream os;
-  pD->get<Element>(pD->getElements(), id)->getTracker(index)->save(os);
+  pD->get<Element>(pD->get_elements(), id)->get_tracker(index)->save(os);
   istringstream is(os.str());
   return buildList(is);
 }
@@ -1107,9 +1107,9 @@ static PyObject* pyConstraint_Set(PyObject* /*self*/, PyObject* args) {
     if (!PyArg_ParseTuple(args, "d(iid)", &c, &nodeID, &dofID, &a))
     return NULL;
   Constraint* pConstraint = new Constraint;
-  pConstraint->setcDof(nodeID, dofID, a);
-  pConstraint->setcVal(c);
-  pD->add(pD->getConstraints(), pConstraint);
+  pConstraint->set_cdof(nodeID, dofID, a);
+  pConstraint->set_val(c);
+  pD->add(pD->get_constraints(), pConstraint);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1120,10 +1120,10 @@ static PyObject* pyConstraint_twoDofs(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "(iid)(iid)d", &node1, &dof1, &a1, &node2, &dof2, &a2, &c))
     return NULL;
   Constraint* pConstraint = new Constraint;
-  pConstraint->setcDof(node1, dof1, a1);
-  pConstraint->setcDof(node2, dof2, a2);
-  pConstraint->setcVal(c);
-  pD->add(pD->getConstraints(), pConstraint);
+  pConstraint->set_cdof(node1, dof1, a1);
+  pConstraint->set_cdof(node2, dof2, a2);
+  pConstraint->set_val(c);
+  pD->add(pD->get_constraints(), pConstraint);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1132,7 +1132,7 @@ static PyObject* pyConstraint_Linear(PyObject* /*self*/, PyObject* args) {
   PyObject* cList;
   if (!PyArg_ParseTuple(args, "dO", &c0, &cList)) return NULL;
   Constraint* pConstraint = new Constraint;
-  pConstraint->setcVal(c0);
+  pConstraint->set_val(c0);
 
   // Check if list ok
   if (!PyList_Check(cList)) {
@@ -1169,10 +1169,10 @@ static PyObject* pyConstraint_Linear(PyObject* /*self*/, PyObject* args) {
     int dof  =PyInt_AsLong(tmpDof);
     double ci = PyFloat_AsDouble(tmpCi);
     // Build triple
-    pConstraint->setcDof(node, dof, ci);
+    pConstraint->set_cdof(node, dof, ci);
   }
   // Add to domain
-  pD->add(pD->getConstraints(), pConstraint);
+  pD->add(pD->get_constraints(), pConstraint);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1193,7 +1193,7 @@ static PyObject* pyGroup_Define(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &groupId)) return NULL;
   try {
     Group* pGroup = new Group(groupId);
-    pD->add(pD->getGroups(), pGroup);
+    pD->add(pD->get_groups(), pGroup);
     pD->setCurrentGroup(groupId);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1206,7 +1206,7 @@ static PyObject* pyGroup_Set(PyObject* /*self*/, PyObject* args) {
   int groupID, elemID;
   if (!PyArg_ParseTuple(args, "ii", &groupID, &elemID)) return NULL;
   try {
-    pD->get < Element>(pD->getElements(), elemID)->setGroup(groupID);
+    pD->get < Element>(pD->get_elements(), elemID)->set_group(groupID);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1228,7 +1228,7 @@ static PyObject* pyGroup_State(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii|ddddd", &groupID, &active, &facK, &facS, &facG, &facP))
     return NULL;
   GroupState* pGroupState = new GroupState(groupID, active, facK, facS, facG, facP);
-  pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addGroupState(pGroupState);
+  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addGroupState(pGroupState);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1251,7 +1251,7 @@ static PyObject* pySens_Elem(PyObject* /*self*/, PyObject* args) {
   try {
     ElementSensitivityParameter* pParam =
       new ElementSensitivityParameter(elemID, param);
-    pD->get<LoadCase>(pD->getLoadCases(),
+    pD->get<LoadCase>(pD->get_loadcases(),
       currentLC)->addSensitivityParameter(pParam);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1279,7 +1279,7 @@ static PyObject* pyLoad_NodeConstant(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iid", &nodeID, &dofID, &val))
     return NULL;
   Load* pLoad = new NodalLoadConstant(nodeID, dofID, val);
-  pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addLoad(pLoad);
+  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1293,7 +1293,7 @@ static PyObject* pyLoad_Linear(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iidd", &nodeID, &dofID, &val, &grad))
     return NULL;
   Load* pLoad = new NodalLoadLinear(nodeID, dofID, val, grad);
-  pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addLoad(pLoad);
+  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1307,7 +1307,7 @@ static PyObject* pyLoad_Sin(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iiddd", &nodeID, &dofID, &a, &omega, &phi))
     return NULL;
   Load* pLoad = new NodalLoadSin(nodeID, dofID, a, omega, phi);
-  pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addLoad(pLoad);
+  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1320,7 +1320,7 @@ static PyObject* pyLoad_BeamPoint(PyObject* /*self*/, PyObject* args) {
     double a0, p0;
     if (!PyArg_ParseTuple(args, "isdd", &elemID, &dir, &a0, &p0)) return NULL;
     Load* pLoad = new BeamLoadPoint(elemID, dir, a0, p0);
-    pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addLoad(pLoad);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1337,7 +1337,7 @@ static PyObject* pyLoad_BeamUniform(PyObject* /*self*/, PyObject* args) {
     double p0;
     if (!PyArg_ParseTuple(args, "isd", &elemID, &dir, &p0)) return NULL;
     Load* pLoad = new BeamLoadUniform(elemID, dir, p0);
-    pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addLoad(pLoad);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1374,7 +1374,7 @@ static PyObject* pyGroundMotion_File(PyObject* /*self*/, PyObject* args) {
     ifstream data(filename);
     Load* pLoad = new GroundMotionFile(dof, data, dt, scale);
     data.close();
-    pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addLoad(pLoad);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1390,7 +1390,7 @@ static PyObject* pyGroundMotion_Sin(PyObject* /*self*/, PyObject* args) {
     double a, omega, phi = 0.;
     if (!PyArg_ParseTuple(args, "idd|d", &dof, &a, &omega, &phi)) return NULL;
     Load* pLoad = new GroundMotionSin(dof, a, omega, phi);
-    pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addLoad(pLoad);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1417,7 +1417,7 @@ static PyObject* pyInitialConditions_Disp(PyObject* /*self*/, PyObject* args) {
   double u;
   if (!PyArg_ParseTuple(args, "iid", &nodeID, &dofID, &u)) return NULL;
   InitialCondition* pInitial = new InitialDisplacement(nodeID, dofID, u);
-  pD->get<LoadCase>(pD->getLoadCases(), currentLC)->addInitialCondition(pInitial);
+  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addInitialCondition(pInitial);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1430,7 +1430,7 @@ static PyObject* pyInitialConditions_Velc(PyObject* /*self*/, PyObject* args) {
   double v;
   if (!PyArg_ParseTuple(args, "iid", &nodeID, &dofID, &v)) return NULL;
   InitialCondition* pInitial = new InitialVelocity(nodeID, dofID, v);
-  pD->get < LoadCase>(pD->getLoadCases(), currentLC)->addInitialCondition(pInitial);
+  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addInitialCondition(pInitial);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1446,7 +1446,7 @@ static PyObject* pyInitialConditions_Stresses(PyObject* /*self*/,
     return NULL;
   try {
     InitialStresses* pInitial = new InitialStresses(groupID, dir, h1, s1, h2, s2, K0);
-    pD->get<LoadCase>(pD->getLoadCases(),
+    pD->get<LoadCase>(pD->get_loadcases(),
       currentLC)->addInitialCondition(pInitial);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1472,7 +1472,7 @@ static PyObject* pyCrack_OneTip(PyObject* /*self*/, PyObject* args) {
   double xS, yS, xT, yT;
   if (!PyArg_ParseTuple(args, "idddd", &id, &xS, &yS, &xT, &yT)) return NULL;
   Crack* pCrack = new Crack(id, xS, yS, xT, yT);
-  pD->add < Crack>(pD->getCracks(), pCrack);
+  pD->add < Crack>(pD->get_cracks(), pCrack);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1492,7 +1492,7 @@ static PyObject* pyLC_Define(PyObject* /*self*/, PyObject* args) {
   ///todo: check this better
   if (name != 0) pLC = new LoadCase(id, name);
   else    pLC = new LoadCase(id, "default");
-  pD->add(pD->getLoadCases(), pLC);
+  pD->add(pD->get_loadcases(), pLC);
   currentLC = id;
   Py_INCREF(Py_None);
   return Py_None;
@@ -1516,21 +1516,21 @@ static PyMethodDef LCMethods[] =  {
 static PyObject* pyAnalysis_Static(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   AnalysisType* pType = new StaticAnalysis();
-  pA->setAnalysisType(pType);
+  pA->set_analysis_type(pType);
   Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pyAnalysis_Transient(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   AnalysisType* pType = new TransientAnalysis();
-  pA->setAnalysisType(pType);
+  pA->set_analysis_type(pType);
   Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pyAnalysis_Eigen(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   AnalysisType* pType = new EigenAnalysis();
-  pA->setAnalysisType(pType);
+  pA->set_analysis_type(pType);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1538,7 +1538,7 @@ static PyObject* pyAnalysis_Sensitivity(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   AnalysisType* pType = new SensitivityStaticAnalysis();
   try {
-    pA->setAnalysisType(pType);
+    pA->set_analysis_type(pType);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1550,7 +1550,7 @@ static PyObject* pyAnalysis_XFem(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   AnalysisType* pType = new XFemAnalysis();
   try {
-    pA->setAnalysisType(pType);
+    pA->set_analysis_type(pType);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1591,7 +1591,7 @@ static PyMethodDef AnalysisMethods[] =  {
 static PyObject* pyImposer_Eliminatation(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Imposer* pImposer = new EliminationImposer();
-  pA->setImposer(pImposer);
+  pA->set_imposer(pImposer);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1599,7 +1599,7 @@ static PyObject* pyImposer_Lagrange(PyObject* /*self*/, PyObject* args) {
   double a;
   if (!PyArg_ParseTuple(args, "", &a)) return NULL;
   Imposer* pImposer = new LagrangeImposer();
-  pA->setImposer(pImposer);
+  pA->set_imposer(pImposer);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1607,7 +1607,7 @@ static PyObject* pyImposer_Penalty(PyObject* /*self*/, PyObject* args) {
   double a;
   if (!PyArg_ParseTuple(args, "d", &a)) return NULL;
   Imposer* pImposer = new PenaltyImposer(a);
-  pA->setImposer(pImposer);
+  pA->set_imposer(pImposer);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1629,7 +1629,7 @@ static PyObject* pyControl_Load(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "d|ddidd", &DL0, &minDL, &maxDL, &Id, &n, &dt))
     return NULL;
   Control* pControl = new LoadControl(DL0, minDL, maxDL, Id, n, dt);
-  pA->setControl(pControl);
+  pA->set_control(pControl);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1639,7 +1639,7 @@ static PyObject* pyControl_ArcLength(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "d|ddidd", &DL0, &minDL, &maxDL, &Id, &n, &dt))
     return NULL;
   Control* pControl = new ArcLengthSpherical(DL0, minDL, maxDL, Id, n, dt);
-  pA->setControl(pControl);
+  pA->set_control(pControl);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1649,7 +1649,7 @@ static PyObject* pyControl_ArcLengthUNP(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "d|ddidd", &DL0, &minDL, &maxDL, &Id, &n, &dt))
     return NULL;
   Control* pControl = new ArcLengthUNP(DL0, minDL, maxDL, Id, n, dt);
-  pA->setControl(pControl);
+  pA->set_control(pControl);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1661,7 +1661,7 @@ static PyObject* pyControl_Disp(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iid|ddidd", &nodeID, &dofID, &Du0, &minDu, &maxDu, &Id, &n, &dt))
     return NULL;
   Control* pControl = new DisplacementControl(nodeID, dofID, Du0, minDu, maxDu, Id, n, dt);
-  pA->setControl(pControl);
+  pA->set_control(pControl);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1669,7 +1669,7 @@ static PyObject* pyControl_Newmark(PyObject* /*self*/, PyObject* args) {
   double beta, gamma, dt;
   if (!PyArg_ParseTuple(args, "ddd", &beta, &gamma, &dt)) return NULL;
   Control* pControl = new Newmark(beta, gamma, dt);
-  pA->setControl(pControl);
+  pA->set_control(pControl);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1692,7 +1692,7 @@ static PyMethodDef ControlMethods[] = {
 static PyObject* pyAlgorithm_Linear(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Algorithm* pAlgorithm = new LinearAlgorithm();
-  pA->setAlgorithm(pAlgorithm);
+  pA->set_algorithm(pAlgorithm);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1706,7 +1706,7 @@ static PyObject* pyAlgorithm_BFGS(PyObject* /*self*/, PyObject* args) {
   Algorithm* pAlgorithm;
   if (lsearch == 0)  pAlgorithm = new BFGS(m);
   else      pAlgorithm = new BFGS(m, etaMin, etaMax, rTol, maxIter);
-  pA->setAlgorithm(pAlgorithm);
+  pA->set_algorithm(pAlgorithm);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1714,7 +1714,7 @@ static PyObject* pyAlgorithm_FullNewtonRaphson(PyObject* /*self*/,
                                                PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Algorithm* pAlgorithm = new NewtonRaphsonFull();
-  pA->setAlgorithm(pAlgorithm);
+  pA->set_algorithm(pAlgorithm);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1722,7 +1722,7 @@ static PyObject* pyAlgorithm_InitialNewtonRaphson(PyObject* /*self*/,
                                                   PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Algorithm* pAlgorithm = new NewtonRaphsonInitial();
-  pA->setAlgorithm(pAlgorithm);
+  pA->set_algorithm(pAlgorithm);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1731,7 +1731,7 @@ pyAlgorithm_ModifiedNewtonRaphson(PyObject* /*self*/,
                                   PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Algorithm* pAlgorithm = new NewtonRaphsonModified();
-  pA->setAlgorithm(pAlgorithm);
+  pA->set_algorithm(pAlgorithm);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1758,7 +1758,7 @@ static PyObject* pyConvergence_Set(PyObject* /*self*/, PyObject* args) {
   double tolWrel = 1.0;
   if (!PyArg_ParseTuple(args, "id|dd",
     &maxIter, &tolRabs, &tolRrel, &tolWrel)) return NULL;
-  pA->getConvergenceNorm()->setCheck(maxIter, tolRabs, tolRrel, tolWrel);
+  pA->get_convergence_norm()->set_check(maxIter, tolRabs, tolRrel, tolWrel);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1773,27 +1773,27 @@ static PyMethodDef ConvergenceMethods[] =  {
 static PyObject* pySOE_FullLinearSOE(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   SOE* pSOE = new FullLinearSOE();
-  pA->setSOE(pSOE);
+  pA->set_soe(pSOE);
   Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pySOE_SymmLinearSOE(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   SOE* pSOE = new SymmLinearSOE();
-  pA->setSOE(pSOE);
+  pA->set_soe(pSOE);
   Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pySOE_BandLinearSOE(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   SOE* pSOE = new BandLinearSOE();
-  pA->setSOE(pSOE);
+  pA->set_soe(pSOE);
   Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pySOE_Info(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
-  pA->getSOE()->print();
+  pA->get_soe()->print();
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1801,7 +1801,7 @@ static PyObject* pySOE_PlotGraph(PyObject* /*self*/, PyObject* args) {
   const char* s;
   if (!PyArg_ParseTuple(args, "s", &s)) return NULL;
   try {
-    pA->getSOE()->plotGraph(s);
+    pA->get_soe()->plotGraph(s);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1828,14 +1828,14 @@ static PyMethodDef SOEMethods[] =  {
 static PyObject* pyReorder_RCM(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Reorderer* pReorderer = new ReverseCuthillMckee();
-  pA->setReorderer(pReorderer);
+  pA->set_reorderer(pReorderer);
   Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pyReorder_FCM(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Reorderer* pReorderer = new ForwardCuthillMckee();
-  pA->setReorderer(pReorderer);
+  pA->set_reorderer(pReorderer);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1843,7 +1843,7 @@ static PyObject* pyReorder_FSloan(PyObject* /*self*/, PyObject* args) {
   double w1 = 0.5, w2 = 0.5;
   if (!PyArg_ParseTuple(args, "|dd", &w1, &w2)) return NULL;
   Reorderer* pReorderer = new ForwardSloan(w1, w2);
-  pA->setReorderer(pReorderer);
+  pA->set_reorderer(pReorderer);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1851,7 +1851,7 @@ static PyObject* pyReorder_RSloan(PyObject* /*self*/, PyObject* args) {
   double w1 = 0.5, w2 = 0.5;
   if (!PyArg_ParseTuple(args, "|dd", &w1, &w2)) return NULL;
   Reorderer* pReorderer = new ReverseSloan(w1, w2);
-  pA->setReorderer(pReorderer);
+  pA->set_reorderer(pReorderer);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1859,7 +1859,7 @@ static PyObject* pyReorder_RSloan(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyReorder_King(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Reorderer* pReorderer = new King();
-  pA->setReorderer(pReorderer);
+  pA->set_reorderer(pReorderer);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1887,7 +1887,7 @@ static PyObject* pyTracker_Node(PyObject* self, PyObject* args) {
   try
   {
     Tracker* pTracker = new Tracker(id, nodeID);
-    pD->add(pD->getTrackers(), pTracker);
+    pD->add(pD->get_trackers(), pTracker);
   }
   catch(SException e)
   {
@@ -1903,7 +1903,7 @@ static PyObject* pyTracker_Steps(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   try
   {
-    steps = pD->get < Tracker>(pD->getTrackers(), id)->getSteps();
+    steps = pD->get < Tracker>(pD->get_trackers(), id)->get_steps();
   }
   catch(SException e)
   {
@@ -1919,7 +1919,7 @@ static PyObject* pyTracker_Time(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
   try
   {
-    time = pD->get < Tracker>(pD->getTrackers(), id)->getTime(step);
+    time = pD->get < Tracker>(pD->get_trackers(), id)->get_time(step);
   }
   catch(SException e)
   {
@@ -1935,7 +1935,7 @@ static PyObject* pyTracker_Lambda(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
   try
   {
-    lambda = pD->get < Tracker>(pD->getTrackers(), id)->getLambda(step);
+    lambda = pD->get < Tracker>(pD->get_trackers(), id)->get_lambda(step);
   }
   catch(SException e)
   {
@@ -1949,7 +1949,7 @@ static PyObject* pyTracker_Data(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
   try
   {
-    return buildTuple(pD->get < Tracker>(pD->getTrackers(), id)->getPacket(step));
+    return buildTuple(pD->get < Tracker>(pD->get_trackers(), id)->get_packet(step));
   }
   catch(SException e)
   {

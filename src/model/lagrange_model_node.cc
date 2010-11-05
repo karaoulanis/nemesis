@@ -41,18 +41,18 @@ LagrangeModelNode::LagrangeModelNode(const IDContainer& FTable, Node* pNode,
 void LagrangeModelNode::add_R(double /*factor*/) {
 }
 void LagrangeModelNode::incTrialDisp(const Vector& du) {
-  myConstraint->incTrialForce(du[theFTable[0]]);
+  myConstraint->inc_trial_force(du[theFTable[0]]);
 }
 void LagrangeModelNode::incTrialVecs(const Vector& /*du*/, const Vector& /*dv*/,
                                      const Vector& /*da*/) {
 //  myConstraint->incTrialDisp(du[theFTable[0]]);
 }
-void LagrangeModelNode::setTrialDisp(const Vector& /*u*/) {
-//  myConstraint->setTrialDisp(u[theFTable[0]]);
+void LagrangeModelNode::set_trial_disp(const Vector& /*u*/) {
+//  myConstraint->set_trial_disp(u[theFTable[0]]);
 }
-void LagrangeModelNode::setTrialVecs(const Vector& /*u*/, const Vector& /*v*/,
+void LagrangeModelNode::set_trial_vecs(const Vector& /*u*/, const Vector& /*v*/,
                                      const Vector& /*a*/) {
-//  myConstraint->setTrialDisp(u[theFTable[0]]);
+//  myConstraint->set_trial_disp(u[theFTable[0]]);
 }
 void LagrangeModelNode::commit() {
   myConstraint->commit();

@@ -43,7 +43,7 @@ UniaxialGap::UniaxialGap(int ID, double E, double nu, double rho, double aT,
   MatParams[3]=gap;
   myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
-UniaxialMaterial* UniaxialGap::getClone() {
+UniaxialMaterial* UniaxialGap::get_clone() {
   // Material parameters
   double E   =MatParams[ 0];
   double nu  =MatParams[ 1];
@@ -55,7 +55,7 @@ UniaxialMaterial* UniaxialGap::getClone() {
   UniaxialMaterial* clone = new UniaxialGap(myID, E, nu, rho, aT, sy, gap);
   return clone;
 }
-void UniaxialGap::setStrain(const double De) {
+void UniaxialGap::set_strain(const double De) {
   double E = MatParams[ 0];
   eTrial = eTotal+De;
   if (sy >= 0) {
@@ -82,7 +82,7 @@ void UniaxialGap::setStrain(const double De) {
     }
   }
 }
-double UniaxialGap::getC() {
+double UniaxialGap::get_C() {
   return Et;
 }
 void UniaxialGap::commit() {

@@ -33,10 +33,10 @@ ForwardSloan::ForwardSloan(double w1, double w2) {
 }
 ForwardSloan::~ForwardSloan() {
 }
-int ForwardSloan::getPerm(std::vector < int>& perm) {
+int ForwardSloan::get_perm(std::vector < int>& perm) {
   // Create the Graph and additional vectors
-  UndirectedGraph G(pA->getModel()->getnEquations());
-  pA->getModel()->getUndirectedGraph(G);
+  UndirectedGraph G(pA->get_model()->get_num_eqns());
+  pA->get_model()->get_undirected_graph(G);
   property_map<UndirectedGraph, vertex_index_t>::type
     index_map = get(vertex_index, G);
   std::vector<int> inv_perm(num_vertices(G));

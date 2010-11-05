@@ -44,9 +44,9 @@ class Brick8: public Element {
         int matID);
   virtual ~Brick8();
 
-  virtual const Matrix& getK();
-  virtual const Matrix& getM();
-  virtual const Vector& getR();
+  virtual const Matrix& get_K();
+  virtual const Matrix& get_M();
+  virtual const Vector& get_R();
 
   virtual void update();
   virtual void commit();
@@ -54,9 +54,9 @@ class Brick8: public Element {
   bool checkIfAllows(FEObject* f);
   void addInitialStresses(InitialStresses* pInitialStresses);
   void recoverStresses();
-  int getnPlasticPoints();
+  int get_num_plastic_points();
 
   void shapeFunctions();
-  virtual void getB(Matrix& B, int node, int gPoint)=0;
+  virtual void get_B(Matrix& B, int node, int gPoint)=0;
 };
 #endif  // SRC_ELEMENTS_BRICK8_H_

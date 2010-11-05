@@ -32,9 +32,9 @@ class UniaxialElastic: public UniaxialMaterial {
  public:
   UniaxialElastic();
   UniaxialElastic(int ID, double E, double nu, double rho, double aT);
-  UniaxialMaterial* getClone();
-  void setStrain(const double De);
-  double getC();
+  UniaxialMaterial* get_clone();
+  void set_strain(const double De);
+  double get_C();
   void commit();
 };
 

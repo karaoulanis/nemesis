@@ -60,20 +60,20 @@ Triangle3::Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID)
   myMatPoints.resize(1);
   MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 1);
-  myMatPoints[0]->setX(num::d13*(x(0, 0)+x(1, 0)+x(2, 0)),
+  myMatPoints[0]->set_X(num::d13*(x(0, 0)+x(1, 0)+x(2, 0)),
                        num::d13*(x(0, 1)+x(1, 1)+x(2, 1)));
 }
 Triangle3::~Triangle3() {
 }
 void Triangle3::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID())
+  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id())
     for (unsigned i = 0;i < myMatPoints.size();i++)
-      myMatPoints[i]->setInitialStresses(pInitialStresses);
+      myMatPoints[i]->set_initial_stresses(pInitialStresses);
 }
-const Matrix& Triangle3::getK() {
+const Matrix& Triangle3::get_K() {
   Matrix& K=*myMatrix;
-  const Matrix& C = myMatPoints[0]->getMaterial()->getC();
-  double coeff = pD->getFac()*0.25/A;
+  const Matrix& C = myMatPoints[0]->get_material()->get_C();
+  double coeff = pD->get_fac()*0.25/A;
   K(0, 0) = coeff*((b1*C(0, 0)+c1*C(3, 0))*b1+(b1*C(0, 3)+c1*C(3, 3))*c1);
   K(0, 1) = coeff*((b1*C(0, 1)+c1*C(3, 1))*c1+(b1*C(0, 3)+c1*C(3, 3))*b1);
   K(0, 2) = coeff*((b1*C(0, 0)+c1*C(3, 0))*b2+(b1*C(0, 3)+c1*C(3, 3))*c2);
@@ -111,26 +111,26 @@ const Matrix& Triangle3::getK() {
   K(5, 4) = coeff*((c3*C(1, 0)+b3*C(3, 0))*b3+(c3*C(1, 3)+b3*C(3, 3))*c3);
   K(5, 5) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c3+(c3*C(1, 3)+b3*C(3, 3))*b3);
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
-const Matrix& Triangle3::getM() {
+const Matrix& Triangle3::get_M() {
   return *myMatrix;
 }
-const Vector& Triangle3::getR() {
+const Vector& Triangle3::get_R() {
   Vector& R=*myVector;
   R.clear();
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
-  double s1=(myMatPoints[0]->getMaterial()->getStress())[0];
-  double s2=(myMatPoints[0]->getMaterial()->getStress())[1];
-  double s3=(myMatPoints[0]->getMaterial()->getStress())[3];
-  double fac = facS*0.5*(pD->getFac());
-  double facb0 = facG*(pD->getFac())*A*num::d13*b[0];
-  double facb1 = facG*(pD->getFac())*A*num::d13*b[1];
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
+  double s1=(myMatPoints[0]->get_material()->get_stress())[0];
+  double s2=(myMatPoints[0]->get_material()->get_stress())[1];
+  double s3=(myMatPoints[0]->get_material()->get_stress())[3];
+  double fac = facS*0.5*(pD->get_fac());
+  double facb0 = facG*(pD->get_fac())*A*num::d13*b[0];
+  double facb1 = facG*(pD->get_fac())*A*num::d13*b[1];
   R[0]=fac*(b1*s1+c1*s3)-facb0;
   R[1]=fac*(c1*s2+b1*s3)-facb1;
   R[2]=fac*(b2*s1+c2*s3)-facb0;
@@ -143,7 +143,7 @@ const Vector& Triangle3::getR() {
 void Triangle3::update() {
   if (!(myGroup->isActive()))  return;
   Vector& u=*myVector;
-  u = this->getDispIncrm();
+  u = this->get_disp_incrm();
   // Determine the strain
   static Vector epsilon(6);
   epsilon.clear();
@@ -151,21 +151,21 @@ void Triangle3::update() {
   epsilon[1]=(0.5/A)*(c1*u[1]+c2*u[3]+c3*u[5]);
   epsilon[3]=(0.5/A)*(c1*u[0]+b1*u[1]+c2*u[2]+b2*u[3]+c3*u[4]+b3*u[5]);
   // And send it to the material point
-  myMatPoints[0]->getMaterial()->setStrain(epsilon);
+  myMatPoints[0]->get_material()->set_strain(epsilon);
 }
 void Triangle3::commit() {
-  myMatPoints[0]->getMaterial()->commit();
+  myMatPoints[0]->get_material()->commit();
 }
 void Triangle3::recoverStresses() {
   static Vector sigma(6);
-  sigma = myMatPoints[0]->getMaterial()->getStress();
+  sigma = myMatPoints[0]->get_material()->get_stress();
   for (int i = 0;i < 3;i++) myNodes[i]->addStress(sigma);
 }
 bool Triangle3::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
-int Triangle3::getnPlasticPoints() {
+int Triangle3::get_num_plastic_points() {
   int n = 0;
-  if (myMatPoints[0]->getMaterial()->isPlastic()) n = 1;
+  if (myMatPoints[0]->get_material()->isPlastic()) n = 1;
   return n;
 }

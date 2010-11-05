@@ -30,7 +30,7 @@ ConvergenceNorm::ConvergenceNorm() {
 }
 ConvergenceNorm::~ConvergenceNorm() {
 }
-void ConvergenceNorm::setCheck(int maxIterations,
+void ConvergenceNorm::set_check(int maxIterations,
                  double tolRabs, double tolRrel, double tolWrel) {
   maxIter = maxIterations;
   tol[0] = tolRabs;
@@ -52,8 +52,8 @@ void ConvergenceNorm::newStep() {
   ro = 0;
   uo = 0;
   wo = 0;
-  const Vector& Ro = pA->getSOE()->getB();
-  const Vector& dUo = pA->getSOE()->getX();
+  const Vector& Ro = pA->get_soe()->get_B();
+  const Vector& dUo = pA->get_soe()->get_X();
   for (int i = 0; i < Ro.size(); i++) {
     double c1 = Ro[i];
     double c2 = dUo[i];
@@ -70,17 +70,17 @@ int ConvergenceNorm::update() {
   double ri = 0, wi = 0;
   double ridro, widwo;
   // Get lambda
-  double lambda = pA->getControl()->getLambda();
-  double time = pA->getDomain()->getTimeCurr();
+  double lambda = pA->get_control()->get_lambda();
+  double time = pA->get_domain()->get_time_curr();
   // Get number of plastic points
   int nPP = 0;
-  for (ElementIterator eIter = pA->getDomain()->getElements().begin();
-            eIter != pA->getDomain()->getElements().end(); eIter++)
-    nPP+=eIter->second->getnPlasticPoints();
+  for (ElementIterator eIter = pA->get_domain()->get_elements().begin();
+            eIter != pA->get_domain()->get_elements().end(); eIter++)
+    nPP+=eIter->second->get_num_plastic_points();
 
 
-  const Vector& dR = pA->getSOE()->getB();
-  const Vector& dU = pA->getSOE()->getX();
+  const Vector& dR = pA->get_soe()->get_B();
+  const Vector& dU = pA->get_soe()->get_X();
   // for (int i = 0;i < dR.size();i++) cout << dR[i] <<endl;
   for (int i = 0; i < dR.size(); i++) {
     double c1 = dR[i];

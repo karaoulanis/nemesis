@@ -48,10 +48,10 @@ class MatPoint: public DomainObject {
   MatPoint(MultiaxialMaterial* mat, double r_, double s_, double t_, double w_);
   ~MatPoint();
 
-  void setX(double x1_, double x2_ = 0, double x3_ = 0);
-  inline MultiaxialMaterial* getMaterial()  {return myMaterial;}
+  void set_X(double x1_, double x2_ = 0, double x3_ = 0);
+  inline MultiaxialMaterial* get_material()  {return myMaterial;}
   bool isPlastic()              {return myMaterial->isPlastic();}
-  void setInitialStresses(InitialStresses* pInitialStresses);
+  void set_initial_stresses(InitialStresses* pInitialStresses);
 
   inline double get_x()     {return x;}
   inline double get_y()     {return y;}
@@ -60,8 +60,8 @@ class MatPoint: public DomainObject {
   inline double get_s()     {return s;}
   inline double get_t()     {return t;}
   inline double get_w()     {return w;}
-  const Packet& getPacket()   {return thePacket;  }
-  void setPacket(const Packet& /*p*/) {/*does nothing*/ }
+  const Packet& get_packet()   {return thePacket;  }
+  void set_packet(const Packet& /*p*/) {/*does nothing*/ }
 };
 
 #endif  // SRC_MATERIAL_MATPOINT_H_

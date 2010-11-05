@@ -34,9 +34,9 @@ Crack::Crack(int /*ID*/, double xS, double yS, double xT, double yT) {
 Crack::~Crack() {
   Containers::vector_delete(myCrackPoints);
 }
-const vector < CrackPoint*>& Crack::getCrack() {
+const vector < CrackPoint*>& Crack::get_crack() {
   return myCrackPoints;
 }
-CrackPoint* Crack::getCrackPoint(int n) {
+CrackPoint* Crack::get_crack_point(int n) {
   return myCrackPoints[n];
 }

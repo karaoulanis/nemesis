@@ -38,16 +38,16 @@ Group::Group(int ID)
 }
 Group::~Group() {
 }
-void Group::setDefault() {
+void Group::set_default() {
   facK = 1.;
   facS = 1.;
   facG = 1.;
   facP = 1.;
 }
-void Group::setState(GroupState* g) {
-  active = g->getActive();
-  facK = g->getFacK();
-  facS = g->getFacS();
-  facG = g->getFacG();
-  facP = g->getFacP();
+void Group::set_state(GroupState* g) {
+  active = g->get_active();
+  facK = g->get_fac_K();
+  facS = g->get_fac_S();
+  facG = g->get_fac_G();
+  facP = g->get_fac_P();
 }

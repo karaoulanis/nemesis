@@ -37,9 +37,9 @@ class Quad4DispAxisymmetric: public Quad4 {
                         int integrationRuleXi, int integrationRuleEta);
   ~Quad4DispAxisymmetric();
 
-  const Matrix& getK();
-  const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
 
   void update();
 };

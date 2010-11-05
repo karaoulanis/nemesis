@@ -76,7 +76,7 @@ DisplacementControl::~DisplacementControl() {
 void DisplacementControl::predict() {
   // Set the reference dof
   ///@todo Since changes in the dof schemes have occurred, check if this is ok.
-  theRefDof = pA->getModel()->getSOEDof(theNodeID, theDofID);
+  theRefDof = pA->get_model()->get_soe_dof(theNodeID, theDofID);
   
   // Find DeltaU increment
   ///@todo Auto-incrementation involves abs() and this might be a problem...
@@ -86,9 +86,9 @@ void DisplacementControl::predict() {
   
   // Find duT (tangent) at coefficient k
 //  theSOE->print();
-  pA->getSOE()->setB(qRef);
-  pA->getSOE()->solve();
-  duT = pA->getSOE()->getX();
+  pA->get_soe()->set_B(qRef);
+  pA->get_soe()->solve();
+  duT = pA->get_soe()->get_X();
   duT_k = duT[theRefDof];
   
   // Now DLambda can be found, see Crisfield, (9.34). 
@@ -98,14 +98,14 @@ void DisplacementControl::predict() {
   // Find displacement vectors and update the model
   du = DLambda*duT;
   Du_k = du[theRefDof];
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
 
   // Set num of achieved iterations to one
   Io = 1;
 
   // Set du to the SOE so the norm can find it there
-  pA->getSOE()->setX(du);
+  pA->get_soe()->set_X(du);
 }
 /**
  * Updates that occur within each iterative step.
@@ -113,13 +113,13 @@ void DisplacementControl::predict() {
   */
 void DisplacementControl::correct() {
   // Find du_bar
-  du = pA->getSOE()->getX();
+  du = pA->get_soe()->get_X();
   double duBar_k = du[theRefDof];
 
   // Find du_t_k
-  pA->getSOE()->setB(qRef);
-  pA->getSOE()->solve();
-  duT = pA->getSOE()->getX();
+  pA->get_soe()->set_B(qRef);
+  pA->get_soe()->solve();
+  duT = pA->get_soe()->get_X();
   duT_k = duT[theRefDof];
 
   // Find dLambda and update quantities in the control
@@ -129,10 +129,10 @@ void DisplacementControl::correct() {
 
   // Update displacements in the model
   du+=dLambda*duT;
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
 
   // Increase number of iterations
   Io++;
-//  pA->getSOE()->setX(du);
+//  pA->get_soe()->set_X(du);
 }

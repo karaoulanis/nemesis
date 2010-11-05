@@ -42,7 +42,7 @@ Model::~Model() {
  * Set constrained variable.
  * @param b True/false depending whether constraints have been imposed.
  */ 
-void Model::setConstrained(bool b) {
+void Model::set_constrained(bool b) {
   constrained = b;
 }
 /**
@@ -55,7 +55,7 @@ bool Model::isConstrained() {
  * Set reordered variable.
  * @param b True/false depending whether reording has been done.
  */ 
-void Model::setReordered(bool b) {
+void Model::set_reordered(bool b) {
   reordered = b;
 }
 /**
@@ -64,11 +64,11 @@ void Model::setReordered(bool b) {
 bool Model::isReordered() {
   return reordered;
 }
-int Model::getnNodes() {
-  return theDomain->getNodes().size();
+int Model::get_num_nodes() {
+  return theDomain->get_nodes().size();
 }
-int Model::getnElements() {
-  return theDomain->getElements().size();
+int Model::get_num_elements() {
+  return theDomain->get_elements().size();
 }
 int Model::addModelNode(ModelNode* pModelNode) {
   theModelNodes.push_back(pModelNode);
@@ -78,10 +78,10 @@ int Model::addModelElement(ModelElement* pModelElement) {
   theModelElements.push_back(pModelElement);
   return 0;
 }
-const ModelNodeContainer& Model::getModelNodes() const {
+const ModelNodeContainer& Model::get_model_nodes() const {
   return theModelNodes;
 }
-const ModelElementContainer& Model::getModelElements() const {
+const ModelElementContainer& Model::get_model_elements() const {
   return theModelElements;
 }
 /**
@@ -90,44 +90,44 @@ const ModelElementContainer& Model::getModelElements() const {
  * \param localDof The localDof.
  * \return The index (starting from 0) of the dof in the SOE.
  */
-int Model::getSOEDof(int NodeID, int localDof) {
+int Model::get_soe_dof(int NodeID, int localDof) {
   ///@todo I do not like this function.
   ///@bug When dof is fixed using eleimination (minus) it returnes negative.
   int n = theModelNodes.size();
   Node* pNode = 0;
   ModelNode* pModelNode = 0;
   for (int i = 0; i < n; i++) {
-    if (theModelNodes[i]->getNode()->getID() == NodeID) {
-      pModelNode = getModelNodes()[i];
-      pNode = pModelNode->getNode();
+    if (theModelNodes[i]->get_node()->get_id() == NodeID) {
+      pModelNode = get_model_nodes()[i];
+      pNode = pModelNode->get_node();
       break;
     }
   }
   if (pNode == 0) exit(-9856);
-  return pModelNode->getFTable()[pNode->getActivatedDof(localDof-1)];
+  return pModelNode->get_FTable()[pNode->get_activated_dof(localDof-1)];
 }
 
-void Model::setEquations(int n) {
+void Model::set_equations(int n) {
   nEquations = n;
 }
-int Model::getnEquations() {
+int Model::get_num_eqns() {
   return nEquations;
 }
 void Model::incTrialDisp(const Vector& du) {
   for (unsigned i = 0;i < theModelNodes.size();i++)
     theModelNodes[i]->incTrialDisp(du);
 }
-void Model::setTrialDisp(const Vector& du) {
+void Model::set_trial_disp(const Vector& du) {
   for (unsigned i = 0;i < theModelNodes.size();i++)
-    theModelNodes[i]->setTrialDisp(du);
+    theModelNodes[i]->set_trial_disp(du);
 }
 void Model::incTrialVecs(const Vector& du, const Vector& da, const Vector& dv) {
   for (unsigned i = 0;i < theModelNodes.size();i++)
     theModelNodes[i]->incTrialVecs(du, da, dv);
 }
-void Model::setTrialVecs(const Vector& u, const Vector& a, const Vector& v) {
+void Model::set_trial_vecs(const Vector& u, const Vector& a, const Vector& v) {
   for (unsigned i = 0;i < theModelNodes.size();i++)
-    theModelNodes[i]->setTrialVecs(u, a, v);
+    theModelNodes[i]->set_trial_vecs(u, a, v);
 }
 void Model::update() {
   for (unsigned i = 0;i < theModelElements.size();i++)
@@ -150,7 +150,7 @@ void Model::clear() {
   constrained = false;
   reordered = false;
 }
-int Model::getDirectedGraph(DirectedGraph& G) {
+int Model::get_directed_graph(DirectedGraph& G) {
   typedef graph_traits < DirectedGraph>::vertex_descriptor Vertex;
   typedef graph_traits < DirectedGraph>::vertices_size_type size_type;
   typedef std::pair < int, int > Pair;
@@ -158,11 +158,11 @@ int Model::getDirectedGraph(DirectedGraph& G) {
   Pair Edge;
   for (unsigned k = 0; k < theModelElements.size(); k++) {
     ModelElement* pModelElem = theModelElements[k];
-    for (unsigned i = 0;i < pModelElem->getFTable().size();i++)
-      for (unsigned j = 0; j < pModelElem->getFTable().size(); j++) {
+    for (unsigned i = 0;i < pModelElem->get_FTable().size();i++)
+      for (unsigned j = 0; j < pModelElem->get_FTable().size(); j++) {
         if (i == j) continue;
-        Edge.first = pModelElem->getFTable()[i];
-        Edge.second = pModelElem->getFTable()[j];
+        Edge.first = pModelElem->get_FTable()[i];
+        Edge.second = pModelElem->get_FTable()[j];
         if (Edge.first < 0||Edge.second < 0) continue;
         theEdges.insert(Edge);
       }
@@ -172,7 +172,7 @@ int Model::getDirectedGraph(DirectedGraph& G) {
     add_edge(iEdges->first, iEdges->second, G);
   return 0;
 }
-int Model::getUndirectedGraph(UndirectedGraph& G) {
+int Model::get_undirected_graph(UndirectedGraph& G) {
   typedef graph_traits < UndirectedGraph>::vertex_descriptor Vertex;
   typedef graph_traits < UndirectedGraph>::vertices_size_type size_type;
   typedef std::pair < int, int > Pair;
@@ -180,10 +180,10 @@ int Model::getUndirectedGraph(UndirectedGraph& G) {
   Pair Edge;
   for (unsigned k = 0; k < theModelElements.size(); k++) {
     ModelElement* pModelElem = theModelElements[k];
-    for (unsigned i = 0;i < pModelElem->getFTable().size();i++)
-      for (unsigned j = i+1; j < pModelElem->getFTable().size(); j++) {
-        Edge.first = pModelElem->getFTable()[i];
-        Edge.second = pModelElem->getFTable()[j];
+    for (unsigned i = 0;i < pModelElem->get_FTable().size();i++)
+      for (unsigned j = i+1; j < pModelElem->get_FTable().size(); j++) {
+        Edge.first = pModelElem->get_FTable()[i];
+        Edge.second = pModelElem->get_FTable()[j];
         if (Edge.first < 0||Edge.second < 0) continue;
         if (Edge.first>Edge.second)std::swap(Edge.first, Edge.second);
         theEdges.insert(Edge);
@@ -194,19 +194,19 @@ int Model::getUndirectedGraph(UndirectedGraph& G) {
     add_edge(iEdges->first, iEdges->second, G);
   return 0;
 }
-void Model::setNodalStress() {
+void Model::set_nodal_stress() {
   theDomain->zeroNodalStress();
-  for (ElementIterator eIter = theDomain->getElements().begin();
-    eIter != theDomain->getElements().end(); eIter++)
+  for (ElementIterator eIter = theDomain->get_elements().begin();
+    eIter != theDomain->get_elements().end(); eIter++)
       eIter->second->recoverStresses();
 }
 void Model::enrich() {
   // First enrich nodes (Level set initialization)
-  for (NodeIterator nIter = theDomain->getNodes().begin();
-    nIter != theDomain->getNodes().end(); nIter++)
+  for (NodeIterator nIter = theDomain->get_nodes().begin();
+    nIter != theDomain->get_nodes().end(); nIter++)
       nIter->second->evalLevelSets();
   // And then enrich elements
-  for (ElementIterator eIter = theDomain->getElements().begin();
-    eIter != theDomain->getElements().end(); eIter++)
+  for (ElementIterator eIter = theDomain->get_elements().begin();
+    eIter != theDomain->get_elements().end(); eIter++)
       eIter->second->enrich();
 }

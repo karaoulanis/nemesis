@@ -40,19 +40,19 @@ int SOE::insertVectorIntoB(const Vector& Ve, const IDContainer& EFTable,
 void SOE::printSolution() {
   for (int i = 0;i < theSize; i++) cout << X[i] << endl;
 }
-const Vector& SOE::getX() {
+const Vector& SOE::get_X() {
   return X;
 }
-const Vector& SOE::getB() {
+const Vector& SOE::get_B() {
   return B;
 }
 void SOE::addB(const Vector& v) {
   B+=v;
 }
-void SOE::setB(const Vector& v) {
+void SOE::set_B(const Vector& v) {
   B = v;
 }
-void SOE::setX(const Vector& v) {
+void SOE::set_X(const Vector& v) {
   X = v;
 }
 void SOE::zero() {
@@ -78,7 +78,7 @@ int SOE::plotGraph(const char* s) {
   if (theSize <= 0)
     throw SException("[nemesis:%d] %s", 1110, "Could not initialize graph.\n");
   UndirectedGraph G(theSize);
-  pA->getModel()->getUndirectedGraph(G);
+  pA->get_model()->get_undirected_graph(G);
   // Plot the Graph
   ofstream outfile(s);
   ///@todo: the following line is commented, produces error/warnings

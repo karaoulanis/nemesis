@@ -41,7 +41,7 @@ class ModelNode :public ModelObject {
   virtual ~ModelNode();
 
   // Access to data members
-  Node* getNode()     {return myNode;}
+  Node* get_node()     {return myNode;}
 
   virtual void add_R(double factor = 1.0)=0;
   virtual void add_uTrial(double factor = 1.0);
@@ -49,8 +49,8 @@ class ModelNode :public ModelObject {
 
   virtual void incTrialDisp(const Vector& du)=0;
   virtual void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da)=0;
-  virtual void setTrialDisp(const Vector& u)=0;
-  virtual void setTrialVecs(const Vector& u, const Vector& v, const Vector& a)=0;
+  virtual void set_trial_disp(const Vector& u)=0;
+  virtual void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a)=0;
 
   virtual void commit()=0;
   virtual void commitSens(const Vector& /*ds*/, int /*param*/) {}

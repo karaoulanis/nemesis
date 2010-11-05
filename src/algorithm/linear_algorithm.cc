@@ -31,10 +31,10 @@ LinearAlgorithm::LinearAlgorithm() {
 LinearAlgorithm::~LinearAlgorithm() {
 }
 int LinearAlgorithm::solveStep(int /*n*/) {
-  pA->getControl()->formTangent();
-  pA->getConvergenceNorm()->newStep();
-  pA->getControl()->predict();
-  pA->getControl()->formResidual(pA->getControl()->getLambda());
-  pA->getConvergenceNorm()->update();
+  pA->get_control()->formTangent();
+  pA->get_convergence_norm()->newStep();
+  pA->get_control()->predict();
+  pA->get_control()->formResidual(pA->get_control()->get_lambda());
+  pA->get_convergence_norm()->update();
   return 0;
 }

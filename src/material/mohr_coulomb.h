@@ -43,10 +43,10 @@ class MohrCoulomb: public MultiaxialMaterial {
   MohrCoulomb(int ID, int elasticID, double c, double phi, double alpha);
   ~MohrCoulomb();
 
-  MultiaxialMaterial* getClone();
-  void setStrain(const Vector& De);
+  MultiaxialMaterial* get_clone();
+  void set_strain(const Vector& De);
   void commit();
-  const Matrix& getC();
+  const Matrix& get_C();
   bool isPlastic();
 
   // Tracker member functions

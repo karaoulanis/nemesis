@@ -43,18 +43,18 @@ class ElementalLoad: public Load {
   virtual ~ElementalLoad();
 /*
   // Access to member data
-  int setTheLoadDirection(LoadDirection direction);
-  int setTheUserDirection(Vector* direction);
-  void setA(Vector& aValues);
-  void setP(Vector& pValues);
+  int set_load_direction(LoadDirection direction);
+  int set_user_direction(Vector* direction);
+  void set_A(Vector& aValues);
+  void set_P(Vector& pValues);
 
-  LoadDirection getTheLoadDirection();
-  Vector* getTheUserDirection();
-  const Vector& getA();
-  const Vector& getP();
+  LoadDirection get_load_direction();
+  Vector* get_user_direction();
+  const Vector& get_A();
+  const Vector& get_P();
 */  
   // Apply load
-  virtual const Vector& getP()=0;
+  virtual const Vector& get_P()=0;
   void apply(double fact, double t);
 };
 

@@ -32,17 +32,17 @@ NewtonRaphsonInitial::~NewtonRaphsonInitial() {
 }
 int NewtonRaphsonInitial::solveStep(int n) {
   // Predictor phase
-  if (n == 0) pA->getControl()->formTangent();
-  pA->getControl()->predict();
-  pA->getConvergenceNorm()->newStep();
-  pA->getControl()->formResidual(pA->getControl()->getLambda());
+  if (n == 0) pA->get_control()->formTangent();
+  pA->get_control()->predict();
+  pA->get_convergence_norm()->newStep();
+  pA->get_control()->formResidual(pA->get_control()->get_lambda());
 
   // Corrector phase
   int check;
-  while ((check=pA->getConvergenceNorm()->update()) > 0) {
-    pA->getSOE()->solve();
-    pA->getControl()->correct();
-    pA->getControl()->formResidual(pA->getControl()->getLambda());
+  while ((check=pA->get_convergence_norm()->update()) > 0) {
+    pA->get_soe()->solve();
+    pA->get_control()->correct();
+    pA->get_control()->formResidual(pA->get_control()->get_lambda());
   }
   return check;
 }

@@ -41,9 +41,9 @@ class Tetrahedron4Disp: public Element {
                    int matID); 
   ~Tetrahedron4Disp();
 
-  const Matrix& getK();
-  const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
 
   void update();
   void commit();

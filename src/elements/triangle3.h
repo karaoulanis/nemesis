@@ -42,9 +42,9 @@ class Triangle3: public Element {
   Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID);
   ~Triangle3();
 
-  const Matrix& getK();
-  const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
 
   void update();
   void commit();
@@ -52,7 +52,7 @@ class Triangle3: public Element {
   void addInitialStresses(InitialStresses* pInitialStresses);
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
-  int getnPlasticPoints();
+  int get_num_plastic_points();
 };
 
 #endif  // SRC_ELEMENTS_TRIANGLE3_H_

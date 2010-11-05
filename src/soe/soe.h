@@ -67,14 +67,14 @@ class SOE: public AnalysisObject {
   virtual void zeroX();
   virtual void zero();
 
-  const Vector& getX();
-  const Vector& getB();
+  const Vector& get_X();
+  const Vector& get_B();
   void addB(const Vector& v);
-  void setB(const Vector& v);
-  void setX(const Vector& v);
+  void set_B(const Vector& v);
+  void set_X(const Vector& v);
 
-  virtual void setTheSize()=0;
-  virtual int getEigenSign()=0;
+  virtual void set_size()=0;
+  virtual int get_eigen_sign()=0;
   virtual void print()=0;
   virtual void printSolution();
 

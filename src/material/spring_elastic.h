@@ -36,8 +36,8 @@ class SpringElastic: public SpringMaterial {
   SpringElastic();
   SpringElastic(int ID, double Kn, double Ks2, double Ks3);
 
-  SpringMaterial* getClone();
-  void setStrain(const Vector& De);
+  SpringMaterial* get_clone();
+  void set_strain(const Vector& De);
 };
 
 #endif  // SRC_MATERIAL_SPRING_ELASTIC_H_

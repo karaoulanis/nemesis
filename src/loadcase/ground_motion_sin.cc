@@ -35,7 +35,7 @@ GroundMotionSin::GroundMotionSin(int dof, double a, double omega, double phi)
   phi_   = phi;
 }
 void GroundMotionSin::apply(double /*fact*/, double time) {
-  const std::map<int, Element*>& c = pD->getElements();
+  const std::map<int, Element*>& c = pD->get_elements();
   std::map<int, Element*>::const_iterator i;
   for (i = c.begin(); i != c.end(); i++)
     i->second->addGroundMotion(dof_, a_*sin(omega_*time+phi_));

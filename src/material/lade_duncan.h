@@ -35,7 +35,7 @@ class LadeDuncan: public MultiaxialElastoPlastic {
  public:
   LadeDuncan();
   LadeDuncan(int ID, int elasticID, double K);
-  MultiaxialMaterial* getClone();
+  MultiaxialMaterial* get_clone();
   ~LadeDuncan();
 };
 #endif  // SRC_MATERIAL_LADE_DUNCAN_H_

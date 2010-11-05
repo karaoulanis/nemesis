@@ -36,8 +36,8 @@ class SpringContact: public SpringMaterial {
   SpringContact();
   SpringContact(int ID, double Kn, double Ks, double mu, double gap);
 
-  SpringMaterial* getClone();
-  void setStrain(const Vector& De);
+  SpringMaterial* get_clone();
+  void set_strain(const Vector& De);
 };
 
 #endif  // SRC_MATERIAL_SPRING_CONTACT_H_

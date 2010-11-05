@@ -31,10 +31,10 @@ InitialDisplacement::InitialDisplacement(int nodeID, int dofID, double u)
   :InitialCondition() {
   myTag = TAG_INITIAL_DISPLACEMENT;
   // Retrieve node from the domain
-  myNode = pD->get < Node>(pD->getNodes(), nodeID);
+  myNode = pD->get < Node>(pD->get_nodes(), nodeID);
   dof = dofID-1;
   // Check if dof is activated
-  if (myNode->getActivatedDof(dof)<0) 
+  if (myNode->get_activated_dof(dof)<0) 
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
   disp = u;
 }

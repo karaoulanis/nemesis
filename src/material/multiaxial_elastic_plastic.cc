@@ -33,13 +33,13 @@ MultiaxialElastoPlastic::MultiaxialElastoPlastic() {
 MultiaxialElastoPlastic::MultiaxialElastoPlastic(int ID, int elasticID)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+  Material* p = pD->get < Material>(pD->get_materials(), elasticID);
+  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999,
                       "Multiaxial elastic material expected.");
-  myElastic = static_cast < MultiaxialMaterial*>(p)->getClone();
-  MatParams[30]=myElastic->getParam(30);
-  MatParams[31]=myElastic->getParam(31);
+  myElastic = static_cast < MultiaxialMaterial*>(p)->get_clone();
+  MatParams[30]=myElastic->get_param(30);
+  MatParams[31]=myElastic->get_param(31);
 
   // Material state
   ePTrial.resize(6, 0.);
@@ -62,7 +62,7 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic() {
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
  */ 
-void MultiaxialElastoPlastic::setStrain(const Vector& De) {
+void MultiaxialElastoPlastic::set_strain(const Vector& De) {
   // this->returnMapTest(De);
   this->returnMapSYS2(De);
   // this->returnMapMYS3(De);
@@ -88,7 +88,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De) {
   double tol1 = 1e-6;
   double tol2 = 1e-6;
   Vector R(7, 0.);
-  Matrix Cel = myElastic->getC();
+  Matrix Cel = myElastic->get_C();
   Matrix invCel = Inverse(Cel);
   Matrix A(7, 7, 0.);
   ePTrial = ePConvg;
@@ -98,7 +98,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De) {
   Surface* fS = fSurfaces[0];
   Surface* gS = gSurfaces[0];
   // double eta = 1000.;
-  // double dt = pD->getTimeIncr();
+  // double dt = pD->get_time_incr();
 
   // ===========================================================================
   // Step 1: Compute trial stress
@@ -161,7 +161,7 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De) {
   int nIter = 25;
   double tol1 = 1e-6;
   double tol2 = 1e-6;
-  Matrix Cel  = myElastic->getC();
+  Matrix Cel  = myElastic->get_C();
   Matrix invCel = Inverse(Cel);
 
   aTrial  = aConvg;
@@ -279,7 +279,7 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De) {
   int nIter = 25;
   double tol1 = 1e-6;
   double tol2 = 1e-6;
-  Matrix Cel    = myElastic->getC();
+  Matrix Cel    = myElastic->get_C();
   Matrix invCel = Inverse(Cel);
 
   aTrial  = aConvg;
@@ -353,7 +353,7 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De) {
     dg+=ddg;
   }
 //  double eta = 1000.;
-//  double Dt = pD->getTimeIncr();
+//  double Dt = pD->get_time_incr();
 //  sTrial=(ss    +(Dt/eta)*sTrial)/(1+Dt/eta);
 //  aTrial=(aConvg+(Dt/eta)*aTrial)/(1+Dt/eta);
 //  ePTrial = eTrial-invCel*sTrial;
@@ -372,7 +372,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
   double tol2 = 1e-6;
   Vector R(6, 0.);
   Vector dEp(6, 0.);
-  Matrix Cel   =myElastic->getC();
+  Matrix Cel   =myElastic->get_C();
   Matrix invCel = Inverse(Cel);
   Vector ddg(12, 0.);
   Vector dg(12, 0.);
@@ -398,7 +398,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
   int nActiveSurfaces = 0;
   for (unsigned i = 0;i < fSurfaces.size();i++) {
     if (fSurfaces[i]->get_f(sTrial, q)>0) {
-      fSurfaces[i]->setActive(true);
+      fSurfaces[i]->set_active(true);
       nActiveSurfaces++;
     }
   }
@@ -491,7 +491,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
     for (unsigned a = 0; a < fSurfaces.size(); a++) {
       // cout << "a = "<<a<<"  "<<dg[a]+ddg[a]<<endl;
       if (fSurfaces[a]->isActive() &&  (dg[a]+ddg[a] < 0.)) {
-        fSurfaces[a]->setActive(false);
+        fSurfaces[a]->set_active(false);
         dg[a]=0.;
         ddg[a]=0.;
         reset = true;
@@ -528,7 +528,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
   //   cout << "PASSED : "<<nActiveSurfaces << endl;
   // }
   // cout << endl;
-  // double dt = pD->getTimeIncr();
+  // double dt = pD->get_time_incr();
   // double eta = 1000.;
   // sTrial=((sConvg+Cel*De)+(dt/eta)*(sConvg+Cel*De))/(1+(dt/eta));
   // sTrial=(ss+(dt/eta)*sTrial)/(1+(dt/eta));
@@ -538,8 +538,8 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
  * @todo fill it
  * @return A reference to the tangent material matrix.
  */
-const Matrix& MultiaxialElastoPlastic::getC() {
-  return myElastic->getC();
+const Matrix& MultiaxialElastoPlastic::get_C() {
+  return myElastic->get_C();
 }
 /**
  * Add a record to the tracker.
@@ -558,7 +558,7 @@ void MultiaxialElastoPlastic::track() {
   s << "p "     << 1020 << ' ' << sConvg.p() << ' ';
   s << "q "     << 1020 << ' ' << sConvg.q() << ' ';
   s << "END "   << ' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }
 
 void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
@@ -570,7 +570,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
   double tol2 = 1e-6;
   Vector R(6, 0.);
   Vector dEp(6, 0.);
-  Matrix Cel   =myElastic->getC();
+  Matrix Cel   =myElastic->get_C();
   Matrix invCel = Inverse(Cel);
   Vector dg(12, 0.);
   double q = 0;
@@ -595,7 +595,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
   int nActiveSurfaces = 0;
   for (unsigned i = 0; i < fSurfaces.size(); i++) {
     if (fSurfaces[i]->get_f(sTrial, q)>0) {
-      fSurfaces[i]->setActive(true);
+      fSurfaces[i]->set_active(true);
       nActiveSurfaces++;
     }
   }
@@ -681,7 +681,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
     }
     bool reset = false;
     if (abs(det(Gab)) < 1e-8) {
-      fSurfaces[nActiveSurfaces-1]->setActive(false);
+      fSurfaces[nActiveSurfaces-1]->set_active(false);
       reset = true;
     }
     // cout << k << " Gab "<< Gab << endl;
@@ -693,7 +693,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
     for (unsigned a = 0; a < fSurfaces.size(); a++) {
       // cout << "a = " << a << "  " << dg[a]+ddg[a] << endl;
       if (fSurfaces[a]->isActive() && (dg[a]+ddg[a] < 0.)) {
-        fSurfaces[a]->setActive(false);
+        fSurfaces[a]->set_active(false);
         dg[a]  = 0.;
         ddg[a] = 0.;
         reset  = true;
@@ -732,7 +732,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
   double tol1 = 1e-6;
   double tol2 = 1e-9;
   Vector dEp(6, 0.);
-  Matrix Cel   =myElastic->getC();
+  Matrix Cel   =myElastic->get_C();
   Matrix invCel = Inverse(Cel);
 
   aTrial =aConvg;
@@ -754,7 +754,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
   activeSurfaces.resize(0);
   for (unsigned i = 0;i < fSurfaces.size();i++)
     if (fSurfaces[i]->get_f(sTrial, aTrial)>tol2) {
-      fSurfaces[i]->setActive(true);
+      fSurfaces[i]->set_active(true);
       activeSurfaces.push_back(i);
     }
   if (activeSurfaces.empty()) return;
@@ -769,7 +769,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
     activeSurfaces.resize(0);
     for (unsigned i = 0; i < fSurfaces.size(); i++) {
       if (fSurfaces[i]->get_f(sTrial, aTrial)>tol2) {
-        fSurfaces[i]->setActive(true);
+        fSurfaces[i]->set_active(true);
         activeSurfaces.push_back(i);
       }
     }
@@ -777,8 +777,8 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
     if (activeSurfaces.size()>tol2 && abs(sTrial.theta())*180./num::pi>29.99) {
       activeSurfaces.resize(0);
       for (unsigned i = 0;i < fSurfaces.size(); i++)
-        fSurfaces[i]->setActive(false);
-      fSurfaces[0]->setActive(true);
+        fSurfaces[i]->set_active(false);
+      fSurfaces[0]->set_active(true);
       activeSurfaces.push_back(0);
     }
 
@@ -869,7 +869,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
       ddg[i]=x[7+i];
     for (unsigned i = 0; i < activeSurfaces.size(); i++) {
       if (dg[i]+ddg[i] < 0.) {
-        fSurfaces[activeSurfaces[i]]->setActive(false);
+        fSurfaces[activeSurfaces[i]]->set_active(false);
         dg[i]=0.;
         ddg[i]=0.;
         reset = true;

@@ -79,7 +79,7 @@ class LoadCase: public DomainObject {
   // Apply member functions
   void applyLoads(double lambda_, double time_);
   void applySensitivityParameter(int param);
-  int getnSensitivityParameters();
+  int get_num_sens_param();
 };
 
 #endif  // SRC_LOADCASE_LOADCASE_H_

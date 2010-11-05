@@ -80,21 +80,21 @@ void LoadControl::predict() {
   lambdaTrial = lambdaConvg+DLambda;
 
   // Find duT (tangent du)
-  pA->getSOE()->setB(qRef);
-  pA->getSOE()->solve();
-  duT = pA->getSOE()->getX();
+  pA->get_soe()->set_B(qRef);
+  pA->get_soe()->solve();
+  duT = pA->get_soe()->get_X();
 
   // Find du and update model (predictor)
   du = DLambda*duT;
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
   Du = du;
 
   // Set num of achieved iterations to one
   Io = 1;
 
   // Set initial displacement to the SOE so that the norm can find it there
-  pA->getSOE()->setX(du);
+  pA->get_soe()->set_X(du);
 }
 /**
  * Updates that occur within each iterative step.
@@ -103,15 +103,15 @@ void LoadControl::predict() {
  */
 void LoadControl::correct() {
   // Find incremental and accumulative displacements
-  du = pA->getSOE()->getX();
+  du = pA->get_soe()->get_X();
   Du+=du;
 
   // Set accumulative displacement to the SOE so that the norm can find it there
-  pA->getSOE()->setX(Du);
+  pA->get_soe()->set_X(Du);
 
   // Update displacements in the model
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
 
   // Increase number of iterations
   Io++;

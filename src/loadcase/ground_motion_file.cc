@@ -48,7 +48,7 @@ void GroundMotionFile::apply(double fact, double time) {
   double d1 = data[n];
   double d2 = data[n+1];
   double d = d1+(time-t1)*(d2-d1)/(t2-t1);
-  const std::map < int, Element*>& c = pD->getElements();
+  const std::map < int, Element*>& c = pD->get_elements();
   std::map < int, Element*>::const_iterator i;
   for (i = c.begin();i != c.end();i++) i->second->addGroundMotion(dof, fact*scale*d);
 }

@@ -73,17 +73,17 @@ void EigenControl::formNodalResidual(ModelNode* pModelNode) {
   pModelNode->add_R(1.0);
 }
 void EigenControl::formTangent() {
-  EigenSOE* pSOE = static_cast < EigenSOE*>(pA->getSOE());
+  EigenSOE* pSOE = static_cast < EigenSOE*>(pA->get_soe());
   pSOE->zeroA();
   pSOE->zeroM();
 
-  int n = pA->getModel()->getModelElements().size();
+  int n = pA->get_model()->get_model_elements().size();
   for (int i = 0; i < n; i++) {
-    ModelElement* p = pA->getModel()->getModelElements()[i];
+    ModelElement* p = pA->get_model()->get_model_elements()[i];
     this->formElementalTangent(p);
-    pSOE->insertMatrixIntoA(p->getMatrix(), p->getFTable(), 1.0);
+    pSOE->insertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
     this->formElementalMassMatrix(p);
-    pSOE->insertMatrixIntoM(p->getMatrix(), p->getFTable(), 1.0);
+    pSOE->insertMatrixIntoM(p->get_matrix(), p->get_FTable(), 1.0);
   }
 }
 /**

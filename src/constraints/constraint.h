@@ -38,10 +38,10 @@
 class Domain;
 class Node;
 
-struct cDof {
-  Node* pNode;
-  int dof;
-  double coeff;
+struct CDof {
+  Node* pNode_;
+  int dof_;
+  double coeff_;
 };
 
 /**
@@ -49,31 +49,30 @@ struct cDof {
  */
 class Constraint: public DomainObject {
  protected:
-  static int nConstraints;
-
-  std::vector <cDof> theCDofs;
-  double cVal;
-  double fTrial;
-  double fConvg;
-  public:
+  static int num_constraints_;
+  std::vector<CDof> cdofs_;
+  double val_;
+  double f_trial_;
+  double f_convg_;
+ public:
   // Constructors
   Constraint();
 
-  void setcDof(int NodeID, int dof, double coeff);
-  void setcVal(double val);
+  void set_cdof(int NodeID, int dof, double coeff);
+  void set_val(double val);
 
-  int getncDofs();
-  const cDof& getcDof(int i);
-  virtual double getcVal(double time = 0.);
+  int get_num_cdofs();
+  const CDof& get_cdof(int i);
+  virtual double get_val(double time = 0.);
 
-  void incTrialForce(double f);
-  double getDisp(int i);
-  double getVelc(int i);
-  double getDispConvg(int i);
-  double getDispTrial(int i);
-  double getVelcConvg(int i);
-  double getAcclConvg(int i);
-  double getF();
+  void inc_trial_force(double f);
+  double get_disp(int i);
+  double get_velc(int i);
+  double get_disp_convg(int i);
+  double get_disp_trial(int i);
+  double get_velc_convg(int i);
+  double get_accl_convg(int i);
+  double get_F();
 
   void update(double f);
   void commit();

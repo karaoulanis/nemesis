@@ -41,10 +41,10 @@ class Beam2e: public Element {
   Beam2e(int ID, int Node_1, int Node_2, int matID, int secID);
   ~Beam2e();
 
-  const Matrix& getK();
-    const Matrix& getM();
-  const Vector& getR();
-  const Vector& getRgrad();
+  const Matrix& get_K();
+    const Matrix& get_M();
+  const Vector& get_R();
+  const Vector& get_Rgrad();
 
   bool checkIfAllows(FEObject* /*f*/)   {return true;}
   void update()           {return;}

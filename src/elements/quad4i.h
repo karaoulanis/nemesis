@@ -39,20 +39,20 @@ class Quad4i: public Quad4 {
   Vector aTrial;
   Vector aConvg;
   void shapeFunctions();
-  void getBStd(Matrix& B, int node, int gPoint);
-  void getBInc(Matrix& B, int node, int gPoint);
-  void getKdd(Matrix& K);
-  void getKda(Matrix& K);
-  void getKaa(Matrix& K);
+  void get_Bstd(Matrix& B, int node, int gPoint);
+  void get_BInc(Matrix& B, int node, int gPoint);
+  void get_Kdd(Matrix& K);
+  void get_Kda(Matrix& K);
+  void get_Kaa(Matrix& K);
   public:
   // Constructors and Destructor
   Quad4i();
   Quad4i(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
   ~Quad4i();
   
-  const Matrix& getK();
-    const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+    const Matrix& get_M();
+  const Vector& get_R();
   void update();
   void commit();
 };

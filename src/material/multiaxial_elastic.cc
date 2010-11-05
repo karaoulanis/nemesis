@@ -39,7 +39,7 @@ MultiaxialElastic::MultiaxialElastic(int ID, double E, double nu, double rho,
   // Material tag
   myTag = TAG_MATERIAL_MULTIAXIAL_ELASTIC;
 }
-MultiaxialMaterial* MultiaxialElastic::getClone() {
+MultiaxialMaterial* MultiaxialElastic::get_clone() {
   // Material parameters
   double E   =MatParams[ 0];
   double nu  =MatParams[ 1];
@@ -53,12 +53,12 @@ MultiaxialMaterial* MultiaxialElastic::getClone() {
     new MultiaxialElastic(myID, E, nu, rho, aT, kx, ky, kz);
   return newClone;
 }
-void MultiaxialElastic::setStrain(const Vector& De) {
+void MultiaxialElastic::set_strain(const Vector& De) {
   eTrial = eTotal+De;
-  // sTrial=(this->getC())*eTrial;
-  sTrial = sConvg+(this->getC())*De;
+  // sTrial=(this->get_C())*eTrial;
+  sTrial = sConvg+(this->get_C())*De;
 }
-const Matrix& MultiaxialElastic::getC() {
+const Matrix& MultiaxialElastic::get_C() {
   C.clear();
   // Material parameters
   double kx  =MatParams[ 2];
@@ -98,5 +98,5 @@ void MultiaxialElastic::track() {
   s << "p "     << 1020 << ' ' << sConvg.p() << ' ';
   s << "q "     << 1020 << ' ' << sConvg.q() << ' ';
   s << "END " << ' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

@@ -45,12 +45,12 @@ class MultiaxialMaterial: public Material {
   MultiaxialMaterial(int ID, double rho, double aT);
   ~MultiaxialMaterial();
 
-  virtual MultiaxialMaterial* getClone()=0;
-  virtual void setStrain(const Vector& De)=0;
-  virtual const Matrix& getC()=0;
-  void  setStress(const Vector& s)  {sTrial =s; sConvg =s;}
+  virtual MultiaxialMaterial* get_clone()=0;
+  virtual void set_strain(const Vector& De)=0;
+  virtual const Matrix& get_C()=0;
+  void  set_stress(const Vector& s)  {sTrial =s; sConvg =s;}
   void  addStress(const Vector& s)  {sTrial+=s; sConvg+=s;}
-  const Vector& getStress()         {return sTrial;}
+  const Vector& get_stress()         {return sTrial;}
   virtual bool isPlastic()          {return false;}
 };
 #endif  // SRC_MATERIAL_MULTIAXIAL_MATERIAL_H_

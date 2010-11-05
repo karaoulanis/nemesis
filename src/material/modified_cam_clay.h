@@ -36,7 +36,7 @@ class ModifiedCamClay: public MultiaxialElastoPlastic {
   public:
   ModifiedCamClay();
   ModifiedCamClay(int ID, int elasticID, double M, double po, double kappa, double lambda);
-  MultiaxialMaterial* getClone();
+  MultiaxialMaterial* get_clone();
   ~ModifiedCamClay();
 };
 #endif  // SRC_MATERIAL_MODIFIED_CAM_CLAY_H_

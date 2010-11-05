@@ -46,26 +46,26 @@ class UniaxialLoad: public ElementalLoad {
 * Beam load point
 ******************************************************************************/
 class BeamLoadPoint: public UniaxialLoad {
-  private:
+ private:
   double a0;
   double p0;
-  public:
+ public:
   BeamLoadPoint();
   BeamLoadPoint(int elemID, const char* dir, double a0, double p0);
   ~BeamLoadPoint();
-  const Vector& getP();
+  const Vector& get_P();
 };
 
 /******************************************************************************
 * Beam load uniform
 ******************************************************************************/
 class BeamLoadUniform: public UniaxialLoad {
-  private:
+ private:
   double p0;
-  public:
+ public:
   BeamLoadUniform();
   BeamLoadUniform(int elemID, const char* dir, double p0);
   ~BeamLoadUniform();
-    const Vector& getP();
+  const Vector& get_P();
 };
 #endif  // SRC_LOADCASE_UNIAXIAL_LOAD_H_

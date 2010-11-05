@@ -79,12 +79,12 @@ void ArcLengthSpherical::predict() {
   else if (DeltaL>maxDelta) DeltaL = maxDelta;
 
   // Find duT (tangent du)
-  pA->getSOE()->setB(qRef);
-  pA->getSOE()->solve();
-  duT = pA->getSOE()->getX();
+  pA->get_soe()->set_B(qRef);
+  pA->get_soe()->solve();
+  duT = pA->get_soe()->get_X();
 
   // Now DLambda can be found, see Crisfield, (9.34).
-  int sign = pA->getSOE()->getEigenSign();
+  int sign = pA->get_soe()->get_eigen_sign();
   if (sign == 0) exit(-11111);
   DLambda = sign*DeltaL/sqrt(duT*duT);
   lambdaTrial+=DLambda;
@@ -92,14 +92,14 @@ void ArcLengthSpherical::predict() {
   // Find displacement vectors and update the model
   du = DLambda*duT;
   Du = du;
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
 
   // Set num of achieved iterations to one
   Io = 1;
 
   // Set du to the SOE so the norm can find it there
-  pA->getSOE()->setX(du);
+  pA->get_soe()->set_X(du);
 }
 /**
  * Updates that occur within each iterative step.
@@ -112,12 +112,12 @@ void ArcLengthSpherical::predict() {
  */
 void ArcLengthSpherical::correct() {
   // Find du_bar
-  duBar = pA->getSOE()->getX();
+  duBar = pA->get_soe()->get_X();
 
   // Find duT
-  pA->getSOE()->setB(qRef);
-  pA->getSOE()->solve();
-  duT = pA->getSOE()->getX();
+  pA->get_soe()->set_B(qRef);
+  pA->get_soe()->solve();
+  duT = pA->get_soe()->get_X();
 
   // Find a-coefficients
   double psi = 0;
@@ -158,8 +158,8 @@ void ArcLengthSpherical::correct() {
   Du+=du;
 
   // Update displacements in the model
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
 
   // Increase number of iterations
   Io++;

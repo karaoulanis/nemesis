@@ -27,7 +27,8 @@
 
 InitialStresses::InitialStresses() {
 }
-InitialStresses::InitialStresses(int groupID_, int dir_, double h1_, double s1_, double h2_, double s2_, double K0_)
+InitialStresses::InitialStresses(int groupID_, int dir_, double h1_, double s1_,
+                                 double h2_, double s2_, double K0_)
   :InitialCondition() {
   myTag = TAG_INITIAL_STRESSES;
   theGroupID = groupID_;
@@ -38,7 +39,7 @@ InitialStresses::InitialStresses(int groupID_, int dir_, double h1_, double s1_,
   s2 = s2_;
   K0 = K0_;
   // Check if group exists
-  pD->get < Group>(pD->getGroups(), theGroupID);
+  pD->get<Group>(pD->get_groups(), theGroupID);
   // Check direction
   if (dir < 1 || dir>3)
     throw SException("[nemesis:%d] Direction should be 1, 2 or 3.", 9999);
@@ -46,8 +47,8 @@ InitialStresses::InitialStresses(int groupID_, int dir_, double h1_, double s1_,
 InitialStresses::~InitialStresses() {
 }
 int InitialStresses::apply() {
-  ElementContainer& DomainElems = pD->getElements();
-  for (ElementIterator ei = DomainElems.begin();ei != DomainElems.end();ei++)
+  ElementContainer& DomainElems = pD->get_elements();
+  for (ElementIterator ei = DomainElems.begin(); ei != DomainElems.end(); ei++)
     ei->second->addInitialStresses(this);
   return 0;
 }

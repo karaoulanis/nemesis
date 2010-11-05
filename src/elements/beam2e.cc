@@ -41,14 +41,14 @@ Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, int secID)
   // Handle common info
   this->handleCommonInfo();
   mySecID = secID;
-  mySection = pD->get < CrossSection>(pD->getCrossSections(), mySecID);
+  mySection = pD->get<CrossSection>(pD->get_cross_sections(), mySecID);
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
   myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
   ///@todo: check this
-  double A = mySection->getA();
+  double A = mySection->get_A();
   double b0A = b[0]*A;
   double b1A = b[1]*A;
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
@@ -59,12 +59,12 @@ Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, int secID)
  */
 Beam2e::~Beam2e() {
 }
-const Matrix& Beam2e::getK() {
+const Matrix& Beam2e::get_K() {
   Matrix& K=*myMatrix;
   K.clear();
-  double E =myUniMaterial->getParam(0);
-  double A = mySection->getA();
-  double J = mySection->getJ3();
+  double E =myUniMaterial->get_param(0);
+  double A = mySection->get_A();
+  double J = mySection->get_J3();
 
   double c = cosX[0];
   double s = cosX[1];
@@ -86,23 +86,23 @@ const Matrix& Beam2e::getK() {
   K(4, 0)=-K2;  K(4, 1)=-K3;   K(4, 2)=-K5;   K(4, 3)= K2;   K(4, 4)= K3;   K(4, 5)=-K5;
   K(5, 0)= K4;  K(5, 1)= K5;   K(5, 2)= K7;   K(5, 3)=-K4;   K(5, 4)=-K5;   K(5, 5)= K6;
 
-  if (myGroup->isActive()) K*=myGroup->getFacK();
+  if (myGroup->isActive()) K*=myGroup->get_fac_K();
   else          K*=1e-7;
   return K;
 }
-const Matrix& Beam2e::getM() {
+const Matrix& Beam2e::get_M() {
   Matrix& M=*myMatrix;
   M.clear();
   return M;
 }
-const Vector& Beam2e::getRgrad() {
+const Vector& Beam2e::get_Rgrad() {
   ///@todo
   Matrix& K=*myMatrix;
   K.clear();
   myVector->clear();
-  double E =myUniMaterial->getParam(0);
-  double A = mySection->getA();
-  double J = mySection->getJ3();
+  double E =myUniMaterial->get_param(0);
+  double A = mySection->get_A();
+  double J = mySection->get_J3();
 
   if (activeParameter == 1)    E = 1;
   else if (activeParameter == 2) A = 1;
@@ -129,22 +129,22 @@ const Vector& Beam2e::getRgrad() {
   K(4, 0)=-K2;  K(4, 1)=-K3;   K(4, 2)=-K5;   K(4, 3)= K2;   K(4, 4)= K3;   K(4, 5)=-K5;
   K(5, 0)= K4;  K(5, 1)= K5;   K(5, 2)= K7;   K(5, 3)=-K4;   K(5, 4)=-K5;   K(5, 5)= K6;
 
-  if (myGroup->isActive()) K*=myGroup->getFacK();
+  if (myGroup->isActive()) K*=myGroup->get_fac_K();
   else            K*=1e-7;
   return *myVector;
 }
-const Vector& Beam2e::getR() {
+const Vector& Beam2e::get_R() {
   Vector& R=*myVector;
   R.clear();
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
 
   double c = cosX[0];
   double s = cosX[1];
   static Vector u(6);
-  u = this->getDispIncrm();
+  u = this->get_disp_incrm();
 
   // Global u to local u
   double u0= cosX[0]*u[0]+cosX[1]*u[1];
@@ -157,9 +157,9 @@ const Vector& Beam2e::getR() {
   u[4]=u4;
 
   // Find factors of Ke
-  double E =myUniMaterial->getParam(0);
-  double A = mySection->getA();
-  double J = mySection->getJ3();
+  double E =myUniMaterial->get_param(0);
+  double A = mySection->get_A();
+  double J = mySection->get_J3();
   double KN = E*A/L;
   double K2 = 2*E*J/L;
   double K4 = 4*E*J/L;

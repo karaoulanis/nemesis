@@ -35,13 +35,13 @@ MohrCoulomb::MohrCoulomb(int ID, int elasticID, double c, double phi,
                          double alpha)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+  Material* p = pD->get < Material>(pD->get_materials(), elasticID);
+  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999,
                       "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->getClone();
-  MatParams[30] = myElastic->getParam(30);
-  MatParams[31] = myElastic->getParam(31);
+  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
+  MatParams[30] = myElastic->get_param(30);
+  MatParams[31] = myElastic->get_param(31);
   // Material properties
   MatParams[0] = c;
   MatParams[1] = phi;
@@ -59,10 +59,10 @@ MohrCoulomb::MohrCoulomb(int ID, int elasticID, double c, double phi,
 MohrCoulomb::~MohrCoulomb() {
   delete myElastic;
 }
-MultiaxialMaterial* MohrCoulomb::getClone() {
+MultiaxialMaterial* MohrCoulomb::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double alpha= MatParams[ 2];
@@ -74,10 +74,10 @@ MultiaxialMaterial* MohrCoulomb::getClone() {
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
  */ 
-void MohrCoulomb::setStrain(const Vector& De) {
+void MohrCoulomb::set_strain(const Vector& De) {
   // material properties
-  double E = myElastic->getParam(0);
-  double nu= myElastic->getParam(1);
+  double E = myElastic->get_param(0);
+  double nu= myElastic->get_param(1);
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double alpha= MatParams[ 2];
@@ -104,7 +104,7 @@ void MohrCoulomb::setStrain(const Vector& De) {
   static Vector s(3);
   static Matrix sV(3, 3);
   eTrial = eTotal+De;
-  sTrial = sConvg+(this->getC())*De;
+  sTrial = sConvg+(this->get_C())*De;
   spectralDecomposition(sTrial, s, sV);
 
   // yield function
@@ -191,8 +191,8 @@ void MohrCoulomb::commit() {
  * @todo fill it
  * @return A reference to the tangent material matrix.
  */
-const Matrix& MohrCoulomb::getC() {
-  return myElastic->getC();
+const Matrix& MohrCoulomb::get_C() {
+  return myElastic->get_C();
 }
 bool MohrCoulomb::isPlastic() {
   return plastic;
@@ -214,5 +214,5 @@ void MohrCoulomb::track() {
 //  s << "p "     <<1020<<' '<<sConvg.p()<<' ';
 //  s << "q "     <<1020<<' '<<sConvg.q()<<' ';
 //  s << "END "<<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

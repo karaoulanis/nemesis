@@ -32,16 +32,16 @@ Creep::Creep() {
 Creep::Creep(int ID, int elasticID, double A, double n, double k)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+  Material* p = pD->get < Material>(pD->get_materials(), elasticID);
+  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999,
                      "Multiaxial elastic material expected.");
-  myElastic = static_cast < MultiaxialMaterial*>(p)->getClone();
+  myElastic = static_cast < MultiaxialMaterial*>(p)->get_clone();
   MatParams[ 0]=A;
   MatParams[ 1]=n;
   MatParams[ 2]=k;
-  MatParams[30]=myElastic->getParam(30);
-  MatParams[31]=myElastic->getParam(31);
+  MatParams[30]=myElastic->get_param(30);
+  MatParams[31]=myElastic->get_param(31);
 
   // Material state
   eCTrial.resize(6, 0.);
@@ -54,16 +54,16 @@ Creep::~Creep() {
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
  */ 
-void Creep::setStrain(const Vector& De) {
-  double Dt = pD->getTimeIncr();
+void Creep::set_strain(const Vector& De) {
+  double Dt = pD->get_time_incr();
   eTrial = eTotal+De;
-  // sTrial = sConvg+(myElastic->getC())*De;
-  sTrial = (myElastic->getC())*(eTotal-eCConvg);
+  // sTrial = sConvg+(myElastic->get_C())*De;
+  sTrial = (myElastic->get_C())*(eTotal-eCConvg);
   double d = eCConvg.twonorm()*sqrt(3./2.);
   Vector beta(6, 0);
   beta = k*pow(A, 1./k)*d*sTrial;
   eCTrial = eCConvg+Dt*beta;
-  sTrial=(myElastic->getC())*(eTotal-eCTrial-Dt*beta);
+  sTrial=(myElastic->get_C())*(eTotal-eCTrial-Dt*beta);
 }
 /**
  * Commit material state.
@@ -79,13 +79,13 @@ void Creep::commit() {
  * @todo fill it
  * @return A reference to the tangent material matrix.
  */
-const Matrix& Creep::getC() {
-  return myElastic->getC();
+const Matrix& Creep::get_C() {
+  return myElastic->get_C();
 }
-MultiaxialMaterial* Creep::getClone() {
+MultiaxialMaterial* Creep::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double A    = MatParams[ 0];
   double n    = MatParams[ 1];
   double k    = MatParams[ 2];
@@ -111,5 +111,5 @@ void Creep::track() {
   s << "p "     << 1020 << ' ' <<sConvg.p() << ' ';
   s << "q "     << 1020 << ' ' <<sConvg.q() << ' ';
   s << "END " <<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

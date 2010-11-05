@@ -47,12 +47,12 @@ Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
  */
 Bar2t::~Bar2t()  {
 }
-const Matrix& Bar2t::getK() {
+const Matrix& Bar2t::get_K() {
   Matrix& K=*myMatrix;
 
   // Directional cosines, L^2 and strain (in the current configuration)
   static Vector du(2*nDim);
-  du = this->getDispTrial();
+  du = this->get_disp_trial();
   for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
   double L2 = 0;
   for (int i = 0;i < nDim;i++)
@@ -61,7 +61,7 @@ const Matrix& Bar2t::getK() {
 
   // Matrix KM
   K.clear();
-  double E = myUniMaterial->getC();
+  double E = myUniMaterial->get_C();
   double K0 = E*A0/L0;
   double d;
   for (int i = 0;i < nDim;i++)
@@ -83,29 +83,29 @@ const Matrix& Bar2t::getK() {
 
   ///@todo Add nodal transformations
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
-const Vector& Bar2t::getR() {
+const Vector& Bar2t::get_R() {
   Vector& R=*myVector;
   R.clear();
 
   // Factors
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
 
   // Directional cosines, L^2 and strain (in the current configuration)
   static Vector du(2*nDim);
-  du = this->getDispTrial();
+  du = this->get_disp_trial();
   for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
   double L2 = 0;
   for (int i = 0;i < nDim;i++)
     L2+=(x(1, i)-x(0, i)+du[i+nDim]-du[i])*(x(1, i)-x(0, i)+du[i+nDim]-du[i]);
   double e=(L2-L0*L0)/(2*L0*L0);
-  double E = myUniMaterial->getC();
+  double E = myUniMaterial->get_C();
   double N = E*A0*e;
   for (int i = 0; i < nDim; i++) {
     double d = facS*cosX[i]*N;
@@ -114,7 +114,7 @@ const Vector& Bar2t::getR() {
   }
   // Self-weigth (only in y todo: check this)
   if (!num::tiny(facG) && nDim>1) {
-    double b=-facG*0.5*(myUniMaterial->getRho())*A0*L0;
+    double b=-facG*0.5*(myUniMaterial->get_rho())*A0*L0;
     R[1]-=b;
     R[1+nDim]-=b;
   }

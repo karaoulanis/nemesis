@@ -47,20 +47,20 @@ StandardModelElement::StandardModelElement(const IDContainer& FTable,
 StandardModelElement::~StandardModelElement() {
 }
 void StandardModelElement::add_K(double factor) {
-  myMatrix->add_cM(factor, myElement->getK());
+  myMatrix->add_cM(factor, myElement->get_K());
 }
 void StandardModelElement::add_M(double factor) {
-  myMatrix->add_cM(factor, myElement->getM());
+  myMatrix->add_cM(factor, myElement->get_M());
 }
 void StandardModelElement::add_C(double factor) {
-  myMatrix->add_cM(factor, myElement->getC());
+  myMatrix->add_cM(factor, myElement->get_C());
 }
 void StandardModelElement::add_R(double factor) {
-  myVector->add_cV(factor, myElement->getR());
+  myVector->add_cV(factor, myElement->get_R());
 }
 void StandardModelElement::add_Reff(double factor) {
-  myVector->add_cV(factor, myElement->getReff());
+  myVector->add_cV(factor, myElement->get_Reff());
 }
 void StandardModelElement::add_Rgrad(double factor) {
-  myVector->add_cV(factor, myElement->getRgrad());
+  myVector->add_cV(factor, myElement->get_Rgrad());
 }

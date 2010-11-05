@@ -52,7 +52,7 @@ class Surface {
   virtual const Vector& get_df2dsa(const Vector& s, const double a);
   virtual double  get_df2daa(const Vector& s, const double a);
 
-  void setActive(bool b)  {active = b;}
+  void set_active(bool b)  {active = b;}
   bool isActive()     {return active;}
 };
 #endif  // SRC_MATERIAL_SURFACE_H_

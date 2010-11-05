@@ -36,9 +36,9 @@ class MultiaxialElastic: public MultiaxialMaterial {
   MultiaxialElastic();
   MultiaxialElastic(int ID, double E, double nu, double rho, double aT,
     double kx, double ky, double kz);
-  MultiaxialMaterial* getClone();
-  void setStrain(const Vector& De);
-  const Matrix& getC();
+  MultiaxialMaterial* get_clone();
+  void set_strain(const Vector& De);
+  const Matrix& get_C();
   void commit();
   // Tracker member functions
   void track();

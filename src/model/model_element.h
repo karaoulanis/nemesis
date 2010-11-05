@@ -42,8 +42,8 @@ class ModelElement : public ModelObject {
   virtual ~ModelElement();
 
   // Access to data members
-  Element* getElement()   {return myElement;}
-  Constraint* getConstraint() {return myConstraint;}
+  Element* get_element()   {return myElement;}
+  Constraint* get_constraint() {return myConstraint;}
 
   virtual void update();
   virtual void commit();

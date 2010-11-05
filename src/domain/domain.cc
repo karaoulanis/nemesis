@@ -29,7 +29,7 @@
  * Default Constructor.
  */
 Domain::Domain()   {
-  nDim = 0;
+  dim_ = 0;
   myTag = TAG_DOMAIN_NOT_SET;
   myFac = 1.0;
   upToDate = false;
@@ -47,8 +47,8 @@ Domain::~Domain()  {
 void Domain::init() {
   // Define group 0
   Group* pGroup = new Group(0);
-  pGroup->setDomain(this);
-  this->add(this->getGroups(), pGroup);
+  pGroup->set_domain(this);
+  this->add(this->get_groups(), pGroup);
   // Define that groups are by set by materials
   groupsByMaterial = true;
   currentGroup = 0;
@@ -66,7 +66,7 @@ void Domain::init() {
  * The containers and the contained objects are deleted.
  */
 void Domain::clear() {
-  nDim = 0;
+  dim_ = 0;
   RayleighFactors.resize(0);
   eigenVals.resize(0);
   Containers::map_delete(theNodes);
@@ -82,15 +82,15 @@ void Domain::clear() {
  * Set the number of the dimensions of the Domain.
  * @return An integer implying if something is wrong. 
  */
-int Domain::setnDim(int nDimensions) {
-  if (nDim != 0) {
+int Domain::set_dim(int dim) {
+  if (dim_ != 0) {
     throw SException("[nemesis:%d] %s", 9999,
       "Domain must be cleared before changing dim.");
-  } else if ((nDimensions < 1)||(nDimensions>3)) {
+  } else if ((dim < 1) || (dim>3)) {
     throw SException("[nemesis:%d] %s", 9999,
       "Dim value 1, 2 or 3 is only allowed.");
   } else {
-    nDim = nDimensions;
+    dim_ = dim;
   }
   return 0;
 }
@@ -98,14 +98,14 @@ int Domain::setnDim(int nDimensions) {
  * Access to the number of the dimensions of the Domain.
  * @return The number of the dimensions of the Domain.
  */
-int Domain::getnDim() const {
-  return nDim;
+int Domain::get_dim() const {
+  return dim_;
 }
-void Domain::setDatabase(Database* pDB) {
+void Domain::set_database(Database* pDB) {
   if (theDatabase != 0) delete theDatabase;
   theDatabase = pDB;
 }
-Database* Domain::getDatabase() {
+Database* Domain::get_database() {
   return theDatabase;
 }
 void Domain::zeroNodalStress() {
@@ -132,12 +132,12 @@ int Domain::storeState(const char* tableName) {
   for (NodeIterator nIter = theNodes.begin();
     nIter != theNodes.end(); nIter++)
     if (nIter->second->isActive())
-      theDatabase->storeData(nIter->second->getPacket());
+      theDatabase->storeData(nIter->second->get_packet());
   // Store elements
   for (ElementIterator eIter = theElements.begin();
     eIter != theElements.end(); eIter++)
     if (eIter->second->isActive())
-      theDatabase->storeData(eIter->second->getPacket());
+      theDatabase->storeData(eIter->second->get_packet());
   // Commit transaction
   theDatabase->commitTransaction();
   return 0;
@@ -148,8 +148,8 @@ int Domain::restoreState(const char* tableName) {
   theDatabase->useTable(tableName);
   // Restore the nodes
   for (NodeIterator nIter = theNodes.begin(); nIter != theNodes.end(); nIter++)
-      nIter->second->setPacket(theDatabase->retrieveData(nIter->second->getTag(),
-        nIter->second->getID()));
+      nIter->second->set_packet(theDatabase->retrieveData(nIter->second->get_tag(),
+        nIter->second->get_id()));
   theDatabase->commitTransaction();
   return 0;
 }
@@ -158,15 +158,15 @@ void Domain::setRayleighFactors(const Vector& factors) {
   RayleighFactors.resize(factors.size());
   RayleighFactors = factors;
 }
-const Vector& Domain::getRayleighFactors() {
+const Vector& Domain::get_rayleigh_factors() {
   return RayleighFactors;
 }
 // EigenValues
-void Domain::setEigenValues(const Vector& vals) {
+void Domain::set_eigenvalues(const Vector& vals) {
   eigenVals.resize(vals.size());
   eigenVals = vals;
 }
-const Vector& Domain::getEigenValues() {
+const Vector& Domain::get_eigen_values() {
   return eigenVals;
 }
 void Domain::applyLoads(double lambda_, double time_) {
@@ -185,7 +185,7 @@ void Domain::zeroLoads() {
 void Domain::zeroGroups() {
   GroupIterator gi;
   for (gi = theGroups.begin(); gi != theGroups.end(); gi++)
-    gi->second->setDefault();
+    gi->second->set_default();
 }
 /**
  * Sets gravity info.
@@ -209,13 +209,13 @@ void Domain::setGravity(double g, double xG, double yG, double zG) {
  * @return A constant reference to a 3x1 normalized Vector holding gravity
  * directions.
  */
-const Vector& Domain::getGravityVect() {
+const Vector& Domain::get_gravity_vect() {
   return gravityVect;
 }
 /**
  * Returns gravity acceleration.
  * @return Gravity acceleration
  */
-double Domain::getGravityAccl() {
+double Domain::get_gravity_accl() {
   return gravityAccl;
 }

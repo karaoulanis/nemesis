@@ -68,27 +68,27 @@ class Node: public DomainObject {
   Vector strain;
   bool isLoadApplied;
 
-  public:
+ public:
   // Constructors and destructor
   Node();
   Node(int ID, double xc1, double xc2 = 0, double xc3 = 0);
   ~Node();
 
   // Get nodal coordinates
-  double getx1();
-  double getx2();
-  double getx3();
+  double get_x1();
+  double get_x2();
+  double get_x3();
 
   // Connected elements
   int addEleToNode(Element *pElement);
-  const IDContainer& getConnectedElements() const;
+  const IDContainer& get_connected_elements() const;
   bool isActive();
 
   // Activated Dofs
   int addDofToNode(int dof);
-  const IDContainer& getActivatedDofs() const;
-  int getActivatedDof(int localDof) const;
-  int getnActivatedDofs() const;
+  const IDContainer& get_activated_dofs() const;
+  int get_activated_dof(int localDof) const;
+  int get_num_activated_dofs() const;
 
   // Loads
   void addLoad(int dof, double value, double factor = 1.0);
@@ -96,43 +96,43 @@ class Node: public DomainObject {
   void addInitialVelc(int dof, double velc);
   bool existsLoad();
   void zeroLoad();
-  const Vector& getR();
+  const Vector& get_R();
 
 
   // Functions that handle the trial and converged states
   void incTrialDisp(const Vector& du);
   void addTrialVelc(const Vector& dv);
   void addTrialAccl(const Vector& da);
-  void setTrialDisp(const Vector& u);
-  void setTrialVelc(const Vector& v);
-  void setTrialAccl(const Vector& a);
+  void set_trial_disp(const Vector& u);
+  void set_trial_velc(const Vector& v);
+  void set_trial_accl(const Vector& a);
   void commit();
   void rollback();
 
-  const Vector& getDispTrial();
-  const Vector& getVelcTrial();
-  const Vector& getAcclTrial();
-  const Vector& getDispConvg();
-  const Vector& getVelcConvg();
-  const Vector& getAcclConvg();
-  double getDispTrialAtDof(int dof);
-  double getVelcTrialAtDof(int dof);
-  double getAcclTrialAtDof(int dof);
-  double getDispConvgAtDof(int dof);
-  double getVelcConvgAtDof(int dof);
-  double getAcclConvgAtDof(int dof);
+  const Vector& get_disp_trial();
+  const Vector& get_velc_trial();
+  const Vector& get_accl_trial();
+  const Vector& get_disp_convg();
+  const Vector& get_velc_convg();
+  const Vector& get_accl_convg();
+  double get_disp_trial_at_dof(int dof);
+  double get_velc_trial_at_dof(int dof);
+  double get_accl_trial_at_dof(int dof);
+  double get_disp_convg_at_dof(int dof);
+  double get_velc_convg_at_dof(int dof);
+  double get_accl_convg_at_dof(int dof);
 
   void zeroStress();
   void addStress(const Vector& s);
   void multDisp(double facD);
 
-  const Packet& getPacket();
-  void setPacket(const Packet& p);
+  const Packet& get_packet();
+  void set_packet(const Packet& p);
   void save(std::ostream& s);
 
   // Tracker member functions
   void addTracker();
-  Tracker* getTracker();
+  Tracker* get_tracker();
   void track();
 
   // Sensitivity functions
