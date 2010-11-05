@@ -128,7 +128,7 @@ class Domain {
   void state(double facD);
 
   // Gravity axis
-  void setGravity(double g, double xG, double yG, double zG);
+  void set_gravity(double g, double xG, double yG, double zG);
   const Vector& get_gravity_vect();
   double  get_gravity_accl();
 
@@ -149,19 +149,19 @@ class Domain {
   int storeState(const char* tableName);
   int restoreState(const char* tableName);
 
-  void setTag(DomainTag t)          {myTag = t;}
+  void set_tag(DomainTag t)          {myTag = t;}
   DomainTag get_tag()                {return myTag;}
-  void setFac(double fac)           {myFac = fac;}
+  void set_fac(double fac)           {myFac = fac;}
   double get_fac()                   {return myFac;}
   bool isUpToDate()                 {return upToDate;}
-  void setUpToDate()                {upToDate = true;}
+  void set_uptodate()                {upToDate = true;}
   bool areGroupsByMaterial()        {return groupsByMaterial;}
-  void setGroupsByMaterial(bool b)  {groupsByMaterial = b;}
-  void setCurrentGroup(int n)       {currentGroup = n;}
+  void set_groups_by_material(bool b)  {groupsByMaterial = b;}
+  void set_current_group(int n)       {currentGroup = n;}
   int  get_current_group()            {return currentGroup;}
 
   // Rayleigh damping
-  void setRayleighFactors(const Vector& factors);
+  void set_Rayleigh_factors(const Vector& factors);
   const Vector& get_rayleigh_factors();
 
   // EigenValues
