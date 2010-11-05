@@ -217,8 +217,8 @@ static PyObject* pyDomain_PlaneStress(PyObject* /*self*/, PyObject* args) {
   double t = 1.0;
   if (!PyArg_ParseTuple(args, "|d", &t)) return NULL;
   try {
-    pD->setTag(TAG_DOMAIN_PLANE_STRESS);
-    pD->setFac(t);
+    pD->set_tag(TAG_DOMAIN_PLANE_STRESS);
+    pD->set_fac(t);
     pD->set_dim(2);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -231,8 +231,8 @@ static PyObject* pyDomain_PlaneStrain(PyObject* /*self*/, PyObject* args) {
   double t = 1.0;
   if (!PyArg_ParseTuple(args, "|d", &t)) return NULL;
   try {
-    pD->setTag(TAG_DOMAIN_PLANE_STRAIN);
-    pD->setFac(t);
+    pD->set_tag(TAG_DOMAIN_PLANE_STRAIN);
+    pD->set_fac(t);
     pD->set_dim(2);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -245,8 +245,8 @@ static PyObject* pyDomain_Axisymmetric(PyObject* /*self*/, PyObject* args) {
   double t = 1.0;
   if (!PyArg_ParseTuple(args, "|d", &t)) return NULL;
   try {
-    pD->setTag(TAG_DOMAIN_AXISYMMETRIC);
-    pD->setFac(t);
+    pD->set_tag(TAG_DOMAIN_AXISYMMETRIC);
+    pD->set_fac(t);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -261,7 +261,7 @@ static PyObject* pyDomain_RayleighDamping(PyObject* /*self*/, PyObject* args) {
   Vector facs(2);
   facs[0]=aK;
   facs[1]=bM;
-  pD->setRayleighFactors(facs);
+  pD->set_Rayleigh_factors(facs);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -291,7 +291,7 @@ static PyObject* pyDomain_Gravity(PyObject* /*self*/, PyObject* args) {
   double g, xG, yG, zG;
   if (!PyArg_ParseTuple(args, "d(ddd)", &g, &xG, &yG, &zG)) return NULL;
   try {
-    pD->setGravity(g, xG, yG, zG);
+    pD->set_gravity(g, xG, yG, zG);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -459,7 +459,7 @@ void createGroupByMaterial(int groupId) {
   try {
     Group* pGroup = new Group(groupId);
     pD->add(pD->get_groups(), pGroup);
-    pD->setCurrentGroup(groupId);
+    pD->set_current_group(groupId);
   } catch(SException /*e*/) {
     ///@todo
   }
@@ -1194,7 +1194,7 @@ static PyObject* pyGroup_Define(PyObject* /*self*/, PyObject* args) {
   try {
     Group* pGroup = new Group(groupId);
     pD->add(pD->get_groups(), pGroup);
-    pD->setCurrentGroup(groupId);
+    pD->set_current_group(groupId);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;

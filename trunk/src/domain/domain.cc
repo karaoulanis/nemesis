@@ -154,7 +154,7 @@ int Domain::restoreState(const char* tableName) {
   return 0;
 }
 // Rayleigh damping
-void Domain::setRayleighFactors(const Vector& factors) {
+void Domain::set_Rayleigh_factors(const Vector& factors) {
   RayleighFactors.resize(factors.size());
   RayleighFactors = factors;
 }
@@ -197,7 +197,7 @@ void Domain::zeroGroups() {
  * @param yG y-coordinate of gravity vector.
  * @param zG z-coordinate of gravity vector.
  */
-void Domain::setGravity(double g, double xG, double yG, double zG) {
+void Domain::set_gravity(double g, double xG, double yG, double zG) {
   gravityAccl = g;
   gravityVect[0]=xG;
   gravityVect[1]=yG;
