@@ -80,20 +80,20 @@ class Element: public DomainObject {
   Element(int ID, int matID);
   ~Element();
 
-  const IDContainer& getNodalIDs() const;
-  const IDContainer& getLocalNodalDofs() const;
-  const std::vector<Node*>& getNodes() const;
+  const IDContainer& get_nodal_ids() const;
+  const IDContainer& get_local_nodal_dofs() const;
+  const std::vector<Node*>& get_nodes() const;
 
   bool isActive();
-  virtual int getnPlasticPoints();
+  virtual int get_num_plastic_points();
 
   // Build and return global element matrices
-  virtual const Matrix& getK()=0;
-  virtual const Matrix& getM()=0;
-  virtual const Matrix& getC();
-  virtual const Vector& getR()=0;
-  virtual const Vector& getReff()   {myVector->clear(); return *myVector;}
-  virtual const Vector& getRgrad()  {myVector->clear(); return *myVector;}
+  virtual const Matrix& get_K()=0;
+  virtual const Matrix& get_M()=0;
+  virtual const Matrix& get_C();
+  virtual const Vector& get_R()=0;
+  virtual const Vector& get_Reff()   {myVector->clear(); return *myVector;}
+  virtual const Vector& get_Rgrad()  {myVector->clear(); return *myVector;}
 
   // Handle elemental loads
   void addLoad(const Vector& val, double fac = 1.0);
@@ -104,27 +104,27 @@ class Element: public DomainObject {
   virtual void update()=0;
   virtual void commit()=0;
 
-  virtual const Vector& getDispTrial();
-  virtual const Vector& getVelcTrial();
-  virtual const Vector& getAcclTrial();
-  virtual const Vector& getDispConvg();
-  virtual const Vector& getVelcConvg();
-  virtual const Vector& getAcclConvg();
-  virtual const Vector& getDispIncrm();
+  virtual const Vector& get_disp_trial();
+  virtual const Vector& get_velc_trial();
+  virtual const Vector& get_accl_trial();
+  virtual const Vector& get_disp_convg();
+  virtual const Vector& get_velc_convg();
+  virtual const Vector& get_accl_convg();
+  virtual const Vector& get_disp_incrm();
 
-  void setGroup(int groupID);
+  void set_group(int groupID);
   virtual void recoverStresses() {}
 
   // Send and receive packet
-  const Packet& getPacket();
-  void setPacket(const Packet& p);
+  const Packet& get_packet();
+  void set_packet(const Packet& p);
   void save(std::ostream& s);
 
   void activateParameter(int param) {activeParameter = param;}
 
   // Tracker member functions
   virtual void addTracker(int index);
-  virtual Tracker* getTracker(int index);
+  virtual Tracker* get_tracker(int index);
   virtual void track();
 
   // Enrichment functions

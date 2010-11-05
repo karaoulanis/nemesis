@@ -45,32 +45,32 @@ int LagrangeImposer::impose() {
   // Find nodal global numbering and store it
   //=========================================================================
   int nDofs = this->createGlobalDofNumbering();
-  theModel->setEquations(nDofs);
+  theModel->set_equations(nDofs);
 
   //=========================================================================
   // Create Standard ModelNodes
   //=========================================================================
-  for (NodeIterator nIter = pA->getDomain()->getNodes().begin();
-          nIter != pA->getDomain()->getNodes().end(); nIter++) {
+  for (NodeIterator nIter = pA->get_domain()->get_nodes().begin();
+          nIter != pA->get_domain()->get_nodes().end(); nIter++) {
     // Get a pointer to a node
     pNode = nIter->second;
     // Get the nodal id
-    int nodeID = pNode->getID();
-    IDContainer nodalFTable = this->getGlobalDofs(nodeID);
+    int nodeID = pNode->get_id();
+    IDContainer nodalFTable = this->get_global_dofs(nodeID);
     pStdModelNode = new StandardModelNode(nodalFTable, pNode);
     theModel->addModelNode(pStdModelNode);
   }
   //=========================================================================
   // Create Standard ModelElements
   //=========================================================================
-    for (ElementIterator eIter = pA->getDomain()->getElements().begin();
-             eIter != pA->getDomain()->getElements().end();eIter++) {
+    for (ElementIterator eIter = pA->get_domain()->get_elements().begin();
+             eIter != pA->get_domain()->get_elements().end();eIter++) {
     // Get next (randomly chosen) element
     pElement = eIter->second;
     // Get the ids of the nodes
-    IDContainer myNodalIDs = pElement->getNodalIDs();
+    IDContainer myNodalIDs = pElement->get_nodal_ids();
     // Get the local dofs of each node of the element
-    IDContainer theNodalLocalDofs = pElement->getLocalNodalDofs();
+    IDContainer theNodalLocalDofs = pElement->get_local_nodal_dofs();
     // Create an element freedom table
     IDContainer elemFTable(myNodalIDs.size()*theNodalLocalDofs.size());
 
@@ -79,7 +79,7 @@ int LagrangeImposer::impose() {
       int NodeID = myNodalIDs[j];
       for (unsigned k = 0; k < theNodalLocalDofs.size(); k++) {
         int localDof = theNodalLocalDofs[k];
-        int globalDof = this->getGlobalDof(NodeID, localDof);
+        int globalDof = this->get_global_dof(NodeID, localDof);
         elemFTable[j*theNodalLocalDofs.size()+k]=globalDof;
       }
     }
@@ -89,29 +89,29 @@ int LagrangeImposer::impose() {
   //=========================================================================
   // Constraints
   //=========================================================================
-  int nEquations = theModel->getnEquations();
+  int nEquations = theModel->get_num_eqns();
   for (ConstraintIterator cIter = theConstraints->begin();
             cIter != theConstraints->end(); cIter++) {
     pConstraint = cIter->second;
-    if (pConstraint->getncDofs() == 0) continue;
+    if (pConstraint->get_num_cdofs() == 0) continue;
     // Lagrange ModelNode
     static IDContainer nodalFTable(1);
     nodalFTable[0]=nEquations;
     pLagModelNode = new LagrangeModelNode(nodalFTable, 0, pConstraint);
     theModel->addModelNode(pLagModelNode);
     // Lagrange ModelElement
-    int ncDofs = pConstraint->getncDofs();
+    int ncDofs = pConstraint->get_num_cdofs();
     IDContainer cFTable(ncDofs+1);
     for (int j = 0;j < ncDofs;j++) {
-      cFTable[j]=this->getGlobalDof(pConstraint->getcDof(j).pNode->getID(),
-                                    pConstraint->getcDof(j).dof);
+      cFTable[j]=this->get_global_dof(pConstraint->get_cdof(j).pNode_->get_id(),
+                                    pConstraint->get_cdof(j).dof_);
     }
     cFTable[ncDofs]=nEquations;
     pLagModelElement = new LagrangeModelElement(cFTable, pConstraint);
     theModel->addModelElement(pLagModelElement);
     nEquations++;
   }
-  theModel->setEquations(nEquations);
-  theModel->setConstrained(true);
+  theModel->set_equations(nEquations);
+  theModel->set_constrained(true);
   return 0;
 }

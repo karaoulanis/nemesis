@@ -48,7 +48,7 @@ Newmark::~Newmark() {
  *
  */
 void Newmark::predict() {
-  pA->getDomain()->incTime(dt);
+  pA->get_domain()->incTime(dt);
   ut = u;
   vt = v;
   at = a;
@@ -59,26 +59,26 @@ void Newmark::predict() {
   v = c1*v+c2*at;
   a = c4*a+c3*vt;
 
-  pA->getModel()->setTrialVecs(u, v, a);
-  pA->getModel()->update();
+  pA->get_model()->set_trial_vecs(u, v, a);
+  pA->get_model()->update();
 
   this->formResidual(1.0);
-  pA->getSOE()->solve();
+  pA->get_soe()->solve();
 
-  u = u+(pA->getSOE()->getX());
-  v = v+c[2]*(pA->getSOE()->getX());
-  a = a+c[1]*(pA->getSOE()->getX());
-  pA->getModel()->setTrialVecs(u, v, a);
-  pA->getModel()->update();
+  u = u+(pA->get_soe()->get_X());
+  v = v+c[2]*(pA->get_soe()->get_X());
+  a = a+c[1]*(pA->get_soe()->get_X());
+  pA->get_model()->set_trial_vecs(u, v, a);
+  pA->get_model()->update();
 }
 /**
  *
  */
 void Newmark::correct() {
-  u = u+(pA->getSOE()->getX());
-  v = v+c[2]*(pA->getSOE()->getX());
-  a = a+c[1]*(pA->getSOE()->getX());
+  u = u+(pA->get_soe()->get_X());
+  v = v+c[2]*(pA->get_soe()->get_X());
+  a = a+c[1]*(pA->get_soe()->get_X());
 
-  pA->getModel()->setTrialVecs(u, v, a);
-  pA->getModel()->update();
+  pA->get_model()->set_trial_vecs(u, v, a);
+  pA->get_model()->update();
 }

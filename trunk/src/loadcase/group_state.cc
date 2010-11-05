@@ -33,7 +33,7 @@ GroupState::GroupState()
 GroupState::GroupState(int groupID, int active_,
         double facK_, double facS_, double facG_, double facP_)
   :DomainObject(++nGroupStates) {
-  myGroup = pD->get < Group>(pD->getGroups(), groupID);  
+  myGroup = pD->get < Group>(pD->get_groups(), groupID);  
   active_ == 0 ? active = false : active = true;
   facK = facK_;
   facS = facS_;
@@ -41,6 +41,6 @@ GroupState::GroupState(int groupID, int active_,
   facP = facP_;
 }
 int GroupState::apply() {
-  myGroup->setState(this);
+  myGroup->set_state(this);
   return 0;
 }

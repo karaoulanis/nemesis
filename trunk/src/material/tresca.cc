@@ -35,12 +35,12 @@ Tresca::Tresca(int ID, int elasticID, double cu, double kx, double ky,
                double kz)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get<Material>(pD->getMaterials(), elasticID);
-  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
+  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999, "Multiaxial elastic material expected.");
-  myElastic = static_cast < MultiaxialMaterial*>(p)->getClone();
-  MatParams[30] = myElastic->getParam(30);
-  MatParams[31] = myElastic->getParam(31);
+  myElastic = static_cast < MultiaxialMaterial*>(p)->get_clone();
+  MatParams[30] = myElastic->get_param(30);
+  MatParams[31] = myElastic->get_param(31);
 
   // Material properties
   MatParams[0] = cu;
@@ -59,10 +59,10 @@ Tresca::Tresca(int ID, int elasticID, double cu, double kx, double ky,
 Tresca::~Tresca() {
   delete myElastic;
 }
-MultiaxialMaterial* Tresca::getClone() {
+MultiaxialMaterial* Tresca::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double cu   = MatParams[ 0];
   double kx   = MatParams[ 1];
   double ky   = MatParams[ 2];
@@ -75,15 +75,15 @@ MultiaxialMaterial* Tresca::getClone() {
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
  */ 
-void Tresca::setStrain(const Vector& De) {
+void Tresca::set_strain(const Vector& De) {
   std::vector<Vector> df(3);
   df[0].resize(3);  df[1].resize(3);  df[2].resize(3);
   df[0][0]= 1.0;    df[0][1]= 0.0;    df[0][2]=-1.0;
   df[1][0]= 1.0;    df[1][1]=-1.0;    df[1][2]= 0.0;
   df[2][0]= 0.0;    df[2][1]= 1.0;    df[2][2]=-1.0;
 
-  double E = myElastic->getParam(0);
-  double nu= myElastic->getParam(1);
+  double E = myElastic->get_param(0);
+  double nu= myElastic->get_param(1);
   double kx   = MatParams[ 1];
   double ky   = MatParams[ 2];
   double kz   = MatParams[ 3];
@@ -95,7 +95,7 @@ void Tresca::setStrain(const Vector& De) {
   static Vector s(3);
   static Matrix sV(3, 3);
   eTrial = eTotal+De;
-  sTrial = sConvg+(this->getC())*De;
+  sTrial = sConvg+(this->get_C())*De;
   spectralDecomposition(sTrial, s, sV);
   // Vector tempS(3);
   // tempS = sTrial;
@@ -196,8 +196,8 @@ void Tresca::commit() {
  * @todo fill it
  * @return A reference to the tangent material matrix.
  */
-const Matrix& Tresca::getC() {
-  return myElastic->getC();
+const Matrix& Tresca::get_C() {
+  return myElastic->get_C();
 }
 bool Tresca::isPlastic() {
   return plastic;
@@ -219,5 +219,5 @@ void Tresca::track() {
 //  s << "p "     <<1020<<' '<<sConvg.p()<<' ';
 //  s << "q "     <<1020<<' '<<sConvg.q()<<' ';
 //  s << "END "<<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

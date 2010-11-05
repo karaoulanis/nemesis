@@ -42,10 +42,10 @@ VonMises::VonMises(int ID, int elasticID, double s0, double K)
 }
 VonMises::~VonMises() {
 }
-MultiaxialMaterial* VonMises::getClone() {
+MultiaxialMaterial* VonMises::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double s0   = MatParams[ 0];
   double K    = MatParams[ 1];
   // Create clone and return

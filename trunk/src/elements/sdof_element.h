@@ -38,9 +38,9 @@ class SDofElement: public Element {
   SDofElement(int ID, int NodeID, int dofID, int matID);
   ~SDofElement();
 
-  const Matrix& getK();
-  const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
 
   bool checkIfAllows(FEObject* f);
   void update() {return;}

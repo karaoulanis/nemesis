@@ -52,10 +52,10 @@ class Quad4: public Element {
 
   // Tracker member functions
   void addTracker(int index);
-  Tracker* getTracker(int index);
+  Tracker* get_tracker(int index);
   void track();
 
-  int getnPlasticPoints();
+  int get_num_plastic_points();
 };
 
 #endif  // SRC_ELEMENTS_QUAD4_H_

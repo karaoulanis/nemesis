@@ -43,18 +43,18 @@ class Triangle6: public Element {
     int Node_4, int Node_5, int Node_6, int matID);
   ~Triangle6();
 
-  const Matrix& getK();
-  const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
 
   void update();
   void commit();
 
-  void getShapeFunctions(MatPoint* pMatPoint, Matrix& N, double& detJ);
+  void get_shape_functions(MatPoint* pMatPoint, Matrix& N, double& detJ);
   void addInitialStresses(InitialStresses* pInitialStresses);
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
-  int getnPlasticPoints();
+  int get_num_plastic_points();
 };
 
 #endif  // SRC_ELEMENTS_TRIANGLE6_H_

@@ -35,12 +35,12 @@ HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
                      double mbb, double alpha)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get < Material>(pD->getMaterials(), elasticID);
-  if (p->getTag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
+  Material* p = pD->get < Material>(pD->get_materials(), elasticID);
+  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999, "Multiaxial elastic material expected.");
-  myElastic = static_cast < MultiaxialMaterial*>(p)->getClone();
-  MatParams[30]=myElastic->getParam(30);
-  MatParams[31]=myElastic->getParam(31);
+  myElastic = static_cast < MultiaxialMaterial*>(p)->get_clone();
+  MatParams[30]=myElastic->get_param(30);
+  MatParams[31]=myElastic->get_param(31);
 
   // Material properties
   MatParams[0]=si;
@@ -74,10 +74,10 @@ HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
 HoekBrown::~HoekBrown() {
   delete myElastic;
 }
-MultiaxialMaterial* HoekBrown::getClone() {
+MultiaxialMaterial* HoekBrown::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
   double mb       = MatParams[ 2];
@@ -136,12 +136,12 @@ void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
  * @param De Vector containing total strain increment.
  * @todo CHECK - ERROR!!!!!!!
  */ 
-void HoekBrown::setStrain(const Vector& De) {
+void HoekBrown::set_strain(const Vector& De) {
   int response;
 
   // material properties
-  double E = myElastic->getParam(0);
-  double nu= myElastic->getParam(1);
+  double E = myElastic->get_param(0);
+  double nu= myElastic->get_param(1);
 
   // elasticity matrix
   C3(0, 0)=  1/E;  C3(0, 1)=-nu/E;  C3(0, 2)=-nu/E;
@@ -154,7 +154,7 @@ void HoekBrown::setStrain(const Vector& De) {
   Matrix sV(3, 3), eV(3, 3);
   aTrial = aConvg;
   eTrial = eTotal+De;
-  sTrial = sConvg+(this->getC())*De;
+  sTrial = sConvg+(this->get_C())*De;
   spectralDecomposition(sTrial, s, sV);
   Vector eTrial3 = C3*s;
   sTrial3 = s;
@@ -341,8 +341,8 @@ void HoekBrown::commit() {
  * @todo fill it
  * @return A reference to the tangent material matrix.
  */
-const Matrix& HoekBrown::getC() {
-  return myElastic->getC();
+const Matrix& HoekBrown::get_C() {
+  return myElastic->get_C();
 }
 bool HoekBrown::isPlastic() {
   return plastic;
@@ -364,5 +364,5 @@ void HoekBrown::track() {
   //  s << "p "     <<1020<<' '<<sConvg.p()<<' ';
   //  s << "q "     <<1020<<' '<<sConvg.q()<<' ';
   //  s << "END "<<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

@@ -83,41 +83,41 @@ class Model: public AnalysisObject {
   Model(Domain* pDomain);
   virtual ~Model();
 
-  void setConstrained(bool b);
+  void set_constrained(bool b);
   bool isConstrained();
-  void setReordered(bool b);
+  void set_reordered(bool b);
   bool isReordered();
 
-  int getSOEDof(int NodeID, int localDof);
+  int get_soe_dof(int NodeID, int localDof);
 
   // Retrieve data needed from the Domain concering Nodes and Elements
-  int getnNodes();
-  int getnElements();
+  int get_num_nodes();
+  int get_num_elements();
 
   // Retrieve data from the Model concering ModelNodes and ModelElements
   int addModelNode(ModelNode* pModelNode);
   int addModelElement(ModelElement* pModelElement);
-  const ModelNodeContainer& getModelNodes() const;
-  const ModelElementContainer& getModelElements() const;
+  const ModelNodeContainer& get_model_nodes() const;
+  const ModelElementContainer& get_model_elements() const;
 
   // Handle the number of the system equations
-  void setEquations(int n);
-  int getnEquations();
+  void set_equations(int n);
+  int get_num_eqns();
 
   void incTrialDisp(const Vector& du);
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
-  void setTrialDisp(const Vector& u);
-  void setTrialVecs(const Vector& u, const Vector& v, const Vector& a);
+  void set_trial_disp(const Vector& u);
+  void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a);
   void update();
   void commit();
   void clear();
 
   void commitSens(const Vector& ds, int param);
 
-  void setNodalStress();
+  void set_nodal_stress();
 
-  int getDirectedGraph(DirectedGraph& G);
-  int getUndirectedGraph(UndirectedGraph& G);
+  int get_directed_graph(DirectedGraph& G);
+  int get_undirected_graph(UndirectedGraph& G);
 
   // XFem (or other type) enrichment
   void enrich();

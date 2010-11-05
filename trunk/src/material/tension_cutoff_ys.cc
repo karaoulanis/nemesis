@@ -29,26 +29,26 @@
 TensionCutOffYS::TensionCutOffYS(double T_) {
   T = T_;
 }
-double TensionCutOffYS::getf(const Vector& sigma, const double /*kappa*/) {
-  this->setSigma(sigma);
+double TensionCutOffYS::get_f(const Vector& sigma, const double /*kappa*/) {
+  this->set_sigma(sigma);
   return I1-T;
 }
-const Vector& TensionCutOffYS::getdfds(const Vector& sigma,
+const Vector& TensionCutOffYS::get_dfds(const Vector& sigma,
                                        const double /*kappa*/) {
-  this->setSigma(sigma);
+  this->set_sigma(sigma);
   a = a1;
   return a;
 }
-const Matrix& TensionCutOffYS::getd2fdsds(const Vector& /*sigma*/,
+const Matrix& TensionCutOffYS::get_d2fdsds(const Vector& /*sigma*/,
                                           const double /*kappa*/) {
   da.clear();
   return da;
 }
-double TensionCutOffYS::getdfdk(const Vector& /*sigma*/,
+double TensionCutOffYS::get_dfdk(const Vector& /*sigma*/,
                                 const double /*kappa*/) {
   return 0;
 }
-const Vector& TensionCutOffYS::getf2dkds(const Vector& /*sigma*/,
+const Vector& TensionCutOffYS::get_f2dkds(const Vector& /*sigma*/,
                                          const double /*kappa*/) {
   a.clear();
   return a;

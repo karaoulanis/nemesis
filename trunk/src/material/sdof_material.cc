@@ -33,7 +33,7 @@ SDofMaterial::SDofMaterial(int ID, double E, double rho)
   MatParams[0]=E;
   myTag = TAG_MATERIAL_SINGLE_DOF;
 }
-SDofMaterial* SDofMaterial::getClone() {
+SDofMaterial* SDofMaterial::get_clone() {
   // Material parameters
   double E   =MatParams[ 0];
   double rho =MatParams[30];

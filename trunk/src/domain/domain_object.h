@@ -46,13 +46,13 @@ class DomainObject: public FEObject {
   DomainObject(int ID);
   virtual ~DomainObject();
 
-  virtual int getID();
+  virtual int get_id();
 
-  virtual const Packet& getPacket();
-  virtual void setPacket(const Packet& p);
+  virtual const Packet& get_packet();
+  virtual void set_packet(const Packet& p);
   virtual void save(std::ostream& /*s*/)  {}
   virtual void load(std::istream& /*s*/)  {}
 
-  void setDomain(Domain* pDomain);
+  void set_domain(Domain* pDomain);
 };
 #endif  // SRC_DOMAIN_DOMAIN_OBJECT_H_

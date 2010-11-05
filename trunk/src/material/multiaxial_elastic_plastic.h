@@ -47,8 +47,8 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
   std::vector < Surface*> gSurfaces;
   EvolutionLaw* EL;
 
-  inline std::vector<Surface*> getfSurfaces()   {return fSurfaces;}
-  inline std::vector<Surface*> getgSurfaces()   {return gSurfaces;}
+  inline std::vector<Surface*> get_fSurfaces()   {return fSurfaces;}
+  inline std::vector<Surface*> get_gSurfaces()   {return gSurfaces;}
   void returnMapSYS(const Vector& De);
   void returnMapSYS2(const Vector& De);
 
@@ -61,9 +61,9 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
   MultiaxialElastoPlastic(int ID, int elasticID);
   ~MultiaxialElastoPlastic();
 
-  void setStrain(const Vector& De);
+  void set_strain(const Vector& De);
   void commit();
-  const Matrix& getC();
+  const Matrix& get_C();
   bool isPlastic()              {return plastic;}
 
   void updateStateVariable();

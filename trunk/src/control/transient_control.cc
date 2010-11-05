@@ -39,7 +39,7 @@ TransientControl::~TransientControl() {
  * @return 0 if everything is ok.
  */
 void TransientControl::init() {
-  int size = pA->getModel()->getnEquations();
+  int size = pA->get_model()->get_num_eqns();
   ///@todo: resize(size, 0.)
   u.resize(size);
   u.clear();
@@ -61,65 +61,65 @@ void TransientControl::init() {
   //-------------------------------------------------------------------------
   theLoadCase->initialize();
   int i, n;
-  n = pA->getModel()->getModelNodes().size();
+  n = pA->get_model()->get_model_nodes().size();
   for (i = 0; i < n; i++) {
-    ModelNode* pModelNode = pA->getModel()->getModelNodes()[i];
-    IDContainer FTable = pModelNode->getFTable();
+    ModelNode* pModelNode = pA->get_model()->get_model_nodes()[i];
+    IDContainer FTable = pModelNode->get_FTable();
     // Copy displacements
     pModelNode->zeroVector();
     pModelNode->add_uTrial();
     for (unsigned j = 0;j < FTable.size();j++)
       if ((FTable[j])>=0)
-        u[FTable[j]]=pModelNode->getVector()[j];
+        u[FTable[j]]=pModelNode->get_vector()[j];
     // Copy velocities
     pModelNode->zeroVector();
     pModelNode->add_vTrial();
     for (unsigned j = 0;j < FTable.size();j++)
       if ((FTable[j])>=0) 
-        v[FTable[j]]=pModelNode->getVector()[j];
+        v[FTable[j]]=pModelNode->get_vector()[j];
   }
   //-------------------------------------------------------------------------
   // Apply loads
   //-------------------------------------------------------------------------
-  pA->getDomain()->zeroLoads();
-  theLoadCase->setFactor(1.0);
+  pA->get_domain()->zeroLoads();
+  theLoadCase->set_factor(1.0);
   theLoadCase->applyLoads(0.);
 
   //-------------------------------------------------------------------------
   // Build the system of equations M.a = R-K.u-C.v
   //-------------------------------------------------------------------------
-  pA->getSOE()->zeroA();
-  pA->getSOE()->zeroB();
+  pA->get_soe()->zeroA();
+  pA->get_soe()->zeroB();
   // Take contribution from Elements
-  n = pA->getModel()->getModelElements().size();
+  n = pA->get_model()->get_model_elements().size();
   for (i = 0; i < n; i++) {
-    ModelElement* pModelElement = pA->getModel()->getModelElements()[i];
+    ModelElement* pModelElement = pA->get_model()->get_model_elements()[i];
     pModelElement->zeroMatrix();
     pModelElement->add_M();
-    pA->getSOE()->insertMatrixIntoA(pModelElement->getMatrix(),
-      pModelElement->getFTable(), 1.0);
+    pA->get_soe()->insertMatrixIntoA(pModelElement->get_matrix(),
+      pModelElement->get_FTable(), 1.0);
 
     pModelElement->zeroVector();
 //    pModelElement->add_KuTrial(1.0);
 //    pModelElement->add_CvTrial(1.0);
     pModelElement->add_Reff(1.0);
-    pA->getSOE()->insertVectorIntoB(pModelElement->getVector(),
-      pModelElement->getFTable(), -1.0);
+    pA->get_soe()->insertVectorIntoB(pModelElement->get_vector(),
+      pModelElement->get_FTable(), -1.0);
   }
   // Take contribution from Nodes
-  n = pA->getModel()->getModelNodes().size();
+  n = pA->get_model()->get_model_nodes().size();
   for (i = 0; i < n; i++) {
-    ModelNode* p = pA->getModel()->getModelNodes()[i];
+    ModelNode* p = pA->get_model()->get_model_nodes()[i];
     this->formNodalResidual(p);
-    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+    pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
   //-------------------------------------------------------------------------
   // Solve the system, update accelerations and commit
   //-------------------------------------------------------------------------
-  pA->getSOE()->solve();
-  a = pA->getSOE()->getX();
+  pA->get_soe()->solve();
+  a = pA->get_soe()->get_X();
   // Only accelerations are updated here, u and v are already updated from db
-  pA->getModel()->setTrialVecs(u, v, a);
+  pA->get_model()->set_trial_vecs(u, v, a);
   this->commit();
 */
 }
@@ -144,7 +144,7 @@ void TransientControl::formNodalResidual(ModelNode* pModelNode) {
   pModelNode->add_R(1.0);
 }
 void TransientControl::commit() {
-  pA->getModel()->commit();
+  pA->get_model()->commit();
 }
 /**
  * Aborts step.
@@ -153,20 +153,20 @@ void TransientControl::rollback() {
   lambdaTrial = lambdaConvg;
 }
 void TransientControl::formResidual(double fac)  {
-  pA->getSOE()->zeroB();
-  pA->getDomain()->zeroLoads();
-  pA->getDomain()->applyLoads(fac, pA->getDomain()->getTimeCurr());
+  pA->get_soe()->zeroB();
+  pA->get_domain()->zeroLoads();
+  pA->get_domain()->applyLoads(fac, pA->get_domain()->get_time_curr());
 
   // Take contribution from Nodes
-  for (unsigned i = 0; i < pA->getModel()->getModelNodes().size(); i++) {
-    ModelNode* p = pA->getModel()->getModelNodes()[i];
+  for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
+    ModelNode* p = pA->get_model()->get_model_nodes()[i];
     this->formNodalResidual(p);
-    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+    pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
   // Take contribution from Elements
-  for (unsigned i = 0; i < pA->getModel()->getModelElements().size(); i++) {
-    ModelElement* p = pA->getModel()->getModelElements()[i];
+  for (unsigned i = 0; i < pA->get_model()->get_model_elements().size(); i++) {
+    ModelElement* p = pA->get_model()->get_model_elements()[i];
     this->formElementalResidual(p);
-    pA->getSOE()->insertVectorIntoB(p->getVector(), p->getFTable(), -1.0);
+    pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
 }

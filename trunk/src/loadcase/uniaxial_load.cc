@@ -32,10 +32,10 @@ UniaxialLoad::UniaxialLoad() {
 }
 UniaxialLoad::UniaxialLoad(int elemID, const char* dir)
 :ElementalLoad(elemID) {
-  double xA = myElement->getNodes()[0]->getx1();
-  double yA = myElement->getNodes()[0]->getx2();
-  double xB = myElement->getNodes()[1]->getx1();
-  double yB = myElement->getNodes()[1]->getx2();
+  double xA = myElement->get_nodes()[0]->get_x1();
+  double yA = myElement->get_nodes()[0]->get_x2();
+  double xB = myElement->get_nodes()[1]->get_x1();
+  double yB = myElement->get_nodes()[1]->get_x2();
   L = sqrt((xB-xA)*(xB-xA)+(yB-yA)*(yB-yA));
   double c=(xB-xA)/L;
   double s=(yB-yA)/L;
@@ -73,7 +73,7 @@ BeamLoadPoint::BeamLoadPoint(int elemID, const char* dir, double a0_, double p0_
 }
 BeamLoadPoint::~BeamLoadPoint() {
 }
-const Vector& BeamLoadPoint::getP() {
+const Vector& BeamLoadPoint::get_P() {
   P.resize(6, 0.);
   P[0]=projections[0]*p0*(1-a0);
   P[1]=projections[1]*p0*(1-3*a0*a0+2*a0*a0*a0);
@@ -95,7 +95,7 @@ BeamLoadUniform::BeamLoadUniform(int elemID, const char* dir, double p0_)
 }
 BeamLoadUniform::~BeamLoadUniform() {
 }
-const Vector& BeamLoadUniform::getP() {
+const Vector& BeamLoadUniform::get_P() {
   P.resize(6, 0.);
   P[0]= projections[0]*( p0*L/2.);
   P[1]=-projections[1]*(-p0*L/2.);

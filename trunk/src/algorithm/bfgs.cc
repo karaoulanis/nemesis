@@ -41,7 +41,7 @@ isLineSearchActive(true) {
 BFGS::~BFGS() {
 }
 int BFGS::solveStep(int /*n*/) {
-  int size = pA->getModel()->getnEquations();
+  int size = pA->get_model()->get_num_eqns();
   Vector resOld(size);
   Vector resNew(size);
   Vector q(size);
@@ -54,19 +54,19 @@ int BFGS::solveStep(int /*n*/) {
   }
 
   // Predictor phase
-  pA->getControl()->formTangent();
-  pA->getControl()->predict();
-  pA->getConvergenceNorm()->newStep();
-  du = pA->getSOE()->getX();
-  resOld = pA->getSOE()->getB();
+  pA->get_control()->formTangent();
+  pA->get_control()->predict();
+  pA->get_convergence_norm()->newStep();
+  du = pA->get_soe()->get_X();
+  resOld = pA->get_soe()->get_B();
   resOld*=-1.;
-  pA->getControl()->formResidual(pA->getControl()->getLambda());
+  pA->get_control()->formResidual(pA->get_control()->get_lambda());
 
   // Corrector phase
   int k = 0;
   int check;
-  while ((check = pA->getConvergenceNorm()->update()) > 0) {
-    resNew = pA->getSOE()->getB();
+  while ((check = pA->get_convergence_norm()->update()) > 0) {
+    resNew = pA->get_soe()->get_B();
     resNew*=-1.;
     y[k]=resNew-resOld;
     s[k]=du;
@@ -81,9 +81,9 @@ int BFGS::solveStep(int /*n*/) {
       q-=a[i]*y[i+1];
     }
 
-    pA->getSOE()->setB(q);
-    pA->getSOE()->solve();
-    du = pA->getSOE()->getX();
+    pA->get_soe()->set_B(q);
+    pA->get_soe()->solve();
+    du = pA->get_soe()->get_X();
     // for (int i = k-m;i <= k-1;i++)          // for l-bfgs
     for (int i = 1; i <= k; i++) {
       // cout << "B "<<i<<" "<<k-i-1 << endl;   // for l-bfgs
@@ -92,11 +92,11 @@ int BFGS::solveStep(int /*n*/) {
       du+=s[i]*(a[i-1]-b);
     }
 
-    pA->getSOE()->setX(du);
-    pA->getControl()->correct();
-    pA->getControl()->formResidual(pA->getControl()->getLambda());
+    pA->get_soe()->set_X(du);
+    pA->get_control()->correct();
+    pA->get_control()->formResidual(pA->get_control()->get_lambda());
     double s0=-s[k]*resNew;
-    double s1=-s[k]*(pA->getSOE()->getB());
+    double s1=-s[k]*(pA->get_soe()->get_B());
     if (isLineSearchActive) this->lineSearch(s0, s1, du);
     resOld = resNew;
     ++k;
@@ -119,14 +119,14 @@ void BFGS::lineSearch(double s0, double sj, const Vector& du) {
     if (eta>etaMax) eta = etaMax;
     if (rj > r0    ) eta = 1.0;
     dx*=eta;
-    pA->getSOE()->setX(dx);
-    pA->getControl()->correct();
-    pA->getControl()->formResidual(pA->getControl()->getLambda());
-    sj = du*(pA->getSOE()->getB());
+    pA->get_soe()->set_X(dx);
+    pA->get_control()->correct();
+    pA->get_control()->formResidual(pA->get_control()->get_lambda());
+    sj = du*(pA->get_soe()->get_B());
     rj = fabs(sj/s0);
     etaP = eta;
     ++k;
   }
   dx = eta*du;
-  pA->getSOE()->setX(dx);
+  pA->get_soe()->set_X(dx);
 }

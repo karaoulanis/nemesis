@@ -40,13 +40,13 @@ class YS {
   bool active;
   public:
   YS();
-  void setSigma(const Vector& s);
+  void set_sigma(const Vector& s);
 
   // functions to be overwritten
-  virtual double getf(const Vector& sigma, const double kappa)=0;
-  virtual const Vector& getdfds(const Vector& sigma, const double kappa)=0;
-  virtual const Matrix& getd2fdsds(const Vector& sigma, const double kappa)=0;
-  virtual double getdfdk(const Vector& sigma, const double kappa)=0;
-  virtual const Vector& getf2dkds(const Vector& sigma, const double kappa)=0;
+  virtual double get_f(const Vector& sigma, const double kappa)=0;
+  virtual const Vector& get_dfds(const Vector& sigma, const double kappa)=0;
+  virtual const Matrix& get_d2fdsds(const Vector& sigma, const double kappa)=0;
+  virtual double get_dfdk(const Vector& sigma, const double kappa)=0;
+  virtual const Vector& get_f2dkds(const Vector& sigma, const double kappa)=0;
 };
 #endif  // SRC_MATERIAL_YS_H_

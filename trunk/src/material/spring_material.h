@@ -44,14 +44,14 @@ class SpringMaterial: public Material {
   SpringMaterial(int ID);
 
   // Get clone
-  virtual SpringMaterial* getClone()=0;
-  virtual void setStrain(const Vector& De)=0;
+  virtual SpringMaterial* get_clone()=0;
+  virtual void set_strain(const Vector& De)=0;
 
-  const Matrix& getC();
+  const Matrix& get_C();
   void commit();
-  inline void setStress(const Vector& s)  {sTrial = s;    }
+  inline void set_stress(const Vector& s)  {sTrial = s;    }
   inline void addStress(const Vector& s)  {sTrial+=s;   }
-  inline const Vector& getStress()    {return sTrial; }
+  inline const Vector& get_stress()    {return sTrial; }
 
   // Tracker member functions
   void track();

@@ -31,10 +31,10 @@ InitialVelocity::InitialVelocity(int nodeID, int DofID, double v)
   :InitialCondition() {
   myTag = TAG_INITIAL_VELOCITY;
   // Retrieve node from the domain
-  myNode = pD->get < Node>(pD->getNodes(), nodeID);
+  myNode = pD->get < Node>(pD->get_nodes(), nodeID);
   // Check if dof is activated
   dof = DofID-1;
-  if (myNode->getActivatedDof(dof)<0) 
+  if (myNode->get_activated_dof(dof)<0) 
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
   velc = v;
 }

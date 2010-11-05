@@ -48,16 +48,16 @@ class Material: public DomainObject {
   Material(int ID, double rho, double aT);
   virtual ~Material();
 
-  void setX(double x1_, double x2_ = 0, double x3_ = 0);
-  inline void   setParam(int i, double d)  {MatParams[i]=d;}
-  inline double getParam(int i)     {return MatParams[i];}
-  inline double getRho()          {return MatParams[30];}
-  inline double getaT()         {return MatParams[31];}
+  void set_X(double x1_, double x2_ = 0, double x3_ = 0);
+  inline void   set_param(int i, double d)  {MatParams[i]=d;}
+  inline double get_param(int i)     {return MatParams[i];}
+  inline double get_rho()          {return MatParams[30];}
+  inline double get_aT()         {return MatParams[31];}
   virtual void commit()=0;
 
   // Tracker member functions
   void addTracker();
-  Tracker* getTracker();
+  Tracker* get_tracker();
   virtual void track();
 };
 

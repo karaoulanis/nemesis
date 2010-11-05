@@ -48,12 +48,12 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     }
   return 0;
 }
-void SymmLinearSOE::setTheSize() {
+void SymmLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (theSize == pA->getModel()->getnEquations()) {
+  if (theSize == pA->get_model()->get_num_eqns()) {
     return;
   } else {
-    theSize = pA->getModel()->getnEquations();
+    theSize = pA->get_model()->get_num_eqns();
   }
   A.resize((int)(0.5*theSize*(theSize+1)));
   B.resize(theSize);
@@ -73,7 +73,7 @@ void SymmLinearSOE::print() {
       cout << " | " << B[i] << endl;
   }
 }
-int SymmLinearSOE::getEigenSign() {
+int SymmLinearSOE::get_eigen_sign() {
 ///@todo
 //  for (int i = 0;i < theSize;i++)
 //    if (fabs(A(i, i))<1e-12)  return 0;

@@ -34,6 +34,6 @@ NodalLoadSin::NodalLoadSin(int nodeID, int DofID, double a_, double omega_, doub
   omega = omega_;
   phi = phi_;
 }
-double NodalLoadSin::getValue(double time) {
+double NodalLoadSin::get_value(double time) {
   return a*sin(omega*time+phi);
 }

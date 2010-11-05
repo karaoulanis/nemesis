@@ -41,7 +41,7 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
 :Element(ID, matID) {
   myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
   // Get dimension
-  nDim = pD->getnDim();
+  nDim = pD->get_dim();
 
   // Store the nodes
   myNodalIDs.resize(2);
@@ -56,7 +56,7 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
   this->handleCommonInfo();
 
   // Store material information
-  mySpringMaterial = static_cast < SpringMaterial*>(myMaterial)->getClone();
+  mySpringMaterial = static_cast < SpringMaterial*>(myMaterial)->get_clone();
 
   // Find gap
   // gap = sqrt((x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0))
@@ -106,7 +106,7 @@ Spring::~Spring() {
 }
 void Spring::update() {
   static Vector du(2*nDim);
-  du = this->getDispIncrm();
+  du = this->get_disp_incrm();
   report(du, "du");
   static Vector de(nDim, 0);
   de.clear();
@@ -114,7 +114,7 @@ void Spring::update() {
     for (int i = 0;i < nDim;i++)
       de[i]+=T(i, k)*(du[k+nDim]-du[k]);
   // report(de, "de");
-  mySpringMaterial->setStrain(de);
+  mySpringMaterial->set_strain(de);
 }
 void Spring::commit() {
   mySpringMaterial->commit();
@@ -122,24 +122,24 @@ void Spring::commit() {
 bool Spring::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
-const Matrix& Spring::getK() {
+const Matrix& Spring::get_K() {
   Matrix& K=*myMatrix;
   K.clear();
-  const Matrix& Ct = mySpringMaterial->getC();
+  const Matrix& Ct = mySpringMaterial->get_C();
   Matrix K0 = Transpose(T)*Ct*T;
   K.append(K0, 0, 0, +1.);
   K.append(K0, 0, 3, -1.);
   K.append(K0, 3, 0, -1.);
   K.append(K0, 3, 3, +1.);
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   // report(K, "K", 14, 1);
   return K;
 
 /*  Matrix& K=*myMatrix;
   K.clear();
-  Vector Ct = mySpringMaterial->getC();
+  Vector Ct = mySpringMaterial->get_C();
   for (int k = 0; k < nDim; k++) {
     for (int j = 0; j < nDim; j++) {
       for (int i = 0; i < nDim; i++) {
@@ -151,26 +151,26 @@ const Matrix& Spring::getK() {
     }
   }
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;*/
 }
-const Matrix& Spring::getM() {
+const Matrix& Spring::get_M() {
   Matrix& M=*myMatrix;
   M.clear();
   return M;
 }
-const Vector& Spring::getR() {
+const Vector& Spring::get_R() {
   Vector& R=*myVector;
   R.clear();
   // Factors
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
+  double facS = myGroup->get_fac_S();
   ///@todo check
-  // double facG = myGroup->getFacG();
-  // double facP = myGroup->getFacP();
+  // double facG = myGroup->get_fac_G();
+  // double facP = myGroup->get_fac_P();
   // R = Fint - Fext
-  Vector sigma = mySpringMaterial->getStress();
+  Vector sigma = mySpringMaterial->get_stress();
   for (int k = 0; k < nDim; k++) {
     for (int i = 0; i < nDim; i++) {
       double d = facS*T(k, i)*sigma[k];
@@ -181,13 +181,13 @@ const Vector& Spring::getR() {
   report(R, "R");
   return R;
 }
-const Vector& Spring::getReff() {
+const Vector& Spring::get_Reff() {
   ///@todo: form Reff
   Vector& Reff=*myVector;
   Reff.clear();
   return Reff;
 }
-const Vector& Spring::getRgrad() {
+const Vector& Spring::get_Rgrad() {
   ///@todo: form Rgrad
   Vector& Rgrad=*myVector;
   Rgrad.clear();
@@ -197,7 +197,7 @@ void Spring::recoverStresses() {
   ///@todo Stresses from bar to nodes
   static Vector s(6);
   s.clear();
-  s.append(mySpringMaterial->getStress(), 0);
+  s.append(mySpringMaterial->get_stress(), 0);
   myNodes[0]->addStress(s);
   myNodes[1]->addStress(s);
 }
@@ -217,12 +217,12 @@ void Spring::addTracker(int index) {
  * An exception is thrown if no tracker is set.
  * @param index The index to the Element's Material.
  */
-Tracker* Spring::getTracker(int index) {
+Tracker* Spring::get_tracker(int index) {
   if (index != 1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (mySpringMaterial->getTracker() == 0)
+  if (mySpringMaterial->get_tracker() == 0)
     throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
-  return mySpringMaterial->getTracker();
+  return mySpringMaterial->get_tracker();
 }
 /**
  * Add a record to the tracker.

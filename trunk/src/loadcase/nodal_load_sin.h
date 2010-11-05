@@ -37,7 +37,7 @@ class NodalLoadSin: public NodalLoad {
   NodalLoadSin();
   NodalLoadSin(int nodeID, int DofID, double a_, double omega_, double phi_);
 
-  double getValue(double time);
+  double get_value(double time);
 };
 
 #endif  // SRC_LOADCASE_NODAL_LOAD_SIN_H_

@@ -43,12 +43,12 @@ EliminationModelNode::EliminationModelNode(const IDContainer& FTable,
  */
 EliminationModelNode::~EliminationModelNode() {
 }
-void EliminationModelNode::setTheOldFTable(const IDContainer& ftab) {
+void EliminationModelNode::set_old_FTable(const IDContainer& ftab) {
   theOldFTable = ftab;
 }
 void EliminationModelNode::add_R(double factor) {
   if (myNode->existsLoad())
-    myVector->add_cV(factor, myNode->getR());
+    myVector->add_cV(factor, myNode->get_R());
 }
 
 void EliminationModelNode::incTrialDisp(const Vector& du) {
@@ -91,16 +91,16 @@ void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
   }
   myNode->addTrialAccl(*myVector);
 }
-void EliminationModelNode::setTrialDisp(const Vector& u) {
+void EliminationModelNode::set_trial_disp(const Vector& u) {
   myVector->clear();
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=u[theFTable[i]];
     }
   }
-  myNode->setTrialDisp(*myVector);
+  myNode->set_trial_disp(*myVector);
 }
-void EliminationModelNode::setTrialVecs(const Vector& u, const Vector& v,
+void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
                                         const Vector& a) {
   ///@todo Run these within a loop
   // Set displacements
@@ -111,7 +111,7 @@ void EliminationModelNode::setTrialVecs(const Vector& u, const Vector& v,
       (*myVector)[i]=0.;
     }
   }
-  myNode->setTrialDisp(*myVector);
+  myNode->set_trial_disp(*myVector);
   // Set velocities
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
@@ -120,7 +120,7 @@ void EliminationModelNode::setTrialVecs(const Vector& u, const Vector& v,
       (*myVector)[i]=0.;
     }
   }
-  myNode->setTrialVelc(*myVector);
+  myNode->set_trial_velc(*myVector);
   // Set accelerations
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
@@ -129,7 +129,7 @@ void EliminationModelNode::setTrialVecs(const Vector& u, const Vector& v,
       (*myVector)[i]=0.;
     }
   }
-  myNode->setTrialAccl(*myVector);
+  myNode->set_trial_accl(*myVector);
 }
 void EliminationModelNode::commit() {
   myNode->commit();

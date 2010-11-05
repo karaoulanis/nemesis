@@ -62,7 +62,7 @@ Quad4::Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
     this->findShapeFunctionsAt(myMatPoints[i]);
     double xG = N(0, 0)*x(0, 0)+N(0, 1)*x(1, 0)+N(0, 2)*x(2, 0)+N(0, 3)*x(3, 0);
     double yG = N(0, 0)*x(0, 1)+N(0, 1)*x(1, 1)+N(0, 2)*x(2, 1)+N(0, 3)*x(3, 1);
-    myMatPoints[i]->setX(xG, yG);
+    myMatPoints[i]->set_X(xG, yG);
   }
 }
 Quad4::~Quad4() {
@@ -84,7 +84,7 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
   J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
 
   detJ = J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);     // detJ
-  if (detJ < 0.) cout << myNodes[0]->getID() << endl;
+  if (detJ < 0.) cout << myNodes[0]->get_id() << endl;
   double dxidx  = J(1, 1)/detJ;
   double detadx =-J(1, 0)/detJ;
   double dxidy  =-J(0, 1)/detJ;
@@ -102,15 +102,15 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
 }
 void Quad4::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->getMaterial()->commit();
+    myMatPoints[i]->get_material()->commit();
 }
 bool Quad4::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
 void Quad4::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID())
+  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id())
     for (unsigned i = 0;i < myMatPoints.size();i++)
-      myMatPoints[i]->setInitialStresses(pInitialStresses);
+      myMatPoints[i]->set_initial_stresses(pInitialStresses);
 }
 void Quad4::recoverStresses() {
   ///@todo check
@@ -125,22 +125,22 @@ void Quad4::recoverStresses() {
 
   sigma.clear();
   for (unsigned i = 0; i < 4; i++) {
-    sigma[0]=E(i, 0)*myMatPoints[0]->getMaterial()->getStress()[0]
-        +E(i, 1)*myMatPoints[1]->getMaterial()->getStress()[0]
-        +E(i, 2)*myMatPoints[2]->getMaterial()->getStress()[0]
-        +E(i, 3)*myMatPoints[3]->getMaterial()->getStress()[0];
-    sigma[1]=E(i, 0)*myMatPoints[0]->getMaterial()->getStress()[1]
-        +E(i, 1)*myMatPoints[1]->getMaterial()->getStress()[1]
-        +E(i, 2)*myMatPoints[2]->getMaterial()->getStress()[1]
-        +E(i, 3)*myMatPoints[3]->getMaterial()->getStress()[1];
-    sigma[2]=E(i, 0)*myMatPoints[0]->getMaterial()->getStress()[2]
-        +E(i, 1)*myMatPoints[1]->getMaterial()->getStress()[2]
-        +E(i, 2)*myMatPoints[2]->getMaterial()->getStress()[2]
-        +E(i, 3)*myMatPoints[3]->getMaterial()->getStress()[2];
-    sigma[3]=E(i, 0)*myMatPoints[0]->getMaterial()->getStress()[3]
-        +E(i, 1)*myMatPoints[1]->getMaterial()->getStress()[3]
-        +E(i, 2)*myMatPoints[2]->getMaterial()->getStress()[3]
-        +E(i, 3)*myMatPoints[3]->getMaterial()->getStress()[3];
+    sigma[0]=E(i, 0)*myMatPoints[0]->get_material()->get_stress()[0]
+        +E(i, 1)*myMatPoints[1]->get_material()->get_stress()[0]
+        +E(i, 2)*myMatPoints[2]->get_material()->get_stress()[0]
+        +E(i, 3)*myMatPoints[3]->get_material()->get_stress()[0];
+    sigma[1]=E(i, 0)*myMatPoints[0]->get_material()->get_stress()[1]
+        +E(i, 1)*myMatPoints[1]->get_material()->get_stress()[1]
+        +E(i, 2)*myMatPoints[2]->get_material()->get_stress()[1]
+        +E(i, 3)*myMatPoints[3]->get_material()->get_stress()[1];
+    sigma[2]=E(i, 0)*myMatPoints[0]->get_material()->get_stress()[2]
+        +E(i, 1)*myMatPoints[1]->get_material()->get_stress()[2]
+        +E(i, 2)*myMatPoints[2]->get_material()->get_stress()[2]
+        +E(i, 3)*myMatPoints[3]->get_material()->get_stress()[2];
+    sigma[3]=E(i, 0)*myMatPoints[0]->get_material()->get_stress()[3]
+        +E(i, 1)*myMatPoints[1]->get_material()->get_stress()[3]
+        +E(i, 2)*myMatPoints[2]->get_material()->get_stress()[3]
+        +E(i, 3)*myMatPoints[3]->get_material()->get_stress()[3];
     myNodes[i]->addStress(sigma);
   }
 }
@@ -152,7 +152,7 @@ void Quad4::recoverStresses() {
 void Quad4::addTracker(int index) {
   if (index < 0 || index>(int)myMatPoints.size()-1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  myMatPoints[index]->getMaterial()->addTracker();
+  myMatPoints[index]->get_material()->addTracker();
 }
 /**
  * Get the Tracker with \a index.
@@ -160,12 +160,12 @@ void Quad4::addTracker(int index) {
  * An exception is thrown if no tracker is set.
  * @param index The index to the Element's Material.
  */
-Tracker* Quad4::getTracker(int index) {
+Tracker* Quad4::get_tracker(int index) {
   if (index < 0 || index>(int)myMatPoints.size()-1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (myMatPoints[index]->getMaterial()->getTracker() == 0)
+  if (myMatPoints[index]->get_material()->get_tracker() == 0)
     throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
-  return myMatPoints[index]->getMaterial()->getTracker();
+  return myMatPoints[index]->get_material()->get_tracker();
 }
 /**
  * Add a record to the tracker.
@@ -173,12 +173,12 @@ Tracker* Quad4::getTracker(int index) {
  */
 void Quad4::track() {
   for (unsigned i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->getMaterial()->track();
+    myMatPoints[i]->get_material()->track();
 }
-int Quad4::getnPlasticPoints() {
+int Quad4::get_num_plastic_points() {
   int n = 0;
   for (unsigned int i = 0;i < myMatPoints.size();i++) {
-    if (myMatPoints[i]->getMaterial()->isPlastic()) n++;
+    if (myMatPoints[i]->get_material()->isPlastic()) n++;
   }
   return n;
 }

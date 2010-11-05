@@ -35,7 +35,7 @@ YS::YS() {
   da22.resize(3, 3);
   active = false;
 }
-void YS::setSigma(const Vector& s) {
+void YS::set_sigma(const Vector& s) {
   // Deviatoric stresses
   double s0=(s[0]+s[1]+s[2])/3.;
   s1 = s[0]-s0;

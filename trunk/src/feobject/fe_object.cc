@@ -35,7 +35,7 @@ FEObject::FEObject(FEObjectTag tag) {
 }
 FEObject::~FEObject() {
 }
-FEObjectTag FEObject::getTag() {
+FEObjectTag FEObject::get_tag() {
   return myTag;
 }
 

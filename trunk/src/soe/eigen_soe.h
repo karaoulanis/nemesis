@@ -49,8 +49,8 @@ class EigenSOE: public SOE {
 
   void zeroM();
   int solve();
-  void setTheSize();
+  void set_size();
   void print();
-  int getEigenSign();
+  int get_eigen_sign();
 };
 #endif  // SRC_SOE_EIGEN_SOE_H_

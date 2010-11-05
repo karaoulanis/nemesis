@@ -32,6 +32,6 @@ NodalLoadConstant::NodalLoadConstant(int nodeID, int DofID, double val)
   myTag = TAG_NODAL_LOAD_CONSTANT;
   theValue = val;
 }
-double NodalLoadConstant::getValue(double /*time*/) {
+double NodalLoadConstant::get_value(double /*time*/) {
   return theValue;
 }

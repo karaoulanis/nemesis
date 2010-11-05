@@ -83,7 +83,7 @@ enum DomainTag {  TAG_DOMAIN_NOT_SET      =  0,
  */
 class Domain {
  private:
-  int nDim;
+  int dim_;
   DomainTag myTag;
   double myFac;   // factor for plane/axisymmetric problems (e.g. 1.0 rad)
   bool upToDate;
@@ -116,8 +116,8 @@ class Domain {
   ~Domain();
 
   // Access to data members
-  int setnDim(int nDimensions);
-  int getnDim() const;
+  int set_dim(int dim);
+  int get_dim() const;
   void zeroNodalStress();
   void zeroSensitivityParameters();
   void applyLoads(double lambda_, double time_);
@@ -129,56 +129,56 @@ class Domain {
 
   // Gravity axis
   void setGravity(double g, double xG, double yG, double zG);
-  const Vector& getGravityVect();
-  double  getGravityAccl();
+  const Vector& get_gravity_vect();
+  double  get_gravity_accl();
 
   ///@todo cleanup
-  double getTimeCurr()      {return timeCurr;}
-  double getTimePrev()      {return timePrev;}
-  double getTimeIncr()      {return timeCurr-timePrev;}
-  void incTime(double dt)   {timeCurr+=dt;}
-  void commit()             {timePrev = timeCurr;}
-  void setLambda(double l)  {lambdaConvg = l;}
-  double getLambda()        {return lambdaConvg;}
+  double get_time_curr()      {return timeCurr;}
+  double get_time_prev()      {return timePrev;}
+  double get_time_incr()      {return timeCurr-timePrev;}
+  void incTime(double dt)     {timeCurr+=dt;}
+  void commit()               {timePrev = timeCurr;}
+  void set_lambda(double l)    {lambdaConvg = l;}
+  double get_lambda()         {return lambdaConvg;}
 
-  void rollback()           {}
+  void rollback()             {}
 
   // Functions that handle the database
-  void setDatabase(Database* db);
-  Database* getDatabase();
+  void set_database(Database* db);
+  Database* get_database();
   int storeState(const char* tableName);
   int restoreState(const char* tableName);
 
   void setTag(DomainTag t)          {myTag = t;}
-  DomainTag getTag()                {return myTag;}
+  DomainTag get_tag()                {return myTag;}
   void setFac(double fac)           {myFac = fac;}
-  double getFac()                   {return myFac;}
+  double get_fac()                   {return myFac;}
   bool isUpToDate()                 {return upToDate;}
   void setUpToDate()                {upToDate = true;}
   bool areGroupsByMaterial()        {return groupsByMaterial;}
   void setGroupsByMaterial(bool b)  {groupsByMaterial = b;}
   void setCurrentGroup(int n)       {currentGroup = n;}
-  int  getCurrentGroup()            {return currentGroup;}
+  int  get_current_group()            {return currentGroup;}
 
   // Rayleigh damping
   void setRayleighFactors(const Vector& factors);
-  const Vector& getRayleighFactors();
+  const Vector& get_rayleigh_factors();
 
   // EigenValues
-  void setEigenValues(const Vector& vals);
-  const Vector& getEigenValues();
+  void set_eigenvalues(const Vector& vals);
+  const Vector& get_eigen_values();
 
-  inline NodeContainer& getNodes()                  {return theNodes;}
-  inline CrossSectionContainer& getCrossSections()  {return theCrossSections;}
-  inline ElementContainer& getElements()            {return theElements;}
-  inline GroupContainer& getGroups()                {return theGroups;}
-  inline MaterialContainer& getMaterials()          {return theMaterials;}
-  inline LoadCaseContainer& getLoadCases()          {return theLoadCases;}
-  inline ConstraintContainer& getConstraints()      {return theConstraints;}
-  inline CrackContainer& getCracks()                {return theCracks;}
+  inline NodeContainer& get_nodes()                  {return theNodes;}
+  inline CrossSectionContainer& get_cross_sections()  {return theCrossSections;}
+  inline ElementContainer& get_elements()            {return theElements;}
+  inline GroupContainer& get_groups()                {return theGroups;}
+  inline MaterialContainer& get_materials()          {return theMaterials;}
+  inline LoadCaseContainer& get_loadcases()          {return theLoadCases;}
+  inline ConstraintContainer& get_constraints()      {return theConstraints;}
+  inline CrackContainer& get_cracks()                {return theCracks;}
 
   template<class TE, class TC> int add(TC& c, TE* e) {
-    int id = e->getID();
+    int id = e->get_id();
     std::pair<typename TC::const_iterator, bool> res = c.insert(make_pair(id, e));
     if (res.second == true) {
       upToDate = false;

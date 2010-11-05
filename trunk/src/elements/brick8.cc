@@ -87,7 +87,7 @@ Brick8::Brick8(int ID,
       yG+=shp[a][0][k]*x(a, 1);
       zG+=shp[a][0][k]*x(a, 2);
     }
-    myMatPoints[k]->setX(xG, yG, zG);
+    myMatPoints[k]->set_X(xG, yG, zG);
   }
 
   // Permutation index
@@ -102,7 +102,7 @@ Brick8::~Brick8() {
 /**
  * Element stiffness matrix.
  */
-const Matrix& Brick8::getK() {
+const Matrix& Brick8::get_K() {
   // Static variables and references
   static Matrix Ba;
   static Matrix Bb;
@@ -112,26 +112,26 @@ const Matrix& Brick8::getK() {
   // Stiffness matrix K+=B[a]T.C.B[b].dV (for each GaussPoint)
   K.clear();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    const Matrix& C = myMatPoints[k]->get_material()->get_C();
     double dV = detJ[k];
     for (unsigned a = 0; a < myNodes.size(); a++) {
-      this->getB(Ba, a, k);
+      this->get_B(Ba, a, k);
       for (unsigned b = 0; b < myNodes.size(); b++) {
-        this->getB(Bb, b, k);
+        this->get_B(Bb, b, k);
         K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
   // Multiply by facK (active/deactivated)
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
 /**
  * Element mass matrix.
  */
-const Matrix& Brick8::getM() {
+const Matrix& Brick8::get_M() {
   Matrix &M=*myMatrix;
   M.clear();
   return M;
@@ -139,7 +139,7 @@ const Matrix& Brick8::getM() {
 /**
  * Element residual vector.
  */
-const Vector& Brick8::getR() {
+const Vector& Brick8::get_R() {
   // Static variables and references
   static Vector sigma(6);
   static Matrix Ba(6, 3);
@@ -147,18 +147,18 @@ const Vector& Brick8::getR() {
   R.clear();
   // Factors
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
   this->shapeFunctions();
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    sigma = myMatPoints[k]->getMaterial()->getStress();
+    sigma = myMatPoints[k]->get_material()->get_stress();
     double dV = detJ[k];
     for (unsigned a = 0; a < myNodes.size(); a++) {
       // +facS*Fint
-      this->getB(Ba, a, k);
+      this->get_B(Ba, a, k);
       add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 3;i++)
@@ -181,17 +181,17 @@ void Brick8::update() {
   // Check if active
   if (!(myGroup->isActive()))  return;
   // Get incremental displacements
-  u = this->getDispIncrm();
+  u = this->get_disp_incrm();
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
   this->shapeFunctions();
   // Incremental strains: De+=B[a].Du  (for each GaussPoint)
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.clear();
     for (unsigned a = 0; a < myNodes.size(); a++) {
-      this->getB(B, a, k);
+      this->get_B(B, a, k);
       add2(epsilon, 3*a, B, u, 1.0, 1.0);
     }
-    myMatPoints[k]->getMaterial()->setStrain(epsilon);
+    myMatPoints[k]->get_material()->set_strain(epsilon);
   }
 }
 /**
@@ -199,7 +199,7 @@ void Brick8::update() {
  */
 void Brick8::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->getMaterial()->commit();
+    myMatPoints[i]->get_material()->commit();
 }
 /**
  * Element shape functions.
@@ -211,9 +211,9 @@ void Brick8::shapeFunctions() {
  * Element initial stresses.
  */
 void Brick8::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->getGroupID() == myGroup->getID()) {
+  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id()) {
     for (unsigned i = 0;i < myMatPoints.size();i++) {
-      myMatPoints[i]->setInitialStresses(pInitialStresses);
+      myMatPoints[i]->set_initial_stresses(pInitialStresses);
     }
   }
 }
@@ -248,7 +248,7 @@ void Brick8::recoverStresses() {
     sigma.clear();
     for (unsigned j = 0;j < 6;j++) {    // sigma
       for (unsigned k = 0;k < 8;k++) {  // material points
-        sigma[j]+=E(i, k)*(myMatPoints[k]->getMaterial()->getStress())[j];
+        sigma[j]+=E(i, k)*(myMatPoints[k]->get_material()->get_stress())[j];
       }
     }
     myNodes[i]->addStress(sigma);
@@ -257,10 +257,10 @@ void Brick8::recoverStresses() {
 /**
  * Element non-linear points.
  */
-int Brick8::getnPlasticPoints() {
+int Brick8::get_num_plastic_points() {
   int n = 0;
   for (unsigned i = 0;i < myMatPoints.size();i++)
-    if (myMatPoints[i]->getMaterial()->isPlastic()) n+=1;
+    if (myMatPoints[i]->get_material()->isPlastic()) n+=1;
   return n;
 }
 /**

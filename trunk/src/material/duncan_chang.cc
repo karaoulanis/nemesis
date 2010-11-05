@@ -41,7 +41,7 @@ DuncanChang::DuncanChang(int ID, double E, double nu, double c, double phi,
   // Material tag
   myTag = TAG_MATERIAL_MULTIAXIAL_ELASTIC;
 }
-MultiaxialMaterial* DuncanChang::getClone() {
+MultiaxialMaterial* DuncanChang::get_clone() {
   // Material parameters
   double E   = MatParams[ 0];
   double nu  = MatParams[ 1];
@@ -57,11 +57,11 @@ MultiaxialMaterial* DuncanChang::getClone() {
     new DuncanChang(myID, E, nu, c, phi, m, Rf, pa, rho, aT);
   return newClone;
 }
-void DuncanChang::setStrain(const Vector& De) {
+void DuncanChang::set_strain(const Vector& De) {
   eTrial = eTotal+De;
-  sTrial=(this->getC())*eTrial;
+  sTrial=(this->get_C())*eTrial;
 }
-const Matrix& DuncanChang::getC() {
+const Matrix& DuncanChang::get_C() {
   C.clear();
   const Vector& s = sTrial.eigenvalues();
   double s1 = -s[2];
@@ -114,5 +114,5 @@ void DuncanChang::track() {
   s << "p "     << 1020 << ' ' << sConvg.p() << ' ';
   s << "q "     << 1020 << ' ' << sConvg.q() << ' ';
   s << "END " <<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

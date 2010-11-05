@@ -37,6 +37,6 @@ class Reorderer: public AnalysisObject {
   Reorderer();
   virtual ~Reorderer();
   int reorder();
-  virtual int getPerm(std::vector<int>& perm)=0;
+  virtual int get_perm(std::vector<int>& perm)=0;
 };
 #endif  // SRC_REORDERER_REORDERER_H_

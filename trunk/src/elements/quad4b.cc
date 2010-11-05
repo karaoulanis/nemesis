@@ -43,7 +43,7 @@ Quad4b::Quad4b(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
 }
 Quad4b::~Quad4b() {
 }
-const Matrix& Quad4b::getK() {
+const Matrix& Quad4b::get_K() {
   Matrix &K=*myMatrix;
   static Matrix Ba;
   static Matrix Bb;
@@ -51,30 +51,30 @@ const Matrix& Quad4b::getK() {
   this->shapeFunctions();
   K.clear();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < myNodes.size(); a++) {
-      this->getB(Ba, a, k);
+      this->get_B(Ba, a, k);
       for (unsigned b = 0; b < myNodes.size(); b++) {
-        this->getB(Bb, b, k);
-        double dV=(pD->getFac())*detJ[k];
+        this->get_B(Bb, b, k);
+        double dV=(pD->get_fac())*detJ[k];
         K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
-const Matrix& Quad4b::getM() {
+const Matrix& Quad4b::get_M() {
   Matrix &M=*myMatrix;
   M.clear();
-  double rho = myMaterial->getRho();
+  double rho = myMaterial->get_rho();
   double volume = 0.;
 
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++)
-    volume+=detJ[k]*(pD->getFac())*(myMatPoints[k]->get_w());
+    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w());
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
   return M;
@@ -82,7 +82,7 @@ const Matrix& Quad4b::getM() {
 /**
  * Element residual vector.
  */
-const Vector& Quad4b::getR() {
+const Vector& Quad4b::get_R() {
   // Static variables and references
   static Vector sigma(6);
   static Matrix Ba;
@@ -91,20 +91,20 @@ const Vector& Quad4b::getR() {
 
   // Factors
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
 
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
 
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    sigma = myMatPoints[k]->getMaterial()->getStress();
-    double dV=(pD->getFac())*detJ[k];
+    sigma = myMatPoints[k]->get_material()->get_stress();
+    double dV=(pD->get_fac())*detJ[k];
     for (unsigned a = 0; a < myNodes.size(); a++) {
       // +facS*Fint
-      this->getB(Ba, a, k);
+      this->get_B(Ba, a, k);
       add_BTv(R, 2*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 2;i++)
@@ -126,25 +126,25 @@ void Quad4b::update() {
   static Matrix Ba;
 
   if (!(myGroup->isActive()))  return;
-  u = this->getDispIncrm();
+  u = this->get_disp_incrm();
 
   this->shapeFunctions();
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.clear();
     for (unsigned a = 0; a < myNodes.size(); a++) {
-      this->getB(Ba, a, k);
+      this->get_B(Ba, a, k);
       ///@todo check dV
-      // double dV=(pD->getFac())*detJ[k];
+      // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
     }
-    myMatPoints[k]->getMaterial()->setStrain(epsilon);
+    myMatPoints[k]->get_material()->set_strain(epsilon);
   }
 }
 void Quad4b::shapeFunctions() {
   shape4(x, shp, detJ);
   // Axisymmetry
-  if (pD->getTag() == TAG_DOMAIN_AXISYMMETRIC) {
+  if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
     for (int k = 0; k < 4; k++) {    // matpoints
       double r = 0.;
       for (int i = 0; i < 4; i++) {  // nodes
@@ -154,11 +154,11 @@ void Quad4b::shapeFunctions() {
     }
   }
 }
-void Quad4b::getB(Matrix& B, int node, int gPoint) {
+void Quad4b::get_B(Matrix& B, int node, int gPoint) {
   B.resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
   for (int k = 0;k < 4;k++) {  // matpoints
-    double dV = detJ[k]*(pD->getFac());
+    double dV = detJ[k]*(pD->get_fac());
     Bb1+=shp[node][1][k]*dV;
     Bb2+=shp[node][2][k]*dV;
     vol+=dV;
@@ -169,7 +169,7 @@ void Quad4b::getB(Matrix& B, int node, int gPoint) {
   double B0 = 0., Bb0 = 0.;
   // Axisymmetry
   double r = 0.;
-  if (pD->getTag() == TAG_DOMAIN_AXISYMMETRIC) {
+  if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
     for (int i = 0;i < 4;i++) {
           r+=x(i, 0)*shp[i][0][gPoint];
     }
@@ -179,7 +179,7 @@ void Quad4b::getB(Matrix& B, int node, int gPoint) {
       for (int i = 0;i < 4;i++) {
           r+=x(i, 0)*shp[i][0][k];
       }
-      Bb0+=shp[node][0][k]*detJ[k]*(pD->getFac())/vol/r;
+      Bb0+=shp[node][0][k]*detJ[k]*(pD->get_fac())/vol/r;
     }
   }
 

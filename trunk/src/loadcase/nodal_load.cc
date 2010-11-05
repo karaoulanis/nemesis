@@ -30,12 +30,12 @@ NodalLoad::NodalLoad() {
 NodalLoad::NodalLoad(int nodeID, int dofID)
   :Load() {
   // Retrieve node from the domain and check if exists
-  myNode = pD->get < Node>(pD->getNodes(), nodeID);
+  myNode = pD->get < Node>(pD->get_nodes(), nodeID);
   // Set the dof and check if activated
   dof = dofID-1;
-  if (myNode->getActivatedDof(dof)<0) 
+  if (myNode->get_activated_dof(dof)<0) 
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
 }
 void NodalLoad::apply(double fact, double time) {
-  myNode->addLoad(dof, this->getValue(time), fact);
+  myNode->addLoad(dof, this->get_value(time), fact);
 }

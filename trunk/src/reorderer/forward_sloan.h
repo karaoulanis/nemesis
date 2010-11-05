@@ -35,6 +35,6 @@ class ForwardSloan: public Reorderer {
  public:
   ForwardSloan(double w1 = 0.5, double w2 = 0.5);
   ~ForwardSloan();
-  int getPerm(std::vector<int>& perm);
+  int get_perm(std::vector<int>& perm);
 };
 #endif  // SRC_REORDERER_FORWARD_SLOAN_H_

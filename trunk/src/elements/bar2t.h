@@ -36,8 +36,8 @@ class Bar2t: public Bar {
   Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID);
   ~Bar2t();
 
-  const Matrix& getK();
-  const Vector& getR();
+  const Matrix& get_K();
+  const Vector& get_R();
 };
 
 #endif  // SRC_ELEMENTS_BAR2T_H_

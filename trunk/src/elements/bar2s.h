@@ -36,9 +36,9 @@ class Bar2s: public Bar {
   Bar2s(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID);
   ~Bar2s();
 
-  const Matrix& getK();
-  const Vector& getR();
-  const Vector& getRgrad();
+  const Matrix& get_K();
+  const Vector& get_R();
+  const Vector& get_Rgrad();
 };
 
 #endif  // SRC_ELEMENTS_BAR2S_H_

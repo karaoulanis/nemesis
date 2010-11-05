@@ -41,13 +41,13 @@ class Quad4e: public Quad4 {
   Quad4e(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
   ~Quad4e();
   
-  const Matrix& getK();
-    const Matrix& getM();
-  const Vector& getR();
+  const Matrix& get_K();
+    const Matrix& get_M();
+  const Vector& get_R();
 
   void update();
   void formKR();
-  double getJ(double xi, double eta);
+  double get_J(double xi, double eta);
   void formTo(double xi, double eta);
   void formNu(double xi, double eta);
   void formBu(double xi, double eta);

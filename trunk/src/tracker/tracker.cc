@@ -32,7 +32,7 @@ Tracker::Tracker() {
 }
 Tracker::~Tracker() {
 }
-int Tracker::getSteps() {
+int Tracker::get_steps() {
   return myRecords.size();
 }
 void Tracker::track(double lambda_, double time_, string data_) {

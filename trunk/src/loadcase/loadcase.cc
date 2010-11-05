@@ -108,7 +108,7 @@ void LoadCase::commit() {
 void LoadCase::applySensitivityParameter(int param) {
   mySensitivityParameters[param]->apply();
 }
-int LoadCase::getnSensitivityParameters() {
+int LoadCase::get_num_sens_param() {
   return mySensitivityParameters.size();
 }
 void LoadCase::addSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter) {

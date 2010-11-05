@@ -35,7 +35,7 @@ class NodalLoadConstant: public NodalLoad {
   NodalLoadConstant();
   NodalLoadConstant(int nodeID, int DofID, double val);
 
-  double getValue(double time);
+  double get_value(double time);
 };
 
 #endif  // SRC_LOADCASE_NODAL_LOAD_CONSTANT_H_

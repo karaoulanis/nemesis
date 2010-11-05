@@ -37,7 +37,7 @@ Brick8d::Brick8d(int ID,
 }
 Brick8d::~Brick8d() {
 }
-void Brick8d::getB(Matrix& B, int node, int gPoint) {
+void Brick8d::get_B(Matrix& B, int node, int gPoint) {
   // Resize B
   B.resize(6, 3);
   double B1 = shp[node][1][gPoint];

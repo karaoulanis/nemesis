@@ -78,13 +78,13 @@ void ArcLengthUNP::predict() {
 //  else if (fabs(DLambda)>maxDelta) DLambda = maxDelta;
 
   // Find duT (tangent du)
-  pA->getSOE()->setB(qRef);
-  pA->getSOE()->solve();
-  duT = pA->getSOE()->getX();
+  pA->get_soe()->set_B(qRef);
+  pA->get_soe()->solve();
+  duT = pA->get_soe()->get_X();
 
   // Now DLambda can be found
   ///@todo rewrite eigenSign
-  int sign = pA->getSOE()->getEigenSign();
+  int sign = pA->get_soe()->get_eigen_sign();
   //if (sign == 0) exit(-11111);
   DLambda*=sign;
   lambdaTrial+=DLambda;
@@ -93,14 +93,14 @@ void ArcLengthUNP::predict() {
   // Find displacement vectors and update the model
   du = DLambda*duT;
   Du = du;
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
 
   // Set num of achieved iterations to one
   Io = 1;
 
   // Set du to the SOE so the norm can find it there
-  pA->getSOE()->setX(du);
+  pA->get_soe()->set_X(du);
 }
 /**
  * Updates that occur within each iterative step.
@@ -108,12 +108,12 @@ void ArcLengthUNP::predict() {
  */
 void ArcLengthUNP::correct() {
   // Find du_bar
-  duBar = pA->getSOE()->getX();
+  duBar = pA->get_soe()->get_X();
 
   // Find duT
-  pA->getSOE()->setB(qRef);
-  pA->getSOE()->solve();
-  duT = pA->getSOE()->getX();
+  pA->get_soe()->set_B(qRef);
+  pA->get_soe()->solve();
+  duT = pA->get_soe()->get_X();
 
   dLambda=-Du*duBar/(Du*duT+DLambda);
   DLambda+=dLambda;
@@ -124,8 +124,8 @@ void ArcLengthUNP::correct() {
   du = duBar+dLambda*duT;
 
   // Update displacements in the model
-  pA->getModel()->incTrialDisp(du);
-  pA->getModel()->update();
+  pA->get_model()->incTrialDisp(du);
+  pA->get_model()->update();
 
   // Increase number of iterations
   Io++;

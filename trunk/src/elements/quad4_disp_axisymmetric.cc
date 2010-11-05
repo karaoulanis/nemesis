@@ -35,14 +35,14 @@ Quad4DispAxisymmetric::Quad4DispAxisymmetric(int ID, int Node_1, int Node_2,
 }
 Quad4DispAxisymmetric::~Quad4DispAxisymmetric() {
 }
-const Matrix& Quad4DispAxisymmetric::getK() {
+const Matrix& Quad4DispAxisymmetric::get_K() {
   Matrix &K=*myMatrix;
   K.clear();
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
     double r = x(0, 0)*N(0, 0)+x(1, 0)*N(0, 1)+x(2, 0)*N(0, 2)+x(3, 0)*N(0, 3);
-    double dV = detJ*r*(pD->getFac())*(myMatPoints[k]->get_w());
-    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    double dV = detJ*r*(pD->get_fac())*(myMatPoints[k]->get_w());
+    const Matrix& C = myMatPoints[k]->get_material()->get_C();
     int ii = 0;
     for (int i = 0; i < 4; i++) {
       int jj = 0;
@@ -69,38 +69,38 @@ const Matrix& Quad4DispAxisymmetric::getK() {
     }
   }
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
 ///@todo
-const Matrix& Quad4DispAxisymmetric::getM() {
+const Matrix& Quad4DispAxisymmetric::get_M() {
   Matrix &M=*myMatrix;
   M.clear();
-  double rho = myMaterial->getRho();
+  double rho = myMaterial->get_rho();
   double volume = 0.;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
-    volume+=detJ*(pD->getFac())*(myMatPoints[k]->get_w());
+    volume+=detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
   return M;
 }
 
-const Vector& Quad4DispAxisymmetric::getR() {
+const Vector& Quad4DispAxisymmetric::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
   R.clear();
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    sigma = myMatPoints[k]->getMaterial()->getStress();
+    sigma = myMatPoints[k]->get_material()->get_stress();
     this->findShapeFunctionsAt(myMatPoints[k]);
     double r = x(0, 0)*N(0, 0)+x(1, 0)*N(0, 1)+x(2, 0)*N(0, 2)+x(3, 0)*N(0, 3);
-    double dV = detJ*r*(pD->getFac())*(myMatPoints[k]->get_w());
+    double dV = detJ*r*(pD->get_fac())*(myMatPoints[k]->get_w());
     int ii = 0;
     for (int i = 0; i < 4; i++) {
       R[ii  ]+=facS*(N(1, i)*sigma[0] + N(0, i)/r*sigma[2]  + N(2, i)*sigma[3])*dV;
@@ -118,8 +118,8 @@ void Quad4DispAxisymmetric::update() {
   Vector& u=*myVector;
   static Vector u1(8);
   static Vector u2(8);
-  u2 = this->getDispConvg();
-  u1 = this->getDispTrial();
+  u2 = this->get_disp_convg();
+  u1 = this->get_disp_trial();
   u = u1-u2;
   // For each material point
   for (unsigned int i = 0; i < myMatPoints.size(); i++) {
@@ -134,6 +134,6 @@ void Quad4DispAxisymmetric::update() {
     epsilon[3]=N(2, 0)*u[0]   + N(1, 0)*u[1]   + N(2, 1)*u[2]   + N(1, 1)*u[3] +
            N(2, 2)*u[4]   + N(1, 2)*u[5]   + N(2, 3)*u[6]   + N(1, 3)*u[7];
     // And send it to the material point
-    myMatPoints[i]->getMaterial()->setStrain(epsilon);
+    myMatPoints[i]->get_material()->set_strain(epsilon);
   }
 }

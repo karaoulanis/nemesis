@@ -44,7 +44,7 @@ Brick8i::Brick8i(int ID,
 }
 Brick8i::~Brick8i() {
 }
-const Matrix& Brick8i::getK() {
+const Matrix& Brick8i::get_K() {
   // Get a reference to myMatrix as K
   Matrix &K=*myMatrix;
   // Define local static matrices
@@ -53,28 +53,28 @@ const Matrix& Brick8i::getK() {
   // Form shape functions
   this->shapeFunctions();
   // Get Kdd, Kda, Kaa Matrices
-  this->getKdd(Kdd);
-  this->getKda(Kda);
-  this->getKaa(Kaa);
+  this->get_Kdd(Kdd);
+  this->get_Kda(Kda);
+  this->get_Kaa(Kaa);
   // Form K
   K = Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
   // Get group factors
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   // Return K
   return K;
 }
-const Matrix& Brick8i::getM() {
+const Matrix& Brick8i::get_M() {
   // Get a reference to myMatrix as K
   Matrix &M=*myMatrix;
   M.clear();
   // Find total mass
-  double rho = myMaterial->getRho();
+  double rho = myMaterial->get_rho();
   double volume = 0.;
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++) {
-    volume+=detJ[k]*(pD->getFac())*(myMatPoints[k]->get_w());
+    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
   // Set corresponding mass to diagonal terms
@@ -87,7 +87,7 @@ const Matrix& Brick8i::getM() {
 /**
  * Element residual vector.
  */
-const Vector& Brick8i::getR() {
+const Vector& Brick8i::get_R() {
   // Get a reference to myVector as R
   Vector& R=*myVector;
   R.clear();
@@ -96,20 +96,20 @@ const Vector& Brick8i::getR() {
   static Matrix Ba(6, 3);
   // Factors
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
 
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
 
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    sigma = myMatPoints[k]->getMaterial()->getStress();
-    double dV=(pD->getFac())*detJ[k];
+    sigma = myMatPoints[k]->get_material()->get_stress();
+    double dV=(pD->get_fac())*detJ[k];
     for (unsigned a = 0; a < myNodes.size(); a++) {
       // +facS*Fint
-      this->getBStd(Ba, a, k);
+      this->get_Bstd(Ba, a, k);
       add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 3;i++)
@@ -135,28 +135,28 @@ void Brick8i::update() {
   // Form shape functions
   this->shapeFunctions();
   // Get incremental displacements
-  Du = this->getDispIncrm();
+  Du = this->get_disp_incrm();
   // Get incremental alphas
-  this->getKda(Kda);
-  this->getKaa(Kaa);
+  this->get_Kda(Kda);
+  this->get_Kaa(Kaa);
   Da=-Inverse(Kaa)*Transpose(Kda)*Du;
   aTrial = aConvg+Da;
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.clear();
     for (unsigned a = 0; a < 8; a++) {
-      this->getBStd(Ba, a, k);
+      this->get_Bstd(Ba, a, k);
       ///@todo check dV
-      // double dV=(pD->getFac())*detJ[k];
+      // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 3; a++) {
-      this->getBInc(Ba, a, k);
+      this->get_BInc(Ba, a, k);
       ///@todo check dV
-      // double dV=(pD->getFac())*detJ[k];
+      // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Da, 1.0, 1.0);
     }
-    myMatPoints[k]->getMaterial()->setStrain(epsilon);
+    myMatPoints[k]->get_material()->set_strain(epsilon);
   }
 }
 /**
@@ -166,7 +166,7 @@ void Brick8i::update() {
  */
 void Brick8i::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++) {
-    myMatPoints[i]->getMaterial()->commit();
+    myMatPoints[i]->get_material()->commit();
   }
   aConvg = aTrial;
 }
@@ -184,7 +184,7 @@ void Brick8i::shapeFunctions() {
  * @param node The corresponding node.
  * @param gPoint The corresponding Gauss Point.
  */
-void Brick8i::getBStd(Matrix& B, int node, int gPoint) {
+void Brick8i::get_Bstd(Matrix& B, int node, int gPoint) {
   // B-factors
   double B1 = shpStd[node][1][gPoint];
   double B2 = shpStd[node][2][gPoint];
@@ -205,7 +205,7 @@ void Brick8i::getBStd(Matrix& B, int node, int gPoint) {
  * @param node The corresponding node.
  * @param gPoint The corresponding Gauss Point.
  */
-void Brick8i::getBInc(Matrix& B, int node, int gPoint) {
+void Brick8i::get_BInc(Matrix& B, int node, int gPoint) {
   // B-factors
   double B1 = shpInc[node][1][gPoint]/detJ[gPoint];
   double B2 = shpInc[node][2][gPoint]/detJ[gPoint];
@@ -226,17 +226,17 @@ void Brick8i::getBInc(Matrix& B, int node, int gPoint) {
  * @todo Increase performance.
  * @param K The matrix to be filled.
  */
-void Brick8i::getKdd(Matrix& K) {
+void Brick8i::get_Kdd(Matrix& K) {
   K.clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
-    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 8; a++) {
-      getBStd(Ba, a, k);
+      get_Bstd(Ba, a, k);
       for (unsigned b = 0; b < 8; b++) {
-        getBStd(Bb, b, k);
-        double dV=(pD->getFac())*detJ[k];
+        get_Bstd(Bb, b, k);
+        double dV=(pD->get_fac())*detJ[k];
         K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
@@ -248,16 +248,16 @@ void Brick8i::getKdd(Matrix& K) {
  * @todo Increase performance.
  * @param K The matrix to be filled.
  */
-void Brick8i::getKda(Matrix& K) {
+void Brick8i::get_Kda(Matrix& K) {
   K.clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
-    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 8; a++) {
-      getBStd(Ba, a, k);
+      get_Bstd(Ba, a, k);
       for (unsigned b = 0; b < 3; b++) {
-        getBInc(Bb, b, k);
+        get_BInc(Bb, b, k);
         double dV = 1.0*detJ[k];
         K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
@@ -270,16 +270,16 @@ void Brick8i::getKda(Matrix& K) {
  * @todo Increase performance.
  * @param K The matrix to be filled.
  */
-void Brick8i::getKaa(Matrix& K) {
+void Brick8i::get_Kaa(Matrix& K) {
   K.clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
-    const Matrix& C = myMatPoints[k]->getMaterial()->getC();
+    const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 3; a++) {
-      getBInc(Ba, a, k);
+      get_BInc(Ba, a, k);
       for (unsigned b = 0; b < 3; b++) {
-        getBInc(Bb, b, k);
+        get_BInc(Bb, b, k);
         double dV = 1.0*detJ[k];
         K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }

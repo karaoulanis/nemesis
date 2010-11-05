@@ -39,10 +39,10 @@ class Quad4b: public Quad4 {
   Quad4b(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
   ~Quad4b();
   
-  const Matrix& getK();
-    const Matrix& getM();
-  const Vector& getR();
-  void getB(Matrix& B, int node, int gPoint);
+  const Matrix& get_K();
+    const Matrix& get_M();
+  const Vector& get_R();
+  void get_B(Matrix& B, int node, int gPoint);
   void shapeFunctions();
   void update();
 };

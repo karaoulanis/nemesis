@@ -32,9 +32,9 @@ class Hardening {
   private:
   public:
   Hardening();
-  double geth(const Vector& v);
-  const Vector& gethds(const Vector& sigma, const double kappa);
-  double gethdk(const Vector& sigma, const double kappa);
+  double get_h(const Vector& v);
+  const Vector& get_hds(const Vector& sigma, const double kappa);
+  double get_hdk(const Vector& sigma, const double kappa);
 };
 
 #endif  // SRC_MATERIAL_HARDENING_H_

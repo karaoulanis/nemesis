@@ -32,17 +32,17 @@ DruckerPragerYS::DruckerPragerYS(double c_, double phi_, double Kc_,
   Kc = Kc_;
   Kphi = Kphi_;
 }
-double DruckerPragerYS::getf(const Vector& sigma, const double kappa) {
-  this->setSigma(sigma);
+double DruckerPragerYS::get_f(const Vector& sigma, const double kappa) {
+  this->set_sigma(sigma);
   double c = c0+Kc*kappa;
   double phi = phi0+Kphi*kappa;
   double rho = 2*sin(phi)/(sqrt(3.)*(3-sin(phi)));
   double k = 6*c*cos(phi)/(sqrt(3.)*(3-sin(phi)));
   return rho*I1+sqrt(J2)-k;
 }
-const Vector& DruckerPragerYS::getdfds(const Vector& sigma,
+const Vector& DruckerPragerYS::get_dfds(const Vector& sigma,
                                        const double kappa) {
-  this->setSigma(sigma);
+  this->set_sigma(sigma);
   double phi = phi0+Kphi*kappa;
   double rho = 2*sin(phi)/(sqrt(3.)*(3-sin(phi)));
 
@@ -51,17 +51,17 @@ const Vector& DruckerPragerYS::getdfds(const Vector& sigma,
   a = a1*C1+a2*C2;
   return a;
 }
-const Matrix& DruckerPragerYS::getd2fdsds(const Vector& sigma,
+const Matrix& DruckerPragerYS::get_d2fdsds(const Vector& sigma,
                                           const double /*kappa*/) {
-  this->setSigma(sigma);
+  this->set_sigma(sigma);
 
   double C2 = 1./(2.*sqrt(J2));
   double C22=-1./(4.*J2*sqrt(J2));
   da = C2*da2+C22*da22;
   return da;
 }
-double DruckerPragerYS::getdfdk(const Vector& sigma, const double kappa) {
-  this->setSigma(sigma);
+double DruckerPragerYS::get_dfdk(const Vector& sigma, const double kappa) {
+  this->set_sigma(sigma);
   double c = c0+Kc*kappa;
   double phi = phi0+Kphi*kappa;
 
@@ -74,9 +74,9 @@ double DruckerPragerYS::getdfdk(const Vector& sigma, const double kappa) {
                         +Kphi*cos(phi+Kphi*kappa)*Kc*kappa)/denom;
   return I1*drhodkappa-dkdkappa;
 }
-const Vector& DruckerPragerYS::getf2dkds(const Vector& sigma,
+const Vector& DruckerPragerYS::get_f2dkds(const Vector& sigma,
                                          const double kappa) {
-  this->setSigma(sigma);
+  this->set_sigma(sigma);
   double phi = phi0+Kphi*kappa;
 
   double denom = -10.+6.*sin(phi+Kphi*kappa)

@@ -38,6 +38,6 @@ class Brick8d: public Brick8 {
         int matID);
   ~Brick8d();
 
-  void getB(Matrix& B, int node, int gPoint);
+  void get_B(Matrix& B, int node, int gPoint);
 };
 #endif  // SRC_ELEMENTS_BRICK8D_H_

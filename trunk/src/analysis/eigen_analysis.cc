@@ -29,9 +29,9 @@ EigenAnalysis::EigenAnalysis()
   :AnalysisType() {
   myTag = TAG_NONE;
   // defaults
-  pA->setImposer(new EliminationImposer());
-  pA->setControl(new EigenControl());
-  pA->setSOE(new EigenSOE());
+  pA->set_imposer(new EliminationImposer());
+  pA->set_control(new EigenControl());
+  pA->set_soe(new EigenSOE());
 }
 EigenAnalysis::~EigenAnalysis() {
 }
@@ -40,19 +40,19 @@ bool EigenAnalysis::checkIfAllows(FEObject* /*f*/) {
 }
 int EigenAnalysis::run(int /*nLC*/, int /*nLoadSteps*/) {
   // Create model by applying the constraints
-  pA->getImposer()->impose();
+  pA->get_imposer()->impose();
 
   // Now that model is complete, reorder the model
-  if (pA->getReorderer() !=0 ) pA->getReorderer()->reorder();
+  if (pA->get_reorderer() !=0 ) pA->get_reorderer()->reorder();
 
   // Now that model is complete, the SOE can be initialized
-  pA->getSOE()->setTheSize();
+  pA->get_soe()->set_size();
 
   // Initialize the control
-  pA->getControl()->formTangent();
-  //  pA->getSOE()->print();
-  pA->getSOE()->solve();
-  pA->getDomain()->setEigenValues(pA->getSOE()->getX());
+  pA->get_control()->formTangent();
+  //  pA->get_soe()->print();
+  pA->get_soe()->solve();
+  pA->get_domain()->set_eigenvalues(pA->get_soe()->get_X());
 
   return 0;
 }

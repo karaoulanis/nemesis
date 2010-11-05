@@ -29,10 +29,10 @@ SensitivityStaticAnalysis::SensitivityStaticAnalysis()
   :AnalysisType() {
   myTag = TAG_ANALYSIS_STATIC;
   // defaults
-  pA->setImposer(new EliminationImposer());
-  pA->setControl(new LoadControl(1., 1., 1., 1, 0.5, 0.));
-  pA->setAlgorithm(new LinearAlgorithm());
-  pA->setSOE(new FullLinearSOE());
+  pA->set_imposer(new EliminationImposer());
+  pA->set_control(new LoadControl(1., 1., 1., 1, 0.5, 0.));
+  pA->set_algorithm(new LinearAlgorithm());
+  pA->set_soe(new FullLinearSOE());
   theSensitivityControl = new SensitivityControl;
 }
 SensitivityStaticAnalysis::~SensitivityStaticAnalysis() {
@@ -43,31 +43,31 @@ bool SensitivityStaticAnalysis::checkIfAllows(FEObject* /*f*/) {
 }
 int SensitivityStaticAnalysis::run(int nLC, int nLoadSteps) {
   // Create model by applying the constraints
-  pA->getImposer()->impose();
+  pA->get_imposer()->impose();
 
   // Now that model is complete, reorder the model
-  if (pA->getReorderer() != 0) pA->getReorderer()->reorder();
+  if (pA->get_reorderer() != 0) pA->get_reorderer()->reorder();
 
   // Now that model is complete, the SOE can be initialized
-  pA->getSOE()->setTheSize();
+  pA->get_soe()->set_size();
 
   // Apply the loads carried by the given loadcase
-  //  pA->getControl()->setTheLoadCase(pA->getDomain()->get<LoadCase>(
-  //    pA->getDomain()->getLoadCases(), nLC));
-  //  theSensitivityControl->setTheLoadCase(pA->getDomain()->get<LoadCase>(
-  //    pA->getDomain()->getLoadCases(), nLC));
+  //  pA->get_control()->set_loadcase(pA->get_domain()->get<LoadCase>(
+  //    pA->get_domain()->get_loadcases(), nLC));
+  //  theSensitivityControl->set_loadcase(pA->get_domain()->get<LoadCase>(
+  //    pA->get_domain()->get_loadcases(), nLC));
 
   // Initialize control
-  pA->getControl()->init();
+  pA->get_control()->init();
   theSensitivityControl->init();
 
   // Initialize the convergence check
-  pA->getConvergenceNorm()->init(nLC, nLoadSteps);
+  pA->get_convergence_norm()->init(nLC, nLoadSteps);
 
   int ret = 0;
   for (int i = 0; i < nLoadSteps; i++) {
     // Call algorithm to solve step
-    int check = pA->getAlgorithm()->solveStep(i);
+    int check = pA->get_algorithm()->solveStep(i);
     // Algorithm failed
     if (check < 0) {
       if (check == -1)
@@ -77,22 +77,22 @@ int SensitivityStaticAnalysis::run(int nLC, int nLoadSteps) {
       ret=-1;
     }
     // Algorithm succeeded
-    pA->getControl()->commit();
+    pA->get_control()->commit();
 
     // Sensitivity
-    int nParams = pA->getDomain()->get<LoadCase>(
-      pA->getDomain()->getLoadCases(), nLC)->getnSensitivityParameters();
+    int nParams = pA->get_domain()->get<LoadCase>(
+      pA->get_domain()->get_loadcases(), nLC)->get_num_sens_param();
     for (int j = 0; j < nParams; j++) {
       theSensitivityControl->formTangent();
       theSensitivityControl->formResidual(0.);
-      // pA->getSOE()->print();
-      pA->getSOE()->solve();
-      // cout << pA->getSOE()->getX();
+      // pA->get_soe()->print();
+      pA->get_soe()->solve();
+      // cout << pA->get_soe()->get_X();
       theSensitivityControl->commit();
     }
   }
 
   // Finalize loadcase
-  pA->getModel()->setNodalStress();
+  pA->get_model()->set_nodal_stress();
   return ret;
 }

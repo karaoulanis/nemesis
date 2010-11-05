@@ -37,8 +37,8 @@ class FullLinearSOE: public SOE {
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
               double factor = 1.0);
   int solve();
-  void setTheSize();
+  void set_size();
   void print();
-  int getEigenSign();
+  int get_eigen_sign();
 };
 #endif  // SRC_SOE_FULL_LINEAR_SOE_H_

@@ -61,7 +61,7 @@ Material::~Material() {
  * Set global coordinates to material.
  * This is useful in case where material is position depended.
  */
-void Material::setX(double x1_, double x2_, double x3_) {
+void Material::set_X(double x1_, double x2_, double x3_) {
   x = x1_;
   y = x2_;
   z = x3_;
@@ -85,7 +85,7 @@ void Material::addTracker() {
  * @todo Change this to a constant pointer.
  * @return  pointer to \a myTracker.
  */
-Tracker* Material::getTracker() {
+Tracker* Material::get_tracker() {
   return myTracker;
 }
 /**

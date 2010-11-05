@@ -53,18 +53,18 @@ void StandardModelNode::incTrialVecs(const Vector& du, const Vector& dv,
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=da[theFTable[i]];
   myNode->addTrialAccl(*myVector);
 }
-void StandardModelNode::setTrialDisp(const Vector& u) {
+void StandardModelNode::set_trial_disp(const Vector& u) {
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
-  myNode->setTrialDisp(*myVector);
+  myNode->set_trial_disp(*myVector);
 }
-void StandardModelNode::setTrialVecs(const Vector& u, const Vector& v,
+void StandardModelNode::set_trial_vecs(const Vector& u, const Vector& v,
                                      const Vector& a) {
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
-  myNode->setTrialDisp(*myVector);
+  myNode->set_trial_disp(*myVector);
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=v[theFTable[i]];
-  myNode->setTrialVelc(*myVector);
+  myNode->set_trial_velc(*myVector);
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=a[theFTable[i]];
-  myNode->setTrialAccl(*myVector);
+  myNode->set_trial_accl(*myVector);
 }
 void StandardModelNode::commit() {
   myNode->commit();
@@ -74,5 +74,5 @@ void StandardModelNode::commitSens(const Vector& X, int param) {
   myNode->commitSens(*myVector, param);
 }
 void StandardModelNode::add_R(double factor) {
-  if (myNode->existsLoad()) myVector->add_cV(factor, myNode->getR());
+  if (myNode->existsLoad()) myVector->add_cV(factor, myNode->get_R());
 }

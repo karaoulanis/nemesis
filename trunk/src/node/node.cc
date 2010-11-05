@@ -56,13 +56,13 @@ Node::~Node() {
 // Access to data members
 //=============================================================================
 
-double Node::getx1() {
+double Node::get_x1() {
   return x1;
 }
-double Node::getx2() {
+double Node::get_x2() {
   return x2;
 }
-double Node::getx3() {
+double Node::get_x3() {
   return x3;
 }
 /**
@@ -72,7 +72,7 @@ double Node::getx3() {
  * @return An integer indicating if everything went ok.
  */
 int Node::addEleToNode(Element *pElement) {
-  myConnectedElements.push_back(pElement->getID());
+  myConnectedElements.push_back(pElement->get_id());
   return 0;
 }
 /**
@@ -80,7 +80,7 @@ int Node::addEleToNode(Element *pElement) {
  * This container holds all the ID's of the elements that include this Node.
  * @return A pointer to the container.
  */
-const IDContainer& Node::getConnectedElements() const {
+const IDContainer& Node::get_connected_elements() const {
   return myConnectedElements;
 }
 /**
@@ -108,7 +108,7 @@ int Node::addDofToNode(int dof) {
   }
   return 0;
 }
-const IDContainer& Node::getActivatedDofs() const {
+const IDContainer& Node::get_activated_dofs() const {
   return myActivatedDofs;
 }
 /**
@@ -116,11 +116,11 @@ const IDContainer& Node::getActivatedDofs() const {
  * Both the activated and the local dofs start from 0 and not from 1.
  * \param localDof The localdof.
  */
-int Node::getActivatedDof(int localDof) const {
+int Node::get_activated_dof(int localDof) const {
   ///@todo Error if localDof>MAX_NUMBER_OF_DOFS see:Constraint for e.g.
   return myActivatedDofs[localDof];
 }
-int Node::getnActivatedDofs() const {
+int Node::get_num_activated_dofs() const {
   return nActivatedDofs;
 }
 void Node::addLoad(int dof, double value, double factor) {
@@ -133,7 +133,7 @@ void Node::addInitialDisp(int dof, double disp) {
 void Node::addInitialVelc(int dof, double velc) {
   velcTrial[myActivatedDofs[dof]]=velc;
 }
-const Vector& Node::getR() {
+const Vector& Node::get_R() {
   return P;
 }
 bool Node::existsLoad() {
@@ -156,10 +156,10 @@ void Node::addStress(const Vector& s) {
   stress+=s;
   avgStress+=1;
 }
-const Packet& Node::getPacket() {
+const Packet& Node::get_packet() {
   thePacket.zero();
-  thePacket.tag = this->getTag();
-  thePacket.id = this->getID();
+  thePacket.tag = this->get_tag();
+  thePacket.id = this->get_id();
   thePacket.dblArray[0]=x1;
   thePacket.dblArray[1]=x2;
   thePacket.dblArray[2]=x3;
@@ -175,7 +175,7 @@ const Packet& Node::getPacket() {
       thePacket.dblArray[i+3+3*MAX_NUMBER_OF_DOFS]=stress[i];
   return thePacket;
 }
-void Node::setPacket(const Packet& p) {
+void Node::set_packet(const Packet& p) {
   for (int i = 0; i < MAX_NUMBER_OF_DOFS; i++) {
     if (myActivatedDofs[i] < 0) continue;
     dispConvg[myActivatedDofs[i]]=p.dblArray[i+3];
@@ -213,13 +213,13 @@ void Node::addTrialVelc(const Vector& dv) {
 void Node::addTrialAccl(const Vector& da) {
   acclTrial+=da;
 }
-void Node::setTrialDisp(const Vector& u) {
+void Node::set_trial_disp(const Vector& u) {
   dispTrial = u;
 }
-void Node::setTrialVelc(const Vector& v) {
+void Node::set_trial_velc(const Vector& v) {
   velcTrial = v;
 }
-void Node::setTrialAccl(const Vector& a) {
+void Node::set_trial_accl(const Vector& a) {
   acclTrial = a;
 }
 void Node::commit() {
@@ -228,48 +228,48 @@ void Node::commit() {
   acclConvg = acclTrial;
   this->track();
 }
-const Vector& Node::getDispTrial() {
+const Vector& Node::get_disp_trial() {
   return dispTrial;
 }
-const Vector& Node::getDispConvg() {
+const Vector& Node::get_disp_convg() {
   return dispConvg;
 }
-const Vector& Node::getVelcTrial() {
+const Vector& Node::get_velc_trial() {
   return velcTrial;
 }
-const Vector& Node::getVelcConvg() {
+const Vector& Node::get_velc_convg() {
   return velcConvg;
 }
-const Vector& Node::getAcclTrial() {
+const Vector& Node::get_accl_trial() {
   return acclTrial;
 }
-const Vector& Node::getAcclConvg() {
+const Vector& Node::get_accl_convg() {
   return acclConvg;
 }
 void Node::rollback() {
   dispTrial = dispConvg;
 }
-double Node::getDispTrialAtDof(int dof) {
+double Node::get_disp_trial_at_dof(int dof) {
   return dispTrial[myActivatedDofs[dof]];
 }
-double Node::getVelcTrialAtDof(int dof) {
+double Node::get_velc_trial_at_dof(int dof) {
   return velcTrial[myActivatedDofs[dof]];
 }
-double Node::getAcclTrialAtDof(int dof) {
+double Node::get_accl_trial_at_dof(int dof) {
   return acclTrial[myActivatedDofs[dof]];
 }
-double Node::getDispConvgAtDof(int dof) {
+double Node::get_disp_convg_at_dof(int dof) {
   return dispConvg[myActivatedDofs[dof]];
 }
-double Node::getVelcConvgAtDof(int dof) {
+double Node::get_velc_convg_at_dof(int dof) {
   return velcConvg[myActivatedDofs[dof]];
 }
-double Node::getAcclConvgAtDof(int dof) {
+double Node::get_accl_convg_at_dof(int dof) {
   return acclConvg[myActivatedDofs[dof]];
 }
 bool Node::isActive() {
   for (unsigned i = 0;i < myConnectedElements.size();i++)
-    if (pD->get < Element>(pD->getElements(),
+    if (pD->get < Element>(pD->get_elements(),
       myConnectedElements[i])->isActive()) return true;
   return false;
 }
@@ -292,7 +292,7 @@ void Node::addTracker() {
  * @todo Change this to a constant pointer.
  * @return  pointer to \a myTracker.
  */
-Tracker* Node::getTracker() {
+Tracker* Node::get_tracker() {
   if (myTracker == 0)
     throw SException("[nemesis:%d] No tracker is set for Node %d.", 9999, myID);
   return myTracker;
@@ -311,7 +311,7 @@ void Node::track() {
   s << "velc " << ' ' << velcConvg;
   s << "accl " << ' ' << acclConvg;
   s << "END "  <<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }
 // Sensitivity functions
 void Node::initSensitivityMatrix(int nGrads) {

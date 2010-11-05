@@ -42,23 +42,23 @@ SDofElement::SDofElement(int ID, int NodeID, int dofID, int matID)
   myLocalNodalDofs[0]=dofID-1;
   // Handle common info
     this->handleCommonInfo();
-  mySDofMaterial = static_cast < SDofMaterial*>(myMaterial)->getClone();
+  mySDofMaterial = static_cast < SDofMaterial*>(myMaterial)->get_clone();
 }
 SDofElement::~SDofElement() {
 }
-const Matrix& SDofElement::getK() {
+const Matrix& SDofElement::get_K() {
   Matrix& K=*myMatrix;
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
-  K(0, 0)=facK*(mySDofMaterial->getParam(0));
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  K(0, 0)=facK*(mySDofMaterial->get_param(0));
   return K;
 }
-const Matrix& SDofElement::getM() {
+const Matrix& SDofElement::get_M() {
   Matrix& M=*myMatrix;
-  M(0, 0)=mySDofMaterial->getRho();
+  M(0, 0)=mySDofMaterial->get_rho();
   return M;
 }
-const Vector& SDofElement::getR() {
+const Vector& SDofElement::get_R() {
   Vector& R=*myVector;
   R.clear();
   return R;

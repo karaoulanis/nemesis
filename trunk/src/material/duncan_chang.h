@@ -36,9 +36,9 @@ class DuncanChang: public MultiaxialMaterial {
   DuncanChang();
   DuncanChang(int ID, double E, double nu, double c, double phi,
     double m, double Rf, double pa, double rho, double aT);
-  MultiaxialMaterial* getClone();
-  void setStrain(const Vector& De);
-  const Matrix& getC();
+  MultiaxialMaterial* get_clone();
+  void set_strain(const Vector& De);
+  const Matrix& get_C();
   void commit();
   // Tracker member functions
   void track();

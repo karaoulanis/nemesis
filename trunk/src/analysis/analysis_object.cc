@@ -31,6 +31,6 @@ AnalysisObject::AnalysisObject() {
 }
 AnalysisObject::~AnalysisObject() {
 }
-void AnalysisObject::setAnalysis(Analysis* pAnalysis) {
+void AnalysisObject::set_analysis(Analysis* pAnalysis) {
   pA = pAnalysis;
 }

@@ -45,10 +45,10 @@ ModifiedCamClay::ModifiedCamClay(int ID, int elasticID, double M, double po,
 }
 ModifiedCamClay::~ModifiedCamClay() {
 }
-MultiaxialMaterial* ModifiedCamClay::getClone() {
+MultiaxialMaterial* ModifiedCamClay::get_clone() {
   // Material parameters
-  int myID      = this->getID();
-  int elID      = myElastic->getID();
+  int myID      = this->get_id();
+  int elID      = myElastic->get_id();
   double M      = MatParams[ 0];
   double po     = MatParams[ 1];
   double kappa  = MatParams[ 2];

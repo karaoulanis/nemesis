@@ -43,13 +43,13 @@ class Group: public DomainObject {
   Group();
   ~Group();
   Group(int ID);
-  void setDefault();
-  void setState(GroupState* g);
+  void set_default();
+  void set_state(GroupState* g);
   inline bool isActive()        {return active;}
-  inline double getFacK()       {return facK;}
-  inline double getFacS()       {return facS;}
-  inline double getFacG()       {return facG;}
-  inline double getFacP()       {return facP;}
+  inline double get_fac_K()       {return facK;}
+  inline double get_fac_S()       {return facS;}
+  inline double get_fac_G()       {return facG;}
+  inline double get_fac_P()       {return facP;}
 };
 
 #endif  // SRC_GROUP_GROUP_H_

@@ -37,14 +37,14 @@ Brick8b::Brick8b(int ID,
 }
 Brick8b::~Brick8b() {
 }
-void Brick8b::getB(Matrix& B, int node, int gPoint) {
+void Brick8b::get_B(Matrix& B, int node, int gPoint) {
   // Resize B
   B.resize(6, 3);
 
   // Find B-bar coefficients
   double Bb1 = 0., Bb2 = 0., Bb3 = 0., vol = 0.;
   for (unsigned k = 0;k < myMatPoints.size();k++) {  // matpoints
-    double dV = detJ[k]*(pD->getFac());
+    double dV = detJ[k]*(pD->get_fac());
     Bb1+=shp[node][1][k]*dV;
     Bb2+=shp[node][2][k]*dV;
     Bb3+=shp[node][3][k]*dV;

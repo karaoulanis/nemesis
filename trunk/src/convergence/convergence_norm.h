@@ -40,7 +40,7 @@ class ConvergenceNorm: public AnalysisObject {
   public:
   ConvergenceNorm();
   ~ConvergenceNorm();
-  void setCheck(int maxIterations, double tolRabs, double tolRrel,
+  void set_check(int maxIterations, double tolRabs, double tolRrel,
                 double tolWrel);
   void init(int LCid, int steps);
   void newStep();

@@ -33,11 +33,11 @@ class TensionCutOffYS: public YS {
   double T;
   public:
   TensionCutOffYS(double T_);
-  double getf(const Vector& sigma, const double kappa);
-  const Vector& getdfds(const Vector& sigma, const double kappa);
-  const Matrix& getd2fdsds(const Vector& sigma, const double kappa);
-  double getdfdk(const Vector& sigma, const double kappa);
-  const Vector& getf2dkds(const Vector& sigma, const double kappa);
+  double get_f(const Vector& sigma, const double kappa);
+  const Vector& get_dfds(const Vector& sigma, const double kappa);
+  const Matrix& get_d2fdsds(const Vector& sigma, const double kappa);
+  double get_dfdk(const Vector& sigma, const double kappa);
+  const Vector& get_f2dkds(const Vector& sigma, const double kappa);
 };
 
 #endif  // SRC_MATERIAL_TENSION_CUTOFF_YS_H_

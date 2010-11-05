@@ -46,10 +46,10 @@ class Timoshenko2d: public Element {
                int rule);
   ~Timoshenko2d();
 
-  const Matrix& getK();
-    const Matrix& getM();
-  const Vector& getR();
-  const Vector& getRgrad();
+  const Matrix& get_K();
+    const Matrix& get_M();
+  const Vector& get_R();
+  const Vector& get_Rgrad();
 
   bool checkIfAllows(FEObject* /*f*/)   {return true;}
   void update()           {return;}

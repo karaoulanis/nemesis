@@ -47,9 +47,9 @@ Bar2s::Bar2s(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
  */
 Bar2s::~Bar2s()  {
 }
-const Matrix& Bar2s::getK() {
+const Matrix& Bar2s::get_K() {
   Matrix& K=*myMatrix;
-  double E = myUniMaterial->getC();
+  double E = myUniMaterial->get_C();
   double K0 = E*A0/L0;
   double d;
   for (int i = 0;i < nDim;i++)
@@ -62,12 +62,12 @@ const Matrix& Bar2s::getK() {
     }
   ///@todo Add nodal transformations
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
-const Vector& Bar2s::getRgrad() {
-  double E = myUniMaterial->getC();
+const Vector& Bar2s::get_Rgrad() {
+  double E = myUniMaterial->get_C();
   Matrix& K=*myMatrix;
   double K0;
   switch (activeParameter) {
@@ -87,21 +87,21 @@ const Vector& Bar2s::getRgrad() {
     }
   ///@todo Add nodal transformations
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
-  *myVector = K*(this->getDispConvg());
+  *myVector = K*(this->get_disp_convg());
   return *myVector;
 }
-const Vector& Bar2s::getR() {
+const Vector& Bar2s::get_R() {
   Vector& R=*myVector;
   R.clear();
   // Factors
   if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->getFacS();
-  double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  double facS = myGroup->get_fac_S();
+  double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
   // R = Fint - Fext
-  double F0 = A0*(myUniMaterial->getStress());
+  double F0 = A0*(myUniMaterial->get_stress());
   for (int i = 0; i < nDim; i++) {
     double d = facS*cosX[i]*F0;
     R[i]      =-d - facP*P[i];
@@ -109,7 +109,7 @@ const Vector& Bar2s::getR() {
   }
   // Self-weigth (only in y todo: check this)
   if (!num::tiny(facG) && nDim>1) {
-    double b=-facG*0.5*(myUniMaterial->getRho())*A0*L0;
+    double b=-facG*0.5*(myUniMaterial->get_rho())*A0*L0;
     R[1]-=b;
     R[1+nDim]-=b;
   }

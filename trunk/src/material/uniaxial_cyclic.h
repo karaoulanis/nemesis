@@ -41,9 +41,9 @@ class UniaxialCyclic: public UniaxialMaterial {
   UniaxialCyclic(int ID, double E, double nu, double rho, double aT,
                  double tmax, double Gmax);
   ~UniaxialCyclic();
-  UniaxialMaterial* getClone();
-  void setStrain(const double De);
-  double getC();
+  UniaxialMaterial* get_clone();
+  void set_strain(const double De);
+  double get_C();
   void commit();
 };
 #endif  // SRC_MATERIAL_UNIAXIAL_CYCLIC_H_

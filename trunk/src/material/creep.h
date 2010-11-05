@@ -44,12 +44,12 @@ class Creep: public MultiaxialMaterial {
   Creep(int ID, int elasticID, double A, double n, double k);
   ~Creep();
 
-  void setStrain(const Vector& De);
+  void set_strain(const Vector& De);
   void commit();
-  const Matrix& getC();
+  const Matrix& get_C();
   bool isPlastic()              {return false;}
 
-  MultiaxialMaterial* getClone();
+  MultiaxialMaterial* get_clone();
 
   // Tracker member functions
   void track();

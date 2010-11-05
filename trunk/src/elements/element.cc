@@ -52,13 +52,13 @@ Element::Element(int ID, int matID)
     for (int i = 1;i < 64;i++) theStaticVectors[i]=new Vector(i, 0.);
   }
   // Retrieve Material pointer
-  myMaterial = pD->get < Material>(pD->getMaterials(), matID);
+  myMaterial = pD->get < Material>(pD->get_materials(), matID);
   // Set Group pointer to the material.
   ///@todo Get rid of Groups and keep only Materials for this functionality.
   if (pD->areGroupsByMaterial())
-    myGroup = pD->get < Group>(pD->getGroups(), matID);
+    myGroup = pD->get < Group>(pD->get_groups(), matID);
   else
-    myGroup = pD->get < Group>(pD->getGroups(), pD->getCurrentGroup());
+    myGroup = pD->get < Group>(pD->get_groups(), pD->get_current_group());
 }
 Element::~Element() {
   if (theStaticMatrices != 0) {
@@ -70,16 +70,16 @@ Element::~Element() {
     theStaticVectors = 0;
   }
 }
-const Matrix& Element::getC() {
+const Matrix& Element::get_C() {
   static Matrix C;
   int nDofs = myNodalIDs.size()*myLocalNodalDofs.size();
   C.resize(nDofs, nDofs, 0.);
-  Vector RayleighFactors = pD->getRayleighFactors();
+  Vector RayleighFactors = pD->get_rayleigh_factors();
   if (RayleighFactors.size() == 0) {
     C.clear();
   } else {
-    C.add_cM(RayleighFactors[0], this->getK());
-    C.add_cM(RayleighFactors[1], this->getM());
+    C.add_cM(RayleighFactors[0], this->get_K());
+    C.add_cM(RayleighFactors[1], this->get_M());
   }
   return C;
 }
@@ -94,13 +94,13 @@ int Element::handleCommonInfo() {
   myVector = theStaticVectors[nDofs];
   // Retrieve the node pointers and check if they do exist
   for (int i = 0;i < nNodes;i++)
-    myNodes[i]=pD->get < Node>(pD->getNodes(), myNodalIDs[i]);
+    myNodes[i]=pD->get < Node>(pD->get_nodes(), myNodalIDs[i]);
   // Get nodal coordinates
   x.resize(nNodes, 3);
   for (int i = 0; i < nNodes; i++) {
-    x(i, 0)=myNodes[i]->getx1();
-    x(i, 1)=myNodes[i]->getx2();
-    x(i, 2)=myNodes[i]->getx3();
+    x(i, 0)=myNodes[i]->get_x1();
+    x(i, 1)=myNodes[i]->get_x2();
+    x(i, 2)=myNodes[i]->get_x3();
   }
   // Resize external load vector, self weigth vector
   P.resize(nDofs);
@@ -114,15 +114,15 @@ int Element::handleCommonInfo() {
   // Create load vector
   for (int i = 0;i < nDofs;i++) P[i]=0;
   // Get Material related info
-  if (myMaterial->getID()>0) {
+  if (myMaterial->get_id()>0) {
     // Check if the material can be assigned
     this->checkIfAllows(myMaterial);
     // Self weight
     b.resize(3);
-    double g = pD->getGravityAccl();
-    b[0]=g*(pD->getGravityVect()[0])*(myMaterial->getRho());
-    b[1]=g*(pD->getGravityVect()[1])*(myMaterial->getRho());
-    b[2]=g*(pD->getGravityVect()[2])*(myMaterial->getRho());
+    double g = pD->get_gravity_accl();
+    b[0]=g*(pD->get_gravity_vect()[0])*(myMaterial->get_rho());
+    b[1]=g*(pD->get_gravity_vect()[1])*(myMaterial->get_rho());
+    b[2]=g*(pD->get_gravity_vect()[2])*(myMaterial->get_rho());
   }
   return 0;
 }
@@ -130,78 +130,78 @@ int Element::handleCommonInfo() {
  * Returns the id's of the Nodes of an element.
  * @return An IDContainer of the Nodes.
  */
-const IDContainer& Element::getNodalIDs() const {
+const IDContainer& Element::get_nodal_ids() const {
   return myNodalIDs;
 }
-const IDContainer& Element::getLocalNodalDofs() const {
+const IDContainer& Element::get_local_nodal_dofs() const {
   return myLocalNodalDofs;
 }
-const std::vector < Node*>& Element::getNodes() const {
+const std::vector < Node*>& Element::get_nodes() const {
   return myNodes;
 }
-const Vector& Element::getDispTrial() {
+const Vector& Element::get_disp_trial() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->getDispTrialAtDof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j]=myNodes[i]->get_disp_trial_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
-const Vector& Element::getVelcTrial() {
+const Vector& Element::get_velc_trial() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& velc=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      velc[i*nDofs+j]=myNodes[i]->getVelcTrialAtDof(myLocalNodalDofs[j]);
+      velc[i*nDofs+j]=myNodes[i]->get_velc_trial_at_dof(myLocalNodalDofs[j]);
   return velc;
 }
-const Vector& Element::getAcclTrial() {
+const Vector& Element::get_accl_trial() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& accl=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      accl[i*nDofs+j]=myNodes[i]->getAcclTrialAtDof(myLocalNodalDofs[j]);
+      accl[i*nDofs+j]=myNodes[i]->get_accl_trial_at_dof(myLocalNodalDofs[j]);
   return accl;
 }
-const Vector& Element::getDispConvg() {
+const Vector& Element::get_disp_convg() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->getDispConvgAtDof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j]=myNodes[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
-const Vector& Element::getVelcConvg() {
+const Vector& Element::get_velc_convg() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& velc=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      velc[i*nDofs+j]=myNodes[i]->getVelcConvgAtDof(myLocalNodalDofs[j]);
+      velc[i*nDofs+j]=myNodes[i]->get_velc_convg_at_dof(myLocalNodalDofs[j]);
   return velc;
 }
-const Vector& Element::getAcclConvg() {
+const Vector& Element::get_accl_convg() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->getAcclConvgAtDof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j]=myNodes[i]->get_accl_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
-///@todo void getDispIncrm(u)
-const Vector& Element::getDispIncrm() {
+///@todo void get_disp_incrm(u)
+const Vector& Element::get_disp_incrm() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->getDispTrialAtDof(myLocalNodalDofs[j])-
-                      myNodes[i]->getDispConvgAtDof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j]=myNodes[i]->get_disp_trial_at_dof(myLocalNodalDofs[j])-
+                      myNodes[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
 void Element::zeroLoad() {
@@ -214,7 +214,7 @@ void Element::addInitialStresses(InitialStresses* /*pInitialStresses*/) {
   // needs to be overwritten
 }
 void Element::addGroundMotion(int dof, double val) {
-  this->getM();
+  this->get_M();
   Matrix& M=*myMatrix;
   int pos = Containers::index_find(myLocalNodalDofs, dof);
   if (pos < 0) return;
@@ -228,19 +228,19 @@ void Element::addGroundMotion(int dof, double val) {
 bool Element::isActive() {
   return myGroup->isActive();
 }
-void Element::setGroup(int groupID) {
-    myGroup = pD->get < Group>(pD->getGroups(), groupID);
+void Element::set_group(int groupID) {
+    myGroup = pD->get < Group>(pD->get_groups(), groupID);
 }
-int Element::getnPlasticPoints() {
+int Element::get_num_plastic_points() {
   int n = 0;
 //  for (unsigned i = 0;i < theMaterialItems.size();i++)
 //    if (theMaterialItems[i]->plastified()) n++;
   return n;
 }
-const Packet& Element::getPacket() {
+const Packet& Element::get_packet() {
   thePacket.zero();
-  thePacket.tag = this->getTag();
-  thePacket.id = this->getID();
+  thePacket.tag = this->get_tag();
+  thePacket.id = this->get_id();
   // Store nodes
   thePacket.intArray[0]=myNodalIDs.size();
   for (unsigned i = 0;i < myNodalIDs.size();i++)
@@ -248,19 +248,19 @@ const Packet& Element::getPacket() {
   // Store nDofs
   thePacket.intArray[28]=myNodalIDs.size()*myLocalNodalDofs.size();
   // Store plastic points
-  thePacket.intArray[29]=myMaterial->getID();
+  thePacket.intArray[29]=myMaterial->get_id();
   // Store material
-  thePacket.intArray[30]=this->getnPlasticPoints();
+  thePacket.intArray[30]=this->get_num_plastic_points();
   // Send data
   return thePacket;
 }
-void Element::setPacket(const Packet& /*p*/) {
+void Element::set_packet(const Packet& /*p*/) {
 }
 void Element::save(std::ostream& s) {
   s << "ELEMENT " <<' ';
   s << "tag " << 1000 <<' ' <<myTag <<' ';
   s << "id "  << 1000 <<' ' <<myID  << ' ';
-  s << "mat " << 1000 <<' ' << myMaterial->getID() << ' ';
+  s << "mat " << 1000 <<' ' << myMaterial->get_id() << ' ';
   s << "END " << ' ';
 }
 /**
@@ -275,7 +275,7 @@ void Element::addTracker(int /*index*/) {
  * This should be overwitten depending on how an Element treats its Materials
  * @param index The index to the Element's Material
  */
-Tracker* Element::getTracker(int /*index*/) {
+Tracker* Element::get_tracker(int /*index*/) {
   return 0;
 }
 /**

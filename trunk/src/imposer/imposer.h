@@ -47,8 +47,8 @@ class Imposer: public AnalysisObject {
   Imposer();
   virtual ~Imposer();
   int createGlobalDofNumbering();
-  int getGlobalDof(int NodeID, int localDof);
-  const IDContainer getGlobalDofs(int NodeID);
+  int get_global_dof(int NodeID, int localDof);
+  const IDContainer get_global_dofs(int NodeID);
   virtual int impose()=0;
 };
 #endif  // SRC_IMPOSER_IMPOSER_H_

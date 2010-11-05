@@ -27,7 +27,7 @@
 
 Analysis::Analysis(Domain* pDomain)
 :M(pDomain), theDomain(pDomain) {
-  M.setAnalysis(this);
+  M.set_analysis(this);
   theNorm = new ConvergenceNorm();
   theAnalysisType = 0;
   theImposer = 0;
@@ -73,27 +73,27 @@ void Analysis::clear() {
     theReorderer = 0;
   }
 }
-void Analysis::setAnalysisType(AnalysisType* p) {
+void Analysis::set_analysis_type(AnalysisType* p) {
   if (theAnalysisType != 0) delete theAnalysisType;
   theAnalysisType = p;
 }
-void Analysis::setAlgorithm(Algorithm* p) {
+void Analysis::set_algorithm(Algorithm* p) {
   if (theAlgorithm != 0) delete theAlgorithm;
   theAlgorithm = p;
 }
-void Analysis::setControl(Control* p) {
+void Analysis::set_control(Control* p) {
   if (theControl != 0) delete theControl;
   theControl = p;
 }
-void Analysis::setImposer(Imposer* p) {
+void Analysis::set_imposer(Imposer* p) {
   if (theImposer != 0) delete theImposer;
   theImposer = p;
 }
-void Analysis::setReorderer(Reorderer* p) {
+void Analysis::set_reorderer(Reorderer* p) {
   if (theReorderer != 0) delete theReorderer;
   theReorderer = p;
 }
-void Analysis::setSOE(SOE* p) {
+void Analysis::set_soe(SOE* p) {
   if (theSOE != 0) delete theSOE;
   theSOE = p;
 }

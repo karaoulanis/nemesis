@@ -42,12 +42,12 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     }
   return 0;
 }
-void FullLinearSOE::setTheSize() {
+void FullLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (theSize == pA->getModel()->getnEquations()) {
+  if (theSize == pA->get_model()->get_num_eqns()) {
     return;
   } else {
-    theSize = pA->getModel()->getnEquations();
+    theSize = pA->get_model()->get_num_eqns();
   }
   A.resize(theSize*theSize);
   B.resize(theSize);
@@ -65,7 +65,7 @@ void FullLinearSOE::print() {
         cout << " | " << B[i] << endl;
   }
 }
-int FullLinearSOE::getEigenSign() {
+int FullLinearSOE::get_eigen_sign() {
   for (int i = 0; i < theSize; i++)
     if (fabs(A[i*(theSize+1)]) < 1e-12)  return 0;
     else if (A[i*(theSize+1)]  < 0)      return -1;

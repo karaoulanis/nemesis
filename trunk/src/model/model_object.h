@@ -42,14 +42,14 @@ class ModelObject {
   virtual ~ModelObject();
 
   // Access to data members
-  const IDContainer& getFTable() const;
-  void setFTable(const IDContainer& FTable);
-  void setFTable(int index, int val);
+  const IDContainer& get_FTable() const;
+  void set_FTable(const IDContainer& FTable);
+  void set_FTable(int index, int val);
 
   inline void zeroMatrix()        {myMatrix->clear();}
   inline void zeroVector()        {myVector->clear();}
-  inline const Matrix& getMatrix() const  {return *myMatrix; }
-  inline const Vector& getVector() const  {return *myVector; }
+  inline const Matrix& get_matrix() const  {return *myMatrix; }
+  inline const Vector& get_vector() const  {return *myVector; }
 };
 
 #endif  // SRC_MODEL_MODEL_OBJECT_H_

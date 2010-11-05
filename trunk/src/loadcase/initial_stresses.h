@@ -32,7 +32,7 @@
 typedef std::map < int, Element*>  ElementContainer;
 
 class InitialStresses: public InitialCondition {
-  private:
+ private:
   int theGroupID;
   int dir;
   double h1;
@@ -42,15 +42,16 @@ class InitialStresses: public InitialCondition {
   double K0;
   public:
   InitialStresses();
-  InitialStresses(int groupID_, int dir_, double h1_, double s1_, double h2_, double s2_, double K0_);
+  InitialStresses(int groupID_, int dir_, double h1_, double s1_, double h2_,
+                    double s2_, double K0_);
   ~InitialStresses();
-  inline int getGroupID() {return theGroupID;}
-  inline int getDir()   {return dir;}
-  inline double getH1() {return h1;}
-  inline double getS1() {return s1;}
-  inline double getH2() {return h2;}
-  inline double getS2() {return s2;}
-  inline double getK0() {return K0;}
+  inline int get_group_id() {return theGroupID;}
+  inline int get_dir()   {return dir;}
+  inline double get_H1() {return h1;}
+  inline double get_S1() {return s1;}
+  inline double get_H2() {return h2;}
+  inline double get_S2() {return s2;}
+  inline double get_K0() {return K0;}
   int apply();
 };
 

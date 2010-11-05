@@ -38,13 +38,13 @@ class EliminationModelNode: public ModelNode {
   EliminationModelNode(const IDContainer& FTable, Node* pNode);
   ~EliminationModelNode();
   
-  void setTheOldFTable(const IDContainer& ftab);
+  void set_old_FTable(const IDContainer& ftab);
 
   void add_R(double factor);
   void incTrialDisp(const Vector& du);
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
-  void setTrialDisp(const Vector& u);
-  void setTrialVecs(const Vector& u, const Vector& v, const Vector& a);
+  void set_trial_disp(const Vector& u);
+  void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a);
   void commit();
   void commitSens(const Vector& X, int param);
 };

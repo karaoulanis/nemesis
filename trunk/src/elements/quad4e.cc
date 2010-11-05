@@ -39,29 +39,29 @@ Quad4e::Quad4e(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID
 }
 Quad4e::~Quad4e() {
 }
-const Matrix& Quad4e::getK() {
+const Matrix& Quad4e::get_K() {
   this->formKR();
   Matrix &K=*myMatrix;
   double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->getFacK();
+  if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
   return K;
 }
-const Matrix& Quad4e::getM() {
+const Matrix& Quad4e::get_M() {
   Matrix &M=*myMatrix;
   M.clear();
   return M;
 }
-const Vector& Quad4e::getR() {
+const Vector& Quad4e::get_R() {
   Vector& R=*myVector;
   R.clear();
   if (!(myGroup->isActive()))  return R;
   
   this->formKR();
   ///@todo: chech
-  //double facS = myGroup->getFacS();
-  //double facG = myGroup->getFacG();
-  double facP = myGroup->getFacP();
+  //double facS = myGroup->get_fac_S();
+  //double facG = myGroup->get_fac_G();
+  double facP = myGroup->get_fac_P();
   //R-=facG*b;
   R-=facP*P;
   return R;
@@ -83,7 +83,7 @@ void Quad4e::formKR() {
   static Vector Dalpha(4);
   static Vector dalpha(4);
   
-  Du = this->getDispIncrm();
+  Du = this->get_disp_incrm();
 
   // Local Newton scheme to enforce orthogonality
   Dalpha.clear();
@@ -97,9 +97,9 @@ void Quad4e::formKR() {
     for (unsigned i = 0; i < myMatPoints.size(); i++) {
       double xi =myMatPoints[i]->get_r();
       double eta = myMatPoints[i]->get_s();
-      double detJ = this->getJ(xi, eta);
+      double detJ = this->get_J(xi, eta);
       double dV = myMatPoints[i]->get_w()*detJ;
-      const Matrix& C0 = myMatPoints[i]->getMaterial()->getC();
+      const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
       C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);   
       C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);   
       C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);   
@@ -112,8 +112,8 @@ void Quad4e::formKR() {
       Depsilon[1]=Depsilon3[1];
       Depsilon[3]=Depsilon3[2];
 
-      myMatPoints[i]->getMaterial()->setStrain(Depsilon);
-      sigma = myMatPoints[i]->getMaterial()->getStress();
+      myMatPoints[i]->get_material()->set_strain(Depsilon);
+      sigma = myMatPoints[i]->get_material()->get_stress();
       sigma3[0]=sigma[0];
       sigma3[1]=sigma[1];
       sigma3[2]=sigma[3];
@@ -128,9 +128,9 @@ void Quad4e::formKR() {
       for (unsigned i = 0; i < myMatPoints.size(); i++) {
         double xi =myMatPoints[i]->get_r();
         double eta = myMatPoints[i]->get_s();
-        double detJ = this->getJ(xi, eta);
+        double detJ = this->get_J(xi, eta);
         double dV = myMatPoints[i]->get_w()*detJ;
-        const Matrix& C0 = myMatPoints[i]->getMaterial()->getC();
+        const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
         C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);   
         C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);   
         C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);   
@@ -157,9 +157,9 @@ void Quad4e::formKR() {
     double eta = myMatPoints[i]->get_s();
     this->formBe(xi, eta);
     this->formBu(xi, eta);
-    double detJ = this->getJ(xi, eta);
+    double detJ = this->get_J(xi, eta);
     double dV = myMatPoints[i]->get_w()*detJ;
-    const Matrix& C0 = myMatPoints[i]->getMaterial()->getC();
+    const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
     C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);   
     C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);   
     C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);   
@@ -173,9 +173,9 @@ void Quad4e::formKR() {
     double xi =myMatPoints[i]->get_r();
     double eta = myMatPoints[i]->get_s();
     this->formBu(xi, eta);
-    double detJ = this->getJ(xi, eta);
+    double detJ = this->get_J(xi, eta);
     double dV = myMatPoints[i]->get_w()*detJ;
-    sigma = myMatPoints[i]->getMaterial()->getStress();
+    sigma = myMatPoints[i]->get_material()->get_stress();
     sigma3[0]=sigma[0];
     sigma3[1]=sigma[1];
     sigma3[2]=sigma[3];
@@ -194,7 +194,7 @@ void Quad4e::formKR() {
 
 }
 
-double Quad4e::getJ(double xi, double eta) {
+double Quad4e::get_J(double xi, double eta) {
   static Matrix J(2, 2);
   J(0, 0)=0.25*(-x(0, 0)*(1-eta) +x(1, 0)*(1-eta) +x(2, 0)*(1+eta) -x(3, 0)*(1+eta));
   J(0, 1)=0.25*(-x(0, 0)*(1-xi)  -x(1, 0)*(1+xi)  +x(2, 0)*(1+xi)  +x(3, 0)*(1-xi));
@@ -264,8 +264,8 @@ void Quad4e::formBu(double xi, double eta) {
 //  Be(2, 3)=eta;
 //  //Be(2, 4)=xi*eta;
 //
-//  double detJ0 = getJ(0., 0.);
-//  double detJ =getJ(xi, eta);
+//  double detJ0 = get_J(0., 0.);
+//  double detJ =get_J(xi, eta);
 //  this->formT0(0., 0.);
 //  Be=(detJ0/detJ)*Transpose(Inverse(T0))*Be;
 //
@@ -279,7 +279,7 @@ void Quad4e::formBe(double xi, double eta) {
   J(1, 1)=0.25*(-x(0, 1)-x(1, 1)+x(2, 1)+x(3, 1));
 
   invTranJ = Transpose(Inverse(J));
-  double detJ =getJ(xi, eta);
+  double detJ =get_J(xi, eta);
 
   double d00 = invTranJ(0, 0)*xi/detJ;
   double d10 = invTranJ(1, 0)*xi/detJ;

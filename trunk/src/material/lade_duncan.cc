@@ -41,10 +41,10 @@ LadeDuncan::LadeDuncan(int ID, int elasticID, double K)
 }
 LadeDuncan::~LadeDuncan() {
 }
-MultiaxialMaterial* LadeDuncan::getClone() {
+MultiaxialMaterial* LadeDuncan::get_clone() {
   // Material parameters
-  int myID    = this->getID();
-  int elID    = myElastic->getID();
+  int myID    = this->get_id();
+  int elID    = myElastic->get_id();
   double K    = MatParams[ 0];
   // Create clone and return
   LadeDuncan* newClone = new LadeDuncan(myID, elID, K);

@@ -48,14 +48,14 @@ class CrossSection: public DomainObject {
   CrossSection(int ID)
     :DomainObject(ID)  {}
     ~CrossSection() {}
-  double getA()   {return A;}
-  double getAs2()   {return As2;}
-  double getAs3()   {return As3;}
-  double getJ1()    {return J1;}
-  double getJ2()    {return J2;}
-  double getJ3()    {return J3;}
-  double geth2()    {return h2;}
-  double geth3()    {return h3;}
+  double get_A()   {return A;}
+  double get_As2()   {return As2;}
+  double get_As3()   {return As3;}
+  double getJ_1()    {return J1;}
+  double get_J2()    {return J2;}
+  double get_J3()    {return J3;}
+  double get_h2()    {return h2;}
+  double get_h3()    {return h3;}
 };
 
 //=============================================================

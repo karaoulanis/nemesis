@@ -50,7 +50,7 @@ class Crack: public DomainObject {
   Crack();
   Crack(int ID, double xS_, double yS_, double xT_, double yT_);
   ~Crack();
-  const vector<CrackPoint*>& getCrack();
-  CrackPoint* getCrackPoint(int n);
+  const vector<CrackPoint*>& get_crack();
+  CrackPoint* get_crack_point(int n);
 };
 #endif  // SRC_CRACK_CRACK_H_

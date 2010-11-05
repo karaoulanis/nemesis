@@ -46,11 +46,11 @@ class GroupState: public DomainObject {
   GroupState(int groupID, int active_,
     double facK_, double facS_, double facG_, double facP_);
   int apply();
-  inline bool getActive()       {return active;}
-  inline double getFacK()       {return facK;}
-  inline double getFacS()       {return facS;}
-  inline double getFacG()       {return facG;}
-  inline double getFacP()       {return facP;}
+  inline bool get_active()       {return active;}
+  inline double get_fac_K()       {return facK;}
+  inline double get_fac_S()       {return facS;}
+  inline double get_fac_G()       {return facG;}
+  inline double get_fac_P()       {return facP;}
 };
 
 #endif  // SRC_LOADCASE_GROUP_STATE_H_

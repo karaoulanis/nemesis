@@ -35,7 +35,7 @@ class PlaneStress: public MultiaxialElastic {
   public:
   PlaneStress();
   PlaneStress(int ID, double E, double nu, double rho, double aT);
-  MultiaxialMaterial* getClone();
-  const Matrix& getC();
+  MultiaxialMaterial* get_clone();
+  const Matrix& get_C();
 };
 #endif  // SRC_MATERIAL_PLANE_STRESS_H_

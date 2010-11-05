@@ -46,5 +46,5 @@ void UniaxialMaterial::track() {
   s << "sigm "  << 1020 << ' ' << sConvg << ' ';
   s << "epst "  << 1020 << ' ' << eTotal << ' ';
   s << "END " <<' ';
-  myTracker->track(pD->getLambda(), pD->getTimeCurr(), s.str());
+  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
 }

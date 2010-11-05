@@ -43,10 +43,10 @@ class Tresca: public MultiaxialMaterial {
   Tresca(int ID, int elasticID, double sy, double kx, double ky, double kz);
   ~Tresca();
 
-  MultiaxialMaterial* getClone();
-  void setStrain(const Vector& De);
+  MultiaxialMaterial* get_clone();
+  void set_strain(const Vector& De);
   void commit();
-  const Matrix& getC();
+  const Matrix& get_C();
   bool isPlastic();
 
   // Tracker member functions
