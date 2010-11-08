@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="unit_tests"
+	Name="nemesis_tests"
 	ProjectGUID="{90BD460C-2517-4235-AF2E-E590A5BD09C5}"
 	RootNamespace="unit_tests"
 	Keyword="Win32Proj"
@@ -141,6 +141,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="SQLite.lib python27.lib libacml_mp_dll.lib gtestd.lib"
+				OutputFile="..\..\bin\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;D:\programming\gtest-1.5.0\msvc\x64\Debug&quot;;&quot;C:\Program Files\boost_1_44_0\libs\serialization&quot;;&quot;C:\Program Files\SQLite&quot;;&quot;C:\Program Files\AMD\acml4.4.0\ifort64_mp\lib&quot;;&quot;C:\Program Files\Python27\libs&quot;"
 				IgnoreDefaultLibraryNames="MSVCRT.lib"
