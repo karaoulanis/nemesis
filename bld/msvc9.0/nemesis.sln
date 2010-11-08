@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nemesis", "nemesis.vcproj", "{8C24245F-3BAB-4689-AEAB-09F12E99482D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_tests", "unit_tests.vcproj", "{90BD460C-2517-4235-AF2E-E590A5BD09C5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nemesis_tests", "nemesis_tests.vcproj", "{90BD460C-2517-4235-AF2E-E590A5BD09C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
