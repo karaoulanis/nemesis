@@ -4,7 +4,7 @@
 	Version="9,00"
 	Name="nemesis_tests"
 	ProjectGUID="{90BD460C-2517-4235-AF2E-E590A5BD09C5}"
-	RootNamespace="unit_tests"
+	RootNamespace="nemesis_tests"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
