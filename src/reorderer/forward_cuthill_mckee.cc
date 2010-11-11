@@ -31,7 +31,7 @@ ForwardCuthillMckee::ForwardCuthillMckee() {
 }
 ForwardCuthillMckee::~ForwardCuthillMckee() {
 }
-int ForwardCuthillMckee::get_perm(std::vector < int>& perm) {
+int ForwardCuthillMckee::get_perm(std::vector<int>& perm) {
   // Create the Graph and additional vectors
   UndirectedGraph G(pA->get_model()->get_num_eqns());
   pA->get_model()->get_undirected_graph(G);

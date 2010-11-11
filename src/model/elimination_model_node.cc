@@ -62,7 +62,7 @@ void EliminationModelNode::incTrialDisp(const Vector& du) {
 }
 void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
                                         const Vector& da) {
-  ///@todo Run these within a loop
+  /// @todo Run these within a loop
   // Add displacements
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
@@ -102,7 +102,7 @@ void EliminationModelNode::set_trial_disp(const Vector& u) {
 }
 void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
                                         const Vector& a) {
-  ///@todo Run these within a loop
+  /// @todo Run these within a loop
   // Set displacements
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {

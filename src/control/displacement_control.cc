@@ -75,11 +75,11 @@ DisplacementControl::~DisplacementControl() {
  */
 void DisplacementControl::predict() {
   // Set the reference dof
-  ///@todo Since changes in the dof schemes have occurred, check if this is ok.
+  /// @todo Since changes in the dof schemes have occurred, check if this is ok.
   theRefDof = pA->get_model()->get_soe_dof(theNodeID, theDofID);
   
   // Find DeltaU increment
-  ///@todo Auto-incrementation involves abs() and this might be a problem...
+  /// @todo Auto-incrementation involves abs() and this might be a problem...
 //  DeltaU*=pow(((double)Id/(double)Io), nExp);
 //  if (DeltaU < minDelta) DeltaU = minDelta;
 //  else if (DeltaU>maxDelta) DeltaU = maxDelta;

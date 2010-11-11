@@ -58,7 +58,7 @@ void SensitivityControl::init() {
   ds.clear();
   for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
     // ModelNode* p = pA->get_model()->get_model_nodes()[i];
-    ///@todo  initSensitivityMatrix stupid
+    /// @todo  initSensitivityMatrix stupid
     // p->get_node()->initSensitivityMatrix(theLoadCase->get_num_sens_param());
   }
 }

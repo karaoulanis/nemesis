@@ -166,7 +166,7 @@ const Vector& Spring::get_R() {
   // Factors
   if (!(myGroup->isActive()))  return R;
   double facS = myGroup->get_fac_S();
-  ///@todo check
+  /// @todo check
   // double facG = myGroup->get_fac_G();
   // double facP = myGroup->get_fac_P();
   // R = Fint - Fext
@@ -182,19 +182,19 @@ const Vector& Spring::get_R() {
   return R;
 }
 const Vector& Spring::get_Reff() {
-  ///@todo: form Reff
+  /// @todo: form Reff
   Vector& Reff=*myVector;
   Reff.clear();
   return Reff;
 }
 const Vector& Spring::get_Rgrad() {
-  ///@todo: form Rgrad
+  /// @todo: form Rgrad
   Vector& Rgrad=*myVector;
   Rgrad.clear();
   return Rgrad;
 }
 void Spring::recoverStresses() {
-  ///@todo Stresses from bar to nodes
+  /// @todo Stresses from bar to nodes
   static Vector s(6);
   s.clear();
   s.append(mySpringMaterial->get_stress(), 0);

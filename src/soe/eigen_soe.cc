@@ -38,7 +38,7 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     for (unsigned j = 0; j < EFTable.size(); j++) {
       if (EFTable[i] < 0) continue;
       if (EFTable[j] < 0) continue;
-      A[EFTable[j]*theSize+EFTable[i]]+=factor*Ke(i, j);
+      A[EFTable[j]*size_+EFTable[i]]+=factor*Ke(i, j);
     }
   return 0;
 }
@@ -49,40 +49,41 @@ insertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     for (unsigned j = 0; j < EFTable.size(); j++) {
       if (EFTable[i] < 0) continue;
       if (EFTable[j] < 0) continue;
-      M[EFTable[j]*theSize+EFTable[i]]+=factor*Ke(i, j);
+      M[EFTable[j]*size_+EFTable[i]]+=factor*Ke(i, j);
     }
   return 0;
 }
 void EigenSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (theSize == pA->get_model()->get_num_eqns()) {
+  if (size_ == pA->get_model()->get_num_eqns()) {
     return;
   } else {
-    theSize = pA->get_model()->get_num_eqns();
+    size_ = pA->get_model()->get_num_eqns();
   }
-  A.resize(theSize*theSize);
-  M.resize(theSize*theSize);
-  X.resize(theSize);
-  ALPHAR.resize(theSize);
-  ALPHAI.resize(theSize);
-  BETA.resize(theSize);
-  VL.resize(theSize*theSize);
-  VR.resize(theSize*theSize);
-  WORK.resize(8*theSize);
+  A.resize(size_*size_);
+  M.resize(size_*size_);
+  X.resize(size_);
+  ALPHAR.resize(size_);
+  ALPHAI.resize(size_);
+  BETA.resize(size_);
+  VL.resize(size_*size_);
+  VR.resize(size_*size_);
+  WORK.resize(8*size_);
 
-  double d=(4*theSize*theSize+9*theSize)*sizeof(double);
-  double i = theSize*sizeof(int);
-  printf("soe: Allocated %6.2fmb of memory.\n", (d+i)/(1024*1024));
+  size_t d = (4*size_*size_+9*size_)*sizeof(double);
+  size_t i = size_*sizeof(int);
+  printf("soe: Allocated %6.2fmb of memory.\n",
+    static_cast<double>(d+i)/(1024*1024));
 }
 void EigenSOE::print() {
   cout << "A" << endl;
-  for (int i = 0; i < theSize; i++) {
-    for (int j = 0; j < theSize; j++)  cout << A[j*theSize+i] << ' ';
+  for (int i = 0; i < size_; i++) {
+    for (int j = 0; j < size_; j++)  cout << A[j*size_+i] << ' ';
     cout << endl;
   }
   cout << "M" << endl;
-  for (int i = 0; i < theSize; i++) {
-    for (int j = 0; j < theSize; j++)  cout << M[j*theSize+i] << ' ';
+  for (int i = 0; i < size_; i++) {
+    for (int j = 0; j < size_; j++)  cout << M[j*size_+i] << ' ';
     cout << endl;
   }
 }
@@ -95,7 +96,7 @@ void EigenSOE::zeroM() {
 int EigenSOE::solve() {
   char JOBVL='N';
   char JOBVR='V';
-  int N = theSize;
+  int N = size_;
   int LDA = N;
   int LDB = N;
   int LDVL = N;
@@ -106,6 +107,6 @@ int EigenSOE::solve() {
     &BETA[0], &VL[0], &LDVL, &VR[0], &LDVR, &WORK[0], &LWORK, &INFO, 1, 1);
   if (INFO != 0)
     throw SException("[nemesis:%d] %s", 1110, "SOE: lapack DSYGV failed.");
-  for (int i = 0;i < theSize;i++) X[i]=ALPHAR[i]/BETA[i];
+  for (int i = 0;i < size_;i++) X[i]=ALPHAR[i]/BETA[i];
     return 0;
 }

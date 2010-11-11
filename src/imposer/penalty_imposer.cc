@@ -101,6 +101,6 @@ int PenaltyImposer::impose() {
     pPenModelElement = new PenaltyModelElement(cFTable, pConstraint, a);
     theModel->addModelElement(pPenModelElement);
   }
-  theModel->set_constrained(true);  ///@todo remove
+  theModel->set_constrained(true);  /// @todo remove
   return 0;
 }

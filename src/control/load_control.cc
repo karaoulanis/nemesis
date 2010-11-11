@@ -71,8 +71,8 @@ LoadControl::~LoadControl() {
  */
 void LoadControl::predict() {
   // Find lambdaTrial
-  ///@todo Auto-incrementation involves abs() and this might be a problem...
-  ///@todo Check defaults
+  /// @todo Auto-incrementation involves abs() and this might be a problem...
+  /// @todo Check defaults
   // DLambda*=pow(((double)Id/(double)Io), nExp);
   // if (DLambda < minDelta) DLambda = minDelta;
   // else if (DLambda>maxDelta) DLambda = maxDelta;

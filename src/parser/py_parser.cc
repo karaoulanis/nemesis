@@ -461,7 +461,7 @@ void createGroupByMaterial(int groupId) {
     pD->add(pD->get_groups(), pGroup);
     pD->set_current_group(groupId);
   } catch(SException /*e*/) {
-    ///@todo
+    /// @todo
   }
 }
 static PyObject* pyMaterial_SDof(PyObject* /*self*/, PyObject* args) {
@@ -1113,7 +1113,7 @@ static PyObject* pyConstraint_Set(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
-///@todo make this one more general
+/// @todo make this one more general
 static PyObject* pyConstraint_twoDofs(PyObject* /*self*/, PyObject* args) {
   int node1, dof1, node2, dof2;
   double a1, a2, c;
@@ -1313,7 +1313,7 @@ static PyObject* pyLoad_Sin(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyLoad_BeamPoint(PyObject* /*self*/, PyObject* args) {
   try {
-    if (currentLC <= 0) ///@todo remove exception to lc
+    if (currentLC <= 0) /// @todo remove exception to lc
       throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
     int elemID;
     const char* dir;
@@ -1363,7 +1363,7 @@ static PyMethodDef LoadMethods[] =  {
 ******************************************************************************/
 static PyObject* pyGroundMotion_File(PyObject* /*self*/, PyObject* args) {
   try {
-    if (currentLC <= 0) ///@todo remove exception to lc
+    if (currentLC <= 0) /// @todo remove exception to lc
       throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
     int dof;
     const char* filename;

@@ -60,7 +60,7 @@ const Matrix& Bar2s::get_K() {
       K(i     , j+nDim) = -d;
       K(i+nDim, j+nDim) =  d;
     }
-  ///@todo Add nodal transformations
+  /// @todo Add nodal transformations
   double facK = 1e-7;
   if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
@@ -85,7 +85,7 @@ const Vector& Bar2s::get_Rgrad() {
       K(i     , j+nDim) =-d;
       K(i+nDim, j+nDim) = d;
     }
-  ///@todo Add nodal transformations
+  /// @todo Add nodal transformations
   double facK = 1e-7;
   if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
@@ -113,6 +113,6 @@ const Vector& Bar2s::get_R() {
     R[1]-=b;
     R[1+nDim]-=b;
   }
-  ///@todo Add nodal transformations
+  /// @todo Add nodal transformations
   return R;
 }

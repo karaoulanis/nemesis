@@ -29,7 +29,7 @@
 #include "numeric/numeric.h"
 
 namespace LU {
-  ///@todo check and comment the algorithm
+  /// @todo check and comment the algorithm
   inline int decomposition(double* data, int n, double* vv, int* index, double& d) {
     int i, imax, j, k;
     double big, sum, temp;

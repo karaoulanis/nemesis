@@ -93,7 +93,7 @@ int ConvergenceNorm::update() {
   // ui = sqrt(ui);
   wi = abs(wi);
 
-  ///@todo Check if by setting to zero has any problems.
+  /// @todo Check if by setting to zero has any problems.
   if (num::smaller(ro, 1e-9)) {
     ridro = 0.;
   } else {

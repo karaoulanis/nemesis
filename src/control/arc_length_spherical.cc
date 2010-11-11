@@ -73,7 +73,7 @@ ArcLengthSpherical::~ArcLengthSpherical() {
  */
 void ArcLengthSpherical::predict() {
   // Find DeltaL increment
-  ///@todo Auto-incrementation involves abs() and this might be a problem...
+  /// @todo Auto-incrementation involves abs() and this might be a problem...
   DeltaL*=pow(((double)Id/(double)Io), nExp);
   if (DeltaL < minDelta) DeltaL = minDelta;
   else if (DeltaL>maxDelta) DeltaL = maxDelta;
@@ -137,7 +137,7 @@ void ArcLengthSpherical::correct() {
     dLambda1=(-a2+sqrt(det))/(2*a1);
     dLambda2=(-a2-sqrt(det))/(2*a1);
   } else {
-    dLambda1 = dLambda2=-a3/a2;  ///@todo Check the linear case.
+    dLambda1 = dLambda2=-a3/a2;  /// @todo Check the linear case.
   }
 
   // Apply minimum angle criterion
@@ -146,7 +146,7 @@ void ArcLengthSpherical::correct() {
   dLambda = dLambda1;
   if (DL2cosTheta2>DL2cosTheta1) dLambda = dLambda2;
 
-  ///@todo Find more about the external work criterion.
+  /// @todo Find more about the external work criterion.
   // Positive external work
   // dLambda = dLambda1;
   // double DW=(*q)*((*Du)+(*duBar)+dLambda*(*duT));

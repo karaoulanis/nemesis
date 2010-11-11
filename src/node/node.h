@@ -63,7 +63,7 @@ class Node: public DomainObject {
 
   Tracker* myTracker;
 
-  int avgStress; ///@todo: remove this when full nodal recovering is implemented
+  int avgStress; /// @todo: remove this when full nodal recovering is implemented
   Vector stress;
   Vector strain;
   bool isLoadApplied;

@@ -36,8 +36,8 @@ class BFGS :public Algorithm {
   double rTol;
   int maxIter;
     bool isLineSearchActive;
-  std::vector < Vector > s;
-  std::vector < Vector > y;
+  std::vector<Vector> s;
+  std::vector<Vector> y;
  public:
   BFGS(int m_ = 10);
   BFGS(int m_, double etaMin_, double etaMax_, double rTol_, int maxIter_);

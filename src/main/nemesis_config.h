@@ -23,6 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
+#ifndef SRC_MAIN_NEMESIS_CONFIG_H_
+#define SRC_MAIN_NEMESIS_CONFIG_H_
+
 /*****************************************************************************
 * nemesis Info
 *****************************************************************************/
@@ -55,3 +58,14 @@
   #define NEMESIS_COMPILER_NAME "<Unknown>"
   #define NEMESIS_COMPILER_VERSION 0.0.0
 #endif
+
+/*****************************************************************************
+* snsprintf
+*****************************************************************************/
+// #if _MSC_VER >= 1400  // VC 8.0 and later deprecate snprintf and _snprintf.
+//   #define snprintf _snprintf_s
+// #elif _MSC_VER
+//   #define snprintf _snprintf
+// #endif
+
+#endif  // SRC_MAIN_NEMESIS_CONFIG_H_

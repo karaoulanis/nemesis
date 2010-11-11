@@ -52,37 +52,38 @@ void BandLinearSOE::set_size() {
   upperBandwidth = lowerBandwidth;
 
   // If the size has not changed do not resize arrays
-  if (theSize == pA->get_model()->get_num_eqns()) {
+  if (size_ == pA->get_model()->get_num_eqns()) {
     return;
   } else {
-    theSize = pA->get_model()->get_num_eqns();
+    size_ = pA->get_model()->get_num_eqns();
   }
   nRows = 2*lowerBandwidth+upperBandwidth+1;
-  A.resize(nRows*theSize);
-  B.resize(theSize);
-  X.resize(theSize);
-  IPIV.resize(theSize);
+  A.resize(nRows*size_);
+  B.resize(size_);
+  X.resize(size_);
+  IPIV.resize(size_);
 
-  double d=(nRows+2)*theSize*sizeof(double);
-  double i = theSize*sizeof(int);
-  printf("soe: Allocated %.2fmb of memory for %ddofs.\n", (d+i)/(1024*1024), theSize);
+  size_t d = (nRows+2)*size_*sizeof(double);
+  size_t i = size_*sizeof(int);
+  printf("soe: Allocated %6.2fmb of memory for %d dofs.\n",
+    static_cast<double>(d+i)/(1024*1024), size_);
 }
 void BandLinearSOE::print() {
-  for (int i = 0; i < theSize; i++) {
-    for (int j = 0;j < theSize;j++)
+  for (int i = 0; i < size_; i++) {
+    for (int j = 0;j < size_;j++)
       cout << A[j*nRows+(lowerBandwidth+upperBandwidth+i-j)] << ' ';
         cout << " | " << B[i] << endl;
   }
 }
 int BandLinearSOE::get_eigen_sign() {
-  for (int i = 0;i < theSize;i++)
-    if (fabs(A[lowerBandwidth+upperBandwidth+i*theSize]) < 1e-12)  return  0;
-    else if (A[lowerBandwidth+upperBandwidth+i*theSize]  < 0)      return -1;
+  for (int i = 0;i < size_;i++)
+    if (fabs(A[lowerBandwidth+upperBandwidth+i*size_]) < 1e-12)  return  0;
+    else if (A[lowerBandwidth+upperBandwidth+i*size_]  < 0)      return -1;
   return 1;
 }
 int BandLinearSOE::solve() {
   // Input data
-  int N = theSize;
+  int N = size_;
   int KL = lowerBandwidth;
   int KU = upperBandwidth;
   int NRHS = 1;

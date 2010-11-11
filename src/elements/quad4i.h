@@ -34,7 +34,7 @@ class Quad4i: public Quad4 {
   static double shpInc[2][3][4];
 
   static double detJ[4];
-  static std::vector < int > perm;
+  static std::vector<int> perm;
   
   Vector aTrial;
   Vector aConvg;

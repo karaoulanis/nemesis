@@ -54,7 +54,7 @@ Element::Element(int ID, int matID)
   // Retrieve Material pointer
   myMaterial = pD->get < Material>(pD->get_materials(), matID);
   // Set Group pointer to the material.
-  ///@todo Get rid of Groups and keep only Materials for this functionality.
+  /// @todo Get rid of Groups and keep only Materials for this functionality.
   if (pD->areGroupsByMaterial())
     myGroup = pD->get < Group>(pD->get_groups(), matID);
   else
@@ -136,7 +136,7 @@ const IDContainer& Element::get_nodal_ids() const {
 const IDContainer& Element::get_local_nodal_dofs() const {
   return myLocalNodalDofs;
 }
-const std::vector < Node*>& Element::get_nodes() const {
+const std::vector<Node*>& Element::get_nodes() const {
   return myNodes;
 }
 const Vector& Element::get_disp_trial() {
@@ -193,7 +193,7 @@ const Vector& Element::get_accl_convg() {
       disp[i*nDofs+j]=myNodes[i]->get_accl_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
-///@todo void get_disp_incrm(u)
+/// @todo void get_disp_incrm(u)
 const Vector& Element::get_disp_incrm() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();

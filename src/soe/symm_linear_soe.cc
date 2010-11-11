@@ -44,44 +44,44 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
         ii = EFTable[j];
         jj = EFTable[i];
       }
-      A[jj*theSize-(int)((jj+1)*jj*0.5)+ii]+=factor*Ke(i, j);
+      A[jj*size_-static_cast<int>((jj+1)*jj*0.5)+ii]+=factor*Ke(i, j);
     }
   return 0;
 }
 void SymmLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (theSize == pA->get_model()->get_num_eqns()) {
+  if (size_ == pA->get_model()->get_num_eqns()) {
     return;
   } else {
-    theSize = pA->get_model()->get_num_eqns();
+    size_ = pA->get_model()->get_num_eqns();
   }
-  A.resize((int)(0.5*theSize*(theSize+1)));
-  B.resize(theSize);
-  X.resize(theSize);
-  IPIV.resize(theSize);
+  A.resize(static_cast<int>(0.5*size_*(size_+1)));
+  B.resize(size_);
+  X.resize(size_);
+  IPIV.resize(size_);
 
-  double d = ((int)(0.5*theSize*(theSize+1))+theSize+theSize)*sizeof(double);
-  double i = theSize*sizeof(int);
-  printf("soe: Allocated %6.2fmb of memory for %ddofs.\n", (d+i)/(1024*1024),
-    theSize);
+  size_t d = (static_cast<int>(0.5*size_*(size_+1))+size_+size_)*sizeof(double);
+  size_t i = size_*sizeof(int);
+  printf("soe: Allocated %6.2fmb of memory for %d dofs.\n",
+    static_cast<double>(d+i)/(1024*1024), size_);
 }
 void SymmLinearSOE::print() {
-  for (int i = 0; i < theSize; i++) {
-    for (int j = 0; j < theSize; j++)
-      if (j <= i) cout << A[j*theSize-(int)((j+1)*j*0.5)+i] << ' ';
-      else        cout << A[i*theSize-(int)((i+1)*i*0.5)+j] << ' ';
+  for (int i = 0; i < size_; i++) {
+    for (int j = 0; j < size_; j++)
+      if (j <= i) cout << A[j*size_-static_cast<int>((j+1)*j*0.5)+i] << ' ';
+      else        cout << A[i*size_-static_cast<int>((i+1)*i*0.5)+j] << ' ';
       cout << " | " << B[i] << endl;
   }
 }
 int SymmLinearSOE::get_eigen_sign() {
-///@todo
-//  for (int i = 0;i < theSize;i++)
+/// @todo Unfinished function.
+//  for (int i = 0;i < size_;i++)
 //    if (fabs(A(i, i))<1e-12)  return 0;
 //    else if (A(i, i)<0)   return -1;
   return 1;
 }
 int SymmLinearSOE::solve() {
-  int N = theSize;
+  int N = size_;
   int NRHS = 1;
   int INFO;
   int LDB = N;

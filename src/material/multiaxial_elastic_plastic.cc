@@ -74,7 +74,7 @@ void MultiaxialElastoPlastic::set_strain(const Vector& De) {
  * Commit material state.
  */
 void MultiaxialElastoPlastic::commit() {
-  eTotal = eTrial;  ///@todo
+  eTotal = eTrial;  /// @todo
   ePConvg = ePTrial;
   sConvg = sTrial;
   qConvg = qTrial;
@@ -601,7 +601,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
   }
   if (nActiveSurfaces == 0) return;
   // cout << nActiveSurfaces << endl;
-  // cout << enn-eTrial << endl; ///@todo Check out which is better.
+  // cout << enn-eTrial << endl; /// @todo Check out which is better.
 
   plastic = true;
   // cout << endl;
@@ -750,7 +750,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
   //=========================================================================
   // Step 2: Check for plastic process
   //=========================================================================
-  std::vector < int > activeSurfaces;
+  std::vector<int> activeSurfaces;
   activeSurfaces.resize(0);
   for (unsigned i = 0;i < fSurfaces.size();i++)
     if (fSurfaces[i]->get_f(sTrial, aTrial)>tol2) {

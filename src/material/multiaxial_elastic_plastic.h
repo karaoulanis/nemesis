@@ -43,8 +43,8 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
   bool plastic;
   int nHardeningVariables;
 
-  std::vector < Surface*> fSurfaces;
-  std::vector < Surface*> gSurfaces;
+  std::vector<Surface*> fSurfaces;
+  std::vector<Surface*> gSurfaces;
   EvolutionLaw* EL;
 
   inline std::vector<Surface*> get_fSurfaces()   {return fSurfaces;}

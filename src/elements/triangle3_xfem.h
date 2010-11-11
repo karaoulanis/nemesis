@@ -35,7 +35,7 @@ class Triangle3XFem: public Element {
   double b1, b2, b3;
   double c1, c2, c3;
   double A;
-  std::vector < MatPoint*> myMatPoints;
+  std::vector<MatPoint*> myMatPoints;
   public:
   // Constructors and Destructor
   Triangle3XFem();

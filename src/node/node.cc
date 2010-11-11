@@ -89,7 +89,7 @@ const IDContainer& Node::get_connected_elements() const {
  */
 int Node::addDofToNode(int dof) {
   if (myActivatedDofs.at(dof) < 0) {
-    ///@todo use resize(size, 0.)
+    /// @todo use resize(size, 0.)
     myActivatedDofs[dof]=nActivatedDofs++;
     velcConvg.resize(nActivatedDofs);
     velcConvg.clear();
@@ -117,7 +117,7 @@ const IDContainer& Node::get_activated_dofs() const {
  * \param localDof The localdof.
  */
 int Node::get_activated_dof(int localDof) const {
-  ///@todo Error if localDof>MAX_NUMBER_OF_DOFS see:Constraint for e.g.
+  /// @todo Error if localDof>MAX_NUMBER_OF_DOFS see:Constraint for e.g.
   return myActivatedDofs[localDof];
 }
 int Node::get_num_activated_dofs() const {

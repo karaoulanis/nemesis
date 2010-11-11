@@ -32,7 +32,7 @@ class Quad4d: public Quad4 {
   private:
   static double shp[4][3][4];
   static double detJ[4];
-  static std::vector < int > perm;
+  static std::vector<int> perm;
   public:
   // Constructors and Destructor
   Quad4d();

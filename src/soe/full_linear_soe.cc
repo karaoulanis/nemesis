@@ -38,48 +38,48 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     for (unsigned j = 0; j < EFTable.size(); j++) {
       if ((EFTable[i]) < 0) continue;
       if ((EFTable[j]) < 0) continue;
-      A[EFTable[j]*theSize+EFTable[i]]+=factor*Ke(i, j);
+      A[EFTable[j]*size_+EFTable[i]]+=factor*Ke(i, j);
     }
   return 0;
 }
 void FullLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (theSize == pA->get_model()->get_num_eqns()) {
+  if (size_ == pA->get_model()->get_num_eqns()) {
     return;
   } else {
-    theSize = pA->get_model()->get_num_eqns();
+    size_ = pA->get_model()->get_num_eqns();
   }
-  A.resize(theSize*theSize);
-  B.resize(theSize);
-  X.resize(theSize);
-  IPIV.resize(theSize);
+  A.resize(size_*size_);
+  B.resize(size_);
+  X.resize(size_);
+  IPIV.resize(size_);
 
-  double d = ((int)(theSize*theSize+2*theSize))*sizeof(double);
-  double i = theSize*sizeof(int);
-  printf("soe: Allocated %6.2fmb of memory for %ddofs.\n", (d+i)/(1024*1024),
-    theSize);
+  size_t d = (size_*size_+2*size_)*sizeof(double);
+  size_t i = size_*sizeof(int);
+  printf("soe: Allocated %6.2fmb of memory for %d dofs.\n",
+    static_cast<double>(d+i)/(1024*1024), size_);
 }
 void FullLinearSOE::print() {
-  for (int i = 0; i < theSize; i++) {
-    for (int j = 0; j < theSize; j++)  cout << A[j*theSize+i] << ' ';
+  for (int i = 0; i < size_; i++) {
+    for (int j = 0; j < size_; j++)  cout << A[j*size_+i] << ' ';
         cout << " | " << B[i] << endl;
   }
 }
 int FullLinearSOE::get_eigen_sign() {
-  for (int i = 0; i < theSize; i++)
-    if (fabs(A[i*(theSize+1)]) < 1e-12)  return 0;
-    else if (A[i*(theSize+1)]  < 0)      return -1;
+  for (int i = 0; i < size_; i++)
+    if (fabs(A[i*(size_+1)]) < 1e-12)  return 0;
+    else if (A[i*(size_+1)]  < 0)      return -1;
   return 1;
 }
 int FullLinearSOE::solve() {
-  int N = theSize;
+  int N = size_;
   int NRHS = 1;
   int LDA = N;
   int LDB = N;
   int INFO;
   char c='N';
 //  this->print();
-//  for (int i = 0;i < theSize;i++)
+//  for (int i = 0;i < size_;i++)
 //  {
 //        cout << B[i]<<endl;
 //  }
@@ -94,6 +94,6 @@ int FullLinearSOE::solve() {
   }
   // Solve the system A*X = B, overwriting B with X.
   dgetrs(&c, &N, &NRHS, &A[0], &LDA, &IPIV[0], &X[0], &LDB, &INFO, 1);
-  // for (int i = 0;i < theSize;i++) cout << B[i]<<endl; cout << endl;
+  // for (int i = 0;i < size_;i++) cout << B[i]<<endl; cout << endl;
     return 0;
 }

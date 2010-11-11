@@ -115,7 +115,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
 
   // if (f[0]>0. && f[1]>0. && f[2]>0.) f[2]=-1.;
 
-  std::vector < int > active;
+  std::vector<int> active;
   for (unsigned i = 0;i < 3;i++)
   if (f[i]>0.) active.push_back(i);
 
@@ -182,7 +182,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
 void MohrCoulomb::commit() {
   // report(inaccurate);
   inaccurate = 0;
-  eTotal = eTrial;  ///@todo
+  eTotal = eTrial;  /// @todo
   sConvg = sTrial;
   this->track();
 }

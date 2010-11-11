@@ -72,7 +72,7 @@ ArcLengthUNP::~ArcLengthUNP() {
  */
 void ArcLengthUNP::predict() {
   // Find DLambda
-  ///@todo Auto-incrementation involves abs() and this might be a problem...
+  /// @todo Auto-incrementation involves abs() and this might be a problem...
 //  DLambda = DLambda*pow(((double)Id/(double)Io), nExp);
 //  if (fabs(DLambda)<minDelta)    DLambda = minDelta;
 //  else if (fabs(DLambda)>maxDelta) DLambda = maxDelta;
@@ -83,7 +83,7 @@ void ArcLengthUNP::predict() {
   duT = pA->get_soe()->get_X();
 
   // Now DLambda can be found
-  ///@todo rewrite eigenSign
+  /// @todo rewrite eigenSign
   int sign = pA->get_soe()->get_eigen_sign();
   //if (sign == 0) exit(-11111);
   DLambda*=sign;

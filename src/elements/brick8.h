@@ -34,7 +34,7 @@ class Brick8: public Element {
   std::vector<MatPoint*> myMatPoints;
   static double shp[8][4][8];
   static double detJ[8];
-  static std::vector < int > perm;
+  static std::vector<int> perm;
   public:
   // Constructors and Destructor
   Brick8();

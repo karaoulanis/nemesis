@@ -73,7 +73,7 @@ namespace num {
     char format[64];
     sprintf(format, "%% %dd", total);
     int fw = total-1;
-    ///@todo Check for abs(int)
+    /// @todo Check for abs(int)
     if (fabs((double)n) < pow(10.0, (double)fw)) {
       printf(format, n);
     } else {

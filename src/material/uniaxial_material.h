@@ -45,7 +45,7 @@ class UniaxialMaterial: public Material {
   virtual void set_strain(const double De)=0;
   virtual double get_C()=0;
   inline void set_stress(const double s) {sTrial = s;}
-  inline void addStress(const double s) {sTrial+= s;}  ///@todo: check
+  inline void addStress(const double s) {sTrial+= s;}  /// @todo: check
   inline double get_stress()             {return sTrial;}
 
   // Tracker member functions
