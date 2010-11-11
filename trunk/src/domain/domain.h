@@ -132,7 +132,7 @@ class Domain {
   const Vector& get_gravity_vect();
   double  get_gravity_accl();
 
-  ///@todo cleanup
+  /// @todo cleanup
   double get_time_curr()      {return timeCurr;}
   double get_time_prev()      {return timePrev;}
   double get_time_incr()      {return timeCurr-timePrev;}

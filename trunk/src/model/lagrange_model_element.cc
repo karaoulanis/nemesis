@@ -38,7 +38,7 @@ LagrangeModelElement::LagrangeModelElement()
 LagrangeModelElement::LagrangeModelElement(const IDContainer& FTable,
                        Constraint* pConstraint)
   :ModelElement(FTable, 0, pConstraint) {
-  ///@todo check for maximum number of the available matrices
+  /// @todo check for maximum number of the available matrices
   myMatrix = theStaticMatrices[FTable.size()];
   myVector = theStaticVectors[FTable.size()];
 }
@@ -75,7 +75,7 @@ void LagrangeModelElement::add_C(double /*factor*/) {
  * 
  */
 void LagrangeModelElement::add_R(double /*factor*/) {
-  ///@todo Make this work for the non-linear multi constraint
+  /// @todo Make this work for the non-linear multi constraint
   // Find constraint violation
   double c = myConstraint->get_val();
   double cv = 0.;
@@ -96,7 +96,7 @@ void LagrangeModelElement::add_R(double /*factor*/) {
  * 
  */
 void LagrangeModelElement::add_Reff(double /*factor*/) {
-  ///@todo Make this work for the non-linear multi constraint
+  /// @todo Make this work for the non-linear multi constraint
   double c = myConstraint->get_val();
   double u = myConstraint->get_disp(0); // wrong
   for (unsigned i = 0;i < theFTable.size()-1; i++) {

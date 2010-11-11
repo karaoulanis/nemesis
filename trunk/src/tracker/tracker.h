@@ -41,7 +41,7 @@ class Tracker {
     double time;
     string data;
   };
-  vector < TrackerRecord > myRecords;
+  vector<TrackerRecord> myRecords;
   public:
   Tracker();
   virtual ~Tracker();

@@ -81,7 +81,7 @@ const Matrix& Bar2t::get_K() {
     K(i, ii)+=-K0;
   }
 
-  ///@todo Add nodal transformations
+  /// @todo Add nodal transformations
   double facK = 1e-7;
   if (myGroup->isActive()) facK = myGroup->get_fac_K();
   K*=facK;
@@ -118,6 +118,6 @@ const Vector& Bar2t::get_R() {
     R[1]-=b;
     R[1+nDim]-=b;
   }
-  ///@todo Add nodal transformations
+  /// @todo Add nodal transformations
   return R;
 }

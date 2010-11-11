@@ -32,6 +32,6 @@ class ReverseCuthillMckee: public Reorderer {
   public:
   ReverseCuthillMckee();
   ~ReverseCuthillMckee();
-  int get_perm(std::vector < int>& perm);
+  int get_perm(std::vector<int>& perm);
 };
 #endif  // SRC_REORDERER_REVERSE_CUTHILL_MCKEE_H_

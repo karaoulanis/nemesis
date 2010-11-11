@@ -108,7 +108,7 @@ void Tresca::set_strain(const Vector& De) {
   double theta = sTrial.theta();
   // report(2.*sqrt(sTrial.J2())*cos(theta)-cu, "f");
 
-  std::vector < int > active;
+  std::vector<int> active;
   for (unsigned i = 0;i < 3;i++)
     if (f[i]>0.) active.push_back(i);
 
@@ -187,7 +187,7 @@ void Tresca::set_strain(const Vector& De) {
 void Tresca::commit() {
   // report(inaccurate);
   inaccurate = 0;
-  eTotal = eTrial; ///@todo
+  eTotal = eTrial; /// @todo
   sConvg = sTrial;
   this->track();
 }

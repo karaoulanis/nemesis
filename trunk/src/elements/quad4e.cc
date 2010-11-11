@@ -58,7 +58,7 @@ const Vector& Quad4e::get_R() {
   if (!(myGroup->isActive()))  return R;
   
   this->formKR();
-  ///@todo: chech
+  /// @todo: chech
   //double facS = myGroup->get_fac_S();
   //double facG = myGroup->get_fac_G();
   double facP = myGroup->get_fac_P();

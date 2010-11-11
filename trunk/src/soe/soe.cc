@@ -26,7 +26,7 @@
 #include "soe/soe.h"
 
 SOE::SOE() {
-  theSize = 0;
+  size_ = 0;
   isLUFactored = false;
 }
 SOE::~SOE() {
@@ -38,7 +38,7 @@ int SOE::insertVectorIntoB(const Vector& Ve, const IDContainer& EFTable,
   return 0;
 }
 void SOE::printSolution() {
-  for (int i = 0;i < theSize; i++) cout << X[i] << endl;
+  for (int i = 0;i < size_; i++) cout << X[i] << endl;
 }
 const Vector& SOE::get_X() {
   return X;
@@ -75,13 +75,13 @@ int SOE::insertMatrixIntoA(const Matrix& /*Be*/, const IDContainer& /*EFTable*/,
 }
 int SOE::plotGraph(const char* s) {
   // Create the Graph
-  if (theSize <= 0)
+  if (size_ <= 0)
     throw SException("[nemesis:%d] %s", 1110, "Could not initialize graph.\n");
-  UndirectedGraph G(theSize);
+  UndirectedGraph G(size_);
   pA->get_model()->get_undirected_graph(G);
   // Plot the Graph
   ofstream outfile(s);
-  ///@todo: the following line is commented, produces error/warnings
+  /// @todo: the following line is commented, produces error/warnings
   // write_graphviz(outfile, G);
   return 0;
 }

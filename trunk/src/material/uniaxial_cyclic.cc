@@ -85,7 +85,7 @@ void UniaxialCyclic::set_strain(const double De) {
   }
 }
 double UniaxialCyclic::get_C() {
-  ///@todo
+  /// @todo
   return Et;
 }
 void UniaxialCyclic::commit() {

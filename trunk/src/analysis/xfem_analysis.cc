@@ -38,7 +38,7 @@ bool XFemAnalysis::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
 int XFemAnalysis::run(int nLC, int nLoadSteps) {
-  ///@todo Checks
+  /// @todo Checks
 
   // Create model by applying the constraints
   pA->get_imposer()->impose();
@@ -56,7 +56,7 @@ int XFemAnalysis::run(int nLC, int nLoadSteps) {
 
   // Call algorithm to solve step
   // int check = pA->get_algorithm()->solveStep(0); // gives warning for check
-  pA->get_algorithm()->solveStep(0);  ///@todo:check
+  pA->get_algorithm()->solveStep(0);  /// @todo:check
 
   // Commit
   pA->get_control()->commit();
@@ -64,6 +64,6 @@ int XFemAnalysis::run(int nLC, int nLoadSteps) {
   // Finalize
   pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->commit();
   pA->get_model()->set_nodal_stress();
-  pA->get_domain()->commit(); ///@todo For commiting time; find more elegant way.
+  pA->get_domain()->commit(); /// @todo For commiting time; find more elegant way.
   return 0;
 }

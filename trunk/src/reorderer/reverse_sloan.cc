@@ -33,19 +33,19 @@ ReverseSloan::ReverseSloan(double w1, double w2) {
 }
 ReverseSloan::~ReverseSloan() {
 }
-int ReverseSloan::get_perm(std::vector < int>& perm) {
+int ReverseSloan::get_perm(std::vector<int>& perm) {
   // Create the Graph and additional vectors
   UndirectedGraph G(pA->get_model()->get_num_eqns());
   pA->get_model()->get_undirected_graph(G);
-  property_map < UndirectedGraph, vertex_index_t>::type
+  property_map<UndirectedGraph, vertex_index_t>::type
     index_map = get(vertex_index, G);
-  std::vector < int > inv_perm(num_vertices(G));
+  std::vector<int> inv_perm(num_vertices(G));
   perm.resize(num_vertices(G));
 
   // Find old bandwidth, profile and wavefronts
   int oldBandwidth = bandwidth(G);
   int oldProfile = profile(G);
-  ///@todo check for warnings in wavefront()
+  /// @todo check for warnings in wavefront()
   // double oldMaxWavefront = max_wavefront(G);
   // double oldAverWavefront = aver_wavefront(G);
   // double oldRmsWavefront = rms_wavefront(G);

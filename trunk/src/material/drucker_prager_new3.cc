@@ -278,7 +278,7 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
 void DruckerPragerNew3::commit() {
   // report(inaccurate);
   inaccurate = 0;
-  eTotal = eTrial; ///@todo
+  eTotal = eTrial; /// @todo
   sConvg = sTrial;
   aConvg = aTrial;
   this->track();

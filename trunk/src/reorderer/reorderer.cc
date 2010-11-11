@@ -34,7 +34,7 @@ Reorderer::~Reorderer() {
 }
 int Reorderer::reorder() {
   if (pA->get_model()->isReordered()) return 0;
-  std::vector < int > perm;
+  std::vector<int> perm;
   // Get the permutation matrix
   if (this->get_perm(perm)>0) {
     // Reorder Model Nodes

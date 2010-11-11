@@ -73,7 +73,7 @@ const Matrix& Quad4DispAxisymmetric::get_K() {
   K*=facK;
   return K;
 }
-///@todo
+/// @todo
 const Matrix& Quad4DispAxisymmetric::get_M() {
   Matrix &M=*myMatrix;
   M.clear();

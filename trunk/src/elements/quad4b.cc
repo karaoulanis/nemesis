@@ -29,7 +29,7 @@
 
 double Quad4b::detJ[4];
 double Quad4b::shp[4][3][4];
-std::vector < int > Quad4b::perm(4);
+std::vector<int> Quad4b::perm(4);
 
 Quad4b::Quad4b() {
 }
@@ -134,7 +134,7 @@ void Quad4b::update() {
     epsilon.clear();
     for (unsigned a = 0; a < myNodes.size(); a++) {
       this->get_B(Ba, a, k);
-      ///@todo check dV
+      /// @todo check dV
       // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
     }

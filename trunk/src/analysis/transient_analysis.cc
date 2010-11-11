@@ -97,7 +97,7 @@ int TransientAnalysis::run(int nLC, int nLoadSteps) {
   pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->init();
   pA->get_control()->init();
   pA->get_convergence_norm()->init(nLC, nLoadSteps);
-  ///@todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //pA->get_domain()->keepTrack(pA->get_control()->get_ambda(),
   //  pA->get_control()->get_time());
 
@@ -116,7 +116,7 @@ int TransientAnalysis::run(int nLC, int nLoadSteps) {
     }
     // Algorithm succeeded
     pA->get_control()->commit();
-  ///@todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //pA->get_domain()->keepTrack(pA->get_control()->get_lambda(),
   //  pA->get_control()->get_time());
   }

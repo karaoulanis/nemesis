@@ -45,12 +45,12 @@ class Model;
 
 class SOE: public AnalysisObject {
  protected:
-  int theSize;
-  valarray < double > A;
+  int size_;
+  valarray<double> A;
   Vector X;
   Vector B;
   bool isLUFactored;
-  valarray < int > IPIV;
+  valarray<int> IPIV;
   public:
   SOE();
   virtual ~SOE();
@@ -63,7 +63,7 @@ class SOE: public AnalysisObject {
                   const IDContainer& SFTable, double factor = 1.0);
 
   virtual void zeroA();
-  virtual void zeroB(); 
+  virtual void zeroB();
   virtual void zeroX();
   virtual void zero();
 

@@ -45,7 +45,7 @@ SpringContact::SpringContact(int ID, double Kn, double Ks, double mu,
 
   if (gap != 0.)
     cout << "Warning  : Gap is not yet implemented." << endl;
-  ///@todo gap.
+  /// @todo gap.
   // eTotal.clear();
   // eTotal[0]=gap;
 }

@@ -63,7 +63,7 @@ StaticControl::~StaticControl() {
 void StaticControl::init() {
   // Check the size
   int size = pA->get_model()->get_num_eqns();
-  ///@todo resize(size, 0.)
+  /// @todo resize(size, 0.)
   qRef.resize(size);
   qRef.clear();
   Du.resize(size);
@@ -139,7 +139,7 @@ void StaticControl::formResidual(double fac)   {
 void StaticControl::commit() {
   lambdaConvg = lambdaTrial;
   pA->get_domain()->set_lambda(lambdaConvg);
-  // pA->get_domain()->commit(); ///@todo this commits only domains time!
+  // pA->get_domain()->commit(); /// @todo this commits only domains time!
   pA->get_model()->commit();
 }
 /**

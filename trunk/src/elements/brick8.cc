@@ -29,7 +29,7 @@
 
 double Brick8::detJ[8];
 double Brick8::shp[8][4][8];
-std::vector < int > Brick8::perm(8);
+std::vector<int> Brick8::perm(8);
 
 /**
  * Default constructor.

@@ -209,7 +209,7 @@ bool Triangle6::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
 void Triangle6::recoverStresses() {
-  ///@todo check Gauss extrapolation
+  /// @todo check Gauss extrapolation
   static Vector sigma(6);
   static Matrix xi(6, 3);
   const double d1 = 1.0+num::d23;

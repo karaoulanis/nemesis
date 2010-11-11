@@ -28,7 +28,7 @@
 #include "exception/sexception.h"
 
 SException::SException(const char* format, ...) {
-  ///@todo buffer overflow if message>1024b (see _vscprintf).
+  /// @todo buffer overflow if message>1024b (see _vscprintf).
   va_list args;
   va_start(args, format);
   vsprintf(errMsg, format, args);

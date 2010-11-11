@@ -29,7 +29,7 @@
 
 double Quad4d::detJ[4];
 double Quad4d::shp[4][3][4];
-std::vector < int > Quad4d::perm(4);
+std::vector<int> Quad4d::perm(4);
 
 Quad4d::Quad4d() {
 }
@@ -85,7 +85,7 @@ const Vector& Quad4d::get_R() {
 
   R.clear();
   if (!(myGroup->isActive()))  return R;
-  ///@todo check facS, facG
+  /// @todo check facS, facG
   //double facS = myGroup->get_fac_S();
   //double facG = myGroup->get_fac_G();
   double facP = myGroup->get_fac_P();
@@ -116,7 +116,7 @@ void Quad4d::update() {
     epsilon.clear();
     for (unsigned a = 0; a < myNodes.size(); a++) {
       this->get_B(Ba, a, k);
-      ///@todo check dV
+      /// @todo check dV
       //double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
     }
@@ -138,7 +138,7 @@ void Quad4d::shapeFunctions() {
   }
 }
 void Quad4d::get_B(Matrix& B, int node, int gPoint) {
-  ///@todo: check gCrds
+  /// @todo: check gCrds
   //const double dsq3 = 0.577350269189626;
   //static const double gCrds[4]={-dsq3, +dsq3, -dsq3, +dsq3};
 

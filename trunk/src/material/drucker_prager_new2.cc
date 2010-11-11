@@ -119,7 +119,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
   // report(s, "De", 8, 3);
 
   // Find active surfaces
-  vector < int > activeS;
+  vector<int> activeS;
   for (unsigned i = 0;i < 2;i++)
     if (fSurfaces[i]->get_f(s, aTrial)>1e-9)
       activeS.push_back(i);
@@ -269,7 +269,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
 void DruckerPragerNew2::commit() {
   // report(inaccurate);
   inaccurate = 0;
-  eTotal = eTrial; ///@todo
+  eTotal = eTrial; /// @todo
   sConvg = sTrial;
   aConvg = aTrial;
   this->track();

@@ -47,7 +47,7 @@ Quad4::Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
   // Handle common info
   this->handleCommonInfo();
 
-  ///@todo User defined integration rule
+  /// @todo User defined integration rule
   // p1 = integrationRuleXi;
   // p2 = integrationRuleEta;
   p1 = 2;
@@ -113,7 +113,7 @@ void Quad4::addInitialStresses(InitialStresses* pInitialStresses) {
       myMatPoints[i]->set_initial_stresses(pInitialStresses);
 }
 void Quad4::recoverStresses() {
-  ///@todo check
+  /// @todo check
   if (p1 != 2||p2 != 2) return;
   double sq3 = 1.7320508075688772935274463415059;
   static Vector sigma(6);

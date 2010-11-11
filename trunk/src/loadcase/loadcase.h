@@ -45,11 +45,11 @@ class Load;
 class NodalLoad;
 
 // Type definitions 
-typedef std::vector < Load*>                LoadVector;
-typedef std::vector < InitialCondition*>          InitialConditionVector;
-typedef std::vector < GroupState* >           GroupStateVector;
-typedef std::vector < ElementSensitivityParameter* >    SensitivityParameterVector;
-typedef std::map < int, Group*>              GroupContainer;
+typedef std::vector<Load*>                        LoadVector;
+typedef std::vector<InitialCondition*>            InitialConditionVector;
+typedef std::vector<GroupState*>                  GroupStateVector;
+typedef std::vector<ElementSensitivityParameter*> SensitivityParameterVector;
+typedef std::map<int, Group*>                     GroupContainer;
 
 class LoadCase: public DomainObject {
   private:

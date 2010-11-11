@@ -104,7 +104,7 @@ int EliminationImposer::impose() {
   // ===========================================================================
   for (ElementIterator eIter = pA->get_domain()->get_elements().begin();
     eIter != pA->get_domain()->get_elements().end(); eIter++) {
-    ///@todo Needs speed improvements
+    /// @todo Needs speed improvements
     // Get next (randomly chosen) element
     pElement = eIter->second;
     // Get the ids of the nodes

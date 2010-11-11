@@ -29,7 +29,7 @@
 #include "loadcase/initial_condition.h"
 #include "elements/element.h"
 
-typedef std::map < int, Element*>  ElementContainer;
+typedef std::map<int, Element*>  ElementContainer;
 
 class InitialStresses: public InitialCondition {
  private:

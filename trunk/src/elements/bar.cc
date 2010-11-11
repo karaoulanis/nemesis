@@ -98,7 +98,7 @@ const Matrix& Bar::get_M() {
   return M;
 }
 const Vector& Bar::get_Reff() {
-  Vector velc = this->get_velc_trial(); ///@todo: problem with memory sharing otherwise
+  Vector velc = this->get_velc_trial(); /// @todo: problem with memory sharing otherwise
   Vector& Reff=*myVector;
   // +Fint-Fext
   this->get_R();
@@ -115,7 +115,7 @@ const Vector& Bar::get_Reff() {
   return Reff;
 }
 void Bar::recoverStresses() {
-  ///@todo Stresses from bar to nodes
+  /// @todo Stresses from bar to nodes
   static Vector s(6);
   s[0]=myUniMaterial->get_stress();
   myNodes[0]->addStress(s);

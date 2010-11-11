@@ -27,7 +27,7 @@
 
 PlaneStress::PlaneStress() {
 }
-///@todo 0.
+/// @todo 0.
 PlaneStress::PlaneStress(int ID, double E, double nu, double rho, double aT)
 :MultiaxialElastic(ID, E, nu, rho, aT, 0., 0., 0.) {
 }

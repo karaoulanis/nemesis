@@ -150,7 +150,7 @@ void HoekBrown::set_strain(const Vector& De) {
 
   // spectral decomposition
   Vector s(3), De3(3);
-  Vector sTrial3(3);  ///@todo: remove
+  Vector sTrial3(3);  /// @todo: remove
   Matrix sV(3, 3), eV(3, 3);
   aTrial = aConvg;
   eTrial = eTotal+De;
@@ -166,8 +166,8 @@ void HoekBrown::set_strain(const Vector& De) {
 
   // Setup
   int nf = f.size();
-  vector < bool > active(nf);
-  vector < double > DLambda(nf, 0.);
+  vector<bool> active(nf);
+  vector<double> DLambda(nf, 0.);
   Matrix A;
   Vector R;
   Vector x;
@@ -332,7 +332,7 @@ void HoekBrown::set_strain(const Vector& De) {
 void HoekBrown::commit() {
   //report(inaccurate);
   inaccurate = 0;
-  eTotal = eTrial; ///@todo
+  eTotal = eTrial; /// @todo
   sConvg = sTrial;
   this->track();
 }

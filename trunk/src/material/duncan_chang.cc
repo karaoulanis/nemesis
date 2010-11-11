@@ -109,7 +109,7 @@ void DuncanChang::track() {
   s << "DATA "  << ' ';
   s << "sigm "  << ' ' << sConvg;
   s << "epst "  << ' ' << eTotal;
-  // s << "epsp "  <<' '<<ePConvg; ///@todo
+  // s << "epsp "  <<' '<<ePConvg; /// @todo
   // s << "epsv "  << 1020 << ' ' << eTotal[0]+eTotal[1]+eTotal[2] << ' ';
   s << "p "     << 1020 << ' ' << sConvg.p() << ' ';
   s << "q "     << 1020 << ' ' << sConvg.q() << ' ';

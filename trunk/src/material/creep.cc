@@ -69,7 +69,7 @@ void Creep::set_strain(const Vector& De) {
  * Commit material state.
  */
 void Creep::commit() {
-  eTotal = eTrial;  ///@todo
+  eTotal = eTrial;  /// @todo
   eCConvg = eCTrial;
   sConvg = sTrial;
   this->track();

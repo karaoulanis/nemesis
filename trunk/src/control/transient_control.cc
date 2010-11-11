@@ -40,7 +40,7 @@ TransientControl::~TransientControl() {
  */
 void TransientControl::init() {
   int size = pA->get_model()->get_num_eqns();
-  ///@todo: resize(size, 0.)
+  /// @todo: resize(size, 0.)
   u.resize(size);
   u.clear();
   v.resize(size);

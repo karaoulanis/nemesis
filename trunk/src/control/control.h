@@ -51,7 +51,7 @@ class Control: public AnalysisObject {
   virtual void formNodalResidual(ModelNode* pModelNode)=0;
 
   virtual double get_lambda();
-  virtual double get_time() {return 0;} ///@todo: implement this better
+  virtual double get_time() {return 0;} /// @todo: implement this better
   
   virtual void init()=0;
   virtual void predict()=0;

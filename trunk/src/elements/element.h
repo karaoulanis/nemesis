@@ -56,7 +56,7 @@ class Element: public DomainObject {
  protected:
   IDContainer myNodalIDs;
   IDContainer myLocalNodalDofs;
-  std::vector < Node*> myNodes;
+  std::vector<Node*> myNodes;
   Group* myGroup;
 
   // Materials

@@ -48,7 +48,7 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID,
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
-  ///@todo: check this
+  /// @todo: check this
   double A = mySection->get_A();
   double b0A = b[0]*A;
   double b1A = b[1]*A;
@@ -80,7 +80,7 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
-  ///@todo: check this
+  /// @todo: check this
   double A = mySection->get_A();
   double b0A = b[0]*A;
   double b1A = b[1]*A;
@@ -129,7 +129,7 @@ const Matrix& Timoshenko2d::get_K() {
   double nu = myUniMaterial->get_param(1);
   double A =mySection->get_A();
   double J =mySection->get_J3();
-  double a =5./6.; ///@todo
+  double a =5./6.; /// @todo
 
   double c = cosX[0];
   double s = cosX[1];
@@ -182,7 +182,7 @@ const Vector& Timoshenko2d::get_R() {
   double nu = myUniMaterial->get_param(1);
   double A =mySection->get_A();
   double J =mySection->get_J3();
-  double a =5./6.; ///@todo
+  double a =5./6.; /// @todo
   double c = cosX[0];
   double s = cosX[1];
   double Ni, dNi;
@@ -193,7 +193,7 @@ const Vector& Timoshenko2d::get_R() {
   R.clear();  // get_disp_trial() and R use the same static matrix
   for (int k = 0; k < gPoints; k++) {
     // Find epsilon
-    ///@todo This should happen to update() for elastoplastic computations
+    /// @todo This should happen to update() for elastoplastic computations
     double xi = GaussCoords[gPoints][k+1];
     double dx = GaussWeights[gPoints][k+1]*0.5*L;
     epsilon.clear();
@@ -204,7 +204,7 @@ const Vector& Timoshenko2d::get_R() {
       epsilon[2]+=dNi*(-s*u[0+3*i]+c*u[1+3*i])-Ni*u[2+3*i];
     }
     // Find sigma 
-    ///@todo This should come from material for elastoplastic computations
+    /// @todo This should come from material for elastoplastic computations
     static Vector sigma(3);
     sigma[0]=E*A*epsilon[0];
     sigma[1]=E*J*epsilon[1];
@@ -249,7 +249,7 @@ const Vector& Timoshenko2d::get_R() {
   return R;
 }
 void Timoshenko2d::recoverStresses() {
-  ///@todo This might affect nodal stresses.
+  /// @todo This might affect nodal stresses.
   return;
 }
 const double Timoshenko2d::GaussCoords[4][4]= {{ 0.000000000000000,  // Rule 0

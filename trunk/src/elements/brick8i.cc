@@ -146,13 +146,13 @@ void Brick8i::update() {
     epsilon.clear();
     for (unsigned a = 0; a < 8; a++) {
       this->get_Bstd(Ba, a, k);
-      ///@todo check dV
+      /// @todo check dV
       // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 3; a++) {
       this->get_BInc(Ba, a, k);
-      ///@todo check dV
+      /// @todo check dV
       // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Da, 1.0, 1.0);
     }

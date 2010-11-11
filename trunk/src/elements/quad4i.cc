@@ -30,7 +30,7 @@
 double Quad4i::detJ[4];
 double Quad4i::shpStd[4][3][4];
 double Quad4i::shpInc[2][3][4];
-std::vector < int > Quad4i::perm(3);
+std::vector<int> Quad4i::perm(3);
 
 Quad4i::Quad4i() {
 }
@@ -144,13 +144,13 @@ void Quad4i::update() {
     epsilon.clear();
     for (unsigned a = 0; a < 4; a++) {
       this->get_Bstd(Ba, a, k);
-      ///@todo check
+      /// @todo check
       //double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 2; a++) {
       this->get_BInc(Ba, a, k);
-      ///@todo check
+      /// @todo check
       //double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, Da, 1.0, 1.0);
     }
