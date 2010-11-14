@@ -24,9 +24,8 @@
 // *****************************************************************************
 
 #include "tracker/tracker.h"
-
 // C++ files
-#include < iostream>
+#include <iostream>
 
 Tracker::Tracker() {
 }

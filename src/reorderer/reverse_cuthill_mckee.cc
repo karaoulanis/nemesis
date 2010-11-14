@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "reorderer/reverse_cuthill_mckee.h"
-#include < boost/graph/cuthill_mckee_ordering.hpp>
+#include <boost/graph/cuthill_mckee_ordering.hpp>
 
 ReverseCuthillMckee::ReverseCuthillMckee() {
   myTag = TAG_REORDERER_REVERSE_CUTHILL_MCKEE;

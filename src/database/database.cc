@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include < cstring>
-#include < fstream>
+#include <cstring>
+#include <fstream>
 #include "database/database.h"
 
 using std::fstream;

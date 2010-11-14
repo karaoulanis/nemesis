@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "reorderer/forward_cuthill_mckee.h"
-#include < boost/graph/cuthill_mckee_ordering.hpp>
+#include <boost/graph/cuthill_mckee_ordering.hpp>
 
 ForwardCuthillMckee::ForwardCuthillMckee() {
   myTag = TAG_REORDERER_FORWARD_CUTHILL_MCKEE;

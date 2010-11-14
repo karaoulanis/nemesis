@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "reorderer/reverse_sloan.h"
-#include < boost/graph/sloan_ordering.hpp>
+#include <boost/graph/sloan_ordering.hpp>
 
 ReverseSloan::ReverseSloan(double w1, double w2) {
   myTag = TAG_REORDERER_REVERSE_SLOAN;

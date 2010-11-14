@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "control/load_control.h"
-#include < cmath>
+#include <cmath>
 
 /**
  * Constructor.

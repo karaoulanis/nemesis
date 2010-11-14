@@ -26,7 +26,7 @@
 #ifndef SRC_DOMAIN_DOMAIN_OBJECT_H_
 #define SRC_DOMAIN_DOMAIN_OBJECT_H_
 
-#include < iostream>
+#include <iostream>
 #include "feobject/fe_object.h"
 
 // Forward declarations

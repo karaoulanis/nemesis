@@ -27,7 +27,7 @@
 #include "database/packet.h"
 
 // C++ system files
-#include < iostream>
+#include <iostream>
 
 // Namespaces
 using std::cout;

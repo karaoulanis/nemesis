@@ -37,9 +37,9 @@
  * \li Predictor p.285-286  \n
  */
 class ArcLengthSpherical :public StaticControl {
-  private:
+ private:
   double DeltaL;        ///< Current Delta l for this step
-  public:
+ public:
   ArcLengthSpherical(double DL0, double minDL, double maxDL,
                   int IterDesired, double n, double DeltaTime);
   ~ArcLengthSpherical();

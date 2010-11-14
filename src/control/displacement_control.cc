@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "control/displacement_control.h"
-#include < cmath>
+#include <cmath>
 
 /**
  * Constructor.
