@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "control/newmark.h"
-#include < cmath>
+#include <cmath>
 
 /**
  * Constructor.

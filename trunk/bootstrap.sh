@@ -20,7 +20,7 @@ SOURCES="nemesis_SOURCES ="
 for DIRNAME in $(ls -d1 src/*/) # run through dirs
 do
 	if [ $? == 0 ]; then 
-		for FILENAME in `ls $DIRNAME*.{cc,h}`
+		for FILENAME in `ls $DIRNAME*.{cc,h}|grep -v "_test.cc"`
 		do
 			SOURCES+=' \\'
 			SOURCES+="\n\t$FILENAME"

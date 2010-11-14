@@ -26,13 +26,13 @@
 #ifndef SRC_MODEL_MODEL_H_
 #define SRC_MODEL_MODEL_H_
 
-#include < boost/config.hpp>
-#include < boost/graph/adjacency_list.hpp>
-#include < boost/graph/properties.hpp>
-#include < boost/graph/bandwidth.hpp>
-#include < boost/graph/profile.hpp>
-#include < boost/graph/wavefront.hpp>
-#include < boost/graph/graphviz.hpp>
+#include <boost/config.hpp>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/properties.hpp>
+#include <boost/graph/bandwidth.hpp>
+#include <boost/graph/profile.hpp>
+#include <boost/graph/wavefront.hpp>
+#include <boost/graph/graphviz.hpp>
 
 #include "analysis/analysis_object.h"
 #include "domain/domain.h"

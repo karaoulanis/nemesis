@@ -26,8 +26,8 @@
 #ifndef SRC_DATABASE_SQLITE_DATABASE_H_
 #define SRC_DATABASE_SQLITE_DATABASE_H_
 
-#include < fstream>
-#include < sqlite3.h>
+#include <fstream>
+#include <sqlite3.h>
 #include "containers/containers.h"
 #include "database/database.h"
 

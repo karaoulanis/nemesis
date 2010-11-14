@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "reorderer/reorderer.h"
-#include < fstream>
+#include <fstream>
 #include "exception/sexception.h"
 
 Reorderer::Reorderer() {

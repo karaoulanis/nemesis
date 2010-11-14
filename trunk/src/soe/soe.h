@@ -27,9 +27,9 @@
 #define SRC_SOE_SOE_H_
 
 // C++ system files
-#include < cmath>
-#include < iostream>
-#include < valarray>
+#include <cmath>
+#include <iostream>
+#include <valarray>
 
 // Project files (alphabetically)
 #include "analysis/analysis.h"

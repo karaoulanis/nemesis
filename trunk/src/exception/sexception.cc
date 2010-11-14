@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include < stdio.h>
-#include < stdarg.h>
+#include <cstdio>
+#include <cstdarg>
 #include "exception/sexception.h"
 
 SException::SException(const char* format, ...) {

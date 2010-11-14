@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "model/model.h"
-#include < algorithm>
+#include <algorithm>
 
 /**
  * Default constructor.

@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/element.h"
-#include < math.h>
+#include <cmath>
 
 Matrix** Element::theStaticMatrices = 0;
 Vector** Element::theStaticVectors = 0;

@@ -26,7 +26,7 @@
 #ifndef SRC_DATABASE_PACKET_H_
 #define SRC_DATABASE_PACKET_H_
 
-#include < cstring>
+#include <cstring>
 
 struct Packet {
   const static int dblSize = 64;

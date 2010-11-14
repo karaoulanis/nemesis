@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "control/control.h"
-#include < cmath>
+#include <cmath>
 
 Control::Control() {
   lambdaTrial = 0;

@@ -26,7 +26,7 @@
 #ifndef SRC_NODE_NODE_H_
 #define SRC_NODE_NODE_H_
 
-#include < sstream>
+#include <sstream>
 
 #include "containers/containers.h"
 #include "domain/domain.h"

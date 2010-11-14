@@ -24,8 +24,8 @@
 // *****************************************************************************
 
 #include "database/sqlite_database.h"
-#include < stdio.h>
-#include < iostream>
+#include <cstdio>
+#include <iostream>
 #include "exception/sexception.h"
 
 using std::ofstream;

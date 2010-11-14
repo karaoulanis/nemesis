@@ -26,7 +26,7 @@
 #ifndef SRC_NUMERIC_LAPACK_H_
 #define SRC_NUMERIC_LAPACK_H_
 
-#include < acml.h>
+#include <acml.h>
 
 #if defined(__GNUC__)
   #define dgesv dgesv_
@@ -43,7 +43,7 @@
   #define dggev dggev_
 #endif
 
-#define __ACML__
+// #define __ACML__
 #if defined(__ACML__)
   #define dgesv DGESV
   #define dspsv DSPSV
