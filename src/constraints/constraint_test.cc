@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 // Included files
-#include < gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "constraints/constraint.h"
 #include <exception>
 
