@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include < gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "node/node.h"
 // Tests that ...
 /*TEST(NodeTest, X1Initialized) {
