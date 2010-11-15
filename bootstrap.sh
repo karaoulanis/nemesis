@@ -50,47 +50,48 @@ echo -e $nemesis_CXXFLAGS>>Makefile.am
 # Unit tests
 # =====================================================================
 
-echo -e "TESTS=nemesis-tests">>Makefile.am
+echo -e '\n# Define tests'>>Makefile.am
+echo -e "TESTS=nemesis_tests">>Makefile.am
 
 check_PROGRAMS='\n# Define unit test target\n'
-check_PROGRAMS+='check_PROGRAMS = nemesis-tests'
+check_PROGRAMS+='check_PROGRAMS = nemesis_tests'
 echo -e $check_PROGRAMS>>Makefile.am
 
-nemesis-tests_CPPFLAGS='\n# Command line flags for the preprocessor\n'
-nemesis-tests_CPPFLAGS+='nemesis-tests_CPPFLAGS = -Isrc \\\n'
-nemesis-tests_CPPFLAGS+='\t$(PYTHON_CPPFLAGS) \\\n'
-nemesis-tests_CPPFLAGS+='\t$(BOOST_CPPFLAGS) \\\n'
-nemesis-tests_CPPFLAGS+='\t$(SQLITE3_CPPFLAGS) \\\n'
-nemesis-tests_CPPFLAGS+='\t$(ACML_CPPFLAGS)'
-echo -e $nemesis-tests_CPPFLAGS>>Makefile.am
+nemesis_tests_CPPFLAGS='\n# Command line flags for the preprocessor\n'
+nemesis_tests_CPPFLAGS+='nemesis_tests_CPPFLAGS = -Isrc \\\n'
+nemesis_tests_CPPFLAGS+='\t$(PYTHON_CPPFLAGS) \\\n'
+nemesis_tests_CPPFLAGS+='\t$(BOOST_CPPFLAGS) \\\n'
+nemesis_tests_CPPFLAGS+='\t$(SQLITE3_CPPFLAGS) \\\n'
+nemesis_tests_CPPFLAGS+='\t$(ACML_CPPFLAGS)'
+echo -e $nemesis_tests_CPPFLAGS>>Makefile.am
 
-nemesis-tests_SOURCE="\n# Source/Header files\n"
-nemesis-tests_SOURCES+="nemesis-tests_SOURCES ="
+nemesis_tests_SOURCE="\n# Source/Header files\n"
+nemesis_tests_SOURCES+="nemesis_tests_SOURCES ="
 for FILENAME in $(ls src/*/*.{cc,h}|grep -vw 'main.cc')
 do
-	nemesis-tests_SOURCES+=' \\'
-	nemesis-tests_SOURCES+="\n\t$FILENAME"
+	nemesis_tests_SOURCES+=' \\'
+	nemesis_tests_SOURCES+="\n\t$FILENAME"
 done
-echo -e $nemesis-tests_SOURCES>>Makefile.am
+echo -e $nemesis_tests_SOURCES>>Makefile.am
 
-nemesis-tests_LDFLAGS+="\n# Linker flags\n"
-nemesis-tests_LDFLAGS+='nemesis-tests_LDFLAGS = -L/usr/lib \\\n'
-nemesis-tests_LDFLAGS+='\t$(PYTHON_LDFLAGS) \\\n'
-nemesis-tests_LDFLAGS+='\t$(SQLITE3_LDFLAGS) \\\n'
-nemesis-tests_LDFLAGS+='\t$(ACML_LDFLAGS) \\\n'
-nemesis-tests_LDFLAGS+='\t-fopenmp'
-echo -e $nemesis-tests_LDFLAGS>>Makefile.am
+nemesis_tests_LDFLAGS+="\n# Linker flags\n"
+nemesis_tests_LDFLAGS+='nemesis_tests_LDFLAGS = -L/usr/lib \\\n'
+nemesis_tests_LDFLAGS+='\t$(PYTHON_LDFLAGS) \\\n'
+nemesis_tests_LDFLAGS+='\t$(SQLITE3_LDFLAGS) \\\n'
+nemesis_tests_LDFLAGS+='\t$(ACML_LDFLAGS) \\\n'
+nemesis_tests_LDFLAGS+='\t-fopenmp'
+echo -e $nemesis_tests_LDFLAGS>>Makefile.am
 
-nemesis-tests_LDADD='\n# Libraries to be passed to the linker\n'
-nemesis-tests_LDADD+='nemesis-tests_LDADD = \\\n'
-nemesis-tests_LDADD+='\t$(PYTHON_LIBS) \\\n'
-nemesis-tests_LDADD+='\t$(SQLITE3_LIBS) \\\n'
-nemesis-tests_LDADD+='\t$(ACML_LIBS) \\\n'
-nemesis-tests_LDADD+='\t-lgtest'
-echo -e $nemesis-tests_LDADD>>Makefile.am
+nemesis_tests_LDADD='\n# Libraries to be passed to the linker\n'
+nemesis_tests_LDADD+='nemesis_tests_LDADD = \\\n'
+nemesis_tests_LDADD+='\t$(PYTHON_LIBS) \\\n'
+nemesis_tests_LDADD+='\t$(SQLITE3_LIBS) \\\n'
+nemesis_tests_LDADD+='\t$(ACML_LIBS) \\\n'
+nemesis_tests_LDADD+='\t-lgtest'
+echo -e $nemesis_tests_LDADD>>Makefile.am
 
-nemesis-tests_CXXFLAGS='\n# Command line flags for the compiler\n'
-nemesis-tests_CXXFLAGS+='nemesis-tests_CXXFLAGS = -Wall -Wextra\n'
-echo -e $nemesis-tests_CXXFLAGS>>Makefile.am
+nemesis_tests_CXXFLAGS='\n# Command line flags for the compiler\n'
+nemesis_tests_CXXFLAGS+='nemesis_tests_CXXFLAGS = -Wall -Wextra\n'
+echo -e $nemesis_tests_CXXFLAGS>>Makefile.am
 
 autoreconf --force --install --verbose
