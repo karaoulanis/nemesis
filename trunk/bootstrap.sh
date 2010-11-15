@@ -1,12 +1,14 @@
 #!/bin/bash
 
-echo -e "# Makefile.am \n" > Makefile.am
-echo -e "# Place generated object files (.o) into the same" >> Makefile.am
-echo -e "# directory as their source files" >> Makefile.am
-echo -e "AUTOMAKE_OPTIONS = subdir-objects" >> Makefile.am
+echo -e '# Makefile.am\n'>Makefile.am
+AUTOMAKE_OPTIONS='# Place generated object files (.o) into the same\n'
+AUTOMAKE_OPTIONS+='# directory as their source files\n'
+AUTOMAKE_OPTIONS+='AUTOMAKE_OPTIONS = subdir-objects'
+echo -e $AUTOMAKE_OPTIONS>> Makefile.am
 
-echo -e "\n# Define executable target" >> Makefile.am
-echo -e "bin_PROGRAMS = nemesis" >> Makefile.am
+bin_PROGRAMS='\n# Define executable target\n'
+bin_PROGRAMS+='bin_PROGRAMS = nemesis'
+echo -e $bin_PROGRAMS>> Makefile.am
 
 echo -e "\n# Command line flags for the preprocessor" >> Makefile.am
 echo -e "AM_CPPFLAGS = -Isrc \\"          >> Makefile.am
@@ -15,35 +17,32 @@ echo -e "\t\$(BOOST_CPPFLAGS) \\"         >> Makefile.am
 echo -e "\t\$(SQLITE3_CPPFLAGS) \\"       >> Makefile.am
 echo -e "\t\$(ACML_CPPFLAGS)"             >> Makefile.am
 
-echo -e "\n# Source/Header files" >> Makefile.am
-SOURCES="nemesis_SOURCES ="
-for DIRNAME in $(ls -d1 src/*/) # run through dirs
-do
-	if [ $? == 0 ]; then 
-		for FILENAME in `ls $DIRNAME*.{cc,h}|grep -v "_test.cc"`
-		do
-			SOURCES+=' \\'
-			SOURCES+="\n\t$FILENAME"
-		done
-	fi
-done
-echo -e $SOURCES >> Makefile.am
+nemesis_SOURCES="\n# Source/Header files\n"
+nemesis_SOURCES+="nemesis_SOURCES ="
+for FILENAME in $(ls src/*/*.{cc,h}|grep -v "_test.cc") # run through dirs
+	do
+		nemesis_SOURCES+=' \\'
+		nemesis_SOURCES+="\n\t$FILENAME"
+	done
+echo -e $nemesis_SOURCES >> Makefile.am
 
-echo -e "\n# Linker flags" >> Makefile.am
-echo -e "nemesis_LDFLAGS = -L/usr/lib \\" >> Makefile.am
-echo -e "\t\$(PYTHON_LDFLAGS) \\"         >> Makefile.am
-echo -e "\t\$(SQLITE3_LDFLAGS) \\"        >> Makefile.am
-echo -e "\t\$(ACML_LDFLAGS) \\"           >> Makefile.am
-echo -e "\t-fopenmp"                      >> Makefile.am
+nemesis_LDFLAGS+="\n# Linker flags\n"
+nemesis_LDFLAGS+='nemesis_LDFLAGS = -L/usr/lib \\\n'
+nemesis_LDFLAGS+='\t$(PYTHON_LDFLAGS) \\\n'
+nemesis_LDFLAGS+='\t$(SQLITE3_LDFLAGS) \\\n'
+nemesis_LDFLAGS+='\t$(ACML_LDFLAGS) \\\n'
+nemesis_LDFLAGS+='\t-fopenmp'
+echo -e $nemesis_LDFLAGS >> Makefile.am
 
-echo -e "\n# Libraries to be passed to the linker" >> Makefile.am
-echo -e "nemesis_LDADD = \\"              >> Makefile.am
-echo -e "\t\$(PYTHON_LIBS) \\"            >> Makefile.am
-echo -e "\t\$(SQLITE3_LIBS) \\"           >> Makefile.am
-echo -e "\t\$(ACML_LIBS)"                 >> Makefile.am
+nemesis_LDADD='\n# Libraries to be passed to the linker\n'
+nemesis_LDADD+='nemesis_LDADD = \\\n'
+nemesis_LDADD+='\t$(PYTHON_LIBS) \\\n'
+nemesis_LDADD+='\t$(SQLITE3_LIBS) \\\n'
+nemesis_LDADD+='\t$(ACML_LIBS)'
+echo -e $nemesis_LDADD >> Makefile.am
 
-
-echo -e "\n# Command line flags for the compiler" >> Makefile.am
-echo -e "nemesis_CXXFLAGS = -Wall -Wextra"               >> Makefile.am
+nemesis_CXXFLAGS='\n# Command line flags for the compiler\n'
+nemesis_CXXFLAGS+='nemesis_CXXFLAGS = -Wall -Wextra\n'
+echo -e $nemesis_CXXFLAGS >> Makefile.am
 
 autoreconf --force --install --verbose
