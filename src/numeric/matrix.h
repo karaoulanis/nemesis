@@ -102,67 +102,9 @@ class Matrix {
   {
     return data_;
   }
-  /**
-   * Resizes the Matrix.
-   * Does not preserves data and does not initialize entries.
-   * If new Matrix of the same size no allocation takes place.
-   * Exception handling for bad allocation is provided.
-   * @param m The number of rows.
-   * @param n The number of columns.
-   */
-  void resize(int m, int n)
-  {
-    rows_ = m;
-    cols_ = n;
-    if (size_ != m*n)
-    {
-      size_ = m*n;
-      if (data_ != 0) delete[] data_;
-      try
-      {
-        data_ = new double[size_];
-      }
-      catch(std::bad_alloc)
-      {
-        throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-      }
-    }
-  }
-  /**
-   * Resizes the Matrix.
-   * Does not preserves data but initializes all entries to c.
-   * If new Matrix of the same size no allocation takes place.
-   * Exception handling for bad allocation is provided.
-   * @param m The number of rows.
-   * @param n The number of columns.
-   * @param c Initial value for all entries.
-   */
-  void resize(int m, int n, double c)
-  {
-    rows_ = m;
-    cols_ = n;
-    if (size_ != m*n)
-    {
-      size_ = m*n;
-      if (data_ != 0) delete[] data_;
-      try
-      {
-        data_ = new double[size_];
-      }
-      catch(std::bad_alloc)
-      {
-        throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-      }
-    }
-    for (int i = 0;i < size_;i++) data_[i]=c;
-  }
-  /**
-   * Clears the contents of a Matrix.
-   */
-  void clear()
-  {
-    for (int i = 0;i < size_;i++) data_[i]=0.;
-  }
+  void resize(int m, int n);
+  void resize(int m, int n, double c);
+  void clear();
   /**
    * Implements += operator: this+=c.
    * @param c All elements of the Matrix are added by this factor.
