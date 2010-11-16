@@ -41,101 +41,13 @@ class Matrix {
  private:
   int rows_, cols_, size_;
   double* data_;
-  public:
-  /**
-   * Default constructor.
-   * Initializes everything to zero.
-   */
-  Matrix()
-    :rows_(0), cols_(0), size_(0), data_(0)
-  {
-  }
-  /**
-   * Constructor.
-   * Allocates a size m*n double. 
-   * Exception handling for bad allocation is provided.
-   * @param n The number of rows.
-   * @param m The number of columns.
-   */
-  Matrix(int m, int n)
-    :rows_(m), cols_(n), size_(m*n)
-  {
-    try
-    {
-      data_ = new double[size_];
-    }
-    catch(std::bad_alloc)
-    {
-      throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-    }
-  }
-  /**
-   * Constructor.
-   * Allocates a size m*n double and initializes entries to c. 
-   * Exception handling for bad allocation is provided.
-   * @param n The number of rows.
-   * @param m The number of columns.
-   * @param c Initial value for all entries.
-   */
-  Matrix(int m, int n, double c)
-    :rows_(m), cols_(n), size_(m*n)
-  {
-    try
-    {
-      data_ = new double[size_];
-    }
-    catch(std::bad_alloc)
-    {
-      throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-    }
-    for (int i = 0;i < size_;i++) data_[i]=c;
-  }
-  /**
-   * Copy constructor.
-   * Allocates a size m.rows_*m.cols_ double and copies entries from Matrix m.
-   * Exception handling for bad allocation is provided.
-   * @param m The Matrix that is copied.
-   */
-  Matrix(const Matrix& m)
-    :rows_(m.rows_), cols_(m.cols_), size_(m.size_)
-  {
-    if (size_>0)
-    {
-      try
-      {
-        data_ = new double[size_];
-      }
-      catch(std::bad_alloc)
-      {
-      throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-      }
-      for (int i = 0;i < size_;i++) data_[i]=m.data_[i];
-    } else {
-      data_ = 0;
-    }
-  }
-  /**
-   * Destructor.
-   */
-  ~Matrix()
-  {
-    if (data_ != 0) delete[] data_;
-  }
-  /**
-   * Copy assignment.
-   * Size checking is provided for the debug version.
-   * @param m The Matrix that is copied.
-   * @return  A reference to the Matrix.
-   */
-  inline Matrix& operator=(const Matrix& m)
-  {
-    #ifdef _DEBUG
-    array_size_check(rows_, cols_, m.rows_, m.cols_);
-    #endif
-    if (this != &m)
-      for (int i = 0;i < size_;i++) data_[i]=m.data_[i];
-    return *this;
-  }
+ public:
+  Matrix();
+  Matrix(int m, int n);
+  Matrix(int m, int n, double c);
+  Matrix(const Matrix& m);
+  ~Matrix();
+  Matrix& operator=(const Matrix& m);
   /**
    * Implements (i, j) operator: m(i, j)
    * Range checking is provided for the debug version.
