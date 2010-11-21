@@ -47,7 +47,8 @@ AC_ARG_WITH([boost-include-path],
 	[AS_HELP_STRING([--with-boost-include-path],
 	[location of the Boost headers, defaults to /usr/include/boost])],
 	[BOOST_CPPFLAGS="-I$withval"],
-	[BOOST_CPPFLAGS='-I/usr/include/boost']
+	#[BOOST_CPPFLAGS='-I/usr/include/boost']
+	[BOOST_CPPFLAGS='-I/usr/include']
 )
 AC_SUBST([BOOST_CPPFLAGS])
 
