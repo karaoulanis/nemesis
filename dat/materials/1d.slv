@@ -1,49 +1,98 @@
+import tracker
+import pylab
 from math import pi
 
-domain.dim(1)
-db.SQLite("mc")
-#~ material.uniElastoPlastic( 1, 1000, 0.25, 0., 0., 1000., 500., 0.)
-material.uniCyclic( 1, 1000, 0.25, 0., 0., 500., 7000.)
-section.user(1,1.)
 
-node.add( 1, 0.)
-node.add( 2, 1.)
 
-element.bar2s( 1, 1, 2, 1, 1)
+# ------------------------------------------------------------------------------
+# domain definition
+# ------------------------------------------------------------------------------
+domain.dim(1)						# one dimensional domain (only x coords)
 
-node.fix(1,1)
-node.track(2)
+# ------------------------------------------------------------------------------
+# material definition
+# ------------------------------------------------------------------------------
+material.uniElastoPlastic( 1,		# material id
+						1000,		# E
+						0.25,		# nu
+						0.,			# rho (density)
+						0.,			# aT (thermal)
+						100.,		# yield stress
+						0.,		# K isotropic
+						500.)			# K kinematic
 
-element.track(1,1)
+# ------------------------------------------------------------------------------
+# section definition
+# ------------------------------------------------------------------------------
+section.user(1,1.)					# user defined section A=1
+
+# ------------------------------------------------------------------------------
+# nodes/elements/constraints
+# ------------------------------------------------------------------------------
+node.add( 1, 0.)					# first node (id, x)
+node.add( 2, 1.)					# second node
+element.bar2s( 1, 1, 2, 1, 1)		# bar element (id, n_1, n_2, mat, section)
+node.fix(1,1)						# fix the first dof
+
+# ------------------------------------------------------------------------------
+# trackers
+# ------------------------------------------------------------------------------
+node.track(2)						# keep track on the second
+
+# ------------------------------------------------------------------------------
+# analysis options
+# ------------------------------------------------------------------------------
+analysis.static()					# static analysis
+imposer.elimination()				# constraints by the elimination method
+control.load(1.)					# load control: load is increased by 1.
+algorithm.fNR()						# Newton-Raphson scheme
+convergence.set(60,1e-4,1e-3,1e-3)	# 60 iter, abs norm, rel norm, energy norm
 
 lc.define(1)
 load.node(2,1,+10.)
+analysis.run(1,15)
 
 lc.define(2)
 load.node(2,1,-10.)
+analysis.run(2,45)
 
 lc.define(3)
 load.node(2,1,+10.)
+analysis.run(3,90)
 
 lc.define(4)
 load.node(2,1,-10.)
+analysis.run(4,135)
 
-lc.define(5)
-load.node(2,1,+10.)
 
-analysis.static()
-imposer.elimination()
-#~ control.disp(2,1,0.1)
-control.load(1.)
-algorithm.fNR()
-convergence.set(60,1e-4,1e-3,1e-3)
-analysis.run(1,30)
-analysis.run(2,60)
-analysis.run(3,70)
-analysis.run(4,80)
-analysis.run(5,90)
-import tracker
-#~ #tracker.plotNodePath(2,'u_x','lambda')
-for i in element.path(1,1):
-	print i
-tracker.plotElemPath(1,1,'eps','sigma')
+# ------------------------------------------------------------------------------
+# plot
+# ------------------------------------------------------------------------------
+x=tracker.getNodePath(2,'u_x',   1.)
+
+y0=tracker.getNodePath(2,'lambda',1.)
+y=[0.]
+sign=1
+total=0
+for i in range(1,len(y0)):
+	diff=y0[i]-y0[i-1]
+	if diff<0:
+		sign*=-1
+		diff=y0[i]
+	total+=sign*diff
+	y.append(total)
+
+
+for i in range(len(x)):
+	print x[i],y[i]
+	
+pylab.plot(x,y,'k-')
+pylab.xlabel("ux")
+pylab.ylabel("lambda")
+pylab.grid(True)
+pylab.show()
+
+#~ tracker.plotNodePath(2,'u_x','lambda')
+#~ for i in element.path(1,1):
+	#~ print i
+#~ tracker.plotElemPath(1,1,'eps','sigma')
