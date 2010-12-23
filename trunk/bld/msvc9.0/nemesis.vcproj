@@ -1745,6 +1745,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\numeric\matrix.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\numeric\matrix.h"
 				>
 			</File>

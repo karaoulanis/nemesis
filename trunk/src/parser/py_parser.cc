@@ -299,6 +299,17 @@ static PyObject* pyDomain_Gravity(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+static PyObject* pyDomain_GetState(PyObject* /*self*/, PyObject* args) {
+  const char* s;
+  if (!PyArg_ParseTuple(args, "")) return NULL;
+  try {
+    s = pD->get_state();
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  return Py_BuildValue("s", s);
+}
 static PyMethodDef DomainMethods[] =  {
   {"dim",   pyDomain_Dim,
     METH_VARARGS, "Set domain dimensions."},
@@ -312,14 +323,16 @@ static PyMethodDef DomainMethods[] =  {
     METH_VARARGS, "Clear the domain."},
   {"state", pyDomain_State,
     METH_VARARGS, "Set domain state."},
-  {"RayleighDamping",   pyDomain_RayleighDamping,
+  {"RayleighDamping", pyDomain_RayleighDamping,
     METH_VARARGS, "Set Rayleigh damping factors."},
   {"eigenvalues",   pyDomain_EigenValues,
     METH_VARARGS, "Return the eigenvalues of the domain."},
-  {"type",        pyDomain_Type,
+  {"type",          pyDomain_Type,
     METH_VARARGS, "Domain type."},
   {"gravity",       pyDomain_Gravity,
     METH_VARARGS, "Set gravity direction."},
+  {"get_state",     pyDomain_GetState,
+    METH_VARARGS, "Return the domain's state."},
   {NULL, NULL, 0, NULL}
 };
 /******************************************************************************

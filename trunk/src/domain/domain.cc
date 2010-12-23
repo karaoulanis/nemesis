@@ -153,6 +153,54 @@ int Domain::restoreState(const char* tableName) {
   theDatabase->commitTransaction();
   return 0;
 }
+/**
+ * Get the state of the domain.
+ * A c-style string with json format is returned.
+ * @return c-style string
+ */
+const char* Domain::get_state() {
+  // define an output string stream
+  ostringstream s;
+  // save data
+  this->save(s);
+  // convert to c style string and return
+  // needs to be converted to a static string before
+  ///@todo: check for refactoring
+  static string tmp;
+  tmp=s.str();
+  return tmp.c_str();
+}
+/**
+ * Serialize domain to an output stream.
+ * Follows the json format.
+ */
+void Domain::save(std::ostream& s) {
+  s << "{";
+  // Store domain info
+
+  // Store nodes
+  s << "\"nodes\":{";
+  for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
+      if (n != theNodes.begin()) s << ",";
+      if (n->second->isActive()) {
+        n->second->save(s);
+      }
+  }
+  s << "},";
+
+  // Store elements
+  s << "\"elements\":{";
+  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
+    if (e->second->isActive()) {
+      e->second->save(s);
+    }
+  }
+  s << "}";
+  
+  // domain
+  s << "}";
+}
+
 // Rayleigh damping
 void Domain::set_Rayleigh_factors(const Vector& factors) {
   RayleighFactors.resize(factors.size());

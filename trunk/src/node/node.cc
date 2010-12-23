@@ -23,9 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include <cmath>
-#include <stdlib.h>
 #include "node/node.h"
+#include <stdlib.h>
+#include <cmath>
 
 /**
  * Defuault Constructor.
@@ -187,22 +187,16 @@ void Node::set_packet(const Packet& p) {
   acclTrial = acclConvg;
 }
 void Node::save(std::ostream& s) {
-  static Vector crds(3);
-  crds[0]=x1;
-  crds[1]=x2;
-  crds[2]=x3;
-  s << "NODE "   << ' ';
-  s << "tag "    << 1000 << ' ' << myTag << ' ';
-  s << "id "     << 1000 << ' ' << myID  << ' ';
-  s << "crds "   << ' ' << crds;
-  s << "disp "   << ' ' << dispConvg;
-  s << "velc "   << ' ' << velcConvg;
-  s << "accl "   << ' ' << acclConvg;
-  s << "stress " << ' ' << stress;
-  s << "strain " << ' ' << strain;
-  s << "dsens  " << ' ' << dispSensi;
-  s << "eigen  " << ' ' << eigenVecs;
-  s << "END "    << ' ';
+  s << "\"" << myID<< "\":{";
+  s << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
+  s << "\"disp\":[" << dispConvg  << "],";
+  s << "\"velc\":[" << velcConvg  << "],";
+  s << "\"accl\":[" << acclConvg  << "],";
+  s << "\"strs\":[" << stress     << "],";
+  s << "\"strn\":[" << strain     << "]";
+  //s << "\"sens\":[" << dispSensi  << "],";
+  //s << "\"eige\":[" << eigenVecs  << "]}";
+  s << "}";
 }
 void Node::incTrialDisp(const Vector& du) {
   dispTrial+=du;

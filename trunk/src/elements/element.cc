@@ -256,12 +256,25 @@ const Packet& Element::get_packet() {
 }
 void Element::set_packet(const Packet& /*p*/) {
 }
+/**
+ * Serialize element.
+ * The following serialization follows the json format.
+ * @param s An output stream (usually a stringstream)
+ */
 void Element::save(std::ostream& s) {
-  s << "ELEMENT " <<' ';
-  s << "tag " << 1000 <<' ' <<myTag <<' ';
-  s << "id "  << 1000 <<' ' <<myID  << ' ';
-  s << "mat " << 1000 <<' ' << myMaterial->get_id() << ' ';
-  s << "END " << ' ';
+  s << "\""                     << myID<< "\":{";
+  s << "\"tag\":"               << this->get_tag()      << ",";
+  s << "\"material\":"          << myMaterial->get_id() << ",";
+  s << "\"nodes\":[";
+  for (unsigned i = 0;i < myNodalIDs.size(); i++) {
+    if (i>0) {
+      s << ',';
+    }
+    s << myNodalIDs[i];
+  }
+  s << "],";
+  s << "\"inelastic_points\":"  << this->get_num_plastic_points();
+  s << "}";
 }
 /**
  * Add a Tracker to an Element's Material.
