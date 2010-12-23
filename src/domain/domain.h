@@ -149,6 +149,12 @@ class Domain {
   int storeState(const char* tableName);
   int restoreState(const char* tableName);
 
+  // serialize/deserialize
+  const char* get_state();
+  void save(std::ostream& s);
+//  int load();  {}
+
+
   void set_tag(DomainTag t)          {myTag = t;}
   DomainTag get_tag()                {return myTag;}
   void set_fac(double fac)           {myFac = fac;}

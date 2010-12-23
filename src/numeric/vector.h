@@ -687,8 +687,13 @@ class Vector {
   }
   inline friend std::ostream& operator<<(std::ostream& s, const Vector& v)
   {
-    s << 1100 << ' ' << v.size_ << ' ';
-    for (int i = 0; i < v.size_; i++) s << v.data_[i] << ' ';
+    // s << 1100 << ' ' << v.size_ << ' ';
+    for (int i = 0; i < v.size_; i++) {
+      if (i>0) {
+        s << ',';
+      }
+      s << v.data_[i];
+    }
     return s;
   }
 };
