@@ -179,23 +179,24 @@ void Domain::save(std::ostream& s) {
   // Store domain info
 
   // Store nodes
-  s << "\"nodes\":{";
+  s << "\"nodes\":[";
   for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
-      if (n != theNodes.begin()) s << ",";
       if (n->second->isActive()) {
+        if (n != theNodes.begin()) s << ",";
         n->second->save(s);
       }
   }
-  s << "},";
+  s << "],";
 
   // Store elements
-  s << "\"elements\":{";
-  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
+  s << "\"elements\":[";
+  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {  
     if (e->second->isActive()) {
+      if (e != theElements.begin()) s << ",";
       e->second->save(s);
     }
   }
-  s << "}";
+  s << "]";
   
   // domain
   s << "}";

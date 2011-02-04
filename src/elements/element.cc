@@ -262,7 +262,9 @@ void Element::set_packet(const Packet& /*p*/) {
  * @param s An output stream (usually a stringstream)
  */
 void Element::save(std::ostream& s) {
-  s << "\""                     << myID<< "\":{";
+//  s << "\""                     << myID<< "\":{";
+  s << "{";
+  s << "\"id\":" << myID <<",";
   s << "\"tag\":"               << this->get_tag()      << ",";
   s << "\"material\":"          << myMaterial->get_id() << ",";
   s << "\"nodes\":[";

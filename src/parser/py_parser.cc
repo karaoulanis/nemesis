@@ -371,6 +371,7 @@ static PyObject* pyNode_Fix(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
   int id;
+  // define an output string stream
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   ostringstream os;
   try {
@@ -379,9 +380,13 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  static istringstream is;
-  is.str(os.str());
-  return buildDict(is);
+//  static istringstream is;
+//  is.str(os.str());
+//  return buildDict(is);
+
+  static string tmp;
+  tmp=os.str();
+  return Py_BuildValue("s", tmp.c_str());
 }
 static PyObject* pyNode_Track(PyObject* /*self*/, PyObject* args) {
   int id;

@@ -187,7 +187,9 @@ void Node::set_packet(const Packet& p) {
   acclTrial = acclConvg;
 }
 void Node::save(std::ostream& s) {
-  s << "\"" << myID<< "\":{";
+//  s << "\"" << myID<< "\":{";
+  s << "{";
+  s << "\"id\":" << myID <<",";
   s << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
   s << "\"disp\":[" << dispConvg  << "],";
   s << "\"velc\":[" << velcConvg  << "],";

@@ -42,12 +42,12 @@ void Tracker::track(double lambda_, double time_, string data_) {
   myRecords.push_back(record);
 }
 void Tracker::save(std::ostream& s) {
-  s << "TRACKER " << ' ';
-  s << "steps " << 1000 << ' ' << myRecords.size() << ' ';
-  for (unsigned i = 0; i < myRecords.size(); i++) {
-    s << "lambda "  << 1010 << ' ' <<myRecords[i].lambda  << ' ';
-    s << "time "    << 1010 << ' ' <<myRecords[i].time    << ' ';
-    s << "data "    << 1020 << ' ' <<myRecords[i].data    << ' ';
-  }
-  s << "END " << ' ';
+  //s << "TRACKER " << ' ';
+  //s << "steps " << 1000 << ' ' << myRecords.size() << ' ';
+  //for (unsigned i = 0; i < myRecords.size(); i++) {
+  //  s << "lambda "  << 1010 << ' ' <<myRecords[i].lambda  << ' ';
+  //  s << "time "    << 1010 << ' ' <<myRecords[i].time    << ' ';
+  //  s << "data "    << 1020 << ' ' <<myRecords[i].data    << ' ';
+  //}
+  //s << "END " << ' ';
 }
