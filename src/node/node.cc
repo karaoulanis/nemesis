@@ -187,7 +187,6 @@ void Node::set_packet(const Packet& p) {
   acclTrial = acclConvg;
 }
 void Node::save(std::ostream& s) {
-//  s << "\"" << myID<< "\":{";
   s << "{";
   s << "\"id\":" << myID <<",";
   s << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
@@ -301,13 +300,25 @@ Tracker* Node::get_tracker() {
  */
 void Node::track() {
   if (myTracker == 0) return;
+  // define an output string stream
   ostringstream s;
-  s << "DATA " << ' ';
-  s << "disp " << ' ' << dispConvg;
-  s << "velc " << ' ' << velcConvg;
-  s << "accl " << ' ' << acclConvg;
-  s << "END "  <<' ';
-  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
+  // start saving
+  s << "{";
+  // save lambda
+  s << "\"lambda\":" << pD->get_lambda() << ",";
+  // save time
+  s << "\"time\":" << pD->get_time_curr() << ",";
+  // save self
+  s << "\"data\":";
+  this->save(s);
+  // finalize
+  s << "}";
+  // convert to c style string and return
+  // needs to be converted to a static string before
+  /// @todo: check for refactoring
+  static string tmp;
+  tmp=s.str();
+  myTracker->track(tmp.c_str());
 }
 // Sensitivity functions
 void Node::initSensitivityMatrix(int nGrads) {

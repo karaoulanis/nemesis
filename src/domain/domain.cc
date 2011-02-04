@@ -165,7 +165,7 @@ const char* Domain::get_state() {
   this->save(s);
   // convert to c style string and return
   // needs to be converted to a static string before
-  ///@todo: check for refactoring
+  /// @todo: check for refactoring
   static string tmp;
   tmp=s.str();
   return tmp.c_str();

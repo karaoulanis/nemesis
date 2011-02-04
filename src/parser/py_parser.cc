@@ -34,18 +34,6 @@ static Domain*   pD = 0;
 static Analysis* pA = 0;
 static int currentLC = 0;
 
-PyObject* buildTuple(const Packet& p) {
-  static PyObject* pTuple;
-  int pos = 0;
-  pTuple = PyTuple_New(p.size);
-  PyTuple_SetItem(pTuple, pos++, PyInt_FromLong(0));
-  PyTuple_SetItem(pTuple, pos++, PyInt_FromLong(0));
-  for (int i = 0;i < p.dblSize;i++)
-    PyTuple_SetItem(pTuple, pos++, PyFloat_FromDouble(p.dblArray[i]));
-  for (int i = 0;i < p.intSize;i++)
-    PyTuple_SetItem(pTuple, pos++, PyInt_FromLong(p.intArray[i]));
-  return pTuple;
-}
 PyObject* buildList(const Vector& v) {
   static PyObject* pyList;
   pyList = PyList_New(v.size());
@@ -380,10 +368,6 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-//  static istringstream is;
-//  is.str(os.str());
-//  return buildDict(is);
-
   static string tmp;
   tmp=os.str();
   return Py_BuildValue("s", tmp.c_str());
@@ -402,16 +386,15 @@ static PyObject* pyNode_Track(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyNode_Path(PyObject* /*self*/, PyObject* args) {
   int id;
+  const char* s;
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
-  ostringstream os;
   try {
-    pD->get < Node>(pD->get_nodes(), id)->get_tracker()->save(os);
+    s = pD->get < Node>(pD->get_nodes(), id)->get_tracker()->data();
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  istringstream is(os.str());
-  return buildList(is);
+  return Py_BuildValue("s", s);
 }
 static PyMethodDef NodeMethods[] =  {
   {"add",   pyNode_Add,
@@ -1045,12 +1028,18 @@ static PyObject* pyElement_Tetrahedron4d(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
   int id;
+  // define an output string stream
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   ostringstream os;
-  pD->get<Element>(pD->get_elements(), id)->save(os);
-  static istringstream is;
-  is.str(os.str());
-  return buildDict(is);
+  try {
+    pD->get<Element>(pD->get_elements(), id)->save(os);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  static string tmp;
+  tmp=os.str();
+  return Py_BuildValue("s", tmp.c_str());
 }
 static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
   int id, index;
@@ -1061,11 +1050,16 @@ static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyElement_Path(PyObject* /*self*/, PyObject* args) {
   int id, index;
+  const char* s; 
   if (!PyArg_ParseTuple(args, "ii", &id, &index)) return NULL;
-  ostringstream os;
-  pD->get<Element>(pD->get_elements(), id)->get_tracker(index)->save(os);
-  istringstream is(os.str());
-  return buildList(is);
+  try {
+    s = pD->get<Element>(pD->get_elements(), id)->get_tracker(index)->data();
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  return Py_BuildValue("s", s);
+
 }
 static PyMethodDef ElementMethods[] = {
   {"spring",      pyElement_Spring,

@@ -330,9 +330,9 @@ void HoekBrown::set_strain(const Vector& De) {
  * Commit material state.
  */
 void HoekBrown::commit() {
-  //report(inaccurate);
+  // report(inaccurate);
   inaccurate = 0;
-  eTotal = eTrial; /// @todo
+  eTotal = eTrial;  /// @todo
   sConvg = sTrial;
   this->track();
 }
@@ -355,14 +355,29 @@ bool HoekBrown::isPlastic() {
  */
 void HoekBrown::track() {
   if (myTracker == 0) return;
+  // define an output string stream
   ostringstream s;
-  s << "DATA "  <<' ';
-  //  s << "sigm "  <<' '<<sConvg;
-  //  s << "epst "  <<' '<<eTotal;
-  //  s << "epsp "  <<' '<<ePConvg;
-  //  s << "epsv "  <<1020<<' '<<eTotal[0]+eTotal[1]+eTotal[2]<<' ';
-  //  s << "p "     <<1020<<' '<<sConvg.p()<<' ';
-  //  s << "q "     <<1020<<' '<<sConvg.q()<<' ';
-  //  s << "END "<<' ';
-  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
+  // start saving
+  s << "{";
+  // save lambda
+  s << "\"lambda\":"  << pD->get_lambda() << ",";
+  // save time
+  s << "\"time\":"    << pD->get_time_curr() << ",";
+  // save self
+  s << "\"data\":{";
+  s << "\"sigm\":"    << sConvg << ',';
+  s << "\"epst\":"    << eTotal << ',';
+//  s << "\"epsp\":"    << ePConvg << ',';
+  s << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
+  s << "\"p\":"       << sConvg.p() << ',';
+  s << "\"q\":"       << sConvg.q();
+  s << "}";
+  // finalize
+  s << "}";
+  // convert to c style string and return
+  // needs to be converted to a static string before
+  /// @todo: check for refactoring
+  static string tmp;
+  tmp = s.str();
+  myTracker->track(tmp.c_str());
 }

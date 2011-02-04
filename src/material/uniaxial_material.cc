@@ -41,10 +41,29 @@ UniaxialMaterial::~UniaxialMaterial() {
  */
 void UniaxialMaterial::track() {
   if (myTracker == 0) return;
+  // define an output string stream
   ostringstream s;
-  s << "DATA "  << ' ';
-  s << "sigm "  << 1020 << ' ' << sConvg << ' ';
-  s << "epst "  << 1020 << ' ' << eTotal << ' ';
-  s << "END " <<' ';
-  myTracker->track(pD->get_lambda(), pD->get_time_curr(), s.str());
+  // start saving
+  s << "{";
+  // save lambda
+  s << "\"lambda\":"  << pD->get_lambda() << ",";
+  // save time
+  s << "\"time\":"    << pD->get_time_curr() << ",";
+  // save self
+  s << "\"data\":{";
+  s << "\"sigm\":"    << sConvg << ',';
+  s << "\"epst\":"    << eTotal;
+//  s << "\"epsp\":"    << ePConvg << ',';
+//  s << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
+//  s << "\"p\":"       << sConvg.p() << ',';
+//  s << "\"q\":"       << sConvg.q();
+  s << "}";
+  // finalize
+  s << "}";
+  // convert to c style string and return
+  // needs to be converted to a static string before
+  /// @todo: check for refactoring
+  static string tmp;
+  tmp=s.str();
+  myTracker->track(tmp.c_str());
 }
