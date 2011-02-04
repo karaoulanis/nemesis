@@ -25,6 +25,7 @@
 
 #include "tracker/tracker.h"
 // C++ files
+#include <sstream>
 #include <iostream>
 
 Tracker::Tracker() {
@@ -32,22 +33,30 @@ Tracker::Tracker() {
 Tracker::~Tracker() {
 }
 int Tracker::get_steps() {
-  return myRecords.size();
+  return records_.size();
 }
-void Tracker::track(double lambda_, double time_, string data_) {
-  TrackerRecord record;
-  record.lambda = lambda_;
-  record.time = time_;
-  record.data = data_;
-  myRecords.push_back(record);
+/**
+ * /// @todo: check with const char*
+ */
+void Tracker::track(string record) {
+  records_.push_back(record);
 }
-void Tracker::save(std::ostream& s) {
-  //s << "TRACKER " << ' ';
-  //s << "steps " << 1000 << ' ' << myRecords.size() << ' ';
-  //for (unsigned i = 0; i < myRecords.size(); i++) {
-  //  s << "lambda "  << 1010 << ' ' <<myRecords[i].lambda  << ' ';
-  //  s << "time "    << 1010 << ' ' <<myRecords[i].time    << ' ';
-  //  s << "data "    << 1020 << ' ' <<myRecords[i].data    << ' ';
-  //}
-  //s << "END " << ' ';
+const char* Tracker::data() {
+  // define an output string stream
+  std::ostringstream s;
+  // start saving
+  s << "[";
+  // save data
+  for (int i=0;i<records_.size();i++) {
+    if(i>0) s <<",";
+    s << records_[i];
+  }
+  // finalize
+  s << "]";
+  // convert to c style string and return
+  // needs to be converted to a static string before
+  /// @todo: check for refactoring
+  static string tmp;
+  tmp=s.str();
+  return tmp.c_str();
 }

@@ -35,20 +35,15 @@ using std::string;
 using std::vector;
 
 class Tracker {
-  private:
-  struct TrackerRecord {
-    double lambda;
-    double time;
-    string data;
-  };
-  vector<TrackerRecord> myRecords;
-  public:
+ private:
+  vector<string> records_;
+ public:
   Tracker();
   virtual ~Tracker();
   int get_steps();
 
-  void track(double lambda_, double time_, string data_);
-  void save(std::ostream& s);
+  void track(string record);
+  const char* data();
 };
 
 #endif  // SRC_TRACKER_TRACKER_H_
