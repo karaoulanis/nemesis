@@ -190,13 +190,24 @@ void Node::save(std::ostream& s) {
   s << "{";
   s << "\"id\":" << myID <<",";
   s << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
+  s << "\"dofs\":[";
+  ///@ todo make this more general
+  for (int i = 0; i < myActivatedDofs.size(); i++) {
+      if (i > 0) s << ',';
+      s << myActivatedDofs[i];
+  }
+  s << "],";
   s << "\"disp\":[" << dispConvg  << "],";
   s << "\"velc\":[" << velcConvg  << "],";
   s << "\"accl\":[" << acclConvg  << "],";
-  s << "\"strs\":[" << stress     << "],";
-  s << "\"strn\":[" << strain     << "]";
-  //s << "\"sens\":[" << dispSensi  << "],";
-  //s << "\"eige\":[" << eigenVecs  << "]}";
+
+  if (avgStress>0) stress*=1.0/avgStress;
+  s << "\"strs\":[" << stress     << "]";
+
+  /// @todo include strains, sensitivities and eigenvalues also
+  // s << "\"strn\":[" << strain     << "]";
+  // s << "\"sens\":[" << dispSensi  << "],";
+  // s << "\"eige\":[" << eigenVecs  << "]}";
   s << "}";
 }
 void Node::incTrialDisp(const Vector& du) {
@@ -317,7 +328,7 @@ void Node::track() {
   // needs to be converted to a static string before
   /// @todo: check for refactoring
   static string tmp;
-  tmp=s.str();
+  tmp = s.str();
   myTracker->track(tmp.c_str());
 }
 // Sensitivity functions
