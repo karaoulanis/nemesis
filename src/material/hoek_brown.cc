@@ -29,15 +29,29 @@
 Matrix HoekBrown::C(6, 6, 0.);
 Matrix HoekBrown::C3(3, 3, 0.);
 
+/**
+ * Default constructor.
+ */
 HoekBrown::HoekBrown() {
 }
+/**
+ * Constructor.
+ * @param ID The id of this material
+ * @param elasticID The id of the elastic material
+ * @param si Uniaxial compressive strength of the impact rock 
+ * @param sp Empirically determined parameter
+ * @param mb Empirically determined parameter
+ * @param mbb Empirically determined parameter (??)
+ * @param alpha Empirically determined parameter
+ */
 HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
                      double mbb, double alpha)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
   Material* p = pD->get < Material>(pD->get_materials(), elasticID);
   if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999, "Multiaxial elastic material expected.");
+    throw SException("[nemesis:%d] %s", 9999,
+    "Multiaxial elastic material expected.");
   myElastic = static_cast < MultiaxialMaterial*>(p)->get_clone();
   MatParams[30]=myElastic->get_param(30);
   MatParams[31]=myElastic->get_param(31);
@@ -68,12 +82,20 @@ HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
   inaccurate = 0;
   aTrial = 0.;
   aConvg = 0.;
+
   // Material tag
   myTag = TAG_MATERIAL_MOHR_COULOMB;
 }
+/**
+ * Default destructor.
+ * Needs to delete cloned elastic material.
+ */
 HoekBrown::~HoekBrown() {
   delete myElastic;
 }
+/**
+ * Create a clone of this material.
+ */
 MultiaxialMaterial* HoekBrown::get_clone() {
   // Material parameters
   int myID    = this->get_id();
@@ -87,6 +109,12 @@ MultiaxialMaterial* HoekBrown::get_clone() {
   HoekBrown* newClone = new HoekBrown(myID, elID, sigma_ci, sp, mb, mbb, alpha);
   return newClone;
 }
+/**
+ * Find the value of the gield surfaces w.r.t. to stress.
+ * The derivative is stored at Vector g.
+ * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121.
+ * @param s Stress Vector.
+ */ 
 void HoekBrown::find_f(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -96,6 +124,12 @@ void HoekBrown::find_f(const Vector& s, double /*q*/) {
   f[1]=s[1]-s[2]-sigma_ci*pow(sp-mb*s[1]/sigma_ci, alpha);
   f[2]=s[0]-s[1]-sigma_ci*pow(sp-mb*s[0]/sigma_ci, alpha);
 }
+/**
+ * Find the first derivative of the plastic potential surfaces w.r.t. to stress.
+ * The derivative is stored at std::vector<Vector> dfds.
+ * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121.
+ * @param s Stress Vector.
+ */ 
 void HoekBrown::find_dfds(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -103,11 +137,16 @@ void HoekBrown::find_dfds(const Vector& s, double /*q*/) {
   double alpha    = MatParams[ 4];
   double c0 = alpha*mb*pow(sp-mb*s[0]/sigma_ci, alpha-1);
   double c1 = alpha*mb*pow(sp-mb*s[1]/sigma_ci, alpha-1);
-
   dfds[0][0]= 1.0+c0;   dfds[1][0]= 0.0;      dfds[2][0]= 1.0+c0;
   dfds[0][1]= 0.0;      dfds[1][1]= 1.0+c1;   dfds[2][1]=-1.0;
   dfds[0][2]=-1.0;      dfds[1][2]=-1.0;      dfds[2][2]= 0.0;
 }
+/**
+ * Find the first derivative of the plastic potential surfaces w.r.t. to stress.
+ * The derivative is stored at std::vector<Vector> dgds.
+ * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121.
+ * @param s Stress Vector.
+ */ 
 void HoekBrown::find_dgds(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -115,11 +154,16 @@ void HoekBrown::find_dgds(const Vector& s, double /*q*/) {
   double alpha    = MatParams[ 4];
   double c0 = alpha*mb*pow(sp-mb*s[0]/sigma_ci, alpha-1);
   double c1 = alpha*mb*pow(sp-mb*s[1]/sigma_ci, alpha-1);
-
   dgds[0][0]= 1.0+c0;   dgds[1][0]= 0.0;      dgds[2][0]= 1.0+c0;
   dgds[0][1]= 0.0;      dgds[1][1]= 1.0+c1;   dgds[2][1]=-1.0;
   dgds[0][2]=-1.0;      dgds[1][2]=-1.0;      dgds[2][2]= 0.0;
 }
+/**
+ * Find the second derivative of the yield  potential surfaces w.r.t. to stress.
+ * The derivative is stored at std::vector<Matrix> d2gdsds.
+ * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121-122.
+ * @param s Stress Vector.
+ */ 
 void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -128,13 +172,12 @@ void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
   double c00 = alpha*(1-alpha)*mb*mb*pow(sp-mb*s[0]/sigma_ci, alpha-2)/sigma_ci;
   double c11 = alpha*(1-alpha)*mb*mb*pow(sp-mb*s[1]/sigma_ci, alpha-2)/sigma_ci;
   d2gdsds[0](0, 0)=c00;
-  d2gdsds[0](1, 1)=c11;
-  d2gdsds[0](0, 0)=c00;
+  d2gdsds[1](1, 1)=c11;
+  d2gdsds[2](0, 0)=c00;
 }
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
- * @todo CHECK - ERROR!!!!!!!
  */ 
 void HoekBrown::set_strain(const Vector& De) {
   int response;
@@ -205,9 +248,7 @@ void HoekBrown::set_strain(const Vector& De) {
 
   int iter = 0;
   for (; ; ) {
-    //---------------------------------------------------------------------
     // setup jacobian
-    //---------------------------------------------------------------------
     A.resize(3+nActive, 3+nActive, 0.);
     R.resize(3+nActive, 0.);
     x.resize(3+nActive);
@@ -224,11 +265,9 @@ void HoekBrown::set_strain(const Vector& De) {
         pos++;
       }
     }
-    //---------------------------------------------------------------------
-    // check for convergence
-    //---------------------------------------------------------------------
-    iter++;
 
+    // check for convergence
+    iter++;
     if (R.twonorm() < 1.e-09) {
       bool restart = false;
       pos = 0;
@@ -243,61 +282,23 @@ void HoekBrown::set_strain(const Vector& De) {
         }
       }
       if (restart) {
-        // cout << "RESTART\n";
+        // initialize stresses and lambdas
         s = sTrial3;
         for (int i = 0;i < nf;i++) DLambda[i]=0.;
         this->find_f(s, q);
         this->find_dfds(s, q);
         this->find_dgds(s, q);
         restart = false;
+        // restart with initial data
         continue;
       } else {
         break;
       }
     }
 
-    // -------------------------------------------------------------------------
     // solve
-    // -------------------------------------------------------------------------
-    // report(A, "A", 14, 9);
     A.solve(x, R);
 
-    // report(x, "x", 14, 8);
-    // -------------------------------------------------------------------------
-    // check for dLambda < 0: set restart
-    // -------------------------------------------------------------------------
-    // pos = 0;
-    // for (int i = 0;i < 3;i++)
-    // {
-    //  if (active[i])
-    //  {
-    //    if (DLambda[i]+x[3+pos]<0.)
-    //    {
-    //      active[i]=false;
-    //      nActive--;
-    //      restart = true;
-    //    }
-    //    pos++;
-    //  }
-    // }
-    // -------------------------------------------------------------------------
-    // if restart continue else update
-    // -------------------------------------------------------------------------
-    // if (restart)
-    // {
-    //  // reset all and restart
-    //  cout << "RESTART\n";
-    //  sTrial = sConvg+C*De;
-    //  for (int i = 0;i < nf;i++) DLambda[i]=0.;
-    //  this->find_f(sTrial, q);
-    //  this->find_dfds(sTrial, q);
-    //  this->find_dgds(sTrial, q);
-    //  restart = false;
-    //  continue;
-    // }
-    //---------------------------------------------------------------------
-    // update
-    //---------------------------------------------------------------------
     // Update stresses
     for (int i = 0;i < 3;i++)
       s[i]+=x[i];
@@ -315,8 +316,6 @@ void HoekBrown::set_strain(const Vector& De) {
     this->find_dgds(s, q);
     this->find_d2gdsds(s, q);
   }
-    // cout << iter<<'\t'<<f[0]<<'\t'<<f[1]<<'\t'<<f[2]
-    //      <<'\t'<<R.twonorm()<<endl;
 
     // coordinate transformation
     sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
