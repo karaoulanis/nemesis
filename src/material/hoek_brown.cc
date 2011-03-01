@@ -201,6 +201,7 @@ void HoekBrown::set_strain(const Vector& De) {
   spectralDecomposition(sTrial, s, sV);
   Vector eTrial3 = C3*s;
   sTrial3 = s;
+  Vector snn = sTrial;
 
   // Yield functions
   double q = 0.;
@@ -317,13 +318,21 @@ void HoekBrown::set_strain(const Vector& De) {
     this->find_d2gdsds(s, q);
   }
 
-    // coordinate transformation
-    sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
-    sTrial[1]=s[0]*sV(0, 1)*sV(0, 1)+s[1]*sV(1, 1)*sV(1, 1)+s[2]*sV(2, 1)*sV(2, 1);
-    sTrial[2]=s[0]*sV(0, 2)*sV(0, 2)+s[1]*sV(1, 2)*sV(1, 2)+s[2]*sV(2, 2)*sV(2, 2);
-    sTrial[3]=s[0]*sV(0, 0)*sV(0, 1)+s[1]*sV(1, 0)*sV(1, 1)+s[2]*sV(2, 0)*sV(2, 1);
-    sTrial[4]=s[0]*sV(0, 1)*sV(0, 2)+s[1]*sV(1, 1)*sV(1, 2)+s[2]*sV(2, 1)*sV(2, 2);
-    sTrial[5]=s[0]*sV(0, 0)*sV(0, 2)+s[1]*sV(1, 0)*sV(1, 2)+s[2]*sV(2, 0)*sV(2, 2);
+  // coordinate transformation
+  sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
+  sTrial[1]=s[0]*sV(0, 1)*sV(0, 1)+s[1]*sV(1, 1)*sV(1, 1)+s[2]*sV(2, 1)*sV(2, 1);
+  sTrial[2]=s[0]*sV(0, 2)*sV(0, 2)+s[1]*sV(1, 2)*sV(1, 2)+s[2]*sV(2, 2)*sV(2, 2);
+  sTrial[3]=s[0]*sV(0, 0)*sV(0, 1)+s[1]*sV(1, 0)*sV(1, 1)+s[2]*sV(2, 0)*sV(2, 1);
+  sTrial[4]=s[0]*sV(0, 1)*sV(0, 2)+s[1]*sV(1, 1)*sV(1, 2)+s[2]*sV(2, 1)*sV(2, 2);
+  sTrial[5]=s[0]*sV(0, 0)*sV(0, 2)+s[1]*sV(1, 0)*sV(1, 2)+s[2]*sV(2, 0)*sV(2, 2);
+
+  // creep
+ //   double Dt  = 10000.;
+ //   double eta = 100000.;
+    double Dt  = 10000.;
+    double eta = 100000.;
+  sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
+ // aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
 }
 /**
  * Commit material state.

@@ -202,6 +202,7 @@ void Node::save(std::ostream& s) {
   s << "\"accl\":[" << acclConvg  << "],";
 
   if (avgStress>0) stress*=1.0/avgStress;
+  avgStress=0;
   s << "\"strs\":[" << stress     << "]";
 
   /// @todo include strains, sensitivities and eigenvalues also
