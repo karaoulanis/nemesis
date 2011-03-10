@@ -59,6 +59,8 @@ Element::Element(int ID, int matID)
     myGroup = pD->get < Group>(pD->get_groups(), matID);
   else
     myGroup = pD->get < Group>(pD->get_groups(), pD->get_current_group());
+
+  active_ = true;
 }
 Element::~Element() {
   if (theStaticMatrices != 0) {

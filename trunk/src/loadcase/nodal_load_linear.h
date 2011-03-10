@@ -29,14 +29,14 @@
 #include "loadcase/nodal_load.h"
 
 class NodalLoadLinear: public NodalLoad {
-  private:
-  double theValue;
-  double theGradient;
-  public:
+ public:
   NodalLoadLinear();
-  NodalLoadLinear(int nodeID, int DofID, double val, double grad);
+  NodalLoadLinear(Node* node, int dof, double initial_value, double gradient);
+  double GetValue(double time);
 
-  double get_value(double time);
+ private:
+  double initial_value_;
+  double gradient_;
 };
 
 #endif  // SRC_LOADCASE_NODAL_LOAD_LINEAR_H_

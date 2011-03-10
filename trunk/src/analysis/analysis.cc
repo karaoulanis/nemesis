@@ -40,11 +40,11 @@ Analysis::~Analysis() {
   delete theNorm;
   this->clear();
 }
-int Analysis::analyze(int lcID, int nLoadSteps) {
+int Analysis::analyze(LoadCase* loadcase, int num_loadsteps) {
   if (theAnalysisType == 0)
     throw SException("[nemesis:%d] %s", 9999, "No analysis type set.");
   // Run the analysis
-  return theAnalysisType->run(lcID, nLoadSteps);
+  return theAnalysisType->run(loadcase, num_loadsteps);
 }
 void Analysis::clear() {
   M.clear();

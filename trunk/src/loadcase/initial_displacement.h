@@ -27,17 +27,17 @@
 #define SRC_LOADCASE_INITIAL_DISPLACEMENT_H_
 
 #include "loadcase/initial_condition.h"
-#include "node/node.h"
+
+class Node;
 
 class InitialDisplacement: public InitialCondition {
-  private:
-  int dof;
-  Node* myNode;
-  double disp;
-  public:
+ public:
   InitialDisplacement();
-  InitialDisplacement(int nodeID, int dofID, double u);
-  int apply();
+  InitialDisplacement(Node* node, int dof, double disp);
+  int Apply();
+ private:
+  int dof_;
+  Node* node_;
+  double disp_;
 };
-
 #endif  // SRC_LOADCASE_INITIAL_DISPLACEMENT_H_

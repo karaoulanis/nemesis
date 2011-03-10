@@ -77,7 +77,7 @@ class Analysis {
   void set_reorderer(Reorderer* p);
   void set_soe(SOE* p);
 
-  int analyze(int lcID, int nLoadSteps);
+  int analyze(LoadCase* loadcase, int num_loadsteps);
   void clear();
 };
 #endif  // SRC_ANALYSIS_ANALYSIS_H_

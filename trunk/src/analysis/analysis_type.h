@@ -28,12 +28,13 @@
 
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
+#include "loadcase/loadcase.h"
 
 class AnalysisType: public AnalysisObject {
   public:
   AnalysisType();
   ~AnalysisType();
-  virtual int run(int nLC, int nLoadSteps)=0;
+  virtual int run(LoadCase* loadcase, int num_loadsteps)=0;
 };
 
 #endif  // SRC_ANALYSIS_ANALYSIS_TYPE_H_

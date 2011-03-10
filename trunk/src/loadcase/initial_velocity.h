@@ -27,17 +27,17 @@
 #define SRC_LOADCASE_INITIAL_VELOCITY_H_
 
 #include "loadcase/initial_condition.h"
-#include "node/node.h"
+
+class Node;
 
 class InitialVelocity: public InitialCondition {
-  private:
-  int dof;
-  Node* myNode;
-  double velc;
-  public:
+ public:
   InitialVelocity();
-  InitialVelocity(int nodeID, int DofID, double v);
-  int apply();
+  InitialVelocity(Node* node, int dof, double velocity);
+  int Apply();
+ private:
+  int dof_;
+  Node* node_;
+  double velocity_;
 };
-
 #endif  // SRC_LOADCASE_INITIAL_VELOCITY_H_

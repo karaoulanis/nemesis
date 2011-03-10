@@ -61,7 +61,7 @@ bool StaticAnalysis::checkIfAllows(FEObject* f) {
       return true;
   return false;
 }
-int StaticAnalysis::run(int nLC, int nLoadSteps) {
+int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   // Check the imposer
   if (pA->get_imposer() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
@@ -96,12 +96,12 @@ int StaticAnalysis::run(int nLC, int nLoadSteps) {
   pA->get_soe()->set_size();
 
   // Initialize
-  pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->init();
+  loadcase->Initialize();
   pA->get_control()->init();
-  pA->get_convergence_norm()->init(nLC, nLoadSteps);
+  pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
 
   int ret = 0;
-  for (int i = 0; i < nLoadSteps; i++) {
+  for (int i = 0; i < num_loadsteps; i++) {
     // Call algorithm to solve step
     int check = pA->get_algorithm()->solveStep(i);
     // Algorithm failed
@@ -120,7 +120,7 @@ int StaticAnalysis::run(int nLC, int nLoadSteps) {
     pA->get_control()->commit();
   }
   // Finalize
-  pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->commit();
+  loadcase->Commit();
   pA->get_model()->set_nodal_stress();
   pA->get_domain()->commit(); /// @todo For commiting time; find more elegant way.
   return ret;

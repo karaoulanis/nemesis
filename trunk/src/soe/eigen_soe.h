@@ -27,17 +27,18 @@
 #define SRC_SOE_EIGEN_SOE_H_
 
 #include "soe/soe.h"
+#include <valarray>
 
 class EigenSOE: public SOE {
  protected:
-  valarray<double> M;
-  valarray<double> ALPHAR;
-  valarray<double> ALPHAI;
-  valarray<double> BETA;
-  valarray<double> VL;
-  valarray<double> VR;
-  valarray<double> WORK;
-  public:
+  std::valarray<double> M;
+  std::valarray<double> ALPHAR;
+  std::valarray<double> ALPHAI;
+  std::valarray<double> BETA;
+  std::valarray<double> VL;
+  std::valarray<double> VR;
+  std::valarray<double> WORK;
+ public:
   // Constructor and destructor
   EigenSOE();
   ~EigenSOE();

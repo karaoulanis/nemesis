@@ -24,31 +24,43 @@
 // *****************************************************************************
 
 #include "loadcase/ground_motion_file.h"
+#include <cmath>
+#include "elements/element.h"
+#include "exception/sexception.h"
 
 GroundMotionFile::GroundMotionFile() {
 }
-GroundMotionFile::GroundMotionFile(int dof_, std::istream& s, double dt_, double scale_)
-  :Load() {
-  dof = dof_-1;
-  dt = dt_;
-  scale = scale_;
-  while(!s.eof())
-  {
+
+GroundMotionFile::GroundMotionFile(const std::map<int, Element*>* elements,
+                                   int dof, std::istream& s, double dt,
+                                   double scale)
+                                   :Load() {
+  elements_ = elements;
+  dof_ = dof - 1;
+  dt_ = dt;
+  scale_ = scale;
+  while (!s.eof()) {
     double d;
-    s>>d;
-    data.push_back(d);
+    s >> d;
+    data_.push_back(d);
   }
 }
-void GroundMotionFile::apply(double fact, double time) {
-  if (time < 0.||dt < 0.) throw SException("[nemesis:%d] %s", 9999, "Time/dt must pe positive values.");
-  unsigned n=(int)floor(time/dt);
-  if (n >= data.size()) throw SException("[nemesis:%d] %s", 9999, "Time exceeds given values.");
-  double t1 = n*dt;
-  double t2=(n+1)*dt;
-  double d1 = data[n];
-  double d2 = data[n+1];
+
+void GroundMotionFile::Apply(double factor, double time) {
+  if (time < 0. || dt_ < 0.) {
+    throw SException("[nemesis:%d] %s", 9999, "Time/dt must pe positive.");
+  }
+  unsigned n = static_cast<int>(std::floor(time/dt_));
+  if (n >= data_.size()) {
+    throw SException("[nemesis:%d] %s", 9999, "Time exceeds given values.");
+  }
+  double t1 = n*dt_;
+  double t2 = (n+1)*dt_;
+  double d1 = data_[n];
+  double d2 = data_[n+1];
   double d = d1+(time-t1)*(d2-d1)/(t2-t1);
-  const std::map<int, Element*>& c = pD->get_elements();
   std::map<int, Element*>::const_iterator i;
-  for (i = c.begin();i != c.end();i++) i->second->addGroundMotion(dof, fact*scale*d);
+  for (i = elements_->begin(); i != elements_->end(); i++) {
+    i->second->addGroundMotion(dof_, factor*scale_*d);
+  }
 }

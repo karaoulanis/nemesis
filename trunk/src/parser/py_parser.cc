@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "parser/py_parser.h"
+#include <fstream>
 #include <sstream>
 #include "exception/sexception.h"
 
@@ -52,7 +53,7 @@ PyObject* buildList(const Matrix& m) {
   }
   return pyList;
 }
-static PyObject* buildDict(istream& s) {
+static PyObject* buildDict(std::istream& s) {
   static PyObject* pyDict;
   pyDict = PyDict_New();
   char name[128];
@@ -90,7 +91,7 @@ static PyObject* buildDict(istream& s) {
   }
   return pyDict;
 }
-PyObject* buildList(istream& s) {
+PyObject* buildList(std::istream& s) {
   static PyObject* pyList;
   char name[128];
   int tag;
@@ -361,7 +362,7 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
   int id;
   // define an output string stream
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
-  ostringstream os;
+  std::ostringstream os;
   try {
     pD->get < Node>(pD->get_nodes(), id)->save(os);
   } catch(SException e) {
@@ -369,7 +370,7 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
     return NULL;
   }
   static string tmp;
-  tmp=os.str();
+  tmp = os.str();
   return Py_BuildValue("s", tmp.c_str());
 }
 static PyObject* pyNode_Track(PyObject* /*self*/, PyObject* args) {
@@ -984,20 +985,6 @@ static PyObject* pyElement_Triangle3d(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
-static PyObject* pyElement_Triangle3dXFem(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, matID;
-  if (!PyArg_ParseTuple(args, "iiiii", &id, &n1, &n2, &n3, &matID))
-    return NULL;
-  try {
-    Element* pElement = new Triangle3XFem(id, n1, n2, n3, matID);
-    pD->add(pD->get_elements(), pElement);
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
 static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, n5, n6, matID;
   if (!PyArg_ParseTuple(args, "iiiiiiii", &id, &n1, &n2, &n3, &n4, &n5, &n6, &matID))
@@ -1030,7 +1017,7 @@ static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
   int id;
   // define an output string stream
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
-  ostringstream os;
+  std::ostringstream os;
   try {
     pD->get<Element>(pD->get_elements(), id)->save(os);
   } catch(SException e) {
@@ -1038,7 +1025,7 @@ static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
     return NULL;
   }
   static string tmp;
-  tmp=os.str();
+  tmp = os.str();
   return Py_BuildValue("s", tmp.c_str());
 }
 static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
@@ -1050,7 +1037,7 @@ static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyElement_Path(PyObject* /*self*/, PyObject* args) {
   int id, index;
-  const char* s; 
+  const char* s;
   if (!PyArg_ParseTuple(args, "ii", &id, &index)) return NULL;
   try {
     s = pD->get<Element>(pD->get_elements(), id)->get_tracker(index)->data();
@@ -1059,8 +1046,8 @@ static PyObject* pyElement_Path(PyObject* /*self*/, PyObject* args) {
     return NULL;
   }
   return Py_BuildValue("s", s);
-
 }
+
 static PyMethodDef ElementMethods[] = {
   {"spring",      pyElement_Spring,
     METH_VARARGS, "Define a spring element."},
@@ -1069,7 +1056,7 @@ static PyMethodDef ElementMethods[] = {
   {"bar2s",     pyElement_Bar2s,
     METH_VARARGS, "Defines a simple 1d/2d/3d geometrically linear bar."},
   {"bar2t",     pyElement_Bar2t,
-    METH_VARARGS, "Defines a 1d/2d/3d bar based on a Total Lagrangian formulation."},
+    METH_VARARGS, "Defines a 1d/2d/3d bar (Total Lagrangian formulation)."},
   {"beam2e",      pyElement_Beam2e,
     METH_VARARGS, "Defines a 2-Node Euler-Bernulli beam."},
   {"beam2t",      pyElement_Beam2t,
@@ -1090,8 +1077,6 @@ static PyMethodDef ElementMethods[] = {
     METH_VARARGS, "Define a 4-Noded enhanced assumed strain quad."},
   {"tria3d",        pyElement_Triangle3d,
     METH_VARARGS, "Define a 3-Noded constant strain triangle."},
-  {"tria3x",        pyElement_Triangle3dXFem,
-    METH_VARARGS, "Define a 3-Noded constant strain triangle for XFem."},
   {"tria6d",        pyElement_Triangle6d,
     METH_VARARGS, "Define a 6-Noded linear strain triangle."},
   {"tetra4d",     pyElement_Tetrahedron4d,
@@ -1240,7 +1225,7 @@ static PyObject* pyGroup_State(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii|ddddd", &groupID, &active, &facK, &facS, &facG, &facP))
     return NULL;
   GroupState* pGroupState = new GroupState(groupID, active, facK, facS, facG, facP);
-  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addGroupState(pGroupState);
+  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddGroupState(pGroupState);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1264,7 +1249,7 @@ static PyObject* pySens_Elem(PyObject* /*self*/, PyObject* args) {
     ElementSensitivityParameter* pParam =
       new ElementSensitivityParameter(elemID, param);
     pD->get<LoadCase>(pD->get_loadcases(),
-      currentLC)->addSensitivityParameter(pParam);
+      currentLC)->AddSensitivityParameter(pParam);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1286,12 +1271,18 @@ static PyObject* pyLoad_NodeConstant(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
     return NULL;
   }
-  int nodeID, dofID;
-  double val;
-  if (!PyArg_ParseTuple(args, "iid", &nodeID, &dofID, &val))
+  int node_id, dof;
+  double value;
+  if (!PyArg_ParseTuple(args, "iid", &node_id, &dof, &value))
     return NULL;
-  Load* pLoad = new NodalLoadConstant(nodeID, dofID, val);
-  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
+  try {
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    Load* load = new NodalLoadConstant(node, dof, value);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddLoad(load);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1300,12 +1291,18 @@ static PyObject* pyLoad_Linear(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
     return NULL;
   }
-  int nodeID, dofID;
-  double val, grad;
-  if (!PyArg_ParseTuple(args, "iidd", &nodeID, &dofID, &val, &grad))
+  int node_id, dof;
+  double initial_value, grad;
+  if (!PyArg_ParseTuple(args, "iidd", &node_id, &dof, &initial_value, &grad))
     return NULL;
-  Load* pLoad = new NodalLoadLinear(nodeID, dofID, val, grad);
-  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
+  try {
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    Load* load = new NodalLoadLinear(node, dof, initial_value, grad);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddLoad(load);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1314,42 +1311,14 @@ static PyObject* pyLoad_Sin(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
     return NULL;
   }
-  int nodeID, dofID;
+  int node_id, dof;
   double a, omega, phi;
-  if (!PyArg_ParseTuple(args, "iiddd", &nodeID, &dofID, &a, &omega, &phi))
+  if (!PyArg_ParseTuple(args, "iiddd", &node_id, &dof, &a, &omega, &phi))
     return NULL;
-  Load* pLoad = new NodalLoadSin(nodeID, dofID, a, omega, phi);
-  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pyLoad_BeamPoint(PyObject* /*self*/, PyObject* args) {
   try {
-    if (currentLC <= 0) /// @todo remove exception to lc
-      throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
-    int elemID;
-    const char* dir;
-    double a0, p0;
-    if (!PyArg_ParseTuple(args, "isdd", &elemID, &dir, &a0, &p0)) return NULL;
-    Load* pLoad = new BeamLoadPoint(elemID, dir, a0, p0);
-    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pyLoad_BeamUniform(PyObject* /*self*/, PyObject* args) {
-  try {
-    if (currentLC <= 0) ///todo remove exception to lc
-      throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
-    int elemID;
-    const char* dir;
-    double p0;
-    if (!PyArg_ParseTuple(args, "isd", &elemID, &dir, &p0)) return NULL;
-    Load* pLoad = new BeamLoadUniform(elemID, dir, p0);
-    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    Load* load = new NodalLoadSin(node, dof, a, omega, phi);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddLoad(load);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1364,29 +1333,26 @@ static PyMethodDef LoadMethods[] =  {
     METH_VARARGS, "Define a linear in time nodal load."},
   {"sin",     pyLoad_Sin,
     METH_VARARGS, "Define a sinus nodal load."},
-  {"beamPoint", pyLoad_BeamPoint,
-    METH_VARARGS, "Define a concentrated force load acting on a beam."},
-  {"beamUniform", pyLoad_BeamUniform,
-    METH_VARARGS, "Define a uniform force load acting on a beam."},
   {NULL, NULL, 0, NULL}
 };
 /******************************************************************************
 * Ground Motion commands
 ******************************************************************************/
 static PyObject* pyGroundMotion_File(PyObject* /*self*/, PyObject* args) {
+  if (currentLC <= 0)  /// @todo remove exception to lc
+    throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
+  int dof;
+  const char* filename;
+  double dt;
+  double scale = 1.0;
+  if (!PyArg_ParseTuple(args, "isd|d", &dof, &filename, &dt, &scale))
+    return NULL;
   try {
-    if (currentLC <= 0) /// @todo remove exception to lc
-      throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
-    int dof;
-    const char* filename;
-    double dt;
-    double scale = 1.0;
-    if (!PyArg_ParseTuple(args, "isd|d", &dof, &filename, &dt, &scale)) 
-      return NULL;
-    ifstream data(filename);
-    Load* pLoad = new GroundMotionFile(dof, data, dt, scale);
+    std::ifstream data(filename);
+    const std::map<int, Element*>* elements = &(pD->get_elements());
+    Load* load = new GroundMotionFile(elements, dof, data, dt, scale);
     data.close();
-    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddLoad(load);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1395,14 +1361,16 @@ static PyObject* pyGroundMotion_File(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyGroundMotion_Sin(PyObject* /*self*/, PyObject* args) {
+  if (currentLC <= 0)  /// @todo remove exception to lc
+    throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
+  int dof;
+  double a, omega, phi = 0.;
+  if (!PyArg_ParseTuple(args, "idd|d", &dof, &a, &omega, &phi))
+    return NULL;
   try {
-    if (currentLC <= 0) ///todo remove exception to lc
-      throw SException("[nemesis:%d] %s", 1110, "No LoadCase yet defined.");
-    int dof;
-    double a, omega, phi = 0.;
-    if (!PyArg_ParseTuple(args, "idd|d", &dof, &a, &omega, &phi)) return NULL;
-    Load* pLoad = new GroundMotionSin(dof, a, omega, phi);
-    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addLoad(pLoad);
+    const std::map<int, Element*>* elements = &(pD->get_elements());
+    Load* load = new GroundMotionSin(elements, dof, a, omega, phi);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddLoad(load);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1425,11 +1393,18 @@ static PyObject* pyInitialConditions_Disp(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
     return NULL;
   }
-  int nodeID, dofID;
-  double u;
-  if (!PyArg_ParseTuple(args, "iid", &nodeID, &dofID, &u)) return NULL;
-  InitialCondition* pInitial = new InitialDisplacement(nodeID, dofID, u);
-  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addInitialCondition(pInitial);
+  int node_id, dof;
+  double disp;
+  if (!PyArg_ParseTuple(args, "iid", &node_id, &dof, &disp))
+    return NULL;
+  try {
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    InitialCondition* initial = new InitialDisplacement(node, dof, disp);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddInitialCondition(initial);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1438,12 +1413,18 @@ static PyObject* pyInitialConditions_Velc(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
     return NULL;
   }
-  int nodeID, dofID;
-  double v;
-  if (!PyArg_ParseTuple(args, "iid", &nodeID, &dofID, &v)) return NULL;
-  InitialCondition* pInitial = new InitialVelocity(nodeID, dofID, v);
-  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->addInitialCondition(pInitial);
-  Py_INCREF(Py_None);
+  int node_id, dof;
+  double velocity;
+  if (!PyArg_ParseTuple(args, "iid", &node_id, &dof, &velocity))
+    return NULL;
+  try {
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    InitialCondition* initial = new InitialVelocity(node, dof, velocity);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddInitialCondition(initial);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }  Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pyInitialConditions_Stresses(PyObject* /*self*/,
@@ -1452,14 +1433,16 @@ static PyObject* pyInitialConditions_Stresses(PyObject* /*self*/,
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
     return NULL;
   }
-  int groupID, dir;
+  int group_id, dir;
   double h1, s1, h2, s2, K0;
-  if (!PyArg_ParseTuple(args, "iiddddd", &groupID, &dir, &h1, &s1, &h2, &s2, &K0))
+  if (!PyArg_ParseTuple(args, "iiddddd", &group_id, &dir, &h1, &s1, &h2, &s2, &K0))
     return NULL;
   try {
-    InitialStresses* pInitial = new InitialStresses(groupID, dir, h1, s1, h2, s2, K0);
+    const std::map<int, Element*>* elements = &(pD->get_elements());
+    InitialStresses* initial =
+      new InitialStresses(elements, group_id, dir, h1, s1, h2, s2, K0);
     pD->get<LoadCase>(pD->get_loadcases(),
-      currentLC)->addInitialCondition(pInitial);
+      currentLC)->AddInitialCondition(initial);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1476,23 +1459,7 @@ static PyMethodDef InitialConditionsMethods[] =  {
     METH_VARARGS, "Set initial stresses to a group."},
   {NULL, NULL, 0, NULL}
 };
-/******************************************************************************
-* Crack commands
-******************************************************************************/
-static PyObject* pyCrack_OneTip(PyObject* /*self*/, PyObject* args) {
-  int id;
-  double xS, yS, xT, yT;
-  if (!PyArg_ParseTuple(args, "idddd", &id, &xS, &yS, &xT, &yT)) return NULL;
-  Crack* pCrack = new Crack(id, xS, yS, xT, yT);
-  pD->add < Crack>(pD->get_cracks(), pCrack);
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyMethodDef CrackMethods[] =  {
-  {"oneTip",    pyCrack_OneTip,
-    METH_VARARGS, "Define a one tip crack."},
-  {NULL, NULL, 0, NULL}
-};
+
 /******************************************************************************
 * LoadCase commands
 ******************************************************************************/
@@ -1501,7 +1468,7 @@ static PyObject* pyLC_Define(PyObject* /*self*/, PyObject* args) {
   const char* name = 0;
   if (!PyArg_ParseTuple(args, "i|s", &id, &name)) return NULL;
   LoadCase* pLC;
-  ///todo: check this better
+  /// @todo: check this better
   if (name != 0) pLC = new LoadCase(id, name);
   else    pLC = new LoadCase(id, "default");
   pD->add(pD->get_loadcases(), pLC);
@@ -1558,23 +1525,12 @@ static PyObject* pyAnalysis_Sensitivity(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
-static PyObject* pyAnalysis_XFem(PyObject* /*self*/, PyObject* args) {
-  if (!PyArg_ParseTuple(args, "")) return NULL;
-  AnalysisType* pType = new XFemAnalysis();
-  try {
-    pA->set_analysis_type(pType);
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
 static PyObject* pyAnalysis_Run(PyObject* /*self*/, PyObject* args) {
-  int LC, steps, ret;
-  if (!PyArg_ParseTuple(args, "ii", &LC, &steps)) return NULL;
+  int id, steps, ret;
+  if (!PyArg_ParseTuple(args, "ii", &id, &steps)) return NULL;
   try {
-    ret = pA->analyze(LC, steps);
+    LoadCase* loadcase = pD->get<LoadCase>(pD->get_loadcases(),id);
+    ret = pA->analyze(loadcase, steps);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1591,8 +1547,6 @@ static PyMethodDef AnalysisMethods[] =  {
     METH_VARARGS, "Define a eigeinvalue analysis."},
   {"sensitivity", pyAnalysis_Sensitivity,
     METH_VARARGS, "Define a sensitivity analysis."},
-  {"xFem",    pyAnalysis_XFem,
-    METH_VARARGS, "Define an xFem analysis."},
   {"run", pyAnalysis_Run,
     METH_VARARGS, "Run given analysis."},
   {NULL, NULL, 0, NULL}
@@ -2055,8 +2009,8 @@ int PyParser::parse(char* filename) {
     return 0;
   }
   // Check if file exists
-  fstream tmpFile;
-  tmpFile.open(filename, ios::binary|ios::in);
+  std::fstream tmpFile;
+  tmpFile.open(filename, std::ios::binary|std::ios::in);
   if (tmpFile.fail()) {
     tmpFile.clear();
     tmpFile.close();
@@ -2075,26 +2029,25 @@ int PyParser::parse(char* filename) {
 }
 int PyParser::initModules() {
   Py_InitModule("db", DatabaseMethods);
-    Py_InitModule("domain", DomainMethods);
-    Py_InitModule("node", NodeMethods);
-    Py_InitModule("section", SectionMethods);
-    Py_InitModule("material", MaterialMethods);
-    Py_InitModule("element", ElementMethods);
-    Py_InitModule("constraint", ConstraintMethods);
-    Py_InitModule("load", LoadMethods);
-    Py_InitModule("groundMotion", GroundMotionMethods);
-    Py_InitModule("initial", InitialConditionsMethods);
-    Py_InitModule("lc", LCMethods);
-    Py_InitModule("analysis", AnalysisMethods);
-    Py_InitModule("imposer", ImposerMethods);
-    Py_InitModule("control", ControlMethods);
-    Py_InitModule("algorithm", AlgorithmMethods);
-    Py_InitModule("convergence", ConvergenceMethods);
+  Py_InitModule("domain", DomainMethods);
+  Py_InitModule("node", NodeMethods);
+  Py_InitModule("section", SectionMethods);
+  Py_InitModule("material", MaterialMethods);
+  Py_InitModule("element", ElementMethods);
+  Py_InitModule("constraint", ConstraintMethods);
+  Py_InitModule("load", LoadMethods);
+  Py_InitModule("groundMotion", GroundMotionMethods);
+  Py_InitModule("initial", InitialConditionsMethods);
+  Py_InitModule("lc", LCMethods);
+  Py_InitModule("analysis", AnalysisMethods);
+  Py_InitModule("imposer", ImposerMethods);
+  Py_InitModule("control", ControlMethods);
+  Py_InitModule("algorithm", AlgorithmMethods);
+  Py_InitModule("convergence", ConvergenceMethods);
   Py_InitModule("soe", SOEMethods);
   Py_InitModule("reorder", ReorderMethods);
   Py_InitModule("group", GroupMethods);
   Py_InitModule("sens", SensitivityMethods);
-  Py_InitModule("crack", CrackMethods);
   PyRun_SimpleString("import db");
   PyRun_SimpleString("import domain");
   PyRun_SimpleString("import node");

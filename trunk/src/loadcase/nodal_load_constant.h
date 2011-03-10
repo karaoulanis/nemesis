@@ -29,13 +29,12 @@
 #include "loadcase/nodal_load.h"
 
 class NodalLoadConstant: public NodalLoad {
-  private:
-  double theValue;
-  public:
+ public:
   NodalLoadConstant();
-  NodalLoadConstant(int nodeID, int DofID, double val);
+  NodalLoadConstant(Node* node, int dof, double value);
+  double GetValue(double time);
 
-  double get_value(double time);
+ private:
+  double value_;
 };
-
 #endif  // SRC_LOADCASE_NODAL_LOAD_CONSTANT_H_

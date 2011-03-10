@@ -35,8 +35,6 @@ using std::string;
 using std::vector;
 
 class Tracker {
- private:
-  vector<string> records_;
  public:
   Tracker();
   virtual ~Tracker();
@@ -44,6 +42,9 @@ class Tracker {
 
   void track(string record);
   const char* data();
+
+ private:
+  vector<string> records_;
 };
 
 #endif  // SRC_TRACKER_TRACKER_H_

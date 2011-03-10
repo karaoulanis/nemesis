@@ -26,19 +26,45 @@
 #ifndef SRC_LOADCASE_NODAL_LOAD_H_
 #define SRC_LOADCASE_NODAL_LOAD_H_
 
-#include "node/node.h"
 #include "loadcase/load.h"
 
-class NodalLoad: public Load {
- protected:
-  int dof;
-  Node* myNode;
-  public:
-  NodalLoad();
-  NodalLoad(int nodeID, int dofID);
+class Node;
 
-  void apply(double fact, double time);
-  virtual double get_value(double time)=0;
+class NodalLoad: public Load {
+ public:
+  /**
+   * Default constructor.
+   */
+  NodalLoad();
+
+  /**
+   * Constructor.
+   * @param node The node where the Load is apllied.
+   * @param dof The corresponding dof (ux = 1, uy = 2, ...)
+   */
+  NodalLoad(Node* node, int dof);
+
+  /**
+   * Virtual destructor.
+   */
+  virtual ~NodalLoad();
+
+  /**
+   * Apply load to its Node.
+   * @param factor Factor multiplied by the Load value.
+   * @param time The time at which Load value is evaluated.
+   */
+  void Apply(double factor, double time);
+
+  /**
+   * Find Load value at given time.
+   * @param time The time at which Load value is evaluated.
+   */
+  virtual double GetValue(double time)=0;
+
+ protected:
+  Node* node_;
+  int dof_;
 };
 
 #endif  // SRC_LOADCASE_NODAL_LOAD_H_

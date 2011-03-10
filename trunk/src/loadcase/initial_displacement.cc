@@ -24,21 +24,25 @@
 // *****************************************************************************
 
 #include "loadcase/initial_displacement.h"
+#include "node/node.h"
 
 InitialDisplacement::InitialDisplacement() {
 }
-InitialDisplacement::InitialDisplacement(int nodeID, int dofID, double u)
-  :InitialCondition() {
-  myTag = TAG_INITIAL_DISPLACEMENT;
+
+InitialDisplacement::InitialDisplacement(Node* node, int dof, double disp)
+:InitialCondition() {
   // Retrieve node from the domain
-  myNode = pD->get < Node>(pD->get_nodes(), nodeID);
-  dof = dofID-1;
+  node_ = node;
+  dof_ = dof-1;
   // Check if dof is activated
-  if (myNode->get_activated_dof(dof)<0) 
+  ///@todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
+  ///@todo Give SException the right id and not 9999.
+  if (node_->get_activated_dof(dof_)<0) 
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
-  disp = u;
+  disp_ = disp;
 }
-int InitialDisplacement::apply() {
-  myNode->addInitialDisp(dof, disp);
+
+int InitialDisplacement::Apply() {
+  node_->addInitialDisp(dof_, disp_);
   return 0;
 }

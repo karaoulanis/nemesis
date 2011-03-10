@@ -38,7 +38,7 @@ EigenAnalysis::~EigenAnalysis() {
 bool EigenAnalysis::checkIfAllows(FEObject* /*f*/) {
   return false;
 }
-int EigenAnalysis::run(int /*nLC*/, int /*nLoadSteps*/) {
+int EigenAnalysis::run(LoadCase* /*loadcase*/, int /*num_loadsteps*/) {
   // Create model by applying the constraints
   pA->get_imposer()->impose();
 

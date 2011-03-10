@@ -35,13 +35,16 @@ SensitivityStaticAnalysis::SensitivityStaticAnalysis()
   pA->set_soe(new FullLinearSOE());
   theSensitivityControl = new SensitivityControl;
 }
+
 SensitivityStaticAnalysis::~SensitivityStaticAnalysis() {
   delete theSensitivityControl;
 }
+
 bool SensitivityStaticAnalysis::checkIfAllows(FEObject* /*f*/) {
   return false;
 }
-int SensitivityStaticAnalysis::run(int nLC, int nLoadSteps) {
+
+int SensitivityStaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   // Create model by applying the constraints
   pA->get_imposer()->impose();
 
@@ -62,10 +65,10 @@ int SensitivityStaticAnalysis::run(int nLC, int nLoadSteps) {
   theSensitivityControl->init();
 
   // Initialize the convergence check
-  pA->get_convergence_norm()->init(nLC, nLoadSteps);
+  pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
 
   int ret = 0;
-  for (int i = 0; i < nLoadSteps; i++) {
+  for (int i = 0; i < num_loadsteps; i++) {
     // Call algorithm to solve step
     int check = pA->get_algorithm()->solveStep(i);
     // Algorithm failed
@@ -80,8 +83,7 @@ int SensitivityStaticAnalysis::run(int nLC, int nLoadSteps) {
     pA->get_control()->commit();
 
     // Sensitivity
-    int nParams = pA->get_domain()->get<LoadCase>(
-      pA->get_domain()->get_loadcases(), nLC)->get_num_sens_param();
+    int nParams =loadcase->GetNumSensitivityParameters();
     for (int j = 0; j < nParams; j++) {
       theSensitivityControl->formTangent();
       theSensitivityControl->formResidual(0.);

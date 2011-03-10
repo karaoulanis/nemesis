@@ -32,7 +32,7 @@ class TransientAnalysis :public AnalysisType {
   public:
   TransientAnalysis();
   bool checkIfAllows(FEObject* f);
-  int run(int nLC, int nLoadSteps);
+  int run(LoadCase* loadcase, int num_loadsteps);
 };
 
 #endif  // SRC_ANALYSIS_TRANSIENT_ANALYSIS_H_

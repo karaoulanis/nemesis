@@ -80,7 +80,7 @@ int SOE::plotGraph(const char* s) {
   UndirectedGraph G(size_);
   pA->get_model()->get_undirected_graph(G);
   // Plot the Graph
-  ofstream outfile(s);
+  std::ofstream outfile(s);
   /// @todo: the following line is commented, produces error/warnings
   // write_graphviz(outfile, G);
   return 0;

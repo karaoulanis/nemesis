@@ -24,21 +24,25 @@
 // *****************************************************************************
 
 #include "loadcase/initial_velocity.h"
+#include "node/node.h"
 
 InitialVelocity::InitialVelocity() {
 }
-InitialVelocity::InitialVelocity(int nodeID, int DofID, double v)
-  :InitialCondition() {
-  myTag = TAG_INITIAL_VELOCITY;
+
+InitialVelocity::InitialVelocity(Node* node, int dof, double velocity)
+:InitialCondition() {
   // Retrieve node from the domain
-  myNode = pD->get < Node>(pD->get_nodes(), nodeID);
+  node_ = node;
+  dof_ = dof-1;
   // Check if dof is activated
-  dof = DofID-1;
-  if (myNode->get_activated_dof(dof)<0) 
+  ///@todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
+  ///@todo Give SException the right id and not 9999.
+  if (node_->get_activated_dof(dof_)<0) 
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
-  velc = v;
+  velocity_ = velocity;
 }
-int InitialVelocity::apply() {
-  myNode->addInitialVelc(dof, velc);
+
+int InitialVelocity::Apply() {
+  node_->addInitialVelc(dof_, velocity_);
   return 0;
 }

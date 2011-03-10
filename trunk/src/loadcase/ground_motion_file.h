@@ -26,23 +26,26 @@
 #ifndef SRC_LOADCASE_GROUND_MOTION_FILE_H_
 #define SRC_LOADCASE_GROUND_MOTION_FILE_H_
 
-#include <iostream>
 #include <map>
 #include <vector>
 #include "loadcase/load.h"
-#include "elements/element.h"
+
+class Element;
 
 class GroundMotionFile: public Load {
- protected:
-  int dof;
-  std::vector<double> data; // use stl because of resize (todo)
-  double dt;
-  double scale;
-  public:
+ public:
   GroundMotionFile();
-  GroundMotionFile(int dof_, std::istream& s, double dt_, double scale_ = 1.0);
+  GroundMotionFile(const std::map<int, Element*>* elements, int dof,
+    std::istream& s, double dt, double scale = 1.0);
 
-  void apply(double fact, double time);
+  void Apply(double factor, double time);
+
+ protected:
+  const std::map<int, Element*>* elements_;
+  int dof_;
+  std::vector<double> data_;
+  double dt_;
+  double scale_;
 };
 
 #endif  // SRC_LOADCASE_GROUND_MOTION_FILE_H_
