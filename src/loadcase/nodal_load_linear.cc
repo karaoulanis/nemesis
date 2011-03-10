@@ -27,12 +27,14 @@
 
 NodalLoadLinear::NodalLoadLinear() {
 }
-NodalLoadLinear::NodalLoadLinear(int nodeID, int DofID, double val, double grad)
-  :NodalLoad(nodeID, DofID) {
-  myTag = TAG_NODAL_LOAD_CONSTANT;
-  theValue = val;
-  theGradient = grad;
+
+NodalLoadLinear::NodalLoadLinear(Node* node, int dof, double initial_value,
+                                 double gradient)
+                                 :NodalLoad(node, dof) {
+  initial_value_ = initial_value;
+  gradient = gradient_;
 }
-double NodalLoadLinear::get_value(double time) {
-  return theValue+theGradient*time;
+
+double NodalLoadLinear::GetValue(double time) {
+  return initial_value_ + (gradient_ * time);
 }

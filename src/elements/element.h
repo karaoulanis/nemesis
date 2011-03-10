@@ -74,6 +74,8 @@ class Element: public DomainObject {
   int handleCommonInfo();
   int activeParameter;
 
+  bool active_;
+
  public:
   // Constructors and Destructor
   Element();

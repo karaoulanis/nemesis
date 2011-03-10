@@ -41,7 +41,7 @@ class SensitivityStaticAnalysis :public AnalysisType {
   SensitivityStaticAnalysis();
   ~SensitivityStaticAnalysis();
   bool checkIfAllows(FEObject* f);
-  int run(int nLC, int nLoadSteps);
+  int run(LoadCase* loadcase, int num_loadsteps);
 };
 
 #endif  // SRC_ANALYSIS_SENSITIVITY_STATIC_ANALYSIS_H_

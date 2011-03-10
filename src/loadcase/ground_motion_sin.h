@@ -26,20 +26,24 @@
 #ifndef SRC_LOADCASE_GROUND_MOTION_SIN_H_
 #define SRC_LOADCASE_GROUND_MOTION_SIN_H_
 
-#include "elements/element.h"
+#include <map>
 #include "loadcase/load.h"
 
+class Element;
+
 class GroundMotionSin: public Load {
+ public:
+  GroundMotionSin();
+  GroundMotionSin(const std::map<int, Element*>* elements, int dof,
+    double a, double omega, double phi = 0.);
+  void Apply(double factor, double time);
+
  protected:
+  const std::map<int, Element*>* elements_;
   int dof_;
   double a_;
   double omega_;
   double phi_;
- public:
-  GroundMotionSin();
-  GroundMotionSin(int dof, double a, double omega, double phi = 0.);
-
-  void apply(double fact, double time);
 };
 
 #endif  // SRC_LOADCASE_GROUND_MOTION_SIN_H_

@@ -26,14 +26,10 @@
 #ifndef SRC_LOADCASE_INITIAL_CONDITION_H_
 #define SRC_LOADCASE_INITIAL_CONDITION_H_
 
-#include "domain/domain_object.h"
-
-class InitialCondition: public DomainObject {
-  private:
-  static int nInitialConditions;
-  public:
+class InitialCondition {
+ public:
   InitialCondition();
-  virtual int apply()=0;
+  virtual int Apply()=0;
 };
 
 #endif  // SRC_LOADCASE_INITIAL_CONDITION_H_

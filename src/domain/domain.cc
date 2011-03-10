@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "domain/domain.h"
+#include <iostream>
 
 /**
  * Default Constructor.
@@ -160,7 +161,7 @@ int Domain::restoreState(const char* tableName) {
  */
 const char* Domain::get_state() {
   // define an output string stream
-  ostringstream s;
+  std::ostringstream s;
   // save data
   this->save(s);
   // convert to c style string and return
@@ -221,7 +222,7 @@ const Vector& Domain::get_eigen_values() {
 void Domain::applyLoads(double lambda_, double time_) {
   for (LoadCaseIterator lcIter = theLoadCases.begin();
     lcIter != theLoadCases.end(); lcIter++)
-      lcIter->second->applyLoads(lambda_, time_);
+      lcIter->second->ApplyLoads(lambda_, time_);
 }
 void Domain::zeroLoads() {
   for (NodeIterator nIter = theNodes.begin();

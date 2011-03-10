@@ -386,14 +386,6 @@
 				RelativePath="..\..\src\analysis\transient_analysis.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\analysis\xfem_analysis.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\analysis\xfem_analysis.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="tracker"
@@ -556,18 +548,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="crack"
-			>
-			<File
-				RelativePath="..\..\src\crack\crack.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\crack\crack.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="crosssection"
 			>
 			<File
@@ -647,14 +627,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\elements\triangle3.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\elements\triangle3_xfem.cc"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\elements\triangle3_xfem.h"
 					>
 				</File>
 				<File
@@ -957,6 +929,10 @@
 					RelativePath="..\..\src\loadcase\load.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\loadcase\load_test.cc"
+					>
+				</File>
 				<Filter
 					Name="elementalLoad"
 					>
@@ -1010,6 +986,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\loadcase\nodal_load_sin.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\loadcase\nodal_load_test.cc"
 						>
 					</File>
 				</Filter>

@@ -25,8 +25,5 @@
 
 #include "loadcase/initial_condition.h"
 
-int InitialCondition::nInitialConditions = 0;
-
-InitialCondition::InitialCondition()
-  :DomainObject(++nInitialConditions) {
+InitialCondition::InitialCondition() {
 }

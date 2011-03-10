@@ -28,7 +28,6 @@
 
 #include <map>
 #include "constraints/constraint.h"
-#include "crack/crack.h"
 #include "crosssection/cross_section.h"
 #include "database/database.h"
 #include "database/sqlite_database.h"
@@ -55,7 +54,6 @@ typedef std::map<int, CrossSection*>                  CrossSectionContainer;
 typedef std::map<int, Material*>                      MaterialContainer;
 typedef std::map<int, LoadCase*>                      LoadCaseContainer;
 typedef std::map<int, Constraint*>                    ConstraintContainer;
-typedef std::map<int, Crack*>                         CrackContainer;
 
 // Type definitions - Iterators
 typedef std::map<int, Node*>::const_iterator          NodeIterator;
@@ -65,7 +63,6 @@ typedef std::map<int, CrossSection*>::const_iterator  CrossSectionIterator;
 typedef std::map<int, Material*>::const_iterator      MaterialIterator;
 typedef std::map<int, LoadCase*>::const_iterator      LoadCaseIterator;
 typedef std::map<int, Constraint*>::const_iterator    ConstraintIterator;
-typedef std::map<int, Crack*>::const_iterator         CrackIterator;
 
 // Domain tag
 enum DomainTag {  TAG_DOMAIN_NOT_SET      =  0,
@@ -99,7 +96,6 @@ class Domain {
   MaterialContainer     theMaterials;
   LoadCaseContainer     theLoadCases;
   ConstraintContainer   theConstraints;
-  CrackContainer        theCracks;
 
   Database* theDatabase;
   Vector RayleighFactors;
@@ -181,11 +177,10 @@ class Domain {
   inline MaterialContainer& get_materials()          {return theMaterials;}
   inline LoadCaseContainer& get_loadcases()          {return theLoadCases;}
   inline ConstraintContainer& get_constraints()      {return theConstraints;}
-  inline CrackContainer& get_cracks()                {return theCracks;}
 
   template<class TE, class TC> int add(TC& c, TE* e) {
     int id = e->get_id();
-    std::pair<typename TC::const_iterator, bool> res = c.insert(make_pair(id, e));
+    std::pair<typename TC::const_iterator, bool> res = c.insert(std::make_pair(id, e));
     if (res.second == true) {
       upToDate = false;
     } else {

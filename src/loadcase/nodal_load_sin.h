@@ -29,15 +29,14 @@
 #include "loadcase/nodal_load.h"
 
 class NodalLoadSin: public NodalLoad {
-  private:
-  double a;
-  double omega;
-  double phi;
-  public:
+ public:
   NodalLoadSin();
-  NodalLoadSin(int nodeID, int DofID, double a_, double omega_, double phi_);
+  NodalLoadSin(Node* node, int dof, double a, double omega, double phi);
 
-  double get_value(double time);
+ private:
+  double a_;
+  double omega_;
+  double phi_;
+  double GetValue(double time);
 };
-
 #endif  // SRC_LOADCASE_NODAL_LOAD_SIN_H_

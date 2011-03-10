@@ -90,7 +90,7 @@ void MultiaxialElastic::commit() {
 void MultiaxialElastic::track() {
   if (myTracker == 0) return;
   // define an output string stream
-  ostringstream s;
+  std::ostringstream s;
   // start saving
   s << "{";
   // save lambda

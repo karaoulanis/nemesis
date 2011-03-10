@@ -26,6 +26,9 @@
 #ifndef SRC_LOADCASE_LOADCASE_H_
 #define SRC_LOADCASE_LOADCASE_H_
 
+#include <vector>
+#include <map>
+
 // Project files (alphabetically)
 #include "containers/containers.h"
 #include "domain/domain_object.h"
@@ -44,7 +47,7 @@ class InitialCondition;
 class Load;
 class NodalLoad;
 
-// Type definitions 
+// Type definitions
 typedef std::vector<Load*>                        LoadVector;
 typedef std::vector<InitialCondition*>            InitialConditionVector;
 typedef std::vector<GroupState*>                  GroupStateVector;
@@ -52,34 +55,31 @@ typedef std::vector<ElementSensitivityParameter*> SensitivityParameterVector;
 typedef std::map<int, Group*>                     GroupContainer;
 
 class LoadCase: public DomainObject {
-  private:
-  char myLabel[512];
-  double myFac;
-  int active;
-  LoadVector          myLoads;
-  GroupStateVector      myGroupStates;
-  InitialConditionVector    myInitialConditions;
-  SensitivityParameterVector  mySensitivityParameters;
-  public:
+ public:
   // Constructors and destructor
   LoadCase();
-  LoadCase(int ID, const char* label);
+  LoadCase(int id, const char* label);
   ~LoadCase();
-
   // Initialize loadcase
-  void init();
-  void commit();
-
+  void Initialize();
+  void Commit();
   // Add member functions
-  void addLoad(Load* pLoad);
-  void addGroupState(GroupState* pGroupState);
-  void addInitialCondition(InitialCondition* pInitialCondition);
-  void addSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter);
-
+  void AddLoad(Load* pLoad);
+  void AddGroupState(GroupState* pGroupState);
+  void AddInitialCondition(InitialCondition* pInitialCondition);
+  void AddSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter);
   // Apply member functions
-  void applyLoads(double lambda_, double time_);
-  void applySensitivityParameter(int param);
-  int get_num_sens_param();
-};
+  void ApplyLoads(double lambda_, double time_);
+  void ApplySensitivityParameter(int param);
+  int GetNumSensitivityParameters();
 
+ private:
+  char label_[512];
+  double factor_;
+  int active_;
+  LoadVector                  loads_;
+  GroupStateVector            group_states_;
+  InitialConditionVector      initial_conditions_;
+  SensitivityParameterVector  sensitivity_parameters_;
+};
 #endif  // SRC_LOADCASE_LOADCASE_H_

@@ -46,11 +46,11 @@ class Model;
 class SOE: public AnalysisObject {
  protected:
   int size_;
-  valarray<double> A;
+  std::valarray<double> A;
   Vector X;
   Vector B;
   bool isLUFactored;
-  valarray<int> IPIV;
+  std::valarray<int> IPIV;
   public:
   SOE();
   virtual ~SOE();

@@ -26,13 +26,9 @@
 #ifndef SRC_LOADCASE_LOAD_H_
 #define SRC_LOADCASE_LOAD_H_
 
-#include "domain/domain_object.h"
-
-class Load: public DomainObject {
- protected:
-  static int nLoads;
-  public:
+class Load {
+ public:
   Load();
-  virtual void apply(double fact, double t)=0;
+  virtual void Apply(double factor, double time)=0;
 };
 #endif  // SRC_LOADCASE_LOAD_H_

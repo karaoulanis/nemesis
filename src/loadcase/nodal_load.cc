@@ -24,18 +24,24 @@
 // *****************************************************************************
 
 #include "loadcase/nodal_load.h"
+#include "node/node.h"
 
 NodalLoad::NodalLoad() {
 }
-NodalLoad::NodalLoad(int nodeID, int dofID)
-  :Load() {
-  // Retrieve node from the domain and check if exists
-  myNode = pD->get < Node>(pD->get_nodes(), nodeID);
-  // Set the dof and check if activated
-  dof = dofID-1;
-  if (myNode->get_activated_dof(dof)<0) 
+
+NodalLoad::~NodalLoad() {
+}
+
+NodalLoad::NodalLoad(Node* node, int dof)
+:Load() {
+  node_ = node;
+  dof_  = dof - 1;
+  ///@todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
+  ///@todo Give SException the right id and not 9999.
+  if (node_->get_activated_dof(dof_) < 0)
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
 }
-void NodalLoad::apply(double fact, double time) {
-  myNode->addLoad(dof, this->get_value(time), fact);
+
+void NodalLoad::Apply(double factor, double time) {
+  node_->addLoad(dof_, this->GetValue(time), factor);
 }

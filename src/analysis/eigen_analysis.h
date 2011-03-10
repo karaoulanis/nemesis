@@ -37,7 +37,7 @@ class EigenAnalysis :public AnalysisType {
   EigenAnalysis();
   ~EigenAnalysis();
   bool checkIfAllows(FEObject* f);
-  int run(int nLC, int nLoadSteps);
+  int run(LoadCase* loadcase, int num_loadsteps);
 };
 
 #endif  // SRC_ANALYSIS_EIGEN_ANALYSIS_H_

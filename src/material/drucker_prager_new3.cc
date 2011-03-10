@@ -303,7 +303,7 @@ bool DruckerPragerNew3::isPlastic() {
 void DruckerPragerNew3::track() {
   if (myTracker == 0) return;
   // define an output string stream
-  ostringstream s;
+  std::ostringstream s;
   // start saving
   s << "{";
   // save lambda

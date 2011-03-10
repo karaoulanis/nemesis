@@ -27,11 +27,12 @@
 
 NodalLoadConstant::NodalLoadConstant() {
 }
-NodalLoadConstant::NodalLoadConstant(int nodeID, int DofID, double val)
-  :NodalLoad(nodeID, DofID) {
-  myTag = TAG_NODAL_LOAD_CONSTANT;
-  theValue = val;
+
+NodalLoadConstant::NodalLoadConstant(Node* node, int dof, double value)
+:NodalLoad(node, dof) {
+  value_ = value;
 }
-double NodalLoadConstant::get_value(double /*time*/) {
-  return theValue;
+
+double NodalLoadConstant::GetValue(double /*time*/) {
+  return value_;
 }

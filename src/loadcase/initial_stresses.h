@@ -27,32 +27,34 @@
 #define SRC_LOADCASE_INITIAL_STRESSES_H_
 
 #include "loadcase/initial_condition.h"
-#include "elements/element.h"
+#include <map>
 
-typedef std::map<int, Element*>  ElementContainer;
+class Element;
 
 class InitialStresses: public InitialCondition {
- private:
-  int theGroupID;
-  int dir;
-  double h1;
-  double s1;
-  double h2;
-  double s2;
-  double K0;
-  public:
+ public:
   InitialStresses();
-  InitialStresses(int groupID_, int dir_, double h1_, double s1_, double h2_,
-                    double s2_, double K0_);
+  InitialStresses(const std::map<int, Element*>* elements,
+                  int group_id, int dir,
+                  double h1, double s1, double h2, double s2, double K0);
   ~InitialStresses();
-  inline int get_group_id() {return theGroupID;}
-  inline int get_dir()   {return dir;}
-  inline double get_H1() {return h1;}
-  inline double get_S1() {return s1;}
-  inline double get_H2() {return h2;}
-  inline double get_S2() {return s2;}
-  inline double get_K0() {return K0;}
-  int apply();
-};
+  inline int get_group_id()   {return group_id_;}
+  inline int get_dir()        {return dir_;}
+  inline double get_H1()      {return h1_;}
+  inline double get_S1()      {return s1_;}
+  inline double get_H2()      {return h2_;}
+  inline double get_S2()      {return s2_;}
+  inline double get_K0()      {return K0_;}
+  int Apply();
 
+ private:
+  const std::map<int, Element*>* elements_;
+  int group_id_;
+  int dir_;
+  double h1_;
+  double s1_;
+  double h2_;
+  double s2_;
+  double K0_;
+};
 #endif  // SRC_LOADCASE_INITIAL_STRESSES_H_

@@ -25,7 +25,5 @@
 
 #include "loadcase/load.h"
 
-int Load::nLoads = 0;
-Load::Load()
-:DomainObject(++nLoads) {
+Load::Load() {
 }

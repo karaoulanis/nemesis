@@ -24,31 +24,32 @@
 // *****************************************************************************
 
 #include "loadcase/initial_stresses.h"
+#include "elements/element.h"
 
 InitialStresses::InitialStresses() {
 }
-InitialStresses::InitialStresses(int groupID_, int dir_, double h1_, double s1_,
-                                 double h2_, double s2_, double K0_)
-  :InitialCondition() {
-  myTag = TAG_INITIAL_STRESSES;
-  theGroupID = groupID_;
-  dir = dir_;
-  h1 = h1_;
-  s1 = s1_;
-  h2 = h2_;
-  s2 = s2_;
-  K0 = K0_;
-  // Check if group exists
-  pD->get<Group>(pD->get_groups(), theGroupID);
+InitialStresses::InitialStresses(const std::map<int, Element*>* elements,
+                                 int group_id, int dir,
+                                 double h1, double s1,
+                                 double h2, double s2, double K0)
+                                 :InitialCondition() {
+  elements_ = elements;
+  dir_ = dir;
+  group_id_ = group_id;
+  h1_ = h1;
+  s1_ = s1;
+  h2_ = h2;
+  s2_ = s2;
+  K0_ = K0;
   // Check direction
+  ///@todo Give SException the right id and not 9999.
   if (dir < 1 || dir>3)
     throw SException("[nemesis:%d] Direction should be 1, 2 or 3.", 9999);
 }
 InitialStresses::~InitialStresses() {
 }
-int InitialStresses::apply() {
-  ElementContainer& DomainElems = pD->get_elements();
-  for (ElementIterator ei = DomainElems.begin(); ei != DomainElems.end(); ei++)
+int InitialStresses::Apply() {
+  for (ElementIterator ei = elements_->begin(); ei != elements_->end(); ei++)
     ei->second->addInitialStresses(this);
   return 0;
 }

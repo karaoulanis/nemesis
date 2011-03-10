@@ -54,7 +54,7 @@ bool TransientAnalysis::checkIfAllows(FEObject* /*f*/) {
   return false;*/
   return true;
 }
-int TransientAnalysis::run(int nLC, int nLoadSteps) {
+int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   // Check the imposer
   if (pA->get_imposer() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
@@ -94,14 +94,14 @@ int TransientAnalysis::run(int nLC, int nLoadSteps) {
   pA->get_soe()->set_size();
 
   // Initialize
-  pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->init();
+  loadcase->Initialize();
   pA->get_control()->init();
-  pA->get_convergence_norm()->init(nLC, nLoadSteps);
+  pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
   /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //pA->get_domain()->keepTrack(pA->get_control()->get_ambda(),
   //  pA->get_control()->get_time());
 
-  for (int i = 0; i < nLoadSteps; i++) {
+  for (int i = 0; i < num_loadsteps; i++) {
     // Call algorithm to solve step
     int check = pA->get_algorithm()->solveStep(i);
 
@@ -120,6 +120,6 @@ int TransientAnalysis::run(int nLC, int nLoadSteps) {
   //pA->get_domain()->keepTrack(pA->get_control()->get_lambda(),
   //  pA->get_control()->get_time());
   }
-  pA->get_domain()->get<LoadCase>(pA->get_domain()->get_loadcases(), nLC)->commit();
+ loadcase->Commit();
   return 0;
 }
