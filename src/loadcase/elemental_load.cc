@@ -25,23 +25,16 @@
 
 #include "loadcase/elemental_load.h"
 
-Vector ElementalLoad::P(0, 0.);
-
-/**
- * Default constructor.
- */
 ElementalLoad::ElementalLoad() {
 }
-/**
- * Constructor.
- * Set the the Element ID and the LoadType. 
- * @param elemID    The id of the Element.
- */
-ElementalLoad::ElementalLoad(int elemID) {
-  myElement = pD->get < Element>(pD->get_elements(), elemID);
+
+ElementalLoad::ElementalLoad(Element* element) {
+  element_ = element;
 }
+
 ElementalLoad::~ElementalLoad() {
 }
-void ElementalLoad::apply(double fact, double /*t*/) {
-  myElement->addLoad(this->get_P(), fact);
+
+void ElementalLoad::apply(double /*fact*/, double /*t*/) {
+  /// @todo derive element load classes
 }

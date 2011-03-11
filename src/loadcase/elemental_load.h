@@ -26,37 +26,23 @@
 #ifndef SRC_LOADCASE_ELEMENTAL_LOAD_H_
 #define SRC_LOADCASE_ELEMENTAL_LOAD_H_
 
-#include "elements/element.h"
 #include "loadcase/load.h"
-#include "numeric/vector.h"
 
+// Forward declerations
 class Element;
+class Vector;
 
 class ElementalLoad: public Load {
- protected:
-  Element* myElement;   /// A pointer to the corresponding Element.
-  static Vector P;
   public:
   // Constructor and destructors
   ElementalLoad();
-  ElementalLoad(int elemID);
+  ElementalLoad(Element* element);
   virtual ~ElementalLoad();
-/*
-  // Access to member data
-  int set_load_direction(LoadDirection direction);
-  int set_user_direction(Vector* direction);
-  void set_A(Vector& aValues);
-  void set_P(Vector& pValues);
-
-  LoadDirection get_load_direction();
-  Vector* get_user_direction();
-  const Vector& get_A();
-  const Vector& get_P();
-*/  
+ 
   // Apply load
   virtual const Vector& get_P()=0;
   void apply(double fact, double t);
+ protected:
+  Element* element_;
 };
-
-
 #endif  // SRC_LOADCASE_ELEMENTAL_LOAD_H_
