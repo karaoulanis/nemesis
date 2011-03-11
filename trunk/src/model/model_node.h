@@ -26,9 +26,10 @@
 #ifndef SRC_MODEL_MODEL_NODE_H_
 #define SRC_MODEL_MODEL_NODE_H_
 
-#include "containers/containers.h"
 #include "model/model_object.h"
-#include "node/node.h"
+
+class Node;
+class Constraint;
 
 class ModelNode :public ModelObject {
  protected:
@@ -37,7 +38,8 @@ class ModelNode :public ModelObject {
   public:
   // Constructors
   ModelNode();
-  ModelNode(const IDContainer& FTable, Node* pNode = 0, Constraint* pConstraint = 0);
+  ModelNode(const IDContainer& FTable, Node* pNode = 0,
+            Constraint* pConstraint = 0);
   virtual ~ModelNode();
 
   // Access to data members
@@ -48,9 +50,11 @@ class ModelNode :public ModelObject {
   virtual void add_vTrial(double factor = 1.0);
 
   virtual void incTrialDisp(const Vector& du)=0;
-  virtual void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da)=0;
+  virtual void incTrialVecs(const Vector& du, const Vector& dv,
+                            const Vector& da)=0;
   virtual void set_trial_disp(const Vector& u)=0;
-  virtual void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a)=0;
+  virtual void set_trial_vecs(const Vector& u, const Vector& v,
+                              const Vector& a)=0;
 
   virtual void commit()=0;
   virtual void commitSens(const Vector& /*ds*/, int /*param*/) {}

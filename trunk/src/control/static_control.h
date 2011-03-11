@@ -45,17 +45,17 @@
  */
 class StaticControl :public Control {
  protected:
-  double Delta0;        ///< Initial Delta
-  double minDelta;      ///< Lower bound for Delta (absolute);
-  double maxDelta;      ///< Upper bound for Delta (absolute);
-  Vector du;          ///< Iterative displacements
-  Vector duT;         ///< SOE solution for q        
-  Vector duBar;       ///< SOE solution for lambda*q
-  Vector Du;          ///< Accumulative solution within each step
-  int Io;           ///< Number of iterations in the last step
-  int Id;           ///< Desired number of iterations in this step
-  double nExp;        ///< Exponent for the auto incrementation       
-  double Dt;          ///< Timestep for viscoplastic solutions        
+  double Delta0;        /// < Initial Delta
+  double minDelta;      /// < Lower bound for Delta (absolute);
+  double maxDelta;      /// < Upper bound for Delta (absolute);
+  Vector du;            /// < Iterative displacements
+  Vector duT;           /// < SOE solution for q
+  Vector duBar;         /// < SOE solution for lambda*q
+  Vector Du;            /// < Accumulative solution within each step
+  int Io;               /// < Number of iterations in the last step
+  int Id;               /// < Desired number of iterations in this step
+  double nExp;          /// < Exponent for the auto incrementation
+  double Dt;            /// < Timestep for viscoplastic solutions
   public:
 
   // Constructors and destructor
@@ -66,10 +66,11 @@ class StaticControl :public Control {
 
   void formResidual(double factor);
 
-  // Form tangent and residual element by element 
+  // Form tangent and residual element by element
   virtual void formElementalTangent(ModelElement* pModelElement);
-  virtual void formElementalResidual(ModelElement* pModelElement, double time = 0.);
-  
+  virtual void formElementalResidual(ModelElement* pModelElement,
+                                     double time = 0.);
+
   // Form residual node by node
   void formNodalResidual(ModelNode* pModelNode);
 

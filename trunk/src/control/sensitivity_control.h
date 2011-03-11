@@ -38,10 +38,11 @@ class SensitivityControl :public Control {
   SensitivityControl();
   virtual ~SensitivityControl();
 
-  // Form tangent and residual element by element 
+  // Form tangent and residual element by element
   virtual void formElementalTangent(ModelElement* pModelElement);
-  virtual void formElementalResidual(ModelElement* pModelElement, double time = 0.);
-  
+  virtual void formElementalResidual(ModelElement* pModelElement,
+                                     double time = 0.);
+
   // Form residual node by node
   void formNodalResidual(ModelNode* /*pModelNode*/) {}
 

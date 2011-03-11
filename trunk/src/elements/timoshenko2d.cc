@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/timoshenko2d.h"
+#include "loadcase/group_data.h"
 
 Timoshenko2d::Timoshenko2d() {
 }
@@ -157,8 +158,7 @@ const Matrix& Timoshenko2d::get_K() {
       }
     }
   }
-  if (myGroup->isActive()) K*=myGroup->get_fac_K();
-  else          K*=1e-12;
+  // double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   return K;
 }
 const Matrix& Timoshenko2d::get_M() {
@@ -173,10 +173,12 @@ const Vector& Timoshenko2d::get_Rgrad() {
 const Vector& Timoshenko2d::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+  if (!(groupdata_->active_))  return R;
+
+  // Factors
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
 
   double E =myUniMaterial->get_param(0);
   double nu = myUniMaterial->get_param(1);
@@ -203,7 +205,7 @@ const Vector& Timoshenko2d::get_R() {
       epsilon[1]+=dNi*u[2+3*i];
       epsilon[2]+=dNi*(-s*u[0+3*i]+c*u[1+3*i])-Ni*u[2+3*i];
     }
-    // Find sigma 
+    // Find sigma
     /// @todo This should come from material for elastoplastic computations
     static Vector sigma(3);
     sigma[0]=E*A*epsilon[0];

@@ -85,7 +85,7 @@ void ArcLengthUNP::predict() {
   // Now DLambda can be found
   /// @todo rewrite eigenSign
   int sign = pA->get_soe()->get_eigen_sign();
-  //if (sign == 0) exit(-11111);
+  // if (sign == 0) exit(-11111);
   DLambda*=sign;
   lambdaTrial+=DLambda;
 

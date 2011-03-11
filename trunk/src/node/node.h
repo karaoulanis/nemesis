@@ -26,18 +26,12 @@
 #ifndef SRC_NODE_NODE_H_
 #define SRC_NODE_NODE_H_
 
-#include <sstream>
-
-#include "containers/containers.h"
-#include "domain/domain.h"
-#include "domain/domain_object.h"
-#include "elements/element.h"
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
-#include "tracker/tracker.h"
+#include "containers/containers.h"
+#include "domain/domain_object.h"
 
-class Domain;
-class Element;
+class Tracker;
 const int MAX_NUMBER_OF_DOFS = 16;
 
 /**
@@ -63,10 +57,12 @@ class Node: public DomainObject {
 
   Tracker* myTracker;
 
-  int avgStress; /// @todo: remove this when full nodal recovering is implemented
+  int avgStress;  /// @todo: implement full nodal recovering is implemented
   Vector stress;
   Vector strain;
   bool isLoadApplied;
+
+  int active_;
 
  public:
   // Constructors and destructor
@@ -79,10 +75,10 @@ class Node: public DomainObject {
   double get_x2();
   double get_x3();
 
-  // Connected elements
-  int addEleToNode(Element *pElement);
-  const IDContainer& get_connected_elements() const;
-  bool isActive();
+  // Set/check whether node is active.
+  // If all connected elements are not active then node is also not active.
+  void SetActive(bool active);
+  bool IsActive();
 
   // Activated Dofs
   int addDofToNode(int dof);

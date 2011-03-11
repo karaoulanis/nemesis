@@ -42,16 +42,15 @@ class EigenControl :public Control {
   void formResidual(double /*factor*/) {}
   void formTangent();
 
-  // Form tangent and residual element by element 
+  // Form tangent and residual element by element
   void formElementalTangent(ModelElement* pModelElement);
   void formElementalMassMatrix(ModelElement* pModelElement);
   void formElementalResidual(ModelElement* pModelElement, double time = 0.);
-  
+
   // Form residual node by node
   void formNodalResidual(ModelNode* pModelNode);
 
   // Methods that are used through analysis
   void rollback();
 };
-
 #endif  // SRC_CONTROL_EIGEN_CONTROL_H_

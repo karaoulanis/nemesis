@@ -47,8 +47,8 @@ const char* Tracker::data() {
   // start saving
   s << "[";
   // save data
-  for (int i=0;i<records_.size();i++) {
-    if(i>0) s <<",";
+  for (int i = 0; i < records_.size(); i++) {
+    if (i > 0) s <<",";
     s << records_[i];
   }
   // finalize
@@ -57,6 +57,6 @@ const char* Tracker::data() {
   // needs to be converted to a static string before
   /// @todo: check for refactoring
   static string tmp;
-  tmp=s.str();
+  tmp = s.str();
   return tmp.c_str();
 }

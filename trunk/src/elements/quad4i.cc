@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/quad4i.h"
+#include "loadcase/group_data.h"
 #include "elements/shape_functions.h"
 #include "main/nemesis_debug.h"
 
@@ -58,9 +59,8 @@ const Matrix& Quad4i::get_K() {
   this->get_Kaa(Kaa);
   // Form K
   K = Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
-  // Get group factors
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  // Get group factor
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   // Return K
   return K;
@@ -74,10 +74,10 @@ const Matrix& Quad4i::get_M() {
   double volume = 0.;
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++)
-    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w()); 
+    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w());
   double mass = rho*volume;
   // Set corresponding mass to diagonal terms
-  for (int i = 0;i < 8;i++) 
+  for (int i = 0;i < 8;i++)
     M(i, i)=0.25*mass;
   // Return M
   return M;
@@ -92,12 +92,15 @@ const Vector& Quad4i::get_R() {
   // Static vectors and matrices
   static Vector sigma(6);
   static Matrix Ba(3, 2);
+
+  // Quick return if element not active
+  if (!(groupdata_->active_))  return R;
+
   // Factors
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
-  
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
+
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
 
@@ -125,7 +128,7 @@ const Vector& Quad4i::get_R() {
  */
 void Quad4i::update() {
   // Check for a quick return
-  if (!(myGroup->isActive()))  return;
+  if (!(groupdata_->active_))  return;
   // Static vectors and matrices
   static Vector Du(8), Da(4), epsilon(6);
   static Matrix Ba(3, 2);
@@ -163,7 +166,7 @@ void Quad4i::update() {
  * be commited. This takes place in element level.
  */
 void Quad4i::commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++) 
+  for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->get_material()->commit();
   aConvg = aTrial;
 }

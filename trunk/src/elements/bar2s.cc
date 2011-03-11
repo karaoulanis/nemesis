@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/bar2s.h"
+#include "loadcase/group_data.h"
 
 /**
  * Default constructor.
@@ -61,8 +62,7 @@ const Matrix& Bar2s::get_K() {
       K(i+nDim, j+nDim) =  d;
     }
   /// @todo Add nodal transformations
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -86,8 +86,7 @@ const Vector& Bar2s::get_Rgrad() {
       K(i+nDim, j+nDim) = d;
     }
   /// @todo Add nodal transformations
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   *myVector = K*(this->get_disp_convg());
   return *myVector;
@@ -95,11 +94,15 @@ const Vector& Bar2s::get_Rgrad() {
 const Vector& Bar2s::get_R() {
   Vector& R=*myVector;
   R.clear();
+
+  // Quick return if element not active
+  if (!(groupdata_->active_))  return R;
+
   // Factors
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
+
   // R = Fint - Fext
   double F0 = A0*(myUniMaterial->get_stress());
   for (int i = 0; i < nDim; i++) {

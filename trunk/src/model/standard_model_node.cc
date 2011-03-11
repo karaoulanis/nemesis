@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "model/standard_model_node.h"
+#include "node/node.h"
 
 /**
  * Default constructor.

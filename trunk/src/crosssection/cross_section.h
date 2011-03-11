@@ -45,7 +45,7 @@ class CrossSection: public DomainObject {
   double h3;
   public:
   CrossSection() {}
-  CrossSection(int ID)
+  explicit CrossSection(int ID)
     :DomainObject(ID)  {}
     ~CrossSection() {}
   double get_A()   {return A;}

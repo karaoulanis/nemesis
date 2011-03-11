@@ -29,7 +29,7 @@
 class InitialCondition {
  public:
   InitialCondition();
-  virtual int Apply()=0;
+  virtual void Apply()=0;
 };
 
 #endif  // SRC_LOADCASE_INITIAL_CONDITION_H_

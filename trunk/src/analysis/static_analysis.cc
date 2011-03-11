@@ -66,25 +66,25 @@ int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   if (pA->get_imposer() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
   if (!this->checkIfAllows(pA->get_imposer()))
-    throw SException("[nemesis:%d] %s", 9999, "The imposer type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Imposer type is incorrect.");
   // Check the control
   if (pA->get_control() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No control has been set.");
   if (!this->checkIfAllows(pA->get_control()))
-    throw SException("[nemesis:%d] %s", 9999, "The control type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Control type is incorrect.");
   // Check the algorithm
   if (pA->get_algorithm() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No algorithm has been set.");
   if (!this->checkIfAllows(pA->get_algorithm()))
-    throw SException("[nemesis:%d] %s", 9999, "The algorithm type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Algorithm type is incorrect.");
   // Check the SOE
   if (pA->get_soe() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No soe has been set.");
   if (!this->checkIfAllows(pA->get_soe()))
-    throw SException("[nemesis:%d] %s", 9999, "The soe type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Soe type is incorrect.");
   // Check the Reorderer
   if ((pA->get_reorderer() != 0) && (!this->checkIfAllows(pA->get_reorderer())))
-    throw SException("[nemesis:%d] %s", 9999, "The reorderer type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Reorderer type is incorrect.");
 
   // Create model by applying the constraints
   pA->get_imposer()->impose();
@@ -122,6 +122,6 @@ int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   // Finalize
   loadcase->Commit();
   pA->get_model()->set_nodal_stress();
-  pA->get_domain()->commit(); /// @todo For commiting time; find more elegant way.
+  pA->get_domain()->commit();  /// @todo Commiting time; find more elegant way.
   return ret;
 }

@@ -29,28 +29,19 @@
 #include "loadcase/initial_condition.h"
 #include <map>
 
-class Element;
+class Group;
 
 class InitialStresses: public InitialCondition {
  public:
   InitialStresses();
-  InitialStresses(const std::map<int, Element*>* elements,
-                  int group_id, int dir,
+  InitialStresses(Group* group, int direction,
                   double h1, double s1, double h2, double s2, double K0);
   ~InitialStresses();
-  inline int get_group_id()   {return group_id_;}
-  inline int get_dir()        {return dir_;}
-  inline double get_H1()      {return h1_;}
-  inline double get_S1()      {return s1_;}
-  inline double get_H2()      {return h2_;}
-  inline double get_S2()      {return s2_;}
-  inline double get_K0()      {return K0_;}
-  int Apply();
+  void Apply();
 
  private:
-  const std::map<int, Element*>* elements_;
-  int group_id_;
-  int dir_;
+  Group* group_;
+  int direction_;
   double h1_;
   double s1_;
   double h2_;

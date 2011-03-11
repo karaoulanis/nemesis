@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/bar2t.h"
+#include "loadcase/group_data.h"
 
 /**
  * Default constructor.
@@ -32,8 +33,8 @@ Bar2t::Bar2t()   {
 }
 /**
  * Constructor.
- * Creates a Bar2t Element. At this point only the id's of the nodes and the 
- * Material are stored. Only when this element is added to the Domain, the 
+ * Creates a Bar2t Element. At this point only the id's of the nodes and the
+ * Material are stored. Only when this element is added to the Domain, the
  * pointers concerning the Nodes and the Material are initiated.
  */
 Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
@@ -82,8 +83,7 @@ const Matrix& Bar2t::get_K() {
   }
 
   /// @todo Add nodal transformations
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -92,10 +92,10 @@ const Vector& Bar2t::get_R() {
   R.clear();
 
   // Factors
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+  if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
 
   // Directional cosines, L^2 and strain (in the current configuration)
   static Vector du(2*nDim);

@@ -32,7 +32,7 @@ Bar::Bar()   {
 }
 /**
  * Constructor.
- * Creates a Bar Element. 
+ * Creates a Bar Element.
  */
 Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
 :Element(ID, matID) {

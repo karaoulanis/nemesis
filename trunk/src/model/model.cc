@@ -92,7 +92,7 @@ const ModelElementContainer& Model::get_model_elements() const {
  */
 int Model::get_soe_dof(int NodeID, int localDof) {
   /// @todo I do not like this function.
-  ///@bug When dof is fixed using eleimination (minus) it returnes negative.
+  /// @bug When dof is fixed using eleimination (minus) it returnes negative.
   int n = theModelNodes.size();
   Node* pNode = 0;
   ModelNode* pModelNode = 0;

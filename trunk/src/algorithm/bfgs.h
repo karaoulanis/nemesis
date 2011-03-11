@@ -26,6 +26,7 @@
 #ifndef SRC_ALGORITHM_BFGS_H_
 #define SRC_ALGORITHM_BFGS_H_
 
+#include <vector>
 #include "algorithm/algorithm.h"
 
 class BFGS :public Algorithm {
@@ -35,14 +36,13 @@ class BFGS :public Algorithm {
   double etaMax;
   double rTol;
   int maxIter;
-    bool isLineSearchActive;
+  bool isLineSearchActive;
   std::vector<Vector> s;
   std::vector<Vector> y;
  public:
-  BFGS(int m_ = 10);
+  explicit BFGS(int m_ = 10);
   BFGS(int m_, double etaMin_, double etaMax_, double rTol_, int maxIter_);
   ~BFGS();
-
   int solveStep(int n);
   void lineSearch(double s0, double s1, const Vector& du);
 };

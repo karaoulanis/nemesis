@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "material/hoek_brown.h"
+#include <sstream>
 #include "main/nemesis_debug.h"
 
 Matrix HoekBrown::C(6, 6, 0.);

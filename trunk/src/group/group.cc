@@ -24,30 +24,17 @@
 // *****************************************************************************
 
 #include "group/group.h"
+#include "loadcase/group_state.h"
 
 Group::Group() {
 }
-Group::Group(int ID)
-:DomainObject(ID)
-{ 
-  active = true;
-  facK = 1.;
-  facS = 1.;
-  facG = 1.;
-  facP = 1.;
+
+Group::Group(int id)
+:DomainObject(id) { 
 }
+
 Group::~Group() {
 }
-void Group::set_default() {
-  facK = 1.;
-  facS = 1.;
-  facG = 1.;
-  facP = 1.;
-}
-void Group::set_state(GroupState* g) {
-  active = g->get_active();
-  facK = g->get_fac_K();
-  facS = g->get_fac_S();
-  facG = g->get_fac_G();
-  facP = g->get_fac_P();
+void Group::AddElement(Element* element) {
+  elements_.push_back(element);
 }

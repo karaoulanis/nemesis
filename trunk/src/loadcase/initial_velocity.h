@@ -34,7 +34,7 @@ class InitialVelocity: public InitialCondition {
  public:
   InitialVelocity();
   InitialVelocity(Node* node, int dof, double velocity);
-  int Apply();
+  void Apply();
  private:
   int dof_;
   Node* node_;

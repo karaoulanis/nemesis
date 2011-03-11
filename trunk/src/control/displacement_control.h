@@ -50,15 +50,16 @@
  */
 class DisplacementControl :public StaticControl {
   private:
-  double DeltaU;        ///< Current Delta u for this step
-  double Du_k;        ///< Accumulative Delta u at k
-  double duT_k;       ///< Tangent delta u at k
-  int theNodeID;        ///< The Node that determines the Du
-  int theDofID;       ///< The local Dof that determines the Du
-  int theRefDof;        ///< From Node and Dof comes the global dof
+  double DeltaU;        /// < Current Delta u for this step
+  double Du_k;          /// < Accumulative Delta u at k
+  double duT_k;         /// < Tangent delta u at k
+  int theNodeID;        /// < The Node that determines the Du
+  int theDofID;         /// < The local Dof that determines the Du
+  int theRefDof;        /// < From Node and Dof comes the global dof
   public:
   DisplacementControl(int nodeID, int dofID,
-    double Du0, double minDu, double maxDu, int IterDesired, double n, double DeltaTime);
+    double Du0, double minDu, double maxDu, int IterDesired,
+    double n, double DeltaTime);
   ~DisplacementControl();
 
   // Methods for incremental/iterative algorithms

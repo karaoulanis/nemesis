@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "material/drucker_prager_new.h"
+#include <sstream>
 #include "material/drucker_prager_ys.h"
 #include "material/tension_cutoff_ys.h"
 

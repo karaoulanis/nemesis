@@ -24,6 +24,8 @@
 // *****************************************************************************
 
 #include "model/lagrange_model_node.h"
+#include "node/node.h"
+#include "constraints/constraint.h"
 
 /**
  * Default constructor.

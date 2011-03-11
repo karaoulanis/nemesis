@@ -24,23 +24,25 @@
 // *****************************************************************************
 
 #include "loadcase/group_state.h"
+#include "group/group.h"
+#include "elements/element.h"
 
-int GroupState::nGroupStates = 0;
+GroupState::GroupState() {
+}
 
-GroupState::GroupState()
-  :DomainObject() {
+GroupState::GroupState(Group* group, int active,
+                       double factor_K, double factor_S, double factor_G,
+                       double factor_P) {
+  group_    = group;
+  groupdata_.active_   == 0 ? active = false : active = true;
+  groupdata_.factor_K_ = factor_K;
+  groupdata_.factor_S_ = factor_S;
+  groupdata_.factor_G_ = factor_G;
+  groupdata_.factor_P_ = factor_P;
 }
-GroupState::GroupState(int groupID, int active_,
-        double facK_, double facS_, double facG_, double facP_)
-  :DomainObject(++nGroupStates) {
-  myGroup = pD->get < Group>(pD->get_groups(), groupID);  
-  active_ == 0 ? active = false : active = true;
-  facK = facK_;
-  facS = facS_;
-  facG = facG_;
-  facP = facP_;
-}
-int GroupState::apply() {
-  myGroup->set_state(this);
-  return 0;
+
+void GroupState::Apply() {
+  for (int i = 0; i < group_->get_elements().size(); i++) {
+    group_->get_elements()[i]->SetGroupData(&groupdata_);
+  }
 }

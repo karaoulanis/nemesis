@@ -35,7 +35,7 @@ class Quad4DispPlain: public Quad4 {
   Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID,
          int integrationRuleXi, int integrationRuleEta);
   ~Quad4DispPlain();
-  
+
   const Matrix& get_K();
     const Matrix& get_M();
   const Vector& get_R();

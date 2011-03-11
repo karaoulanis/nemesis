@@ -59,30 +59,30 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   if (pA->get_imposer() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
   if (!this->checkIfAllows(pA->get_imposer()))
-    throw SException("[nemesis:%d] %s", 9999, "The imposer type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Imposer type is incorrect.");
   // Check the control
   if (pA->get_control() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No control has been set.");
   if (!this->checkIfAllows(pA->get_control()))
-    throw SException("[nemesis:%d] %s", 9999, "The control type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Control type is incorrect.");
   // Check the algorithm
   if (pA->get_algorithm() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No algorithm has been set.");
   if (!this->checkIfAllows(pA->get_algorithm()))
-    throw SException("[nemesis:%d] %s", 9999, "The algorithm type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Algorithm type is incorrect.");
   // Check the SOE
   if (pA->get_soe() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No soe has been set.");
   if (!this->checkIfAllows(pA->get_soe()))
-    throw SException("[nemesis:%d] %s", 9999, "The soe type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Soe type is incorrect.");
   // Check the Norm
   if (pA->get_convergence_norm() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No norm has been set.");
   if (!this->checkIfAllows(pA->get_convergence_norm()))
-    throw SException("[nemesis:%d] %s", 9999, "The norm type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Norm type is incorrect.");
   // Check the Reorderer
   if ((pA->get_reorderer() != 0) && (!this->checkIfAllows(pA->get_reorderer())))
-    throw SException("[nemesis:%d] %s", 9999, "The reorderer type is incorrect.");
+    throw SException("[nemesis:%d] %s", 9999, "Reorderer type is incorrect.");
 
   // Create model by applying the constraints
   pA->get_imposer()->impose();
@@ -97,9 +97,9 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   loadcase->Initialize();
   pA->get_control()->init();
   pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
-  /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //pA->get_domain()->keepTrack(pA->get_control()->get_ambda(),
-  //  pA->get_control()->get_time());
+  /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // pA->get_domain()->keepTrack(pA->get_control()->get_ambda(),
+  // pA->get_control()->get_time());
 
   for (int i = 0; i < num_loadsteps; i++) {
     // Call algorithm to solve step
@@ -116,10 +116,10 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
     }
     // Algorithm succeeded
     pA->get_control()->commit();
-  /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //pA->get_domain()->keepTrack(pA->get_control()->get_lambda(),
-  //  pA->get_control()->get_time());
+    /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // pA->get_domain()->keepTrack(pA->get_control()->get_lambda(),
+    // pA->get_control()->get_time());
   }
- loadcase->Commit();
+  loadcase->Commit();
   return 0;
 }

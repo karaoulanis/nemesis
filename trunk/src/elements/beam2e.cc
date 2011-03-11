@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/beam2e.h"
+#include "loadcase/group_data.h"
 
 Beam2e::Beam2e() {
 }
@@ -78,7 +79,7 @@ const Matrix& Beam2e::get_K() {
   double K5 = C3*c;
   double K6 = 4*E*J/L;
   double K7 = 2*E*J/L;
-  
+
   K(0, 0)= K1;  K(0, 1)= K2;   K(0, 2)= K4;   K(0, 3)=-K1;   K(0, 4)=-K2;   K(0, 5)= K4;
   K(1, 0)= K2;  K(1, 1)= K3;   K(1, 2)= K5;   K(1, 3)=-K2;   K(1, 4)=-K3;   K(1, 5)= K5;
   K(2, 0)= K4;  K(2, 1)= K5;   K(2, 2)= K6;   K(2, 3)=-K4;   K(2, 4)=-K5;   K(2, 5)= K7;
@@ -86,8 +87,8 @@ const Matrix& Beam2e::get_K() {
   K(4, 0)=-K2;  K(4, 1)=-K3;   K(4, 2)=-K5;   K(4, 3)= K2;   K(4, 4)= K3;   K(4, 5)=-K5;
   K(5, 0)= K4;  K(5, 1)= K5;   K(5, 2)= K7;   K(5, 3)=-K4;   K(5, 4)=-K5;   K(5, 5)= K6;
 
-  if (myGroup->isActive()) K*=myGroup->get_fac_K();
-  else          K*=1e-7;
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  K*=facK;
   return K;
 }
 const Matrix& Beam2e::get_M() {
@@ -121,7 +122,7 @@ const Vector& Beam2e::get_Rgrad() {
   double K5 = C3*c;
   double K6 = 4*E*J/L;
   double K7 = 2*E*J/L;
-  
+
   K(0, 0)= K1;  K(0, 1)= K2;   K(0, 2)= K4;   K(0, 3)=-K1;   K(0, 4)=-K2;   K(0, 5)= K4;
   K(1, 0)= K2;  K(1, 1)= K3;   K(1, 2)= K5;   K(1, 3)=-K2;   K(1, 4)=-K3;   K(1, 5)= K5;
   K(2, 0)= K4;  K(2, 1)= K5;   K(2, 2)= K6;   K(2, 3)=-K4;   K(2, 4)=-K5;   K(2, 5)= K7;
@@ -129,17 +130,18 @@ const Vector& Beam2e::get_Rgrad() {
   K(4, 0)=-K2;  K(4, 1)=-K3;   K(4, 2)=-K5;   K(4, 3)= K2;   K(4, 4)= K3;   K(4, 5)=-K5;
   K(5, 0)= K4;  K(5, 1)= K5;   K(5, 2)= K7;   K(5, 3)=-K4;   K(5, 4)=-K5;   K(5, 5)= K6;
 
-  if (myGroup->isActive()) K*=myGroup->get_fac_K();
-  else            K*=1e-7;
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  K*=facK;
   return *myVector;
 }
 const Vector& Beam2e::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+  // Factors
+  if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
 
   double c = cosX[0];
   double s = cosX[1];

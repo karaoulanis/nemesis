@@ -1199,11 +1199,25 @@ static PyObject* pyGroup_Define(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
-static PyObject* pyGroup_Set(PyObject* /*self*/, PyObject* args) {
-  int groupID, elemID;
-  if (!PyArg_ParseTuple(args, "ii", &groupID, &elemID)) return NULL;
+
+static PyObject* pyGroup_State(PyObject* /*self*/, PyObject* args) {
+  if (currentLC <= 0) {
+    PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
+    return NULL;
+  }
+  int id;
+  int active;
+  double facK = 1.;
+  double facS = 1.;
+  double facG = 1.;
+  double facP = 1.;
+  if (!PyArg_ParseTuple(args, "ii|ddddd", &id, &active,
+                        &facK, &facS, &facG, &facP))
+    return NULL;
   try {
-    pD->get < Element>(pD->get_elements(), elemID)->set_group(groupID);
+    Group* group = new Group(id);
+    GroupState* gs = new GroupState(group, active, facK, facS, facG, facP);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddGroupState(gs);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1211,29 +1225,9 @@ static PyObject* pyGroup_Set(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
-static PyObject* pyGroup_State(PyObject* /*self*/, PyObject* args) {
-  if (currentLC <= 0) {
-    PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
-    return NULL;
-  }
-  int groupID;
-  int active;
-  double facK = 1.;
-  double facS = 1.;
-  double facG = 1.;
-  double facP = 1.;
-  if (!PyArg_ParseTuple(args, "ii|ddddd", &groupID, &active, &facK, &facS, &facG, &facP))
-    return NULL;
-  GroupState* pGroupState = new GroupState(groupID, active, facK, facS, facG, facP);
-  pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddGroupState(pGroupState);
-  Py_INCREF(Py_None);
-  return Py_None;
-}
 static PyMethodDef GroupMethods[] =  {
   {"define",  pyGroup_Define,
     METH_VARARGS, "Define and set current group."},
-  {"set",   pyGroup_Set,
-    METH_VARARGS, "Assigns a group to an element."},
   {"state", pyGroup_State,
     METH_VARARGS, "Define group state for current laodcase."},
   {NULL, NULL, 0, NULL}
@@ -1433,16 +1427,14 @@ static PyObject* pyInitialConditions_Stresses(PyObject* /*self*/,
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
     return NULL;
   }
-  int group_id, dir;
+  int id, dir;
   double h1, s1, h2, s2, K0;
-  if (!PyArg_ParseTuple(args, "iiddddd", &group_id, &dir, &h1, &s1, &h2, &s2, &K0))
+  if (!PyArg_ParseTuple(args, "iiddddd", &id, &dir, &h1, &s1, &h2, &s2, &K0))
     return NULL;
   try {
-    const std::map<int, Element*>* elements = &(pD->get_elements());
-    InitialStresses* initial =
-      new InitialStresses(elements, group_id, dir, h1, s1, h2, s2, K0);
-    pD->get<LoadCase>(pD->get_loadcases(),
-      currentLC)->AddInitialCondition(initial);
+    Group* group = pD->get<Group>(pD->get_groups(), id);
+    InitialStresses* is = new InitialStresses(group, dir, h1, s1, h2, s2, K0);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddInitialCondition(is);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1529,7 +1521,7 @@ static PyObject* pyAnalysis_Run(PyObject* /*self*/, PyObject* args) {
   int id, steps, ret;
   if (!PyArg_ParseTuple(args, "ii", &id, &steps)) return NULL;
   try {
-    LoadCase* loadcase = pD->get<LoadCase>(pD->get_loadcases(),id);
+    LoadCase* loadcase = pD->get<LoadCase>(pD->get_loadcases(), id);
     ret = pA->analyze(loadcase, steps);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());

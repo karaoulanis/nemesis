@@ -46,7 +46,7 @@ class Reorderer;
 class SOE;
 
 class Analysis {
-  private:
+ private:
   Model M;
   Domain* theDomain;
   AnalysisType* theAnalysisType;
@@ -56,8 +56,9 @@ class Analysis {
   Imposer* theImposer;
   ConvergenceNorm* theNorm;
   Reorderer* theReorderer;
-  public:
-  Analysis(Domain* pDomain);
+
+ public:
+  explicit Analysis(Domain* pDomain);
   ~Analysis();
 
   inline Model* get_model()                      {return &M;}

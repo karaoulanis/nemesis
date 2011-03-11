@@ -25,6 +25,7 @@
 
 #include "elements/quad4d.h"
 #include "elements/shape_functions.h"
+#include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
 
 double Quad4d::detJ[4];
@@ -60,8 +61,7 @@ const Matrix& Quad4d::get_K() {
       }
     }
   }
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -70,10 +70,10 @@ const Matrix& Quad4d::get_M() {
   M.clear();
   double rho = myMaterial->get_rho();
   double volume = 0.;
-  
+
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++)
-    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w()); 
+    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w());
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
   return M;
@@ -84,12 +84,15 @@ const Vector& Quad4d::get_R() {
   static Matrix Ba;
 
   R.clear();
-  if (!(myGroup->isActive()))  return R;
-  /// @todo check facS, facG
-  //double facS = myGroup->get_fac_S();
-  //double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
-  
+
+  // Quick return if element not active
+  if (!(groupdata_->active_))  return R;
+
+  // Factors
+  // double facS = groupdata_->factor_S_;
+  // double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
+
   this->shapeFunctions();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
@@ -107,7 +110,7 @@ void Quad4d::update() {
   static Vector epsilon(6);
   static Matrix Ba;
 
-  if (!(myGroup->isActive()))  return;
+  if (!(groupdata_->active_))  return;
   u = this->get_disp_incrm();
 
   this->shapeFunctions();
@@ -153,7 +156,7 @@ void Quad4d::get_B(Matrix& B, int node, int gPoint) {
   }
   Bb1/=vol;
   Bb2/=vol;
-  
+
     double B0 = 0., Bb0 = 0.;
   // Axisymmetry
   double r = 0.;

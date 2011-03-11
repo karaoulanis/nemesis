@@ -38,7 +38,7 @@ class ModelObject {
   public:
   // Constructors
   ModelObject();
-  ModelObject(const IDContainer& FTable);
+  explicit ModelObject(const IDContainer& FTable);
   virtual ~ModelObject();
 
   // Access to data members

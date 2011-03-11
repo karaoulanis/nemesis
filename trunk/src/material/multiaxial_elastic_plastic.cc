@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "material/multiaxial_elastic_plastic.h"
+#include <sstream>
 #include "main/nemesis_debug.h"
 
 Matrix MultiaxialElastoPlastic::C(6, 6, 0.);

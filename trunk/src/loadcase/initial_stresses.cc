@@ -24,32 +24,34 @@
 // *****************************************************************************
 
 #include "loadcase/initial_stresses.h"
+#include "group/group.h"
 #include "elements/element.h"
 
 InitialStresses::InitialStresses() {
 }
-InitialStresses::InitialStresses(const std::map<int, Element*>* elements,
-                                 int group_id, int dir,
+InitialStresses::InitialStresses(Group* group, int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0)
                                  :InitialCondition() {
-  elements_ = elements;
-  dir_ = dir;
-  group_id_ = group_id;
+  group_ = group;
+  direction_ = direction;
   h1_ = h1;
   s1_ = s1;
   h2_ = h2;
   s2_ = s2;
   K0_ = K0;
   // Check direction
-  ///@todo Give SException the right id and not 9999.
-  if (dir < 1 || dir>3)
+  /// @todo Give SException the right id and not 9999.
+  if (direction_ < 1 || direction_ > 3) {
     throw SException("[nemesis:%d] Direction should be 1, 2 or 3.", 9999);
+  }
 }
 InitialStresses::~InitialStresses() {
 }
-int InitialStresses::Apply() {
-  for (ElementIterator ei = elements_->begin(); ei != elements_->end(); ei++)
-    ei->second->addInitialStresses(this);
-  return 0;
+
+void InitialStresses::Apply() {
+  for (unsigned i = 0; i < group_->get_elements().size(); i++) {
+    group_->get_elements()[i]->AddInitialStresses(direction_,
+                                                  h1_, s1_, h2_, s2_, K0_);
+  }
 }

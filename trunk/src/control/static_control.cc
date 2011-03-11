@@ -45,7 +45,7 @@ StaticControl::StaticControl(double D0, double minD, double maxD,
 Io(IterDesired), Id(IterDesired), nExp(n) {
   DLambda = D0;
   if (minDelta>maxDelta)
-    throw SException("[nemesis:%d] %s", 9999, "'max' cannot be less than 'min'.");
+    throw SException("[nemesis:%d] %s", 9999, "'max' is less than 'min'.");
   if (IterDesired <= 0)
     throw SException("[nemesis:%d] %s", 9999, "'Id' should be greater than 0.");
   Dt = DeltaTime;

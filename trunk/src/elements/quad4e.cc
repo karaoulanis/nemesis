@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/quad4e.h"
+#include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
 
 Matrix Quad4e::Bu(3, 8);
@@ -42,8 +43,7 @@ Quad4e::~Quad4e() {
 const Matrix& Quad4e::get_K() {
   this->formKR();
   Matrix &K=*myMatrix;
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -55,14 +55,14 @@ const Matrix& Quad4e::get_M() {
 const Vector& Quad4e::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(myGroup->isActive()))  return R;
-  
+  if (!(groupdata_->active_))  return R;
+
+  // Factors
+  // double facS = groupdata_->factor_S_;
+  // double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
+
   this->formKR();
-  /// @todo: chech
-  //double facS = myGroup->get_fac_S();
-  //double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
-  //R-=facG*b;
   R-=facP*P;
   return R;
 }
@@ -82,7 +82,7 @@ void Quad4e::formKR() {
   static Vector Fu(8);
   static Vector Dalpha(4);
   static Vector dalpha(4);
-  
+
   Du = this->get_disp_incrm();
 
   // Local Newton scheme to enforce orthogonality
@@ -100,12 +100,12 @@ void Quad4e::formKR() {
       double detJ = this->get_J(xi, eta);
       double dV = myMatPoints[i]->get_w()*detJ;
       const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
-      C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);   
-      C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);   
-      C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);   
+      C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);
+      C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);
+      C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);
       this->formBe(xi, eta);
       this->formBu(xi, eta);
-      
+
       Depsilon3 = Bu*Du+Be*Dalpha;
       Depsilon.clear();
       Depsilon[0]=Depsilon3[0];
@@ -124,16 +124,16 @@ void Quad4e::formKR() {
     Kee.solve(dalpha, Fe);
     Dalpha+=dalpha;
     if (counter>30)
-    { 
+    {
       for (unsigned i = 0; i < myMatPoints.size(); i++) {
         double xi =myMatPoints[i]->get_r();
         double eta = myMatPoints[i]->get_s();
         double detJ = this->get_J(xi, eta);
         double dV = myMatPoints[i]->get_w()*detJ;
         const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
-        C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);   
-        C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);   
-        C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);   
+        C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);
+        C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);
+        C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);
         this->formBe(xi, eta);
         report(detJ, "detJ", 20, 12);
         report(dV,  "dV  ", 20, 12);
@@ -160,9 +160,9 @@ void Quad4e::formKR() {
     double detJ = this->get_J(xi, eta);
     double dV = myMatPoints[i]->get_w()*detJ;
     const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
-    C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);   
-    C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);   
-    C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);   
+    C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);
+    C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);
+    C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);
     Kuu+=Transpose(Bu)*C*Bu*dV;
     Kue+=Transpose(Bu)*C*Be*dV;
   }
@@ -216,7 +216,7 @@ void Quad4e::formT0(double xi, double eta) {
   //T0.report("T0");
 }
 void Quad4e::formNu(double xi, double eta)
-{ 
+{
   N.clear();
   N(0, 0)=0.25*(1-xi)*(1-eta);           // N1
   N(0, 2)=0.25*(1+xi)*(1-eta);           // N2
@@ -251,8 +251,8 @@ void Quad4e::formBu(double xi, double eta) {
     double d3deta=+0.25*(1+eta)*dxidy +0.25*(1+xi)*detady;  // N3, 2
   double d4deta=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady;  // N4, 2
 
-  Bu(0, 0)=d1dxi;  Bu(0, 1)=0.;   Bu(0, 2)=d2dxi;  Bu(0, 3)=0.;   Bu(0, 4)=d3dxi;  Bu(0, 5)=0.;   Bu(0, 6)=d4dxi;  Bu(0, 7)=0.;     
-  Bu(1, 0)=0.;   Bu(1, 1)=d1deta; Bu(1, 2)=0.;   Bu(1, 3)=d2deta; Bu(1, 4)=0.;   Bu(1, 5)=d3deta; Bu(1, 6)=0.;   Bu(1, 7)=d4deta;   
+  Bu(0, 0)=d1dxi;  Bu(0, 1)=0.;   Bu(0, 2)=d2dxi;  Bu(0, 3)=0.;   Bu(0, 4)=d3dxi;  Bu(0, 5)=0.;   Bu(0, 6)=d4dxi;  Bu(0, 7)=0.;
+  Bu(1, 0)=0.;   Bu(1, 1)=d1deta; Bu(1, 2)=0.;   Bu(1, 3)=d2deta; Bu(1, 4)=0.;   Bu(1, 5)=d3deta; Bu(1, 6)=0.;   Bu(1, 7)=d4deta;
   Bu(2, 0)=d1deta; Bu(2, 1)=d1dxi;  Bu(2, 2)=d2deta; Bu(2, 3)=d2dxi;  Bu(2, 4)=d3deta; Bu(2, 5)=d3dxi;  Bu(2, 6)=d4deta; Bu(2, 7)=d4dxi;
 }
 //void Quad4e::formBe(double xi, double eta)

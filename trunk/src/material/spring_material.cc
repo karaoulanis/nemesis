@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "material/spring_material.h"
+#include <sstream>
 
 SpringMaterial::SpringMaterial() {
 }

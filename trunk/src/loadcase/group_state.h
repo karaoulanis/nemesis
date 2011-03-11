@@ -26,31 +26,19 @@
 #ifndef SRC_LOADCASE_GROUP_STATE_H_
 #define SRC_LOADCASE_GROUP_STATE_H_
 
-#include "domain/domain.h"
-#include "domain/domain_object.h"
-#include "group/group.h"
+#include "loadcase/group_data.h"
 
 class Group;
+struct GroupData;
 
-class GroupState: public DomainObject {
-  private:
-  static int nGroupStates;
-  Group* myGroup;
-  bool active;
-  double facK;
-  double facS;
-  double facG;
-  double facP;
-  public:
+class GroupState {
+public:
   GroupState();
-  GroupState(int groupID, int active_,
-    double facK_, double facS_, double facG_, double facP_);
-  int apply();
-  inline bool get_active()       {return active;}
-  inline double get_fac_K()       {return facK;}
-  inline double get_fac_S()       {return facS;}
-  inline double get_fac_G()       {return facG;}
-  inline double get_fac_P()       {return facP;}
+  GroupState(Group* group, int active,
+    double factor_K, double factor_S, double factor_G, double factor_P);
+  void Apply();
+private:
+  Group* group_;
+  GroupData groupdata_;
 };
-
 #endif  // SRC_LOADCASE_GROUP_STATE_H_

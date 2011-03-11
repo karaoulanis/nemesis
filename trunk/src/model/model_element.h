@@ -28,6 +28,7 @@
 
 #include "model/model_object.h"
 
+class Constraint;
 class ModelElement : public ModelObject {
   private:
 

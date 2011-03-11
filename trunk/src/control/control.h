@@ -42,17 +42,18 @@ class Control: public AnalysisObject {
   Control();
   virtual ~Control();
 
-  virtual void formTangent();    
+  virtual void formTangent();
   virtual void formResidual(double factor)=0;
 
   // Functions to build Element by Element or Node by Node it's contribution
   virtual void formElementalTangent(ModelElement* pModelElement)=0;
-  virtual void formElementalResidual(ModelElement* pModelElement, double time = 0.)=0;
+  virtual void formElementalResidual(ModelElement* pModelElement,
+                                     double time = 0.)=0;
   virtual void formNodalResidual(ModelNode* pModelNode)=0;
 
   virtual double get_lambda();
-  virtual double get_time() {return 0;} /// @todo: implement this better
-  
+  virtual double get_time() {return 0;}  /// @todo: implement this better
+
   virtual void init()=0;
   virtual void predict()=0;
   virtual void correct()=0;

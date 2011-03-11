@@ -49,7 +49,8 @@ class Triangle3: public Element {
   void update();
   void commit();
 
-  void addInitialStresses(InitialStresses* pInitialStresses);
+  void AddInitialStresses(int direction, double h1, double s1,
+                          double h2, double s2, double K0);
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
   int get_num_plastic_points();

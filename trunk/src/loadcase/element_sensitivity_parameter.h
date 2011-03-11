@@ -26,7 +26,9 @@
 #ifndef SRC_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_
 #define SRC_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_
 
-#include "elements/element.h"
+#include "domain/domain_object.h"
+
+class Element;
 
 class ElementSensitivityParameter: public DomainObject {
   private:

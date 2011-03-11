@@ -74,7 +74,7 @@ ArcLengthSpherical::~ArcLengthSpherical() {
 void ArcLengthSpherical::predict() {
   // Find DeltaL increment
   /// @todo Auto-incrementation involves abs() and this might be a problem...
-  DeltaL*=pow(((double)Id/(double)Io), nExp);
+  DeltaL*=pow(static_cast<double>(Id)/static_cast<double>(Io), nExp);
   if (DeltaL < minDelta) DeltaL = minDelta;
   else if (DeltaL>maxDelta) DeltaL = maxDelta;
 
