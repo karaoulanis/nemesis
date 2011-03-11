@@ -30,19 +30,20 @@
 
 /**
  * The LoadControl Class.
- * LoadControl is a static control that increases \f$\lambda_n\f$ according 
- * to the relation \f$\lambda_n=\lambda_o+\Delta\lambda\f$, where 'o' stands 
- * for old (previous) step and 'n' stands for new (current step). 
+ * LoadControl is a static control that increases \f$\lambda_n\f$ according
+ * to the relation \f$\lambda_n=\lambda_o+\Delta\lambda\f$, where 'o' stands
+ * for old (previous) step and 'n' stands for new (current step).
  * \f$\Delta\lambda\f$ may vary between different steps (auto-incrementation)
- * but is constant within each step, i.e. \f$\delta\lambda\f$=0. 
- * \f$\lambda_n\f$ is in fact a trial \f$\lambda_n\f$, and becomes 
+ * but is constant within each step, i.e. \f$\delta\lambda\f$=0.
+ * \f$\lambda_n\f$ is in fact a trial \f$\lambda_n\f$, and becomes
  * \f$\lambda_o\f$ for the next step if and only if this step converges.\n
  */
 class LoadControl :public StaticControl {
   private:
   public:
   // Constructor and destructor
-  LoadControl(double DL0, double minDL, double maxDL, int IterDesired, double n, double DeltaTime);
+  LoadControl(double DL0, double minDL, double maxDL, int IterDesired, double n,
+              double DeltaTime);
   ~LoadControl();
 
   // Methods for incremental/iterative algorithms

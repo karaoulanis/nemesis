@@ -42,7 +42,6 @@ InitialDisplacement::InitialDisplacement(Node* node, int dof, double disp)
   disp_ = disp;
 }
 
-int InitialDisplacement::Apply() {
+void InitialDisplacement::Apply() {
   node_->addInitialDisp(dof_, disp_);
-  return 0;
 }

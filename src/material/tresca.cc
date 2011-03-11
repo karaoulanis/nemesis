@@ -23,8 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include "main/nemesis_debug.h"
 #include "material/tresca.h"
+#include <sstream>
+#include "main/nemesis_debug.h"
 
 Matrix Tresca::C(6, 6, 0.);
 Matrix Tresca::C3(3, 3, 0.);

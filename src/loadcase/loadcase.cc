@@ -24,6 +24,10 @@
 // *****************************************************************************
 
 #include "loadcase/loadcase.h"
+#include "loadcase/group_state.h"
+#include "loadcase/initial_condition.h"
+#include "loadcase/load.h"
+#include "loadcase/element_sensitivity_parameter.h"
 
 /**
  * Default constructor.
@@ -42,9 +46,11 @@ LoadCase::LoadCase(int id, const char* label)
   } else {
     sprintf(myLabel, "%s", label);
   }
-  active_ = -1;
-  factor_ =  0.;
+  applied_ = false;
+  active_  = false;
+  factor_  = 0.;
 }
+
 /**
  * Destructor.
  */
@@ -54,17 +60,7 @@ LoadCase::~LoadCase() {
   Containers::vector_delete(initial_conditions_);
   Containers::vector_delete(sensitivity_parameters_);
 }
-void LoadCase::Initialize() {
-  if (active_ == 1) return;
-  active_ = 0;
-  pD->zeroGroups();
-  // Apply group states
-  for (unsigned i = 0;i < group_states_.size();i++) group_states_[i]->apply();
-  // Apply initial conditions
-  for (unsigned int i = 0;i < initial_conditions_.size();i++)
-    initial_conditions_[i]->Apply();
-  // Increase domain time
-}
+
 /**
  * Add a Load to the Loadcase.
  * The Load object should be first added to the Domain. Then a 
@@ -92,25 +88,38 @@ void LoadCase::AddGroupState(GroupState* group_state) {
   group_states_.push_back(group_state);
 }
 
-/**
- * Apply nodal and elemental loads.
- */
+void LoadCase::Initialize() {
+  // Quick return if loadcase is already applied or is now active
+  /// @todo Check if this conditional is really necessary.
+  if (active_ || applied_) return;
+  // First time encountered so this is now active
+  active_ = true;
+  for (unsigned i = 0; i < group_states_.size(); i++) {
+    group_states_[i]->Apply();
+  }
+  // Apply initial conditions
+  for (unsigned int i = 0;i < initial_conditions_.size();i++) {
+    initial_conditions_[i]->Apply();
+  }
+  // Increase domain time
+  /// @todo
+}
+
 void LoadCase::ApplyLoads(double lambda, double time) {
   if (lambda  ==  0.) return;
-  if (active_ == -1)  return;
+  if (!active_ && !applied_)  return;
   else if (active_ == 0) factor_ = lambda;
   // Apply nodal and elemental loads
   for (unsigned int i = 0; i < loads_.size(); i++) {
     loads_[i]->Apply(factor_, time);
   }
 }
-/**
- * Commit.
- */
+
 void LoadCase::Commit() {
-  active_ = 1;
-  pD->commit();
+  applied_ = true;
+  active_  = false;
 }
+
 void LoadCase::ApplySensitivityParameter(int param) {
   sensitivity_parameters_[param]->apply();
 }

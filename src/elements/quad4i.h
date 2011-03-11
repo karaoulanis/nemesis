@@ -35,7 +35,7 @@ class Quad4i: public Quad4 {
 
   static double detJ[4];
   static std::vector<int> perm;
-  
+
   Vector aTrial;
   Vector aConvg;
   void shapeFunctions();
@@ -49,7 +49,7 @@ class Quad4i: public Quad4 {
   Quad4i();
   Quad4i(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
   ~Quad4i();
-  
+
   const Matrix& get_K();
     const Matrix& get_M();
   const Vector& get_R();

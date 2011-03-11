@@ -118,7 +118,6 @@ class Domain {
   void zeroSensitivityParameters();
   void applyLoads(double lambda_, double time_);
   void zeroLoads();
-  void zeroGroups();
 
   void clear();
   void state(double facD);

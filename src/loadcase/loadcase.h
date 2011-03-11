@@ -28,31 +28,15 @@
 
 #include <vector>
 #include <map>
-
-// Project files (alphabetically)
 #include "containers/containers.h"
 #include "domain/domain_object.h"
-#include "loadcase/elemental_load.h"
-#include "loadcase/element_sensitivity_parameter.h"
-#include "loadcase/group_state.h"
-#include "loadcase/initial_condition.h"
-#include "loadcase/load.h"
-#include "loadcase/nodal_load.h"
 
 // Forward declarations
 class ElementSensitivityParameter;
 class GroupState;
-class Group;
 class InitialCondition;
 class Load;
 class NodalLoad;
-
-// Type definitions
-typedef std::vector<Load*>                        LoadVector;
-typedef std::vector<InitialCondition*>            InitialConditionVector;
-typedef std::vector<GroupState*>                  GroupStateVector;
-typedef std::vector<ElementSensitivityParameter*> SensitivityParameterVector;
-typedef std::map<int, Group*>                     GroupContainer;
 
 class LoadCase: public DomainObject {
  public:
@@ -76,10 +60,13 @@ class LoadCase: public DomainObject {
  private:
   char label_[512];
   double factor_;
-  int active_;
-  LoadVector                  loads_;
-  GroupStateVector            group_states_;
-  InitialConditionVector      initial_conditions_;
-  SensitivityParameterVector  sensitivity_parameters_;
+
+  bool applied_;
+  bool active_;
+
+  std::vector<Load*> loads_;
+  std::vector<GroupState*> group_states_;
+  std::vector<InitialCondition*> initial_conditions_;
+  std::vector<ElementSensitivityParameter*> sensitivity_parameters_;
 };
 #endif  // SRC_LOADCASE_LOADCASE_H_

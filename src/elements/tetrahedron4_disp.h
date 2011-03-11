@@ -38,7 +38,7 @@ class Tetrahedron4Disp: public Element {
   // Constructors and Destructor
   Tetrahedron4Disp();
   Tetrahedron4Disp(int ID,int Node_1, int Node_2, int Node_3, int Node_4,
-                   int matID); 
+                   int matID);
   ~Tetrahedron4Disp();
 
   const Matrix& get_K();

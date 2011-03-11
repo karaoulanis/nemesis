@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/spring.h"
+#include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
 
 /**
@@ -33,7 +34,7 @@ Spring::Spring()   {
 }
 /**
  * Constructor.
- * Creates a Bar Element. 
+ * Creates a Bar Element.
  */
 Spring::Spring(int ID, int Node_1, int Node_2, int matID,
                 double xp1, double xp2, double xp3,
@@ -131,8 +132,7 @@ const Matrix& Spring::get_K() {
   K.append(K0, 0, 3, -1.);
   K.append(K0, 3, 0, -1.);
   K.append(K0, 3, 3, +1.);
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   // report(K, "K", 14, 1);
   return K;
@@ -150,8 +150,7 @@ const Matrix& Spring::get_K() {
       }
     }
   }
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;*/
 }
@@ -164,8 +163,10 @@ const Vector& Spring::get_R() {
   Vector& R=*myVector;
   R.clear();
   // Factors
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
+  if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  //double facG = groupdata_->factor_G_;
+  //double facP = groupdata_->factor_P_;
   /// @todo check
   // double facG = myGroup->get_fac_G();
   // double facP = myGroup->get_fac_P();

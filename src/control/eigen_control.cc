@@ -59,7 +59,8 @@ void EigenControl::formElementalMassMatrix(ModelElement* pModelElement)  {
  * @param time Current(?) time.
  * @return 0 if everything is ok.
  */
-void EigenControl::formElementalResidual(ModelElement* pModelElement, double /*time*/) {
+void EigenControl::formElementalResidual(ModelElement* pModelElement,
+                                         double /*time*/) {
   pModelElement->zeroVector();
   pModelElement->add_R(1.0);
 }

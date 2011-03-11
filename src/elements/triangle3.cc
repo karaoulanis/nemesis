@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/triangle3.h"
+#include "loadcase/group_data.h"
 
 Triangle3::Triangle3() {
 }
@@ -65,11 +66,18 @@ Triangle3::Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID)
 }
 Triangle3::~Triangle3() {
 }
-void Triangle3::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id())
-    for (unsigned i = 0;i < myMatPoints.size();i++)
-      myMatPoints[i]->set_initial_stresses(pInitialStresses);
+
+/**
+ * Initial stresses.
+ */
+void Triangle3::AddInitialStresses(int direction,
+                                 double h1, double s1,
+                                 double h2, double s2, double K0) {
+  for (unsigned i = 0;i < myMatPoints.size();i++) {
+    myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
+  }
 }
+
 const Matrix& Triangle3::get_K() {
   Matrix& K=*myMatrix;
   const Matrix& C = myMatPoints[0]->get_material()->get_C();
@@ -110,8 +118,7 @@ const Matrix& Triangle3::get_K() {
   K(5, 3) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c2+(c3*C(1, 3)+b3*C(3, 3))*b2);
   K(5, 4) = coeff*((c3*C(1, 0)+b3*C(3, 0))*b3+(c3*C(1, 3)+b3*C(3, 3))*c3);
   K(5, 5) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c3+(c3*C(1, 3)+b3*C(3, 3))*b3);
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -121,10 +128,10 @@ const Matrix& Triangle3::get_M() {
 const Vector& Triangle3::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+  if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
   double s1=(myMatPoints[0]->get_material()->get_stress())[0];
   double s2=(myMatPoints[0]->get_material()->get_stress())[1];
   double s3=(myMatPoints[0]->get_material()->get_stress())[3];
@@ -141,7 +148,7 @@ const Vector& Triangle3::get_R() {
   return R;
 }
 void Triangle3::update() {
-  if (!(myGroup->isActive()))  return;
+  if (!(groupdata_->active_))  return;
   Vector& u=*myVector;
   u = this->get_disp_incrm();
   // Determine the strain

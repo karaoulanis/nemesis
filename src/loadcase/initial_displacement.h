@@ -34,7 +34,8 @@ class InitialDisplacement: public InitialCondition {
  public:
   InitialDisplacement();
   InitialDisplacement(Node* node, int dof, double disp);
-  int Apply();
+  void Apply();
+
  private:
   int dof_;
   Node* node_;

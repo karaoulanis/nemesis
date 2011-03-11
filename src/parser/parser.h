@@ -68,13 +68,14 @@
 #include "loadcase/element_sensitivity_parameter.h"
 #include "loadcase/ground_motion_file.h"
 #include "loadcase/ground_motion_sin.h"
+#include "loadcase/group_state.h"
 #include "loadcase/initial_displacement.h"
 #include "loadcase/initial_velocity.h"
 #include "loadcase/initial_stresses.h"
 #include "loadcase/nodal_load_constant.h"
 #include "loadcase/nodal_load_linear.h"
 #include "loadcase/nodal_load_sin.h"
-//#include "loadcase/uniaxial_load.h"
+// #include "loadcase/uniaxial_load.h"
 #include "material/creep.h"
 #include "material/drucker_prager.h"
 #include "material/drucker_prager_new.h"
@@ -101,8 +102,8 @@
 #include "node/node.h"
 #include "reorderer/forward_cuthill_mckee.h"
 #include "reorderer/forward_sloan.h"
-//#include "reorderer/king.h"
-//#include "reorderer/minimum_degree_ordering.h"
+// #include "reorderer/king.h"
+// #include "reorderer/minimum_degree_ordering.h"
 #include "reorderer/reverse_cuthill_mckee.h"
 #include "reorderer/reverse_sloan.h"
 #include "reorderer/reorderer.h"
@@ -113,7 +114,7 @@
 class Parser {
  protected:
   Domain D;
-  Analysis A;    
+  Analysis A;
   public:
   // Constructors and destructor
   Parser();

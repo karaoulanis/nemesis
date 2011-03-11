@@ -52,7 +52,8 @@ class Brick8: public Element {
   virtual void commit();
 
   bool checkIfAllows(FEObject* f);
-  void addInitialStresses(InitialStresses* pInitialStresses);
+  void AddInitialStresses(int direction, double h1, double s1,
+                          double h2, double s2, double K0);
   void recoverStresses();
   int get_num_plastic_points();
 

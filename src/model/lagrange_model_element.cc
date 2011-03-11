@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "model/lagrange_model_element.h"
-#include "main/nemesis_debug.h"
+#include "constraints/constraint.h"
 
 /**
  * Default constructor

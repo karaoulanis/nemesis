@@ -26,6 +26,7 @@
 #ifndef SRC_REORDERER_REVERSE_CUTHILL_MCKEE_H_
 #define SRC_REORDERER_REVERSE_CUTHILL_MCKEE_H_
 
+#include <vector>
 #include "reorderer/reorderer.h"
 
 class ReverseCuthillMckee: public Reorderer {

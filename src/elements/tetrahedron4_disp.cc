@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/tetrahedron4_disp.h"
+#include "loadcase/group_data.h"
 
 Matrix Tetrahedron4Disp::N(4, 4);
 double Tetrahedron4Disp::V = 0;
@@ -120,8 +121,7 @@ const Matrix& Tetrahedron4Disp::get_K() {
     }
     ii+=3;
   }
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -134,10 +134,12 @@ const Vector& Tetrahedron4Disp::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
   R.clear();
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  // double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+
+  if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  // double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
+
   sigma = myMatPoints[0]->get_material()->get_stress();
   this->findShapeFunctions();
   int ii = 0;
@@ -156,7 +158,7 @@ const Vector& Tetrahedron4Disp::get_R() {
   return R;
 }
 void Tetrahedron4Disp::update() {
-  if (!(myGroup->isActive()))  return;
+  if (!(groupdata_->active_))  return;
   static Vector u(12);
   u = this->get_disp_incrm();
   // For each material point

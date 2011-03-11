@@ -27,29 +27,20 @@
 #define SRC_GROUP_GROUP_H_
 
 // Included files
+#include <vector>
 #include "domain/domain_object.h"
-#include "loadcase/group_state.h"
 
+class Element;
 class GroupState;
-
 class Group: public DomainObject {
-  private:
-  bool active;
-  double facK;
-  double facS;
-  double facG;
-  double facP;
-  public:
+ public:
   Group();
   ~Group();
-  Group(int ID);
-  void set_default();
-  void set_state(GroupState* g);
-  inline bool isActive()        {return active;}
-  inline double get_fac_K()       {return facK;}
-  inline double get_fac_S()       {return facS;}
-  inline double get_fac_G()       {return facG;}
-  inline double get_fac_P()       {return facP;}
+  Group(int id);
+  inline const std::vector<Element*>& get_elements()  {return elements_;}
+  void AddElement(Element* element);
+ private:
+  std::vector<Element*> elements_;
 };
 
 #endif  // SRC_GROUP_GROUP_H_

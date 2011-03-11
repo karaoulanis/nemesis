@@ -25,6 +25,7 @@
 
 #include "elements/brick8i.h"
 #include "elements/shape_functions.h"
+#include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
 
 double Brick8i::detJ[8];
@@ -59,8 +60,7 @@ const Matrix& Brick8i::get_K() {
   // Form K
   K = Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
   // Get group factors
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   // Return K
   return K;
@@ -95,10 +95,10 @@ const Vector& Brick8i::get_R() {
   static Vector sigma(6);
   static Matrix Ba(6, 3);
   // Factors
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+   if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
 
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
@@ -127,7 +127,7 @@ const Vector& Brick8i::get_R() {
  */
 void Brick8i::update() {
   // Check for a quick return
-  if (!(myGroup->isActive()))  return;
+  if (!(groupdata_->active_))  return;
   // Static vectors and matrices
   static Vector Du(24), Da(9), epsilon(6);
   static Matrix Ba(6, 3);

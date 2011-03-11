@@ -38,7 +38,7 @@ class Quad4b: public Quad4 {
   Quad4b();
   Quad4b(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
   ~Quad4b();
-  
+
   const Matrix& get_K();
     const Matrix& get_M();
   const Vector& get_R();

@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/sdof_element.h"
+#include "loadcase/group_data.h"
 
 /**
  * Default constructor.
@@ -48,8 +49,7 @@ SDofElement::~SDofElement() {
 }
 const Matrix& SDofElement::get_K() {
   Matrix& K=*myMatrix;
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K(0, 0)=facK*(mySDofMaterial->get_param(0));
   return K;
 }

@@ -25,6 +25,7 @@
 
 
 #include "model/penalty_model_element.h"
+#include "constraints/constraint.h"
 
 /**
  * Default constructor

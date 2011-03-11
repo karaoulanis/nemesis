@@ -26,7 +26,7 @@
 #ifndef SRC_LOADCASE_GROUP_STATE_DATA_H_
 #define SRC_LOADCASE_GROUP_STATE_DATA_H_
 
-struct GroupStateData {
+struct GroupData {
   bool   active_;
   double factor_K_;
   double factor_S_;

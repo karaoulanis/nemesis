@@ -27,37 +27,30 @@
 #define SRC_ELEMENTS_ELEMENT_H_
 
 // Included Files
+#include <vector>
 #include "containers/containers.h"
-#include "domain/domain.h"
 #include "domain/domain_object.h"
-#include "group/group.h"
-#include "loadcase/elemental_load.h"
-#include "loadcase/initial_stresses.h"
-#include "node/node.h"
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
 
 // Forward Declerations
-class Domain;
-class ElementalLoad;
-class Group;
-class InitialStresses;
 class Material;
 class Node;
 class Tracker;
+struct GroupData;
 
 /**
- * The Element Class.                                                
+ * The Element Class.
  * The Element class is an abstract class, that provides the interface to all
- * kind of elements. One, two or three dimensional elements should be able to 
- * be derived from this class. 
+ * kind of elements. One, two or three dimensional elements should be able to
+ * be derived from this class.
  */
 class Element: public DomainObject {
  protected:
   IDContainer myNodalIDs;
   IDContainer myLocalNodalDofs;
   std::vector<Node*> myNodes;
-  Group* myGroup;
+  GroupData* groupdata_;
 
   // Materials
   Material* myMaterial;
@@ -74,8 +67,6 @@ class Element: public DomainObject {
   int handleCommonInfo();
   int activeParameter;
 
-  bool active_;
-
  public:
   // Constructors and Destructor
   Element();
@@ -86,7 +77,6 @@ class Element: public DomainObject {
   const IDContainer& get_local_nodal_dofs() const;
   const std::vector<Node*>& get_nodes() const;
 
-  bool isActive();
   virtual int get_num_plastic_points();
 
   // Build and return global element matrices
@@ -101,7 +91,8 @@ class Element: public DomainObject {
   void addLoad(const Vector& val, double fac = 1.0);
   void zeroLoad();
   void addGroundMotion(int dof, double val);
-  virtual void addInitialStresses(InitialStresses* pInitialStresses);
+  virtual void AddInitialStresses(int direction, double h1, double s1,
+                                  double h2, double s2, double K0);
 
   virtual void update()=0;
   virtual void commit()=0;
@@ -114,12 +105,13 @@ class Element: public DomainObject {
   virtual const Vector& get_accl_convg();
   virtual const Vector& get_disp_incrm();
 
-  void set_group(int groupID);
+  // GroupData related info
+  void SetGroupData(GroupData* groupdata);
+  bool IsActive();
+
   virtual void recoverStresses() {}
 
-  // Send and receive packet
-  const Packet& get_packet();
-  void set_packet(const Packet& p);
+  // Serialise
   void save(std::ostream& s);
 
   void activateParameter(int param) {activeParameter = param;}
@@ -132,5 +124,4 @@ class Element: public DomainObject {
   // Enrichment functions
   virtual void enrich();
 };
-
 #endif  // SRC_ELEMENTS_ELEMENT_H_

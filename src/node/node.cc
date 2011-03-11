@@ -26,6 +26,10 @@
 #include "node/node.h"
 #include <stdlib.h>
 #include <cmath>
+#include <sstream>
+
+#include "tracker/tracker.h"
+#include "domain/domain.h"
 
 /**
  * Defuault Constructor.
@@ -48,6 +52,7 @@ Node::Node(int ID, double xc1, double xc2, double xc3)
   strain.resize(6, 0.);
   avgStress = 0;
   myTracker = 0;
+  active_ = 0;
 }
 Node::~Node() {
   if (myTracker != 0) delete myTracker;
@@ -65,24 +70,15 @@ double Node::get_x2() {
 double Node::get_x3() {
   return x3;
 }
-/**
- * Adds a Node ID to theConnectedElements Container.
- * This container holds all the ID's of the elements that include this Node.
- * @param  pElement A pointer to the Elemented that is connected to this Node. 
- * @return An integer indicating if everything went ok.
- */
-int Node::addEleToNode(Element *pElement) {
-  myConnectedElements.push_back(pElement->get_id());
-  return 0;
+
+void Node::SetActive(bool active) {
+  active ? ++active_ : --active_;
 }
-/**
- * Returns thegetTheConnectedElements container.
- * This container holds all the ID's of the elements that include this Node.
- * @return A pointer to the container.
- */
-const IDContainer& Node::get_connected_elements() const {
-  return myConnectedElements;
+
+bool Node::IsActive() {
+  return active_ >0 ? true : false;
 }
+
 /**
  * Activates a dof in the node.
  * \param dof The dof that should be activated.
@@ -191,7 +187,7 @@ void Node::save(std::ostream& s) {
   s << "\"id\":" << myID <<",";
   s << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
   s << "\"dofs\":[";
-  ///@ todo make this more general
+  /// @todo make this more general
   for (int i = 0; i < myActivatedDofs.size(); i++) {
       if (i > 0) s << ',';
       s << myActivatedDofs[i];
@@ -201,8 +197,8 @@ void Node::save(std::ostream& s) {
   s << "\"velc\":[" << velcConvg  << "],";
   s << "\"accl\":[" << acclConvg  << "],";
 
-  if (avgStress>0) stress*=1.0/avgStress;
-  avgStress=0;
+  if (avgStress > 0) stress*=1.0/avgStress;
+  avgStress = 0;
   s << "\"strs\":[" << stress     << "]";
 
   /// @todo include strains, sensitivities and eigenvalues also
@@ -273,12 +269,6 @@ double Node::get_velc_convg_at_dof(int dof) {
 }
 double Node::get_accl_convg_at_dof(int dof) {
   return acclConvg[myActivatedDofs[dof]];
-}
-bool Node::isActive() {
-  for (unsigned i = 0;i < myConnectedElements.size();i++)
-    if (pD->get < Element>(pD->get_elements(),
-      myConnectedElements[i])->isActive()) return true;
-  return false;
 }
 /**
  * Add a Tracker to Node.

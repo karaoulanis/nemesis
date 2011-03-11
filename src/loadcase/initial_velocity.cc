@@ -42,7 +42,6 @@ InitialVelocity::InitialVelocity(Node* node, int dof, double velocity)
   velocity_ = velocity;
 }
 
-int InitialVelocity::Apply() {
+void InitialVelocity::Apply() {
   node_->addInitialVelc(dof_, velocity_);
-  return 0;
 }

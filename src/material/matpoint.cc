@@ -82,36 +82,37 @@ void MatPoint::set_X(double x_, double y_, double z_) {
   z = z_;
   myMaterial->set_X(x, y, z);
 }
-void MatPoint::set_initial_stresses(InitialStresses* pInitialStresses) {
+
+/**
+ * Initial stresses.
+ */
+void MatPoint::AddInitialStresses(int direction,
+                                 double h1, double s1,
+                                 double h2, double s2, double K0) {
   static Vector s0(6);
   s0.clear();
-  int dir = pInitialStresses->get_dir();
-  double H1 = pInitialStresses->get_H1();
-  double H2 = pInitialStresses->get_H2();
-  double s1 = pInitialStresses->get_S1();
-  double s2 = pInitialStresses->get_S2();
-  switch (dir) {
+  switch (direction) {
     case 1:
-      if (x < H1 && x > H2) {
-      s0[0]=s1+(s2-s1)*(x-H1)/(H2-H1);
-      s0[1]=pInitialStresses->get_K0()*s0[0];
-      s0[2]=pInitialStresses->get_K0()*s0[0];
+      if (x < h1 && x > h2) {
+      s0[0] = s1+(s2-s1)*(x-h1)/(h2-h1);
+      s0[1] = K0*s0[0];
+      s0[2] = K0*s0[0];
       myMaterial->addStress(s0);
       }
       break;
   case 2:
-    if (y < H1 && y > H2) {
-      s0[1]=s1+(s2-s1)*(y-H1)/(H2-H1);
-      s0[0]=pInitialStresses->get_K0()*s0[1];
-      s0[2]=pInitialStresses->get_K0()*s0[1];
+    if (y < h1 && y > h2) {
+      s0[1] = s1+(s2-s1)*(y-h1)/(h2-h1);
+      s0[0] = K0*s0[1];
+      s0[2] = K0*s0[1];
       myMaterial->addStress(s0);
     }
     break;
   case 3:
-    if (z < H1 && z>H2) {
-      s0[2]=s1+(s2-s1)*(z-H1)/(H2-H1);
-      s0[0]=pInitialStresses->get_K0()*s0[2];
-      s0[1]=pInitialStresses->get_K0()*s0[2];
+    if (z < h1 && z>h2) {
+      s0[2] = s1+(s2-s1)*(z-h1)/(h2-h1);
+      s0[0] = K0*s0[2];
+      s0[1] = K0*s0[2];
       myMaterial->addStress(s0);
     }
     break;

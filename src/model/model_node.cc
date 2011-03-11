@@ -24,6 +24,8 @@
 // *****************************************************************************
 
 #include "model/model_node.h"
+#include "node/node.h"
+
 /**
  * Default constructor.
  */
@@ -34,7 +36,8 @@ ModelNode::ModelNode() {
  * Initializes the ModelObject, which in turn initializes the FEObject, passes
  * the FTable to the ModelObject and copies the address of it's node.
  */
-ModelNode::ModelNode(const IDContainer& FTable, Node* pNode, Constraint* pConstraint)
+ModelNode::ModelNode(const IDContainer& FTable, Node* pNode,
+                     Constraint* pConstraint)
   :ModelObject(FTable), myNode(pNode), myConstraint(pConstraint) {
   // Set a pointer to the corresponding static Vector
   myVector = theStaticVectors[FTable.size()];

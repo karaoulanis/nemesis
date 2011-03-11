@@ -38,7 +38,8 @@
  * \param DeltaTime     Timestep for viscoplastic solutions
 */
 DisplacementControl::DisplacementControl(int nodeID, int dofID,
-    double Du0, double minDu, double maxDu, int IterDesired, double n, double DeltaTime)
+    double Du0, double minDu, double maxDu, int IterDesired,
+    double n, double DeltaTime)
 :StaticControl(Du0, minDu, maxDu, IterDesired, n, DeltaTime), DeltaU(Du0) {
   theNodeID = nodeID;
   theDofID = dofID;
@@ -77,21 +78,21 @@ void DisplacementControl::predict() {
   // Set the reference dof
   /// @todo Since changes in the dof schemes have occurred, check if this is ok.
   theRefDof = pA->get_model()->get_soe_dof(theNodeID, theDofID);
-  
+
   // Find DeltaU increment
   /// @todo Auto-incrementation involves abs() and this might be a problem...
-//  DeltaU*=pow(((double)Id/(double)Io), nExp);
-//  if (DeltaU < minDelta) DeltaU = minDelta;
-//  else if (DeltaU>maxDelta) DeltaU = maxDelta;
-  
+  //  DeltaU*=pow(((double)Id/(double)Io), nExp);
+  //  if (DeltaU < minDelta) DeltaU = minDelta;
+  //  else if (DeltaU>maxDelta) DeltaU = maxDelta;
+
   // Find duT (tangent) at coefficient k
-//  theSOE->print();
+  //  theSOE->print();
   pA->get_soe()->set_B(qRef);
   pA->get_soe()->solve();
   duT = pA->get_soe()->get_X();
   duT_k = duT[theRefDof];
-  
-  // Now DLambda can be found, see Crisfield, (9.34). 
+
+  // Now DLambda can be found, see Crisfield, (9.34).
   DLambda = DeltaU/duT_k;
   lambdaTrial+=DLambda;
 
@@ -134,5 +135,5 @@ void DisplacementControl::correct() {
 
   // Increase number of iterations
   Io++;
-//  pA->get_soe()->set_X(du);
+  //  pA->get_soe()->set_X(du);
 }

@@ -1132,6 +1132,10 @@
 				Name="groupState"
 				>
 				<File
+					RelativePath="..\..\src\loadcase\group_data.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\loadcase\group_state.cc"
 					>
 				</File>

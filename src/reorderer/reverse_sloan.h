@@ -26,6 +26,7 @@
 #ifndef SRC_REORDERER_REVERSE_SLOAN_H_
 #define SRC_REORDERER_REVERSE_SLOAN_H_
 
+#include <vector>
 #include "reorderer/reorderer.h"
 
 class ReverseSloan: public Reorderer {

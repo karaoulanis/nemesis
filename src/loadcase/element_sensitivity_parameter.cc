@@ -24,6 +24,8 @@
 // *****************************************************************************
 
 #include "loadcase/element_sensitivity_parameter.h"
+#include "domain/domain.h"
+#include "elements/element.h"
 
 int ElementSensitivityParameter::nSensitivityParameters = 0;
 

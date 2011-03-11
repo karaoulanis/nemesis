@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/triangle6.h"
+#include "loadcase/group_data.h"
 
 Triangle6::Triangle6() {
 }
@@ -142,8 +143,7 @@ const Matrix& Triangle6::get_K() {
       ii+=2;
     }
   }
-  double facK = 1e-9;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -155,10 +155,10 @@ const Matrix& Triangle6::get_M() {
 const Vector& Triangle6::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+  if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     // Get B-matrix
     static Matrix N(6, 3);
@@ -181,7 +181,7 @@ const Vector& Triangle6::get_R() {
   return R;
 }
 void Triangle6::update() {
-  if (!(myGroup->isActive()))  return;
+  if (!(groupdata_->active_))  return;
   Vector& u=*myVector;
   u = this->get_disp_incrm();
   // For each material point
@@ -231,11 +231,18 @@ void Triangle6::recoverStresses() {
     myNodes[i]->addStress(sigma);
   }
 }
-void Triangle6::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id())
-    for (unsigned i = 0;i < myMatPoints.size();i++)
-      myMatPoints[i]->set_initial_stresses(pInitialStresses);
+
+/**
+ * Initial stresses.
+ */
+void Triangle6::AddInitialStresses(int direction,
+                                 double h1, double s1,
+                                 double h2, double s2, double K0) {
+  for (unsigned i = 0;i < myMatPoints.size();i++) {
+    myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
+  }
 }
+
 int Triangle6::get_num_plastic_points() {
   int n = 0;
   for (unsigned int i = 0;i < myMatPoints.size();i++)

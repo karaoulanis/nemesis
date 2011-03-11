@@ -24,7 +24,8 @@
 // *****************************************************************************
 
 #include "domain/domain.h"
-#include <iostream>
+#include <sstream>
+#include "loadcase/group_data.h"
 
 /**
  * Default Constructor.
@@ -48,7 +49,6 @@ Domain::~Domain()  {
 void Domain::init() {
   // Define group 0
   Group* pGroup = new Group(0);
-  pGroup->set_domain(this);
   this->add(this->get_groups(), pGroup);
   // Define that groups are by set by materials
   groupsByMaterial = true;
@@ -132,12 +132,12 @@ int Domain::storeState(const char* tableName) {
   // Store nodes
   for (NodeIterator nIter = theNodes.begin();
     nIter != theNodes.end(); nIter++)
-    if (nIter->second->isActive())
+    if (nIter->second->IsActive())
       theDatabase->storeData(nIter->second->get_packet());
   // Store elements
   for (ElementIterator eIter = theElements.begin();
     eIter != theElements.end(); eIter++)
-    if (eIter->second->isActive())
+    if (eIter->second->IsActive())
       theDatabase->storeData(eIter->second->get_packet());
   // Commit transaction
   theDatabase->commitTransaction();
@@ -182,7 +182,7 @@ void Domain::save(std::ostream& s) {
   // Store nodes
   s << "\"nodes\":[";
   for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
-      if (n->second->isActive()) {
+      if (n->second->IsActive()) {
         if (n != theNodes.begin()) s << ",";
         n->second->save(s);
       }
@@ -192,7 +192,7 @@ void Domain::save(std::ostream& s) {
   // Store elements
   s << "\"elements\":[";
   for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {  
-    if (e->second->isActive()) {
+    if (e->second->IsActive()) {
       if (e != theElements.begin()) s << ",";
       e->second->save(s);
     }
@@ -224,19 +224,25 @@ void Domain::applyLoads(double lambda_, double time_) {
     lcIter != theLoadCases.end(); lcIter++)
       lcIter->second->ApplyLoads(lambda_, time_);
 }
+
 void Domain::zeroLoads() {
-  for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end(); nIter++)
-      nIter->second->zeroLoad();
-  for (ElementIterator eIter = theElements.begin();
-    eIter != theElements.end(); eIter++)
-      eIter->second->zeroLoad();
+  /// @todo: rename as to be consistent
+  // default groupdata for all elements
+  static GroupData default_groupdata;
+  default_groupdata.active_ = true;
+  default_groupdata.factor_K_ = 1.0;
+  default_groupdata.factor_S_ = 1.0;
+  default_groupdata.factor_G_ = 1.0;
+  default_groupdata.factor_P_ = 1.0;
+  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
+    e->second->SetGroupData(&default_groupdata);
+    e->second->zeroLoad();
+  }
+  for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
+    n->second->zeroLoad();
+  }
 }
-void Domain::zeroGroups() {
-  GroupIterator gi;
-  for (gi = theGroups.begin(); gi != theGroups.end(); gi++)
-    gi->second->set_default();
-}
+
 /**
  * Sets gravity info.
  * gravityVect Vector giving the direction of gravity. It does not include 

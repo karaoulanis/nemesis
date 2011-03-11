@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "material/duncan_chang.h"
+#include <sstream>
 
 DuncanChang::DuncanChang() {
 }

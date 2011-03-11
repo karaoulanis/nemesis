@@ -25,6 +25,7 @@
 
 #include "elements/brick8.h"
 #include "elements/shape_functions.h"
+#include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
 
 double Brick8::detJ[8];
@@ -123,8 +124,7 @@ const Matrix& Brick8::get_K() {
     }
   }
   // Multiply by facK (active/deactivated)
-  double facK = 1e-7;
-  if (myGroup->isActive()) facK = myGroup->get_fac_K();
+  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   return K;
 }
@@ -146,10 +146,10 @@ const Vector& Brick8::get_R() {
   Vector& R=*myVector;
   R.clear();
   // Factors
-  if (!(myGroup->isActive()))  return R;
-  double facS = myGroup->get_fac_S();
-  double facG = myGroup->get_fac_G();
-  double facP = myGroup->get_fac_P();
+  if (!(groupdata_->active_))  return R;
+  double facS = groupdata_->factor_S_;
+  double facG = groupdata_->factor_G_;
+  double facP = groupdata_->factor_P_;
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
   this->shapeFunctions();
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
@@ -179,7 +179,7 @@ void Brick8::update() {
   static Vector epsilon(6);
   static Matrix B;
   // Check if active
-  if (!(myGroup->isActive()))  return;
+  if (!(groupdata_->active_))  return;
   // Get incremental displacements
   u = this->get_disp_incrm();
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
@@ -207,16 +207,17 @@ void Brick8::commit() {
 void Brick8::shapeFunctions() {
   shape8(x, shp, detJ);
 }
+
 /**
- * Element initial stresses.
+ * Initial stresses.
  */
-void Brick8::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id()) {
-    for (unsigned i = 0;i < myMatPoints.size();i++) {
-      myMatPoints[i]->set_initial_stresses(pInitialStresses);
-    }
-  }
+void Brick8::AddInitialStresses(int direction,
+                                 double h1, double s1,
+                                 double h2, double s2, double K0) {
+  for (unsigned i = 0;i < myMatPoints.size();i++)
+    myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
 }
+
 /**
  * Element stress recovery.
  */

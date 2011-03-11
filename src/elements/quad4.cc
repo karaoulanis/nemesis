@@ -107,11 +107,18 @@ void Quad4::commit() {
 bool Quad4::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
-void Quad4::addInitialStresses(InitialStresses* pInitialStresses) {
-  if (myGroup->isActive()&&pInitialStresses->get_group_id() == myGroup->get_id())
-    for (unsigned i = 0;i < myMatPoints.size();i++)
-      myMatPoints[i]->set_initial_stresses(pInitialStresses);
+
+/**
+ * Initial stresses.
+ */
+void Quad4::AddInitialStresses(int direction,
+                                 double h1, double s1,
+                                 double h2, double s2, double K0) {
+  for (unsigned i = 0;i < myMatPoints.size();i++) {
+    myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
+  }
 }
+
 void Quad4::recoverStresses() {
   /// @todo check
   if (p1 != 2||p2 != 2) return;

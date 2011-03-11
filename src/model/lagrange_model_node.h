@@ -27,7 +27,9 @@
 #define SRC_MODEL_LAGRANGE_MODEL_NODE_H_
 
 #include "model/model_node.h"
-#include "node/node.h"
+
+class Node;
+class Constraint;
 
 class LagrangeModelNode: public ModelNode {
   private:

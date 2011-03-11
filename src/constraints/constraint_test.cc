@@ -24,8 +24,8 @@
 // *****************************************************************************
 
 // Included files
-#include <gtest/gtest.h>
 #include "constraints/constraint.h"
+#include <gtest/gtest.h>
 #include <exception>
 
 class ConstraintTest : public ::testing::Test {
@@ -50,6 +50,6 @@ class ConstraintTest : public ::testing::Test {
 
 TEST_F(ConstraintTest, NonExcistingNode) {
   EXPECT_THROW({
-    c->set_cdof(2,1,8.);
+    c->set_cdof(2, 1, 8.);
   }, SException);
 }
