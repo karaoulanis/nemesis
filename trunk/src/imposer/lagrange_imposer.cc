@@ -103,8 +103,8 @@ int LagrangeImposer::impose() {
     int ncDofs = pConstraint->get_num_cdofs();
     IDContainer cFTable(ncDofs+1);
     for (int j = 0;j < ncDofs;j++) {
-      cFTable[j]=this->get_global_dof(pConstraint->get_cdof(j).pNode_->get_id(),
-                                    pConstraint->get_cdof(j).dof_);
+      cFTable[j]=this->get_global_dof(pConstraint->get_cdof(j).node->get_id(),
+                                      pConstraint->get_cdof(j).dof);
     }
     cFTable[ncDofs]=nEquations;
     pLagModelElement = new LagrangeModelElement(cFTable, pConstraint);

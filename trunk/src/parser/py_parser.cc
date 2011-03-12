@@ -342,19 +342,19 @@ static PyObject* pyNode_Add(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyNode_Fix(PyObject* /*self*/, PyObject* args) {
-  int nodeID, dofID;
+  int node_id, dof;
   double c = 0.;
-  if (!PyArg_ParseTuple(args, "ii|d", &nodeID, &dofID, &c))  return NULL;
-  Constraint* pConstraint = new Constraint;
+  if (!PyArg_ParseTuple(args, "ii|d", &node_id, &dof, &c))  return NULL;
   try {
-    pConstraint->set_cdof(nodeID, dofID, 1.0);
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    Constraint* constraint = new Constraint();
+    constraint->set_cdof(node, dof, 1.0);
+    constraint->set_val(c);
+    pD->add(pD->get_constraints(), constraint);
   } catch(SException e) {
-    delete pConstraint;
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  pConstraint->set_val(c);
-  pD->add(pD->get_constraints(), pConstraint);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1099,37 +1099,52 @@ static PyMethodDef ElementMethods[] = {
 * Constraint commands
 ******************************************************************************/
 static PyObject* pyConstraint_Set(PyObject* /*self*/, PyObject* args) {
-  int nodeID, dofID;
+  int node_id, dof;
   double a, c;
-    if (!PyArg_ParseTuple(args, "d(iid)", &c, &nodeID, &dofID, &a))
+  if (!PyArg_ParseTuple(args, "d(iid)", &c, &node_id, &dof, &a))
     return NULL;
-  Constraint* pConstraint = new Constraint;
-  pConstraint->set_cdof(nodeID, dofID, a);
-  pConstraint->set_val(c);
-  pD->add(pD->get_constraints(), pConstraint);
+  try {
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    Constraint* constraint = new Constraint;
+    constraint->set_cdof(node, dof, a);
+    constraint->set_val(c);
+    pD->add(pD->get_constraints(), constraint);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
 /// @todo make this one more general
 static PyObject* pyConstraint_twoDofs(PyObject* /*self*/, PyObject* args) {
-  int node1, dof1, node2, dof2;
+  int node_id1, dof1, node_id2, dof2;
   double a1, a2, c;
-  if (!PyArg_ParseTuple(args, "(iid)(iid)d", &node1, &dof1, &a1, &node2, &dof2, &a2, &c))
+  if (!PyArg_ParseTuple(args, "(iid)(iid)d", &node_id1, &dof1, &a1, 
+                                             &node_id2, &dof2, &a2, &c))
     return NULL;
-  Constraint* pConstraint = new Constraint;
-  pConstraint->set_cdof(node1, dof1, a1);
-  pConstraint->set_cdof(node2, dof2, a2);
-  pConstraint->set_val(c);
-  pD->add(pD->get_constraints(), pConstraint);
+  try {
+    Node* node1 = pD->get<Node>(pD->get_nodes(), node_id1);
+    Node* node2 = pD->get<Node>(pD->get_nodes(), node_id2);
+    Constraint* constraint = new Constraint;
+    constraint->set_cdof(node1, dof1, a1);
+    constraint->set_cdof(node2, dof2, a2);
+    constraint->set_val(c);
+    pD->add(pD->get_constraints(), constraint);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyConstraint_Linear(PyObject* /*self*/, PyObject* args) {
   double c0;
   PyObject* cList;
   if (!PyArg_ParseTuple(args, "dO", &c0, &cList)) return NULL;
-  Constraint* pConstraint = new Constraint;
-  pConstraint->set_val(c0);
+  Constraint* constraint = new Constraint;
+  constraint->set_val(c0);
 
   // Check if list ok
   if (!PyList_Check(cList)) {
@@ -1162,14 +1177,20 @@ static PyObject* pyConstraint_Linear(PyObject* /*self*/, PyObject* args) {
       return NULL;
     }
     // Get arguments
-    int node =PyInt_AsLong(tmpNode);
-    int dof  =PyInt_AsLong(tmpDof);
-    double ci = PyFloat_AsDouble(tmpCi);
+    int node_id = PyInt_AsLong(tmpNode);
+    int dof     = PyInt_AsLong(tmpDof);
+    double ci   = PyFloat_AsDouble(tmpCi);
     // Build triple
-    pConstraint->set_cdof(node, dof, ci);
+    try {
+      Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+      constraint->set_cdof(node, dof, ci);
+    } catch(SException e) {
+      PyErr_SetString(PyExc_StandardError, e.what());
+      return NULL;
+    }
   }
   // Add to domain
-  pD->add(pD->get_constraints(), pConstraint);
+  pD->add(pD->get_constraints(), constraint);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -2061,9 +2082,6 @@ int PyParser::initModules() {
   PyRun_SimpleString("import reorder");
   PyRun_SimpleString("import group");
   PyRun_SimpleString("import sens");
-  PyRun_SimpleString("import crack");
-//  PyRun_SimpleString("import tracker");
-//  PyRun_SimpleString("import nemesis");
 
   Py_InitModule("log", logMethods);
   PyRun_SimpleString("import log\n"

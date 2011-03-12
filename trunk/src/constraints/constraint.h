@@ -26,22 +26,15 @@
 #ifndef SRC_CONSTRAINTS_CONSTRAINT_H_
 #define SRC_CONSTRAINTS_CONSTRAINT_H_
 
-// C++ system files
 #include <vector>
-
-// Project files
-#include "domain/domain.h"
 #include "domain/domain_object.h"
-#include "node/node.h"
 
-// Forward declarations
-class Domain;
 class Node;
 
 struct CDof {
-  Node* pNode_;
-  int dof_;
-  double coeff_;
+  Node* node;
+  int dof;
+  double coeff;
 };
 
 /**
@@ -58,7 +51,7 @@ class Constraint: public DomainObject {
   // Constructors
   Constraint();
 
-  void set_cdof(int NodeID, int dof, double coeff);
+  void set_cdof(Node* node, int dof, double coeff);
   void set_val(double val);
 
   int get_num_cdofs();

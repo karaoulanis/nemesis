@@ -188,7 +188,7 @@ void Node::save(std::ostream& s) {
   s << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
   s << "\"dofs\":[";
   /// @todo make this more general
-  for (int i = 0; i < myActivatedDofs.size(); i++) {
+  for (unsigned i = 0; i < myActivatedDofs.size(); i++) {
       if (i > 0) s << ',';
       s << myActivatedDofs[i];
   }

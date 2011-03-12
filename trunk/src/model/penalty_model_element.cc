@@ -52,8 +52,8 @@ PenaltyModelElement::~PenaltyModelElement() {
 void PenaltyModelElement::add_K(double factor) {
   for (unsigned int i = 0; i < theFTable.size(); i++) {
     for (unsigned int j = 0; j < theFTable.size(); j++) {
-      double ci = myConstraint->get_cdof(i).coeff_;
-      double cj = myConstraint->get_cdof(j).coeff_;
+      double ci = myConstraint->get_cdof(i).coeff;
+      double cj = myConstraint->get_cdof(j).coeff;
       (*myMatrix)(i, j)+=factor*a*ci*cj;
     }
   }
@@ -61,8 +61,8 @@ void PenaltyModelElement::add_K(double factor) {
 void PenaltyModelElement::add_M(double factor) {
   for (unsigned int i = 0; i < theFTable.size(); i++) {
     for (unsigned int j = 0; j < theFTable.size(); j++) {
-      double ci = myConstraint->get_cdof(i).coeff_;
-      double cj = myConstraint->get_cdof(j).coeff_;
+      double ci = myConstraint->get_cdof(i).coeff;
+      double cj = myConstraint->get_cdof(j).coeff;
       (*myMatrix)(i, j)+=factor*a*ci*cj;
     }
   }
@@ -74,14 +74,14 @@ void PenaltyModelElement::add_R(double factor) {
   double c = myConstraint->get_val(0.);
   double cv = 0.;
   for (unsigned i = 0; i < theFTable.size(); i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     double ui = myConstraint->get_disp(i);
     cv+=a*ci*ui;
   }
   cv-=a*c;
   // Add to constraint load vector
   for (unsigned i = 0; i < theFTable.size(); i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     (*myVector)[i]=+factor*ci*cv;
   }
 }
@@ -90,14 +90,14 @@ void PenaltyModelElement::add_Reff(double factor) {
   double c = myConstraint->get_val(0.);
   double cv = 0.;
   for (unsigned i = 0; i < theFTable.size(); i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     double ui = myConstraint->get_disp(i);
     cv+=a*ci*ui;
   }
   cv-=a*c;
   // Add to constraint load vector
   for (unsigned i = 0; i < theFTable.size(); i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     (*myVector)[i]=+factor*ci*cv;
   }
 }

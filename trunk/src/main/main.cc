@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
   *****************************************************************************/
   cout  << "nemesis-"   << NEMESIS_VERSION
         << "[nemesis-project.org] "
-        << "Copyright (C) 2004-2010 F.E. Karaoulanis." << endl;
+        << "Copyright (C) 2004-2011 F.E. Karaoulanis." << endl;
   cout  << "Built on "  << NEMESIS_PLATFORM
         << " with "     << NEMESIS_COMPILER_NAME
         << " ver."      << NEMESIS_COMPILER_VERSION

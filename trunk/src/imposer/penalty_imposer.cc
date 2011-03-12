@@ -95,8 +95,8 @@ int PenaltyImposer::impose() {
     int nCDofs = pConstraint->get_num_cdofs();
     IDContainer cFTable(nCDofs);
     for (int j = 0;j < nCDofs;j++) {
-      cFTable[j]=this->get_global_dof(pConstraint->get_cdof(j).pNode_->get_id(),
-                                    pConstraint->get_cdof(j).dof_);
+      cFTable[j]=this->get_global_dof(pConstraint->get_cdof(j).node->get_id(),
+                                      pConstraint->get_cdof(j).dof);
     }
     pPenModelElement = new PenaltyModelElement(cFTable, pConstraint, a);
     theModel->addModelElement(pPenModelElement);

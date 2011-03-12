@@ -25,6 +25,7 @@
 
 // Included files
 #include "constraints/constraint.h"
+#include "node/node.h"
 
 // Initialize variables
 int Constraint::num_constraints_ = 0;
@@ -35,6 +36,7 @@ int Constraint::num_constraints_ = 0;
 Constraint::Constraint()
   :DomainObject(++num_constraints_), val_(0), f_trial_(0), f_convg_(0) {
 }
+
 /**
  * Create a constrained dof.
  * Check if \a node_id and \a dof is valid; otherwise throw an exception.
@@ -42,69 +44,74 @@ Constraint::Constraint()
  * @param dof The nodal dof to be constrained.
  * @param coeff The Constraint's coefficient.
  */
-void Constraint::set_cdof(int node_id, int dof, double coeff) {
+void Constraint::set_cdof(Node* node, int dof, double coeff) {
   static CDof cdof;
-  // Get node; if does not exists re-throw the exception
-  Node* pNode;
-  try {
-    pNode = pD->get<Node>(pD->get_nodes(), node_id);
-  } catch(SException) {
-    throw;
-  }
   // Check if dof is active
-  if (pNode->get_activated_dof(dof-1) < 0) {
+  if (node->get_activated_dof(dof-1) < 0) {
     throw SException("[nemesis:%d] Node %d dof %d is not yet active.\n", 1110,
-      pNode->get_id(), dof);
-    // Containers::vector_print(pNode->get_connected_elements());cout << endl;
-    // return;
+      node->get_id(), dof);
   }
   // Now it is ok to continue
-  cdof.pNode_ = pNode;
-  cdof.dof_   = dof-1;
+  cdof.node  = node;
+  cdof.dof   = dof-1;
   // Add the coeffiecient
-  cdof.coeff_ = coeff;
+  cdof.coeff = coeff;
   // Keep constrained dof
   cdofs_.push_back(cdof);
 }
+
 const CDof& Constraint::get_cdof(int i) {
   return cdofs_[i];
 }
+
 void Constraint::set_val(double val) {
   val_ = val;
 }
+
 double Constraint::get_val(double /*time*/) {
   return val_;
 }
+
 int Constraint::get_num_cdofs() {
   return cdofs_.size();
 }
+
 double Constraint::get_disp(int i) {
-  return cdofs_[i].pNode_->get_disp_trial_at_dof(cdofs_[i].dof_);
+  return cdofs_[i].node->get_disp_trial_at_dof(cdofs_[i].dof);
 }
+
 double Constraint::get_velc(int i) {
-  return cdofs_[i].pNode_->get_velc_trial_at_dof(cdofs_[i].dof_);
+  return cdofs_[i].node->get_velc_trial_at_dof(cdofs_[i].dof);
 }
+
 double Constraint::get_disp_convg(int i) {
-  return cdofs_[i].pNode_->get_disp_convg_at_dof(cdofs_[i].dof_);
+  return cdofs_[i].node->get_disp_convg_at_dof(cdofs_[i].dof);
 }
+
 double Constraint::get_disp_trial(int i) {
-  return cdofs_[i].pNode_->get_disp_trial_at_dof(cdofs_[i].dof_);
+  return cdofs_[i].node->get_disp_trial_at_dof(cdofs_[i].dof);
 }
+
 double Constraint::get_velc_convg(int i) {
-  return cdofs_[i].pNode_->get_velc_convg_at_dof(cdofs_[i].dof_);
+  return cdofs_[i].node->get_velc_convg_at_dof(cdofs_[i].dof);
 }
+
 double Constraint::get_accl_convg(int i) {
-  return cdofs_[i].pNode_->get_accl_convg_at_dof(cdofs_[i].dof_);
+  return cdofs_[i].node->get_accl_convg_at_dof(cdofs_[i].dof);
 }
+
 void Constraint::inc_trial_force(double f) {
   f_trial_+=f;
 }
+
 void Constraint::update(double f)  {
   f_trial_+=f;
 }
+
 void Constraint::commit() {
   f_convg_ = f_trial_;
 }
+
 double Constraint::get_F() {
   return f_trial_;
 }
