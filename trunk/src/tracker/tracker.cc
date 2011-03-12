@@ -47,7 +47,7 @@ const char* Tracker::data() {
   // start saving
   s << "[";
   // save data
-  for (int i = 0; i < records_.size(); i++) {
+  for (unsigned i = 0; i < records_.size(); i++) {
     if (i > 0) s <<",";
     s << records_[i];
   }
