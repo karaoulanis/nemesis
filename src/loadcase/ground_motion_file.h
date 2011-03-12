@@ -28,6 +28,7 @@
 
 #include <map>
 #include <vector>
+#include <iostream>
 #include "loadcase/load.h"
 
 class Element;
