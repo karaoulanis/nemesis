@@ -61,7 +61,7 @@ int EliminationImposer::impose() {
       throw SException("[nemesis:%d] %s", 9999,
       "Elimination method cannot be used for MultiFreedom constraints.");
     int globalDof = this->get_global_dof(
-      pConstraint->get_cdof(0).pNode_->get_id(), pConstraint->get_cdof(0).dof_);
+      pConstraint->get_cdof(0).node->get_id(), pConstraint->get_cdof(0).dof);
     // Check if dof is activated
     if (globalDof < 0) continue;
     theNewDofs[globalDof]=-pConstraint->get_id();

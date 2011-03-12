@@ -53,11 +53,11 @@ LagrangeModelElement::~LagrangeModelElement() {
 void LagrangeModelElement::add_K(double /*factor*/) {
   myMatrix->clear();
   for (unsigned i = 0; i < theFTable.size()-1; i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     (*myMatrix)(i, theFTable.size()-1)=ci;
   }
   for (unsigned i = 0; i < theFTable.size()-1; i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     (*myMatrix)(theFTable.size()-1, i)=ci;
   }
 }
@@ -80,13 +80,13 @@ void LagrangeModelElement::add_R(double /*factor*/) {
   double c = myConstraint->get_val();
   double cv = 0.;
   for (unsigned i = 0; i < theFTable.size()-1; i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     double ui = myConstraint->get_disp(i);
     cv+=ci*ui;
   }
   cv-=c;
   for (unsigned i = 0; i < theFTable.size()-1; i++) {
-    double ci = myConstraint->get_cdof(i).coeff_;
+    double ci = myConstraint->get_cdof(i).coeff;
     double Fi = myConstraint->get_F();
     (*myVector)[i]=ci*Fi;
   }

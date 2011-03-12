@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "loadcase/loadcase.h"
+#include <stdio.h>
 #include "loadcase/group_state.h"
 #include "loadcase/initial_condition.h"
 #include "loadcase/load.h"
