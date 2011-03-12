@@ -29,7 +29,7 @@ def dependencies(root, src_ext = '.cc'):
         # run gcc and get dependeny data 
         command = 'g++ {0} -I{1} -MM'.format(path, root)
         output  = sp.Popen([command], shell=True, stdout=sp.PIPE).communicate()[0]
-        deps= len(output.split())-1
+        deps    = len(output.replace('\\', '').split())-1
         size    = os.path.getsize(path)
         # code analysis
         print('{0:<60}: {1:6d}b {2:4d} deps'.format(path, size, deps))
