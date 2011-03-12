@@ -42,7 +42,7 @@ GroupState::GroupState(Group* group, int active,
 }
 
 void GroupState::Apply() {
-  for (int i = 0; i < group_->get_elements().size(); i++) {
+  for (unsigned i = 0; i < group_->get_elements().size(); i++) {
     group_->get_elements()[i]->SetGroupData(&groupdata_);
   }
 }
