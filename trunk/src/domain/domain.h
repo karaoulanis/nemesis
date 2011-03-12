@@ -73,9 +73,9 @@ enum DomainTag {  TAG_DOMAIN_NOT_SET      =  0,
                   TAG_DOMAIN_AXISYMMETRIC = 23,
                   TAG_DOMAIN_3D           = 30 };
 /**
- * The Domain Class.                                                
- * The Domain is where all data concerning the nodes, elements, materials, loads 
- * a.s.o. are stored. As storage schemes the stl map class is used. Domain 
+ * The Domain Class.
+ * The Domain is where all data concerning the nodes, elements, materials, loads
+ * a.s.o. are stored. As storage schemes the stl map class is used. Domain
  * provides template methods for storing, accessing and handling these oblects.
  */
 class Domain {

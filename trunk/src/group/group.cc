@@ -30,7 +30,7 @@ Group::Group() {
 }
 
 Group::Group(int id)
-:DomainObject(id) { 
+:DomainObject(id) {
 }
 
 Group::~Group() {

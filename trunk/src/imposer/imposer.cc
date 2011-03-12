@@ -35,9 +35,9 @@ Imposer::~Imposer() {
 }
 /**
  * Creates global dof numbering and stores it into the appropriate containers.
- * There exist two containers: myNodalIDs and theNodalGlobalDofs. The first 
- * one holds the ids, while the second one holds the number of the 
- * corresponding activated dofs in an accumulative way which makes the 
+ * There exist two containers: myNodalIDs and theNodalGlobalDofs. The first
+ * one holds the ids, while the second one holds the number of the
+ * corresponding activated dofs in an accumulative way which makes the
  * retrieval of global dof numbering an easy task. The storing is as follows:
  * Suppose three nodes with ids and activated dofs as, (1, 3), (3, 2), (10, 4).
  * Then it while be stored:

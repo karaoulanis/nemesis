@@ -33,14 +33,14 @@
  * Static Control is a class derived from the Control class. It should
  * control the model through a static analysis, i.e.
  * \li 1. It should form for each ModelElement and for each ModelNode its
- * tangent matrix and its residual vector and it should insert those into the 
+ * tangent matrix and its residual vector and it should insert those into the
  * SOE. I.e. It must create the SOE for a static analysis.
  * \li 2. It should create a predictor step. (new step)
  * \li 3. It should be able to create corrective steps (update).
  * \li 4. It should update the model with the iterative displacements.
- * \li 5. It should commit the converged displacements to the model after 
+ * \li 5. It should commit the converged displacements to the model after
  * each successive increment.
- * \li 6. It should return to the previous converged step, if the current 
+ * \li 6. It should return to the previous converged step, if the current
  * step fails.
  */
 class StaticControl :public Control {

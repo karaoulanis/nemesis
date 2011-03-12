@@ -81,7 +81,7 @@ void Material::addTracker() {
 }
 /**
  * Get the Tracker.
- * Return \a myTracker pointer either it is null or not. 
+ * Return \a myTracker pointer either it is null or not.
  * @todo Change this to a constant pointer.
  * @return  pointer to \a myTracker.
  */

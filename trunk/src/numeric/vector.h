@@ -48,7 +48,7 @@ class Vector {
   }
   /**
    * Constructor.
-   * Allocates a size n double. 
+   * Allocates a size n double.
    * Exception handling for bad allocation is provided.
    * @param n The size of the vector.
    */
@@ -66,7 +66,7 @@ class Vector {
   }
   /**
    * Constructor.
-   * Allocates a size n double and initializes entries to c. 
+   * Allocates a size n double and initializes entries to c.
    * Exception handling for bad allocation is provided.
    * @param n The size of the vector.
    * @param c Initial value for all entries.
@@ -625,7 +625,7 @@ class Vector {
     return ret;
   }
   /**
-   * Return dq/ds. 
+   * Return dq/ds.
    * @todo remove?
    */
   inline Vector dqds() const

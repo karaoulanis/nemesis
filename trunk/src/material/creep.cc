@@ -54,7 +54,7 @@ Creep::~Creep() {
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
- */ 
+ */
 void Creep::set_strain(const Vector& De) {
   double Dt = pD->get_time_incr();
   eTrial = eTotal+De;

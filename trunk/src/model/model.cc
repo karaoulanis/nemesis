@@ -41,26 +41,26 @@ Model::~Model() {
 /**
  * Set constrained variable.
  * @param b True/false depending whether constraints have been imposed.
- */ 
+ */
 void Model::set_constrained(bool b) {
   constrained = b;
 }
 /**
  * Check whether constraints have been imposed.
- */ 
+ */
 bool Model::isConstrained() {
   return constrained;
 }
 /**
  * Set reordered variable.
  * @param b True/false depending whether reording has been done.
- */ 
+ */
 void Model::set_reordered(bool b) {
   reordered = b;
 }
 /**
  * Check whether reording has been done.
- */ 
+ */
 bool Model::isReordered() {
   return reordered;
 }

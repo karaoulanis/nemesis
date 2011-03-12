@@ -75,7 +75,7 @@ void TransientControl::init() {
     pModelNode->zeroVector();
     pModelNode->add_vTrial();
     for (unsigned j = 0;j < FTable.size();j++)
-      if ((FTable[j])>=0) 
+      if ((FTable[j])>=0)
         v[FTable[j]]=pModelNode->get_vector()[j];
   }
   //-------------------------------------------------------------------------

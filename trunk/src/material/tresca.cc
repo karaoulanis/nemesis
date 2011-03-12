@@ -75,7 +75,7 @@ MultiaxialMaterial* Tresca::get_clone() {
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
- */ 
+ */
 void Tresca::set_strain(const Vector& De) {
   std::vector<Vector> df(3);
   df[0].resize(3);  df[1].resize(3);  df[2].resize(3);

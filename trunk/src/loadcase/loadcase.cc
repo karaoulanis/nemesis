@@ -63,7 +63,7 @@ LoadCase::~LoadCase() {
 
 /**
  * Add a Load to the Loadcase.
- * The Load object should be first added to the Domain. Then a 
+ * The Load object should be first added to the Domain. Then a
  * pointer is passed to the corresponding LoadCase.
  */
 void LoadCase::AddLoad(Load* load) {
@@ -72,7 +72,7 @@ void LoadCase::AddLoad(Load* load) {
 
 /**
  * Add an Initial Condition to the Loadcase.
- * The InitialCondition object should be first added to the Domain. Then a 
+ * The InitialCondition object should be first added to the Domain. Then a
  * pointer is passed to the corresponding LoadCase.
  */
 void LoadCase::AddInitialCondition(InitialCondition* initial_condition) {
@@ -81,7 +81,7 @@ void LoadCase::AddInitialCondition(InitialCondition* initial_condition) {
 
 /**
  * Add a Group State to the Loadcase.
- * The GroupState object should be first added to the Domain. Then a 
+ * The GroupState object should be first added to the Domain. Then a
  * pointer is passed to the corresponding LoadCase.
  */
 void LoadCase::AddGroupState(GroupState* group_state) {

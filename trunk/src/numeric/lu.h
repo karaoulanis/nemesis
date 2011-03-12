@@ -76,7 +76,7 @@ namespace LU {
       }
       /* store the index */
       index[j]=imax;
-      /* if the pivot element is zero, the matrix is singular but for some 
+      /* if the pivot element is zero, the matrix is singular but for some
       applications a tiny number is desirable instead */
       if (data[j*n+j] == 0.) data[j*n+j]=num::eps;
       /* finally, divide by the pivot element */

@@ -62,7 +62,7 @@ MultiaxialElastoPlastic::~MultiaxialElastoPlastic() {
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
- */ 
+ */
 void MultiaxialElastoPlastic::set_strain(const Vector& De) {
   // this->returnMapTest(De);
   this->returnMapSYS2(De);

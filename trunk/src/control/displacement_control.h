@@ -31,8 +31,8 @@
 /**
  * The DisplacementControl Class.
  * DisplacementControl is a static control that constraints the displacement
- * increment at a particular variable \f$k\f$ to a fixed quantity 
- * \f$\Delta k\f$. For more details see p.275-276 of "Non-linear Finite Element 
+ * increment at a particular variable \f$k\f$ to a fixed quantity
+ * \f$\Delta k\f$. For more details see p.275-276 of "Non-linear Finite Element
  * Analysis of Solids and Strucures", Vol.1.\n
  * Auto incrementation is done here similarly to that used in LoadControl, i.e.
  * \f[\Delta u_{n}=\Delta u_{0}
@@ -42,11 +42,11 @@
  * \f]
  * \f$I_d\f$ is the desired number of
  * iterations within each step (Crisfield suggests ~3), \f$I_o\f$ is the number
- * of iterations in the last step and \f$n\f$ is an exponent, usually set to 
+ * of iterations in the last step and \f$n\f$ is an exponent, usually set to
  * 0.5 as suggested by Ramm.\n
  * \f$\Delta u\f$ is also limited within min\f$\Delta u\f$ and
- * max\f$\Delta u\f$. By setting those equal to \f$\Delta u_0\f$, then no 
- * auto-incrementation takes place and \f$\Delta u=\Delta u_0\f$. 
+ * max\f$\Delta u\f$. By setting those equal to \f$\Delta u_0\f$, then no
+ * auto-incrementation takes place and \f$\Delta u=\Delta u_0\f$.
  */
 class DisplacementControl :public StaticControl {
   private:

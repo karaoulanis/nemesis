@@ -81,7 +81,7 @@ void Domain::clear() {
 }
 /**
  * Set the number of the dimensions of the Domain.
- * @return An integer implying if something is wrong. 
+ * @return An integer implying if something is wrong.
  */
 int Domain::set_dim(int dim) {
   if (dim_ != 0) {
@@ -191,14 +191,14 @@ void Domain::save(std::ostream& s) {
 
   // Store elements
   s << "\"elements\":[";
-  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {  
+  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
     if (e->second->IsActive()) {
       if (e != theElements.begin()) s << ",";
       e->second->save(s);
     }
   }
   s << "]";
-  
+
   // domain
   s << "}";
 }
@@ -245,7 +245,7 @@ void Domain::zeroLoads() {
 
 /**
  * Sets gravity info.
- * gravityVect Vector giving the direction of gravity. It does not include 
+ * gravityVect Vector giving the direction of gravity. It does not include
  * special cases for 1D, 2D or 3D cases. It might not be normalized; it is
  * normalized here and remains so thereafter.
  * @param g  The gravity acceleration.

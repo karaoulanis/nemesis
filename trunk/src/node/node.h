@@ -35,7 +35,7 @@ class Tracker;
 const int MAX_NUMBER_OF_DOFS = 16;
 
 /**
- * The Node class.                                                
+ * The Node class.
  */
 class Node: public DomainObject {
  private:

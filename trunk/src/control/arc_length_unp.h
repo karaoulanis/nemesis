@@ -30,8 +30,8 @@
 
 /**
  * The ArcLengthUNP Class.
- * ArcLengthUNP (Updated Normal Plane)is a static control that is based on 
- * Crisfield's book "Non-linear Finite Element Analysis of Solids and 
+ * ArcLengthUNP (Updated Normal Plane)is a static control that is based on
+ * Crisfield's book "Non-linear Finite Element Analysis of Solids and
  * Strucures", Vol.1.
  * For more details see:
  * \li Theory p.274 \n

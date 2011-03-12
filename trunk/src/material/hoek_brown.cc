@@ -39,7 +39,7 @@ HoekBrown::HoekBrown() {
  * Constructor.
  * @param ID The id of this material
  * @param elasticID The id of the elastic material
- * @param si Uniaxial compressive strength of the impact rock 
+ * @param si Uniaxial compressive strength of the impact rock
  * @param sp Empirically determined parameter
  * @param mb Empirically determined parameter
  * @param mbb Empirically determined parameter (??)
@@ -115,7 +115,7 @@ MultiaxialMaterial* HoekBrown::get_clone() {
  * The derivative is stored at Vector g.
  * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121.
  * @param s Stress Vector.
- */ 
+ */
 void HoekBrown::find_f(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -130,7 +130,7 @@ void HoekBrown::find_f(const Vector& s, double /*q*/) {
  * The derivative is stored at std::vector<Vector> dfds.
  * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121.
  * @param s Stress Vector.
- */ 
+ */
 void HoekBrown::find_dfds(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -147,7 +147,7 @@ void HoekBrown::find_dfds(const Vector& s, double /*q*/) {
  * The derivative is stored at std::vector<Vector> dgds.
  * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121.
  * @param s Stress Vector.
- */ 
+ */
 void HoekBrown::find_dgds(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -164,7 +164,7 @@ void HoekBrown::find_dgds(const Vector& s, double /*q*/) {
  * The derivative is stored at std::vector<Matrix> d2gdsds.
  * See http://invenio.lib.auth.gr/record/123972/files/karaoulanis.pdf p.121-122.
  * @param s Stress Vector.
- */ 
+ */
 void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
@@ -179,7 +179,7 @@ void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
- */ 
+ */
 void HoekBrown::set_strain(const Vector& De) {
   int response;
 

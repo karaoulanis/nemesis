@@ -48,7 +48,7 @@ LagrangeModelElement::LagrangeModelElement(const IDContainer& FTable,
 LagrangeModelElement::~LagrangeModelElement() {
 }
 /**
- * 
+ *
  */
 void LagrangeModelElement::add_K(double /*factor*/) {
   myMatrix->clear();
@@ -62,17 +62,17 @@ void LagrangeModelElement::add_K(double /*factor*/) {
   }
 }
 /**
- * 
+ *
  */
 void LagrangeModelElement::add_M(double /*factor*/) {
 }
 /**
- * 
+ *
  */
 void LagrangeModelElement::add_C(double /*factor*/) {
 }
 /**
- * 
+ *
  */
 void LagrangeModelElement::add_R(double /*factor*/) {
   /// @todo Make this work for the non-linear multi constraint
@@ -93,7 +93,7 @@ void LagrangeModelElement::add_R(double /*factor*/) {
   (*myVector)[theFTable.size()-1]=cv;
 }
 /**
- * 
+ *
  */
 void LagrangeModelElement::add_Reff(double /*factor*/) {
   /// @todo Make this work for the non-linear multi constraint

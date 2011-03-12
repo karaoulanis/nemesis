@@ -56,7 +56,7 @@ Io(IterDesired), Id(IterDesired), nExp(n) {
 StaticControl::~StaticControl() {
 }
 /**
- * Initializes the vectors used in the Static Control. Also finds the 
+ * Initializes the vectors used in the Static Control. Also finds the
  * vector of external forces and initializes the norm.
  * @return 0 if everything is ok.
  */
@@ -132,7 +132,7 @@ void StaticControl::formResidual(double fac)   {
 }
 /**
  * Commits displacements.
- * After a successfull step the displacements in the domain are set to be 
+ * After a successfull step the displacements in the domain are set to be
  * converged. Time and lambda are committed to Domain.
  * @return 0 if everything is ok.
  */
@@ -144,8 +144,8 @@ void StaticControl::commit() {
 }
 /**
  * Aborts step.
- * After a unsuccessfull step the displacement in the domain are set to the 
- * previous converged step. 
+ * After a unsuccessfull step the displacement in the domain are set to the
+ * previous converged step.
  * @return 0 if everything is ok.
  */
 void StaticControl::rollback() {

@@ -29,7 +29,7 @@
 #include "material/spring_material.h"
 
 /**
- * The Elastic Spring Material Class.                                                
+ * The Elastic Spring Material Class.
  */
 class SpringContact: public SpringMaterial {
  public:

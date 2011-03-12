@@ -32,9 +32,9 @@ ModelElement::ModelElement() {
 }
 /**
  * Simple constructor.
- * Initializes the ModelObject, which in turn initializes the FEObject and 
- * passes the FTable to the ModelObject. This constructor will be used when 
- * other objects than elements (such as constraints) will need to occupy a 
+ * Initializes the ModelObject, which in turn initializes the FEObject and
+ * passes the FTable to the ModelObject. This constructor will be used when
+ * other objects than elements (such as constraints) will need to occupy a
  * ModelNode.
  */
 ModelElement::ModelElement(const IDContainer& FTable, Element* pElement,

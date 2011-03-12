@@ -61,17 +61,17 @@ DisplacementControl::~DisplacementControl() {
  *            \frac{I_d}{I_o}
  *                      \right)^n
  * \f]
- * \f$I_d\f$ is the desired number of iterations within each step (Crisfield 
- * suggests ~3), \f$I_o\f$ is the number of iterations in the last step and 
+ * \f$I_d\f$ is the desired number of iterations within each step (Crisfield
+ * suggests ~3), \f$I_o\f$ is the number of iterations in the last step and
  * \f$n\f$ is an exponent, usually set to 0.5 as suggested by Ramm.\n
  * \f$\Delta u(k)\f$ is also limited within min\f$\Delta l\f$ and
  * max\f$\Delta u(k)\f$. By setting those equal to \f$\Delta u(k)_{0}\f$,
- * then no auto-incrementation takes place and \f$\Delta l=\Delta u(k)_{0}\f$. 
- * It should be noted that min\f$\Delta u(k)\f$ and min\f$\Delta u(k)\f$ are 
+ * then no auto-incrementation takes place and \f$\Delta l=\Delta u(k)_{0}\f$.
+ * It should be noted that min\f$\Delta u(k)\f$ and min\f$\Delta u(k)\f$ are
  * given as absolute values.
  * \li Predictor Step\n
- * The predictor step is based on a forward Euler scheme. It is based on 
- * p.276 (eq.9.34) of Cridfield's book. As soon this is computed the domain is 
+ * The predictor step is based on a forward Euler scheme. It is based on
+ * p.276 (eq.9.34) of Cridfield's book. As soon this is computed the domain is
  * updated.
  */
 void DisplacementControl::predict() {
@@ -110,7 +110,7 @@ void DisplacementControl::predict() {
 }
 /**
  * Updates that occur within each iterative step.
- * \f$\delta\lambda\f$ is given in (9.32) p.276, Crisfield, Vol.1.  
+ * \f$\delta\lambda\f$ is given in (9.32) p.276, Crisfield, Vol.1.
   */
 void DisplacementControl::correct() {
   // Find du_bar
