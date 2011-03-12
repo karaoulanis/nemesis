@@ -11,7 +11,7 @@ def get_target(project, path, item, num_items, verbal, color, src_ext = '.cc', o
     objname = path.replace(src_ext, obj_ext)
     command = 'g++ {0} -Isrc -MM -MT \'{1}\''.format(path, objname)
     output  = sp.Popen([command], shell=True, stdout=sp.PIPE).communicate()[0]
-    num_deps= len(output.split())-1
+    num_deps= len(output.replace('\\', '').split())-1
     size    = os.path.getsize(path)
     sign    = '' if verbal else '@'
     color0  = '\e[00m'    if color else ''
