@@ -29,7 +29,7 @@
 #include "material/material.h"
 
 /**
- * The Single Dof Material Class.                                                
+ * The Single Dof Material Class.
  */
 class SDofMaterial: public Material {
  protected:

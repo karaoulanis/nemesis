@@ -29,7 +29,7 @@
 #include "control/static_control.h"
 /**
  * The ArcLengthSpherical Class.
- * ArcLengthSpherical is a static control that is based on Crisfield's 
+ * ArcLengthSpherical is a static control that is based on Crisfield's
  * book "Non-linear Finite Element Analysis of Solids and Strucures", Vol.1.
  * For more details see:
  * \li Theory p.274-275 \n

@@ -35,7 +35,7 @@ DomainObject::DomainObject() {
   // Does nothing.
 }
 /**
- * Constructor. 
+ * Constructor.
  * Construct a DomainObject for a given ID.
  * @param ID An integer that initialize a DomainObject.
  */

@@ -29,7 +29,7 @@
 #include "material/multiaxial_material.h"
 
 /**
- * The Tresca Material Class.                                                
+ * The Tresca Material Class.
  */
 class Tresca: public MultiaxialMaterial {
  protected:

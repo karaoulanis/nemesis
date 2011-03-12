@@ -49,7 +49,7 @@ UniaxialLoad::UniaxialLoad(int elemID, const char* dir)
   else if (!strcmp(dir, "POSY"))
   { myDirection[0]= 0;  myDirection[1]= 1;  myDirection[2]= 0; }
   else
-    throw SException("[nemesis:%d] %s", 9999, "Unknown/misspelled direction."); 
+    throw SException("[nemesis:%d] %s", 9999, "Unknown/misspelled direction.");
   projections.resize(2, 0.);
   projections[0]= myDirection[0]*(+c)+
           myDirection[1]*(+s);
@@ -66,7 +66,7 @@ BeamLoadPoint::BeamLoadPoint() {
 }
 BeamLoadPoint::BeamLoadPoint(int elemID, const char* dir, double a0_, double p0_)
 :UniaxialLoad(elemID, dir) {
-  if (a0_ < 0.||a0_>1.) 
+  if (a0_ < 0.||a0_>1.)
     throw SException("[nemesis:%d] %s", 9999, "a must be between 0. and 1.");
   a0 = a0_;
   p0 = p0_;

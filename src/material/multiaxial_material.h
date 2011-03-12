@@ -31,7 +31,7 @@
 #include "numeric/vector.h"
 
 /**
- * The Multiaxial Material Class.                                                
+ * The Multiaxial Material Class.
  */
 class MultiaxialMaterial: public Material {
  protected:

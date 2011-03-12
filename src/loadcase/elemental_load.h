@@ -38,7 +38,7 @@ class ElementalLoad: public Load {
   ElementalLoad();
   ElementalLoad(Element* element);
   virtual ~ElementalLoad();
- 
+
   // Apply load
   virtual const Vector& get_P()=0;
   void apply(double fact, double t);

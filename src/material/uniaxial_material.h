@@ -29,7 +29,7 @@
 #include "material/material.h"
 
 /**
- * The Uniaxial Material Class.                                                
+ * The Uniaxial Material Class.
  */
 class UniaxialMaterial: public Material {
  protected:

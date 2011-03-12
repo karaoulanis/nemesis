@@ -50,25 +50,25 @@ ArcLengthSpherical::~ArcLengthSpherical() {
 /**
  * Creates new step for a Arc Length Spherical control based static analysis.
  * It does two things:
- * \li Auto-incrementation \n 
- * \f$\Delta l\f$ at each new step is given as decribed in "Non-linear 
+ * \li Auto-incrementation \n
+ * \f$\Delta l\f$ at each new step is given as decribed in "Non-linear
  * Finite Element Analysis of Solids and Strucures", Vol.1, p.287, by (9.40):
  * \f[\Delta l_{n}=\Delta l_{0}
  *            \left(
  *            \frac{I_d}{I_o}
  *                      \right)^n
  * \f]
- * \f$I_d\f$ is the desired number of iterations within each step (Crisfield 
- * suggests ~3), \f$I_o\f$ is the number of iterations in the last step and 
+ * \f$I_d\f$ is the desired number of iterations within each step (Crisfield
+ * suggests ~3), \f$I_o\f$ is the number of iterations in the last step and
  * \f$n\f$ is an exponent, usually set to 0.5 as suggested by Ramm.\n
  * \f$\Delta l\f$ is also limited within min\f$\Delta l\f$ and
  * max\f$\Delta l\f$. By setting those equal to \f$\Delta l_{0}\f$,
- * then no auto-incrementation takes place and \f$\Delta l=\Delta l_{0}\f$. 
+ * then no auto-incrementation takes place and \f$\Delta l=\Delta l_{0}\f$.
  * It should be noted that min\f$\Delta l\f$ and min\f$\Delta l\f$ are given as
  * absolute values.
  * \li Predictor Step\n
- * The predictor step is based on a forward Euler scheme. It is based on 
- * p.285-286 of Cridfield's book. As soon this is computed the domain is 
+ * The predictor step is based on a forward Euler scheme. It is based on
+ * p.285-286 of Cridfield's book. As soon this is computed the domain is
  * updated.
  */
 void ArcLengthSpherical::predict() {
@@ -103,7 +103,7 @@ void ArcLengthSpherical::predict() {
 }
 /**
  * Updates that occur within each iterative step.
- * \f$\delta\lambda\f$ is the root of the equation  
+ * \f$\delta\lambda\f$ is the root of the equation
  * \f[
  *    a_1\delta\lambda^2+a_2\delta\lambda+a3 = 0.
  * \f]

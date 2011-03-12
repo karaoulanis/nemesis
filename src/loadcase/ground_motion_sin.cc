@@ -28,7 +28,7 @@
 
 GroundMotionSin::GroundMotionSin() {
 }
- 
+
 GroundMotionSin::GroundMotionSin(const std::map<int, Element*>* elements,
                                  int dof, double a, double omega, double phi)
                                  :Load() {

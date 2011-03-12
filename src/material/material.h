@@ -34,7 +34,7 @@
 class Domain;
 
 /**
- * The Material Class.                                                
+ * The Material Class.
  */
 class Material: public DomainObject {
  protected:

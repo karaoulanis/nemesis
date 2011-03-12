@@ -50,24 +50,24 @@ ArcLengthUNP::~ArcLengthUNP() {
  * Creates new step for a Arc Length UNP control based static analysis.
  * It does two things:
  * \li Auto-incrementation \n
- * \f$\Delta\lambda\f$ at each new step is given as decribed in "Non-linear 
+ * \f$\Delta\lambda\f$ at each new step is given as decribed in "Non-linear
  * Finite Element Analysis of Solids and Strucures", Vol.1, p.287, by (9.40):
  * \f[\Delta\lambda_{n}=\Delta\lambda_{0}
  *            \left(
  *            \frac{I_d}{I_o}
  *                      \right)^n
  * \f]
- * \f$I_d\f$ is the desired number of iterations within each step (Crisfield 
- * suggests ~3), \f$I_o\f$ is the number of iterations in the last step and 
+ * \f$I_d\f$ is the desired number of iterations within each step (Crisfield
+ * suggests ~3), \f$I_o\f$ is the number of iterations in the last step and
  * \f$n\f$ is an exponent, usually set to 0.5 as suggested by Ramm.\n
  * \f$\Delta\lambda\f$ is also limited within min\f$\Delta\lambda\f$ and
  * max\f$\Delta\lambda\f$. By setting those equal to \f$\Delta\lambda_{0}\f$,
- * then no auto-incrementation takes place and \f$\Delta l=\Delta l_{0}\f$. 
- * It should be noted that min\f$\Delta\lambda\f$ and min\f$\Delta\lambda\f$ 
+ * then no auto-incrementation takes place and \f$\Delta l=\Delta l_{0}\f$.
+ * It should be noted that min\f$\Delta\lambda\f$ and min\f$\Delta\lambda\f$
  * are given as absolute values.
  * \li Predictor Step\n
- * The predictor step is based on a forward Euler scheme. It is based on 
- * p.285-286 of Cridfield's book. As soon this is computed the domain is 
+ * The predictor step is based on a forward Euler scheme. It is based on
+ * p.285-286 of Cridfield's book. As soon this is computed the domain is
  * updated.
  */
 void ArcLengthUNP::predict() {

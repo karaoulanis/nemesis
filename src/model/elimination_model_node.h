@@ -37,7 +37,7 @@ class EliminationModelNode: public ModelNode {
   EliminationModelNode();
   EliminationModelNode(const IDContainer& FTable, Node* pNode);
   ~EliminationModelNode();
-  
+
   void set_old_FTable(const IDContainer& ftab);
 
   void add_R(double factor);

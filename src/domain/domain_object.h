@@ -33,7 +33,7 @@
 class Domain;
 
 /**
- * The DomainObject Class.                                                
+ * The DomainObject Class.
  */
 class DomainObject: public FEObject {
  protected:

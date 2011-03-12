@@ -89,8 +89,8 @@ void EigenControl::formTangent() {
 }
 /**
  * Aborts step.
- * After a unsuccessfull step the displacement in the domain are set to the 
- * previous converged step. This happens throught the ModelNodes. 
+ * After a unsuccessfull step the displacement in the domain are set to the
+ * previous converged step. This happens throught the ModelNodes.
  * @return 0 if everything is ok.
  */
 void EigenControl::rollback() {

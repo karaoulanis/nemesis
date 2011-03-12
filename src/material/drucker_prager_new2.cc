@@ -92,7 +92,7 @@ MultiaxialMaterial* DruckerPragerNew2::get_clone() {
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
- */ 
+ */
 void DruckerPragerNew2::set_strain(const Vector& De) {
   // material properties
   double E = myElastic->get_param(0);

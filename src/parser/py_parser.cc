@@ -1918,15 +1918,15 @@ static PyObject* pyTracker_Data(PyObject* self, PyObject* args) {
   return Py_None;
 }
 static PyMethodDef TrackerMethods[] =  {
-  {"node",      pyTracker_Node, 
+  {"node",      pyTracker_Node,
     METH_VARARGS, "Add a new tracker to given node."},
-  {"steps",     pyTracker_Steps,  
+  {"steps",     pyTracker_Steps,
     METH_VARARGS, "Get number tracker steps."},
-  {"time",      pyTracker_Time, 
+  {"time",      pyTracker_Time,
     METH_VARARGS, "Get tracker time for a given step."},
-  {"Lambda",      pyTracker_Lambda, 
+  {"Lambda",      pyTracker_Lambda,
     METH_VARARGS, "Get tracker lambda for a given step."},
-  {"data",      pyTracker_Data, 
+  {"data",      pyTracker_Data,
     METH_VARARGS, "Get tracker data for a given step."},
   {NULL, NULL, 0, NULL}
 };
