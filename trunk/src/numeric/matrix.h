@@ -54,8 +54,7 @@ class Matrix {
    * @param i The number of row.
    * @param j The number of column.
    */
-  inline double& operator()(int i, int j)
-  {
+  inline double& operator()(int i, int j) {
     #ifdef _DEBUG
     array_range_check(i, j, rows_, cols_);
     #endif
@@ -67,8 +66,7 @@ class Matrix {
    * @param i The number of row.
    * @param j The number of column.
    */
-  inline double operator()(int i, int j) const
-  {
+  inline double operator()(int i, int j) const {
     #ifdef _DEBUG
     array_range_check(i, j, rows_, cols_);
     #endif
@@ -77,29 +75,25 @@ class Matrix {
   /**
    * Returns the number of rows of the Matrix.
    */
-  inline int rows() const
-  {
+  inline int rows() const {
     return rows_;
   }
   /**
    * Returns the number of columns of the Matrix.
    */
-  inline int cols() const
-  {
+  inline int cols() const {
     return cols_;
   }
   /**
    * Returns a pointer to Matrix data.
    */
-  inline double* data()
-  {
+  inline double* data() {
     return data_;
   }
   /**
    * Returns a const pointer to Matrix data.
    */
-  inline double* data() const
-  {
+  inline double* data() const {
     return data_;
   }
   void resize(int m, int n);
@@ -110,8 +104,7 @@ class Matrix {
    * @param c All elements of the Matrix are added by this factor.
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator+=(double c)
-  {
+  inline Matrix& operator+=(double c) {
     for (int i = 0;i < size_;i++) data_[i]+=c;
     return *this;
   }
@@ -120,8 +113,7 @@ class Matrix {
    * @param c This factor is substracted by all elements of the Matrix.
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator-=(double c)
-  {
+  inline Matrix& operator-=(double c) {
     for (int i = 0;i < size_;i++) data_[i]-=c;
     return *this;
   }
@@ -130,8 +122,7 @@ class Matrix {
    * @param c All elements of the Matrix are multiplied with this factor.
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator*=(double c)
-  {
+  inline Matrix& operator*=(double c) {
     for (int i = 0;i < size_;i++) data_[i]*=c;
     return *this;
   }
@@ -140,8 +131,7 @@ class Matrix {
    * @param c All elements of this Matrix are divided with this factor.
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator/=(double c)
-  {
+  inline Matrix& operator/=(double c) {
     for (int i = 0;i < size_;i++) data_[i]/=c;
     return *this;
   }
@@ -150,8 +140,7 @@ class Matrix {
    * @param c All elements of the Matrix are multiplied with this factor.
    * @return  A reference to the Matrix.
    */
-  inline Matrix operator*(const double c) const
-  {
+  inline Matrix operator*(const double c) const {
     Matrix res(*this);
     res*=c;
     return res;
@@ -162,8 +151,7 @@ class Matrix {
    * @param m A reference to the matrix that will be multiplied.
    * @return  Created Matrix.
    */
-    inline friend Matrix operator*(const double c, const Matrix& m)
-  {
+    inline friend Matrix operator*(const double c, const Matrix& m) {
     return m*c;
   }
   /**
@@ -171,8 +159,7 @@ class Matrix {
    * @param c All elements of the Matrix are divided with this factor.
    * @return  Created Matrix.
    */
-  inline Matrix operator/(const double c) const
-  {
+  inline Matrix operator/(const double c) const {
     Matrix res(*this);
     res/=c;
     return res;
@@ -184,8 +171,7 @@ class Matrix {
    * @param m Matrix to be added.
    * @param c0 Factor for the existing Matrix (this).
    */
-  inline void add_cM(double c, const Matrix& m, double c0 = 1.0)
-  {
+  inline void add_cM(double c, const Matrix& m, double c0 = 1.0) {
     if (c0 == 0.0)     for (int i = 0;i < size_;i++) data_[i]=0;
     else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
     for (int i = 0;i < size_;i++) data_[i]+=c*m.data_[i];
@@ -214,8 +200,7 @@ class Matrix {
    * @param m The given Matrix.
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator+=(const Matrix& m)
-  {
+  inline Matrix& operator+=(const Matrix& m) {
     #ifdef _DEBUG
     array_size_check(rows_, cols_, m.rows_, m.cols_);
     #endif
@@ -228,8 +213,7 @@ class Matrix {
    * @param m The given Matrix.
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator-=(const Matrix& m)
-  {
+  inline Matrix& operator-=(const Matrix& m) {
     #ifdef _DEBUG
     array_size_check(rows_, cols_, m.rows_, m.cols_);
     #endif
@@ -238,13 +222,12 @@ class Matrix {
   }
   /**
    * Implements + operator: this+m.
-   * Uses c*this+=c1*m, with c0 = 1.0 and c = 1.0. 
+   * Uses c*this+=c1*m, with c0 = 1.0 and c = 1.0.
    * Size checking is provided for the debug version.
    * @param m The given Matrix.
    * @return  Created Matrix.
    */
-  inline Matrix operator+(const Matrix& m) const
-  {
+  inline Matrix operator+(const Matrix& m) const {
     #ifdef _DEBUG
     array_size_check(rows_, cols_, m.rows_, m.cols_);
     #endif
@@ -259,8 +242,7 @@ class Matrix {
    * @param m The given Matrix.
    * @return  Created Matrix.
    */
-  inline Matrix operator-(const Matrix& m) const
-  {
+  inline Matrix operator-(const Matrix& m) const {
     #ifdef _DEBUG
     array_size_check(rows_, cols_, m.rows_, m.cols_);
     #endif
@@ -269,14 +251,13 @@ class Matrix {
     return res;
   }
   /**
-   * Implements * operator: m1*m2. 
+   * Implements * operator: m1*m2.
    * Uses c0*this+=c*m1*m2, with c0 = 0 c = 1.0 and m1 = this.
    * Size checking is provided for the debug version.
    * @param m The given Matrix.
    * @return  Created Matrix.
    */
-  inline Matrix operator*(const Matrix& m) const
-  {
+  inline Matrix operator*(const Matrix& m) const {
     #ifdef _DEBUG
     array_size_check(cols_, m.rows_);
     #endif
@@ -288,16 +269,14 @@ class Matrix {
    * Implements + operator: +this
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator+()
-  {
+  inline Matrix& operator+() {
     return *this;
   }
   /**
    * Implements - operator: -this.
    * @return  Created Matrix.
    */
-  inline Matrix operator-()
-  {
+  inline Matrix operator-() {
     Matrix res(cols_, rows_);
     for (int i = 0;i < size_;i++) res.data_[i]=-data_[i];
     return res;
@@ -307,8 +286,7 @@ class Matrix {
    * @param m The given Matrix.
    * @return  Created Matrix.
    */
-  inline friend Matrix Transpose(const Matrix& m)
-  {
+  inline friend Matrix Transpose(const Matrix& m) {
     Matrix res(m.cols_, m.rows_);
     for (int i = 0;i < m.rows_;i++)
       for (int j = 0;j < m.cols_;j++)
@@ -321,8 +299,7 @@ class Matrix {
    * @param v The given Vector.
    * @return  Created Vector.
    */
-  inline Vector operator*(const Vector& v) const
-  {
+  inline Vector operator*(const Vector& v) const {
     #ifdef _DEBUG
     array_size_check(cols_, v.size());
     #endif
@@ -341,8 +318,7 @@ class Matrix {
    * @param c0  A factor to be multiplied with the existing entries.
    */
   inline Matrix& append(const Matrix& m, int row, int col, double c = 1.0,
-                        double c0 = 0.)
-  {
+                        double c0 = 0.) {
     #ifdef _DEBUG
     array_range_check(row+m.rows_, col+m.cols_, rows_, cols_);
     #endif
@@ -409,14 +385,11 @@ class Matrix {
     double* vv;
     int* index;
     double d;
-    try
-    {
+    try {
       me = new double[size_];
       vv = new double[rows_];
       index = new int[rows_];
-    }
-    catch(std::bad_alloc)
-    {
+    } catch(std::bad_alloc) {
       throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
     }
     for (int i = 0;i < size_;i++) me[i]=data_[i];
@@ -430,8 +403,7 @@ class Matrix {
     if (ret == -1)
       throw SException("[nemesis:%d] %s", 1006, "Matrix is singular.\n");
   }
-    friend Matrix Inverse(const Matrix& m)
-  {
+    friend Matrix Inverse(const Matrix& m) {
     #ifdef _DEBUG
     array_size_check(m.cols_, m.rows_);
     #endif
@@ -441,15 +413,12 @@ class Matrix {
     double* vv;
     int* index;
     double d;
-    try
-    {
+    try {
       me = new double[m.size_];
       col = new double[m.rows_];
       vv = new double[m.rows_];
       index = new int[m.rows_];
-    }
-    catch(std::bad_alloc)
-    {
+    } catch(std::bad_alloc) {
       throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
     }
     for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
@@ -464,8 +433,7 @@ class Matrix {
       throw SException("[nemesis:%d] %s", 1006, "Matrix is singular.\n");
     return inv;
   }
-  friend double det(const Matrix& m)
-  {
+  friend double det(const Matrix& m) {
     #ifdef _DEBUG
     array_size_check(m.cols_, m.rows_);
     #endif
@@ -474,14 +442,11 @@ class Matrix {
     int* index;
     double d;
     double det;
-    try
-    {
+    try {
       me = new double[m.size_];
       vv = new double[m.rows_];
       index = new int[m.rows_];
-    }
-    catch(std::bad_alloc)
-    {
+    } catch(std::bad_alloc) {
       throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
     }
     for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
@@ -495,15 +460,13 @@ class Matrix {
       throw SException("[nemesis:%d] %s", 1006, "Matrix is singular.\n");
     return det;
   }
-  friend std::ostream& operator<<(std::ostream& s, const Matrix& m)
-  {
+  friend std::ostream& operator<<(std::ostream& s, const Matrix& m) {
     s << 1200 << ' ' << m.rows_ << ' ' << m.cols_ << ' ';
     for (int i = 0;i < m.size_;i++) s << m.data_[i] << ' ';
     return s;
   }
   void add_BTCB(int row, int col, const int* perm, const Matrix& B1,
-    const Matrix& C, const Matrix B2, double c1, double c0 = 0.)
-  {
+    const Matrix& C, const Matrix B2, double c1, double c0 = 0.) {
     int m = B1.rows();
     int n = B2.cols();
     int pos = row*cols_+col;

@@ -43,7 +43,7 @@ Matrix::Matrix()
 
 /**
  * Constructor.
- * Allocates a size m*n double. 
+ * Allocates a size m*n double.
  * Exception handling for bad allocation is provided.
  * @param n The number of rows.
  * @param m The number of columns.
@@ -61,7 +61,7 @@ Matrix::Matrix(int m, int n)
 
 /**
 * Constructor.
-* Allocates a size m*n double and initializes entries to c. 
+* Allocates a size m*n double and initializes entries to c.
 * Exception handling for bad allocation is provided.
 * @param n The number of rows.
 * @param m The number of columns.
