@@ -122,35 +122,35 @@ void Quad4d::update() {
     for (unsigned a = 0; a < myNodes.size(); a++) {
       this->get_B(Ba, a, k);
       /// @todo check dV
-      //double dV=(pD->get_fac())*detJ[k];
+      //  double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
   }
 }
+
 void Quad4d::shapeFunctions() {
   shape4(x, shp, detJ);
   // Axisymmetry
-  if (pD->get_tag()==TAG_DOMAIN_AXISYMMETRIC)
-  {
-    for (int k = 0;k < 4;k++)    // matpoints
-    {
+  if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
+    for (int k = 0;k < 4;k++) {    // matpoints
       double r = 0.;
-      for (int i = 0;i < 4;i++)  // nodes
+      for (int i = 0;i < 4;i++) {  // nodes
           r+=x(i, 0)*shp[i][0][k];
+      }
       detJ[k]*=r;
     }
   }
 }
+
 void Quad4d::get_B(Matrix& B, int node, int gPoint) {
   /// @todo: check gCrds
-  //const double dsq3 = 0.577350269189626;
-  //static const double gCrds[4]={-dsq3, +dsq3, -dsq3, +dsq3};
+  // const double dsq3 = 0.577350269189626;
+  // static const double gCrds[4]={-dsq3, +dsq3, -dsq3, +dsq3};
 
   B.resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
-  for (int k = 0;k < 4;k++)  //matpoints
-  {
+  for (int k = 0; k < 4; k++) {  // matpoints
     double dV = detJ[k]*(pD->get_fac());
     Bb1+=shp[node][1][k]*dV;
     Bb2+=shp[node][2][k]*dV;
@@ -162,16 +162,16 @@ void Quad4d::get_B(Matrix& B, int node, int gPoint) {
     double B0 = 0., Bb0 = 0.;
   // Axisymmetry
   double r = 0.;
-  if (pD->get_tag()==TAG_DOMAIN_AXISYMMETRIC)
-  {
-    for (int i = 0;i < 4;i++)    // nodes
+  if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC)  {
+    for (int i = 0;i < 4;i++) {   // nodes
           r+=x(i, 0)*shp[i][0][gPoint];
+    }
     B0 = shp[node][0][gPoint]/r;
-    for (int k = 0;k < 4;k++)    // matpoints
-    {
+    for (int k = 0;k < 4;k++) {    // matpoints
       r = 0.;
-      for (int i = 0;i < 4;i++)  // nodes
+      for (int i = 0;i < 4;i++) {  // nodes
           r+=x(i, 0)*shp[i][0][k];
+      }
       Bb0+=shp[node][0][k]*detJ[k]*(pD->get_fac())/vol/r;
     }
   }

@@ -171,12 +171,12 @@ const Vector& Beam2e::get_R() {
   double K12 = 12*E*J/(L*L*L);
 
   // R = Fint - Fext(Gravity) - Fext(Loads)
-  R[0]=facS*(  KN*u[0]  - KN*u[3])                      - facG*( 0.5*b[0]*L);
-  R[1]=facS*(  K12*u[1] + K6*u[2] - K12*u[4] + K6*u[5]) - facG*( 0.5*b[1]*L);
-  R[2]=facS*(  K6*u[1]  + K4*u[2] - K6*u[4]  + K2*u[5]) - facG*( b[1]*L*L/12.);
-  R[3]=facS*(- KN*u[0]  + KN*u[3])                      - facG*( 0.5*b[0]*L);
-  R[4]=facS*(- K12*u[1] - K6*u[2] + K12*u[4] - K6*u[5]) - facG*( 0.5*b[1]*L);
-  R[5]=facS*(  K6*u[1]  + K2*u[2] - K6*u[4]  + K4*u[5]) - facG*(-b[1]*L*L/12.);
+  R[0] = facS*(+KN*u[0]  - KN*u[3])                      - facG*(+0.5*b[0]*L);
+  R[1] = facS*(+K12*u[1] + K6*u[2] - K12*u[4] + K6*u[5]) - facG*(+0.5*b[1]*L);
+  R[2] = facS*(+K6*u[1]  + K4*u[2] - K6*u[4]  + K2*u[5]) - facG*(+b[1]*L*L/12.);
+  R[3] = facS*(-KN*u[0]  + KN*u[3])                      - facG*(+0.5*b[0]*L);
+  R[4] = facS*(-K12*u[1] - K6*u[2] + K12*u[4] - K6*u[5]) - facG*(+0.5*b[1]*L);
+  R[5] = facS*(+K6*u[1]  + K2*u[2] - K6*u[4]  + K4*u[5]) - facG*(-b[1]*L*L/12.);
   R-=facP*P;
 
   // Local R to global R

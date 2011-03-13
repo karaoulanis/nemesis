@@ -45,17 +45,17 @@ DomainObject::DomainObject(int ID) {
 DomainObject::~DomainObject() {
   // Nothing to destruct here.
 }
-int DomainObject::get_id()          {
+int DomainObject::get_id() {
   return myID;
 }
 const Packet& DomainObject::get_packet() {
-  ///@ todo When finished implementing all turn this function into pure.
+  /// @todo When finished implementing all turn this function into pure.
   std::cout << "DomainObject::Not implemented yet!" << std::endl;
   thePacket.zero();
   return thePacket;
 }
 void DomainObject::set_packet(const Packet& /*p*/) {
-  ///@ todo When finished implementing all turn this function into pure.
+  /// @todo When finished implementing all turn this function into pure.
   std::cout << "DomainObject::Not implemented yet!" << std::endl;
 }
 void DomainObject::set_domain(Domain* pDomain) {

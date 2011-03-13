@@ -180,7 +180,7 @@ const char* Domain::get_state() {
   // needs to be converted to a static string before
   /// @todo: check for refactoring
   static string tmp;
-  tmp=s.str();
+  tmp = s.str();
   return tmp.c_str();
 }
 /**

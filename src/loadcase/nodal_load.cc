@@ -36,8 +36,8 @@ NodalLoad::NodalLoad(Node* node, int dof)
 :Load() {
   node_ = node;
   dof_  = dof - 1;
-  ///@todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
-  ///@todo Give SException the right id and not 9999.
+  /// @todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
+  /// @todo Give SException the right id and not 9999.
   if (node_->get_activated_dof(dof_) < 0)
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
 }

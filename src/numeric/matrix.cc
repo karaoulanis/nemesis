@@ -262,4 +262,4 @@ double det(const Matrix& m) {
     throw SException("[nemesis:%d] %s", 1006, "Matrix is singular.\n");
   return det;
 }
- 
+

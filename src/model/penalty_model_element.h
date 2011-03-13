@@ -30,7 +30,7 @@
 
 class PenaltyModelElement : public ModelElement {
  private:
- double a;
+  double a;
   public:
   PenaltyModelElement();
   PenaltyModelElement(const IDContainer& FTable,

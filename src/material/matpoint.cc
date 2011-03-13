@@ -35,7 +35,7 @@ MatPoint::MatPoint() {
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index,
                    int p1)
 :DomainObject(IDCounter++) {
-  if (p1>6) { 
+  if (p1>6) {
     throw SException("[nemesis:%d] %s", 9999, "Rule does not exist.");
   }
   r = GaussCrds[p1][index+1];

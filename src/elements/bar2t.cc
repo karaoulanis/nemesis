@@ -47,7 +47,7 @@ Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
 /**
  * Destructor.
  */
-Bar2t::~Bar2t()  {
+Bar2t::~Bar2t() {
 }
 const Matrix& Bar2t::get_K() {
   Matrix& K=*myMatrix;
@@ -69,8 +69,8 @@ const Matrix& Bar2t::get_K() {
   for (int i = 0;i < nDim;i++)
     for (int j = 0; j < nDim; j++) {
       d = cosX[i]*cosX[j]*K0;
-      K(i     , j   )   = d;
-      K(i+nDim, j   )   =-d;
+      K(i     , j)      = d;
+      K(i+nDim, j)      =-d;
       K(i     , j+nDim) =-d;
       K(i+nDim, j+nDim) = d;
     }
@@ -79,7 +79,7 @@ const Matrix& Bar2t::get_K() {
   int ii;
   for (int i = 0; i < nDim; i++) {
     i < nDim ? ii = i+nDim : ii = i-nDim;
-    K(i, i )+= K0;
+    K(i, i) += K0;
     K(i, ii)+=-K0;
   }
 

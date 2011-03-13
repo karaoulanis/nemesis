@@ -1206,7 +1206,7 @@ static PyObject* pyConstraint_Set(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyConstraint_twoDofs(PyObject* /*self*/, PyObject* args) {
   int node_id1, dof1, node_id2, dof2;
   double a1, a2, c;
-  if (!PyArg_ParseTuple(args, "(iid)(iid)d", &node_id1, &dof1, &a1, 
+  if (!PyArg_ParseTuple(args, "(iid)(iid)d", &node_id1, &dof1, &a1,
                                              &node_id2, &dof2, &a2, &c))
     return NULL;
   try {
