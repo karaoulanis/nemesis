@@ -24,9 +24,11 @@
 // *****************************************************************************
 
 #include "elements/quad4i.h"
-#include "loadcase/group_data.h"
 #include "elements/shape_functions.h"
+#include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
 
 double Quad4i::detJ[4];
 double Quad4i::shpStd[4][3][4];

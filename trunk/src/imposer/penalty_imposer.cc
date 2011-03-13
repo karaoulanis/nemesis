@@ -25,9 +25,11 @@
 
 #include "imposer/penalty_imposer.h"
 #include "analysis/analysis.h"
-#include "model/penalty_model_element.h"
-#include "model/standard_model_node.h"
+#include "constraints/constraint.h"
 #include "model/model.h"
+#include "model/penalty_model_element.h"
+#include "model/standard_model_element.h"
+#include "model/standard_model_node.h"
 #include "node/node.h"
 
 PenaltyImposer::PenaltyImposer(double amf)

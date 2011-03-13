@@ -27,7 +27,9 @@
 #define SRC_ELEMENTS_SPRING_H_
 
 #include "elements/element.h"
-#include "material/spring_material.h"
+#include "numeric/matrix.h"
+
+class SpringMaterial;
 
 class Spring: public Element {
  protected:

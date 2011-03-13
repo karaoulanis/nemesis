@@ -27,7 +27,9 @@
 #define SRC_ELEMENTS_BEAM2E_H_
 
 #include "elements/element.h"
-#include "material/uniaxial_material.h"
+
+class CrossSection;
+class UniaxialMaterial;
 
 class Beam2e: public Element {
  protected:
@@ -36,7 +38,7 @@ class Beam2e: public Element {
   CrossSection* mySection;
   double L;
   UniaxialMaterial* myUniMaterial;
-  public:
+ public:
   Beam2e();
   Beam2e(int ID, int Node_1, int Node_2, int matID, int secID);
   ~Beam2e();

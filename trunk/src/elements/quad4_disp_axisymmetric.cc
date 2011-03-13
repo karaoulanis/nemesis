@@ -25,6 +25,8 @@
 
 #include "elements/quad4_disp_axisymmetric.h"
 #include "loadcase/group_data.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
 
 Quad4DispAxisymmetric::Quad4DispAxisymmetric() {
 }

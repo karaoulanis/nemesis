@@ -26,9 +26,10 @@
 #include "elements/element.h"
 #include <cmath>
 #include "domain/domain.h"
-#include "node/node.h"
 #include "group/group.h"
 #include "loadcase/group_data.h"
+#include "material/material.h"
+#include "node/node.h"
 
 Matrix** Element::theStaticMatrices = 0;
 Vector** Element::theStaticVectors = 0;

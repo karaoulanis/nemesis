@@ -24,7 +24,9 @@
 // *****************************************************************************
 
 #include "material/drucker_prager_new2.h"
+#include <iostream>
 #include <sstream>
+#include <string>
 #include "material/drucker_prager_ys.h"
 #include "material/tension_cutoff_ys.h"
 
@@ -130,7 +132,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
   // Elastic (quick return)
   if (activeS.size() == 0) return;
   // check
-  if (activeS.size() == 2) cout << "2 active" << endl;
+  if (activeS.size() == 2) std::cout << "2 active" << std::endl;
 
   // Plastic - start iterations ----------------------------------
   int iter = 0;

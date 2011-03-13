@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_QUAD4B_H_
 #define SRC_ELEMENTS_QUAD4B_H_
 
+#include <vector>
 #include "elements/quad4.h"
 
 class Quad4b: public Quad4 {
@@ -40,7 +41,7 @@ class Quad4b: public Quad4 {
   ~Quad4b();
 
   const Matrix& get_K();
-    const Matrix& get_M();
+  const Matrix& get_M();
   const Vector& get_R();
   void get_B(Matrix& B, int node, int gPoint);
   void shapeFunctions();

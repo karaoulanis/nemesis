@@ -26,8 +26,10 @@
 #ifndef SRC_ELEMENTS_BRICK8_H_
 #define SRC_ELEMENTS_BRICK8_H_
 
+#include <vector>
 #include "elements/element.h"
-#include "material/matpoint.h"
+
+class MatPoint;
 
 class Brick8: public Element {
  protected:

@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_QUAD4D_H_
 #define SRC_ELEMENTS_QUAD4D_H_
 
+#include <vector>
 #include "elements/quad4.h"
 
 class Quad4d: public Quad4 {

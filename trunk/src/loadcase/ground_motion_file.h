@@ -26,9 +26,9 @@
 #ifndef SRC_LOADCASE_GROUND_MOTION_FILE_H_
 #define SRC_LOADCASE_GROUND_MOTION_FILE_H_
 
+#include <iostream>
 #include <map>
 #include <vector>
-#include <iostream>
 #include "loadcase/load.h"
 
 class Element;

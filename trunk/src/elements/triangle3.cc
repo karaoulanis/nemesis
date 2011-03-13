@@ -25,6 +25,9 @@
 
 #include "elements/triangle3.h"
 #include "loadcase/group_data.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
+#include "node/node.h"
 
 Triangle3::Triangle3() {
 }

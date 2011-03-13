@@ -27,17 +27,14 @@
 #define SRC_FEOBJECT_FE_OBJECT_H_
 
 #include <vector>
-#include "database/database.h"
-#include "database/packet.h"
 #include "feobject/fe_object_tags.h"
-
 
 class FEObject {
  protected:
   FEObjectTag myTag;
   std::vector<FEObjectTag> consistentTags;
   char myLabel[64];
-  public:
+ public:
   FEObject();
   FEObject(FEObjectTag tag);
   virtual ~FEObject();

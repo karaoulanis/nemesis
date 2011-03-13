@@ -24,8 +24,8 @@
 // *****************************************************************************
 
 #include "loadcase/initial_stresses.h"
-#include "group/group.h"
 #include "elements/element.h"
+#include "group/group.h"
 
 InitialStresses::InitialStresses() {
 }

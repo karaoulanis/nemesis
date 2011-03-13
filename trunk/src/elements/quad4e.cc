@@ -26,6 +26,8 @@
 #include "elements/quad4e.h"
 #include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
 
 Matrix Quad4e::Bu(3, 8);
 Matrix Quad4e::Be(3, 4);

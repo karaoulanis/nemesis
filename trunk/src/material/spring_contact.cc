@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "material/spring_contact.h"
+#include <iostream>
 
 SpringContact::SpringContact() {
 }
@@ -44,7 +45,7 @@ SpringContact::SpringContact(int ID, double Kn, double Ks, double mu,
   Ct(2, 2)=Ks;
 
   if (gap != 0.)
-    cout << "Warning  : Gap is not yet implemented." << endl;
+    std::cout << "Warning  : Gap is not yet implemented." << std::endl;
   /// @todo gap.
   // eTotal.clear();
   // eTotal[0]=gap;
@@ -79,7 +80,7 @@ void SpringContact::set_strain(const Vector& De) {
 
   if (f1 < 0. && f2 < 0.) {
   // Case 1: Closed and sticking
-    cout << "Spring : " << myID << " Closed and sticking." << endl;
+    std::cout << "Spring : " << myID << " Closed and sticking." << std::endl;
     sTrial[0] = Kn*eTrial[0];
     sTrial[1] = Ks*eTrial[1];
     sTrial[2] = Ks*eTrial[2];
@@ -88,7 +89,7 @@ void SpringContact::set_strain(const Vector& De) {
     Ct(2, 2) = Ks;
   } else if (f1 < 0. && f2 >= 0.)  {
     // Case 2: Closed and sliding
-    cout << "Spring : " << myID << " Closed and sliding." << endl;
+    std::cout << "Spring : " << myID << " Closed and sliding." << std::endl;
     sTrial[0] = Kn*eTrial[0];
     sTrial[1] = 0.;
     sTrial[2] = 0.;
@@ -97,7 +98,7 @@ void SpringContact::set_strain(const Vector& De) {
     Ct(2, 2) = 0.;
   } else {
   // Case 3: Open
-    cout << "Spring : " << myID << " Open." << endl;
+    std::cout << "Spring : " << myID << " Open." << std::endl;
     sTrial[0] = 0.;
     sTrial[1] = 0.;
     sTrial[2] = 0.;

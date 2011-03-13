@@ -24,6 +24,8 @@
 // *****************************************************************************
 
 #include "material/matpoint.h"
+#include "exception/sexception.h"
+#include "material/multiaxial_material.h"
 
 int MatPoint::IDCounter = 0;
 
@@ -33,7 +35,9 @@ MatPoint::MatPoint() {
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index,
                    int p1)
 :DomainObject(IDCounter++) {
-  if (p1>6) exit(-987);
+  if (p1>6) { 
+    throw SException("[nemesis:%d] %s", 9999, "Rule does not exist.");
+  }
   r = GaussCrds[p1][index+1];
   s = 0;
   t = 0;
@@ -44,7 +48,9 @@ MatPoint::MatPoint(MultiaxialMaterial* mat, int index,
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2,
                    int p1, int p2)
 :DomainObject(IDCounter++) {
-  if (p1>6||p2>6) exit(-987);
+  if (p1>6||p2>6) {
+    throw SException("[nemesis:%d] %s", 9999, "Integration rule error.");
+  }
   r = GaussCrds[p1][index1];
   s = GaussCrds[p2][index2];
   t = 0.;
@@ -55,7 +61,9 @@ MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2,
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2, int index3,
                    int p1, int p2, int p3)
 :DomainObject(IDCounter++) {
-  if (p1>6||p2>6) exit(-987);
+  if (p1>6||p2>6) {
+    throw SException("[nemesis:%d] %s", 9999, "Integration rule error.");
+  }
   r = GaussCrds[p1][index1];
   s = GaussCrds[p2][index2];
   t = GaussCrds[p3][index3];
@@ -81,6 +89,10 @@ void MatPoint::set_X(double x_, double y_, double z_) {
   y = y_;
   z = z_;
   myMaterial->set_X(x, y, z);
+}
+
+bool MatPoint::isPlastic() {
+  return myMaterial->isPlastic();
 }
 
 /**

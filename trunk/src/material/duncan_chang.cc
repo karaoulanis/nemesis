@@ -24,7 +24,9 @@
 // *****************************************************************************
 
 #include "material/duncan_chang.h"
+#include <iostream>
 #include <sstream>
+#include <string>
 
 DuncanChang::DuncanChang() {
 }
@@ -67,7 +69,7 @@ const Matrix& DuncanChang::get_C() {
   const Vector& s = sTrial.eigenvalues();
   double s1 = -s[2];
   double s3 = -s[0];
-  cout << s1 << '\t' << s3 << endl;
+  std::cout << s1 << '\t' << s3 << std::endl;
 
   // Material parameters
   double E   =MatParams[ 0];
@@ -81,7 +83,7 @@ const Matrix& DuncanChang::get_C() {
   if (s3 < 0) s3 = 0;
   double Et = d*d*E*pa*pow(s3/pa, m);
   if (num::tiny(Et)) Et = E;
-  cout << Et << endl;
+  std::cout << Et << std::endl;
 
   // Find and return C
   double Em = Et/((1.+nu)*(1.-2*nu));

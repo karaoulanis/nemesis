@@ -27,7 +27,10 @@
 #define SRC_ELEMENTS_BAR_H_
 
 #include "elements/element.h"
-#include "material/uniaxial_material.h"
+
+class CrossSection;
+class Tracker;
+class UniaxialMaterial;
 
 class Bar: public Element {
  protected:

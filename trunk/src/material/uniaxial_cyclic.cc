@@ -24,6 +24,8 @@
 // *****************************************************************************
 
 #include "material/uniaxial_cyclic.h"
+#include <cmath>
+#include <iostream>
 
 UniaxialCyclic::UniaxialCyclic() {
 }
@@ -67,21 +69,21 @@ void UniaxialCyclic::set_strain(const double De) {
     sr = sConvg;
     er = eConvg;
     reversed = true;
-    cout << er << '\t' << sr << endl;
+    std::cout << er << '\t' << sr << std::endl;
   }
   eTrial = eConvg+De;
   // cout << er << '\t '<< eTrial << '\t' << reversed << endl;
   if (reversed == false) {
-    sTrial = Gmax*eTrial/(1+(Gmax/tmax)*fabs(eTrial));
+    sTrial = Gmax*eTrial/(1+(Gmax/tmax)*std::fabs(eTrial));
     Et = Gmax*tmax*
-        (tmax+Gmax*fabs(eTrial)-Gmax*eTrial*num::sign(eTrial))/
-        ((tmax+Gmax*abs(eTrial))*(tmax+Gmax*fabs(eTrial)));
+        (tmax+Gmax*std::fabs(eTrial)-Gmax*eTrial*num::sign(eTrial))/
+        ((tmax+Gmax*std::fabs(eTrial))*(tmax+Gmax*fabs(eTrial)));
   } else {
     sTrial = sr+2.0*Gmax*(0.5*(eTrial-er))/
             (1+(Gmax/tmax)*fabs(0.5*(eTrial-er)));
     Et = 0.5*Gmax*tmax*
-        (2*tmax+Gmax*fabs(er-eTrial)-0.5*Gmax*num::sign(er-eTrial)*(er-eTrial))/
-        ((tmax+0.5*Gmax*abs(er-eTrial))*(tmax+0.5*Gmax*abs(er-eTrial)));
+        (2*tmax+Gmax*std::fabs(er-eTrial)-0.5*Gmax*num::sign(er-eTrial)*(er-eTrial))/
+        ((tmax+0.5*Gmax*std::fabs(er-eTrial))*(tmax+0.5*Gmax*std::fabs(er-eTrial)));
   }
 }
 double UniaxialCyclic::get_C() {

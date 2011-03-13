@@ -26,8 +26,11 @@
 #ifndef SRC_ELEMENTS_TETRAHEDRON4_DISP_H_
 #define SRC_ELEMENTS_TETRAHEDRON4_DISP_H_
 
+#include <vector>
 #include "elements/element.h"
-#include "material/matpoint.h"
+#include "numeric/matrix.h"
+
+class MatPoint;
 
 class Tetrahedron4Disp: public Element {
  protected:

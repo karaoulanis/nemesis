@@ -25,6 +25,7 @@
 
 #include "material/creep.h"
 #include <sstream>
+#include <string>
 
 Matrix Creep::C(6, 6, 0.);
 

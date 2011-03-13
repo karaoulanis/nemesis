@@ -26,6 +26,8 @@
 #include "elements/spring.h"
 #include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
+#include "material/spring_material.h"
+#include "node/node.h"
 
 /**
  * Default constructor.
