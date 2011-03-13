@@ -32,8 +32,6 @@
 #include "numeric/lu.h"
 #include "numeric/vector.h"
 
-using namespace LU;
-
 // Forward declarations
 class Vector;
 
