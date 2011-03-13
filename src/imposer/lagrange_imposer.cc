@@ -24,6 +24,12 @@
 // *****************************************************************************
 
 #include "imposer/lagrange_imposer.h"
+#include "analysis/analysis.h"
+#include "model/lagrange_model_element.h"
+#include "model/lagrange_model_node.h"
+#include "model/standard_model_node.h"
+#include "model/model.h"
+#include "node/node.h"
 
 LagrangeImposer::LagrangeImposer()
   :Imposer() {

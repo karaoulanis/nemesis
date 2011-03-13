@@ -27,8 +27,6 @@
 #define SRC_IMPOSER_ELIMINATION_IMPOSER_H_
 
 #include "imposer/imposer.h"
-#include "model/elimination_model_element.h"
-#include "model/elimination_model_node.h"
 
 class EliminationImposer: public Imposer {
   private:

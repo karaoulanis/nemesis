@@ -26,24 +26,23 @@
 #ifndef SRC_IMPOSER_IMPOSER_H_
 #define SRC_IMPOSER_IMPOSER_H_
 
-#include "analysis/analysis.h"
+#include <map>
 #include "analysis/analysis_object.h"
-#include "model/model.h"
-#include "model/standard_model_element.h"
-#include "model/standard_model_node.h"
+#include "containers/containers.h"
 
 // Forward declarations
 class Model;
 class Domain;
+class Constraint;
 
 class Imposer: public AnalysisObject {
  protected:
   Model* theModel;
   Domain* theDomain;
-  ConstraintContainer* theConstraints;
+  std::map<int, Constraint*>* theConstraints;
   IDContainer myNodalIDs;
   IDContainer theNodalGlobalDofs;
-  public:
+ public:
   Imposer();
   virtual ~Imposer();
   int createGlobalDofNumbering();

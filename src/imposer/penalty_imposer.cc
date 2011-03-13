@@ -24,6 +24,11 @@
 // *****************************************************************************
 
 #include "imposer/penalty_imposer.h"
+#include "analysis/analysis.h"
+#include "model/penalty_model_element.h"
+#include "model/standard_model_node.h"
+#include "model/model.h"
+#include "node/node.h"
 
 PenaltyImposer::PenaltyImposer(double amf)
   :Imposer() {
