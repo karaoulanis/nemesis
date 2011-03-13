@@ -63,7 +63,7 @@ namespace num {
     char format[64];
     sprintf(format, "%% %d.%df", total, decimal);
     int fw = total-1-1-decimal;
-    if (fabs(d) < pow(10.0, (double)fw)) {
+    if (fabs(d) < pow(10.0, static_cast<double>(fw))) {
       printf(format, d);
     } else {
       for (int i = 0; i < total; i++) printf("*");
@@ -74,7 +74,7 @@ namespace num {
     sprintf(format, "%% %dd", total);
     int fw = total-1;
     /// @todo Check for abs(int)
-    if (fabs((double)n) < pow(10.0, (double)fw)) {
+    if (fabs(static_cast<double>(n)) < pow(10.0, static_cast<double>(fw))) {
       printf(format, n);
     } else {
       for (int i = 0;i < total; i++) printf("*");

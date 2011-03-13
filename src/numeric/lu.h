@@ -30,7 +30,8 @@
 
 namespace LU {
   /// @todo check and comment the algorithm
-  inline int decomposition(double* data, int n, double* vv, int* index, double& d) {
+  inline int decomposition(double* data, int n, double* vv,
+                                     int* index, double& d) {
     int i, imax, j, k;
     double big, sum, temp;
     d = 1;
@@ -108,7 +109,8 @@ namespace LU {
       b[i]=sum/data[i*n+i];
     }
   }
-  inline void inverse(double* data, int n, int* index, double* inv, double *col) {
+  inline void inverse(double* data, int n, int* index,
+                             double* inv, double *col) {
     for (int j = 0; j < n; j++) {
       for (int i = 0;i < n;i++) col[i]=0.;
       col[j]=1.;
