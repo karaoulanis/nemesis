@@ -37,9 +37,9 @@ using std::fixed;
  */
 SQLiteDatabase::SQLiteDatabase()
 :Database() {
-  ///@ todo Use synch/not synch to increase performance.
-  ///@ todo Use PRIMARY KEY index.
-  ///@ todo Check if db locked.
+  /// @todo Use synch/not synch to increase performance.
+  /// @todo Use PRIMARY KEY index.
+  /// @todo Check if db locked.
 }
 /**
  * Constructor.
@@ -83,7 +83,8 @@ int SQLiteDatabase::closeDB() {
   if (isConnected) {
     int errCode = sqlite3_close(db);
     if (errCode)
-      throw SException("[nemesis:%d] %s", 9999, "Error while closing database.");
+      throw SException("[nemesis:%d] %s", 9999,
+                       "Error while closing database.");
     dbName[0]='\0';
     isConnected = false;
   }

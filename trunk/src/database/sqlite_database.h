@@ -53,7 +53,5 @@ class SQLiteDatabase: public Database {
   int commitTransaction();
 
   void exportToVtk(const char* tableName);
-
 };
-
 #endif  // SRC_DATABASE_SQLITE_DATABASE_H_

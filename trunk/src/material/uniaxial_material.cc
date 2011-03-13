@@ -66,6 +66,6 @@ void UniaxialMaterial::track() {
   // needs to be converted to a static string before
   /// @todo: check for refactoring
   static string tmp;
-  tmp=s.str();
+  tmp = s.str();
   myTracker->track(tmp.c_str());
 }

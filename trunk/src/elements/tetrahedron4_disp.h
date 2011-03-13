@@ -40,7 +40,7 @@ class Tetrahedron4Disp: public Element {
   public:
   // Constructors and Destructor
   Tetrahedron4Disp();
-  Tetrahedron4Disp(int ID,int Node_1, int Node_2, int Node_3, int Node_4,
+  Tetrahedron4Disp(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
                    int matID);
   ~Tetrahedron4Disp();
 

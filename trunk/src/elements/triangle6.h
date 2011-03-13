@@ -30,7 +30,7 @@
 #include "elements/element.h"
 
 class MatPoint;
- 
+
 class Triangle6: public Element {
  protected:
   double a1, a2, a3;

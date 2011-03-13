@@ -329,12 +329,12 @@ void HoekBrown::set_strain(const Vector& De) {
   sTrial[5]=s[0]*sV(0, 0)*sV(0, 2)+s[1]*sV(1, 0)*sV(1, 2)+s[2]*sV(2, 0)*sV(2, 2);
 
   // creep
- //   double Dt  = 10000.;
- //   double eta = 100000.;
+  // double Dt  = 10000.;
+  // double eta = 100000.;
     double Dt  = 10000.;
     double eta = 100000.;
   sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
- // aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
+  // aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
 }
 /**
  * Commit material state.

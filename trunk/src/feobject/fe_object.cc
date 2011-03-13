@@ -40,7 +40,7 @@ FEObjectTag FEObject::get_tag() {
 }
 
 bool FEObject::checkIfAllows(FEObject* /*f*/) {
-  ///@ todo When finished implementing all turn this function into pure.
+  /// @todo When finished implementing all turn this function into pure.
   return 0;
 }
 void FEObject::checkConstency(FEObject* /*f*/) {

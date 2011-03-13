@@ -137,9 +137,9 @@ const Matrix& Triangle6::get_K() {
         CB(1, 1)=C(1, 1)*N(j, 2) + C(1, 3)*N(j, 1);
         CB(2, 1)=C(3, 1)*N(j, 2) + C(3, 3)*N(j, 1);
 
-        K(ii  , jj  ) += (N(i, 1)*CB(0, 0) + N(i, 2)*CB(2, 0))*dV;
+        K(ii  , jj)   += (N(i, 1)*CB(0, 0) + N(i, 2)*CB(2, 0))*dV;
         K(ii  , jj+1) += (N(i, 1)*CB(0, 1) + N(i, 2)*CB(2, 1))*dV;
-        K(ii+1, jj  ) += (N(i, 2)*CB(1, 0) + N(i, 1)*CB(2, 0))*dV;
+        K(ii+1, jj)   += (N(i, 2)*CB(1, 0) + N(i, 1)*CB(2, 0))*dV;
         K(ii+1, jj+1) += (N(i, 2)*CB(1, 1) + N(i, 1)*CB(2, 1))*dV;
         jj+=2;
       }
@@ -196,9 +196,9 @@ void Triangle6::update() {
     // Determine the strain
     static Vector epsilon(6);
       epsilon.clear();
-    epsilon[0]=N(0, 1)*u[ 0]+N(1, 1)*u[ 2]+N(2, 1)*u[ 4]+N(3, 1)*u[ 6]+N(4, 1)*u[ 8]+N(5, 1)*u[10];
-    epsilon[1]=N(0, 2)*u[ 1]+N(1, 2)*u[ 3]+N(2, 2)*u[ 5]+N(3, 2)*u[ 7]+N(4, 2)*u[ 9]+N(5, 2)*u[11];
-    epsilon[3]=N(0, 2)*u[ 0]+N(0, 1)*u[ 1]+N(1, 2)*u[ 2]+N(1, 1)*u[ 3]+N(2, 2)*u[ 4]+N(2, 1)*u[ 5]+
+    epsilon[0] = N(0, 1)*u[ 0]+N(1, 1)*u[ 2]+N(2, 1)*u[ 4]+N(3, 1)*u[ 6]+N(4, 1)*u[ 8]+N(5, 1)*u[10];
+    epsilon[1] = N(0, 2)*u[ 1]+N(1, 2)*u[ 3]+N(2, 2)*u[ 5]+N(3, 2)*u[ 7]+N(4, 2)*u[ 9]+N(5, 2)*u[11];
+    epsilon[3] = N(0, 2)*u[ 0]+N(0, 1)*u[ 1]+N(1, 2)*u[ 2]+N(1, 1)*u[ 3]+N(2, 2)*u[ 4]+N(2, 1)*u[ 5]+
              N(3, 2)*u[ 6]+N(3, 1)*u[ 7]+N(4, 2)*u[ 8]+N(4, 1)*u[ 9]+N(5, 2)*u[10]+N(5, 1)*u[11];
     // And send it to the material point
     myMatPoints[i]->get_material()->set_strain(epsilon);

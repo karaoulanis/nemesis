@@ -90,8 +90,7 @@ void Quad4e::formKR() {
   // Local Newton scheme to enforce orthogonality
   Dalpha.clear();
   int counter = 0;
-  do
-  {
+  do {
     counter++;
     // Form enhanced tagent matrix/vector
     Kee.clear();
@@ -125,8 +124,7 @@ void Quad4e::formKR() {
     }
     Kee.solve(dalpha, Fe);
     Dalpha+=dalpha;
-    if (counter>30)
-    {
+    if (counter>30) {
       for (unsigned i = 0; i < myMatPoints.size(); i++) {
         double xi =myMatPoints[i]->get_r();
         double eta = myMatPoints[i]->get_s();
@@ -147,10 +145,9 @@ void Quad4e::formKR() {
       report(Dalpha, "Da",  20, 10);
       throw SException("[nemesis:%d] %s", 9999, "Error in quad4e.\n");
     }
-  }
-  while(Fe.twonorm()>1e-6);
+  } while (Fe.twonorm() > 1e-6);
   alpha+=Dalpha;
-  //report(alpha, "alpha", true, 12, 9);
+  // report(alpha, "alpha", true, 12, 9);
 
   Kuu.clear();
   Kue.clear();
@@ -188,12 +185,11 @@ void Quad4e::formKR() {
   Vector& R=*myVector;
   K = Kuu-Kue*Inverse(Kee)*Transpose(Kue);
   R = Fu -Kue*Inverse(Kee)*Fe;
-  //K.report("K", 12, 3);
-  //Kuu.report("Kuu", 12, 3);
-  //Kue.report("Kue", 12, 3);
-  //Kee.report("Kee", 12, 3);
-  //cout << "------------------------------------------------"<<endl;
-
+  // K.report("K", 12, 3);
+  // Kuu.report("Kuu", 12, 3);
+  // Kue.report("Kue", 12, 3);
+  // Kee.report("Kee", 12, 3);
+  // cout << "------------------------------------------------"<<endl;
 }
 
 double Quad4e::get_J(double xi, double eta) {
@@ -215,15 +211,14 @@ void Quad4e::formT0(double xi, double eta) {
   T0(0, 0)=J(0, 0)*J(0, 0);  T0(0, 1)=J(1, 0)*J(0, 1);  T0(0, 2)=2*J(0, 0)*J(0, 1);
   T0(1, 0)=J(0, 1)*J(1, 0);  T0(1, 1)=J(1, 1)*J(1, 1);  T0(1, 2)=2*J(1, 0)*J(1, 1);
   T0(2, 0)=J(0, 0)*J(1, 0);  T0(2, 1)=J(0, 1)*J(1, 1);  T0(2, 2)=  J(0, 0)*J(1, 1)+J(0, 1)*J(1, 0);
-  //T0.report("T0");
+  // T0.report("T0");
 }
-void Quad4e::formNu(double xi, double eta)
-{
+void Quad4e::formNu(double xi, double eta) {
   N.clear();
-  N(0, 0)=0.25*(1-xi)*(1-eta);           // N1
-  N(0, 2)=0.25*(1+xi)*(1-eta);           // N2
-  N(0, 4)=0.25*(1+xi)*(1+eta);           // N3
-  N(0, 6)=0.25*(1-xi)*(1+eta);           // N4
+  N(0, 0)=0.25*(1-xi)*(1-eta);  // N1
+  N(0, 2)=0.25*(1+xi)*(1-eta);  // N2
+  N(0, 4)=0.25*(1+xi)*(1+eta);  // N3
+  N(0, 6)=0.25*(1-xi)*(1+eta);  // N4
   N(1, 1)=N(0, 0);
   N(1, 3)=N(0, 2);
   N(1, 5)=N(0, 4);
@@ -236,42 +231,42 @@ void Quad4e::formBu(double xi, double eta) {
   J(1, 0)=0.25*(-x(0, 1)*(1-eta) +x(1, 1)*(1-eta) +x(2, 1)*(1+eta) -x(3, 1)*(1+eta));
   J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
 
-  double detJ = J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);      // detJ
+  double detJ = J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);  // detJ
 
   double dxidx  = J(1, 1)/detJ;
   double detadx =-J(1, 0)/detJ;
   double dxidy  =-J(0, 1)/detJ;
   double detady = J(0, 0)/detJ;
 
-    double d1dxi=-0.25*(1-eta)*dxidx -0.25*(1-xi)*detadx; // N1, 1
-    double d2dxi=+0.25*(1-eta)*dxidx -0.25*(1+xi)*detadx; // N2, 1
-    double d3dxi=+0.25*(1+eta)*dxidx +0.25*(1+xi)*detadx; // N3, 1
-    double d4dxi=-0.25*(1+eta)*dxidx +0.25*(1-xi)*detadx; // N4, 1
+  double d1dxi=-0.25*(1-eta)*dxidx -0.25*(1-xi)*detadx;  // N1, 1
+  double d2dxi=+0.25*(1-eta)*dxidx -0.25*(1+xi)*detadx;  // N2, 1
+  double d3dxi=+0.25*(1+eta)*dxidx +0.25*(1+xi)*detadx;  // N3, 1
+  double d4dxi=-0.25*(1+eta)*dxidx +0.25*(1-xi)*detadx;  // N4, 1
 
-    double d1deta=-0.25*(1-eta)*dxidy -0.25*(1-xi)*detady;  // N1, 2
-    double d2deta=+0.25*(1-eta)*dxidy -0.25*(1+xi)*detady;  // N2, 2
-    double d3deta=+0.25*(1+eta)*dxidy +0.25*(1+xi)*detady;  // N3, 2
-  double d4deta=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady;  // N4, 2
+  double d1deta=-0.25*(1-eta)*dxidy -0.25*(1-xi)*detady;  // N1, 2
+  double d2deta=+0.25*(1-eta)*dxidy -0.25*(1+xi)*detady;  // N2, 2
+  double d3deta=+0.25*(1+eta)*dxidy +0.25*(1+xi)*detady;  // N3, 2
+  double d4deta=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady;    // N4, 2
 
   Bu(0, 0)=d1dxi;  Bu(0, 1)=0.;   Bu(0, 2)=d2dxi;  Bu(0, 3)=0.;   Bu(0, 4)=d3dxi;  Bu(0, 5)=0.;   Bu(0, 6)=d4dxi;  Bu(0, 7)=0.;
   Bu(1, 0)=0.;   Bu(1, 1)=d1deta; Bu(1, 2)=0.;   Bu(1, 3)=d2deta; Bu(1, 4)=0.;   Bu(1, 5)=d3deta; Bu(1, 6)=0.;   Bu(1, 7)=d4deta;
   Bu(2, 0)=d1deta; Bu(2, 1)=d1dxi;  Bu(2, 2)=d2deta; Bu(2, 3)=d2dxi;  Bu(2, 4)=d3deta; Bu(2, 5)=d3dxi;  Bu(2, 6)=d4deta; Bu(2, 7)=d4dxi;
 }
-//void Quad4e::formBe(double xi, double eta)
-//{
-//  Be.clear();
-//  Be(0, 0)=xi;
-//  Be(1, 1)=eta;
-//  Be(2, 2)=xi;
-//  Be(2, 3)=eta;
-//  //Be(2, 4)=xi*eta;
+// void Quad4e::formBe(double xi, double eta)
+// {
+//   Be.clear();
+//   Be(0, 0)=xi;
+//   Be(1, 1)=eta;
+//   Be(2, 2)=xi;
+//   Be(2, 3)=eta;
+//   //Be(2, 4)=xi*eta;
 //
-//  double detJ0 = get_J(0., 0.);
-//  double detJ =get_J(xi, eta);
-//  this->formT0(0., 0.);
-//  Be=(detJ0/detJ)*Transpose(Inverse(T0))*Be;
+//   double detJ0 = get_J(0., 0.);
+//   double detJ =get_J(xi, eta);
+//   this->formT0(0., 0.);
+//   Be=(detJ0/detJ)*Transpose(Inverse(T0))*Be;
 //
-//}
+// }
 void Quad4e::formBe(double xi, double eta) {
   static Matrix J(2, 2);
   static Matrix invTranJ(2, 2);

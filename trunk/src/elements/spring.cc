@@ -167,8 +167,8 @@ const Vector& Spring::get_R() {
   // Factors
   if (!(groupdata_->active_))  return R;
   double facS = groupdata_->factor_S_;
-  //double facG = groupdata_->factor_G_;
-  //double facP = groupdata_->factor_P_;
+  // double facG = groupdata_->factor_G_;
+  // double facP = groupdata_->factor_P_;
   /// @todo check
   // double facG = myGroup->get_fac_G();
   // double facP = myGroup->get_fac_P();
@@ -234,4 +234,3 @@ Tracker* Spring::get_tracker(int index) {
 void Spring::track() {
     mySpringMaterial->track();
 }
-

@@ -32,6 +32,7 @@
 LagrangeModelElement::LagrangeModelElement()
   :ModelElement() {
 }
+
 /**
  * Constructor
  */
@@ -42,11 +43,13 @@ LagrangeModelElement::LagrangeModelElement(const IDContainer& FTable,
   myMatrix = theStaticMatrices[FTable.size()];
   myVector = theStaticVectors[FTable.size()];
 }
+
 /**
  * Destructor
  */
 LagrangeModelElement::~LagrangeModelElement() {
 }
+
 /**
  *
  */
@@ -61,16 +64,19 @@ void LagrangeModelElement::add_K(double /*factor*/) {
     (*myMatrix)(theFTable.size()-1, i)=ci;
   }
 }
+
 /**
  *
  */
 void LagrangeModelElement::add_M(double /*factor*/) {
 }
+
 /**
  *
  */
 void LagrangeModelElement::add_C(double /*factor*/) {
 }
+
 /**
  *
  */
@@ -92,13 +98,14 @@ void LagrangeModelElement::add_R(double /*factor*/) {
   }
   (*myVector)[theFTable.size()-1]=cv;
 }
+
 /**
  *
  */
 void LagrangeModelElement::add_Reff(double /*factor*/) {
   /// @todo Make this work for the non-linear multi constraint
   double c = myConstraint->get_val();
-  double u = myConstraint->get_disp(0); // wrong
+  double u = myConstraint->get_disp(0);  // wrong
   for (unsigned i = 0;i < theFTable.size()-1; i++) {
     (*myVector)[i]=myConstraint->get_F();
   }

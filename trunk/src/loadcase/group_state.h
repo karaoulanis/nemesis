@@ -32,12 +32,12 @@ class Group;
 struct GroupData;
 
 class GroupState {
-public:
+ public:
   GroupState();
   GroupState(Group* group, int active,
     double factor_K, double factor_S, double factor_G, double factor_P);
   void Apply();
-private:
+ private:
   Group* group_;
   GroupData groupdata_;
 };

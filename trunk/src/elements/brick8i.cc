@@ -97,7 +97,7 @@ const Vector& Brick8i::get_R() {
   static Vector sigma(6);
   static Matrix Ba(6, 3);
   // Factors
-   if (!(groupdata_->active_))  return R;
+  if (!(groupdata_->active_))  return R;
   double facS = groupdata_->factor_S_;
   double facG = groupdata_->factor_G_;
   double facP = groupdata_->factor_P_;

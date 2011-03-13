@@ -95,13 +95,14 @@ const Matrix& Bar::get_M() {
   double rho = myUniMaterial->get_rho();
   double mass = 0.5*L0*A0*rho;
   for (int i = 0; i < nDim; i++) {
-    M(i     , i     ) = mass;
+    M(i     , i)      = mass;
     M(i+nDim, i+nDim) = mass;
   }
   return M;
 }
 const Vector& Bar::get_Reff() {
-  Vector velc = this->get_velc_trial(); /// @todo: problem with memory sharing otherwise
+  /// @todo: problem with memory sharing otherwise
+  Vector velc = this->get_velc_trial();
   Vector& Reff=*myVector;
   // +Fint-Fext
   this->get_R();

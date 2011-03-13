@@ -53,5 +53,4 @@ class Database {
 
   virtual bool existsFile(const char* filename);
 };
-
 #endif  // SRC_DATABASE_DATABASE_H_

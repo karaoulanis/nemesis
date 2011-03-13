@@ -179,11 +179,11 @@ void MohrCoulomb::set_strain(const Vector& De) {
 
   // if (f[0]>1e-8 || f[1]>1e-8 || f[2]>1e-8)
   //   cout << "inacurate : "<<s[0]<<"\t"<<s[1]<<"\t"<<s[2]<<"\t"<<endl;
-    // creep
-    double Dt =10000.;
-    double eta = 100.;
-    sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
-   // aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
+  // creep
+  double Dt =10000.;
+  double eta = 100.;
+  sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
+  // aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
 }
 /**
  * Commit material state.

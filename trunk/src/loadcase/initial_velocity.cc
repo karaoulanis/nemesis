@@ -34,10 +34,10 @@ InitialVelocity::InitialVelocity(Node* node, int dof, double velocity)
   // Retrieve node from the domain
   node_ = node;
   dof_ = dof-1;
-  // Check if dof is activated
-  ///@todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
-  ///@todo Give SException the right id and not 9999.
-  if (node_->get_activated_dof(dof_)<0)
+  //  Check if dof is activated
+  /// @todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
+  /// @todo Give SException the right id and not 9999.
+  if (node_->get_activated_dof(dof_) < 0)
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
   velocity_ = velocity;
 }

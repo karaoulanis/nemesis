@@ -57,8 +57,8 @@ const Matrix& Bar2s::get_K() {
   for (int i = 0;i < nDim;i++)
     for (int j = 0; j < nDim; j++) {
       d = cosX[i]*cosX[j]*K0;
-      K(i     , j   )   =  d;
-      K(i+nDim, j   )   = -d;
+      K(i     , j)      =  d;
+      K(i+nDim, j)      = -d;
       K(i     , j+nDim) = -d;
       K(i+nDim, j+nDim) =  d;
     }
@@ -81,8 +81,8 @@ const Vector& Bar2s::get_Rgrad() {
   for (int i = 0;i < nDim;i++)
     for (int j = 0; j < nDim; j++) {
       d = cosX[i]*cosX[j]*K0;
-      K(i     , j   )   = d;
-      K(i+nDim, j   )   =-d;
+      K(i     , j)      = d;
+      K(i+nDim, j)      =-d;
       K(i     , j+nDim) =-d;
       K(i+nDim, j+nDim) = d;
     }

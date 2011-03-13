@@ -49,16 +49,16 @@ const Matrix& Quad4DispPlain::get_K() {
       int jj = 0;
       for (int j = 0; j < 4; j++) {
         static Matrix CB(3, 2);
-        CB(0, 0)=C(0, 0)*N(1, j) + C(0, 3)*N(2, j);
-        CB(1, 0)=C(1, 0)*N(1, j) + C(1, 3)*N(2, j);
-        CB(2, 0)=C(3, 0)*N(1, j) + C(3, 3)*N(2, j);
-        CB(0, 1)=C(0, 1)*N(2, j) + C(0, 3)*N(1, j);
-        CB(1, 1)=C(1, 1)*N(2, j) + C(1, 3)*N(1, j);
-        CB(2, 1)=C(3, 1)*N(2, j) + C(3, 3)*N(1, j);
+        CB(0, 0) = C(0, 0)*N(1, j) + C(0, 3)*N(2, j);
+        CB(1, 0) = C(1, 0)*N(1, j) + C(1, 3)*N(2, j);
+        CB(2, 0) = C(3, 0)*N(1, j) + C(3, 3)*N(2, j);
+        CB(0, 1) = C(0, 1)*N(2, j) + C(0, 3)*N(1, j);
+        CB(1, 1) = C(1, 1)*N(2, j) + C(1, 3)*N(1, j);
+        CB(2, 1) = C(3, 1)*N(2, j) + C(3, 3)*N(1, j);
 
-        K(ii  , jj  ) += (N(1, i)*CB(0, 0) + N(2, i)*CB(2, 0))*dV;
+        K(ii  , jj)   += (N(1, i)*CB(0, 0) + N(2, i)*CB(2, 0))*dV;
         K(ii  , jj+1) += (N(1, i)*CB(0, 1) + N(2, i)*CB(2, 1))*dV;
-        K(ii+1, jj  ) += (N(2, i)*CB(1, 0) + N(1, i)*CB(2, 0))*dV;
+        K(ii+1, jj)   += (N(2, i)*CB(1, 0) + N(1, i)*CB(2, 0))*dV;
         K(ii+1, jj+1) += (N(2, i)*CB(1, 1) + N(1, i)*CB(2, 1))*dV;
         jj+=2;
       }
@@ -112,7 +112,7 @@ const Vector& Quad4DispPlain::get_R() {
 void Quad4DispPlain::update() {
   if (!(groupdata_->active_))  return;
   Vector& u=*myVector;
-  ///todo: Change this with incrm
+  /// @todo: Change this with incrm
   static Vector u1(8);
   static Vector u2(8);
   u2 = this->get_disp_convg();
