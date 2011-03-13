@@ -27,7 +27,6 @@
 #define SRC_IMPOSER_PENALTY_IMPOSER_H_
 
 #include "imposer/imposer.h"
-#include "model/penalty_model_element.h"
 
 class PenaltyImposer: public Imposer {
   private:

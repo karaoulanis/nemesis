@@ -27,8 +27,6 @@
 #define SRC_IMPOSER_LAGRANGE_IMPOSER_H_
 
 #include "imposer/imposer.h"
-#include "model/lagrange_model_element.h"
-#include "model/lagrange_model_node.h"
 
 class LagrangeImposer: public Imposer {
   private:
