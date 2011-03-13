@@ -27,6 +27,8 @@
 #include "elements/shape_functions.h"
 #include "loadcase/group_data.h"
 #include "main/nemesis_debug.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
 
 double Brick8i::detJ[8];
 double Brick8i::shpStd[8][4][8];

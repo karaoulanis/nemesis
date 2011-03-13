@@ -25,7 +25,19 @@
 
 #include "domain/domain.h"
 #include <sstream>
+#include <string>
+#include "constraints/constraint.h"
+#include "crosssection/cross_section.h"
+#include "database/database.h"
+#include "database/sqlite_database.h"
+#include "domain/domain_object.h"
+#include "elements/element.h"
+#include "exception/sexception.h"
+#include "group/group.h"
 #include "loadcase/group_data.h"
+#include "loadcase/loadcase.h"
+#include "material/material.h"
+#include "node/node.h"
 
 /**
  * Default Constructor.

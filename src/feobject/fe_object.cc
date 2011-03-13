@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include <iostream>
 #include "feobject/fe_object.h"
+#include <string.h>
 
 FEObject::FEObject() {
   myTag = TAG_NONE;

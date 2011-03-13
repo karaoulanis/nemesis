@@ -25,6 +25,13 @@
 
 #include "model/model.h"
 #include <algorithm>
+#include <set>
+#include <utility>
+#include "domain/domain.h"
+#include "model/model_element.h"
+#include "model/model_node.h"
+#include "model/standard_model_element.h"
+#include "node/node.h"
 
 /**
  * Default constructor.
@@ -173,10 +180,10 @@ int Model::get_directed_graph(DirectedGraph& G) {
   return 0;
 }
 int Model::get_undirected_graph(UndirectedGraph& G) {
-  typedef graph_traits < UndirectedGraph>::vertex_descriptor Vertex;
-  typedef graph_traits < UndirectedGraph>::vertices_size_type size_type;
-  typedef std::pair < int, int > Pair;
-  std::set < Pair > theEdges;
+  typedef graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
+  typedef graph_traits<UndirectedGraph>::vertices_size_type size_type;
+  typedef std::pair<int, int> Pair;
+  std::set<Pair> theEdges;
   Pair Edge;
   for (unsigned k = 0; k < theModelElements.size(); k++) {
     ModelElement* pModelElem = theModelElements[k];
@@ -189,7 +196,7 @@ int Model::get_undirected_graph(UndirectedGraph& G) {
         theEdges.insert(Edge);
       }
   }
-  std::set < Pair>::iterator iEdges;
+  std::set<Pair>::iterator iEdges;
   for (iEdges = theEdges.begin(); iEdges != theEdges.end(); iEdges++)
     add_edge(iEdges->first, iEdges->second, G);
   return 0;

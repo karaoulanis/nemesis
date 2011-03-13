@@ -176,3 +176,90 @@ void Matrix::clear() {
   for (int i = 0; i < size_; i++) data_[i]=0.;
 }
 
+void Matrix::solve(Vector& x, const Vector& b) {
+  #ifdef _DEBUG
+  array_size_check(cols_, rows_);
+  array_size_check(cols_, b.size());
+  array_size_check(x.size(), b.size());
+  #endif
+  double* me;
+  double* vv;
+  int* index;
+  double d;
+  try {
+    me = new double[size_];
+    vv = new double[rows_];
+    index = new int[rows_];
+  } catch(std::bad_alloc) {
+    throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
+  }
+  for (int i = 0;i < size_;i++) me[i]=data_[i];
+  for (int i = 0;i < rows_;i++) index[i]=0;
+  x = b;
+  int ret = LU::decomposition(me, rows_, vv, index, d);
+  if (ret == 0) LU::backsubstitution(me, rows_, index, x.data());
+  delete[] vv;
+  delete[] me;
+  delete[] index;
+  if (ret == -1)
+    throw SException("[nemesis:%d] %s", 1006, "Matrix is singular.\n");
+}
+Matrix Inverse(const Matrix& m) {
+  #ifdef _DEBUG
+  array_size_check(m.cols_, m.rows_);
+  #endif
+  Matrix inv = m;
+  double* me;
+  double* col;
+  double* vv;
+  int* index;
+  double d;
+  try {
+    me = new double[m.size_];
+    col = new double[m.rows_];
+    vv = new double[m.rows_];
+    index = new int[m.rows_];
+  } catch(std::bad_alloc) {
+    throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
+  }
+  for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
+  for (int i = 0;i < m.rows_;i++) index[i]=0;
+  int ret = LU::decomposition(me, m.rows_, vv, index, d);
+  if (ret == 0) LU::inverse(me, m.rows_, index, inv.data(), col);
+  delete[] me;
+  delete[] col;
+  delete[] vv;
+  delete[] index;
+  if (ret == -1)
+    throw SException("[nemesis:%d] %s", 1006, "Matrix is singular.\n");
+  return inv;
+}
+
+double det(const Matrix& m) {
+  #ifdef _DEBUG
+  array_size_check(m.cols_, m.rows_);
+  #endif
+  double* me;
+  double* vv;
+  int* index;
+  double d;
+  double det;
+  try {
+    me = new double[m.size_];
+    vv = new double[m.rows_];
+    index = new int[m.rows_];
+  } catch(std::bad_alloc) {
+    throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
+  }
+  for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
+  for (int i = 0;i < m.rows_;i++) index[i]=0;
+  int ret = LU::decomposition(me, m.rows_, vv, index, d);
+  det = LU::determinant(me, m.rows_, d);
+  delete[] me;
+  delete[] vv;
+  delete[] index;
+  if (ret == -1)
+    throw SException("[nemesis:%d] %s", 1006, "Matrix is singular.\n");
+  return det;
+}
+ 

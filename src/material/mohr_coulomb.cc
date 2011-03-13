@@ -23,9 +23,11 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include "main/nemesis_debug.h"
-#include <sstream>
 #include "material/mohr_coulomb.h"
+#include <sstream>
+#include <string>
+#include <vector>
+#include "main/nemesis_debug.h"
 
 Matrix MohrCoulomb::C(6, 6, 0.);
 Matrix MohrCoulomb::C3(3, 3, 0.);

@@ -24,6 +24,9 @@
 // *****************************************************************************
 
 #include "elements/bar.h"
+#include "crosssection/cross_section.h"
+#include "material/uniaxial_material.h"
+#include "node/node.h"
 
 /**
  * Default constructor.

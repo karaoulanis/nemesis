@@ -29,12 +29,12 @@
 #include <cstring>
 
 struct Packet {
-  const static int dblSize = 64;
-  const static int intSize = 32;
-  const static int chrSize = 32;
-  const static int size = 1+1+dblSize+chrSize+1;
-  const static double dblDefault;
-  const static int    intDefault;
+  static const int dblSize = 64;
+  static const int intSize = 32;
+  static const int chrSize = 32;
+  static const int size = 1+1+dblSize+chrSize+1;
+  static const double dblDefault;
+  static const int    intDefault;
 
   int   tag;
   int   id;

@@ -27,7 +27,9 @@
 #define SRC_ELEMENTS_TIMOSHENKO2D_H_
 
 #include "elements/element.h"
-#include "material/uniaxial_material.h"
+
+class UniaxialMaterial;
+class CrossSection;
 
 class Timoshenko2d: public Element {
  protected:

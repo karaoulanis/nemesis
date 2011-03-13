@@ -25,6 +25,7 @@
 
 #include "elements/bar2t.h"
 #include "loadcase/group_data.h"
+#include "material/uniaxial_material.h"
 
 /**
  * Default constructor.

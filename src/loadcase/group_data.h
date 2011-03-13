@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef SRC_LOADCASE_GROUP_STATE_DATA_H_
-#define SRC_LOADCASE_GROUP_STATE_DATA_H_
+#ifndef SRC_LOADCASE_GROUP_DATA_H_
+#define SRC_LOADCASE_GROUP_DATA_H_
 
 struct GroupData {
   bool   active_;
@@ -33,4 +33,4 @@ struct GroupData {
   double factor_G_;
   double factor_P_;
 };
-#endif  // SRC_LOADCASE_GROUP_STATE_DATA_H_
+#endif  // SRC_LOADCASE_GROUP_DATA_H_

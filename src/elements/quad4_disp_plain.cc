@@ -25,6 +25,8 @@
 
 #include "elements/quad4_disp_plain.h"
 #include "loadcase/group_data.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
 
 Quad4DispPlain::Quad4DispPlain() {
 }

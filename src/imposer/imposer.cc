@@ -25,9 +25,11 @@
 
 #include "imposer/imposer.h"
 #include "analysis/analysis.h"
+#include "constraints/constraint.h"
 #include "model/model.h"
 #include "model/standard_model_element.h"
 #include "model/standard_model_node.h"
+#include "node/node.h"
 
 Imposer::Imposer() {
   theModel = pA->get_model();

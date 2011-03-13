@@ -25,6 +25,7 @@
 
 #include "material/multiaxial_elastic.h"
 #include <sstream>
+#include <string>
 
 MultiaxialElastic::MultiaxialElastic() {
 }

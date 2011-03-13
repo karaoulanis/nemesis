@@ -24,6 +24,9 @@
 // *****************************************************************************
 
 #include "elements/quad4.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
+#include "node/node.h"
 
 Matrix Quad4::N(3, 4);
 double Quad4::detJ;

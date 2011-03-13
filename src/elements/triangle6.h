@@ -26,9 +26,11 @@
 #ifndef SRC_ELEMENTS_TRIANGLE6_H_
 #define SRC_ELEMENTS_TRIANGLE6_H_
 
+#include <vector>
 #include "elements/element.h"
-#include "material/matpoint.h"
 
+class MatPoint;
+ 
 class Triangle6: public Element {
  protected:
   double a1, a2, a3;

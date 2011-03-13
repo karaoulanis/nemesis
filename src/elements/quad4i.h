@@ -26,7 +26,10 @@
 #ifndef SRC_ELEMENTS_QUAD4I_H_
 #define SRC_ELEMENTS_QUAD4I_H_
 
+#include <vector>
 #include "elements/quad4.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 
 class Quad4i: public Quad4 {
   private:

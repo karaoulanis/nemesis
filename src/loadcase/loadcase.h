@@ -26,8 +26,8 @@
 #ifndef SRC_LOADCASE_LOADCASE_H_
 #define SRC_LOADCASE_LOADCASE_H_
 
-#include <vector>
 #include <map>
+#include <vector>
 #include "containers/containers.h"
 #include "domain/domain_object.h"
 

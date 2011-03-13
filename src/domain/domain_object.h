@@ -27,6 +27,7 @@
 #define SRC_DOMAIN_DOMAIN_OBJECT_H_
 
 #include <iostream>
+#include "database/packet.h"
 #include "feobject/fe_object.h"
 
 // Forward declarations

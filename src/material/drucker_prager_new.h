@@ -26,9 +26,12 @@
 #ifndef SRC_MATERIAL_DRUCKER_PRAGER_NEW_H_
 #define SRC_MATERIAL_DRUCKER_PRAGER_NEW_H_
 
-#include "material/multiaxial_material.h"
-#include "material/ys.h"
+#include <vector>
 #include "material/hardening.h"
+#include "material/multiaxial_material.h"
+#include "numeric/matrix.h"
+
+class YS;
 
 /**
  * The Drucker-Prager Class.

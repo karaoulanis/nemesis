@@ -27,7 +27,8 @@
 #define SRC_MATERIAL_MATPOINT_H_
 
 #include "domain/domain_object.h"
-#include "material/multiaxial_material.h"
+
+class MultiaxialMaterial;
 
 class MatPoint: public DomainObject {
   private:
@@ -49,7 +50,7 @@ class MatPoint: public DomainObject {
 
   void set_X(double x1_, double x2_ = 0, double x3_ = 0);
   inline MultiaxialMaterial* get_material()  {return myMaterial;}
-  bool isPlastic()              {return myMaterial->isPlastic();}
+  bool isPlastic();
   void AddInitialStresses(int direction, double h1, double s1,
                           double h2, double s2, double K0);
   inline double get_x()     {return x;}

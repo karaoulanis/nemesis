@@ -27,8 +27,8 @@
 #define SRC_TRACKER_TRACKER_H_
 
 // C++ system files
-#include <vector>
 #include <string>
+#include <vector>
 
 // namespaces
 using std::string;

@@ -27,6 +27,8 @@
 #define SRC_MATERIAL_SPRING_MATERIAL_H_
 
 #include "material/material.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 
 /**
  * The Single Dof Material Class.

@@ -27,21 +27,14 @@
 #define SRC_DOMAIN_DOMAIN_H_
 
 #include <map>
-#include "constraints/constraint.h"
-#include "crosssection/cross_section.h"
-#include "database/database.h"
-#include "database/sqlite_database.h"
-#include "domain/domain_object.h"
-#include "elements/element.h"
-#include "group/group.h"
-#include "loadcase/loadcase.h"
-#include "material/material.h"
-#include "node/node.h"
-#include "exception/sexception.h"
+#include "numeric/vector.h"
 
 // Forward declarations
+class CrossSection;
+class Database;
 class Element;
 class Material;
+class Node;
 class Group;
 class LoadCase;
 class Constraint;
@@ -133,7 +126,7 @@ class Domain {
   double get_time_incr()      {return timeCurr-timePrev;}
   void incTime(double dt)     {timeCurr+=dt;}
   void commit()               {timePrev = timeCurr;}
-  void set_lambda(double l)    {lambdaConvg = l;}
+  void set_lambda(double l)   {lambdaConvg = l;}
   double get_lambda()         {return lambdaConvg;}
 
   void rollback()             {}
@@ -150,14 +143,14 @@ class Domain {
 //  int load();  {}
 
 
-  void set_tag(DomainTag t)          {myTag = t;}
-  DomainTag get_tag()                {return myTag;}
-  void set_fac(double fac)           {myFac = fac;}
-  double get_fac()                   {return myFac;}
-  bool isUpToDate()                 {return upToDate;}
-  void set_uptodate()                {upToDate = true;}
-  bool areGroupsByMaterial()        {return groupsByMaterial;}
-  void set_groups_by_material(bool b)  {groupsByMaterial = b;}
+  void set_tag(DomainTag t)           {myTag = t;}
+  DomainTag get_tag()                 {return myTag;}
+  void set_fac(double fac)            {myFac = fac;}
+  double get_fac()                    {return myFac;}
+  bool isUpToDate()                   {return upToDate;}
+  void set_uptodate()                 {upToDate = true;}
+  bool areGroupsByMaterial()          {return groupsByMaterial;}
+  void set_groups_by_material(bool b) {groupsByMaterial = b;}
   void set_current_group(int n)       {currentGroup = n;}
   int  get_current_group()            {return currentGroup;}
 
@@ -170,7 +163,7 @@ class Domain {
   const Vector& get_eigen_values();
 
   inline NodeContainer& get_nodes()                  {return theNodes;}
-  inline CrossSectionContainer& get_cross_sections()  {return theCrossSections;}
+  inline CrossSectionContainer& get_cross_sections() {return theCrossSections;}
   inline ElementContainer& get_elements()            {return theElements;}
   inline GroupContainer& get_groups()                {return theGroups;}
   inline MaterialContainer& get_materials()          {return theMaterials;}
@@ -191,7 +184,7 @@ class Domain {
   template<class TC> int rem(TC& c, int id) {
     typename TC::iterator p = c.find(id);
     if (p == c.end()) {
-      cout << id  <<" not found." <<endl;
+      throw SException("[nemesis:%d] Component %d not found.", 9999, id);
     } else {
       delete p->second;
       c.erase(p);

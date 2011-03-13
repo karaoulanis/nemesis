@@ -27,8 +27,8 @@
 #define SRC_MAIN_NEMESIS_DEBUG_H_
 
 // C++ system files
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 // Project files (alphabetically)

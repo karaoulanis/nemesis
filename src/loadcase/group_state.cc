@@ -24,8 +24,8 @@
 // *****************************************************************************
 
 #include "loadcase/group_state.h"
-#include "group/group.h"
 #include "elements/element.h"
+#include "group/group.h"
 
 GroupState::GroupState() {
 }

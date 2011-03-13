@@ -24,9 +24,12 @@
 // *****************************************************************************
 
 #include "material/drucker_prager_new3.h"
+#include <iostream>
 #include <sstream>
+#include <string>
 #include "material/drucker_prager_ys.h"
 #include "material/tension_cutoff_ys.h"
+#include "material/ys.h"
 
 Matrix DruckerPragerNew3::C(6, 6, 0.);
 Matrix DruckerPragerNew3::C3(3, 3, 0.);
@@ -256,7 +259,7 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
   }
 
   // cout << aTrial << endl;
-  cout << iter << endl;
+  std::cout << iter << std::endl;
   if (iter == num_of_iters) report(iter, "error");
 
 

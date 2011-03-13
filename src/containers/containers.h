@@ -26,9 +26,10 @@
 #ifndef SRC_CONTAINERS_CONTAINERS_H_
 #define SRC_CONTAINERS_CONTAINERS_H_
 
-#include <vector>
 #include <algorithm>
 #include <iostream>
+#include <vector>
+
 using std::cout;
 using std::endl;
 typedef std::vector<int> IDContainer;

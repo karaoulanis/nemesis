@@ -27,9 +27,9 @@
 #include <stdlib.h>
 #include <cmath>
 #include <sstream>
-
-#include "tracker/tracker.h"
+#include <string>
 #include "domain/domain.h"
+#include "tracker/tracker.h"
 
 /**
  * Defuault Constructor.

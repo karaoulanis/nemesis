@@ -26,8 +26,8 @@
 #ifndef SRC_SOE_EIGEN_SOE_H_
 #define SRC_SOE_EIGEN_SOE_H_
 
-#include "soe/soe.h"
 #include <valarray>
+#include "soe/soe.h"
 
 class EigenSOE: public SOE {
  protected:

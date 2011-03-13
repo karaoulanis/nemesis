@@ -26,9 +26,14 @@
 #ifndef SRC_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
 #define SRC_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_
 
+#include <vector>
 #include "material/multiaxial_material.h"
-#include "material/linear_equivalent_el.h"
-#include "material/surface.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
+
+class Surface;
+class EvolutionLaw;
+
 /**
  * The MultiaxialElastoPlastic Class.
  */

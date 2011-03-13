@@ -26,6 +26,7 @@
 
 #include "material/uniaxial_material.h"
 #include <sstream>
+#include <string>
 
 UniaxialMaterial::UniaxialMaterial() {
 }

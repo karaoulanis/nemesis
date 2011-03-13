@@ -27,6 +27,8 @@
 #define SRC_ELEMENTS_QUAD4E_H_
 
 #include "elements/quad4.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 
 class Quad4e: public Quad4 {
   private:
@@ -42,7 +44,7 @@ class Quad4e: public Quad4 {
   ~Quad4e();
 
   const Matrix& get_K();
-    const Matrix& get_M();
+  const Matrix& get_M();
   const Vector& get_R();
 
   void update();

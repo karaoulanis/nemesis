@@ -28,6 +28,8 @@
 
 #include "material/spring_material.h"
 
+class Vector;
+
 /**
  * The Elastic Spring Material Class.
  */

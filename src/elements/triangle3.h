@@ -26,8 +26,10 @@
 #ifndef SRC_ELEMENTS_TRIANGLE3_H_
 #define SRC_ELEMENTS_TRIANGLE3_H_
 
+#include <vector>
 #include "elements/element.h"
-#include "material/matpoint.h"
+
+class MatPoint;
 
 class Triangle3: public Element {
  protected:

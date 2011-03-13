@@ -25,6 +25,9 @@
 
 #include "elements/tetrahedron4_disp.h"
 #include "loadcase/group_data.h"
+#include "material/matpoint.h"
+#include "material/multiaxial_material.h"
+#include "node/node.h"
 
 Matrix Tetrahedron4Disp::N(4, 4);
 double Tetrahedron4Disp::V = 0;

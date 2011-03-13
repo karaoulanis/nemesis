@@ -26,10 +26,10 @@
 #ifndef SRC_NODE_NODE_H_
 #define SRC_NODE_NODE_H_
 
-#include "numeric/matrix.h"
-#include "numeric/vector.h"
 #include "containers/containers.h"
 #include "domain/domain_object.h"
+#include "numeric/matrix.h"
+#include "numeric/vector.h"
 
 class Tracker;
 const int MAX_NUMBER_OF_DOFS = 16;

@@ -23,8 +23,10 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
+#include "crosssection/cross_section.h"
 #include "elements/beam2e.h"
 #include "loadcase/group_data.h"
+#include "material/uniaxial_material.h"
 
 Beam2e::Beam2e() {
 }

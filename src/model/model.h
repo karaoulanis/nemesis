@@ -28,17 +28,18 @@
 
 #include <boost/config.hpp>
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/properties.hpp>
 #include <boost/graph/bandwidth.hpp>
-#include <boost/graph/profile.hpp>
-#include <boost/graph/wavefront.hpp>
 #include <boost/graph/graphviz.hpp>
-
+#include <boost/graph/profile.hpp>
+#include <boost/graph/properties.hpp>
+#include <boost/graph/wavefront.hpp>
+#include <vector>
 #include "analysis/analysis_object.h"
-#include "domain/domain.h"
-#include "model/model_element.h"
-#include "model/model_node.h"
-#include "model/standard_model_element.h"
+
+class ModelNode;
+class ModelElement;
+class Domain;
+class Vector;
 
 // Using from boost nameespace
 using boost::adjacency_list;

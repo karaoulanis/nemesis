@@ -27,11 +27,11 @@
 #define SRC_NUMERIC_VECTOR_H_
 
 // C/C++ include files
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include "numeric/array_check.h"
-#include "numeric/numeric.h"
 #include "numeric/lapack.h"
+#include "numeric/numeric.h"
 
 class Vector {
  protected:

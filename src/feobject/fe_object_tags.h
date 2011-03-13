@@ -23,6 +23,9 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
+#ifndef SRC_FEOBJECT_FE_OBJECT_TAGS_H_
+#define SRC_FEOBJECT_FE_OBJECT_TAGS_H_
+
 enum FEObjectTag {
   TAG_NONE                                = 0000,
   TAG_NOT_YET_SPECIFIED                   = 0001,
@@ -121,3 +124,4 @@ enum FEObjectTag {
   // TAG_REORDERER_KING                      = 9707,
   TAG_PACKET                              = 9901
 };
+#endif  // SRC_FEOBJECT_FE_OBJECT_TAGS_H_

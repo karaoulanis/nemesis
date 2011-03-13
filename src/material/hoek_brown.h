@@ -26,6 +26,7 @@
 #ifndef SRC_MATERIAL_HOEK_BROWN_H_
 #define SRC_MATERIAL_HOEK_BROWN_H_
 
+#include <vector>
 #include "material/multiaxial_elastic_plastic.h"
 
 /**

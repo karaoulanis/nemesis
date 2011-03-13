@@ -25,6 +25,8 @@
 
 #include "material/tresca.h"
 #include <sstream>
+#include <string>
+#include <vector>
 #include "main/nemesis_debug.h"
 
 Matrix Tresca::C(6, 6, 0.);
