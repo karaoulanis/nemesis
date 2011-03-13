@@ -72,6 +72,7 @@ int FullLinearSOE::get_eigen_sign() {
   return 1;
 }
 int FullLinearSOE::solve() {
+  this->print();
   int N = size_;
   int NRHS = 1;
   int LDA = N;
