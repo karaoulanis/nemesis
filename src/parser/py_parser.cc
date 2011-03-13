@@ -629,7 +629,7 @@ static PyObject* pyMaterial_Elastic(PyObject* /*self*/, PyObject *args) {
   else
     pMaterial = new MultiaxialElastic(id, E, nu, rho, aT, kx, ky, kz);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
+  // createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1289,6 +1289,7 @@ static PyMethodDef ConstraintMethods[] =  {
     METH_VARARGS, "Define a linear constraint."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Group commands
 ******************************************************************************/

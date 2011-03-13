@@ -58,7 +58,7 @@ Element::Element(int ID, int matID)
     for (int i = 1;i < 64;i++) theStaticVectors[i]=new Vector(i, 0.);
   }
   // Retrieve Material pointer
-  myMaterial = pD->get < Material>(pD->get_materials(), matID);
+  myMaterial = pD->get<Material>(pD->get_materials(), matID);
 }
 
 Element::~Element() {

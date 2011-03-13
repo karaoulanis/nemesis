@@ -61,6 +61,7 @@ Domain::~Domain()  {
 void Domain::init() {
   // Define group 0
   Group* pGroup = new Group(0);
+  pGroup->set_domain(this);
   this->add(this->get_groups(), pGroup);
   // Define that groups are by set by materials
   groupsByMaterial = true;
