@@ -57,28 +57,7 @@ def get_paths(source_dir, include_pat, exclude_pat = None):
     paths.sort()
     return paths
 
-if __name__ == '__main__':
-    # project specific 
-    project        = 'nemesis'
-   
-    # command line arguments 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--def', metavar='file',
-        dest = 'makefile_def', help = 'makefile definitions file',
-        default = 'Makefile.def')
-    parser.add_argument('-r', '--root', metavar='dir',
-        dest = 'src',          help = 'define source root directory',
-        default = 'src')
-    parser.add_argument('-m', '--monochrome', action = 'store_false',
-        dest = 'color',        help = 'disable colored output')
-    parser.add_argument('-s', '--silent', action = 'store_false',
-        dest = 'verbal',       help = 'disable additional compilation info')
-    args = parser.parse_args()
-    src           = args.src
-    verbal        = args.verbal 
-    color         = args.color
-    makefile_def  = args.makefile_def
-    
+def nemesis(project, src, verbal, color, makefile_def):
     makefile      = ''
     # Makefile.def
     with open(makefile_def, 'r') as f:
@@ -101,3 +80,26 @@ if __name__ == '__main__':
     ofile.write(makefile)
     ofile.close()
 
+if __name__ == '__main__':
+    # project specific 
+    project        = 'nemesis'
+   
+    # command line arguments 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--def', metavar='file',
+        dest = 'makefile_def', help = 'makefile definitions file',
+        default = 'Makefile.def')
+    parser.add_argument('-r', '--root', metavar='dir',
+        dest = 'src',          help = 'define source root directory',
+        default = 'src')
+    parser.add_argument('-m', '--monochrome', action = 'store_false',
+        dest = 'color',        help = 'disable colored output')
+    parser.add_argument('-s', '--silent', action = 'store_false',
+        dest = 'verbal',       help = 'disable additional compilation info')
+    args = parser.parse_args()
+    src           = args.src
+    verbal        = args.verbal 
+    color         = args.color
+    makefile_def  = args.makefile_def
+
+    nemesis(project, src, verbal, color, makefile_def)
