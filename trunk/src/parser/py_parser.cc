@@ -24,10 +24,22 @@
 // *****************************************************************************
 
 #include "parser/py_parser.h"
+
+// C header files
+#ifdef _DEBUG
+  #include <Python.h>
+  #undef Py_DEBUG
+#else
+  #include <Python.h>
+#endif
+
+// C++ header files
 #include <fstream>
 #include <map>
 #include <sstream>
 #include <string>
+
+// additional includes
 #include "algorithm/bfgs.h"
 #include "algorithm/linear_algorithm.h"
 #include "algorithm/newton_raphson_full.h"
@@ -43,6 +55,7 @@
 #include "control/displacement_control.h"
 #include "control/load_control.h"
 #include "control/newmark.h"
+#include "convergence/convergence_norm.h"
 #include "crosssection/cross_section.h"
 #include "database/sqlite_database.h"
 #include "elements/bar2s.h"
@@ -75,6 +88,7 @@
 #include "loadcase/initial_displacement.h"
 #include "loadcase/initial_stresses.h"
 #include "loadcase/initial_velocity.h"
+#include "loadcase/loadcase.h"
 #include "loadcase/nodal_load_constant.h"
 #include "loadcase/nodal_load_linear.h"
 #include "loadcase/nodal_load_sin.h"

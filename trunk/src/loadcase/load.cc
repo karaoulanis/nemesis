@@ -27,3 +27,6 @@
 
 Load::Load() {
 }
+
+Load::~Load() {
+}

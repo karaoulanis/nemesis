@@ -142,7 +142,7 @@ void DruckerPragerNew::set_strain(const Vector& De) {
     ++iter;
 
     // build system
-    int nA=(int)activeS.size();
+    int nA = static_cast<int>(activeS.size());
     A.resize(3+nA+1, 3+nA+1, 0.);
     R.resize(3+nA+1, 0.);
     x.resize(3+nA+1);

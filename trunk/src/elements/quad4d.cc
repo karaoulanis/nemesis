@@ -145,50 +145,52 @@ void Quad4d::shapeFunctions() {
 
 void Quad4d::get_B(Matrix& B, int node, int gPoint) {
   /// @todo: check gCrds
-  // const double dsq3 = 0.577350269189626;
-  // static const double gCrds[4]={-dsq3, +dsq3, -dsq3, +dsq3};
 
   B.resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
-  for (int k = 0; k < 4; k++) {  // matpoints
+  for (int k = 0; k < 4; k++) {     // matpoints
     double dV = detJ[k]*(pD->get_fac());
-    Bb1+=shp[node][1][k]*dV;
-    Bb2+=shp[node][2][k]*dV;
-    vol+=dV;
+    Bb1 += shp[node][1][k]*dV;
+    Bb2 += shp[node][2][k]*dV;
+    vol += dV;
   }
-  Bb1/=vol;
-  Bb2/=vol;
+  Bb1 /= vol;
+  Bb2 /= vol;
 
-    double B0 = 0., Bb0 = 0.;
+  double B0 = 0., Bb0 = 0.;
   // Axisymmetry
   double r = 0.;
   if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC)  {
-    for (int i = 0;i < 4;i++) {   // nodes
-          r+=x(i, 0)*shp[i][0][gPoint];
+    for (int i = 0;i < 4;i++) {     // nodes
+          r += x(i, 0)*shp[i][0][gPoint];
     }
     B0 = shp[node][0][gPoint]/r;
     for (int k = 0;k < 4;k++) {    // matpoints
       r = 0.;
       for (int i = 0;i < 4;i++) {  // nodes
-          r+=x(i, 0)*shp[i][0][k];
+          r += x(i, 0)*shp[i][0][k];
       }
-      Bb0+=shp[node][0][k]*detJ[k]*(pD->get_fac())/vol/r;
+      Bb0 += shp[node][0][k]*detJ[k]*(pD->get_fac())/vol/r;
     }
   }
 
   // B-factors
-  double B1 = shp[node][1][gPoint];
-  double B2 = shp[node][2][gPoint];
-  double B4=(Bb1-B1)/3.;
-  double B6=(Bb2-B2)/3.;
-  double B7 = B2+B6;
+  double B1  = shp[node][1][gPoint];
+  double B2  = shp[node][2][gPoint];
+  double B4  = (Bb1-B1)/3.;
+  double B6  = (Bb2-B2)/3.;
+  double B7  = B2+B6;
   double B10 = B4+(Bb0-B0)/3.;
   double B11 = B0+B10;
   double B12 = B1+B10;
 
   // B-matrix
-  B(0, 0)=B12; B(0, 1)=B6;
-  B(1, 0)=B10; B(1, 1)=B7;
-  B(2, 0)=B11; B(2, 1)=B6;
-  B(3, 0)=B2;  B(3, 1)=B1;
+  B(0, 0) = B12;
+  B(0, 1) = B6;
+  B(1, 0) = B10;
+  B(1, 1) = B7;
+  B(2, 0) = B11;
+  B(2, 1) = B6;
+  B(3, 0) = B2;
+  B(3, 1) = B1;
 }

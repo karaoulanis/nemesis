@@ -27,13 +27,10 @@
 #define SRC_REORDERER_REORDERER_H_
 
 #include <vector>
-#include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "model/model.h"
 
 class Reorderer: public AnalysisObject {
- protected:
-  public:
+ public:
   Reorderer();
   virtual ~Reorderer();
   int reorder();

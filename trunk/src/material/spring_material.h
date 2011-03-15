@@ -41,9 +41,9 @@ class SpringMaterial: public Material {
   Vector eTotal;
   Matrix Ct;
   int nDim;
-  public:
+ public:
   SpringMaterial();
-  SpringMaterial(int ID);
+  explicit SpringMaterial(int ID);
 
   // Get clone
   virtual SpringMaterial* get_clone()=0;

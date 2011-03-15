@@ -29,6 +29,7 @@
 class InitialCondition {
  public:
   InitialCondition();
+  virtual ~InitialCondition();
   virtual void Apply()=0;
 };
 

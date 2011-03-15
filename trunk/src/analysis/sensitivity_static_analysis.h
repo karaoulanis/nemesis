@@ -26,14 +26,11 @@
 #ifndef SRC_ANALYSIS_SENSITIVITY_STATIC_ANALYSIS_H_
 #define SRC_ANALYSIS_SENSITIVITY_STATIC_ANALYSIS_H_
 
-#include "algorithm/linear_algorithm.h"
 #include "analysis/analysis_type.h"
-#include "control/load_control.h"
-#include "control/sensitivity_control.h"
-#include "imposer/elimination_imposer.h"
-#include "soe/full_linear_soe.h"
 
 class Analysis;
+class SensitivityControl;
+
 class SensitivityStaticAnalysis :public AnalysisType {
   private:
   SensitivityControl* theSensitivityControl;

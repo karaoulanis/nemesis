@@ -27,3 +27,6 @@
 
 InitialCondition::InitialCondition() {
 }
+
+InitialCondition::~InitialCondition() {
+}

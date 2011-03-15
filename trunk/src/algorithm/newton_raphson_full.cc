@@ -24,6 +24,10 @@
 // *****************************************************************************
 
 #include "algorithm/newton_raphson_full.h"
+#include "analysis/analysis.h"
+#include "control/control.h"
+#include "convergence/convergence_norm.h"
+#include "soe/soe.h"
 
 NewtonRaphsonFull::NewtonRaphsonFull() {
   myTag = TAG_ALGORITHM_NEWTON_RAPHSON_FULL;

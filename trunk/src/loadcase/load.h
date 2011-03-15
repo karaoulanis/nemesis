@@ -29,6 +29,7 @@
 class Load {
  public:
   Load();
+  virtual ~Load();
   virtual void Apply(double factor, double time)=0;
 };
 #endif  // SRC_LOADCASE_LOAD_H_

@@ -32,9 +32,9 @@ class LadeDuncanSurface: public Surface {
   private:
   double K;
   void find_C(const Vector& s, const double a);
-  public:
+ public:
   LadeDuncanSurface();
-  LadeDuncanSurface(double K_);
+  explicit LadeDuncanSurface(double K_);
   ~LadeDuncanSurface();
 
   double get_f(const Vector& s, const double q);

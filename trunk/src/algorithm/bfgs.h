@@ -29,6 +29,8 @@
 #include <vector>
 #include "algorithm/algorithm.h"
 
+class Vector;
+
 class BFGS :public Algorithm {
  private:
   int m;

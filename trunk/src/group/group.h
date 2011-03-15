@@ -36,7 +36,7 @@ class Group: public DomainObject {
  public:
   Group();
   ~Group();
-  Group(int id);
+  explicit Group(int id);
   inline const std::vector<Element*>& get_elements()  {return elements_;}
   void AddElement(Element* element);
  private:

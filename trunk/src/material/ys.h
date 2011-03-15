@@ -38,8 +38,9 @@ class YS {
   Vector a, a1, a2;
   Matrix da, da2, da11, da22;
   bool active;
-  public:
+ public:
   YS();
+  virtual ~YS();
   void set_sigma(const Vector& s);
 
   // functions to be overwritten

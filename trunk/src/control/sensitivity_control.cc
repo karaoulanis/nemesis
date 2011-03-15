@@ -24,6 +24,12 @@
 // *****************************************************************************
 
 #include "control/sensitivity_control.h"
+#include "analysis/analysis.h"
+#include "domain/domain.h"
+#include "model/model.h"
+#include "model/model_element.h"
+#include "model/model_node.h"
+#include "soe/soe.h"
 
 SensitivityControl::SensitivityControl() {
 }

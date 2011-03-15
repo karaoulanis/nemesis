@@ -25,6 +25,12 @@
 
 #include "reorderer/forward_cuthill_mckee.h"
 #include <boost/graph/cuthill_mckee_ordering.hpp>
+#include <iostream>
+#include "analysis/analysis.h"
+#include "model/model.h"
+
+using std::cout;
+using std::endl;
 
 ForwardCuthillMckee::ForwardCuthillMckee() {
   myTag = TAG_REORDERER_FORWARD_CUTHILL_MCKEE;
@@ -34,6 +40,7 @@ ForwardCuthillMckee::~ForwardCuthillMckee() {
 int ForwardCuthillMckee::get_perm(std::vector<int>& perm) {
   // Create the Graph and additional vectors
   UndirectedGraph G(pA->get_model()->get_num_eqns());
+  /// @todo Remove analysis pointer and use only model [REFACTORING]
   pA->get_model()->get_undirected_graph(G);
   property_map<UndirectedGraph, vertex_index_t>::type
     index_map = get(vertex_index, G);

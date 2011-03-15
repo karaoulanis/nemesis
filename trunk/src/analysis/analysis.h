@@ -26,15 +26,7 @@
 #ifndef SRC_ANALYSIS_ANALYSIS_H_
 #define SRC_ANALYSIS_ANALYSIS_H_
 
-#include "algorithm/algorithm.h"
-#include "analysis/analysis_type.h"
-#include "control/control.h"
-#include "convergence/convergence_norm.h"
-#include "domain/domain.h"
-#include "imposer/imposer.h"
 #include "model/model.h"
-#include "reorderer/reorderer.h"
-#include "soe/soe.h"
 
 class Algorithm;
 class AnalysisType;
@@ -42,6 +34,7 @@ class Control;
 class ConvergenceNorm;
 class Imposer;
 class Model;
+class LoadCase;
 class Reorderer;
 class SOE;
 
@@ -62,11 +55,11 @@ class Analysis {
   ~Analysis();
 
   inline Model* get_model()                      {return &M;}
-  inline AnalysisType* get_analysis_type()        {return theAnalysisType;}
+  inline AnalysisType* get_analysis_type()       {return theAnalysisType;}
   inline Algorithm* get_algorithm()              {return theAlgorithm;}
   inline Control* get_control()                  {return theControl;}
   inline Imposer* get_imposer()                  {return theImposer;}
-  inline ConvergenceNorm* get_convergence_norm()  {return theNorm;}
+  inline ConvergenceNorm* get_convergence_norm() {return theNorm;}
   inline Reorderer* get_reorderer()              {return theReorderer;}
   inline SOE* get_soe()                          {return theSOE;}
   inline Domain* get_domain()                    {return theDomain;}

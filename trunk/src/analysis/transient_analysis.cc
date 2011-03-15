@@ -24,6 +24,14 @@
 // *****************************************************************************
 
 #include "analysis/transient_analysis.h"
+#include "algorithm/linear_algorithm.h"
+#include "control/load_control.h"
+#include "convergence/convergence_norm.h"
+#include "domain/domain.h"
+#include "imposer/elimination_imposer.h"
+#include "loadcase/loadcase.h"
+#include "soe/full_linear_soe.h"
+#include "reorderer/reorderer.h"
 
 TransientAnalysis::TransientAnalysis()
   :AnalysisType() {

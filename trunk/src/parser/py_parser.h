@@ -26,13 +26,6 @@
 #ifndef SRC_PARSER_PY_PARSER_H_
 #define SRC_PARSER_PY_PARSER_H_
 
-#ifdef _DEBUG
-  #include <Python.h>
-  #undef Py_DEBUG
-#else
-  #include <Python.h>
-#endif
-
 #include "parser/parser.h"
 
 class PyParser: public Parser {

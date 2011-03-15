@@ -23,8 +23,12 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
+#include <iostream>
 #include "main/nemesis_config.h"
 #include "parser/py_parser.h"
+
+using std::cout;
+using std::endl;
 
 int main(int argc, char* argv[]) {
   /*****************************************************************************

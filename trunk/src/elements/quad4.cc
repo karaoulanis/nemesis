@@ -160,7 +160,7 @@ void Quad4::recoverStresses() {
  * @param index The index to the Element's Material.
  */
 void Quad4::addTracker(int index) {
-  if (index < 0 || index>(int)myMatPoints.size()-1)
+  if (index < 0 || index > static_cast<int>(myMatPoints.size())-1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
   myMatPoints[index]->get_material()->addTracker();
 }
@@ -171,7 +171,7 @@ void Quad4::addTracker(int index) {
  * @param index The index to the Element's Material.
  */
 Tracker* Quad4::get_tracker(int index) {
-  if (index < 0 || index>(int)myMatPoints.size()-1)
+  if (index < 0 || index > static_cast<int>(myMatPoints.size())-1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
   if (myMatPoints[index]->get_material()->get_tracker() == 0)
     throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);

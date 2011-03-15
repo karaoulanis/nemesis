@@ -50,7 +50,8 @@ void report(const Vector& v, const char* name, int total, int decimal) {
   cout << endl;
 }
 
-void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C, const Matrix B2, double c1, double c0) {
+void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C,
+         const Matrix B2, double c1, double c0) {
   int m = B1.rows();
   int n = B2.cols();
   int pos = row*K.cols()+col;
@@ -69,7 +70,8 @@ void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C, const M
           pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[k*m+l]*pB2[l*n+j];
 }
 
-void add(Vector& R, int row, const Matrix& BT, const Vector& V, double c1, double c0) {
+void add(Vector& R, int row, const Matrix& BT, const Vector& V,
+         double c1, double c0) {
   int m = BT.rows();
   int n = BT.cols();
   double* pV =V.data();
@@ -82,7 +84,8 @@ void add(Vector& R, int row, const Matrix& BT, const Vector& V, double c1, doubl
       pR[row+i]+=c1*pBT[j*n+i]*pV[j];
 }
 
-void add2(Vector& R, int row, const Matrix& BT, const Vector& V, double c1, double c0) {
+void add2(Vector& R, int row, const Matrix& BT, const Vector& V,
+          double c1, double c0) {
   int m = BT.rows();
   int n = BT.cols();
   double* pV =V.data();
@@ -157,14 +160,30 @@ void spectralDecomposition(const Vector& s, Vector& sP, Matrix& sV) {
   int INFO;
   static Vector WORK(LWORK);
 
-  sV(0, 0)=s[0]; sV(0, 1)=s[3]; sV(0, 2)=s[5];
-  sV(1, 0)=0.;   sV(1, 1)=s[1]; sV(1, 2)=s[4];
-  sV(2, 0)=0.;   sV(2, 1)=0.;   sV(2, 2)=s[2];
+  sV(0, 0) = s[0];
+  sV(0, 1) = s[3];
+  sV(0, 2) = s[5];
+  sV(1, 0) = 0.;
+  sV(1, 1) = s[1];
+  sV(1, 2) = s[4];
+  sV(2, 0) = 0.;
+  sV(2, 1) = 0.;
+  sV(2, 2) = s[2];
 
-  dsyev(&JOBZ, &UPLO, &N, sV.data(), &LDA, sP.data(), WORK.data(), &LWORK, &INFO, 1, 1);
+  dsyev(&JOBZ, &UPLO, &N, sV.data(), &LDA, sP.data(), WORK.data(),
+        &LWORK, &INFO, 1, 1);
   // cout << WORK[0]<<endl;
   double d, d0, d1, d2;
-  d    =sP[0];  d0     =sV(0, 0);    d1 =sV(0, 1);    d2 =sV(0, 2);
-  sP[0]=sP[2];  sV(0, 0)=sV(2, 0);  sV(0, 1)=sV(2, 1);  sV(0, 2)=sV(2, 2);
-  sP[2]=d;    sV(2, 0)=d0;     sV(2, 1)=d1;     sV(2, 2)=d2;
+  d  = sP[0];
+  d0 = sV(0, 0);
+  d1 = sV(0, 1);
+  d2 = sV(0, 2);
+  sP[0]    = sP[2];
+  sV(0, 0) = sV(2, 0);
+  sV(0, 1) = sV(2, 1);
+  sV(0, 2) = sV(2, 2);
+  sP[2]    = d;
+  sV(2, 0) = d0;
+  sV(2, 1) = d1;
+  sV(2, 2) = d2;
 }

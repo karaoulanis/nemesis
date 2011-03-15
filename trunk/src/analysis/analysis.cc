@@ -24,6 +24,14 @@
 // *****************************************************************************
 
 #include "analysis/analysis.h"
+#include "algorithm/algorithm.h"
+#include "analysis/analysis_type.h"
+#include "control/control.h"
+#include "convergence/convergence_norm.h"
+#include "domain/domain.h"
+#include "imposer/imposer.h"
+#include "reorderer/reorderer.h"
+#include "soe/soe.h"
 
 Analysis::Analysis(Domain* pDomain)
 :M(pDomain), theDomain(pDomain) {

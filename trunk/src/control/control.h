@@ -26,10 +26,11 @@
 #ifndef SRC_CONTROL_CONTROL_H_
 #define SRC_CONTROL_CONTROL_H_
 
-#include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "model/model_element.h"
-#include "model/model_node.h"
+#include "numeric/vector.h"
+
+class ModelElement;
+class ModelNode;
 
 class Control: public AnalysisObject {
  protected:
@@ -38,7 +39,7 @@ class Control: public AnalysisObject {
   double DLambda;
   double dLambda;
   Vector qRef;
-  public:
+ public:
   Control();
   virtual ~Control();
 

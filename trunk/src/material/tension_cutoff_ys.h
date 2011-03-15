@@ -29,10 +29,10 @@
 #include "material/ys.h"
 
 class TensionCutOffYS: public YS {
-  private:
+ private:
   double T;
-  public:
-  TensionCutOffYS(double T_);
+ public:
+  explicit TensionCutOffYS(double T_);
   double get_f(const Vector& sigma, const double kappa);
   const Vector& get_dfds(const Vector& sigma, const double kappa);
   const Matrix& get_d2fdsds(const Vector& sigma, const double kappa);

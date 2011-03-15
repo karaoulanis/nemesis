@@ -36,7 +36,7 @@ class FEObject {
   char myLabel[64];
  public:
   FEObject();
-  FEObject(FEObjectTag tag);
+  explicit FEObject(FEObjectTag tag);
   virtual ~FEObject();
 
   FEObjectTag get_tag();

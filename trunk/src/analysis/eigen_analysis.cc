@@ -24,6 +24,11 @@
 // *****************************************************************************
 
 #include "analysis/eigen_analysis.h"
+#include "control/eigen_control.h"
+#include "domain/domain.h"
+#include "imposer/elimination_imposer.h"
+#include "reorderer/reorderer.h"
+#include "soe/eigen_soe.h"
 
 EigenAnalysis::EigenAnalysis()
   :AnalysisType() {

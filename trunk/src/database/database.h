@@ -34,7 +34,7 @@ class Database {
   char tableInUse[512];
   bool isConnected;
   static Packet myPacket;
-  public:
+ public:
   Database();
   virtual ~Database();
   virtual int closeDB()=0;

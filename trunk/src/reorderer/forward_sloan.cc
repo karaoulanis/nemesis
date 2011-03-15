@@ -25,6 +25,12 @@
 
 #include "reorderer/forward_sloan.h"
 #include <boost/graph/sloan_ordering.hpp>
+#include <iostream>
+#include "analysis/analysis.h"
+#include "model/model.h"
+
+using std::cout;
+using std::endl;
 
 ForwardSloan::ForwardSloan(double w1, double w2) {
   myTag = TAG_REORDERER_REVERSE_SLOAN;
