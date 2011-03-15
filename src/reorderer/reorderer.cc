@@ -24,8 +24,16 @@
 // *****************************************************************************
 
 #include "reorderer/reorderer.h"
+#include <iostream>
 #include <fstream>
+#include "analysis/analysis.h"
 #include "exception/sexception.h"
+#include "model/model.h"
+#include "model/model_element.h"
+#include "model/model_node.h"
+
+using std::cout;
+using std::endl;
 
 Reorderer::Reorderer() {
   pA->get_model()->set_reordered(false);

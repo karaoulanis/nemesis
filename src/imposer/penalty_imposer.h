@@ -29,10 +29,10 @@
 #include "imposer/imposer.h"
 
 class PenaltyImposer: public Imposer {
-  private:
+ private:
   double a;
-  public:
-  PenaltyImposer(double amf);
+ public:
+  explicit PenaltyImposer(double amf);
   int impose();
 };
 #endif  // SRC_IMPOSER_PENALTY_IMPOSER_H_

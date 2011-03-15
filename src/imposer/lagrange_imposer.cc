@@ -26,6 +26,7 @@
 #include "imposer/lagrange_imposer.h"
 #include "analysis/analysis.h"
 #include "constraints/constraint.h"
+#include "domain/domain.h"
 #include "model/lagrange_model_element.h"
 #include "model/lagrange_model_node.h"
 #include "model/model.h"

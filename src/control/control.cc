@@ -24,7 +24,11 @@
 // *****************************************************************************
 
 #include "control/control.h"
-#include <cmath>
+#include "analysis/analysis.h"
+#include "model/model.h"
+#include "model/model_element.h"
+#include "model/model_node.h"
+#include "soe/soe.h"
 
 Control::Control() {
   lambdaTrial = 0;

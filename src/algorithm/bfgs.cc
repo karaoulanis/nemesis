@@ -24,6 +24,11 @@
 // *****************************************************************************
 
 #include "algorithm/bfgs.h"
+#include "analysis/analysis.h"
+#include "control/control.h"
+#include "convergence/convergence_norm.h"
+#include "numeric/vector.h"
+#include "soe/soe.h"
 
 BFGS::BFGS(int m_)
 :m(m_), isLineSearchActive(false) {

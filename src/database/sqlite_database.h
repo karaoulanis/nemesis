@@ -36,9 +36,9 @@ class SQLiteDatabase: public Database {
   sqlite3* db;
   int executeQuery(const char* query);
   static int callback(void *NotUsed, int argc, char **argv, char **azColName);
-  public:
+ public:
   SQLiteDatabase();
-  SQLiteDatabase(const char* workname);
+  explicit SQLiteDatabase(const char* workname);
   ~SQLiteDatabase();
 
   int closeDB();

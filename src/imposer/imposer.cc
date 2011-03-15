@@ -26,6 +26,7 @@
 #include "imposer/imposer.h"
 #include "analysis/analysis.h"
 #include "constraints/constraint.h"
+#include "domain/domain.h"
 #include "model/model.h"
 #include "model/standard_model_element.h"
 #include "model/standard_model_node.h"

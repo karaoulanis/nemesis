@@ -81,7 +81,7 @@ class Model: public AnalysisObject {
   bool reordered;
  public:
   // Contructor and destructor
-  Model(Domain* pDomain);
+  explicit Model(Domain* pDomain);
   virtual ~Model();
 
   void set_constrained(bool b);

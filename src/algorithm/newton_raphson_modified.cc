@@ -24,6 +24,10 @@
 // *****************************************************************************
 
 #include "algorithm/newton_raphson_modified.h"
+#include "analysis/analysis.h"
+#include "control/control.h"
+#include "convergence/convergence_norm.h"
+#include "soe/soe.h"
 
 NewtonRaphsonModified::NewtonRaphsonModified() {
   myTag = TAG_ALGORITHM_NEWTON_RAPHSON_MODIFED;

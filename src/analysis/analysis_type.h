@@ -26,9 +26,9 @@
 #ifndef SRC_ANALYSIS_ANALYSIS_TYPE_H_
 #define SRC_ANALYSIS_ANALYSIS_TYPE_H_
 
-#include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
-#include "loadcase/loadcase.h"
+
+class LoadCase;
 
 class AnalysisType: public AnalysisObject {
   public:

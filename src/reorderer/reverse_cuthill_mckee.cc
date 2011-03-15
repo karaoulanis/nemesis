@@ -25,6 +25,12 @@
 
 #include "reorderer/reverse_cuthill_mckee.h"
 #include <boost/graph/cuthill_mckee_ordering.hpp>
+#include <iostream>
+#include "analysis/analysis.h"
+#include "model/model.h"
+
+using std::cout;
+using std::endl;
 
 ReverseCuthillMckee::ReverseCuthillMckee() {
   myTag = TAG_REORDERER_REVERSE_CUTHILL_MCKEE;

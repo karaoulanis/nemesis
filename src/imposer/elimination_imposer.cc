@@ -26,6 +26,7 @@
 #include "imposer/elimination_imposer.h"
 #include "analysis/analysis.h"
 #include "constraints/constraint.h"
+#include "domain/domain.h"
 #include "model/elimination_model_element.h"
 #include "model/elimination_model_node.h"
 #include "model/model.h"

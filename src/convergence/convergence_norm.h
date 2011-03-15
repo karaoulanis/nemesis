@@ -26,7 +26,6 @@
 #ifndef SRC_CONVERGENCE_CONVERGENCE_NORM_H_
 #define SRC_CONVERGENCE_CONVERGENCE_NORM_H_
 
-#include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 #include "numeric/vector.h"
 

@@ -33,7 +33,7 @@ class TC: public Surface {
   double t;
  public:
   TC();
-  TC(double t_);
+  explicit TC(double t_);
   ~TC();
 
   double get_f(const Vector& s, const double q);

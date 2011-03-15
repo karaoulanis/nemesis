@@ -27,6 +27,10 @@
 #define SRC_CONTROL_TRANSIENT_CONTROL_H_
 
 #include "control/control.h"
+#include "numeric/vector.h"
+
+class ModelElement;
+class ModelNode;
 
 class TransientControl :public Control {
  protected:

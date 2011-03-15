@@ -25,6 +25,12 @@
 
 #include "control/load_control.h"
 #include <cmath>
+#include "analysis/analysis.h"
+#include "domain/domain.h"
+#include "model/model.h"
+#include "model/model_element.h"
+#include "model/model_node.h"
+#include "soe/soe.h"
 
 /**
  * Constructor.

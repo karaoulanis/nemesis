@@ -28,7 +28,6 @@
 
 #include <map>
 #include <vector>
-#include "containers/containers.h"
 #include "domain/domain_object.h"
 
 // Forward declarations

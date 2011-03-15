@@ -24,6 +24,10 @@
 // *****************************************************************************
 
 #include "algorithm/newton_raphson_initial.h"
+#include "analysis/analysis.h"
+#include "control/control.h"
+#include "convergence/convergence_norm.h"
+#include "soe/soe.h"
 
 NewtonRaphsonInitial::NewtonRaphsonInitial() {
   myTag = TAG_ALGORITHM_NEWTON_RAPHSON_INITIAL;

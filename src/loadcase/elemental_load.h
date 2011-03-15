@@ -36,7 +36,7 @@ class ElementalLoad: public Load {
   public:
   // Constructor and destructors
   ElementalLoad();
-  ElementalLoad(Element* element);
+  explicit ElementalLoad(Element* element);
   virtual ~ElementalLoad();
 
   // Apply load

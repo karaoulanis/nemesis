@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "analysis/analysis_type.h"
+#include "analysis/analysis.h"
 
 AnalysisType::AnalysisType() {
   pA->clear();

@@ -24,6 +24,11 @@
 // *****************************************************************************
 
 #include "convergence/convergence_norm.h"
+#include "analysis/analysis.h"
+#include "control/control.h"
+#include "domain/domain.h"
+#include "elements/element.h"
+#include "soe/soe.h"
 
 ConvergenceNorm::ConvergenceNorm() {
   tol.resize(3);

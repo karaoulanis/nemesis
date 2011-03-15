@@ -26,7 +26,6 @@
 #ifndef SRC_ALGORITHM_ALGORITHM_H_
 #define SRC_ALGORITHM_ALGORITHM_H_
 
-#include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 
 class Algorithm: public AnalysisObject {

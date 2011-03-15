@@ -41,10 +41,10 @@ class DomainObject: public FEObject {
   int myID;
   static Packet thePacket;
   static Domain* pD;
-  public:
+ public:
   // Constructors
   DomainObject();
-  DomainObject(int ID);
+  explicit DomainObject(int ID);
   virtual ~DomainObject();
 
   virtual int get_id();

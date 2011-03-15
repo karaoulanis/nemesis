@@ -27,6 +27,7 @@
 #define SRC_CONTROL_SENSITIVITY_CONTROL_H_
 
 #include "control/control.h"
+#include "numeric/vector.h"
 
 class SensitivityControl :public Control {
  protected:

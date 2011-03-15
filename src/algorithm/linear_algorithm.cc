@@ -24,6 +24,9 @@
 // *****************************************************************************
 
 #include "algorithm/linear_algorithm.h"
+#include "analysis/analysis.h"
+#include "control/control.h"
+#include "convergence/convergence_norm.h"
 
 LinearAlgorithm::LinearAlgorithm() {
   myTag = TAG_ALGORITHM_LINEAR;
