@@ -67,6 +67,7 @@ const Matrix& Quad4d::get_K() {
   K*=facK;
   return K;
 }
+
 const Matrix& Quad4d::get_M() {
   Matrix &M=*myMatrix;
   M.clear();
@@ -80,6 +81,7 @@ const Matrix& Quad4d::get_M() {
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
   return M;
 }
+
 const Vector& Quad4d::get_R() {
   Vector& R=*myVector;
   static Vector sigma(6);
@@ -107,6 +109,7 @@ const Vector& Quad4d::get_R() {
   R-=facP*P;
   return R;
 }
+
 void Quad4d::update() {
   static Vector u(8);
   static Vector epsilon(6);
@@ -145,7 +148,6 @@ void Quad4d::shapeFunctions() {
 
 void Quad4d::get_B(Matrix& B, int node, int gPoint) {
   /// @todo: check gCrds
-
   B.resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
   for (int k = 0; k < 4; k++) {     // matpoints
