@@ -1693,10 +1693,6 @@
 			Name="numeric"
 			>
 			<File
-				RelativePath="..\..\src\numeric\array_check.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\numeric\lapack.h"
 				>
 			</File>
