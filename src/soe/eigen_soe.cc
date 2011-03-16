@@ -1,6 +1,6 @@
 /*******************************************************************************
 * nemesis. an experimental finite element code.                                *
-* Copyright (C) 2004-2010 F.E.Karaoulanis [http://www.nemesis-project.org]     *
+* Copyright (C) 2004-2011 F.E.Karaoulanis [http://www.nemesis-project.org]     *
 *                                                                              *
 * This program is free software; you can redistribute it and/or modify         *
 * it under the terms of the GNU General Public License version 3, as           *
