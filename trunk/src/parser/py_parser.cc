@@ -1329,7 +1329,7 @@ static PyObject* pyGroup_State(PyObject* /*self*/, PyObject* args) {
                         &facK, &facS, &facG, &facP))
     return NULL;
   try {
-    Group* group = new Group(id);
+    Group* group = pD->get<Group>(pD->get_groups(), id);
     GroupState* gs = new GroupState(group, active, facK, facS, facG, facP);
     pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddGroupState(gs);
   } catch(SException e) {
