@@ -86,6 +86,22 @@ const Matrix& Element::get_C() {
   return C;
 }
 
+/**
+ * @todo
+ */
+const Vector& Element::get_Reff() {
+  myVector->clear();
+  return *myVector;
+}
+
+/**
+ * @todo
+ */
+const Vector& Element::get_Rgrad() {
+  myVector->clear();
+  return *myVector;
+}
+
 int Element::handleCommonInfo() {
   // Define number of nodes, number of dofs
   int nNodes = myNodalIDs.size();
