@@ -84,8 +84,8 @@ class Element: public DomainObject {
   virtual const Matrix& get_M()=0;
   virtual const Matrix& get_C();
   virtual const Vector& get_R()=0;
-  virtual const Vector& get_Reff()   {myVector->clear(); return *myVector;}
-  virtual const Vector& get_Rgrad()  {myVector->clear(); return *myVector;}
+  virtual const Vector& get_Reff();
+  virtual const Vector& get_Rgrad();
 
   // Handle elemental loads
   void addLoad(const Vector& val, double fac = 1.0);
