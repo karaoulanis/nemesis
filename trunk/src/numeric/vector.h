@@ -29,7 +29,6 @@
 // C/C++ include files
 #include <cmath>
 #include <iostream>
-#include "numeric/array_check.h"
 #include "numeric/lapack.h"
 #include "numeric/numeric.h"
 
@@ -107,7 +106,7 @@ class Vector {
    */
   inline Vector& operator=(const Vector& v) {
     #ifdef _DEBUG
-    array_size_check(v.size_, size_);
+    num::check::array_size(v.size_, size_);
     #endif
     if (this != &v)
       for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
@@ -119,7 +118,7 @@ class Vector {
    */
   inline double& operator[](int i) {
     #ifdef _DEBUG
-    array_range_check(i, size_);
+    num::check::array_range(i, size_);
     #endif
     return data_[i];
   }
@@ -129,7 +128,7 @@ class Vector {
    */
   inline double operator[](int i) const {
     #ifdef _DEBUG
-    array_range_check(i, size_);
+    num::check::array_range(i, size_);
     #endif
     return data_[i];
   }
@@ -256,7 +255,7 @@ class Vector {
    */
   inline Vector& operator+=(const Vector& v) {
     #ifdef _DEBUG
-    array_size_check(v.size_, size_);
+    num::check::array_size(v.size_, size_);
     #endif
     for (int i = 0;i < size_;i++) data_[i]+=v.data_[i];
     return *this;
@@ -267,7 +266,7 @@ class Vector {
    */
   inline Vector& operator-=(const Vector& v) {
     #ifdef _DEBUG
-    array_size_check(v.size_, size_);
+    num::check::array_size(v.size_, size_);
     #endif
     for (int i = 0;i < size_;i++) data_[i]-=v.data_[i];
     return *this;
@@ -278,7 +277,7 @@ class Vector {
    */
   inline void add_cV(double c, const Vector& v, double c0 = 1.0) {
     #ifdef _DEBUG
-    array_size_check(v.size_, size_);
+    num::check::array_size(v.size_, size_);
     #endif
     if (c == 0.0&&c0 != 0) return;
     else if (c0 == 0.0)  for (int i = 0;i < size_;i++) data_[i]=0;
@@ -325,7 +324,7 @@ class Vector {
    */
   inline friend double operator*(const Vector& v1, const Vector& v2) {
     #ifdef _DEBUG
-    array_size_check(v1.size_, v2.size_);
+    num::check::array_size(v1.size_, v2.size_);
     #endif
     if (v1.size_ == 0) return 0;
     double res = v1.data_[0]*v2.data_[0];
@@ -338,8 +337,8 @@ class Vector {
    */
   inline friend Vector cross(const Vector& v1, const Vector& v2) {
     #ifdef _DEBUG
-    array_size_check(v1.size_, 3);
-    array_size_check(v2.size_, 3);
+    num::check::array_size(v1.size_, 3);
+    num::check::array_size(v2.size_, 3);
     #endif
     Vector res(3);
     res.data_[0]=v1.data_[1]*v2.data_[2]-v1.data_[2]*v2.data_[1];
@@ -398,7 +397,7 @@ class Vector {
   inline Vector& append(const Vector& v, int row, double c = 1.,
                                                   double c0 = 0.) {
     #ifdef _DEBUG
-    array_range_check(row+v.size_, size_);
+    num::check::array_range(row+v.size_, size_);
     #endif
     if (c0 == 0.0)     for (int i = 0;i < v.size_;i++) data_[row+i]=0.;
     else if (c0 != 1.0)  for (int i = 0;i < v.size_;i++) data_[row+i]*=c0;
@@ -419,7 +418,7 @@ class Vector {
    */
   inline double sb() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     return num::d13*(data_[0]+data_[1]+data_[2]);
   }
@@ -429,7 +428,7 @@ class Vector {
    */
   inline double I1() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     return data_[0]+data_[1]+data_[2];
   }
@@ -439,7 +438,7 @@ class Vector {
    */
   inline double I2() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     return 0.;
   }
@@ -449,7 +448,7 @@ class Vector {
    */
   inline double I3() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     return   data_[0]*data_[1]*data_[2]
       +2.0*data_[3]*data_[4]*data_[5]
@@ -463,7 +462,7 @@ class Vector {
    */
   inline double J1() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     return 0;
   }
@@ -473,7 +472,7 @@ class Vector {
    */
   inline double J2() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     double sm=(data_[0]+data_[1]+data_[2])/3.;
     double sx = data_[0]-sm;
@@ -488,7 +487,7 @@ class Vector {
    */
   inline double J3() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     double sm=(data_[0]+data_[1]+data_[2])/3.;
     double sx = data_[0]-sm;
@@ -506,7 +505,7 @@ class Vector {
    */
   inline double theta() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     double facJ3 = this->J3();
     double facSqJ2 = sqrt(this->J2());
@@ -535,7 +534,7 @@ class Vector {
    */
   inline double p() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     return -I1()/3.0;
   }
@@ -545,7 +544,7 @@ class Vector {
    */
   inline double q() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     return sqrt(3.*J2());
   }
@@ -555,7 +554,7 @@ class Vector {
    */
   inline Vector dpds() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     Vector ret(6, 0.);
     ret[0]=-num::d13;
@@ -569,7 +568,7 @@ class Vector {
    */
   inline Vector dqds() const {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     double sm =sb();
     double sx =data_[0]-sm;
@@ -595,7 +594,7 @@ class Vector {
    */
   const Vector& eigenvalues() {
     #ifdef _DEBUG
-    array_size_check(size_, 6);
+    num::check::array_size(size_, 6);
     #endif
     int N = 3;
     char JOBZ='N';

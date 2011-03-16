@@ -30,6 +30,7 @@
 #include <cmath>
 #include <cstdio>
 #include <limits>
+#include "exception/sexception.h"
 
 namespace num {
   const double pi = 4.*std::atan(1.0);
@@ -82,6 +83,25 @@ namespace num {
   }
   inline double sign(double d) {
     return d < 0  ? -1 : 1;
+  }
+
+  namespace check {
+    inline void array_range(int i, int n) {
+      if ((i < 0)||(i > n))
+        throw SException("[nemesis:%d] %s", 1002, "Out of array bounds.");
+    }
+    inline void array_range(int i, int j, int n, int m) {
+      if ((i < 0)||(i > n)||(j < 0)||(j > m))
+        throw SException("[nemesis:%d] %s", 1003, "Out of array bounds.");
+    }
+    inline void array_size(int n, int size) {
+      if (n != size)
+        throw SException("[nemesis:%d] %s", 1004, "Sizes do not match.");
+    }
+    inline void array_size(int n, int m, int size1, int size2) {
+      if (n != size1||m != size2)
+        throw SException("[nemesis:%d] %s", 1005, "Sizes do not match.");
+    }  
   }
 }
 #endif  // SRC_NUMERIC_NUMERIC_H_

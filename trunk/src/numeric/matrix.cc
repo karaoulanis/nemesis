@@ -26,8 +26,8 @@
 // Included files
 #include "numeric/matrix.h"
 #include "exception/sexception.h"
-#include "numeric/array_check.h"
 #include "numeric/lu.h"
+#include "numeric/numeric.h"
 #include "numeric/vector.h"
 
 /**
@@ -116,7 +116,7 @@ Matrix::~Matrix() {
  */
 Matrix& Matrix::operator=(const Matrix& m) {
   #ifdef _DEBUG
-  array_size_check(rows_, cols_, m.rows_, m.cols_);
+  num::check::array_size(rows_, cols_, m.rows_, m.cols_);
   #endif
   if (this != &m)
     for (int i = 0; i < size_; i++) data_[i]=m.data_[i];
@@ -178,9 +178,9 @@ void Matrix::clear() {
 
 void Matrix::solve(Vector& x, const Vector& b) {
   #ifdef _DEBUG
-  array_size_check(cols_, rows_);
-  array_size_check(cols_, b.size());
-  array_size_check(x.size(), b.size());
+  num::check::array_size(cols_, rows_);
+  num::check::array_size(cols_, b.size());
+  num::check::array_size(x.size(), b.size());
   #endif
   double* me;
   double* vv;
@@ -206,7 +206,7 @@ void Matrix::solve(Vector& x, const Vector& b) {
 }
 Matrix Inverse(const Matrix& m) {
   #ifdef _DEBUG
-  array_size_check(m.cols_, m.rows_);
+  num::check::array_size(m.cols_, m.rows_);
   #endif
   Matrix inv = m;
   double* me;
@@ -237,7 +237,7 @@ Matrix Inverse(const Matrix& m) {
 
 double det(const Matrix& m) {
   #ifdef _DEBUG
-  array_size_check(m.cols_, m.rows_);
+  num::check::array_size(m.cols_, m.rows_);
   #endif
   double* me;
   double* vv;

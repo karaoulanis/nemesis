@@ -28,7 +28,7 @@
 
 // Included files
 #include "exception/sexception.h"
-#include "numeric/array_check.h"
+#include "numeric/numeric.h"
 #include "numeric/vector.h"
 
 // Forward declarations
@@ -53,7 +53,7 @@ class Matrix {
    */
   inline double& operator()(int i, int j) {
     #ifdef _DEBUG
-    array_range_check(i, j, rows_, cols_);
+    num::check::array_range(i, j, rows_, cols_);
     #endif
     return data_[i*cols_+j];
   }
@@ -65,7 +65,7 @@ class Matrix {
    */
   inline double operator()(int i, int j) const {
     #ifdef _DEBUG
-    array_range_check(i, j, rows_, cols_);
+    num::check::array_range(i, j, rows_, cols_);
     #endif
     return data_[i*cols_+j];
   }
@@ -199,7 +199,7 @@ class Matrix {
    */
   inline Matrix& operator+=(const Matrix& m) {
     #ifdef _DEBUG
-    array_size_check(rows_, cols_, m.rows_, m.cols_);
+    num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
     for (int i = 0;i < size_;i++) data_[i]+=m.data_[i];
     return *this;
@@ -212,7 +212,7 @@ class Matrix {
    */
   inline Matrix& operator-=(const Matrix& m) {
     #ifdef _DEBUG
-    array_size_check(rows_, cols_, m.rows_, m.cols_);
+    num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
     for (int i = 0;i < size_;i++) data_[i]-=m.data_[i];
     return *this;
@@ -226,7 +226,7 @@ class Matrix {
    */
   inline Matrix operator+(const Matrix& m) const {
     #ifdef _DEBUG
-    array_size_check(rows_, cols_, m.rows_, m.cols_);
+    num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
     Matrix res(*this);
     res.add_cM(1.0, m, 1.0);
@@ -241,7 +241,7 @@ class Matrix {
    */
   inline Matrix operator-(const Matrix& m) const {
     #ifdef _DEBUG
-    array_size_check(rows_, cols_, m.rows_, m.cols_);
+    num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
     Matrix res(*this);
     res.add_cM(-1.0, m, 1.0);
@@ -256,7 +256,7 @@ class Matrix {
    */
   inline Matrix operator*(const Matrix& m) const {
     #ifdef _DEBUG
-    array_size_check(cols_, m.rows_);
+    num::check::array_size(cols_, m.rows_);
     #endif
     Matrix res(rows_, m.cols_);
     res.add_cMM(1.0, *this, m, 0.0);
@@ -298,7 +298,7 @@ class Matrix {
    */
   inline Vector operator*(const Vector& v) const {
     #ifdef _DEBUG
-    array_size_check(cols_, v.size());
+    num::check::array_size(cols_, v.size());
     #endif
     Vector res(rows_, 0.);
     for (int i = 0;i < rows_;i++)
@@ -317,7 +317,7 @@ class Matrix {
   inline Matrix& append(const Matrix& m, int row, int col, double c = 1.0,
                         double c0 = 0.) {
     #ifdef _DEBUG
-    array_range_check(row+m.rows_, col+m.cols_, rows_, cols_);
+    num::check::array_range(row+m.rows_, col+m.cols_, rows_, cols_);
     #endif
     if (c0 == 0.0)
       for (int i = 0;i < m.rows_;i++)
@@ -342,7 +342,7 @@ class Matrix {
   inline Matrix& appendRow(const Vector& v, int row, int col, double c = 1.0,
                            double c0 = 0.) {
     #ifdef _DEBUG
-    array_range_check(row, col+v.size(), rows_, cols_);
+    num::check::array_range(row, col+v.size(), rows_, cols_);
     #endif
     if (c0 == 0.0)
       for (int i = 0;i < v.size();i++) data_[row*cols_+col+i]=0.;
@@ -363,7 +363,7 @@ class Matrix {
   inline Matrix& appendCol(const Vector& v, int row, int col, double c = 1.0,
                            double c0 = 0.) {
     #ifdef _DEBUG
-    array_range_check(row+v.size(), col, rows_, cols_);
+    num::check::array_range(row+v.size(), col, rows_, cols_);
     #endif
     if (c0 == 0.0)
       for (int i = 0;i < v.size();i++) data_[(row+i)*cols_+col]=0.;
@@ -420,7 +420,7 @@ inline Matrix Identity(int n) {
  */
 inline Matrix VVT(const Vector& v1, const Vector& v2) {
   #ifdef _DEBUG
-  array_size_check(v1.size(), v2.size());
+  num::check::array_size(v1.size(), v2.size());
   #endif
   Matrix res(v1.size(), v2.size());
   for (int i = 0;i < v1.size();i++)
