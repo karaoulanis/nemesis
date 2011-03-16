@@ -30,8 +30,8 @@
 
 Timoshenko2d::Timoshenko2d() {
 }
-Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID,
-                           int rule)
+Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2,
+                           int matID, CrossSection* section, int rule)
 :Element(ID, matID) {
   myTag = TAG_ELEM_BEAM_2D_TIMOSHENKO_2;
   myNodalIDs.resize(2);
@@ -41,13 +41,13 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID,
   myLocalNodalDofs[0]=0;
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=5;
-  mySecID = secID;
+  mySection = section;
+  mySecID = section->get_id(); ///@ todo remove
   // Handle common info
   this->handleCommonInfo();
-  mySecID = secID;
-  mySection = pD->get<CrossSection>(pD->get_cross_sections(), mySecID);
-  L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
-  myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
+  L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+
+           (x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
+  myUniMaterial = static_cast<UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
@@ -58,11 +58,11 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID,
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
   b[1]=-cosX[1]*b0A+cosX[0]*b1A;
   gPoints = rule;
-  if (rule != 1&&rule != 2)
-    throw SException("[nemesis:%d] %s", 9999, "Integration rule should be 1 or 2.");
+  if (rule != 1 && rule != 2)
+    throw SException("[nemesis:%d] %s", 9999, "Integration rule must be 1/2.");
 }
 Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
-                           int matID, int secID, int rule)
+                           int matID, CrossSection* section, int rule)
 :Element(ID, matID) {
   myTag = TAG_ELEM_BEAM_2D_TIMOSHENKO_3;
   myNodalIDs.resize(3);
@@ -73,12 +73,12 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
   myLocalNodalDofs[0]=0;
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=5;
-  mySecID = secID;
+  mySection = section;
+  mySecID = section->get_id(); ///@ todo remove
   // Handle common info
   this->handleCommonInfo();
-  mySecID = secID;
-  mySection = pD->get<CrossSection>(pD->get_cross_sections(), mySecID);
-  L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
+  L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+
+           (x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
   myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
@@ -90,8 +90,8 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
   b[1]=-cosX[1]*b0A+cosX[0]*b1A;
   gPoints = rule;
-  if (rule != 2&&rule != 3)
-    throw SException("[nemesis:%d] %s", 9999, "Integration rule should be 2 or 3.");
+  if (rule != 2 && rule != 3)
+    throw SException("[nemesis:%d] %s", 9999, "Integration rule must be 2/3.");
 }
 /**
  * Destructor.

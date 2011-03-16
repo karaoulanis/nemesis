@@ -30,7 +30,7 @@
 
 Beam2e::Beam2e() {
 }
-Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, int secID)
+Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section)
 :Element(ID, matID) {
   myTag = TAG_ELEM_BEAM_2D_EULER;
   myNodalIDs.resize(2);
@@ -40,11 +40,10 @@ Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, int secID)
   myLocalNodalDofs[0]=0;
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=5;
-  mySecID = secID;
+  mySection = section;
+  mySecID = section->get_id(); ///@ todo remove
   // Handle common info
   this->handleCommonInfo();
-  mySecID = secID;
-  mySection = pD->get<CrossSection>(pD->get_cross_sections(), mySecID);
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
   myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;

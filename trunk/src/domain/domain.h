@@ -163,7 +163,7 @@ class Domain {
   const Vector& get_eigen_values();
 
   inline NodeContainer& get_nodes()                  {return theNodes;}
-  inline CrossSectionContainer& get_cross_sections() {return theCrossSections;}
+  inline CrossSectionContainer& get_sections()       {return theCrossSections;}
   inline ElementContainer& get_elements()            {return theElements;}
   inline GroupContainer& get_groups()                {return theGroups;}
   inline MaterialContainer& get_materials()          {return theMaterials;}

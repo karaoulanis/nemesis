@@ -40,7 +40,7 @@ class Beam2e: public Element {
   UniaxialMaterial* myUniMaterial;
  public:
   Beam2e();
-  Beam2e(int ID, int Node_1, int Node_2, int matID, int secID);
+  Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section);
   ~Beam2e();
 
   const Matrix& get_K();

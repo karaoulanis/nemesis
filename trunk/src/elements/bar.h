@@ -44,7 +44,8 @@ class Bar: public Element {
  public:
   // Constructors and Destructor
   Bar();
-  Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID);
+  Bar(int ID, int Node_1, int Node_2, int matID,
+      CrossSection* iSec, CrossSection* jSec);
   ~Bar();
   void update();
   void commit();

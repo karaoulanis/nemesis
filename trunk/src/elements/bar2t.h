@@ -33,7 +33,8 @@ class Bar2t: public Bar {
  public:
   // Constructors and Destructor
   Bar2t();
-  Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID);
+  Bar2t(int ID, int Node_1, int Node_2, int matID,
+        CrossSection* iSec, CrossSection* jSec);
   ~Bar2t();
 
   const Matrix& get_K();

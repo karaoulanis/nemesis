@@ -43,9 +43,10 @@ class Timoshenko2d: public Element {
   int gPoints;
   public:
   Timoshenko2d();
-  Timoshenko2d(int ID, int Node_1, int Node_2, int matID, int secID, int rule);
-  Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3, int matID, int secID,
-               int rule);
+  Timoshenko2d(int ID, int Node_1, int Node_2,
+               int matID, CrossSection* section, int rule);
+  Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
+               int matID, CrossSection* section, int rule);
   ~Timoshenko2d();
 
   const Matrix& get_K();
