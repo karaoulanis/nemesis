@@ -80,7 +80,6 @@ class Domain {
   Vector gravityVect;
   double gravityAccl;
   bool groupsByMaterial;
-  int currentGroup;
 
   NodeContainer         theNodes;
   CrossSectionContainer theCrossSections;
@@ -107,6 +106,9 @@ class Domain {
   // Access to data members
   int set_dim(int dim);
   int get_dim() const;
+
+  // Analysis/LoadCase related members
+  void Initialize();
   void zeroNodalStress();
   void zeroSensitivityParameters();
   void applyLoads(double lambda_, double time_);
@@ -151,8 +153,6 @@ class Domain {
   void set_uptodate()                 {upToDate = true;}
   bool areGroupsByMaterial()          {return groupsByMaterial;}
   void set_groups_by_material(bool b) {groupsByMaterial = b;}
-  void set_current_group(int n)       {currentGroup = n;}
-  int  get_current_group()            {return currentGroup;}
 
   // Rayleigh damping
   void set_Rayleigh_factors(const Vector& factors);

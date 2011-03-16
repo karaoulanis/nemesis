@@ -65,7 +65,6 @@ void Domain::init() {
   this->add(this->get_groups(), pGroup);
   // Define that groups are by set by materials
   groupsByMaterial = true;
-  currentGroup = 0;
   // Initialize time/lambda
   timeCurr = 0.;
   timePrev = 0.;
@@ -232,13 +231,8 @@ void Domain::set_eigenvalues(const Vector& vals) {
 const Vector& Domain::get_eigen_values() {
   return eigenVals;
 }
-void Domain::applyLoads(double lambda_, double time_) {
-  for (LoadCaseIterator lcIter = theLoadCases.begin();
-    lcIter != theLoadCases.end(); lcIter++)
-      lcIter->second->ApplyLoads(lambda_, time_);
-}
 
-void Domain::zeroLoads() {
+void Domain::Initialize() {
   /// @todo: rename as to be consistent
   // default groupdata for all elements
   static GroupData default_groupdata;
@@ -249,12 +243,26 @@ void Domain::zeroLoads() {
   default_groupdata.factor_P_ = 1.0;
   for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
     e->second->SetGroupData(&default_groupdata);
+  }
+}
+
+void Domain::zeroLoads() {
+  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
     e->second->zeroLoad();
   }
   for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
     n->second->zeroLoad();
   }
 }
+
+void Domain::applyLoads(double lambda_, double time_) {
+  for (LoadCaseIterator lcIter = theLoadCases.begin();
+    lcIter != theLoadCases.end(); lcIter++)
+      lcIter->second->ApplyLoads(lambda_, time_);
+}
+
+
+
 
 /**
  * Sets gravity info.

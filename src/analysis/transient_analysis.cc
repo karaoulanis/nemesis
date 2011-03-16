@@ -102,6 +102,7 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   pA->get_soe()->set_size();
 
   // Initialize
+  pA->get_domain()->Initialize();
   loadcase->Initialize();
   pA->get_control()->init();
   pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
@@ -128,6 +129,6 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
     // pA->get_domain()->keepTrack(pA->get_control()->get_lambda(),
     // pA->get_control()->get_time());
   }
-  loadcase->Commit();
+  loadcase->Finalize();
   return 0;
 }

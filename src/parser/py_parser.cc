@@ -134,6 +134,7 @@
 static Domain*   pD = 0;
 static Analysis* pA = 0;
 static int currentLC = 0;
+static int current_group = 0;
 
 PyObject* buildList(const Vector& v) {
   static PyObject* pyList;
@@ -557,22 +558,12 @@ static PyMethodDef SectionMethods[] =  {
 /******************************************************************************
 * Material Commands
 ******************************************************************************/
-void createGroupByMaterial(int groupId) {
-  try {
-    Group* pGroup = new Group(groupId);
-    pD->add(pD->get_groups(), pGroup);
-    pD->set_current_group(groupId);
-  } catch(SException /*e*/) {
-    /// @todo
-  }
-}
 static PyObject* pyMaterial_SDof(PyObject* /*self*/, PyObject* args) {
   int id;
   double E, rho = 0;
     if (!PyArg_ParseTuple(args, "id|d", &id, &E, &rho))return NULL;
   Material* pMaterial = new SDofMaterial(id, E, rho);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -582,7 +573,6 @@ static PyObject* pyMaterial_SpringElastic(PyObject* /*self*/, PyObject* args) {
     if (!PyArg_ParseTuple(args, "id|dd", &id, &Kn, &Ks2, &Ks3))return NULL;
   Material* pMaterial = new SpringElastic(id, Kn, Ks2, Ks3);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -593,7 +583,6 @@ static PyObject* pyMaterial_SpringContact(PyObject* /*self*/, PyObject* args) {
     if (!PyArg_ParseTuple(args, "idddd", &id, &Kn, &Ks, &mu, &gap))return NULL;
   Material* pMaterial = new SpringContact(id, Kn, Ks, mu, gap);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -604,7 +593,6 @@ static PyObject* pyMaterial_UniaxialElastic(PyObject* /*self*/,
     if (!PyArg_ParseTuple(args, "id|ddd", &id, &E, &nu, &rho, &aT))return NULL;
   Material* pMaterial = new UniaxialElastic(id, E, nu, rho, aT);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -612,11 +600,13 @@ static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject* /*self*/,
                                                   PyObject* args) {
   int id;
   double E = 0, nu = 0, rho = 0, aT = 0, sy = 0, Hiso = 0, Hkin = 0, eta = 0;
-  if (!PyArg_ParseTuple(args, "iddddddd|d", &id, &E, &nu, &rho, &aT, &sy, &Hiso, &Hkin, &eta))
+  if (!PyArg_ParseTuple(args, "iddddddd|d",
+                        &id, &E, &nu, &rho, &aT, &sy, &Hiso, &Hkin, &eta)) {
     return NULL;
-  Material* pMaterial = new UniaxialElastoPlastic(id, E, nu, rho, aT, sy, Hiso, Hkin, eta);
+  }
+  Material* pMaterial = new UniaxialElastoPlastic(id, E, nu, rho, aT,
+                                                  sy, Hiso, Hkin, eta);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -627,7 +617,6 @@ static PyObject* pyMaterial_UniaxialGap(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new UniaxialGap(id, E, nu, rho, aT, sy, gap);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -635,15 +624,16 @@ static PyObject* pyMaterial_Elastic(PyObject* /*self*/, PyObject *args) {
   int id;
   double E = 0, nu = 0, rho = 0, aT = 0;
   double kx = 0., ky = 0., kz = 0.;
-  if (!PyArg_ParseTuple(args, "idd|ddddd", &id, &E, &nu, &rho, &aT, &kx, &ky, &kz))
+  if (!PyArg_ParseTuple(args, "idd|ddddd",
+                        &id, &E, &nu, &rho, &aT, &kx, &ky, &kz)) {
     return NULL;
+  }
   Material* pMaterial;
   if (pD->get_tag() == TAG_DOMAIN_PLANE_STRESS)
     pMaterial = new PlaneStress(id, E, nu, rho, aT);
   else
     pMaterial = new MultiaxialElastic(id, E, nu, rho, aT, kx, ky, kz);
   pD->add(pD->get_materials(), pMaterial);
-  // createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -654,7 +644,6 @@ static PyObject* pyMaterial_DuncanChang(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new DuncanChang(id, E, nu, c, phi, m, Rf, pa, rho, aT);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -665,7 +654,6 @@ static PyObject* pyMaterial_UniaxialCyclic(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new UniaxialCyclic(id, E, nu, rho, aT, tmax, gmax);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -676,7 +664,6 @@ static PyObject* pyMaterial_VonMises(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new VonMises(id, elasticId, s0, K);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -687,7 +674,6 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new MohrCoulomb(id, elasticId, c, phi, alpha);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -699,7 +685,6 @@ static PyObject* pyMaterial_Tresca(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new Tresca(id, elasticId, cu, kx, ky, kz);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -710,7 +695,6 @@ static PyObject* pyMaterial_HoekBrown(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new HoekBrown(id, elasticId, si, sp, mb, mbb, alpha);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -721,7 +705,6 @@ static PyObject* pyMaterial_Creep(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new Creep(id, elasticId, A, n, k);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -732,7 +715,6 @@ static PyObject* pyMaterial_DruckerPrager(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new DruckerPrager(id, elasticId, type, c, phi, psi, T);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -744,7 +726,6 @@ static PyObject* pyMaterial_DruckerPragerNew(PyObject* /*self*/,
     return NULL;
   Material* pMaterial = new DruckerPragerNew(id, elasticId, c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -756,7 +737,6 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject* /*self*/,
     return NULL;
   Material* pMaterial = new DruckerPragerNew2(id, elasticId, c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }static PyObject* pyMaterial_DruckerPragerNew3(PyObject* /*self*/,
@@ -767,7 +747,6 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject* /*self*/,
     return NULL;
   Material* pMaterial = new DruckerPragerNew3(id, elasticId, c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -779,7 +758,6 @@ static PyObject* pyMaterial_ModifiedCamClay(PyObject* /*self*/,
     return NULL;
   Material* pMaterial = new ModifiedCamClay(id, elasticId, M, po, kappa, lambda);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -790,7 +768,6 @@ static PyObject* pyMaterial_LadeDuncan(PyObject* /*self*/, PyObject* args) {
     return NULL;
   Material* pMaterial = new LadeDuncan(id, elasticId, K);
   pD->add(pD->get_materials(), pMaterial);
-  createGroupByMaterial(id);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1008,12 +985,14 @@ static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
         pD->get_tag() == TAG_DOMAIN_PLANE_STRESS) {
           pElement = new Quad4DispPlain(id, n1, n2, n3, n4, matID, 2, 2);
     } else if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
-      pElement = new Quad4DispAxisymmetric(id, n1, n2, n3, n4, matID, 2, 2);
+        pElement = new Quad4DispAxisymmetric(id, n1, n2, n3, n4, matID, 2, 2);
     } else {
       throw SException("[nemesis:%d] %s", 1110,
         "A quad4d can be used only in plane strain/stress/axisymmetry.");
     }
     pD->add(pD->get_elements(), pElement);
+    Group* group=pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1321,12 +1300,12 @@ static PyMethodDef ConstraintMethods[] =  {
 * Group commands
 ******************************************************************************/
 static PyObject* pyGroup_Define(PyObject* /*self*/, PyObject* args) {
-  int groupId;
-  if (!PyArg_ParseTuple(args, "i", &groupId)) return NULL;
+  int id;
+  if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   try {
-    Group* pGroup = new Group(groupId);
-    pD->add(pD->get_groups(), pGroup);
-    pD->set_current_group(groupId);
+    Group* group = new Group(id);
+    pD->add(pD->get_groups(), group);
+    current_group = id;
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;

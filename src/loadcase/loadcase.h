@@ -43,14 +43,17 @@ class LoadCase: public DomainObject {
   LoadCase();
   LoadCase(int id, const char* label);
   ~LoadCase();
-  // Initialize loadcase
+  
+  // Do stuff at the begining/end of a loadcase.
   void Initialize();
-  void Commit();
+  void Finalize();
+  
   // Add member functions
   void AddLoad(Load* pLoad);
   void AddGroupState(GroupState* pGroupState);
   void AddInitialCondition(InitialCondition* pInitialCondition);
   void AddSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter);
+  
   // Apply member functions
   void ApplyLoads(double lambda_, double time_);
   void ApplySensitivityParameter(int param);
