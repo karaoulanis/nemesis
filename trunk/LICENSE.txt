@@ -1,5 +1,5 @@
 nemesis. an experimental finite element code.
-Copyright (C) 2004-2007 F.E.Karaoulanis
+Copyright (C) 2004-2011 F.E.Karaoulanis
 nemesis is licensed under GPLv2.0. 
 Additional info can be found at www.nemesis-project.org, or at the bottom of this file.
 
