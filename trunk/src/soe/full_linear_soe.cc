@@ -72,19 +72,17 @@ int FullLinearSOE::get_eigen_sign() {
   return 1;
 }
 int FullLinearSOE::solve() {
-  this->print();
   int N = size_;
   int NRHS = 1;
   int LDA = N;
   int LDB = N;
   int INFO;
   char c='N';
-//  this->print();
-//  for (int i = 0;i < size_;i++)
-//  {
-//        cout << B[i]<<endl;
-//  }
-//  cout << endl;
+  // this->print();
+  // for (int i = 0;i < size_;i++) {
+  //   cout << B[i]<<endl;
+  // }
+  //  cout << endl;
   X = B;
   // Compute the LU factorization of the band matrix A.
   if (!isLUFactored) {

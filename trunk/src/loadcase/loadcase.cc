@@ -117,7 +117,7 @@ void LoadCase::ApplyLoads(double lambda, double time) {
   }
 }
 
-void LoadCase::Commit() {
+void LoadCase::Finalize() {
   applied_ = true;
   active_  = false;
 }

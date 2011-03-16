@@ -104,6 +104,7 @@ int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   pA->get_soe()->set_size();
 
   // Initialize
+  pA->get_domain()->Initialize();
   loadcase->Initialize();
   pA->get_control()->init();
   pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
@@ -128,7 +129,7 @@ int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
     pA->get_control()->commit();
   }
   // Finalize
-  loadcase->Commit();
+  loadcase->Finalize();
   pA->get_model()->set_nodal_stress();
   pA->get_domain()->commit();  /// @todo Commiting time; find more elegant way.
   return ret;
