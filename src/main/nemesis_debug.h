@@ -50,17 +50,17 @@ class LogFile {
   LogFile& operator<<(const void *p)                   {log << p; return *this;}
   LogFile& operator<<(int n)                           {log << n; return *this;}
   LogFile& operator<<(unsigned int n)                  {log << n; return *this;}
-  LogFile& operator<<(long n)                          {log << n; return *this;}
-  LogFile& operator<<(unsigned long n)                 {log << n; return *this;}
-  LogFile& operator<<(short n)                         {log << n; return *this;}
-  LogFile& operator<<(unsigned short n)                {log << n; return *this;}
+  // LogFile& operator<<(long n)                       {log << n; return *this;}
+  // LogFile& operator<<(unsigned long n)              {log << n; return *this;}
+  // LogFile& operator<<(short n)                      {log << n; return *this;}
+  // LogFile& operator<<(unsigned short n)             {log << n; return *this;}
   LogFile& operator<<(double d)                        {log << d; return *this;}
   LogFile& operator<<(float d)                         {log << d; return *this;}
   LogFile& operator<<(bool b)                          {log << b; return *this;}
   LogFile& operator<<(std::string s)                   {log << s; return *this;}
-  LogFile& operator<<(LogFile& (*f)(LogFile&))          {f(*this);return *this;}
-  LogFile& operator>>(LogFile& (*f)(LogFile&))          {f(*this);return *this;}
-  LogFile& flush()                                   {log.flush();return *this;}
+  LogFile& operator<<(LogFile& (*f)(LogFile&))         {f(*this); return *this;}
+  LogFile& operator>>(LogFile& (*f)(LogFile&))         {f(*this); return *this;}
+  LogFile& flush()                                  {log.flush(); return *this;}
   void width(int n)                                              {log.width(n);}
   void fill(char n)                                               {log.fill(n);}
   void write(const Vector& v)                           {log << v << std::endl;}
