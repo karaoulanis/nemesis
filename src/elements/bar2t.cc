@@ -38,8 +38,9 @@ Bar2t::Bar2t()   {
  * Material are stored. Only when this element is added to the Domain, the
  * pointers concerning the Nodes and the Material are initiated.
  */
-Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
-  :Bar(ID, Node_1, Node_2, matID, iSecID, jSecID) {
+Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID,
+             CrossSection* iSec, CrossSection* jSec)
+  :Bar(ID, Node_1, Node_2, matID, iSec, jSec) {
   myTag = TAG_ELEM_BAR_2D_TOTAL_LAGRANGIAN;
   cosX.resize(nDim);
   cosX.clear();

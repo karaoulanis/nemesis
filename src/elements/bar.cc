@@ -37,7 +37,8 @@ Bar::Bar()   {
  * Constructor.
  * Creates a Bar Element.
  */
-Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
+Bar::Bar(int ID, int Node_1, int Node_2, int matID,
+         CrossSection* iSec, CrossSection* jSec)
 :Element(ID, matID) {
   // Get dimension
   nDim = pD->get_dim();
@@ -62,8 +63,8 @@ Bar::Bar(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
     throw SException("[nemesis:%d] %s", 9999, "Zero length bar is not allowed");
 
   // Retrieve the CrossSection pointers and get A0
-  iSection = pD->get<CrossSection>(pD->get_cross_sections(), iSecID);
-  jSection = pD->get<CrossSection>(pD->get_cross_sections(), jSecID);
+  iSection = iSec;
+  jSection = jSec;
   A0 = 0.5*(iSection->get_A()+jSection->get_A());
 
   // Store material information

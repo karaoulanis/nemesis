@@ -36,8 +36,9 @@ Bar2s::Bar2s()   {
  * Constructor.
  * Creates a Bar2s Element.
  */
-Bar2s::Bar2s(int ID, int Node_1, int Node_2, int matID, int iSecID, int jSecID)
-  :Bar(ID, Node_1, Node_2, matID, iSecID, jSecID) {
+Bar2s::Bar2s(int ID, int Node_1, int Node_2, int matID,
+             CrossSection* iSec, CrossSection* jSec)
+  :Bar(ID, Node_1, Node_2, matID, iSec, jSec) {
   myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
   // Find directional cosines
   cosX.resize(nDim);

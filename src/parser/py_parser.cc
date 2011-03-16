@@ -519,7 +519,7 @@ static PyObject* pySection_Rect(PyObject* /*self*/, PyObject* args) {
   double h;
   if (!PyArg_ParseTuple(args, "idd", &id, &w, &h)) return NULL;
   CrossSection* pSection = new RectangularCrossSection(id, w, h);
-  pD->add(pD->get_cross_sections(), pSection);
+  pD->add(pD->get_sections(), pSection);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -530,7 +530,7 @@ static PyObject* pySection_UserDefined(PyObject* /*self*/, PyObject* args) {
     return NULL;
   CrossSection* pSection=
     new UserDefinedCrossSection(id, A, As2, As3, J1, J2, J3, h2, h3);
-  pD->add(pD->get_cross_sections(), pSection);
+  pD->add(pD->get_sections(), pSection);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -857,13 +857,17 @@ static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, iSec, jSec=-9999;
-  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat, &iSec, &jSec))
+  int id, iNode, jNode, mat, isec_id, jsec_id=-9999;
+  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat,
+    &isec_id, &jsec_id))
     return NULL;
   try {
-    if (jSec == -9999)
-      jSec = iSec;
-    Element* pElement = new Bar2s(id, iNode, jNode, mat, iSec, jSec);
+    if (jsec_id == -9999) {
+      jsec_id = isec_id;
+    }
+    CrossSection* isec = pD->get<CrossSection>(pD->get_sections(), isec_id);
+    CrossSection* jsec = pD->get<CrossSection>(pD->get_sections(), jsec_id);
+    Element* pElement = new Bar2s(id, iNode, jNode, mat, isec, jsec);
     pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -873,13 +877,17 @@ static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, iSec, jSec=-9999;
-  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat, &iSec, &jSec))
+  int id, iNode, jNode, mat, isec_id, jsec_id=-9999;
+  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat,
+    &isec_id, &jsec_id))
     return NULL;
   try {
-    if (jSec == -9999)
-      jSec = iSec;
-    Element* pElement = new Bar2t(id, iNode, jNode, mat, iSec, jSec);
+    if (jsec_id == -9999) {
+      jsec_id = isec_id;
+    }
+    CrossSection* isec = pD->get<CrossSection>(pD->get_sections(), isec_id);
+    CrossSection* jsec = pD->get<CrossSection>(pD->get_sections(), jsec_id);
+    Element* pElement = new Bar2t(id, iNode, jNode, mat, isec, jsec);
     pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -889,10 +897,11 @@ static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, sec;
-  if (!PyArg_ParseTuple(args, "iiiii", &id, &iNode, &jNode, &mat, &sec))
+  int id, iNode, jNode, mat, sec_id;
+  if (!PyArg_ParseTuple(args, "iiiii", &id, &iNode, &jNode, &mat, &sec_id))
     return NULL;
   try {
+    CrossSection* sec = pD->get<CrossSection>(pD->get_sections(), sec_id);
     Element* pElement = new Beam2e(id, iNode, jNode, mat, sec);
     pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
@@ -903,12 +912,14 @@ static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, sec, rule=-1;
-  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat, &sec, &rule))
+  int id, iNode, jNode, mat, sec_id, rule=-1;
+  if (!PyArg_ParseTuple(args, "iiiii|i",
+                        &id, &iNode, &jNode, &mat, &sec_id, &rule))
     return NULL;
   try {
     if (rule == -1)
       rule = 1;
+    CrossSection* sec = pD->get<CrossSection>(pD->get_sections(), sec_id);
     Element* pElement = new Timoshenko2d(id, iNode, jNode, mat, sec, rule);
     pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
@@ -919,12 +930,14 @@ static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mNode, mat, sec, rule=-1;
-  if (!PyArg_ParseTuple(args, "iiiiii|i", &id, &iNode, &jNode, &mNode, &mat, &sec, &rule))
+  int id, iNode, jNode, mNode, mat, sec_id, rule=-1;
+  if (!PyArg_ParseTuple(args, "iiiiii|i",
+                        &id, &iNode, &jNode, &mNode, &mat, &sec_id, &rule))
     return NULL;
   try {
     if (rule == -1)
       rule = 2;
+    CrossSection* sec = pD->get<CrossSection>(pD->get_sections(), sec_id);
     Element* pElement = new Timoshenko2d(id, iNode, jNode, mNode, mat, sec, rule);
     pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
