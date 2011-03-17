@@ -172,15 +172,17 @@ class Domain {
 
   template<class TE, class TC> int add(TC& c, TE* e) {
     int id = e->get_id();
-    std::pair<typename TC::const_iterator, bool> res = c.insert(std::make_pair(id, e));
+    std::pair<typename TC::const_iterator, bool> res =
+            c.insert(std::make_pair(id, e));
     if (res.second == true) {
       upToDate = false;
     } else {
       delete e;
-      throw SException("[nemesis:%d] Component already exists with id %d.", 9999, id);
+      throw SException("[nemesis:%d] Component %d already exists.", 9999, id);
     }
     return 0;
   }
+
   template<class TC> int rem(TC& c, int id) {
     typename TC::iterator p = c.find(id);
     if (p == c.end()) {
@@ -191,12 +193,13 @@ class Domain {
     }
     return 0;
   }
+
   template<class TE, class TC> TE* get(TC& c, int id) {
     typename TC::iterator p = c.find(id);
     if (p != c.end()) {
       return p->second;
     } else {
-      throw SException("[nemesis:%d] Component with id %d does not exist.", 9999, id);
+      throw SException("[nemesis:%d] Component %d does not exist.", 9999, id);
     }
   }
 };
