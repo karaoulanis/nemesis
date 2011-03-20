@@ -24,8 +24,7 @@
 // *****************************************************************************
 
 #include "reorderer/reorderer.h"
-#include <iostream>
-#include <fstream>
+#include <stdio.h>
 #include "analysis/analysis.h"
 #include "exception/sexception.h"
 #include "model/model.h"
@@ -61,9 +60,9 @@ int Reorderer::reorder() {
           pModelElem->set_FTable(i, perm[pModelElem->get_FTable()[i]]);
       }
     }
-    cout << "reo: Optimization returned successfully." << endl;
+    printf("reo: Optimization returned successfully.\n");
   } else {
-    cout << "reo: Optimization failed." <<endl;
+    printf("reo: Optimization failed.\n");
   }
   pA->get_model()->set_reordered(true);
   return 0;

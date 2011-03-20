@@ -34,10 +34,10 @@
 /*****************************************************************************
 * Platform Info
 *****************************************************************************/
-#if defined(WIN32)
-  #define NEMESIS_PLATFORM "win32"
-#elif defined(LINUX)
+#if defined(linux) || defined(__linux) || defined(__linux__)
   #define NEMESIS_PLATFORM "linux"
+#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+  #define NEMESIS_PLATFORM "win32"
 #else
   #define NEMESIS_PLATFORM "unknown"
 #endif

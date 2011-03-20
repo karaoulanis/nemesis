@@ -28,7 +28,6 @@
 
 // C++ system files
 #include <cmath>
-#include <iostream>
 #include <valarray>
 
 // Project files (alphabetically)

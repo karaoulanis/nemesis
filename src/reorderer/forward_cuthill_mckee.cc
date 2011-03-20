@@ -25,18 +25,17 @@
 
 #include "reorderer/forward_cuthill_mckee.h"
 #include <boost/graph/cuthill_mckee_ordering.hpp>
-#include <iostream>
+#include <stdio.h>
 #include "analysis/analysis.h"
 #include "model/model.h"
-
-using std::cout;
-using std::endl;
 
 ForwardCuthillMckee::ForwardCuthillMckee() {
   myTag = TAG_REORDERER_FORWARD_CUTHILL_MCKEE;
 }
+
 ForwardCuthillMckee::~ForwardCuthillMckee() {
 }
+
 int ForwardCuthillMckee::get_perm(std::vector<int>& perm) {
   // Create the Graph and additional vectors
   UndirectedGraph G(pA->get_model()->get_num_eqns());
@@ -63,10 +62,10 @@ int ForwardCuthillMckee::get_perm(std::vector<int>& perm) {
   int newProfile = profile(G, make_iterator_property_map(&perm[0], index_map));
 
   // Print optimized sizes
-  cout  << "reo: Optimized (original) bandwidth : "
-        << newBandwidth  << " (" << oldBandwidth << ")" << endl;
-  cout  << "reo: Optimized (original) profile   : "
-        <<newProfile    << " (" << oldProfile  << ")"  << endl;
+  printf("reo: Optimized (original) bandwidth : %d (%d)\n",
+         newBandwidth, oldBandwidth);
+  printf("reo: Optimized (original) profile   : %d (%d)\n",
+         newProfile, oldProfile);
 
   // Check if optimization is needed
   if (newBandwidth > oldBandwidth) return -1;
