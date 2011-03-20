@@ -25,12 +25,9 @@
 
 #include "reorderer/forward_sloan.h"
 #include <boost/graph/sloan_ordering.hpp>
-#include <iostream>
+#include <stdio.h>
 #include "analysis/analysis.h"
 #include "model/model.h"
-
-using std::cout;
-using std::endl;
 
 ForwardSloan::ForwardSloan(double w1, double w2) {
   myTag = TAG_REORDERER_REVERSE_SLOAN;
@@ -74,10 +71,10 @@ int ForwardSloan::get_perm(std::vector<int>& perm) {
   //                          make_iterator_property_map(&perm[0], index_map));
 
   // Print optimized sizes
-  cout  << "reo: Optimized (original) bandwidth : "
-        << newBandwidth  << " (" << oldBandwidth << ")" << endl;
-  cout  << "reo: Optimized (original) profile   : "
-        <<newProfile    << " (" << oldProfile  << ")"  << endl;
+  printf("reo: Optimized (original) bandwidth : %d (%d)\n",
+         newBandwidth, oldBandwidth);
+  printf("reo: Optimized (original) profile   : %d (%d)\n",
+         newProfile, oldProfile);
   // cout   << "fSloan: Optimized (original) maximum wavefront   : "
   //        <<newMaxWavefront   << " (" << oldMaxWavefront   << ")" << endl;
   // cout   << "fSloan: Optimized (original) average wavefront   : "

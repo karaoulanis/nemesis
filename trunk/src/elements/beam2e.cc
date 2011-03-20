@@ -41,7 +41,7 @@ Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section)
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=5;
   mySection = section;
-  mySecID = section->get_id(); ///@ todo remove
+  mySecID = section->get_id();  // /@todo remove
   // Handle common info
   this->handleCommonInfo();
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));

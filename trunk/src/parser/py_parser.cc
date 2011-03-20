@@ -991,7 +991,7 @@ static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
         "A quad4d can be used only in plane strain/stress/axisymmetry.");
     }
     pD->add(pD->get_elements(), pElement);
-    Group* group=pD->get<Group>(pD->get_groups(), current_group);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
     group->AddElement(pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());

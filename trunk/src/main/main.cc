@@ -23,35 +23,30 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include <iostream>
+#include <stdio.h>
 #include "main/nemesis_config.h"
 #include "parser/py_parser.h"
-
-using std::cout;
-using std::endl;
 
 int main(int argc, char* argv[]) {
   /*****************************************************************************
   * Info
   *****************************************************************************/
-  cout  << "nemesis-"   << NEMESIS_VERSION
-        << "[nemesis-project.org] "
-        << "Copyright (C) 2004-2011 F.E. Karaoulanis." << endl;
-  cout  << "Built on "  << NEMESIS_PLATFORM
-        << " with "     << NEMESIS_COMPILER_NAME
-        << " ver."      << NEMESIS_COMPILER_VERSION
-        << " on "       << __DATE__
-        << " at "       << __TIME__ << " ." <<endl;
-  cout  << "Licensed under GPL v3.0; "
-        << "provided \"AS IS\"; "
-        << "comes with ABSOLUTELY NO WARRANTY." <<endl;
+  printf("nemesis-%s[nemesis-project.org] ", NEMESIS_VERSION);
+  printf("Copyright (C) 2004-2011 F.E. Karaoulanis.\n");
+  printf("Built on %s ", NEMESIS_PLATFORM);
+  printf("with %s ", NEMESIS_COMPILER_NAME);
+  printf("ver.%s ", NEMESIS_COMPILER_VERSION);
+  printf("on %s at %s.\n", __DATE__, __TIME__);
+  printf("Licensed under GPL v3.0; ");
+  printf("provided \"AS IS\"; ");
+  printf("comes with ABSOLUTELY NO WARRANTY.\n");
 
   if (argc == 1) {
   /*****************************************************************************
   * Python parser interactive
   *****************************************************************************/
-    cout << "Type help(nemesis) for additional info." << endl;
-    cout << "Use Ctrl-Z plus Return to exit." << endl;
+    printf("Type help(nemesis) for additional info.\n");
+    printf("Use Ctrl-Z plus Return to exit.\n");
     Parser* theParser = new PyParser();
     theParser->parse();
     delete theParser;
@@ -66,8 +61,7 @@ int main(int argc, char* argv[]) {
   /*****************************************************************************
   // Wrong arguments
   *****************************************************************************/
-    cout  << "\nUsage: nemesis" <<endl
-          << "nemesis -p file"  <<endl << endl;
+    printf("\nUsage: nemesis\nnemesis -p file\n\n");
   }
   // Exit
   return 0;

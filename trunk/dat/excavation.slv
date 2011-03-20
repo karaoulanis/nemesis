@@ -1,4 +1,5 @@
 
+from __future__ import print_function
 import json
 
 #domain
@@ -53,16 +54,16 @@ convergence.set(20,1e-2,1e-6)
 #reorder.rCM()
 soe.full()
 analysis.run(1,1)
-print "u5  = ",json.loads(node.data(3))['disp']#[1]
-print "u7  = ",json.loads(node.data(4))['disp']#[1]
-print "u9  = ",json.loads(node.data(5))['disp']#[1]
-print "u11 = ",json.loads(node.data(6))['disp']#[1]
+print("u5  = ",json.loads(node.data(3))['disp'])#[1]
+print("u7  = ",json.loads(node.data(4))['disp'])#[1]
+print("u9  = ",json.loads(node.data(5))['disp'])#[1]
+print("u11 = ",json.loads(node.data(6))['disp'])#[1]
 
 #---------------------------------------------------------
 # excavation analysis
 #---------------------------------------------------------
 analysis.run(2,1)
-print "u5  = ",json.loads(node.data(3))['disp']#[1]
-print "u7  = ",json.loads(node.data(4))['disp']#[1]
+print("u5  = ",json.loads(node.data(3))['disp'])#[1]
+print("u7  = ",json.loads(node.data(4))['disp'])#[1]
 
 

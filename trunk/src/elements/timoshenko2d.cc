@@ -42,7 +42,7 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2,
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=5;
   mySection = section;
-  mySecID = section->get_id(); ///@ todo remove
+  mySecID = section->get_id();  /// @todo remove
   // Handle common info
   this->handleCommonInfo();
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+
@@ -74,7 +74,7 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=5;
   mySection = section;
-  mySecID = section->get_id(); ///@ todo remove
+  mySecID = section->get_id();  /// @todo remove
   // Handle common info
   this->handleCommonInfo();
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+

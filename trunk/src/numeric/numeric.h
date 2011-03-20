@@ -101,7 +101,7 @@ namespace num {
     inline void array_size(int n, int m, int size1, int size2) {
       if (n != size1||m != size2)
         throw SException("[nemesis:%d] %s", 1005, "Sizes do not match.");
-    }  
+    }
   }
 }
 #endif  // SRC_NUMERIC_NUMERIC_H_
