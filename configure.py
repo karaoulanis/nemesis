@@ -57,6 +57,15 @@ def get_paths(source_dir, include_pat, exclude_pat = None):
     paths.sort()
     return paths
 
+def get_paths2(src, extension):
+    paths = []
+    for root, dirs, files in os.walk(src):
+        for name in files:
+            if name.endswith(extension):
+                paths.append(os.path.join(root, name))
+    paths.sort()
+    return paths
+
 def nemesis(project, src, verbal, color, makefile_def):
     makefile      = ''
     # Makefile.def
@@ -76,30 +85,59 @@ def nemesis(project, src, verbal, color, makefile_def):
     for i, path in enumerate(paths):
          makefile += get_target('{0}-tests'.format(project), path, i, len(paths), verbal, color)
     
+    # project: clean
+    makefile += '\n# clean\n'
+    makefile += 'clean:\n'
+    makefile += '\trm src/*/*.o\n'
+    makefile += '\trm nemesis\n'
+
     ofile=open('Makefile','w')
     ofile.write(makefile)
     ofile.close()
 
+def nemesis2(verbal, color):
+    # paths
+    paths = get_paths2('src', '.cc')
+    # return string
+    s = ''
+    # nemesis objects
+    source_paths = [i for i in paths if not i.endswith('_test.cc')]
+    s += get_objects('nemesis', source_paths, verbal, color)
+    # nemesis test objects
+    test_paths   = [i for i in paths if not i.endswith('/main.cc')]
+    s += get_objects('nemesis-tests', test_paths, verbal, color)
+    # compile nemesis targets (paths are the same)
+    for i, path in enumerate(source_paths):
+        s += get_target('nemesis', path, i, len(source_paths), verbal, color)
+    # compile nemesis-tests targets (only -test.cc's)
+    test_paths   = [i for i in paths if i.endswith('_test.cc')]
+    for i, path in enumerate(test_paths):
+        s += get_target('nemesis-tests', path, i, len(test_paths), verbal, color)
+    # project: clean
+    s += '\n# clean\n'
+    s += 'clean:\n'
+    s += '\trm src/*/*.o\n'
+    s += '\trm nemesis\n'
+    # return 
+    return s
+
 if __name__ == '__main__':
-    # project specific 
-    project        = 'nemesis'
-   
     # command line arguments 
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--def', metavar='file',
         dest = 'makefile_def', help = 'makefile definitions file',
         default = 'Makefile.def')
-    parser.add_argument('-r', '--root', metavar='dir',
-        dest = 'src',          help = 'define source root directory',
-        default = 'src')
     parser.add_argument('-m', '--monochrome', action = 'store_false',
         dest = 'color',        help = 'disable colored output')
     parser.add_argument('-s', '--silent', action = 'store_false',
         dest = 'verbal',       help = 'disable additional compilation info')
     args = parser.parse_args()
-    src           = args.src
     verbal        = args.verbal 
     color         = args.color
     makefile_def  = args.makefile_def
-
-    nemesis(project, src, verbal, color, makefile_def)
+    
+    # makefile
+    with open('Makefile','w') as makefile:
+        with open(makefile_def, 'r') as f:
+            makefile.write(f.read())
+        makefile.write(nemesis2(verbal, color))
