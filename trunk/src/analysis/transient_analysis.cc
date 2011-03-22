@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "analysis/transient_analysis.h"
+#include <stdio.h>
 #include "algorithm/linear_algorithm.h"
 #include "control/load_control.h"
 #include "convergence/convergence_norm.h"
@@ -117,9 +118,9 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
     // Algorithm failed
     if (check < 0) {
       if (check == -1)
-        cout << "Warning  : Solution is diverging." << endl;
+        printf("Warning  : Solution is diverging.\n");
       else if (check == -2)
-        cout << "Warning  : Maximum number of iteration was exceeded." << endl;
+        printf("Warning  : Maximum number of iteration was exceeded.\n");
       pA->get_control()->rollback();
       break;
     }

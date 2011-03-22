@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "soe/band_linear_soe.h"
+#include <stdio.h>
 
 BandLinearSOE::BandLinearSOE()
   :SOE() {
@@ -32,8 +33,10 @@ BandLinearSOE::BandLinearSOE()
   upperBandwidth = 0;
   nRows = 0;
 }
+
 BandLinearSOE::~BandLinearSOE() {
 }
+
 int BandLinearSOE::
 insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
@@ -45,6 +48,7 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     }
   return 0;
 }
+
 void BandLinearSOE::set_size() {
   UndirectedGraph G;
   pA->get_model()->get_undirected_graph(G);
@@ -68,19 +72,23 @@ void BandLinearSOE::set_size() {
   printf("soe: Allocated %6.2fmb of memory for %d dofs.\n",
     static_cast<double>(d+i)/(1024*1024), size_);
 }
+
 void BandLinearSOE::print() {
   for (int i = 0; i < size_; i++) {
-    for (int j = 0;j < size_;j++)
-      cout << A[j*nRows+(lowerBandwidth+upperBandwidth+i-j)] << ' ';
-        cout << " | " << B[i] << endl;
+    for (int j = 0; j < size_; j++) {
+      printf("%12.4f ",A[j*nRows+(lowerBandwidth+upperBandwidth+i-j)]);
+    }
+    printf("| %12.4f\n", B[i]);
   }
 }
+
 int BandLinearSOE::get_eigen_sign() {
   for (int i = 0;i < size_;i++)
     if (fabs(A[lowerBandwidth+upperBandwidth+i*size_]) < 1e-12)  return  0;
     else if (A[lowerBandwidth+upperBandwidth+i*size_]  < 0)      return -1;
   return 1;
 }
+
 int BandLinearSOE::solve() {
   // Input data
   int N = size_;

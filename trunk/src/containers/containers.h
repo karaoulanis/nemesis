@@ -30,8 +30,6 @@
 #include <iostream>
 #include <vector>
 
-using std::cout;
-using std::endl;
 typedef std::vector<int> IDContainer;
 
 namespace Containers {
@@ -40,30 +38,46 @@ namespace Containers {
     for (p = c.begin(); p != c.end(); p++) delete p->second;
     c.clear();
   }
+
   template<class TC> void map_print(const TC& c) {
     typename TC::const_iterator p;
-    cout << "Container : ";
-    for (p = c.begin();p != c.end();p++) cout << p->first << ' ';
-    cout << endl;
+    std::cout << "Container : ";
+    for (p = c.begin();p != c.end();p++) {
+      std::cout << p->first << ' ';
+    }
+    std::cout << std::endl;
   }
+
   template<class TC> void vector_delete(TC& c) {
     int n = c.size();
     for (int i = 0;i < n;i++) delete c[i];
     c.clear();
   }
+
   template<class TC> void vector_print(const TC& c) {
     int n = c.size();
-    for (int i = 0;i < n;i++) cout << c[i] <<' ';
-    cout << endl;
+    for (int i = 0;i < n;i++) {
+      std::cout << c[i] <<' ';
+    }
+    std::cout << std::endl;
   }
+
   template<class TE> inline int index_find(const std::vector<TE>& c, TE e) {
     typename std::vector<TE>::const_iterator i = find(c.begin(), c.end(), e);
-    if (i == c.end())  return -1;
-    else      return static_cast < int>(std::distance(c.begin(), i));
+    if (i == c.end()) {
+      return -1;
+    } else {
+      return static_cast < int>(std::distance(c.begin(), i));
+    }
   }
+
   template<class TE> inline bool all_positive(const std::vector<TE>& c) {
     int n = c.size();
-    for (int i = 0;i < n;i++) if (c[i] < 0) return false;
+    for (int i = 0;i < n;i++) {
+      if (c[i] < 0) {
+        return false;
+      }
+    }
     return true;
   }
 }

@@ -24,13 +24,16 @@
 // *****************************************************************************
 
 #include "soe/eigen_soe.h"
+#include <stdio.h>
 
 EigenSOE::EigenSOE()
   :SOE() {
   myTag = TAG_NONE;
 }
+
 EigenSOE::~EigenSOE() {
 }
+
 int EigenSOE::
 insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
@@ -42,6 +45,7 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     }
   return 0;
 }
+
 int EigenSOE::
 insertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
@@ -53,6 +57,7 @@ insertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     }
   return 0;
 }
+
 void EigenSOE::set_size() {
   // If the size has not changed do not resize arrays
   if (size_ == pA->get_model()->get_num_eqns()) {
@@ -75,24 +80,32 @@ void EigenSOE::set_size() {
   printf("soe: Allocated %6.2fmb of memory.\n",
     static_cast<double>(d+i)/(1024*1024));
 }
+
 void EigenSOE::print() {
-  cout << "A" << endl;
+  printf("A\n");
   for (int i = 0; i < size_; i++) {
-    for (int j = 0; j < size_; j++)  cout << A[j*size_+i] << ' ';
-    cout << endl;
+    for (int j = 0; j < size_; j++) {
+      printf("%12.4f ", A[j*size_+i]);
+    }
+    printf("\n");
   }
-  cout << "M" << endl;
+  printf("M\n");
   for (int i = 0; i < size_; i++) {
-    for (int j = 0; j < size_; j++)  cout << M[j*size_+i] << ' ';
-    cout << endl;
+    for (int j = 0; j < size_; j++) {
+      printf("%12.4f ", M[j*size_+i]);
+    }
+    printf("\n");
   }
 }
+
 int EigenSOE::get_eigen_sign() {
   return 1;
 }
+
 void EigenSOE::zeroM() {
   for (unsigned i = 0;i < M.size(); i++) M[i]=0;
 }
+
 int EigenSOE::solve() {
   char JOBVL='N';
   char JOBVR='V';

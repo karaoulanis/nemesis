@@ -87,7 +87,11 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
   J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
 
   detJ = J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);     // detJ
-  if (detJ < 0.) cout << myNodes[0]->get_id() << endl;
+  if (detJ < 0.) {
+    throw SException("[nemesis:%d] Element %d determinant negative",
+                     9999, this->get_id());
+  }
+
   double dxidx  = J(1, 1)/detJ;
   double detadx =-J(1, 0)/detJ;
   double dxidy  =-J(0, 1)/detJ;
