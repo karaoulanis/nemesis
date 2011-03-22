@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "convergence/convergence_norm.h"
+#include <stdio.h>
 #include "analysis/analysis.h"
 #include "control/control.h"
 #include "domain/domain.h"
@@ -33,8 +34,10 @@
 ConvergenceNorm::ConvergenceNorm() {
   tol.resize(3);
 }
+
 ConvergenceNorm::~ConvergenceNorm() {
 }
+
 void ConvergenceNorm::set_check(int maxIterations,
                  double tolRabs, double tolRrel, double tolWrel) {
   maxIter = maxIterations;
@@ -42,15 +45,15 @@ void ConvergenceNorm::set_check(int maxIterations,
   tol[1] = tolRrel;
   tol[2] = tolWrel;
 }
+
 void ConvergenceNorm::init(int LCid, int steps) {
   LC = LCid;
   nSteps = steps;
   step = 0;
-  cout << "__________________________________________________________________"
-       << endl;
-  cout << "Step   Iter   Lambda     Time    R(abs)    R(rel)    E(rel)   P.P."
-       << endl;
+  printf("__________________________________________________________________\n");
+  printf("Step   Iter   Lambda     Time    R(abs)    R(rel)    E(rel)   P.P.\n");
 }
+
 void ConvergenceNorm::newStep() {
   step++;
   iter = 0;
@@ -70,6 +73,7 @@ void ConvergenceNorm::newStep() {
   // uo = sqrt(uo);
   wo = abs(wo);
 }
+
 int ConvergenceNorm::update() {
   iter++;
   double ri = 0, wi = 0;
@@ -119,19 +123,18 @@ int ConvergenceNorm::update() {
   if (iter == 1) {
     num::print_i(step,  6);
   } else {
-    cout.width(6);
-    cout << ' ';
+    printf("      ");
   }
   num::print_i(iter,  5);
-  cout << ' ';
+  printf(" ");
   num::print_d(lambda, 8, 3);
-  cout << ' ';
+  printf(" ");
   num::print_d(time,  8, 3);
-  cout << ' ';
+  printf(" ");
   num::print_d(ri,    9, 3);
-  cout << ' ';
+  printf(" ");
   num::print_d(ridro, 9, 6);
-  cout << ' ';
+  printf(" ");
   // num::print_d(ui,    9, 3);
   // cout<<' ';
   // num::print_d(uiduo, 9, 6);
@@ -139,10 +142,9 @@ int ConvergenceNorm::update() {
   //  num::print_d(wi,    9, 3);
   // cout<<' ';
   num::print_d(widwo, 9, 6);
-  cout << ' ';
+  printf(" ");
   num::print_i(nPP, 6);
-  cout << ' ';
-  cout << endl;
+  printf("\n");
 
   if (iter <= maxIter &&
       ri    < tol[0]  &&

@@ -32,6 +32,7 @@
 #else
   #include <Python.h>
 #endif
+#include <stdio.h>
 
 // C++ header files
 #include <fstream>
@@ -2110,8 +2111,7 @@ int PyParser::parse(char* filename) {
     ||filename[len-3] != 's'
     ||filename[len-2] != 'l'
     ||filename[len-1] != 'v')) {
-    cout  << "solver: Files passed with '-p' should have an '.slv' extension."
-          << endl;
+    printf("solver: Files passed with '-p' should have an '.slv' extension.");
     return 0;
   }
   // Check if file exists
@@ -2120,7 +2120,7 @@ int PyParser::parse(char* filename) {
   if (tmpFile.fail()) {
     tmpFile.clear();
     tmpFile.close();
-    cout << "solver: File not found!" << endl;
+    printf("solver: File not found!");
     return 0;
   }
   tmpFile.close();

@@ -24,13 +24,16 @@
 // *****************************************************************************
 
 #include "soe/full_linear_soe.h"
+#include <stdio.h> 
 
 FullLinearSOE::FullLinearSOE()
   :SOE() {
   myTag = TAG_SOE_LINEAR_FULL;
 }
+
 FullLinearSOE::~FullLinearSOE() {
 }
+
 int FullLinearSOE::
 insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
@@ -42,6 +45,7 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     }
   return 0;
 }
+
 void FullLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
   if (size_ == pA->get_model()->get_num_eqns()) {
@@ -59,18 +63,23 @@ void FullLinearSOE::set_size() {
   printf("soe: Allocated %6.2fmb of memory for %d dofs.\n",
     static_cast<double>(d+i)/(1024*1024), size_);
 }
+
 void FullLinearSOE::print() {
   for (int i = 0; i < size_; i++) {
-    for (int j = 0; j < size_; j++)  cout << A[j*size_+i] << ' ';
-        cout << " | " << B[i] << endl;
+    for (int j = 0; j < size_; j++) {
+      printf("%12.4f ", A[j*size_+i]);
+    }
+    printf("| %12.4f\n", B[i]);
   }
 }
+
 int FullLinearSOE::get_eigen_sign() {
   for (int i = 0; i < size_; i++)
     if (fabs(A[i*(size_+1)]) < 1e-12)  return 0;
     else if (A[i*(size_+1)]  < 0)      return -1;
   return 1;
 }
+
 int FullLinearSOE::solve() {
   int N = size_;
   int NRHS = 1;

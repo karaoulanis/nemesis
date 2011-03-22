@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "analysis/static_analysis.h"
+#include <stdio.h>
 #include "algorithm/linear_algorithm.h"
 #include "control/load_control.h"
 #include "convergence/convergence_norm.h"
@@ -42,6 +43,7 @@ StaticAnalysis::StaticAnalysis()
   pA->set_algorithm(new LinearAlgorithm());
   pA->set_soe(new FullLinearSOE());
 }
+
 bool StaticAnalysis::checkIfAllows(FEObject* f) {
   if (f->get_tag() == TAG_CONTROL_LOAD                      ||
       f->get_tag() == TAG_CONTROL_DISPLACEMENT              ||
@@ -69,6 +71,7 @@ bool StaticAnalysis::checkIfAllows(FEObject* f) {
       return true;
   return false;
 }
+
 int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   // Check the imposer
   if (pA->get_imposer() == 0)
@@ -116,9 +119,9 @@ int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
     // Algorithm failed
     if (check < 0) {
       if (check == -1)
-        cout << "Warning  : Solution is diverging." << endl;
+        printf("Warning  : Solution is diverging.\n");
       else if (check == -2)
-        cout << "Warning  : Maximum number of iteration was exceeded." << endl;
+        printf("Warning  : Maximum number of iteration was exceeded.\n");
       // pA->get_control()->returnToConverged();
       // pA->get_control()->commit();
       // break;

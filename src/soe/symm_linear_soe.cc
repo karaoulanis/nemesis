@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "soe/symm_linear_soe.h"
+#include <stdio.h>
 
 SymmLinearSOE::SymmLinearSOE()
   :SOE() {
@@ -67,10 +68,14 @@ void SymmLinearSOE::set_size() {
 }
 void SymmLinearSOE::print() {
   for (int i = 0; i < size_; i++) {
-    for (int j = 0; j < size_; j++)
-      if (j <= i) cout << A[j*size_-static_cast<int>((j+1)*j*0.5)+i] << ' ';
-      else        cout << A[i*size_-static_cast<int>((i+1)*i*0.5)+j] << ' ';
-      cout << " | " << B[i] << endl;
+    for (int j = 0; j < size_; j++) {
+      if (j <= i) {
+        printf("%12.4f ", A[j*size_-static_cast<int>((j+1)*j*0.5)+i]);
+      } else {
+        printf("%12.4f ", A[i*size_-static_cast<int>((i+1)*i*0.5)+j]);
+      }
+      printf("| %12.4f\n", B[i]);
+    }
   }
 }
 int SymmLinearSOE::get_eigen_sign() {

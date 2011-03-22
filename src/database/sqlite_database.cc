@@ -24,13 +24,14 @@
 // *****************************************************************************
 
 #include "database/sqlite_database.h"
-#include <cstdio>
+#include <stdio.h>
 #include <iostream>
 #include "exception/sexception.h"
 
 using std::ofstream;
 using std::ios_base;
 using std::fixed;
+using std::endl;
 
 /**
  * Default constructor.
@@ -223,8 +224,8 @@ int SQLiteDatabase::executeQuery(const char* query) {
   char *errMsg;
   int rc = sqlite3_exec(db, query, callback, 0, &errMsg);
   if (rc != SQLITE_OK) {
-    cout << "SQL error : " << errMsg << endl;
-    cout << "in query  : " << query << endl;
+    printf("SQL error : %s\n", errMsg);
+    printf("in query  : %s\n", query);
   }
   return rc;
 }
