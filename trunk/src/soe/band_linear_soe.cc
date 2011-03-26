@@ -76,7 +76,7 @@ void BandLinearSOE::set_size() {
 void BandLinearSOE::print() {
   for (int i = 0; i < size_; i++) {
     for (int j = 0; j < size_; j++) {
-      printf("%12.4f ",A[j*nRows+(lowerBandwidth+upperBandwidth+i-j)]);
+      printf("%12.4f ", A[j*nRows+(lowerBandwidth+upperBandwidth+i-j)]);
     }
     printf("| %12.4f\n", B[i]);
   }

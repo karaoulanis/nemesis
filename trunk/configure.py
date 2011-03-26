@@ -47,17 +47,7 @@ def get_objects(project, paths, verbal, color, src_ext = '.cc', obj_ext = '.o'):
     s += '\t{0}$(CXX) -o {1} $(LDFLAGS) $(LDADD) $({1}_LDFLAGS) $({1}_LDADD) $({1}_OBJS)\n'.format(sign, project)
     return s
 
-def get_paths(source_dir, include_pat, exclude_pat = None):
-    paths = []
-    for root, dirs, files in os.walk(source_dir):
-        for name in files:
-            if ((re.search(include_pat, name) != None) and 
-                (exclude_pat == None or re.search(exclude_pat, name) == None)):
-                paths.append(os.path.join(root, name))
-    paths.sort()
-    return paths
-
-def get_paths2(src, extension):
+def get_paths(src, extension):
     paths = []
     for root, dirs, files in os.walk(src):
         for name in files:
@@ -66,38 +56,9 @@ def get_paths2(src, extension):
     paths.sort()
     return paths
 
-def nemesis(project, src, verbal, color, makefile_def):
-    makefile      = ''
-    # Makefile.def
-    with open(makefile_def, 'r') as f:
-        makefile += f.read()
-
-    # project: nemesis
-    paths = get_paths(src, r'\.cc$', r'_test\.cc$')
-    makefile += get_objects(project, paths, verbal, color)
-    for i, path in enumerate(paths):
-        makefile += get_target(project, path, i, len(paths), verbal, color)
-    
-    # project: nemesis-tests
-    paths = get_paths(src, r'\.cc$', None)
-    makefile += get_objects('{0}-tests'.format(project), paths, verbal, color)
-    paths = get_paths(src, r'_test\.cc$', None)
-    for i, path in enumerate(paths):
-         makefile += get_target('{0}-tests'.format(project), path, i, len(paths), verbal, color)
-    
-    # project: clean
-    makefile += '\n# clean\n'
-    makefile += 'clean:\n'
-    makefile += '\trm src/*/*.o\n'
-    makefile += '\trm nemesis\n'
-
-    ofile=open('Makefile','w')
-    ofile.write(makefile)
-    ofile.close()
-
-def nemesis2(verbal, color):
+def nemesis(verbal, color):
     # paths
-    paths = get_paths2('src', '.cc')
+    paths = get_paths('src', '.cc')
     # return string
     s = ''
     # nemesis objects
@@ -135,9 +96,8 @@ if __name__ == '__main__':
     verbal        = args.verbal 
     color         = args.color
     makefile_def  = args.makefile_def
-    
     # makefile
     with open('Makefile','w') as makefile:
         with open(makefile_def, 'r') as f:
             makefile.write(f.read())
-        makefile.write(nemesis2(verbal, color))
+        makefile.write(nemesis(verbal, color))

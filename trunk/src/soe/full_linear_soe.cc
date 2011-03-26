@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "soe/full_linear_soe.h"
-#include <stdio.h> 
+#include <stdio.h>
 
 FullLinearSOE::FullLinearSOE()
   :SOE() {
