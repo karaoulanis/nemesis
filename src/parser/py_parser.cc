@@ -144,6 +144,7 @@ PyObject* buildList(const Vector& v) {
     PyList_SetItem(pyList, i, PyFloat_FromDouble(v[i]));
   return pyList;
 }
+
 PyObject* buildList(const Matrix& m) {
   static PyObject* pyList;
   pyList = PyList_New(m.rows());
@@ -155,6 +156,7 @@ PyObject* buildList(const Matrix& m) {
   }
   return pyList;
 }
+
 static PyObject* buildDict(std::istream& s) {
   static PyObject* pyDict;
   pyDict = PyDict_New();
@@ -193,6 +195,7 @@ static PyObject* buildDict(std::istream& s) {
   }
   return pyDict;
 }
+
 PyObject* buildList(std::istream& s) {
   static PyObject* pyList;
   char name[128];
@@ -512,9 +515,9 @@ static PyMethodDef NodeMethods[] =  {
     METH_VARARGS, "Return the data recorded to the tracker."},
   {NULL, NULL, 0, NULL}
 };
-/******************************************************************************
+/*******************************************************************************
 * CrossSection Commands
-******************************************************************************/
+*******************************************************************************/
 static PyObject* pySection_Rect(PyObject* /*self*/, PyObject* args) {
   int id;
   double w;
@@ -525,17 +528,22 @@ static PyObject* pySection_Rect(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pySection_UserDefined(PyObject* /*self*/, PyObject* args) {
   int id;
   double A = 0, As2 = 0, As3 = 0, J1 = 0, J2 = 0, J3 = 0, h2 = 0, h3 = 0;
-    if (!PyArg_ParseTuple(args, "id|ddddddd", &id, &A, &As2, &As3, &J1, &J2, &J3, &h2, &h3))
-    return NULL;
+  if (!PyArg_ParseTuple(args, "id|ddddddd",
+                               &id, &A, &As2, &As3,
+                               &J1, &J2, &J3, &h2, &h3)) {
+  return NULL;
+  }
   CrossSection* pSection=
     new UserDefinedCrossSection(id, A, As2, As3, J1, J2, J3, h2, h3);
   pD->add(pD->get_sections(), pSection);
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pySection_Rem(PyObject* /*self*/, PyObject* /*args*/) {
   return Py_None;
 }
@@ -545,6 +553,7 @@ static PyObject* pySection_Info(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyMethodDef SectionMethods[] =  {
   {"user",  pySection_UserDefined,
     METH_VARARGS, "Adds a user defined section to the domain."},
@@ -556,9 +565,10 @@ static PyMethodDef SectionMethods[] =  {
     METH_VARARGS, "Prints section info."},
   {NULL, NULL, 0, NULL}
 };
-/******************************************************************************
+
+/*******************************************************************************
 * Material Commands
-******************************************************************************/
+*******************************************************************************/
 static PyObject* pyMaterial_SDof(PyObject* /*self*/, PyObject* args) {
   int id;
   double E, rho = 0;
@@ -571,7 +581,9 @@ static PyObject* pyMaterial_SDof(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyMaterial_SpringElastic(PyObject* /*self*/, PyObject* args) {
   int id;
   double Kn, Ks2 = 0., Ks3 = 0.;
-    if (!PyArg_ParseTuple(args, "id|dd", &id, &Kn, &Ks2, &Ks3))return NULL;
+  if (!PyArg_ParseTuple(args, "id|dd", &id, &Kn, &Ks2, &Ks3)) {
+    return NULL;
+  }
   Material* pMaterial = new SpringElastic(id, Kn, Ks2, Ks3);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
@@ -581,7 +593,9 @@ static PyObject* pyMaterial_SpringElastic(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyMaterial_SpringContact(PyObject* /*self*/, PyObject* args) {
   int id;
   double Kn, Ks, mu, gap;
-    if (!PyArg_ParseTuple(args, "idddd", &id, &Kn, &Ks, &mu, &gap))return NULL;
+  if (!PyArg_ParseTuple(args, "idddd", &id, &Kn, &Ks, &mu, &gap)) {
+    return NULL;
+  }
   Material* pMaterial = new SpringContact(id, Kn, Ks, mu, gap);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
@@ -591,12 +605,15 @@ static PyObject* pyMaterial_UniaxialElastic(PyObject* /*self*/,
                                             PyObject* args) {
   int id;
   double E = 0, nu = 0, rho = 0, aT = 0;
-    if (!PyArg_ParseTuple(args, "id|ddd", &id, &E, &nu, &rho, &aT))return NULL;
+  if (!PyArg_ParseTuple(args, "id|ddd", &id, &E, &nu, &rho, &aT)) {
+    return NULL;
+  }
   Material* pMaterial = new UniaxialElastic(id, E, nu, rho, aT);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject* /*self*/,
                                                   PyObject* args) {
   int id;
@@ -611,6 +628,7 @@ static PyObject* pyMaterial_UniaxialElastoPlastic(PyObject* /*self*/,
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_UniaxialGap(PyObject* /*self*/, PyObject* args) {
   int id;
   double E = 0, nu = 0, rho = 0, aT = 0, sy = 0, gap = 0;
@@ -621,6 +639,7 @@ static PyObject* pyMaterial_UniaxialGap(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_Elastic(PyObject* /*self*/, PyObject *args) {
   int id;
   double E = 0, nu = 0, rho = 0, aT = 0;
@@ -638,16 +657,20 @@ static PyObject* pyMaterial_Elastic(PyObject* /*self*/, PyObject *args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_DuncanChang(PyObject* /*self*/, PyObject* args) {
   int id;
   double E, nu, c, phi, m, Rf, pa, rho = 0, aT = 0;
-  if (!PyArg_ParseTuple(args, "iddddddd|dd", &id, &E, &nu, &c, &phi, &m, &Rf, &pa, &rho, &aT))
+  if (!PyArg_ParseTuple(args, "iddddddd|dd",
+                        &id, &E, &nu, &c, &phi, &m, &Rf, &pa, &rho, &aT)) {
     return NULL;
+  }
   Material* pMaterial = new DuncanChang(id, E, nu, c, phi, m, Rf, pa, rho, aT);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_UniaxialCyclic(PyObject* /*self*/, PyObject* args) {
   int id;
   double E, nu, rho, aT, tmax, gmax;
@@ -658,6 +681,7 @@ static PyObject* pyMaterial_UniaxialCyclic(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_VonMises(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double s0, K;
@@ -668,6 +692,7 @@ static PyObject* pyMaterial_VonMises(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double c, phi, alpha;
@@ -678,6 +703,7 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_Tresca(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double cu;
@@ -689,16 +715,20 @@ static PyObject* pyMaterial_Tresca(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_HoekBrown(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double si, sp, mb, mbb, alpha;
-  if (!PyArg_ParseTuple(args, "iiddddd", &id, &elasticId, &si, &sp, &mb, &mbb, &alpha))
+  if (!PyArg_ParseTuple(args, "iiddddd",
+                        &id, &elasticId, &si, &sp, &mb, &mbb, &alpha)) {
     return NULL;
+  }
   Material* pMaterial = new HoekBrown(id, elasticId, si, sp, mb, mbb, alpha);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_Creep(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double A, n, k;
@@ -709,69 +739,105 @@ static PyObject* pyMaterial_Creep(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_DruckerPrager(PyObject* /*self*/, PyObject* args) {
   int id, elasticId, type;
   double c, phi, psi, T;
-  if (!PyArg_ParseTuple(args, "iiidddd", &id, &elasticId, &type, &c, &phi, &psi, &T))
+  if (!PyArg_ParseTuple(args, "iiidddd",
+                        &id, &elasticId, &type, &c, &phi, &psi, &T)) {
     return NULL;
+  }
   Material* pMaterial = new DruckerPrager(id, elasticId, type, c, phi, psi, T);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_DruckerPragerNew(PyObject* /*self*/,
                                              PyObject* args) {
   int id, elasticId;
   double c, phi, psi, Kphi, Kc, T;
-  if (!PyArg_ParseTuple(args, "iidddddd", &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iidddddd",
+                        &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T)) {
     return NULL;
-  Material* pMaterial = new DruckerPragerNew(id, elasticId, c, phi, psi, Kc, Kphi, T);
+  }
+  // Create material and add it to domain
+  Material* pMaterial = new DruckerPragerNew(id, elasticId,
+                                             c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), pMaterial);
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_DruckerPragerNew2(PyObject* /*self*/,
                                               PyObject* args) {
   int id, elasticId;
   double c, phi, psi, Kphi, Kc, T;
-  if (!PyArg_ParseTuple(args, "iidddddd", &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iidddddd",
+                        &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T)) {
     return NULL;
-  Material* pMaterial = new DruckerPragerNew2(id, elasticId, c, phi, psi, Kc, Kphi, T);
+  }
+  // Create material and add it to domain
+  Material* pMaterial = new DruckerPragerNew2(id, elasticId,
+                                              c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), pMaterial);
-  Py_INCREF(Py_None);
-  return Py_None;
-}static PyObject* pyMaterial_DruckerPragerNew3(PyObject* /*self*/,
-                                               PyObject* args) {
-  int id, elasticId;
-  double c, phi, psi, Kphi, Kc, T;
-  if (!PyArg_ParseTuple(args, "iidddddd", &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T))
-    return NULL;
-  Material* pMaterial = new DruckerPragerNew3(id, elasticId, c, phi, psi, Kc, Kphi, T);
-  pD->add(pD->get_materials(), pMaterial);
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
+static PyObject* pyMaterial_DruckerPragerNew3(PyObject* /*self*/,
+                                               PyObject* args) {
+  int id, elasticId;
+  double c, phi, psi, Kphi, Kc, T;
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iidddddd",
+                        &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T)) {
+    return NULL;
+  }
+  // Create material and add it to domain
+  Material* mat = new DruckerPragerNew3(id, elasticId,
+                                        c, phi, psi, Kc, Kphi, T);
+  pD->add(pD->get_materials(), mat);
+  // Increase reference count and return
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
 static PyObject* pyMaterial_ModifiedCamClay(PyObject* /*self*/,
                                             PyObject* args) {
   int id, elasticId;
   double M, po, kappa, lambda;
-  if (!PyArg_ParseTuple(args, "iidddd", &id, &elasticId, &M, &po, &kappa, &lambda))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iidddd",
+                        &id, &elasticId, &M, &po, &kappa, &lambda))
     return NULL;
-  Material* pMaterial = new ModifiedCamClay(id, elasticId, M, po, kappa, lambda);
-  pD->add(pD->get_materials(), pMaterial);
+  // Create material and add it to domain
+  Material* mat = new ModifiedCamClay(id, elasticId, M, po, kappa, lambda);
+  pD->add(pD->get_materials(), mat);
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyMaterial_LadeDuncan(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double K;
-  if (!PyArg_ParseTuple(args, "iid", &id, &elasticId, &K))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iid", &id, &elasticId, &K)) {
     return NULL;
+  }
+  // Create material and add it to domain
   Material* pMaterial = new LadeDuncan(id, elasticId, K);
   pD->add(pD->get_materials(), pMaterial);
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyMethodDef MaterialMethods[] =  {
   {"sdof",            pyMaterial_SDof,
     METH_VARARGS, "Define a single dof material."},
@@ -815,25 +881,29 @@ static PyMethodDef MaterialMethods[] =  {
     METH_VARARGS, "Define a creep material."},
   {NULL, NULL, 0, NULL}
 };
-/******************************************************************************
+/*******************************************************************************
 * Element commands
-******************************************************************************/
+*******************************************************************************/
 static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat;
+  int id, na, nb, mat;
   double xp1 = 1., xp2 = 0., xp3 = 0., yp1 = 0., yp2 = 1., yp3 = 0.;
-  if (!PyArg_ParseTuple(args, "iiii|(ddd)(ddd)", &id, &iNode, &jNode, &mat,
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiii|(ddd)(ddd)", &id, &na, &nb, &mat,
                                         &xp1, &xp2, &xp3, &yp1, &yp2, &yp3))
     return NULL;
+  // Create element and add it to domain
   try {
-    Element* pElement = new Spring(id, iNode, jNode, mat, xp1, xp2, xp3, yp1, yp2, yp3);
-    pD->add(pD->get_elements(), pElement);
+    Element* elem = new Spring(id, na, nb, mat, xp1, xp2, xp3, yp1, yp2, yp3);
+    pD->add(pD->get_elements(), elem);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args) {
   int id, iNode, jNode, mat, isec_id, jsec_id=-9999;
   if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat,
@@ -907,28 +977,37 @@ static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mNode, mat, sec_id, rule=-1;
+  int id, iNode, jNode, mNode, mat, sec_id, rule = 2;
+  // Check for consistent input
   if (!PyArg_ParseTuple(args, "iiiiii|i",
-                        &id, &iNode, &jNode, &mNode, &mat, &sec_id, &rule))
+                        &id, &iNode, &jNode, &mNode, &mat, &sec_id, &rule)) {
     return NULL;
+  }
+  // Create element and add it to domain
   try {
-    if (rule == -1)
-      rule = 2;
     CrossSection* sec = pD->get<CrossSection>(pD->get_sections(), sec_id);
-    Element* pElement = new Timoshenko2d(id, iNode, jNode, mNode, mat, sec, rule);
+    Element* pElement = new Timoshenko2d(id, iNode, jNode, mNode,
+                                         mat, sec, rule);
     pD->add(pD->get_elements(), pElement);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Brick8d(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, n5, n6, n7, n8, mat;
-  if (!PyArg_ParseTuple(args, "iiiiiiiiii", &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiiiiiiii",
+                        &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat)) {
     return NULL;
+  }
+  // Create element and add it to domain
   try {
     Element* pElement = new Brick8d(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
     pD->add(pD->get_elements(), pElement);
@@ -936,13 +1015,19 @@ static PyObject* pyElement_Brick8d(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Brick8b(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, n5, n6, n7, n8, mat;
-  if (!PyArg_ParseTuple(args, "iiiiiiiiii", &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiiiiiiii",
+                        &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat)) {
     return NULL;
+  }
+  // Create element and add it to domain
   try {
     Element* pElement = new Brick8b(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
     pD->add(pD->get_elements(), pElement);
@@ -950,13 +1035,19 @@ static PyObject* pyElement_Brick8b(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, n5, n6, n7, n8, mat;
-  if (!PyArg_ParseTuple(args, "iiiiiiiiii", &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiiiiiiii",
+                        &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat)) {
     return NULL;
+  }
+  // Create element and add it to domain
   try {
     Element* pElement = new Brick8i(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
     pD->add(pD->get_elements(), pElement);
@@ -964,9 +1055,11 @@ static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_SDOF(PyObject* /*self*/, PyObject* args) {
   int id, nodeID, dofID, matID;
   if (!PyArg_ParseTuple(args, "iiii", &id, &nodeID, &dofID, &matID))
@@ -976,6 +1069,7 @@ static PyObject* pyElement_SDOF(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, matID;
   if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
@@ -1001,6 +1095,7 @@ static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Quad4Test(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, matID;
   if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
@@ -1064,10 +1159,14 @@ static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Triangle3d(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, matID;
-  if (!PyArg_ParseTuple(args, "iiiii", &id, &n1, &n2, &n3, &matID))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiii", &id, &n1, &n2, &n3, &matID)) {
     return NULL;
+  }
+  // Create element and add it to domain
   try {
     Element* pElement = new Triangle3(id, n1, n2, n3, matID);
     pD->add(pD->get_elements(), pElement);
@@ -1075,13 +1174,19 @@ static PyObject* pyElement_Triangle3d(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, n5, n6, matID;
-  if (!PyArg_ParseTuple(args, "iiiiiiii", &id, &n1, &n2, &n3, &n4, &n5, &n6, &matID))
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiiiiii",
+                        &id, &n1, &n2, &n3, &n4, &n5, &n6, &matID)) {
     return NULL;
+  }
+  // Create element and add it to domain
   try {
     Element* pElement = new Triangle6(id, n1, n2, n3, n4, n5, n6, matID);
     pD->add(pD->get_elements(), pElement);
@@ -1089,9 +1194,11 @@ static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
+  // Increase reference count and return
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Tetrahedron4d(PyObject* /*self*/, PyObject* args) {
   int id, n1, n2, n3, n4, matID;
   if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
@@ -1258,15 +1365,15 @@ static PyObject* pyConstraint_Linear(PyObject* /*self*/, PyObject* args) {
     PyObject* tmpDof =PyTuple_GetItem(cTuple, 1);
     PyObject* tmpCi  =PyTuple_GetItem(cTuple, 2);
     if (!PyInt_Check(tmpNode)) {
-      PyErr_SetString(PyExc_StandardError, "Expected (INTEGER, integer, float).");
+      PyErr_SetString(PyExc_StandardError, "Expected (INT, int, float).");
       return NULL;
     }
     if (!PyInt_Check(tmpDof)) {
-      PyErr_SetString(PyExc_StandardError, "Expected (integer, INTEGER, float).");
+      PyErr_SetString(PyExc_StandardError, "Expected (int, INT, float).");
       return NULL;
     }
     if (!PyFloat_Check(tmpCi)) {
-      PyErr_SetString(PyExc_StandardError, "Expected (integer, integer, FLOAT).");
+      PyErr_SetString(PyExc_StandardError, "Expected (int, int, FLOAT).");
       return NULL;
     }
     // Get arguments
@@ -1287,6 +1394,7 @@ static PyObject* pyConstraint_Linear(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyMethodDef ConstraintMethods[] =  {
   {"set",             pyConstraint_Set,
     METH_VARARGS, "Define a single/multiple dof constraint."},
@@ -1494,9 +1602,9 @@ static PyMethodDef GroundMotionMethods[] =  {
     METH_VARARGS, "Define a sinus uniform excitation."},
   {NULL, NULL, 0, NULL}
 };
-/******************************************************************************
+/*******************************************************************************
 * Initial Conditions commands
-******************************************************************************/
+*******************************************************************************/
 static PyObject* pyInitialConditions_Disp(PyObject* /*self*/, PyObject* args) {
   if (currentLC <= 0) {
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
@@ -1508,8 +1616,8 @@ static PyObject* pyInitialConditions_Disp(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Node* node = pD->get<Node>(pD->get_nodes(), node_id);
-    InitialCondition* initial = new InitialDisplacement(node, dof, disp);
-    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddInitialCondition(initial);
+    InitialCondition* ic = new InitialDisplacement(node, dof, disp);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddInitialCondition(ic);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1517,6 +1625,7 @@ static PyObject* pyInitialConditions_Disp(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyInitialConditions_Velc(PyObject* /*self*/, PyObject* args) {
   if (currentLC <= 0) {
     PyErr_SetString(PyExc_StandardError, "No LoadCase yet defined.");
@@ -1528,14 +1637,15 @@ static PyObject* pyInitialConditions_Velc(PyObject* /*self*/, PyObject* args) {
     return NULL;
   try {
     Node* node = pD->get<Node>(pD->get_nodes(), node_id);
-    InitialCondition* initial = new InitialVelocity(node, dof, velocity);
-    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddInitialCondition(initial);
+    InitialCondition* ic = new InitialVelocity(node, dof, velocity);
+    pD->get<LoadCase>(pD->get_loadcases(), currentLC)->AddInitialCondition(ic);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }  Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyInitialConditions_Stresses(PyObject* /*self*/,
                                               PyObject* args) {
   if (currentLC <= 0) {
@@ -1557,6 +1667,7 @@ static PyObject* pyInitialConditions_Stresses(PyObject* /*self*/,
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyMethodDef InitialConditionsMethods[] =  {
   {"disp",    pyInitialConditions_Disp,
     METH_VARARGS, "Set initial displacement to nodal dof."},
@@ -1693,9 +1804,9 @@ static PyMethodDef ImposerMethods[] =  {
     METH_VARARGS, "Use the penalty method to impose constraints."},
   {NULL, NULL, 0, NULL}
 };
-/******************************************************************************
+/*******************************************************************************
 * Control commands
-******************************************************************************/
+*******************************************************************************/
 static PyObject* pyControl_Load(PyObject* /*self*/, PyObject* args) {
   double DL0, minDL = 1., maxDL = 1., n = 0.5, dt = 0.;
   int Id = 1;
@@ -1706,6 +1817,7 @@ static PyObject* pyControl_Load(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyControl_ArcLength(PyObject* /*self*/, PyObject* args) {
   double DL0, minDL = 1., maxDL = 1., n = 0.5, dt = 0.;
   int Id = 1;
@@ -1716,6 +1828,7 @@ static PyObject* pyControl_ArcLength(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyControl_ArcLengthUNP(PyObject* /*self*/, PyObject* args) {
   double DL0, minDL = 1., maxDL = 1., n = 0.5, dt = 0.;
   int Id = 1;
@@ -1726,18 +1839,22 @@ static PyObject* pyControl_ArcLengthUNP(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyControl_Disp(PyObject* /*self*/, PyObject* args) {
-  int nodeID, dofID;
-  double Du0, minDu = 1., maxDu = 1., dt = 0.;
+  int node, dof;
+  double Du0, minDu = 1., maxDu = 1., n = 0.5, dt = 0.;
   int Id = 1;
-  double n = 0.5;
-  if (!PyArg_ParseTuple(args, "iid|ddidd", &nodeID, &dofID, &Du0, &minDu, &maxDu, &Id, &n, &dt))
+  if (!PyArg_ParseTuple(args, "iid|ddidd",
+                        &node, &dof, &Du0, &minDu, &maxDu, &Id, &n, &dt)) {
     return NULL;
-  Control* pControl = new DisplacementControl(nodeID, dofID, Du0, minDu, maxDu, Id, n, dt);
-  pA->set_control(pControl);
+  }
+  Control* c = new DisplacementControl(node, dof,
+                                       Du0, minDu, maxDu, Id, n, dt);
+  pA->set_control(c);
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyControl_Newmark(PyObject* /*self*/, PyObject* args) {
   double beta, gamma, dt;
   if (!PyArg_ParseTuple(args, "ddd", &beta, &gamma, &dt)) return NULL;
@@ -1746,6 +1863,7 @@ static PyObject* pyControl_Newmark(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyMethodDef ControlMethods[] = {
   {"load",      pyControl_Load,
     METH_VARARGS, "Use load control for the analysis."},
@@ -1759,9 +1877,10 @@ static PyMethodDef ControlMethods[] = {
     METH_VARARGS, "Use Newmark control for the analysis."},
   {NULL, NULL, 0, NULL}
 };
-/******************************************************************************
+
+/*******************************************************************************
 * Algorithm commands
-******************************************************************************/
+*******************************************************************************/
 static PyObject* pyAlgorithm_Linear(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Algorithm* pAlgorithm = new LinearAlgorithm();
@@ -1774,8 +1893,10 @@ static PyObject* pyAlgorithm_BFGS(PyObject* /*self*/, PyObject* args) {
   int lsearch = 0;
   double etaMin = 0.1, etaMax = 1.0, rTol = 0.8;
   int maxIter = 10;
-  if (!PyArg_ParseTuple(args, "i|idddi", &m, &lsearch, &etaMin, &etaMax, &rTol, &maxIter))
+  if (!PyArg_ParseTuple(args, "i|idddi",
+                        &m, &lsearch, &etaMin, &etaMax, &rTol, &maxIter)) {
     return NULL;
+  }
   Algorithm* pAlgorithm;
   if (lsearch == 0)  pAlgorithm = new BFGS(m);
   else      pAlgorithm = new BFGS(m, etaMin, etaMax, rTol, maxIter);
@@ -1864,37 +1985,17 @@ static PyObject* pySOE_BandLinearSOE(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
-static PyObject* pySOE_Info(PyObject* /*self*/, PyObject* args) {
-  if (!PyArg_ParseTuple(args, "")) return NULL;
-  pA->get_soe()->print();
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pySOE_PlotGraph(PyObject* /*self*/, PyObject* args) {
-  const char* s;
-  if (!PyArg_ParseTuple(args, "s", &s)) return NULL;
-  try {
-    pA->get_soe()->plotGraph(s);
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
+
 static PyMethodDef SOEMethods[] =  {
   {"full",  pySOE_FullLinearSOE,
-    METH_VARARGS, "Use a full storage scheme to hold the system of equations."},
+    METH_VARARGS, "Use full storage scheme for the system of equations."},
   {"symm",  pySOE_SymmLinearSOE,
-    METH_VARARGS, "Use a symmetric storage scheme to hold the system of equations."},
+    METH_VARARGS, "Use symmetric storage scheme for the system of equations."},
   {"band",  pySOE_BandLinearSOE,
-    METH_VARARGS, "Use a band storage scheme to hold the system of equations."},
-  {"info",  pySOE_Info,
-    METH_VARARGS, "Plot the Graph under given filename."},
-  {"plotGraph", pySOE_PlotGraph,
-    METH_VARARGS, "Plot the Graph under given filename."},
+    METH_VARARGS, "Use band storage scheme for the system of equations."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Reorder commands
 ******************************************************************************/

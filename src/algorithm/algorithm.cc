@@ -28,5 +28,6 @@
 
 Algorithm::Algorithm() {
 }
+
 Algorithm::~Algorithm() {
 }
