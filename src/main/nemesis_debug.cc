@@ -35,9 +35,9 @@ void report(const double d, const char* name, int total, int decimal) {
 }
 
 void report(const Matrix& m, const char* name, int total, int decimal) {
-  cout << name << " [ " << m.rows() << ", " << m.cols() << " ] =" << endl;
-  for (int i = 0; i < m.rows(); i++) {
-    for (int j = 0;j < m.cols();j++)
+  cout << name << " [ " << m.get_rows() << ", " << m.get_cols() << " ] =" << endl;
+  for (int i = 0; i < m.get_rows(); i++) {
+    for (int j = 0;j < m.get_cols();j++)
       num::print_d(m(i, j), total, decimal);
     cout << endl;
   }
@@ -52,14 +52,14 @@ void report(const Vector& v, const char* name, int total, int decimal) {
 
 void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C,
          const Matrix B2, double c1, double c0) {
-  int m = B1.rows();
-  int n = B2.cols();
-  int pos = row*K.cols()+col;
-  int colK = K.cols();
-  double* pK =K.data();
-  double* pB1 = B1.data();
-  double* pB2 = B2.data();
-  double* pC = C.data();
+  int m = B1.get_rows();
+  int n = B2.get_cols();
+  int pos = row*K.get_cols()+col;
+  int colK = K.get_cols();
+  double* pK =K.get_data();
+  double* pB1 = B1.get_data();
+  double* pB2 = B2.get_data();
+  double* pC = C.get_data();
   for (int i = 0;i < n;i++)
     for (int j = 0;j < n;j++)
       pK[pos+i*colK+j]*=c0;
@@ -72,11 +72,11 @@ void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C,
 
 void add(Vector& R, int row, const Matrix& BT, const Vector& V,
          double c1, double c0) {
-  int m = BT.rows();
-  int n = BT.cols();
+  int m = BT.get_rows();
+  int n = BT.get_cols();
   double* pV =V.data();
   double* pR =R.data();
-  double* pBT = BT.data();
+  double* pBT = BT.get_data();
   for (int i = 0;i < n;i++)
     pR[i]*=c0;
   for (int i = 0;i < n;i++)
@@ -86,11 +86,11 @@ void add(Vector& R, int row, const Matrix& BT, const Vector& V,
 
 void add2(Vector& R, int row, const Matrix& BT, const Vector& V,
           double c1, double c0) {
-  int m = BT.rows();
-  int n = BT.cols();
+  int m = BT.get_rows();
+  int n = BT.get_cols();
   double* pV =V.data();
   double* pR =R.data();
-  double* pBT = BT.data();
+  double* pBT = BT.get_data();
   for (int i = 0;i < m;i++)
     pR[i]*=c0;
   for (int i = 0;i < m;i++)
@@ -104,15 +104,15 @@ void add2(Vector& R, int row, const Matrix& BT, const Vector& V,
 void add_BTCB(Matrix& K, int row, int col, const int* perm,
               const Matrix& B1, const Matrix& C, const Matrix B2,
               double c1, double c0) {
-  int m = B1.rows();
-  int n = B2.cols();
-  int pos = row*K.cols()+col;
-  int colK = K.cols();
-  int colC = C.cols();
-  double* pK =K.data();
-  double* pB1 = B1.data();
-  double* pB2 = B2.data();
-  double* pC = C.data();
+  int m = B1.get_rows();
+  int n = B2.get_cols();
+  int pos = row*K.get_cols()+col;
+  int colK = K.get_cols();
+  int colC = C.get_cols();
+  double* pK =K.get_data();
+  double* pB1 = B1.get_data();
+  double* pB2 = B2.get_data();
+  double* pC = C.get_data();
   for (int i = 0;i < n;i++)
     for (int j = 0;j < n;j++)
       pK[pos+i*colK+j]*=c0;
@@ -125,11 +125,11 @@ void add_BTCB(Matrix& K, int row, int col, const int* perm,
 
 void add_BTv(Vector& R, int row, const int* perm,
              const Matrix& B, const Vector& v, double c1, double c0) {
-  int m = B.rows();
-  int n = B.cols();
+  int m = B.get_rows();
+  int n = B.get_cols();
   double* pV = v.data();
   double* pR = R.data();
-  double* pB = B.data();
+  double* pB = B.get_data();
   for (int i = 0;i < n;i++)
     pR[i]*=c0;
   for (int i = 0;i < n;i++)
@@ -139,11 +139,11 @@ void add_BTv(Vector& R, int row, const int* perm,
 
 void add_Bv(Vector& R, int row, const int* perm,
             const Matrix& B, const Vector& v, double c1, double c0) {
-  int m = B.rows();
-  int n = B.cols();
+  int m = B.get_rows();
+  int n = B.get_cols();
   double* pV = v.data();
   double* pR = R.data();
-  double* pB = B.data();
+  double* pB = B.get_data();
   for (int i = 0;i < m;i++)
     pR[i]*=c0;
   for (int i = 0;i < m;i++)
@@ -170,7 +170,7 @@ void spectralDecomposition(const Vector& s, Vector& sP, Matrix& sV) {
   sV(2, 1) = 0.;
   sV(2, 2) = s[2];
 
-  dsyev(&JOBZ, &UPLO, &N, sV.data(), &LDA, sP.data(), WORK.data(),
+  dsyev(&JOBZ, &UPLO, &N, sV.get_data(), &LDA, sP.data(), WORK.data(),
         &LWORK, &INFO, 1, 1);
   // cout << WORK[0]<<endl;
   double d, d0, d1, d2;

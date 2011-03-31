@@ -147,10 +147,10 @@ PyObject* buildList(const Vector& v) {
 
 PyObject* buildList(const Matrix& m) {
   static PyObject* pyList;
-  pyList = PyList_New(m.rows());
-  for (int i = 0; i < m.rows(); i++) {
-    PyObject* pyRow = PyList_New(m.cols());
-    for (int j = 0;j < m.cols();j++)
+  pyList = PyList_New(m.get_rows());
+  for (int i = 0; i < m.get_rows(); i++) {
+    PyObject* pyRow = PyList_New(m.get_cols());
+    for (int j = 0;j < m.get_cols();j++)
       PyList_SetItem(pyRow, j, PyFloat_FromDouble(m(i, j)));
     PyList_SetItem(pyList, i, pyRow);
   }
@@ -186,7 +186,7 @@ static PyObject* buildDict(std::istream& s) {
       s >> rows;
       s >> cols;
       Matrix m(rows, cols, 0.);
-      for (int i = 0;i < rows*cols;i++) s >> m.data()[i];
+      for (int i = 0;i < rows*cols;i++) s >> m.get_data()[i];
       PyDict_SetItem(pyDict, pyKey, buildList(m));
     } else {
       throw SException("[nemesis:%d] %s", 9999, "Internal error: Unknown tag.");

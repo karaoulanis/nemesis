@@ -39,25 +39,25 @@ class MatrixTest : public ::testing::Test {
 // test: Matrix::Matrix();
 TEST_F(MatrixTest, DefaultConstructor) {
   Matrix m;
-  EXPECT_EQ(m.rows(), 0) << "Matrix rows is not null initialized";
-  EXPECT_EQ(m.cols(), 0) << "Matrix cols is not null initialized";
-  // ASSERT_EQ(m.get_size(),0) /// @todo: implement
-  // EXPECT_EQ(m.data(),NULL)    /// @todo: implement;
+  EXPECT_EQ(m.get_rows(), 0) << "Matrix rows is not null initialized";
+  EXPECT_EQ(m.get_cols(), 0) << "Matrix cols is not null initialized";
+  // ASSERT_EQ(m.get_size(),0)    /// @todo: implement
+  // EXPECT_EQ(m.data(),NULL)     /// @todo: implement;
 }
 
-// test: Matrix::Matrix(int m, int n);
+// test: Matrix::Matrix(int rows, int cols);
 TEST_F(MatrixTest, SimpleConstructor) {
   Matrix m(3, 2);
-  EXPECT_EQ(m.rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m.cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)
+  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows not set correctly";
+  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols not set correctly";
+  // EXPECT_EQ(m.get_size(),6)  /// @todo: implement;
 }
 
-// test: Matrix::Matrix(int m, int n, double c);
+// test: Matrix::Matrix(int rows, int cols, double value);
 TEST_F(MatrixTest, ConstructorWithDefaultValues) {
   Matrix m(3, 2, 2.);
-  EXPECT_EQ(m.rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m.cols(), 2) << "Matrix cols not set correctly";
+  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows not set correctly";
+  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols not set correctly";
   // EXPECT_EQ(m.get_size(),6)
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
@@ -66,13 +66,13 @@ TEST_F(MatrixTest, ConstructorWithDefaultValues) {
   }
 }
 
-// test: Matrix::Matrix(const Matrix& m);
+// test: Matrix::Matrix(const Matrix& matrix);
 TEST_F(MatrixTest, CopyConstructor) {
   Matrix m1(3, 2, 2.);
   Matrix m2(m1);
-  EXPECT_EQ(m2.rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m2.cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)
+  EXPECT_EQ(m2.get_rows(), 3) << "Matrix rows not set correctly";
+  EXPECT_EQ(m2.get_cols(), 2) << "Matrix cols not set correctly";
+  // EXPECT_EQ(m.get_size(),6)  /// @todo: implement;
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
       EXPECT_EQ(m2(i, j), 2.) << "Matrix value error";
@@ -86,8 +86,8 @@ TEST_F(MatrixTest, CopyConstructor) {
 TEST_F(MatrixTest, CopyAssignment) {
   Matrix m1(3, 2, 2.);
   Matrix m2 = m1;
-  EXPECT_EQ(m2.rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m2.cols(), 2) << "Matrix cols not set correctly";
+  EXPECT_EQ(m2.get_rows(), 3) << "Matrix rows not set correctly";
+  EXPECT_EQ(m2.get_cols(), 2) << "Matrix cols not set correctly";
   // EXPECT_EQ(m.get_size(),6)
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
@@ -96,8 +96,8 @@ TEST_F(MatrixTest, CopyAssignment) {
   }
   Matrix m3(4, 4, 2.);
   m3 = m1;
-  EXPECT_EQ(m3.rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m3.cols(), 2) << "Matrix cols not set correctly";
+  EXPECT_EQ(m3.get_rows(), 3) << "Matrix rows not set correctly";
+  EXPECT_EQ(m3.get_cols(), 2) << "Matrix cols not set correctly";
   // EXPECT_EQ(m.get_size(),6)
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
@@ -110,8 +110,8 @@ TEST_F(MatrixTest, CopyAssignment) {
 TEST_F(MatrixTest, MatrixResize) {
   Matrix m(3, 2);
   m.resize(2, 3);
-  EXPECT_EQ(m.rows(), 2) << "Matrix rows not set correctly";
-  EXPECT_EQ(m.cols(), 3) << "Matrix cols not set correctly";
+  EXPECT_EQ(m.get_rows(), 2) << "Matrix rows not set correctly";
+  EXPECT_EQ(m.get_cols(), 3) << "Matrix cols not set correctly";
   // EXPECT_EQ(m.get_size(),6)
 }
 
@@ -119,8 +119,8 @@ TEST_F(MatrixTest, MatrixResize) {
 TEST_F(MatrixTest, MatrixResizeWithDefaultValues) {
   Matrix m(2, 3);
   m.resize(3, 2, 2.);
-  EXPECT_EQ(m.rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m.cols(), 2) << "Matrix cols not set correctly";
+  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows not set correctly";
+  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols not set correctly";
   // EXPECT_EQ(m.get_size(),6)
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
@@ -133,8 +133,8 @@ TEST_F(MatrixTest, MatrixResizeWithDefaultValues) {
 TEST_F(MatrixTest, MatrixClear) {
   Matrix m(2, 3, 2.);
   m.clear();
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 2; j++) {
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
       EXPECT_EQ(m(i, j), 0.) << "Matrix value error";
     }
   }
