@@ -123,20 +123,16 @@ Matrix& Matrix::operator=(const Matrix& m) {
   return *this;
 }
 
-/**
-* Resizes the Matrix.
-* Does not preserves data and does not initialize entries.
-* If new Matrix of the same size no allocation takes place.
-* Exception handling for bad allocation is provided.
-* @param m The number of rows.
-* @param n The number of columns.
-*/
-void Matrix::resize(int m, int n) {
-  rows_ = m;
-  cols_ = n;
-  if (size_ != m*n) {
-    size_ = m*n;
-    if (data_ != NULL) delete[] data_;
+void Matrix::resize(int rows, int cols) {
+  rows_ = rows;
+  cols_ = cols;
+  if (size_ != rows*cols) {
+    size_ = rows*cols;
+    // Delete the data_ if exists
+    /// @todo Check whether data can persist (implement capacity). 
+    if (data_ != NULL) {
+      delete[] data_;
+    }
     try {
       data_ = new double[size_];
     } catch(std::bad_alloc) {
@@ -145,35 +141,31 @@ void Matrix::resize(int m, int n) {
   }
 }
 
-/**
-* Resizes the Matrix.
-* Does not preserves data but initializes all entries to c.
-* If new Matrix of the same size no allocation takes place.
-* Exception handling for bad allocation is provided.
-* @param m The number of rows.
-* @param n The number of columns.
-* @param c Initial value for all entries.
-*/
-void Matrix::resize(int m, int n, double c) {
-  rows_ = m;
-  cols_ = n;
-  if (size_ != m*n) {
-    size_ = m*n;
-    if (data_ != NULL) delete[] data_;
+void Matrix::resize(int rows, int cols, double value) {
+  rows_ = rows;
+  cols_ = cols;
+  if (size_ != rows*cols) {
+    size_ = rows*cols;
+    // Delete the data_ if exists
+    /// @todo Check whether data can persist (implement capacity). 
+    if (data_ != NULL) {
+      delete[] data_;
+    }
     try {
       data_ = new double[size_];
     } catch(std::bad_alloc) {
       throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
     }
   }
-  for (int i = 0; i < size_; i++) data_[i]=c;
+  for (int i = 0; i < size_; i++) {
+    data_[i] = value;
+  }
 }
 
-/**
-* Clears the contents of a Matrix.
-*/
 void Matrix::clear() {
-  for (int i = 0; i < size_; i++) data_[i]=0.;
+  for (int i = 0; i < size_; i++) {
+    data_[i]=0.;
+  }
 }
 
 void Matrix::solve(Vector& x, const Vector& b) {
@@ -225,7 +217,7 @@ Matrix Inverse(const Matrix& m) {
   for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
   for (int i = 0;i < m.rows_;i++) index[i]=0;
   int ret = LU::decomposition(me, m.rows_, vv, index, d);
-  if (ret == 0) LU::inverse(me, m.rows_, index, inv.data(), col);
+  if (ret == 0) LU::inverse(me, m.rows_, index, inv.get_data(), col);
   delete[] me;
   delete[] col;
   delete[] vv;

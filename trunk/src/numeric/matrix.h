@@ -35,16 +35,45 @@
 class Vector;
 
 class Matrix {
- private:
-  int rows_, cols_, size_;
-  double* data_;
  public:
+  /**
+   * Default constructor
+   */ 
   Matrix();
-  Matrix(int m, int n);
-  Matrix(int m, int n, double c);
-  Matrix(const Matrix& m);
+  
+  /**
+   * Constructor.
+   * Matrix is not initialized.
+   * @param rows Number of rows.
+   * @param cols Number of columns.
+   */
+  Matrix(int rows, int cols);
+
+  /**
+   * Constructor
+   * @param rows Number of rows.
+   * @param cols Number of columns.
+   * @param value Value to be set to all entries.
+   */
+  Matrix(int rows, int cols, double value);
+
+  /**
+   * Copy constructor
+   * @param matrix The matrix to be copied from.
+   */
+  Matrix(const Matrix& matrix);
+
+  /**
+   * Destructor
+   */
   ~Matrix();
+
+  /**
+   * Copy assignment.
+   * @param matrix The matrix to be assigned.
+   */
   Matrix& operator=(const Matrix& m);
+
   /**
    * Implements (i, j) operator: m(i, j)
    * Range checking is provided for the debug version.
@@ -57,8 +86,9 @@ class Matrix {
     #endif
     return data_[i*cols_+j];
   }
+
   /**
-   * Implements (i, j) operator: m(i, j)
+   * Implements constant (i, j) operator: m(i, j)
    * Range checking is provided for the debug version.
    * @param i The number of row.
    * @param j The number of column.
@@ -69,79 +99,121 @@ class Matrix {
     #endif
     return data_[i*cols_+j];
   }
+
   /**
    * Returns the number of rows of the Matrix.
    */
-  inline int rows() const {
+  inline int get_rows() const {
     return rows_;
   }
+
   /**
    * Returns the number of columns of the Matrix.
    */
-  inline int cols() const {
+  inline int get_cols() const {
     return cols_;
   }
+  
   /**
    * Returns a pointer to Matrix data.
    */
-  inline double* data() {
+  inline double* get_data() {
     return data_;
   }
+
   /**
    * Returns a const pointer to Matrix data.
    */
-  inline double* data() const {
+  inline double* get_data() const {
     return data_;
   }
-  void resize(int m, int n);
-  void resize(int m, int n, double c);
+
+  /**
+  * Resizes the Matrix.
+  * Does not preserve data and does not initialize entries.
+  * If new Matrix of the same size no allocation takes place.
+  * Throws an exception for bad allocation.
+  * @param rows The number of rows.
+  * @param cols The number of columns.
+  */
+  void resize(int rows, int cols);
+
+  /**
+  * Resizes the Matrix and initializes all entries to value.
+  * Does not preserve data and does not initialize entries.
+  * If new Matrix of the same size no allocation takes place.
+  * Throws an exception for bad allocation.
+  * @param rows The number of rows.
+  * @param cols The number of columns.
+  * @param value Value to be set to all entries.
+  */
+  void resize(int cols, int rows, double value);
+  
+  /**
+   * Set all entries of the Matrix equal to zero.
+   */
   void clear();
+
   /**
-   * Implements += operator: this+=c.
-   * @param c All elements of the Matrix are added by this factor.
-   * @return  A reference to the Matrix.
+   * Implements += operator: this+=value.
+   * @param value Added to all elements of the Matrix.
+   * @return A reference to the Matrix.
    */
-  inline Matrix& operator+=(double c) {
-    for (int i = 0;i < size_;i++) data_[i]+=c;
+  inline Matrix& operator+=(double value) {
+    for (int i = 0; i < size_; i++) {
+      data_[i] += value;
+    }
     return *this;
   }
+
   /**
-   * Implements += operator: this-=c.
-   * @param c This factor is substracted by all elements of the Matrix.
-   * @return  A reference to the Matrix.
+   * Implements -= operator: this-=value.
+   * @param value Subtracted from all elements of the Matrix.
+   * @return A reference to the Matrix.
    */
-  inline Matrix& operator-=(double c) {
-    for (int i = 0;i < size_;i++) data_[i]-=c;
+  inline Matrix& operator-=(double value) {
+    for (int i = 0; i < size_; i++) {
+      data_[i] -= value;
+    }
     return *this;
   }
+
   /**
-   * Implements *= operator: this*=c.
-   * @param c All elements of the Matrix are multiplied with this factor.
-   * @return  A reference to the Matrix.
+   * Implements *= operator: this*=value.
+   * @param value Multiplied to all elements of the Matrix.
+   * @return A reference to the Matrix.
    */
-  inline Matrix& operator*=(double c) {
-    for (int i = 0;i < size_;i++) data_[i]*=c;
+  inline Matrix& operator*=(double value) {
+    for (int i = 0; i < size_; i++) {
+      data_[i] *= value;
+    }
     return *this;
   }
-    /**
-   * Implements /= operator: this/=c.
-   * @param c All elements of this Matrix are divided with this factor.
+  
+  /**
+   * Implements /= operator: this/=value.
+   * @param value All elements of the Matrix are devided by this value.
    * @return  A reference to the Matrix.
    */
-  inline Matrix& operator/=(double c) {
-    for (int i = 0;i < size_;i++) data_[i]/=c;
+  inline Matrix& operator/=(double value) {
+    for (int i = 0; i < size_; i++) {
+      data_[i] /= value;
+    }
     return *this;
   }
+
   /**
-   * Implements * operator: m = this*c.
-   * @param c All elements of the Matrix are multiplied with this factor.
-   * @return  A reference to the Matrix.
+   * Implements * operator: m = this*value.
+   * @param value Multiplied to all elements of the Matrix.
+   * @return A newly created Matrix.
+   * @todo Highly inefficient, do not create object.
    */
-  inline Matrix operator*(const double c) const {
+  inline Matrix operator*(const double value) const {
     Matrix res(*this);
-    res*=c;
+    res *= value;
     return res;
   }
+
   /**
    * Implements * operator: m = c*this, using member * operator.
    * @param c All elements of the Matrix are multiplied with this factor.
@@ -151,6 +223,7 @@ class Matrix {
     inline friend Matrix operator*(const double c, const Matrix& m) {
     return m*c;
   }
+
   /**
    * Implements / operator: m = this/c.
    * @param c All elements of the Matrix are divided with this factor.
@@ -161,6 +234,7 @@ class Matrix {
     res/=c;
     return res;
   }
+
   /**
    * Implements c0*this+=c*m.
    * No size checking is provided to avoid double checking with +/- operators.
@@ -173,6 +247,7 @@ class Matrix {
     else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
     for (int i = 0;i < size_;i++) data_[i]+=c*m.data_[i];
   }
+
   /**
    * Implements c0*this+=c*m1*m2.
    * No size checking is provided to avoid double checking with * operator.
@@ -185,12 +260,13 @@ class Matrix {
                       double c0 = 0.) {
     if (c0 == 0.0)     for (int i = 0;i < size_;i++) data_[i]=0;
     else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
-    int bCols = m1.cols();
+    int bCols = m1.get_cols();
     for (int i = 0;i < rows_;i++)
       for (int j = 0;j < cols_;j++)
         for (int k = 0;k < bCols;k++)
           data_[i*cols_+j]+=c*m1.data_[i*bCols+k]*m2.data_[k*cols_+j];
   }
+
   /**
    * Implements += operator: this+=m.
    * Size checking is provided for the debug version.
@@ -204,6 +280,7 @@ class Matrix {
     for (int i = 0;i < size_;i++) data_[i]+=m.data_[i];
     return *this;
   }
+
   /**
    * Implements -= operator: this-=m.
    * Size checking is provided for the debug version.
@@ -217,6 +294,7 @@ class Matrix {
     for (int i = 0;i < size_;i++) data_[i]-=m.data_[i];
     return *this;
   }
+
   /**
    * Implements + operator: this+m.
    * Uses c*this+=c1*m, with c0 = 1.0 and c = 1.0.
@@ -232,6 +310,7 @@ class Matrix {
     res.add_cM(1.0, m, 1.0);
     return res;
   }
+
   /**
    * Implements - operator: this-m.
    * Uses c*this+=c1*m with c0 = 1.0 and c=-1.0.
@@ -247,6 +326,7 @@ class Matrix {
     res.add_cM(-1.0, m, 1.0);
     return res;
   }
+
   /**
    * Implements * operator: m1*m2.
    * Uses c0*this+=c*m1*m2, with c0 = 0 c = 1.0 and m1 = this.
@@ -262,6 +342,7 @@ class Matrix {
     res.add_cMM(1.0, *this, m, 0.0);
     return res;
   }
+
   /**
    * Implements + operator: +this
    * @return  A reference to the Matrix.
@@ -269,6 +350,7 @@ class Matrix {
   inline Matrix& operator+() {
     return *this;
   }
+
   /**
    * Implements - operator: -this.
    * @return  Created Matrix.
@@ -278,6 +360,7 @@ class Matrix {
     for (int i = 0;i < size_;i++) res.data_[i]=-data_[i];
     return res;
   }
+
   /**
    * Implements the Transpose of a Matrix: Transpose(m)
    * @param m The given Matrix.
@@ -290,6 +373,7 @@ class Matrix {
         res.data_[j*m.rows_+i]=m.data_[i*m.cols_+j];
     return res;
   }
+
   /**
    * Implements Matrix*Vector.
    * Size checking is provided for the debug version.
@@ -305,6 +389,7 @@ class Matrix {
       for (int j = 0;j < cols_;j++) res[i]+=data_[i*cols_+j]*v[j];
     return res;
   }
+
   /**
    * Appends the entries of a Matrix m.
    * Range checking is provided for the debug version.
@@ -330,6 +415,7 @@ class Matrix {
         data_[(row+i)*cols_+(col+j)]+=c*m.data_[i*m.cols_+j];
     return *this;
   }
+
   /**
    * Appends the entries of a Vector vin a given row.
    * Range checking is provided for the debug version.
@@ -351,6 +437,7 @@ class Matrix {
     for (int i = 0;i < v.size();i++)     data_[row*cols_+col+i]+=c*v[i];
     return *this;
   }
+
   /**
    * Appends the entries of a Vector vin a given column.
    * Range checking is provided for the debug version.
@@ -373,24 +460,42 @@ class Matrix {
     return *this;
   }
 
+  /**
+   *
+   */
   void solve(Vector& x, const Vector& b);
+  
+  /**
+   *
+   */
   friend Matrix Inverse(const Matrix& m);
+  
+  /**
+   *
+   */
   friend double det(const Matrix& m);
 
+  /**
+   *
+   */
   friend std::ostream& operator<<(std::ostream& s, const Matrix& m) {
     s << 1200 << ' ' << m.rows_ << ' ' << m.cols_ << ' ';
     for (int i = 0;i < m.size_;i++) s << m.data_[i] << ' ';
     return s;
   }
+
+  /**
+   *
+   */
   void add_BTCB(int row, int col, const int* perm, const Matrix& B1,
     const Matrix& C, const Matrix B2, double c1, double c0 = 0.) {
-    int m = B1.rows();
-    int n = B2.cols();
+    int m = B1.get_rows();
+    int n = B2.get_cols();
     int pos = row*cols_+col;
-    int colC = C.cols();
-    double* pB1 = B1.data();
-    double* pB2 = B2.data();
-    double* pC = C.data();
+    int colC = C.get_cols();
+    double* pB1 = B1.get_data();
+    double* pB2 = B2.get_data();
+    double* pC = C.get_data();
     for (int i = 0;i < n;i++)
       for (int j = 0;j < n;j++)
         data_[pos+i*cols_+j]*=c0;
@@ -400,7 +505,13 @@ class Matrix {
           for (int j = 0;j < n;j++)
             data_[pos+i*cols_+j]+=c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
   }
+ private:
+  int rows_;
+  int cols_;
+  int size_;
+  double* data_;
 };
+
 /**
 * Returns an identity matrix of size n.
 */
@@ -409,6 +520,7 @@ inline Matrix Identity(int n) {
   for (int i = 0;i < n;i++) res(i, i)=1.;
   return res;
 }
+
 /**
  * Implements Vector1*Transpose(Vector).
  * Size checking is provided for the debug version.
