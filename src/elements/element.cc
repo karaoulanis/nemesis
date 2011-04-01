@@ -61,6 +61,18 @@ Element::Element(int ID, int matID)
   myMaterial = pD->get<Material>(pD->get_materials(), matID);
 }
 
+Element::Element(int id, std::vector<Node*> nodes) {
+  // Create static Matrices/vectors if they do not exist yet
+  if (theStaticMatrices == 0) {
+    theStaticMatrices = new Matrix*[64];
+    for (int i = 1;i < 64;i++) theStaticMatrices[i]=new Matrix(i, i, 0.);
+    theStaticVectors = new Vector*[64];
+    for (int i = 1;i < 64;i++) theStaticVectors[i]=new Vector(i, 0.);
+  }
+  // Copy pointers to nodes
+  myNodes = nodes;
+}
+
 Element::~Element() {
   if (theStaticMatrices != 0) {
     for (int i = 1;i < 64;i++) delete theStaticMatrices[i];
