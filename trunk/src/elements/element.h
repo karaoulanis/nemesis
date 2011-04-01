@@ -71,6 +71,8 @@ class Element: public DomainObject {
   // Constructors and Destructor
   Element();
   Element(int ID, int matID);
+  // new
+  Element(int id, std::vector<Node*> nodes);
   ~Element();
 
   const IDContainer& get_nodal_ids() const;
