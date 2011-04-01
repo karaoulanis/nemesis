@@ -52,7 +52,8 @@
 #elif defined(_MSC_VER)
   #define NEMESIS_COMPILER_ID 2
   #define NEMESIS_COMPILER_NAME "MSC"
-  #define NEMESIS_COMPILER_VERSION _MSC_VER
+  /// @todo fix _MSC_VER
+  #define NEMESIS_COMPILER_VERSION "1500"
 #else
   #define NEMESIS_COMPILER_ID 0
   #define NEMESIS_COMPILER_NAME "<Unknown>"
