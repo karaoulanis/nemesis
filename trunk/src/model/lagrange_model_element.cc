@@ -54,7 +54,7 @@ LagrangeModelElement::~LagrangeModelElement() {
  *
  */
 void LagrangeModelElement::add_K(double /*factor*/) {
-  myMatrix->clear();
+  myMatrix->Clear();
   for (unsigned i = 0; i < theFTable.size()-1; i++) {
     double ci = myConstraint->get_cdof(i).coeff;
     (*myMatrix)(i, theFTable.size()-1)=ci;

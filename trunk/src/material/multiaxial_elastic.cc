@@ -61,7 +61,7 @@ void MultiaxialElastic::set_strain(const Vector& De) {
   sTrial = sConvg+(this->get_C())*De;
 }
 const Matrix& MultiaxialElastic::get_C() {
-  C.clear();
+  C.Clear();
   // Material parameters
   double kx  =MatParams[ 2];
   double ky  =MatParams[ 3];

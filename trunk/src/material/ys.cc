@@ -29,10 +29,10 @@ YS::YS() {
   a.resize(3);
   a1.resize(3);
   a2.resize(3);
-  da.resize(3, 3);
-  da2.resize(3, 3);
-  da11.resize(3, 3);
-  da22.resize(3, 3);
+  da.Resize(3, 3);
+  da2.Resize(3, 3);
+  da11.Resize(3, 3);
+  da22.Resize(3, 3);
   active = false;
 }
 

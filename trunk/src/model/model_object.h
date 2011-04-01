@@ -29,27 +29,25 @@
 #include "elements/element.h"
 
 class ModelObject {
+ public:
+  // Constructors
+  ModelObject();
+  explicit ModelObject(const IDContainer& FTable);
+  virtual ~ModelObject();
+  // Access to data members
+  const IDContainer& get_FTable() const;
+  void set_FTable(const IDContainer& FTable);
+  void set_FTable(int index, int val);
+
+  inline void zeroMatrix()        {myMatrix->Clear();}
+  inline void zeroVector()        {myVector->clear();}
+  inline const Matrix& get_matrix() const  {return *myMatrix; }
+  inline const Vector& get_vector() const  {return *myVector; }
  protected:
   IDContainer theFTable;
   static Matrix** theStaticMatrices;
   static Vector** theStaticVectors;
   Matrix* myMatrix;
   Vector* myVector;
-  public:
-  // Constructors
-  ModelObject();
-  explicit ModelObject(const IDContainer& FTable);
-  virtual ~ModelObject();
-
-  // Access to data members
-  const IDContainer& get_FTable() const;
-  void set_FTable(const IDContainer& FTable);
-  void set_FTable(int index, int val);
-
-  inline void zeroMatrix()        {myMatrix->clear();}
-  inline void zeroVector()        {myVector->clear();}
-  inline const Matrix& get_matrix() const  {return *myMatrix; }
-  inline const Vector& get_vector() const  {return *myVector; }
 };
-
 #endif  // SRC_MODEL_MODEL_OBJECT_H_

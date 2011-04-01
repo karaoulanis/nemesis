@@ -36,7 +36,7 @@ SpringElastic::SpringElastic(int ID, double Kn, double Ks2, double Ks3)
   myTag = TAG_MATERIAL_SPRING;
 
   // Initialize Ct
-  Ct.clear();
+  Ct.Clear();
   Ct(0, 0)=Kn;
   Ct(1, 1)=Ks2;
   Ct(2, 2)=Ks3;

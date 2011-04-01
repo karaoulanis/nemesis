@@ -157,7 +157,7 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
     if (activeS[0])      nA++;      // just Drucker-Prager
     if (activeS[0] && Kc>0) nA++;   // hardening (if Drucker-Prager)
     if (activeS[1])      nA++;      // tension cut-off
-    A.resize(3+nA, 3+nA, 0.);
+    A.Resize(3+nA, 3+nA, 0.);
     R.resize(3+nA, 0.);
     x.resize(3+nA);
 

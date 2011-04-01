@@ -75,10 +75,10 @@ Element::~Element() {
 const Matrix& Element::get_C() {
   static Matrix C;
   int nDofs = myNodalIDs.size()*myLocalNodalDofs.size();
-  C.resize(nDofs, nDofs, 0.);
+  C.Resize(nDofs, nDofs, 0.);
   Vector RayleighFactors = pD->get_rayleigh_factors();
   if (RayleighFactors.size() == 0) {
-    C.clear();
+    C.Clear();
   } else {
     C.add_cM(RayleighFactors[0], this->get_K());
     C.add_cM(RayleighFactors[1], this->get_M());
@@ -115,7 +115,7 @@ int Element::handleCommonInfo() {
   for (int i = 0;i < nNodes;i++)
     myNodes[i]=pD->get <Node>(pD->get_nodes(), myNodalIDs[i]);
   // Get nodal coordinates
-  x.resize(nNodes, 3);
+  x.Resize(nNodes, 3);
   for (int i = 0; i < nNodes; i++) {
     x(i, 0)=myNodes[i]->get_x1();
     x(i, 1)=myNodes[i]->get_x2();

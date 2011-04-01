@@ -39,7 +39,7 @@ Quad4DispPlain::~Quad4DispPlain() {
 }
 const Matrix& Quad4DispPlain::get_K() {
   Matrix &K=*myMatrix;
-  K.clear();
+  K.Clear();
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
     double dV = detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
@@ -71,7 +71,7 @@ const Matrix& Quad4DispPlain::get_K() {
 }
 const Matrix& Quad4DispPlain::get_M() {
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   double rho = myMaterial->get_rho();
   double volume = 0.;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {

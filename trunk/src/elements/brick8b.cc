@@ -39,7 +39,7 @@ Brick8b::~Brick8b() {
 }
 void Brick8b::get_B(Matrix& B, int node, int gPoint) {
   // Resize B
-  B.resize(6, 3);
+  B.Resize(6, 3);
 
   // Find B-bar coefficients
   double Bb1 = 0., Bb2 = 0., Bb3 = 0., vol = 0.;

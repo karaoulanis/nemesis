@@ -41,7 +41,7 @@ const Vector& TensionCutOffYS::get_dfds(const Vector& sigma,
 }
 const Matrix& TensionCutOffYS::get_d2fdsds(const Vector& /*sigma*/,
                                           const double /*kappa*/) {
-  da.clear();
+  da.Clear();
   return da;
 }
 double TensionCutOffYS::get_dfdk(const Vector& /*sigma*/,

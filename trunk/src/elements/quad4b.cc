@@ -52,7 +52,7 @@ const Matrix& Quad4b::get_K() {
   static Matrix Bb;
 
   this->shapeFunctions();
-  K.clear();
+  K.Clear();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < myNodes.size(); a++) {
@@ -70,7 +70,7 @@ const Matrix& Quad4b::get_K() {
 }
 const Matrix& Quad4b::get_M() {
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   double rho = myMaterial->get_rho();
   double volume = 0.;
 
@@ -157,7 +157,7 @@ void Quad4b::shapeFunctions() {
   }
 }
 void Quad4b::get_B(Matrix& B, int node, int gPoint) {
-  B.resize(4, 2);
+  B.Resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
   for (int k = 0;k < 4;k++) {  // matpoints
     double dV = detJ[k]*(pD->get_fac());

@@ -324,7 +324,7 @@ void Node::track() {
 }
 // Sensitivity functions
 void Node::initSensitivityMatrix(int nGrads) {
-  dispSensi.resize(nActivatedDofs, nGrads, 0.);
+  dispSensi.Resize(nActivatedDofs, nGrads, 0.);
 }
 void Node::commitSens(const Vector& v, int param) {
   dispSensi.appendCol(v, 0, param);

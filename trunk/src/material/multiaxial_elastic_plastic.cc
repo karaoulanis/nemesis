@@ -134,7 +134,7 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De) {
       break;
     }
     // Jacobian
-    A.clear();
+    A.Clear();
     A.append(invCel+dg*(gS->get_df2dss(sTrial, aTrial)), 0, 0);
     for (int i = 0;i < 6;i++) A(6, i)=(fS->get_dfds(sTrial, aTrial))[i];
     for (int i = 0;i < 6;i++) A(i, 6)=(gS->get_dfds(sTrial, aTrial))[i];

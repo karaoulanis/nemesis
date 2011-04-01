@@ -114,7 +114,7 @@ const Matrix& Brick8::get_K() {
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
   this->shapeFunctions();
   // Stiffness matrix K+=B[a]T.C.B[b].dV (for each GaussPoint)
-  K.clear();
+  K.Clear();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     double dV = detJ[k];
@@ -136,7 +136,7 @@ const Matrix& Brick8::get_K() {
  */
 const Matrix& Brick8::get_M() {
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   return M;
 }
 /**

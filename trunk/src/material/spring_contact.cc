@@ -39,7 +39,7 @@ SpringContact::SpringContact(int ID, double Kn, double Ks, double mu,
   myTag = TAG_MATERIAL_SPRING;
 
   // Initialize Ct
-  Ct.clear();
+  Ct.Clear();
   Ct(0, 0)=Kn;
   Ct(1, 1)=Ks;
   Ct(2, 2)=Ks;
@@ -75,7 +75,7 @@ void SpringContact::set_strain(const Vector& De) {
   double f1  = Fn;
   double f2  = sqrt(Fs2*Fs2+Fs3*Fs3)+mu*Fn;
 
-  Ct.clear();
+  Ct.Clear();
   sTrial.clear();
 
   if (f1 < 0. && f2 < 0.) {
