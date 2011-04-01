@@ -190,5 +190,5 @@ bool Tetrahedron4Disp::checkIfAllows(FEObject* /*f*/) {
 void Tetrahedron4Disp::recoverStresses() {
   static Vector sigma(6);
   sigma = myMatPoints[0]->get_material()->get_stress();
-  for (int i = 0;i < 4;i++) myNodes[i]->addStress(sigma);
+  for (int i = 0;i < 4;i++) nodes_[i]->addStress(sigma);
 }

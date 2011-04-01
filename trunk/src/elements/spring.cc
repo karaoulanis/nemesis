@@ -201,8 +201,8 @@ void Spring::recoverStresses() {
   static Vector s(6);
   s.clear();
   s.append(mySpringMaterial->get_stress(), 0);
-  myNodes[0]->addStress(s);
-  myNodes[1]->addStress(s);
+  nodes_[0]->addStress(s);
+  nodes_[1]->addStress(s);
 }
 /**
  * Add a Tracker to the Bar's Material.

@@ -110,8 +110,8 @@ const Vector& Bar::get_Reff() {
   // +M*aTrial
   double rho = myUniMaterial->get_rho();
   double mass = 0.5*rho*L0;
-  const Vector& a0 = myNodes[0]->get_accl_trial();
-  const Vector& a1 = myNodes[1]->get_accl_trial();
+  const Vector& a0 = nodes_[0]->get_accl_trial();
+  const Vector& a1 = nodes_[1]->get_accl_trial();
   for (int i = 0;i < nDim;i++) {
       Reff[i]      += mass*a0[i];
       Reff[i+nDim] += mass*a1[i];
@@ -123,8 +123,8 @@ void Bar::recoverStresses() {
   /// @todo Stresses from bar to nodes
   static Vector s(6);
   s[0]=myUniMaterial->get_stress();
-  myNodes[0]->addStress(s);
-  myNodes[1]->addStress(s);
+  nodes_[0]->addStress(s);
+  nodes_[1]->addStress(s);
 }
 /**
  * Add a Tracker to the Bar's Material.

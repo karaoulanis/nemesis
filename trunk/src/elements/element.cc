@@ -70,7 +70,7 @@ Element::Element(int id, std::vector<Node*> nodes) {
     for (int i = 1;i < 64;i++) theStaticVectors[i]=new Vector(i, 0.);
   }
   // Copy pointers to nodes
-  myNodes = nodes;
+  nodes_ = nodes;
 }
 
 Element::~Element() {
@@ -119,19 +119,19 @@ int Element::handleCommonInfo() {
   int nNodes = myNodalIDs.size();
   int nLocalDofs = myLocalNodalDofs.size();
   int nDofs = nNodes*nLocalDofs;
-    myNodes.resize(nNodes);
+  nodes_.resize(nNodes);
   // Find own matrix and vector
   myMatrix = theStaticMatrices[nDofs];
   myVector = theStaticVectors[nDofs];
   // Retrieve the node pointers and check if they do exist
   for (int i = 0;i < nNodes;i++)
-    myNodes[i]=pD->get <Node>(pD->get_nodes(), myNodalIDs[i]);
+    nodes_[i] = pD->get <Node>(pD->get_nodes(), myNodalIDs[i]);
   // Get nodal coordinates
   x.Resize(nNodes, 3);
   for (int i = 0; i < nNodes; i++) {
-    x(i, 0)=myNodes[i]->get_x1();
-    x(i, 1)=myNodes[i]->get_x2();
-    x(i, 2)=myNodes[i]->get_x3();
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
   }
   // Resize external load vector, self weigth vector
   P.resize(nDofs);
@@ -139,7 +139,7 @@ int Element::handleCommonInfo() {
   // Inform the nodes that the corresponding Dof's must be activated
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nLocalDofs;j++)
-      myNodes[i]->addDofToNode(myLocalNodalDofs[j]);
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Create load vector
   for (int i = 0;i < nDofs;i++) P[i]=0;
   // Get Material related info
@@ -169,7 +169,7 @@ const IDContainer& Element::get_local_nodal_dofs() const {
 }
 
 const std::vector<Node*>& Element::get_nodes() const {
-  return myNodes;
+  return nodes_;
 }
 
 const Vector& Element::get_disp_trial() {
@@ -178,7 +178,7 @@ const Vector& Element::get_disp_trial() {
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->get_disp_trial_at_dof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j] = nodes_[i]->get_disp_trial_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
 
@@ -188,7 +188,7 @@ const Vector& Element::get_velc_trial() {
   Vector& velc=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      velc[i*nDofs+j]=myNodes[i]->get_velc_trial_at_dof(myLocalNodalDofs[j]);
+      velc[i*nDofs+j] = nodes_[i]->get_velc_trial_at_dof(myLocalNodalDofs[j]);
   return velc;
 }
 
@@ -198,7 +198,7 @@ const Vector& Element::get_accl_trial() {
   Vector& accl=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      accl[i*nDofs+j]=myNodes[i]->get_accl_trial_at_dof(myLocalNodalDofs[j]);
+      accl[i*nDofs+j] = nodes_[i]->get_accl_trial_at_dof(myLocalNodalDofs[j]);
   return accl;
 }
 
@@ -208,7 +208,7 @@ const Vector& Element::get_disp_convg() {
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j] = nodes_[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
 
@@ -218,7 +218,7 @@ const Vector& Element::get_velc_convg() {
   Vector& velc=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      velc[i*nDofs+j]=myNodes[i]->get_velc_convg_at_dof(myLocalNodalDofs[j]);
+      velc[i*nDofs+j] = nodes_[i]->get_velc_convg_at_dof(myLocalNodalDofs[j]);
   return velc;
 }
 
@@ -228,7 +228,7 @@ const Vector& Element::get_accl_convg() {
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->get_accl_convg_at_dof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j] = nodes_[i]->get_accl_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
 
@@ -239,8 +239,8 @@ const Vector& Element::get_disp_incrm() {
   Vector& disp=*myVector;
   for (int i = 0;i < nNodes;i++)
     for (int j = 0;j < nDofs;j++)
-      disp[i*nDofs+j]=myNodes[i]->get_disp_trial_at_dof(myLocalNodalDofs[j])-
-                      myNodes[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
+      disp[i*nDofs+j] = nodes_[i]->get_disp_trial_at_dof(myLocalNodalDofs[j])-
+                        nodes_[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
 
@@ -280,8 +280,8 @@ void Element::addGroundMotion(int dof, double val) {
  */
 void Element::SetGroupData(GroupData* groupdata) {
   groupdata_ = groupdata;
-  for (unsigned i = 0; i < myNodes.size(); i++) {
-    myNodes[i]->SetActive(groupdata_->active_);
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    nodes_[i]->SetActive(groupdata_->active_);
   }
 }
 

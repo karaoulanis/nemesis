@@ -54,9 +54,9 @@ const Matrix& Quad4d::get_K() {
   K.Clear();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(Ba, a, k);
-      for (unsigned b = 0; b < myNodes.size(); b++) {
+      for (unsigned b = 0; b < nodes_.size(); b++) {
         this->get_B(Bb, b, k);
         double dV=(pD->get_fac())*detJ[k];
         K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
@@ -100,7 +100,7 @@ const Vector& Quad4d::get_R() {
   this->shapeFunctions();
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(Ba, a, k);
       double dV=(pD->get_fac())*detJ[k];
       add_BTv(R, 2*a, &perm[0], Ba, sigma, dV, 1.0);
@@ -122,7 +122,7 @@ void Quad4d::update() {
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.clear();
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(Ba, a, k);
       /// @todo check dV
       //  double dV=(pD->get_fac())*detJ[k];

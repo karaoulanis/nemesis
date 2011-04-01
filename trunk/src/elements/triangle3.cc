@@ -169,7 +169,7 @@ void Triangle3::commit() {
 void Triangle3::recoverStresses() {
   static Vector sigma(6);
   sigma = myMatPoints[0]->get_material()->get_stress();
-  for (int i = 0;i < 3;i++) myNodes[i]->addStress(sigma);
+  for (int i = 0;i < 3;i++) nodes_[i]->addStress(sigma);
 }
 bool Triangle3::checkIfAllows(FEObject* /*f*/) {
   return true;

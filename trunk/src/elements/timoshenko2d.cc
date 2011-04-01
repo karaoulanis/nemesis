@@ -99,7 +99,7 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
 Timoshenko2d::~Timoshenko2d() {
 }
 void Timoshenko2d::shapeFunctions(int n, double xi, double &N, double &dN) {
-  switch (myNodes.size()) {
+  switch (nodes_.size()) {
     case 2:
       if (n == 0) {
         N = 0.5*(1-xi);
@@ -143,8 +143,8 @@ const Matrix& Timoshenko2d::get_K() {
   for (int k = 0; k < gPoints; k++) {
     double xi = GaussCoords[gPoints][k+1];
     double dx = GaussWeights[gPoints][k+1]*0.5*L;
-    for (unsigned i = 0; i < myNodes.size(); i++) {
-      for (unsigned j = 0; j < myNodes.size(); j++) {
+    for (unsigned i = 0; i < nodes_.size(); i++) {
+      for (unsigned j = 0; j < nodes_.size(); j++) {
         double Ni, Nj, dNi, dNj;
         this->shapeFunctions(i, xi, Ni, dNi);
         this->shapeFunctions(j, xi, Nj, dNj);
@@ -191,7 +191,7 @@ const Vector& Timoshenko2d::get_R() {
   double s = cosX[1];
   double Ni, dNi;
 
-  Vector u(3*myNodes.size());
+  Vector u(3*nodes_.size());
   static Vector epsilon(3);
   u = this->get_disp_trial();
   R.clear();  // get_disp_trial() and R use the same static matrix
@@ -201,7 +201,7 @@ const Vector& Timoshenko2d::get_R() {
     double xi = GaussCoords[gPoints][k+1];
     double dx = GaussWeights[gPoints][k+1]*0.5*L;
     epsilon.clear();
-    for (unsigned i = 0; i < myNodes.size(); i++) {
+    for (unsigned i = 0; i < nodes_.size(); i++) {
       this->shapeFunctions(i, xi, Ni, dNi);
       epsilon[0]+=dNi*(c*u[0+3*i]+s*u[1+3*i]);
       epsilon[1]+=dNi*u[2+3*i];
@@ -214,7 +214,7 @@ const Vector& Timoshenko2d::get_R() {
     sigma[1]=E*J*epsilon[1];
     sigma[2]=a*E/(2*(1+nu))*A*epsilon[2];
     // R = Fint
-    for (unsigned i = 0; i < myNodes.size(); i++) {
+    for (unsigned i = 0; i < nodes_.size(); i++) {
       this->shapeFunctions(i, xi, Ni, dNi);
       R[3*i+0]+=facS*((dNi*sigma[0]))*dx;
       R[3*i+1]+=facS*((dNi*sigma[2]))*dx;
@@ -222,7 +222,7 @@ const Vector& Timoshenko2d::get_R() {
     }
   }
   // R = R - Fext(Gravity)
-  switch (myNodes.size()) {
+  switch (nodes_.size()) {
     case 2:
       R[0]-=facG*(0.5*b[0]*L);
       R[1]-=facG*(0.5*b[1]*L);
@@ -244,7 +244,7 @@ const Vector& Timoshenko2d::get_R() {
   R-=facP*P;
 
   // Local R to global R
-  for (unsigned i = 0; i < myNodes.size(); i++) {
+  for (unsigned i = 0; i < nodes_.size(); i++) {
     double d1 = c*R[3*i+0]-s*R[3*i+1];
     double d2 = s*R[3*i+0]+c*R[3*i+1];
     R[3*i+0]=d1;

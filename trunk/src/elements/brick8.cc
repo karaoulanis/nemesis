@@ -86,7 +86,7 @@ Brick8::Brick8(int ID,
   // Materials coordinates
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     double xG = 0, yG = 0, zG = 0;
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       xG+=shp[a][0][k]*x(a, 0);
       yG+=shp[a][0][k]*x(a, 1);
       zG+=shp[a][0][k]*x(a, 2);
@@ -118,9 +118,9 @@ const Matrix& Brick8::get_K() {
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     double dV = detJ[k];
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(Ba, a, k);
-      for (unsigned b = 0; b < myNodes.size(); b++) {
+      for (unsigned b = 0; b < nodes_.size(); b++) {
         this->get_B(Bb, b, k);
         K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
@@ -159,7 +159,7 @@ const Vector& Brick8::get_R() {
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
     double dV = detJ[k];
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
       this->get_B(Ba, a, k);
       add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
@@ -190,7 +190,7 @@ void Brick8::update() {
   // Incremental strains: De+=B[a].Du  (for each GaussPoint)
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.clear();
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(B, a, k);
       add2(epsilon, 3*a, B, u, 1.0, 1.0);
     }
@@ -255,7 +255,7 @@ void Brick8::recoverStresses() {
         sigma[j]+=E(i, k)*(myMatPoints[k]->get_material()->get_stress())[j];
       }
     }
-    myNodes[i]->addStress(sigma);
+    nodes_[i]->addStress(sigma);
   }
 }
 /**
