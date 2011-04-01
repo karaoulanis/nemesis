@@ -85,7 +85,7 @@ void Tetrahedron4Disp::findShapeFunctions() {
 }
 const Matrix& Tetrahedron4Disp::get_K() {
   Matrix &K=*myMatrix;
-  K.clear();
+  K.Clear();
   this->findShapeFunctions();
   const Matrix& C = myMatPoints[0]->get_material()->get_C();
   static Matrix CB(6, 3);
@@ -130,7 +130,7 @@ const Matrix& Tetrahedron4Disp::get_K() {
 }
 const Matrix& Tetrahedron4Disp::get_M() {
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   return M;
 }
 const Vector& Tetrahedron4Disp::get_R() {

@@ -152,7 +152,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
     while (iter < 20) {
       ++iter;
       int nA = 0;
-      A.resize(3+nA+1, 3+nA+1, 0.);
+      A.Resize(3+nA+1, 3+nA+1, 0.);
       R.resize(3+nA+1, 0.);
       x.resize(3+nA+1);
       A.append(C3, 0, 0, 1.0, 1.0);
@@ -196,7 +196,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
     while (iter < num_of_iters) {
       ++iter;
       int nA = 1;
-      A.resize(3+nA+1, 3+nA+1, 0.);
+      A.Resize(3+nA+1, 3+nA+1, 0.);
       R.resize(3+nA+1, 0.);
       x.resize(3+nA+1);
 

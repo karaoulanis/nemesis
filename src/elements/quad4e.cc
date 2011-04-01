@@ -51,7 +51,7 @@ const Matrix& Quad4e::get_K() {
 }
 const Matrix& Quad4e::get_M() {
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   return M;
 }
 const Vector& Quad4e::get_R() {
@@ -93,7 +93,7 @@ void Quad4e::formKR() {
   do {
     counter++;
     // Form enhanced tagent matrix/vector
-    Kee.clear();
+    Kee.Clear();
     Fe.clear();
     for (unsigned i = 0; i < myMatPoints.size(); i++) {
       double xi =myMatPoints[i]->get_r();
@@ -149,8 +149,8 @@ void Quad4e::formKR() {
   alpha+=Dalpha;
   // report(alpha, "alpha", true, 12, 9);
 
-  Kuu.clear();
-  Kue.clear();
+  Kuu.Clear();
+  Kue.Clear();
   for (unsigned i = 0; i < myMatPoints.size(); i++) {
     double xi =myMatPoints[i]->get_r();
     double eta = myMatPoints[i]->get_s();
@@ -214,7 +214,7 @@ void Quad4e::formT0(double xi, double eta) {
   // T0.report("T0");
 }
 void Quad4e::formNu(double xi, double eta) {
-  N.clear();
+  N.Clear();
   N(0, 0)=0.25*(1-xi)*(1-eta);  // N1
   N(0, 2)=0.25*(1+xi)*(1-eta);  // N2
   N(0, 4)=0.25*(1+xi)*(1+eta);  // N3
@@ -283,7 +283,7 @@ void Quad4e::formBe(double xi, double eta) {
   double d01 = invTranJ(0, 1)*eta/detJ;
   double d11 = invTranJ(1, 1)*eta/detJ;
 
-  Be.clear();
+  Be.Clear();
   Be(0, 0)=d00;  Be(0, 1)=0.;   Be(0, 2)=d01;  Be(0, 3)=0.;
   Be(1, 0)=0.;   Be(1, 1)=d10;  Be(1, 2)=0.;   Be(1, 3)=d11;
   Be(2, 0)=d10;  Be(2, 1)=d00;  Be(2, 2)=d11;  Be(2, 3)=d01;

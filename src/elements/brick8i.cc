@@ -70,7 +70,7 @@ const Matrix& Brick8i::get_K() {
 const Matrix& Brick8i::get_M() {
   // Get a reference to myMatrix as K
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   // Find total mass
   double rho = myMaterial->get_rho();
   double volume = 0.;
@@ -229,7 +229,7 @@ void Brick8i::get_BInc(Matrix& B, int node, int gPoint) {
  * @param K The matrix to be filled.
  */
 void Brick8i::get_Kdd(Matrix& K) {
-  K.clear();
+  K.Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
@@ -251,7 +251,7 @@ void Brick8i::get_Kdd(Matrix& K) {
  * @param K The matrix to be filled.
  */
 void Brick8i::get_Kda(Matrix& K) {
-  K.clear();
+  K.Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
@@ -273,7 +273,7 @@ void Brick8i::get_Kda(Matrix& K) {
  * @param K The matrix to be filled.
  */
 void Brick8i::get_Kaa(Matrix& K) {
-  K.clear();
+  K.Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {

@@ -66,7 +66,7 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
   //      +(x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
   //      +(x(1, 2)-x(0, 2))*(x(1, 2)-x(0, 2)));
   // Define transformations
-  T.resize(nDim, nDim, 0.);
+  T.Resize(nDim, nDim, 0.);
   static Vector xp, yp, zp;
   switch (nDim) {
     case 1:
@@ -127,7 +127,7 @@ bool Spring::checkIfAllows(FEObject* /*f*/) {
 }
 const Matrix& Spring::get_K() {
   Matrix& K=*myMatrix;
-  K.clear();
+  K.Clear();
   const Matrix& Ct = mySpringMaterial->get_C();
   Matrix K0 = Transpose(T)*Ct*T;
   K.append(K0, 0, 0, +1.);
@@ -158,7 +158,7 @@ const Matrix& Spring::get_K() {
 }
 const Matrix& Spring::get_M() {
   Matrix& M=*myMatrix;
-  M.clear();
+  M.Clear();
   return M;
 }
 const Vector& Spring::get_R() {

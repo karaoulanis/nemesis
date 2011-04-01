@@ -70,7 +70,7 @@ const Matrix& Quad4i::get_K() {
 const Matrix& Quad4i::get_M() {
   // Get a reference to myMatrix as K
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   // Find total mass
   double rho = myMaterial->get_rho();
   double volume = 0.;
@@ -221,7 +221,7 @@ void Quad4i::get_BInc(Matrix& B, int node, int gPoint) {
  * @param K The matrix to be filled.
  */
 void Quad4i::get_Kdd(Matrix& K) {
-  K.clear();
+  K.Clear();
   static Matrix Ba(3, 2), Bb(3, 2);
   // For all Gauss points
   for (unsigned k = 0; k < 4; k++) {
@@ -244,7 +244,7 @@ void Quad4i::get_Kdd(Matrix& K) {
  * @param K The matrix to be filled.
  */
 void Quad4i::get_Kda(Matrix& K) {
-  K.clear();
+  K.Clear();
   static Matrix Ba(3, 2), Bb(3, 2);
   // For all Gauss points
   for (unsigned k = 0; k < 4; k++) {
@@ -266,7 +266,7 @@ void Quad4i::get_Kda(Matrix& K) {
  * @param K The matrix to be filled.
  */
 void Quad4i::get_Kaa(Matrix& K) {
-  K.clear();
+  K.Clear();
   static Matrix Ba(3, 2), Bb(3, 2);
   // For all Gauss points
   for (unsigned k = 0; k < 4; k++) {

@@ -40,7 +40,7 @@ Quad4DispAxisymmetric::~Quad4DispAxisymmetric() {
 }
 const Matrix& Quad4DispAxisymmetric::get_K() {
   Matrix &K=*myMatrix;
-  K.clear();
+  K.Clear();
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
     double r = x(0, 0)*N(0, 0)+x(1, 0)*N(0, 1)+x(2, 0)*N(0, 2)+x(3, 0)*N(0, 3);
@@ -78,7 +78,7 @@ const Matrix& Quad4DispAxisymmetric::get_K() {
 /// @todo
 const Matrix& Quad4DispAxisymmetric::get_M() {
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   double rho = myMaterial->get_rho();
   double volume = 0.;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {

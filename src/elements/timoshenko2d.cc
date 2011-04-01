@@ -127,7 +127,7 @@ void Timoshenko2d::shapeFunctions(int n, double xi, double &N, double &dN) {
 }
 const Matrix& Timoshenko2d::get_K() {
   Matrix& K=*myMatrix;
-  K.clear();
+  K.Clear();
   double E =myUniMaterial->get_param(0);
   double nu = myUniMaterial->get_param(1);
   double A =mySection->get_A();
@@ -165,7 +165,7 @@ const Matrix& Timoshenko2d::get_K() {
 }
 const Matrix& Timoshenko2d::get_M() {
   Matrix& M=*myMatrix;
-  M.clear();
+  M.Clear();
   return M;
 }
 const Vector& Timoshenko2d::get_Rgrad() {

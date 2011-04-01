@@ -123,7 +123,7 @@ Matrix& Matrix::operator=(const Matrix& m) {
   return *this;
 }
 
-void Matrix::resize(int rows, int cols) {
+void Matrix::Resize(int rows, int cols) {
   rows_ = rows;
   cols_ = cols;
   if (size_ != rows*cols) {
@@ -141,7 +141,7 @@ void Matrix::resize(int rows, int cols) {
   }
 }
 
-void Matrix::resize(int rows, int cols, double value) {
+void Matrix::Resize(int rows, int cols, double value) {
   rows_ = rows;
   cols_ = cols;
   if (size_ != rows*cols) {
@@ -162,7 +162,7 @@ void Matrix::resize(int rows, int cols, double value) {
   }
 }
 
-void Matrix::clear() {
+void Matrix::Clear() {
   for (int i = 0; i < size_; i++) {
     data_[i]=0.;
   }

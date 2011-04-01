@@ -929,10 +929,6 @@
 					RelativePath="..\..\src\loadcase\load.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\src\loadcase\load_test.cc"
-					>
-				</File>
 				<Filter
 					Name="elementalLoad"
 					>
@@ -942,14 +938,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\loadcase\elemental_load.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\loadcase\uniaxial_load.cc"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\loadcase\uniaxial_load.h"
 						>
 					</File>
 				</Filter>
@@ -986,10 +974,6 @@
 					</File>
 					<File
 						RelativePath="..\..\src\loadcase\nodal_load_sin.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\loadcase\nodal_load_test.cc"
 						>
 					</File>
 				</Filter>

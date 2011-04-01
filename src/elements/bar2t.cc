@@ -63,7 +63,7 @@ const Matrix& Bar2t::get_K() {
   double e=(L2-L0*L0)/(2*L0*L0);
 
   // Matrix KM
-  K.clear();
+  K.Clear();
   double E = myUniMaterial->get_C();
   double K0 = E*A0/L0;
   double d;

@@ -92,7 +92,7 @@ bool Bar::checkIfAllows(FEObject* /*f*/) {
 }
 const Matrix& Bar::get_M() {
   Matrix& M=*myMatrix;
-  M.clear();
+  M.Clear();
   double rho = myUniMaterial->get_rho();
   double mass = 0.5*L0*A0*rho;
   for (int i = 0; i < nDim; i++) {

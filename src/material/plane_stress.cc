@@ -42,7 +42,7 @@ MultiaxialMaterial* PlaneStress::get_clone() {
   return newClone;
 }
 const Matrix& PlaneStress::get_C() {
-  C.clear();
+  C.Clear();
   // Material parameters
   double E   =MatParams[ 0];
   double nu  =MatParams[ 1];

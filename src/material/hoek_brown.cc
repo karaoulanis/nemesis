@@ -76,9 +76,9 @@ HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
   dgds.resize(3);
   dgds[0].resize(3);  dgds[1].resize(3);  dgds[2].resize(3);
   d2gdsds.resize(3);
-  d2gdsds[0].resize(3, 3, 0.);
-  d2gdsds[1].resize(3, 3, 0.);
-  d2gdsds[2].resize(3, 3, 0.);
+  d2gdsds[0].Resize(3, 3, 0.);
+  d2gdsds[1].Resize(3, 3, 0.);
+  d2gdsds[2].Resize(3, 3, 0.);
 
   plastic = false;
   inaccurate = 0;
@@ -252,7 +252,7 @@ void HoekBrown::set_strain(const Vector& De) {
   int iter = 0;
   for (; ; ) {
     // setup jacobian
-    A.resize(3+nActive, 3+nActive, 0.);
+    A.Resize(3+nActive, 3+nActive, 0.);
     R.resize(3+nActive, 0.);
     x.resize(3+nActive);
     A.append(C3, 0, 0);

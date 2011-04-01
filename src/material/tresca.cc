@@ -128,7 +128,7 @@ void Tresca::set_strain(const Vector& De) {
     for (unsigned i = 0;i < 3;i++)
       if (f[i]>0.) active.push_back(i);
   for (int k = 0; k < 4; k++) {
-    A.resize(3+active.size(), 3+active.size(), 0.);
+    A.Resize(3+active.size(), 3+active.size(), 0.);
     x.resize(3+active.size());
     R.resize(3+active.size());
     R.clear();

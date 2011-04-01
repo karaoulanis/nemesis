@@ -75,7 +75,7 @@ void Surface::find_da(const Vector& s) {
   double tyz = s[4];
   double tzx = s[5];
   // Matrix da2 [Crisfield II, p.105, (14.24)].
-  da2.clear();
+  da2.Clear();
   da2(0, 0)= 2;  da2(0, 1)=-1;  da2(0, 2)=-1;
   da2(1, 0)=-1;  da2(1, 1)= 2;  da2(1, 2)=-1;
   da2(2, 0)=-1;  da2(2, 1)=-1;  da2(2, 2)= 2;

@@ -136,7 +136,7 @@ class Matrix {
   * @param rows The number of rows.
   * @param cols The number of columns.
   */
-  void resize(int rows, int cols);
+  void Resize(int rows, int cols);
 
   /**
   * Resizes the Matrix and initializes all entries to value.
@@ -147,12 +147,12 @@ class Matrix {
   * @param cols The number of columns.
   * @param value Value to be set to all entries.
   */
-  void resize(int cols, int rows, double value);
+  void Resize(int cols, int rows, double value);
   
   /**
    * Set all entries of the Matrix equal to zero.
    */
-  void clear();
+  void Clear();
 
   /**
    * Implements += operator: this+=value.

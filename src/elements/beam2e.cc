@@ -63,7 +63,7 @@ Beam2e::~Beam2e() {
 }
 const Matrix& Beam2e::get_K() {
   Matrix& K=*myMatrix;
-  K.clear();
+  K.Clear();
   double E =myUniMaterial->get_param(0);
   double A = mySection->get_A();
   double J = mySection->get_J3();
@@ -94,13 +94,13 @@ const Matrix& Beam2e::get_K() {
 }
 const Matrix& Beam2e::get_M() {
   Matrix& M=*myMatrix;
-  M.clear();
+  M.Clear();
   return M;
 }
 const Vector& Beam2e::get_Rgrad() {
   /// @todo
   Matrix& K=*myMatrix;
-  K.clear();
+  K.Clear();
   myVector->clear();
   double E =myUniMaterial->get_param(0);
   double A = mySection->get_A();

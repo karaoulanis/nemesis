@@ -118,7 +118,7 @@ void Triangle6::get_shape_functions(MatPoint* pMatPoint, Matrix& N, double& detJ
 }
 const Matrix& Triangle6::get_K() {
   Matrix &K=*myMatrix;
-  K.clear();
+  K.Clear();
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     static Matrix N(6, 3);
     static double detJ;
@@ -152,7 +152,7 @@ const Matrix& Triangle6::get_K() {
 }
 const Matrix& Triangle6::get_M() {
   Matrix &M=*myMatrix;
-  M.clear();
+  M.Clear();
   return M;
 }
 const Vector& Triangle6::get_R() {
