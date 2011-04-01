@@ -92,10 +92,14 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
   N(0, 3)=0.25*(1-xi)*(1+eta);           // N4
 
   Matrix J(2, 2);
-  J(0, 0)=0.25*(-x(0, 0)*(1-eta) +x(1, 0)*(1-eta) +x(2, 0)*(1+eta) -x(3, 0)*(1+eta));
-  J(0, 1)=0.25*(-x(0, 0)*(1-xi)  -x(1, 0)*(1+xi)  +x(2, 0)*(1+xi)  +x(3, 0)*(1-xi));
-  J(1, 0)=0.25*(-x(0, 1)*(1-eta) +x(1, 1)*(1-eta) +x(2, 1)*(1+eta) -x(3, 1)*(1+eta));
-  J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
+  J(0, 0) = 0.25*(-x(0, 0)*(1-eta)+x(1, 0)*(1-eta)
+                  +x(2, 0)*(1+eta)-x(3, 0)*(1+eta));
+  J(0, 1) = 0.25*(-x(0, 0)*(1-xi) -x(1, 0)*(1+xi)
+                  +x(2, 0)*(1+xi) +x(3, 0)*(1-xi));
+  J(1, 0) = 0.25*(-x(0, 1)*(1-eta)+x(1, 1)*(1-eta)
+                  +x(2, 1)*(1+eta)-x(3, 1)*(1+eta));
+  J(1, 1) = 0.25*(-x(0, 1)*(1-xi) -x(1, 1)*(1+xi)
+                  +x(2, 1)*(1+xi) +x(3, 1)*(1-xi));
 
   detJ = J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);     // detJ
   if (detJ < 0.) {
@@ -143,11 +147,22 @@ void Quad4::recoverStresses() {
   double sq3 = 1.7320508075688772935274463415059;
   static Vector sigma(6);
   static Matrix E(4, 4);
-  E(0, 0)=1+.5*sq3;   E(0, 1)=-.5;      E(0, 2)=1-.5*sq3;     E(0, 3)=-.5;
-  E(1, 0)=-.5;        E(1, 1)=1+.5*sq3;   E(1, 2)=-.5;        E(1, 3)=1-.5*sq3;
-  E(2, 0)=1-.5*sq3;   E(2, 1)=-.5;        E(2, 2)=1+.5*sq3;   E(2, 3)=-.5;
-  E(3, 0)=-.5;        E(3, 1)=1-.5*sq3;   E(3, 2)=-.5;        E(3, 3)=1+.5*sq3;
-
+  E(0, 0) =  1.0+0.5*sq3;
+  E(0, 1) = -0.5;
+  E(0, 2) =  1.0-0.5*sq3;
+  E(0, 3) = -0.5;
+  E(1, 0) = -0.5;
+  E(1, 1) =  1.0+0.5*sq3;
+  E(1, 2) = -0.5;
+  E(1, 3) =  1.0-0.5*sq3;
+  E(2, 0) =  1.0-0.5*sq3;
+  E(2, 1) = -0.5;
+  E(2, 2) =  1.0+0.5*sq3;
+  E(2, 3) = -0.5;
+  E(3, 0) = -0.5;
+  E(3, 1) =  1.0-0.5*sq3;
+  E(3, 2) = -0.5;
+  E(3, 3) =  1.0+0.5*sq3;
   sigma.clear();
   for (unsigned i = 0; i < 4; i++) {
     sigma[0]=E(i, 0)*myMatPoints[0]->get_material()->get_stress()[0]
@@ -189,7 +204,8 @@ Tracker* Quad4::get_tracker(int index) {
   if (index < 0 || index > static_cast<int>(myMatPoints.size())-1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
   if (myMatPoints[index]->get_material()->get_tracker() == 0)
-    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
+    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.",
+                     9999, myID, index);
   return myMatPoints[index]->get_material()->get_tracker();
 }
 /**
