@@ -155,7 +155,7 @@ void Quad4::recoverStresses() {
         +E(i, 1)*myMatPoints[1]->get_material()->get_stress()[3]
         +E(i, 2)*myMatPoints[2]->get_material()->get_stress()[3]
         +E(i, 3)*myMatPoints[3]->get_material()->get_stress()[3];
-    myNodes[i]->addStress(sigma);
+    nodes_[i]->addStress(sigma);
   }
 }
 /**

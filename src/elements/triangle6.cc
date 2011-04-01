@@ -231,7 +231,7 @@ void Triangle6::recoverStresses() {
     for (unsigned j = 0; j < 3; j++) {
       sigma+=xi(i, j)*(myMatPoints[j]->get_material()->get_stress());
     }
-    myNodes[i]->addStress(sigma);
+    nodes_[i]->addStress(sigma);
   }
 }
 

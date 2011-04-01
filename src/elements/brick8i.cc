@@ -108,8 +108,8 @@ const Vector& Brick8i::get_R() {
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
-    double dV=(pD->get_fac())*detJ[k];
-    for (unsigned a = 0; a < myNodes.size(); a++) {
+    double dV = (pD->get_fac())*detJ[k];
+    for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
       this->get_Bstd(Ba, a, k);
       add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);

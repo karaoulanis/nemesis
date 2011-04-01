@@ -46,33 +46,27 @@ struct GroupData;
  * be derived from this class.
  */
 class Element: public DomainObject {
- protected:
-  IDContainer myNodalIDs;
-  IDContainer myLocalNodalDofs;
-  std::vector<Node*> myNodes;
-  GroupData* groupdata_;
-
-  // Materials
-  Material* myMaterial;
-
-  Vector P;
-  Vector G;
-  Matrix x;
-  Vector b;
-
-  Matrix* myMatrix;
-  Vector* myVector;
-  static Matrix** theStaticMatrices;
-  static Vector** theStaticVectors;
-  int handleCommonInfo();
-  int activeParameter;
-
  public:
-  // Constructors and Destructor
+  /**
+   * Default constructor.
+   */
   Element();
+
+  /**
+   * Constructor.
+   */
   Element(int ID, int matID);
-  // new
+
+  /**
+   * Constructor.
+   * @param id Element id.
+   * @param nodes Pointers to element nodes.
+   */
   Element(int id, std::vector<Node*> nodes);
+
+  /**
+   * Destructor.
+   */
   ~Element();
 
   const IDContainer& get_nodal_ids() const;
@@ -125,5 +119,26 @@ class Element: public DomainObject {
 
   // Enrichment functions
   virtual void enrich();
+
+ protected:
+  std::vector<Node*> nodes_;
+  IDContainer myNodalIDs;
+  IDContainer myLocalNodalDofs;
+  GroupData* groupdata_;
+
+  // Materials
+  Material* myMaterial;
+
+  Vector P;
+  Vector G;
+  Matrix x;
+  Vector b;
+
+  Matrix* myMatrix;
+  Vector* myVector;
+  static Matrix** theStaticMatrices;
+  static Vector** theStaticVectors;
+  int handleCommonInfo();
+  int activeParameter;
 };
 #endif  // SRC_ELEMENTS_ELEMENT_H_
