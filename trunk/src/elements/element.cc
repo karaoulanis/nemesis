@@ -69,7 +69,7 @@ Element::Element(int id, std::vector<Node*> nodes) {
     theStaticVectors = new Vector*[64];
     for (int i = 1;i < 64;i++) theStaticVectors[i]=new Vector(i, 0.);
   }
-  // Copy pointers to nodes
+  // Copy vector of pointer
   nodes_ = nodes;
 }
 

@@ -30,6 +30,7 @@
 #include "elements/element.h"
 
 class MatPoint;
+class MultiaxialMaterial;
 
 class Quad4: public Element {
  protected:
@@ -38,11 +39,13 @@ class Quad4: public Element {
   static Matrix N;
   static double detJ;
   std::vector<MatPoint*> myMatPoints;
-  public:
+  std::vector<MultiaxialMaterial*> materials;
+ public:
   // Constructors and Destructor
   Quad4();
   Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
          int integrationRuleXi, int integrationRuleEta);
+  Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material);
   ~Quad4();
 
   void commit();

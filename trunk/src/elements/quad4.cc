@@ -68,9 +68,20 @@ Quad4::Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
     myMatPoints[i]->set_X(xG, yG);
   }
 }
+
+Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material)
+:Element(id, nodes) {
+  materials.resize(4);
+  for (unsigned i = 0; i < 4; i++) {
+    materials[i] = material->get_clone();
+  }
+}
+
 Quad4::~Quad4() {
   Containers::vector_delete(myMatPoints);
+  Containers::vector_delete(materials);
 }
+
 void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
   double xi= pMatPoint->get_r();
   double eta = pMatPoint->get_s();
