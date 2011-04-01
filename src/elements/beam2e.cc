@@ -44,7 +44,8 @@ Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section)
   mySecID = section->get_id();  // /@todo remove
   // Handle common info
   this->handleCommonInfo();
-  L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
+  L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
+          +(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
   myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
@@ -81,12 +82,42 @@ const Matrix& Beam2e::get_K() {
   double K6 = 4*E*J/L;
   double K7 = 2*E*J/L;
 
-  K(0, 0)= K1;  K(0, 1)= K2;   K(0, 2)= K4;   K(0, 3)=-K1;   K(0, 4)=-K2;   K(0, 5)= K4;
-  K(1, 0)= K2;  K(1, 1)= K3;   K(1, 2)= K5;   K(1, 3)=-K2;   K(1, 4)=-K3;   K(1, 5)= K5;
-  K(2, 0)= K4;  K(2, 1)= K5;   K(2, 2)= K6;   K(2, 3)=-K4;   K(2, 4)=-K5;   K(2, 5)= K7;
-  K(3, 0)=-K1;  K(3, 1)=-K2;   K(3, 2)=-K4;   K(3, 3)= K1;   K(3, 4)= K2;   K(3, 5)=-K4;
-  K(4, 0)=-K2;  K(4, 1)=-K3;   K(4, 2)=-K5;   K(4, 3)= K2;   K(4, 4)= K3;   K(4, 5)=-K5;
-  K(5, 0)= K4;  K(5, 1)= K5;   K(5, 2)= K7;   K(5, 3)=-K4;   K(5, 4)=-K5;   K(5, 5)= K6;
+  K(0, 0)= K1;
+  K(0, 1)= K2;
+  K(0, 2)= K4;
+  K(0, 3)=-K1;
+  K(0, 4)=-K2;
+  K(0, 5)= K4;
+  K(1, 0)= K2;
+  K(1, 1)= K3;
+  K(1, 2)= K5;
+  K(1, 3)=-K2;
+  K(1, 4)=-K3;
+  K(1, 5)= K5;
+  K(2, 0)= K4;
+  K(2, 1)= K5;
+  K(2, 2)= K6;
+  K(2, 3)=-K4;
+  K(2, 4)=-K5;
+  K(2, 5)= K7;
+  K(3, 0)=-K1;
+  K(3, 1)=-K2;
+  K(3, 2)=-K4;
+  K(3, 3)= K1;
+  K(3, 4)= K2;
+  K(3, 5)=-K4;
+  K(4, 0)=-K2;
+  K(4, 1)=-K3;
+  K(4, 2)=-K5;
+  K(4, 3)= K2;
+  K(4, 4)= K3;
+  K(4, 5)=-K5;
+  K(5, 0)= K4;
+  K(5, 1)= K5;
+  K(5, 2)= K7;
+  K(5, 3)=-K4;
+  K(5, 4)=-K5;
+  K(5, 5)= K6;
 
   double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
@@ -106,10 +137,15 @@ const Vector& Beam2e::get_Rgrad() {
   double A = mySection->get_A();
   double J = mySection->get_J3();
 
-  if (activeParameter == 1)    E = 1;
-  else if (activeParameter == 2) A = 1;
-  else if (activeParameter == 3) J = 1;
-  else return *myVector;
+  if (activeParameter == 1) {
+    E = 1;
+  } else if (activeParameter == 2) {
+    A = 1;
+  } else if (activeParameter == 3) {
+    J = 1;
+  } else {
+    return *myVector;
+  }
 
   double c = cosX[0];
   double s = cosX[1];
@@ -124,12 +160,42 @@ const Vector& Beam2e::get_Rgrad() {
   double K6 = 4*E*J/L;
   double K7 = 2*E*J/L;
 
-  K(0, 0)= K1;  K(0, 1)= K2;   K(0, 2)= K4;   K(0, 3)=-K1;   K(0, 4)=-K2;   K(0, 5)= K4;
-  K(1, 0)= K2;  K(1, 1)= K3;   K(1, 2)= K5;   K(1, 3)=-K2;   K(1, 4)=-K3;   K(1, 5)= K5;
-  K(2, 0)= K4;  K(2, 1)= K5;   K(2, 2)= K6;   K(2, 3)=-K4;   K(2, 4)=-K5;   K(2, 5)= K7;
-  K(3, 0)=-K1;  K(3, 1)=-K2;   K(3, 2)=-K4;   K(3, 3)= K1;   K(3, 4)= K2;   K(3, 5)=-K4;
-  K(4, 0)=-K2;  K(4, 1)=-K3;   K(4, 2)=-K5;   K(4, 3)= K2;   K(4, 4)= K3;   K(4, 5)=-K5;
-  K(5, 0)= K4;  K(5, 1)= K5;   K(5, 2)= K7;   K(5, 3)=-K4;   K(5, 4)=-K5;   K(5, 5)= K6;
+  K(0, 0)= K1;
+  K(0, 1)= K2;
+  K(0, 2)= K4;
+  K(0, 3)=-K1;
+  K(0, 4)=-K2;
+  K(0, 5)= K4;
+  K(1, 0)= K2;
+  K(1, 1)= K3;
+  K(1, 2)= K5;
+  K(1, 3)=-K2;
+  K(1, 4)=-K3;
+  K(1, 5)= K5;
+  K(2, 0)= K4;
+  K(2, 1)= K5;
+  K(2, 2)= K6;
+  K(2, 3)=-K4;
+  K(2, 4)=-K5;
+  K(2, 5)= K7;
+  K(3, 0)=-K1;
+  K(3, 1)=-K2;
+  K(3, 2)=-K4;
+  K(3, 3)= K1;
+  K(3, 4)= K2;
+  K(3, 5)=-K4;
+  K(4, 0)=-K2;
+  K(4, 1)=-K3;
+  K(4, 2)=-K5;
+  K(4, 3)= K2;
+  K(4, 4)= K3;
+  K(4, 5)=-K5;
+  K(5, 0)= K4;
+  K(5, 1)= K5;
+  K(5, 2)= K7;
+  K(5, 3)=-K4;
+  K(5, 4)=-K5;
+  K(5, 5)= K6;
 
   double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;

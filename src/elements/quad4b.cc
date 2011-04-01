@@ -196,8 +196,12 @@ void Quad4b::get_B(Matrix& B, int node, int gPoint) {
   double B12 = B1+B10;
 
   // B-matrix
-  B(0, 0)=B12; B(0, 1)=B6;
-  B(1, 0)=B10; B(1, 1)=B7;
-  B(2, 0)=B11; B(2, 1)=B6;
-  B(3, 0)=B2;  B(3, 1)=B1;
+  B(0, 0) = B12;
+  B(0, 1) = B6;
+  B(1, 0) = B10;
+  B(1, 1) = B7;
+  B(2, 0) = B11;
+  B(2, 1) = B6;
+  B(3, 0) = B2;
+  B(3, 1) = B1;
 }

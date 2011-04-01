@@ -612,7 +612,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
 
   // ===========================================================================
   // Step 2: Check for plastic process
-  // =======================================================:====================
+  // ===========================================================================
   int nActiveSurfaces = 0;
   for (unsigned i = 0; i < fSurfaces.size(); i++) {
     if (fSurfaces[i]->get_f(sTrial, q)>0) {
@@ -795,7 +795,8 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
       }
     }
 
-    if (activeSurfaces.size()>tol2 && std::abs(sTrial.theta())*180./num::pi>29.99) {
+    if (activeSurfaces.size()>tol2 &&
+        std::abs(sTrial.theta())*180./num::pi>29.99) {
       activeSurfaces.resize(0);
       for (unsigned i = 0;i < fSurfaces.size(); i++)
         fSurfaces[i]->set_active(false);

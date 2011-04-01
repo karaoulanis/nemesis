@@ -36,7 +36,8 @@ std::vector<int> Quad4d::perm(4);
 
 Quad4d::Quad4d() {
 }
-Quad4d::Quad4d(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID)
+Quad4d::Quad4d(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
+               int MatID)
 :Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, 2, 2) {
   perm[0]=0;
   perm[1]=1;
