@@ -75,8 +75,10 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
     case 2:
       xp.resize(2);
       yp.resize(2);
-      xp[0]= xp1; xp[1]= xp2;
-      yp[0]=-xp2; yp[1]= xp1;
+      xp[0]= xp1;
+      xp[1]= xp2;
+      yp[0]=-xp2;
+      yp[1]= xp1;
       xp.normalize();
       yp.normalize();
       T.appendRow(xp, 0, 0);
@@ -86,8 +88,12 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
       xp.resize(3);
       yp.resize(3);
       zp.resize(3);
-      xp[0]=xp1; xp[1]=xp2; xp[2]=xp3;
-      yp[0]=yp1; yp[1]=yp2; yp[2]=yp3;
+      xp[0]=xp1;
+      xp[1]=xp2;
+      xp[2]=xp3;
+      yp[0]=yp1;
+      yp[1]=yp2;
+      yp[2]=yp3;
       zp = cross(xp, yp);
       yp = cross(zp, xp);
       xp.normalize();
@@ -224,7 +230,8 @@ Tracker* Spring::get_tracker(int index) {
   if (index != 1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
   if (mySpringMaterial->get_tracker() == 0)
-    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
+    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.",
+                      9999, myID, index);
   return mySpringMaterial->get_tracker();
 }
 /**

@@ -146,7 +146,8 @@ Tracker* Bar::get_tracker(int index) {
   if (index != 1)
     throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
   if (myUniMaterial->get_tracker() == 0)
-    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.", 9999, myID, index);
+    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.",
+                     9999, myID, index);
   return myUniMaterial->get_tracker();
 }
 /**

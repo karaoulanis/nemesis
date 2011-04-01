@@ -72,9 +72,13 @@ HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
 
   f.resize(3, 0.);
   dfds.resize(3);
-  dfds[0].resize(3);  dfds[1].resize(3);  dfds[2].resize(3);
+  dfds[0].resize(3);
+  dfds[1].resize(3);
+  dfds[2].resize(3);
   dgds.resize(3);
-  dgds[0].resize(3);  dgds[1].resize(3);  dgds[2].resize(3);
+  dgds[0].resize(3);
+  dgds[1].resize(3);
+  dgds[2].resize(3);
   d2gdsds.resize(3);
   d2gdsds[0].Resize(3, 3, 0.);
   d2gdsds[1].Resize(3, 3, 0.);
@@ -139,9 +143,15 @@ void HoekBrown::find_dfds(const Vector& s, double /*q*/) {
   double alpha    = MatParams[ 4];
   double c0 = alpha*mb*pow(sp-mb*s[0]/sigma_ci, alpha-1);
   double c1 = alpha*mb*pow(sp-mb*s[1]/sigma_ci, alpha-1);
-  dfds[0][0]= 1.0+c0;   dfds[1][0]= 0.0;      dfds[2][0]= 1.0+c0;
-  dfds[0][1]= 0.0;      dfds[1][1]= 1.0+c1;   dfds[2][1]=-1.0;
-  dfds[0][2]=-1.0;      dfds[1][2]=-1.0;      dfds[2][2]= 0.0;
+  dfds[0][0] =  1.0+c0;
+  dfds[1][0] =  0.0;
+  dfds[2][0] =  1.0+c0;
+  dfds[0][1] =  0.0;
+  dfds[1][1] =  1.0+c1;
+  dfds[2][1] = -1.0;
+  dfds[0][2] = -1.0;
+  dfds[1][2] = -1.0;
+  dfds[2][2] =  0.0;
 }
 /**
  * Find the first derivative of the plastic potential surfaces w.r.t. to stress.
@@ -156,9 +166,15 @@ void HoekBrown::find_dgds(const Vector& s, double /*q*/) {
   double alpha    = MatParams[ 4];
   double c0 = alpha*mb*pow(sp-mb*s[0]/sigma_ci, alpha-1);
   double c1 = alpha*mb*pow(sp-mb*s[1]/sigma_ci, alpha-1);
-  dgds[0][0]= 1.0+c0;   dgds[1][0]= 0.0;      dgds[2][0]= 1.0+c0;
-  dgds[0][1]= 0.0;      dgds[1][1]= 1.0+c1;   dgds[2][1]=-1.0;
-  dgds[0][2]=-1.0;      dgds[1][2]=-1.0;      dgds[2][2]= 0.0;
+  dgds[0][0]= 1.0+c0;
+  dgds[1][0]= 0.0;
+  dgds[2][0]= 1.0+c0;
+  dgds[0][1]= 0.0;
+  dgds[1][1]= 1.0+c1;
+  dgds[2][1]=-1.0;
+  dgds[0][2]=-1.0;
+  dgds[1][2]=-1.0;
+  dgds[2][2]= 0.0;
 }
 /**
  * Find the second derivative of the yield  potential surfaces w.r.t. to stress.
@@ -189,9 +205,15 @@ void HoekBrown::set_strain(const Vector& De) {
   double nu= myElastic->get_param(1);
 
   // elasticity matrix
-  C3(0, 0)=  1/E;  C3(0, 1)=-nu/E;  C3(0, 2)=-nu/E;
-  C3(1, 0)=-nu/E;  C3(1, 1)=  1/E;  C3(1, 2)=-nu/E;
-  C3(2, 0)=-nu/E;  C3(2, 1)=-nu/E;  C3(2, 2)=  1/E;
+  C3(0, 0)=  1/E;
+  C3(0, 1)=-nu/E;
+  C3(0, 2)=-nu/E;
+  C3(1, 0)=-nu/E;
+  C3(1, 1)=  1/E;
+  C3(1, 2)=-nu/E;
+  C3(2, 0)=-nu/E;
+  C3(2, 1)=-nu/E;
+  C3(2, 2)=  1/E;
 
   // spectral decomposition
   Vector s(3), De3(3);
@@ -321,13 +343,24 @@ void HoekBrown::set_strain(const Vector& De) {
   }
 
   // coordinate transformation
-  sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
-  sTrial[1]=s[0]*sV(0, 1)*sV(0, 1)+s[1]*sV(1, 1)*sV(1, 1)+s[2]*sV(2, 1)*sV(2, 1);
-  sTrial[2]=s[0]*sV(0, 2)*sV(0, 2)+s[1]*sV(1, 2)*sV(1, 2)+s[2]*sV(2, 2)*sV(2, 2);
-  sTrial[3]=s[0]*sV(0, 0)*sV(0, 1)+s[1]*sV(1, 0)*sV(1, 1)+s[2]*sV(2, 0)*sV(2, 1);
-  sTrial[4]=s[0]*sV(0, 1)*sV(0, 2)+s[1]*sV(1, 1)*sV(1, 2)+s[2]*sV(2, 1)*sV(2, 2);
-  sTrial[5]=s[0]*sV(0, 0)*sV(0, 2)+s[1]*sV(1, 0)*sV(1, 2)+s[2]*sV(2, 0)*sV(2, 2);
-
+  sTrial[0] = s[0]*sV(0, 0)*sV(0, 0)
+             +s[1]*sV(1, 0)*sV(1, 0)
+             +s[2]*sV(2, 0)*sV(2, 0);
+  sTrial[1] = s[0]*sV(0, 1)*sV(0, 1)
+             +s[1]*sV(1, 1)*sV(1, 1)
+             +s[2]*sV(2, 1)*sV(2, 1);
+  sTrial[2] = s[0]*sV(0, 2)*sV(0, 2)
+             +s[1]*sV(1, 2)*sV(1, 2)
+             +s[2]*sV(2, 2)*sV(2, 2);
+  sTrial[3] = s[0]*sV(0, 0)*sV(0, 1)
+             +s[1]*sV(1, 0)*sV(1, 1)
+             +s[2]*sV(2, 0)*sV(2, 1);
+  sTrial[4] = s[0]*sV(0, 1)*sV(0, 2)
+             +s[1]*sV(1, 1)*sV(1, 2)
+             +s[2]*sV(2, 1)*sV(2, 2);
+  sTrial[5] = s[0]*sV(0, 0)*sV(0, 2)
+             +s[1]*sV(1, 0)*sV(1, 2)
+             +s[2]*sV(2, 0)*sV(2, 2);
   // creep
   // double Dt  = 10000.;
   // double eta = 100000.;

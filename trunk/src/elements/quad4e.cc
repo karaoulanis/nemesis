@@ -36,7 +36,8 @@ Vector Quad4e::Nu(2, 8);
 
 Quad4e::Quad4e() {
 }
-Quad4e::Quad4e(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID)
+Quad4e::Quad4e(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
+               int matID)
      :Quad4(ID, Node_1, Node_2, Node_3, Node_4, matID, 2, 2) {
   alpha.resize(4, 0.);
 }
@@ -101,9 +102,15 @@ void Quad4e::formKR() {
       double detJ = this->get_J(xi, eta);
       double dV = myMatPoints[i]->get_w()*detJ;
       const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
-      C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);
-      C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);
-      C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);
+      C(0, 0) = C0(0, 0);
+      C(0, 1) = C0(0, 1);
+      C(0, 2) = C0(0, 3);
+      C(1, 0) = C0(1, 0);
+      C(1, 1) = C0(1, 1);
+      C(1, 2) = C0(1, 3);
+      C(2, 0) = C0(3, 0);
+      C(2, 1) = C0(3, 1);
+      C(2, 2) = C0(3, 3);
       this->formBe(xi, eta);
       this->formBu(xi, eta);
 
@@ -131,9 +138,15 @@ void Quad4e::formKR() {
         double detJ = this->get_J(xi, eta);
         double dV = myMatPoints[i]->get_w()*detJ;
         const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
-        C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);
-        C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);
-        C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);
+        C(0, 0) = C0(0, 0);
+        C(0, 1) = C0(0, 1);
+        C(0, 2) = C0(0, 3);
+        C(1, 0) = C0(1, 0);
+        C(1, 1) = C0(1, 1);
+        C(1, 2) = C0(1, 3);
+        C(2, 0) = C0(3, 0);
+        C(2, 1) = C0(3, 1);
+        C(2, 2) = C0(3, 3);
         this->formBe(xi, eta);
         report(detJ, "detJ", 20, 12);
         report(dV,  "dV  ", 20, 12);
@@ -159,9 +172,15 @@ void Quad4e::formKR() {
     double detJ = this->get_J(xi, eta);
     double dV = myMatPoints[i]->get_w()*detJ;
     const Matrix& C0 = myMatPoints[i]->get_material()->get_C();
-    C(0, 0)=C0(0, 0); C(0, 1)=C0(0, 1); C(0, 2)=C0(0, 3);
-    C(1, 0)=C0(1, 0); C(1, 1)=C0(1, 1); C(1, 2)=C0(1, 3);
-    C(2, 0)=C0(3, 0); C(2, 1)=C0(3, 1); C(2, 2)=C0(3, 3);
+    C(0, 0) = C0(0, 0);
+    C(0, 1) = C0(0, 1);
+    C(0, 2) = C0(0, 3);
+    C(1, 0) = C0(1, 0);
+    C(1, 1) = C0(1, 1);
+    C(1, 2) = C0(1, 3);
+    C(2, 0) = C0(3, 0);
+    C(2, 1) = C0(3, 1);
+    C(2, 2) = C0(3, 3);
     Kuu+=Transpose(Bu)*C*Bu*dV;
     Kue+=Transpose(Bu)*C*Be*dV;
   }
@@ -194,25 +213,40 @@ void Quad4e::formKR() {
 
 double Quad4e::get_J(double xi, double eta) {
   static Matrix J(2, 2);
-  J(0, 0)=0.25*(-x(0, 0)*(1-eta) +x(1, 0)*(1-eta) +x(2, 0)*(1+eta) -x(3, 0)*(1+eta));
-  J(0, 1)=0.25*(-x(0, 0)*(1-xi)  -x(1, 0)*(1+xi)  +x(2, 0)*(1+xi)  +x(3, 0)*(1-xi));
-  J(1, 0)=0.25*(-x(0, 1)*(1-eta) +x(1, 1)*(1-eta) +x(2, 1)*(1+eta) -x(3, 1)*(1+eta));
-  J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
+  J(0, 0) = 0.25*(-x(0, 0)*(1-eta)+x(1, 0)*(1-eta)
+                  +x(2, 0)*(1+eta)-x(3, 0)*(1+eta));
+  J(0, 1) = 0.25*(-x(0, 0)*(1-xi) -x(1, 0)*(1+xi)
+                  +x(2, 0)*(1+xi) +x(3, 0)*(1-xi));
+  J(1, 0) = 0.25*(-x(0, 1)*(1-eta)+x(1, 1)*(1-eta)
+                  +x(2, 1)*(1+eta)-x(3, 1)*(1+eta));
+  J(1, 1) = 0.25*(-x(0, 1)*(1-xi) -x(1, 1)*(1+xi)
+                  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
 
   return J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);     // detJ
 }
+
 void Quad4e::formT0(double xi, double eta) {
   static Matrix J(2, 2);
-  J(0, 0)=0.25*(-x(0, 0)*(1-eta) +x(1, 0)*(1-eta) +x(2, 0)*(1+eta) -x(3, 0)*(1+eta));
-  J(0, 1)=0.25*(-x(0, 0)*(1-xi)  -x(1, 0)*(1+xi)  +x(2, 0)*(1+xi)  +x(3, 0)*(1-xi));
-  J(1, 0)=0.25*(-x(0, 1)*(1-eta) +x(1, 1)*(1-eta) +x(2, 1)*(1+eta) -x(3, 1)*(1+eta));
-  J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
+  J(0, 0) = 0.25*(-x(0, 0)*(1-eta)+x(1, 0)*(1-eta)
+                  +x(2, 0)*(1+eta)-x(3, 0)*(1+eta));
+  J(0, 1) = 0.25*(-x(0, 0)*(1-xi) -x(1, 0)*(1+xi)
+                  +x(2, 0)*(1+xi) +x(3, 0)*(1-xi));
+  J(1, 0) = 0.25*(-x(0, 1)*(1-eta)+x(1, 1)*(1-eta)
+                  +x(2, 1)*(1+eta)-x(3, 1)*(1+eta));
+  J(1, 1) = 0.25*(-x(0, 1)*(1-xi) -x(1, 1)*(1+xi)
+                  +x(2, 1)*(1+xi) +x(3, 1)*(1-xi));
 
-  T0(0, 0)=J(0, 0)*J(0, 0);  T0(0, 1)=J(1, 0)*J(0, 1);  T0(0, 2)=2*J(0, 0)*J(0, 1);
-  T0(1, 0)=J(0, 1)*J(1, 0);  T0(1, 1)=J(1, 1)*J(1, 1);  T0(1, 2)=2*J(1, 0)*J(1, 1);
-  T0(2, 0)=J(0, 0)*J(1, 0);  T0(2, 1)=J(0, 1)*J(1, 1);  T0(2, 2)=  J(0, 0)*J(1, 1)+J(0, 1)*J(1, 0);
-  // T0.report("T0");
+  T0(0, 0) =   J(0, 0)*J(0, 0);
+  T0(0, 1) =   J(1, 0)*J(0, 1);
+  T0(0, 2) = 2*J(0, 0)*J(0, 1);
+  T0(1, 0) =   J(0, 1)*J(1, 0);
+  T0(1, 1) =   J(1, 1)*J(1, 1);
+  T0(1, 2) = 2*J(1, 0)*J(1, 1);
+  T0(2, 0) =   J(0, 0)*J(1, 0);
+  T0(2, 1) =   J(0, 1)*J(1, 1);
+  T0(2, 2) =   J(0, 0)*J(1, 1)+J(0, 1)*J(1, 0);
 }
+
 void Quad4e::formNu(double xi, double eta) {
   N.Clear();
   N(0, 0)=0.25*(1-xi)*(1-eta);  // N1
@@ -226,10 +260,14 @@ void Quad4e::formNu(double xi, double eta) {
 }
 void Quad4e::formBu(double xi, double eta) {
   static Matrix J(2, 2);
-  J(0, 0)=0.25*(-x(0, 0)*(1-eta) +x(1, 0)*(1-eta) +x(2, 0)*(1+eta) -x(3, 0)*(1+eta));
-  J(0, 1)=0.25*(-x(0, 0)*(1-xi)  -x(1, 0)*(1+xi)  +x(2, 0)*(1+xi)  +x(3, 0)*(1-xi));
-  J(1, 0)=0.25*(-x(0, 1)*(1-eta) +x(1, 1)*(1-eta) +x(2, 1)*(1+eta) -x(3, 1)*(1+eta));
-  J(1, 1)=0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
+  J(0, 0) = 0.25*(-x(0, 0)*(1-eta) +x(1, 0)*(1-eta)
+                  +x(2, 0)*(1+eta) -x(3, 0)*(1+eta));
+  J(0, 1) = 0.25*(-x(0, 0)*(1-xi)  -x(1, 0)*(1+xi)
+                  +x(2, 0)*(1+xi)  +x(3, 0)*(1-xi));
+  J(1, 0) = 0.25*(-x(0, 1)*(1-eta) +x(1, 1)*(1-eta)
+                  +x(2, 1)*(1+eta) -x(3, 1)*(1+eta));
+  J(1, 1) = 0.25*(-x(0, 1)*(1-xi)  -x(1, 1)*(1+xi)
+                  +x(2, 1)*(1+xi)  +x(3, 1)*(1-xi));
 
   double detJ = J(0, 0)*J(1, 1)-J(0, 1)*J(1, 0);  // detJ
 
@@ -248,9 +286,30 @@ void Quad4e::formBu(double xi, double eta) {
   double d3deta=+0.25*(1+eta)*dxidy +0.25*(1+xi)*detady;  // N3, 2
   double d4deta=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady;    // N4, 2
 
-  Bu(0, 0)=d1dxi;  Bu(0, 1)=0.;   Bu(0, 2)=d2dxi;  Bu(0, 3)=0.;   Bu(0, 4)=d3dxi;  Bu(0, 5)=0.;   Bu(0, 6)=d4dxi;  Bu(0, 7)=0.;
-  Bu(1, 0)=0.;   Bu(1, 1)=d1deta; Bu(1, 2)=0.;   Bu(1, 3)=d2deta; Bu(1, 4)=0.;   Bu(1, 5)=d3deta; Bu(1, 6)=0.;   Bu(1, 7)=d4deta;
-  Bu(2, 0)=d1deta; Bu(2, 1)=d1dxi;  Bu(2, 2)=d2deta; Bu(2, 3)=d2dxi;  Bu(2, 4)=d3deta; Bu(2, 5)=d3dxi;  Bu(2, 6)=d4deta; Bu(2, 7)=d4dxi;
+  Bu(0, 0) = d1dxi;
+  Bu(0, 1) = 0.;
+  Bu(0, 2) = d2dxi;
+  Bu(0, 3) = 0.;
+  Bu(0, 4) = d3dxi;
+  Bu(0, 5) = 0.;
+  Bu(0, 6) = d4dxi;
+  Bu(0, 7) = 0.;
+  Bu(1, 0) = 0.;
+  Bu(1, 1) = d1deta;
+  Bu(1, 2) = 0.;
+  Bu(1, 3) = d2deta;
+  Bu(1, 4) = 0.;
+  Bu(1, 5) = d3deta;
+  Bu(1, 6) = 0.;
+  Bu(1, 7) = d4deta;
+  Bu(2, 0) = d1deta;
+  Bu(2, 1) = d1dxi;
+  Bu(2, 2) = d2deta;
+  Bu(2, 3) = d2dxi;
+  Bu(2, 4) = d3deta;
+  Bu(2, 5) = d3dxi;
+  Bu(2, 6) = d4deta;
+  Bu(2, 7) = d4dxi;
 }
 // void Quad4e::formBe(double xi, double eta)
 // {
@@ -284,7 +343,16 @@ void Quad4e::formBe(double xi, double eta) {
   double d11 = invTranJ(1, 1)*eta/detJ;
 
   Be.Clear();
-  Be(0, 0)=d00;  Be(0, 1)=0.;   Be(0, 2)=d01;  Be(0, 3)=0.;
-  Be(1, 0)=0.;   Be(1, 1)=d10;  Be(1, 2)=0.;   Be(1, 3)=d11;
-  Be(2, 0)=d10;  Be(2, 1)=d00;  Be(2, 2)=d11;  Be(2, 3)=d01;
+  Be(0, 0) = d00;
+  Be(0, 1) = 0.;
+  Be(0, 2) = d01;
+  Be(0, 3) = 0.;
+  Be(1, 0) = 0.;
+  Be(1, 1) = d10;
+  Be(1, 2) = 0.;
+  Be(1, 3) = d11;
+  Be(2, 0) = d10;
+  Be(2, 1) = d00;
+  Be(2, 2) = d11;
+  Be(2, 3) = d01;
 }

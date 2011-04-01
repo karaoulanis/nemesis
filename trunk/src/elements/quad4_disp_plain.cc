@@ -33,7 +33,8 @@ Quad4DispPlain::Quad4DispPlain() {
 Quad4DispPlain::Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3,
                                int Node_4, int MatID,
                                int integrationRuleXi, int integrationRuleEta)
-:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, integrationRuleXi, integrationRuleEta) {
+:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID,
+       integrationRuleXi, integrationRuleEta) {
 }
 Quad4DispPlain::~Quad4DispPlain() {
 }

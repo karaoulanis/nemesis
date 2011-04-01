@@ -34,7 +34,8 @@ Quad4DispAxisymmetric::Quad4DispAxisymmetric(int ID, int Node_1, int Node_2,
                                              int Node_3, int Node_4, int MatID,
                                              int integrationRuleXi,
                                              int integrationRuleEta)
-:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, integrationRuleXi, integrationRuleEta) {
+:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID,
+       integrationRuleXi, integrationRuleEta) {
 }
 Quad4DispAxisymmetric::~Quad4DispAxisymmetric() {
 }
@@ -57,15 +58,17 @@ const Matrix& Quad4DispAxisymmetric::get_K() {
         CB(2, 0) = C(2, 0)*N(1, j) + C(2, 2)*N(0, j)/r + C(2, 3)*N(2, j);
         CB(3, 0) = C(3, 0)*N(1, j) + C(3, 2)*N(0, j)/r + C(3, 3)*N(2, j);
 
-        CB(0, 1) = C(0, 1)*N(2, j)                   + C(0, 3)*N(1, j);
-        CB(1, 1) = C(1, 1)*N(2, j)                   + C(1, 3)*N(1, j);
-        CB(2, 1) = C(2, 1)*N(2, j)                   + C(2, 3)*N(1, j);
-        CB(3, 1) = C(3, 1)*N(2, j)                   + C(3, 3)*N(1, j);
+        CB(0, 1) = C(0, 1)*N(2, j)                     + C(0, 3)*N(1, j);
+        CB(1, 1) = C(1, 1)*N(2, j)                     + C(1, 3)*N(1, j);
+        CB(2, 1) = C(2, 1)*N(2, j)                     + C(2, 3)*N(1, j);
+        CB(3, 1) = C(3, 1)*N(2, j)                     + C(3, 3)*N(1, j);
 
-        K(ii  , jj)   += (N(1, i)*CB(0, 0) + N(0, i)/r*CB(2, 0) + N(2, i)*CB(3, 0))*dV;
-        K(ii  , jj+1) += (N(1, i)*CB(0, 1) + N(0, i)/r*CB(2, 1) + N(2, i)*CB(3, 1))*dV;
-        K(ii+1, jj)   += (N(2, i)*CB(1, 0)                      + N(1, i)*CB(3, 0))*dV;
-        K(ii+1, jj+1) += (N(2, i)*CB(1, 1)                      + N(1, i)*CB(3, 1))*dV;
+        K(ii, jj)     += (N(1, i)*CB(0, 0) + N(0, i)/r*CB(2, 0)
+                        + N(2, i)*CB(3, 0))*dV;
+        K(ii, jj+1)   += (N(1, i)*CB(0, 1) + N(0, i)/r*CB(2, 1)
+                        + N(2, i)*CB(3, 1))*dV;
+        K(ii+1, jj)   += (N(2, i)*CB(1, 0) + N(1, i)*CB(3, 0))*dV;
+        K(ii+1, jj+1) += (N(2, i)*CB(1, 1) + N(1, i)*CB(3, 1))*dV;
         jj+=2;
       }
       ii+=2;
@@ -106,8 +109,8 @@ const Vector& Quad4DispAxisymmetric::get_R() {
     double dV = detJ*r*(pD->get_fac())*(myMatPoints[k]->get_w());
     int ii = 0;
     for (int i = 0; i < 4; i++) {
-      R[ii  ]+=facS*(N(1, i)*sigma[0] + N(0, i)/r*sigma[2]  + N(2, i)*sigma[3])*dV;
-      R[ii+1]+=facS*(N(2, i)*sigma[1]                       + N(1, i)*sigma[3])*dV;
+      R[ii  ]+=facS*(N(1, i)*sigma[0]+N(0, i)/r*sigma[2]+N(2, i)*sigma[3])*dV;
+      R[ii+1]+=facS*(N(2, i)*sigma[1]                   +N(1, i)*sigma[3])*dV;
       R[ii  ]-=facG*(N(0, i)*b[0]*dV);
       R[ii+1]-=facG*(N(0, i)*b[1]*dV);
       ii+=2;
@@ -130,12 +133,12 @@ void Quad4DispAxisymmetric::update() {
     double r = x(0, 0)*N(0, 0)+x(1, 0)*N(0, 1)+x(2, 0)*N(0, 2)+x(3, 0)*N(0, 3);
     // Determine the strain
     static Vector epsilon(6);
-      epsilon.clear();
-    epsilon[0]=N(1, 0)*u[0]   + N(1, 1)*u[2]   + N(1, 2)*u[4]   + N(1, 3)*u[6];
-    epsilon[1]=N(2, 0)*u[1]   + N(2, 1)*u[3]   + N(2, 2)*u[5]   + N(2, 3)*u[7];
-    epsilon[2]=N(0, 0)/r*u[0] + N(0, 1)/r*u[2] + N(0, 2)/r*u[4] + N(0, 3)/r*u[6];
-    epsilon[3]=N(2, 0)*u[0]   + N(1, 0)*u[1]   + N(2, 1)*u[2]   + N(1, 1)*u[3] +
-           N(2, 2)*u[4]   + N(1, 2)*u[5]   + N(2, 3)*u[6]   + N(1, 3)*u[7];
+    epsilon.clear();
+    epsilon[0] = N(1, 0)*u[0]  +N(1, 1)*u[2]  +N(1, 2)*u[4]  +N(1, 3)*u[6];
+    epsilon[1] = N(2, 0)*u[1]  +N(2, 1)*u[3]  +N(2, 2)*u[5]  +N(2, 3)*u[7];
+    epsilon[2] = N(0, 0)/r*u[0]+N(0, 1)/r*u[2]+N(0, 2)/r*u[4]+N(0, 3)/r*u[6];
+    epsilon[3] = N(2, 0)*u[0]  +N(1, 0)*u[1]  +N(2, 1)*u[2]  +N(1, 1)*u[3] +
+                 N(2, 2)*u[4]  +N(1, 2)*u[5]  +N(2, 3)*u[6]  +N(1, 3)*u[7];
     // And send it to the material point
     myMatPoints[i]->get_material()->set_strain(epsilon);
   }

@@ -32,7 +32,8 @@ class Quad4DispPlain: public Quad4 {
   public:
   // Constructors and Destructor
   Quad4DispPlain();
-  Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID,
+  Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
+                 int MatID,
          int integrationRuleXi, int integrationRuleEta);
   ~Quad4DispPlain();
 
