@@ -87,9 +87,8 @@ void MultiaxialElastoPlastic::commit() {
   aConvg = aTrial;
   this->track();
 }
-void MultiaxialElastoPlastic::returnMapTest(const Vector& De) {
-  static LogFile log("TYS.log");
 
+void MultiaxialElastoPlastic::returnMapTest(const Vector& De) {
   int nIter = 20;
   double tol1 = 1e-6;
   double tol2 = 1e-6;
@@ -159,8 +158,8 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De) {
   }
   // sTrial=(ss+(dt/eta)*sTrial)/(1+(dt/eta));
 }
+
 void MultiaxialElastoPlastic::returnMapSYS(const Vector& De) {
-  static LogFile log("SYS.log");
   // ===========================================================================
   // Setup
   // ===========================================================================
