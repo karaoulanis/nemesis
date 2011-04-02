@@ -31,8 +31,8 @@
 #include "domain/domain.h"
 #include "imposer/elimination_imposer.h"
 #include "loadcase/loadcase.h"
-#include "soe/full_linear_soe.h"
 #include "reorderer/reorderer.h"
+#include "soe/full_linear_soe.h"
 
 TransientAnalysis::TransientAnalysis()
   :AnalysisType() {

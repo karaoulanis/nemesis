@@ -27,8 +27,8 @@
 #include "constraints/constraint.h"
 #include <gtest/gtest.h>
 #include <exception>
-#include <domain/domain.h>
-#include <node/node.h>
+#include "domain/domain.h"
+#include "node/node.h"
 
 class ConstraintTest : public ::testing::Test {
  protected:
@@ -36,7 +36,7 @@ class ConstraintTest : public ::testing::Test {
   Node* n;
   Constraint* c;
   CDof cdof;
-  
+
   virtual void SetUp() {
     d.set_dim(2);
     n = new Node(1, 0., 0.);
@@ -53,7 +53,7 @@ class ConstraintTest : public ::testing::Test {
 
 TEST_F(ConstraintTest, DofNotActivated) {
   EXPECT_THROW({
-    // Take the already existing node 
+    // Take the already existing node
     Node* n = d.get<Node>(d.get_nodes(), 1);
     // Try to add a constraint to a not activated dof
     c->set_cdof(n, 1, 8.);

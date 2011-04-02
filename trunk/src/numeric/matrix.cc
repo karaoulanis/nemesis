@@ -129,7 +129,7 @@ void Matrix::Resize(int rows, int cols) {
   if (size_ != rows*cols) {
     size_ = rows*cols;
     // Delete the data_ if exists
-    /// @todo Check whether data can persist (implement capacity). 
+    /// @todo Check whether data can persist (implement capacity).
     if (data_ != NULL) {
       delete[] data_;
     }
@@ -147,7 +147,7 @@ void Matrix::Resize(int rows, int cols, double value) {
   if (size_ != rows*cols) {
     size_ = rows*cols;
     // Delete the data_ if exists
-    /// @todo Check whether data can persist (implement capacity). 
+    /// @todo Check whether data can persist (implement capacity).
     if (data_ != NULL) {
       delete[] data_;
     }

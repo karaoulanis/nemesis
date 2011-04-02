@@ -2228,7 +2228,8 @@ int PyParser::parse(char* filename) {
   // Now it is ok to parse the file
   Py_Initialize();
   this->initModules();
-  PyObject* PyFileObject = PyFile_FromString(filename, "r");
+  char mode[] = "r";  // This removes deprecated warning.
+  PyObject* PyFileObject = PyFile_FromString(filename, mode);
   PyRun_SimpleFile(PyFile_AsFile(PyFileObject), filename);
   Py_DECREF(PyFileObject);
   Py_Finalize();

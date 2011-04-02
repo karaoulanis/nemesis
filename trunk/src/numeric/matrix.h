@@ -40,7 +40,7 @@ class Matrix {
    * Default constructor
    */ 
   Matrix();
-  
+
   /**
    * Constructor.
    * Matrix is not initialized.
@@ -113,7 +113,7 @@ class Matrix {
   inline int get_cols() const {
     return cols_;
   }
-  
+
   /**
    * Returns a pointer to Matrix data.
    */
@@ -148,7 +148,7 @@ class Matrix {
   * @param value Value to be set to all entries.
   */
   void Resize(int cols, int rows, double value);
-  
+
   /**
    * Set all entries of the Matrix equal to zero.
    */
@@ -189,7 +189,7 @@ class Matrix {
     }
     return *this;
   }
-  
+
   /**
    * Implements /= operator: this/=value.
    * @param value All elements of the Matrix are devided by this value.
@@ -464,12 +464,12 @@ class Matrix {
    *
    */
   void solve(Vector& x, const Vector& b);
-  
+
   /**
    *
    */
   friend Matrix Inverse(const Matrix& m);
-  
+
   /**
    *
    */
