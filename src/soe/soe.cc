@@ -25,6 +25,7 @@
 
 #include "soe/soe.h"
 #include <stdio.h>
+#include "numeric/matrix.h"
 
 SOE::SOE() {
   size_ = 0;

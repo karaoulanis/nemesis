@@ -25,6 +25,8 @@
 
 #include "soe/symm_linear_soe.h"
 #include <stdio.h>
+#include "numeric/lapack.h"
+#include "numeric/matrix.h"
 
 SymmLinearSOE::SymmLinearSOE()
   :SOE() {

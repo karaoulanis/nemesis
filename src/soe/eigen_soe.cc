@@ -25,6 +25,8 @@
 
 #include "soe/eigen_soe.h"
 #include <stdio.h>
+#include "numeric/lapack.h"
+#include "numeric/matrix.h"
 
 EigenSOE::EigenSOE()
   :SOE() {

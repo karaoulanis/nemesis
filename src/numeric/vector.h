@@ -29,7 +29,6 @@
 // C/C++ include files
 #include <cmath>
 #include <iostream>
-#include "numeric/lapack.h"
 #include "numeric/numeric.h"
 
 class Vector {
@@ -592,43 +591,8 @@ class Vector {
    * Return eigenvalues.
    * Eigenvalues are returned in descending order.
    */
-  const Vector& eigenvalues() {
-    #ifdef _DEBUG
-    num::check::array_size(size_, 6);
-    #endif
-    int N = 3;
-    char JOBZ='N';
-    char UPLO='L';
-    int LDA = 3;
-    int LWORK = 102;
-    int INFO;
-    static Vector res(3);
-    static Vector A(9);
-    static Vector WORK(LWORK);
-    res.clear();
+  const Vector& eigenvalues();
 
-    A[0]=data_[0];
-    A[1]=data_[3];
-    A[2]=data_[5];
-
-    A[3]=0.;
-    A[4]=data_[1];
-    A[5]=data_[4];
-
-    A[6]=0.;
-    A[7]=0.;
-    A[8]=data_[2];
-
-    dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK,
-          &INFO, 1, 1);
-  //  dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK,
-  //        &INFO);
-  //  cout << "Optimal LWORK : "<<WORK[0]<<endl;
-    double d = res[0];
-    res[0]=res[2];
-    res[2]=d;
-    return res;
-  }
   inline friend std::ostream& operator<<(std::ostream& s, const Vector& v) {
     // s << 1100 << ' ' << v.size_ << ' ';
     for (int i = 0; i < v.size_; i++) {

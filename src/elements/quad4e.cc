@@ -129,7 +129,7 @@ void Quad4e::formKR() {
       Kee+=Transpose(Be)*C*Be*dV;
       Fe -=Transpose(Be)*sigma3*dV;
     }
-    Kee.solve(dalpha, Fe);
+    Kee.Solve(dalpha, Fe);
     Dalpha+=dalpha;
     if (counter>30) {
       for (unsigned i = 0; i < myMatPoints.size(); i++) {

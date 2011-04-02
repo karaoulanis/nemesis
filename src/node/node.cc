@@ -327,7 +327,7 @@ void Node::initSensitivityMatrix(int nGrads) {
   dispSensi.Resize(nActivatedDofs, nGrads, 0.);
 }
 void Node::commitSens(const Vector& v, int param) {
-  dispSensi.appendCol(v, 0, param);
+  dispSensi.AppendCol(v, 0, param);
 }
 // Enrichment functions
 void Node::evalLevelSets() {

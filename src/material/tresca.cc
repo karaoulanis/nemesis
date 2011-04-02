@@ -149,17 +149,17 @@ void Tresca::set_strain(const Vector& De) {
     R.resize(3+active.size());
     R.clear();
 
-    A.append(C3, 0, 0);
+    A.Append(C3, 0, 0);
     for (unsigned i = 0; i < active.size(); i++) {
-      A.appendCol(df[active[i]],  0, 3+i);
-      A.appendRow(df[active[i]], 3+i,  0);
+      A.AppendCol(df[active[i]],  0, 3+i);
+      A.AppendRow(df[active[i]], 3+i,  0);
       R[3+i]=-f[active[i]];
     }
 
     // solve
     // report(A, "A");
     // report(R);
-    A.solve(x, R);
+    A.Solve(x, R);
     // report(x);
 
     // check

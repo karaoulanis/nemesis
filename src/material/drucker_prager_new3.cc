@@ -179,11 +179,11 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
     // [- - - - - -] [-]
     // [- - - - - -] [-]
     // [- - - - - -] [-]
-    A.append(C3, 0, 0, 1.0, 1.0);
+    A.Append(C3, 0, 0, 1.0, 1.0);
     R.append(C3*s-eTrial3, 0, 1.0, 0.0);
     for (int i = 0; i < 2; i++) {
       if (activeS[i]) {
-        A.append(DL[i]*(gSurfaces[i]->get_d2fdsds(s, aTrial)), 0,   0, 1., 1.);
+        A.Append(DL[i]*(gSurfaces[i]->get_d2fdsds(s, aTrial)), 0,   0, 1., 1.);
         R.append(DL[i]*(gSurfaces[i]->get_dfds(s, aTrial)),         0, 1., 1.);
       }
     }
@@ -201,7 +201,7 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
     for (int i = 0; i < 2; i++) {
       if (activeS[i]) {
         pos++;
-        A.appendCol(gSurfaces[i]->get_dfds(s, aTrial), 0, pos, 1., 0.);
+        A.AppendCol(gSurfaces[i]->get_dfds(s, aTrial), 0, pos, 1., 0.);
       }
     }
 
@@ -232,14 +232,14 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
     for (int i = 0; i < 2; i++) {
       if (activeS[i]) {
         pos++;
-        A.appendRow(fSurfaces[i]->get_dfds(s, aTrial), pos, 0, 1., 0.);
+        A.AppendRow(fSurfaces[i]->get_dfds(s, aTrial), pos, 0, 1., 0.);
         R[pos]=fSurfaces[i]->get_f(s, aTrial);
       }
     }
 
     // report(A, "A");
     // report(R, "R");
-    A.solve(x, -R);
+    A.Solve(x, -R);
     // report(x, "x");
 
     // update
