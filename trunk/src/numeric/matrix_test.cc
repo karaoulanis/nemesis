@@ -106,6 +106,48 @@ TEST_F(MatrixTest, CopyAssignment) {
   }
 }
 
+// inline double& operator()(int i, int j) {
+// inline double operator()(int i, int j) const {
+// inline int get_rows() const {
+// inline int get_cols() const {
+// inline double* get_data() {
+// inline double* get_data() const {
+// inline double* get_data() const {
+// void Resize(int rows, int cols);
+// void Resize(int cols, int rows, double value);
+// void Clear();
+// inline Matrix& operator+=(double value) {
+// inline Matrix& operator-=(double value) {
+// inline Matrix& operator*=(double value) {
+// inline Matrix& operator/=(double value) {
+// inline Matrix operator*(const double value) const {
+// inline friend Matrix operator*(const double c, const Matrix& m) {
+// inline Matrix operator/(const double c) const {
+// inline void add_cM(double c, const Matrix& m, double c0 = 1.0) {
+// inline void add_cMM(double c, const Matrix& m1, const Matrix& m2,
+// inline Matrix& operator+=(const Matrix& m) {
+// inline Matrix& operator-=(const Matrix& m) {
+// inline Matrix operator+(const Matrix& m) const {
+// inline Matrix operator-(const Matrix& m) const {
+// inline Matrix operator*(const Matrix& m) const {
+// inline Matrix& operator+() {
+// inline Matrix operator-() {
+// inline friend Matrix Transpose(const Matrix& m) {
+// inline Vector operator*(const Vector& v) const {
+// inline Matrix& Append(const Matrix& m, int row, int col, double c = 1.0,
+//                         double c0 = 0.) {
+// inline Matrix& AppendRow(const Vector& v, int row, int col, double c = 1.0,
+//                            double c0 = 0.) {
+// inline Matrix& AppendCol(const Vector& v, int row, int col, double c = 1.0,
+//                            double c0 = 0.) {
+// void Solve(Vector& x, const Vector& b);
+// friend Matrix Inverse(const Matrix& m);
+// friend double det(const Matrix& m);
+// friend std::ostream& operator<<(std::ostream& s, const Matrix& m) {
+// void add_BTCB(int row, int col, const int* perm, const Matrix& B1,
+// inline Matrix Identity(int n) {
+// inline Matrix VVT(const Vector& v1, const Vector& v2) {
+
 // test: void Matirx::resize(int m, int n)
 TEST_F(MatrixTest, MatrixResize) {
   Matrix m(3, 2);
