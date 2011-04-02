@@ -72,7 +72,8 @@ Triangle6::Triangle6(int ID,
 Triangle6::~Triangle6() {
   Containers::vector_delete(myMatPoints);
 }
-void Triangle6::get_shape_functions(MatPoint* pMatPoint, Matrix& N, double& detJ) {
+void Triangle6::get_shape_functions(MatPoint* pMatPoint,
+                                    Matrix& N, double& detJ) {
   double z1 = pMatPoint->get_r();
   double z2 = pMatPoint->get_s();
   double z3 = pMatPoint->get_t();
@@ -196,10 +197,14 @@ void Triangle6::update() {
     // Determine the strain
     static Vector epsilon(6);
       epsilon.clear();
-    epsilon[0] = N(0, 1)*u[ 0]+N(1, 1)*u[ 2]+N(2, 1)*u[ 4]+N(3, 1)*u[ 6]+N(4, 1)*u[ 8]+N(5, 1)*u[10];
-    epsilon[1] = N(0, 2)*u[ 1]+N(1, 2)*u[ 3]+N(2, 2)*u[ 5]+N(3, 2)*u[ 7]+N(4, 2)*u[ 9]+N(5, 2)*u[11];
-    epsilon[3] = N(0, 2)*u[ 0]+N(0, 1)*u[ 1]+N(1, 2)*u[ 2]+N(1, 1)*u[ 3]+N(2, 2)*u[ 4]+N(2, 1)*u[ 5]+
-             N(3, 2)*u[ 6]+N(3, 1)*u[ 7]+N(4, 2)*u[ 8]+N(4, 1)*u[ 9]+N(5, 2)*u[10]+N(5, 1)*u[11];
+    epsilon[0] = N(0, 1)*u[ 0]+N(1, 1)*u[ 2]+N(2, 1)*u[ 4]
+                +N(3, 1)*u[ 6]+N(4, 1)*u[ 8]+N(5, 1)*u[10];
+    epsilon[1] = N(0, 2)*u[ 1]+N(1, 2)*u[ 3]+N(2, 2)*u[ 5]
+                +N(3, 2)*u[ 7]+N(4, 2)*u[ 9]+N(5, 2)*u[11];
+    epsilon[3] = N(0, 2)*u[ 0]+N(0, 1)*u[ 1]+N(1, 2)*u[ 2]
+                +N(1, 1)*u[ 3]+N(2, 2)*u[ 4]+N(2, 1)*u[ 5]
+                +N(3, 2)*u[ 6]+N(3, 1)*u[ 7]+N(4, 2)*u[ 8]
+                +N(4, 1)*u[ 9]+N(5, 2)*u[10]+N(5, 1)*u[11];
     // And send it to the material point
     myMatPoints[i]->get_material()->set_strain(epsilon);
   }
@@ -219,12 +224,24 @@ void Triangle6::recoverStresses() {
   const double d2=    num::d13;
   const double d3=    num::d23;
 
-  xi(0, 0)= d1;  xi(0, 1)=-d2;  xi(0, 2)=-d2;
-  xi(1, 0)=-d2;  xi(1, 1)= d1;  xi(1, 2)=-d2;
-  xi(2, 0)=-d2;  xi(2, 1)=-d2;  xi(2, 2)= d1;
-  xi(3, 0)= d3;  xi(3, 1)= d3;  xi(3, 2)=-d2;
-  xi(4, 0)=-d2;  xi(4, 1)= d3;  xi(4, 2)= d3;
-  xi(5, 0)= d3;  xi(5, 1)=-d2;  xi(5, 2)= d3;
+  xi(0, 0) =  d1;
+  xi(0, 1) = -d2;
+  xi(0, 2) = -d2;
+  xi(1, 0) = -d2;
+  xi(1, 1) =  d1;
+  xi(1, 2) = -d2;
+  xi(2, 0) = -d2;
+  xi(2, 1) = -d2;
+  xi(2, 2) =  d1;
+  xi(3, 0) =  d3;
+  xi(3, 1) =  d3;
+  xi(3, 2) = -d2;
+  xi(4, 0) = -d2;
+  xi(4, 1) =  d3;
+  xi(4, 2) =  d3;
+  xi(5, 0) =  d3;
+  xi(5, 1) = -d2;
+  xi(5, 2) =  d3;
 
   for (unsigned i = 0; i < 6; i++) {
     sigma.clear();

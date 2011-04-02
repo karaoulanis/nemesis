@@ -38,7 +38,8 @@ class ModelElement : public ModelObject {
   public:
   // Constructors
   ModelElement();
-  ModelElement(const IDContainer& FTable, Element* pElement, Constraint* pConstraint);
+  ModelElement(const IDContainer& FTable, Element* pElement,
+               Constraint* pConstraint);
 
   virtual ~ModelElement();
 

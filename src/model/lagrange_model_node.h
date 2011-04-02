@@ -36,7 +36,8 @@ class LagrangeModelNode: public ModelNode {
   public:
   // Constructors
   LagrangeModelNode();
-  LagrangeModelNode(const IDContainer& FTable, Node* pNode, Constraint* pConstraint);
+  LagrangeModelNode(const IDContainer& FTable, Node* pNode,
+                    Constraint* pConstraint);
 
   void add_R(double factor);
   void incTrialDisp(const Vector& du);

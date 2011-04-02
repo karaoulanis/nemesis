@@ -194,12 +194,24 @@ void Brick8i::get_Bstd(Matrix& B, int node, int gPoint) {
   double B3 = shpStd[node][3][gPoint];
 
   // B-matrix
-  B(0, 0)=B1;  B(0, 1)=0.;  B(0, 2)=0.;
-  B(1, 0)=0.;  B(1, 1)=B2;  B(1, 2)=0.;
-  B(2, 0)=0.;  B(2, 1)=0.;  B(2, 2)=B3;
-  B(3, 0)=B2;  B(3, 1)=B1;  B(3, 2)=0.;
-  B(4, 0)=0.;  B(4, 1)=B3;  B(4, 2)=B2;
-  B(5, 0)=B3;  B(5, 1)=0.;  B(5, 2)=B1;
+  B(0, 0) = B1;
+  B(0, 1) = 0.;
+  B(0, 2) = 0.;
+  B(1, 0) = 0.;
+  B(1, 1) = B2;
+  B(1, 2) = 0.;
+  B(2, 0) = 0.;
+  B(2, 1) = 0.;
+  B(2, 2) = B3;
+  B(3, 0) = B2;
+  B(3, 1) = B1;
+  B(3, 2) = 0.;
+  B(4, 0) = 0.;
+  B(4, 1) = B3;
+  B(4, 2) = B2;
+  B(5, 0) = B3;
+  B(5, 1) = 0.;
+  B(5, 2) = B1;
 }
 /**
  * Get B-matrix of incompatible modes.
@@ -215,13 +227,26 @@ void Brick8i::get_BInc(Matrix& B, int node, int gPoint) {
   double B3 = shpInc[node][3][gPoint]/detJ[gPoint];
 
   // B-matrix
-  B(0, 0)=B1;  B(0, 1)=0.;  B(0, 2)=0.;
-  B(1, 0)=0.;  B(1, 1)=B2;  B(1, 2)=0.;
-  B(2, 0)=0.;  B(2, 1)=0.;  B(2, 2)=B3;
-  B(3, 0)=B2;  B(3, 1)=B1;  B(3, 2)=0.;
-  B(4, 0)=0.;  B(4, 1)=B3;  B(4, 2)=B2;
-  B(5, 0)=B3;  B(5, 1)=0.;  B(5, 2)=B1;
+  B(0, 0) = B1;
+  B(0, 1) = 0.;
+  B(0, 2) = 0.;
+  B(1, 0) = 0.;
+  B(1, 1) = B2;
+  B(1, 2) = 0.;
+  B(2, 0) = 0.;
+  B(2, 1) = 0.;
+  B(2, 2) = B3;
+  B(3, 0) = B2;
+  B(3, 1) = B1;
+  B(3, 2) = 0.;
+  B(4, 0) = 0.;
+  B(4, 1) = B3;
+  B(4, 2) = B2;
+  B(5, 0) = B3;
+  B(5, 1) = 0.;
+  B(5, 2) = B1;
 }
+
 /**
  * Get Kdd Matrix.
  * This is the usual displacement matrix.

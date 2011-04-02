@@ -61,7 +61,8 @@ Element::Element(int ID, int matID)
   myMaterial = pD->get<Material>(pD->get_materials(), matID);
 }
 
-Element::Element(int id, std::vector<Node*> nodes) {
+Element::Element(int id, std::vector<Node*> nodes)
+:DomainObject(id) {
   // Create static Matrices/vectors if they do not exist yet
   if (theStaticMatrices == 0) {
     theStaticMatrices = new Matrix*[64];

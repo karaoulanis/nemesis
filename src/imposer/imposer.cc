@@ -108,8 +108,9 @@ int Imposer::get_global_dof(int NodeID, int localDof) {
  */
 const IDContainer Imposer::get_global_dofs(int NodeID) {
   int index = Containers::index_find(myNodalIDs, NodeID);
-  int nActivatedDofs=
-    theDomain->get < Node>(theDomain->get_nodes(), NodeID)->get_num_activated_dofs();
+  int nActivatedDofs= theDomain->
+                      get<Node>(theDomain->get_nodes(), NodeID)->
+                      get_num_activated_dofs();
   IDContainer globalDofs(nActivatedDofs);
   int startDof;
   if (index == 0) {

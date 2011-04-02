@@ -168,13 +168,15 @@ void DruckerPragerNew::set_strain(const Vector& De) {
       A(3+i, 3+nA)+=ys->get_dfdk(s, aTrial);
     }
     // hardening
-    A.appendRow(DLambda[0]*(gSurfaces[0]->get_dfds(s, aTrial)), 3+nA, 0, 1., 0.);
+    A.appendRow(DLambda[0]*(gSurfaces[0]->get_dfds(s, aTrial)),
+                            3+nA, 0, 1., 0.);
 
     A(3+nA, 3+nA-1) = -EL.get_h(gSurfaces[0]->get_dfds(s, aTrial));
     // A(3+nA, 3+nA-1)=-DLambda[0]*sqrt(2./3.);
     A(3+nA, 3+nA) = 1.;
 
-    R[3+nA]=-aTrial+aConvg+DLambda[0]*(EL.get_h(gSurfaces[0]->get_dfds(s, aTrial)));
+    R[3+nA]=-aTrial+aConvg
+            +DLambda[0]*(EL.get_h(gSurfaces[0]->get_dfds(s, aTrial)));
     // R[3+nA]=-aTrial+aConvg+DLambda[0]*sqrt(2./3.);
 
     // solve

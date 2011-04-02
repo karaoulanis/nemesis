@@ -200,7 +200,8 @@ int SQLiteDatabase::storeData(const Packet& p) {
  */
 const Packet& SQLiteDatabase::retrieveData(int tag, int id) {
   char query[128];
-  sprintf(query, "SELECT * FROM %s WHERE tag=%d AND id=%d", tableInUse, tag, id);
+  sprintf(query, "SELECT * FROM %s WHERE tag=%d AND id=%d",
+          tableInUse, tag, id);
   char** result;
   char *errMsg;
   int i, nrow, ncol;
@@ -269,7 +270,8 @@ void SQLiteDatabase::exportToVtk(const char* tableName) {
   // Print Elements
   // ***************************************************************************
   char** resElems;
-  sprintf(query, "SELECT * FROM %s WHERE tag BETWEEN 2000 AND 2999;", tableName);
+  sprintf(query, "SELECT * FROM %s WHERE tag BETWEEN 2000 AND 2999;",
+          tableName);
   sqlite3_get_table(db, query, &resElems, &nrow, &ncol, &errMsg);
   int nValues = 0;
   int nElems = nrow;
@@ -282,7 +284,8 @@ void SQLiteDatabase::exportToVtk(const char* tableName) {
     int nVertices = atoi(resElems[i*ncol+2+myPacket.dblSize]);
     vtkFile << nVertices << ' ';
     for (int j = 0;j < nVertices;j++)
-      vtkFile << Containers::index_find(nodalIds, atoi(resElems[i*ncol+2+myPacket.dblSize+1+j])) << ' ';
+      vtkFile << Containers::index_find(nodalIds,
+                          atoi(resElems[i*ncol+2+myPacket.dblSize+1+j])) << ' ';
     vtkFile << endl;
   }
   vtkFile << endl;
