@@ -53,7 +53,8 @@ int Reorderer::reorder() {
       }
     }
     // Reorder Model Elements
-    for (unsigned k = 0; k < pA->get_model()->get_model_elements().size(); k++) {
+    for (unsigned k = 0;
+         k < pA->get_model()->get_model_elements().size(); k++) {
       ModelElement* pModelElem = pA->get_model()->get_model_elements()[k];
       for (unsigned i = 0;i < pModelElem->get_FTable().size();i++) {
         if (pModelElem->get_FTable()[i] >= 0)

@@ -503,7 +503,8 @@ class Matrix {
       for (int k = 0;k < m;k++)
         for (int l = 0;l < m;l++)
           for (int j = 0;j < n;j++)
-            data_[pos+i*cols_+j]+=c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
+            data_[pos+i*cols_+j]+=
+              c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
   }
  private:
   int rows_;

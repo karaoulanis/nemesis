@@ -178,9 +178,15 @@ void shape8(const Matrix& x, double shp[8][4][8], double detJ[8]) {
 
     // dNdx
     for (int i = 0; i < 8; i++) {
-      double d1 = shp[i][1][k]*J[0][0]+shp[i][2][k]*J[0][1]+shp[i][3][k]*J[0][2];
-      double d2 = shp[i][1][k]*J[1][0]+shp[i][2][k]*J[1][1]+shp[i][3][k]*J[1][2];
-      double d3 = shp[i][1][k]*J[2][0]+shp[i][2][k]*J[2][1]+shp[i][3][k]*J[2][2];
+      double d1 = shp[i][1][k]*J[0][0]
+                 +shp[i][2][k]*J[0][1]
+                 +shp[i][3][k]*J[0][2];
+      double d2 = shp[i][1][k]*J[1][0]
+                 +shp[i][2][k]*J[1][1]
+                 +shp[i][3][k]*J[1][2];
+      double d3 = shp[i][1][k]*J[2][0]
+                 +shp[i][2][k]*J[2][1]
+                 +shp[i][3][k]*J[2][2];
       shp[i][1][k]=d1;
       shp[i][2][k]=d2;
       shp[i][3][k]=d3;

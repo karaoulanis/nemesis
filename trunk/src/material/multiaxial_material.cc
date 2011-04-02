@@ -36,5 +36,24 @@ MultiaxialMaterial::MultiaxialMaterial(int ID, double rho, double aT)
   eTrial.resize(6, 0.);
   eTotal.resize(6, 0.);
 }
+
 MultiaxialMaterial::~MultiaxialMaterial() {
+}
+
+void MultiaxialMaterial::set_stress(const Vector& s) {
+  sTrial =s;
+  sConvg =s;
+}
+
+void MultiaxialMaterial::addStress(const Vector& s) {
+  sTrial+=s;
+  sConvg+=s;
+}
+
+const Vector& MultiaxialMaterial::get_stress() {
+  return sTrial;
+}
+
+bool MultiaxialMaterial::isPlastic() {
+  return false;
 }

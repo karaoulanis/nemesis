@@ -35,7 +35,8 @@ class ModifiedCamClay: public MultiaxialElastoPlastic {
   private:
   public:
   ModifiedCamClay();
-  ModifiedCamClay(int ID, int elasticID, double M, double po, double kappa, double lambda);
+  ModifiedCamClay(int ID, int elasticID, double M, double po, double kappa,
+                  double lambda);
   MultiaxialMaterial* get_clone();
   ~ModifiedCamClay();
 };

@@ -40,7 +40,7 @@ class MultiaxialMaterial: public Material {
   Vector eTrial;
   Vector eTotal;
   static Matrix C;
-  public:
+ public:
   MultiaxialMaterial();
   MultiaxialMaterial(int ID, double rho, double aT);
   ~MultiaxialMaterial();
@@ -48,9 +48,9 @@ class MultiaxialMaterial: public Material {
   virtual MultiaxialMaterial* get_clone()=0;
   virtual void set_strain(const Vector& De)=0;
   virtual const Matrix& get_C()=0;
-  void  set_stress(const Vector& s)  {sTrial =s; sConvg =s;}
-  void  addStress(const Vector& s)  {sTrial+=s; sConvg+=s;}
-  const Vector& get_stress()         {return sTrial;}
-  virtual bool isPlastic()          {return false;}
+  void set_stress(const Vector& s);
+  void addStress(const Vector& s);
+  const Vector& get_stress();
+  virtual bool isPlastic();
 };
 #endif  // SRC_MATERIAL_MULTIAXIAL_MATERIAL_H_

@@ -52,7 +52,8 @@ class LoadCase: public DomainObject {
   void AddLoad(Load* pLoad);
   void AddGroupState(GroupState* pGroupState);
   void AddInitialCondition(InitialCondition* pInitialCondition);
-  void AddSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter);
+  void AddSensitivityParameter(ElementSensitivityParameter*
+                                  pElementSensitivityParameter);
 
   // Apply member functions
   void ApplyLoads(double lambda_, double time_);

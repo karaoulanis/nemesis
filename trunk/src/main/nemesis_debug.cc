@@ -24,30 +24,30 @@
 // *****************************************************************************
 
 #include "main/nemesis_debug.h"
-
-using std::cout;
-using std::endl;
+#include "stdio.h"
 
 void report(const double d, const char* name, int total, int decimal) {
-  cout << name << " =";
+  printf("%s =", name);
   num::print_d(d, total, decimal);
-  cout << endl;
+  printf("\n");
 }
 
 void report(const Matrix& m, const char* name, int total, int decimal) {
-  cout << name << " [ " << m.get_rows() << ", " << m.get_cols() << " ] =" << endl;
+  printf("%s [%d, %d] =\n", name, m.get_rows(), m.get_cols());
   for (int i = 0; i < m.get_rows(); i++) {
-    for (int j = 0;j < m.get_cols();j++)
+    for (int j = 0;j < m.get_cols(); j++) {
       num::print_d(m(i, j), total, decimal);
-    cout << endl;
+    }
+    printf("\n");
   }
 }
 
 void report(const Vector& v, const char* name, int total, int decimal) {
-  cout << name << " [ "<< v.size() <<" ] =";
-  for (int i = 0; i < v.size(); i++)
+  printf("%s [%d] =", name, v.size());
+  for (int i = 0; i < v.size(); i++) {
     num::print_d(v[i], total, decimal);
-  cout << endl;
+  }
+  printf("\n");
 }
 
 void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C,

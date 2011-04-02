@@ -193,9 +193,12 @@ void Quad4i::get_Bstd(Matrix& B, int node, int gPoint) {
   double B2 = shpStd[node][2][gPoint];
 
   // B-matrix
-  B(0, 0)=B1;  B(0, 1)=0.;
-  B(1, 0)=0.;  B(1, 1)=B2;
-  B(2, 0)=B2;  B(2, 1)=B1;
+  B(0, 0) = B1;
+  B(0, 1) = 0.;
+  B(1, 0) = 0.;
+  B(1, 1) = B2;
+  B(2, 0) = B2;
+  B(2, 1) = B1;
 }
 /**
  * Get B-matrix of incompatible modes.
@@ -210,9 +213,12 @@ void Quad4i::get_BInc(Matrix& B, int node, int gPoint) {
   double B2 = shpInc[node][2][gPoint]/detJ[gPoint];
 
   // B-matrix
-  B(0, 0)=B1;  B(0, 1)=0.;
-  B(1, 0)=0.;  B(1, 1)=B2;
-  B(2, 0)=B2;  B(2, 1)=B1;
+  B(0, 0) = B1;
+  B(0, 1) = 0.;
+  B(1, 0) = 0.;
+  B(1, 1) = B2;
+  B(2, 0) = B2;
+  B(2, 1) = B1;
 }
 /**
  * Get Kdd Matrix.

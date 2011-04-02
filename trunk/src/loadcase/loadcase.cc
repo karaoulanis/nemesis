@@ -128,6 +128,7 @@ void LoadCase::ApplySensitivityParameter(int param) {
 int LoadCase::GetNumSensitivityParameters() {
   return sensitivity_parameters_.size();
 }
-void LoadCase::AddSensitivityParameter(ElementSensitivityParameter* pElementSensitivityParameter) {
+void LoadCase::AddSensitivityParameter(ElementSensitivityParameter*
+                                       pElementSensitivityParameter) {
   sensitivity_parameters_.push_back(pElementSensitivityParameter);
 }
