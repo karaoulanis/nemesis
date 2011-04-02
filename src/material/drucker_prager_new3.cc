@@ -104,9 +104,15 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
   double Kc   = MatParams[ 3];
 
   // elasticity matrix
-  C3(0, 0)=  1/E;  C3(0, 1)=-nu/E;  C3(0, 2)=-nu/E;
-  C3(1, 0)=-nu/E;  C3(1, 1)=  1/E;  C3(1, 2)=-nu/E;
-  C3(2, 0)=-nu/E;  C3(2, 1)=-nu/E;  C3(2, 2)=  1/E;
+  C3(0, 0) =   1/E;
+  C3(0, 1) = -nu/E;
+  C3(0, 2) = -nu/E;
+  C3(1, 0) = -nu/E;
+  C3(1, 1) =   1/E;
+  C3(1, 2) = -nu/E;
+  C3(2, 0) = -nu/E;
+  C3(2, 1) = -nu/E;
+  C3(2, 2) =   1/E;
 
   // spectral decomposition
   Vector s(3), De3(3);
@@ -264,12 +270,24 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
 
 
   // coordinate transformation
-  sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
-  sTrial[1]=s[0]*sV(0, 1)*sV(0, 1)+s[1]*sV(1, 1)*sV(1, 1)+s[2]*sV(2, 1)*sV(2, 1);
-  sTrial[2]=s[0]*sV(0, 2)*sV(0, 2)+s[1]*sV(1, 2)*sV(1, 2)+s[2]*sV(2, 2)*sV(2, 2);
-  sTrial[3]=s[0]*sV(0, 0)*sV(0, 1)+s[1]*sV(1, 0)*sV(1, 1)+s[2]*sV(2, 0)*sV(2, 1);
-  sTrial[4]=s[0]*sV(0, 1)*sV(0, 2)+s[1]*sV(1, 1)*sV(1, 2)+s[2]*sV(2, 1)*sV(2, 2);
-  sTrial[5]=s[0]*sV(0, 0)*sV(0, 2)+s[1]*sV(1, 0)*sV(1, 2)+s[2]*sV(2, 0)*sV(2, 2);
+  sTrial[0] = s[0]*sV(0, 0)*sV(0, 0)
+             +s[1]*sV(1, 0)*sV(1, 0)
+             +s[2]*sV(2, 0)*sV(2, 0);
+  sTrial[1] = s[0]*sV(0, 1)*sV(0, 1)
+             +s[1]*sV(1, 1)*sV(1, 1)
+             +s[2]*sV(2, 1)*sV(2, 1);
+  sTrial[2] = s[0]*sV(0, 2)*sV(0, 2)
+             +s[1]*sV(1, 2)*sV(1, 2)
+             +s[2]*sV(2, 2)*sV(2, 2);
+  sTrial[3] = s[0]*sV(0, 0)*sV(0, 1)
+             +s[1]*sV(1, 0)*sV(1, 1)
+             +s[2]*sV(2, 0)*sV(2, 1);
+  sTrial[4] = s[0]*sV(0, 1)*sV(0, 2)
+             +s[1]*sV(1, 1)*sV(1, 2)
+             +s[2]*sV(2, 1)*sV(2, 2);
+  sTrial[5] = s[0]*sV(0, 0)*sV(0, 2)
+             +s[1]*sV(1, 0)*sV(1, 2)
+             +s[2]*sV(2, 0)*sV(2, 2);
 
   double Dt =10000.;
   double eta = 1000.;
