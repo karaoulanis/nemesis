@@ -2,7 +2,7 @@
 
 # compiler flags
 CXX                     = g++
-CXXFLAGS                = -g -O2 -Wno-deprecated -Wall -Wextra -Wc++0x-compat -pedantic -ansi
+CXXFLAGS                = -g -O2 -Wno-deprecated -Wall -Wextra -Wc++0x-compat -pedantic -ansi -Weffc++
 
 
 CPPFLAGS                = -Isrc -I/usr/include

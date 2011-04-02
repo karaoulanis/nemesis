@@ -82,8 +82,10 @@ void UniaxialCyclic::set_strain(const double De) {
     sTrial = sr+2.0*Gmax*(0.5*(eTrial-er))/
             (1+(Gmax/tmax)*fabs(0.5*(eTrial-er)));
     Et = 0.5*Gmax*tmax*
-        (2*tmax+Gmax*std::fabs(er-eTrial)-0.5*Gmax*num::sign(er-eTrial)*(er-eTrial))/
-        ((tmax+0.5*Gmax*std::fabs(er-eTrial))*(tmax+0.5*Gmax*std::fabs(er-eTrial)));
+        (2*tmax+Gmax*std::fabs(er-eTrial)
+        -0.5*Gmax*num::sign(er-eTrial)*(er-eTrial))/
+        ((tmax+0.5*Gmax*std::fabs(er-eTrial))*
+         (tmax+0.5*Gmax*std::fabs(er-eTrial)));
   }
 }
 double UniaxialCyclic::get_C() {
@@ -96,4 +98,3 @@ void UniaxialCyclic::commit() {
   eTotal = eConvg;
   this->track();
 }
-

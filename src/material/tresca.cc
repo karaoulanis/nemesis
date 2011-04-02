@@ -39,9 +39,11 @@ Tresca::Tresca(int ID, int elasticID, double cu, double kx, double ky,
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
   Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999, "Multiaxial elastic material expected.");
-  myElastic = static_cast < MultiaxialMaterial*>(p)->get_clone();
+  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC) {
+    throw SException("[nemesis:%d] %s", 9999,
+                     "Multiaxial elastic material expected.");
+  }
+  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
   MatParams[30] = myElastic->get_param(30);
   MatParams[31] = myElastic->get_param(31);
 
@@ -80,10 +82,18 @@ MultiaxialMaterial* Tresca::get_clone() {
  */
 void Tresca::set_strain(const Vector& De) {
   std::vector<Vector> df(3);
-  df[0].resize(3);  df[1].resize(3);  df[2].resize(3);
-  df[0][0]= 1.0;    df[0][1]= 0.0;    df[0][2]=-1.0;
-  df[1][0]= 1.0;    df[1][1]=-1.0;    df[1][2]= 0.0;
-  df[2][0]= 0.0;    df[2][1]= 1.0;    df[2][2]=-1.0;
+  df[0].resize(3);
+  df[1].resize(3);
+  df[2].resize(3);
+  df[0][0] = 1.0;
+  df[0][1] = 0.0;
+  df[0][2] =-1.0;
+  df[1][0] = 1.0;
+  df[1][1] =-1.0;
+  df[1][2] = 0.0;
+  df[2][0] = 0.0;
+  df[2][1] = 1.0;
+  df[2][2] =-1.0;
 
   double E = myElastic->get_param(0);
   double nu= myElastic->get_param(1);
@@ -91,9 +101,15 @@ void Tresca::set_strain(const Vector& De) {
   double ky   = MatParams[ 2];
   double kz   = MatParams[ 3];
   double cu= MatParams[ 0]+(kx*x+ky*y+kz*z);
-  C3(0, 0)=  1/E;  C3(0, 1)=-nu/E;  C3(0, 2)=-nu/E;
-  C3(1, 0)=-nu/E;  C3(1, 1)=  1/E;  C3(1, 2)=-nu/E;
-  C3(2, 0)=-nu/E;  C3(2, 1)=-nu/E;  C3(2, 2)=  1/E;
+  C3(0, 0) =   1/E;
+  C3(0, 1) = -nu/E;
+  C3(0, 2) = -nu/E;
+  C3(1, 0) = -nu/E;
+  C3(1, 1) =   1/E;
+  C3(1, 2) = -nu/E;
+  C3(2, 0) = -nu/E;
+  C3(2, 1) = -nu/E;
+  C3(2, 2) =   1/E;
 
   static Vector s(3);
   static Matrix sV(3, 3);
@@ -165,12 +181,24 @@ void Tresca::set_strain(const Vector& De) {
   // cout << s[0]-s[1]-cu << endl;
   // cout << s[1]-s[2]-cu << endl;
   // coordinate transformation
-  sTrial[0]=s[0]*sV(0, 0)*sV(0, 0)+s[1]*sV(1, 0)*sV(1, 0)+s[2]*sV(2, 0)*sV(2, 0);
-  sTrial[1]=s[0]*sV(0, 1)*sV(0, 1)+s[1]*sV(1, 1)*sV(1, 1)+s[2]*sV(2, 1)*sV(2, 1);
-  sTrial[2]=s[0]*sV(0, 2)*sV(0, 2)+s[1]*sV(1, 2)*sV(1, 2)+s[2]*sV(2, 2)*sV(2, 2);
-  sTrial[3]=s[0]*sV(0, 0)*sV(0, 1)+s[1]*sV(1, 0)*sV(1, 1)+s[2]*sV(2, 0)*sV(2, 1);
-  sTrial[4]=s[0]*sV(0, 1)*sV(0, 2)+s[1]*sV(1, 1)*sV(1, 2)+s[2]*sV(2, 1)*sV(2, 2);
-  sTrial[5]=s[0]*sV(0, 0)*sV(0, 2)+s[1]*sV(1, 0)*sV(1, 2)+s[2]*sV(2, 0)*sV(2, 2);
+  sTrial[0] = s[0]*sV(0, 0)*sV(0, 0)
+             +s[1]*sV(1, 0)*sV(1, 0)
+             +s[2]*sV(2, 0)*sV(2, 0);
+  sTrial[1] = s[0]*sV(0, 1)*sV(0, 1)
+             +s[1]*sV(1, 1)*sV(1, 1)
+             +s[2]*sV(2, 1)*sV(2, 1);
+  sTrial[2] = s[0]*sV(0, 2)*sV(0, 2)
+             +s[1]*sV(1, 2)*sV(1, 2)
+             +s[2]*sV(2, 2)*sV(2, 2);
+  sTrial[3] = s[0]*sV(0, 0)*sV(0, 1)
+             +s[1]*sV(1, 0)*sV(1, 1)
+             +s[2]*sV(2, 0)*sV(2, 1);
+  sTrial[4] = s[0]*sV(0, 1)*sV(0, 2)
+             +s[1]*sV(1, 1)*sV(1, 2)
+             +s[2]*sV(2, 1)*sV(2, 2);
+  sTrial[5] = s[0]*sV(0, 0)*sV(0, 2)
+             +s[1]*sV(1, 0)*sV(1, 2)
+             +s[2]*sV(2, 0)*sV(2, 2);
 
   theta = sTrial.theta();
   //  if ((2.*sqrt(sTrial.J2())*cos(theta)-2*cu) > 1e-6) {

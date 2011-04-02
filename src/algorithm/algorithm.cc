@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include "analysis/analysis.h"
 #include "algorithm/algorithm.h"
+#include "analysis/analysis.h"
 
 Algorithm::Algorithm() {
 }
