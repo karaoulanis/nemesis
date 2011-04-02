@@ -399,7 +399,7 @@ class Matrix {
    * @param c   A factor to be multiplied with the appended entries.
    * @param c0  A factor to be multiplied with the existing entries.
    */
-  inline Matrix& append(const Matrix& m, int row, int col, double c = 1.0,
+  inline Matrix& Append(const Matrix& m, int row, int col, double c = 1.0,
                         double c0 = 0.) {
     #ifdef _DEBUG
     num::check::array_range(row+m.rows_, col+m.cols_, rows_, cols_);
@@ -425,7 +425,7 @@ class Matrix {
    * @param c   A factor to be multiplied with the appended entries.
    * @param c0  A factor to be multiplied with the existing entries.
    */
-  inline Matrix& appendRow(const Vector& v, int row, int col, double c = 1.0,
+  inline Matrix& AppendRow(const Vector& v, int row, int col, double c = 1.0,
                            double c0 = 0.) {
     #ifdef _DEBUG
     num::check::array_range(row, col+v.size(), rows_, cols_);
@@ -447,7 +447,7 @@ class Matrix {
    * @param c   A factor to be multiplied with the appended entries.
    * @param c0  A factor to be multiplied with the existing entries.
    */
-  inline Matrix& appendCol(const Vector& v, int row, int col, double c = 1.0,
+  inline Matrix& AppendCol(const Vector& v, int row, int col, double c = 1.0,
                            double c0 = 0.) {
     #ifdef _DEBUG
     num::check::array_range(row+v.size(), col, rows_, cols_);
@@ -463,7 +463,7 @@ class Matrix {
   /**
    *
    */
-  void solve(Vector& x, const Vector& b);
+  void Solve(Vector& x, const Vector& b);
 
   /**
    *

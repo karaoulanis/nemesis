@@ -152,23 +152,23 @@ void DruckerPragerNew::set_strain(const Vector& De) {
     A.Resize(3+nA+1, 3+nA+1, 0.);
     R.resize(3+nA+1, 0.);
     x.resize(3+nA+1);
-    A.append(C3, 0, 0, 1.0, 1.0);
+    A.Append(C3, 0, 0, 1.0, 1.0);
 
     R.append(C3*s-eTrial3, 0, 1.0, 0.0);
     for (int i = 0; i < nA; i++) {
       YS* ys =fSurfaces[activeS[i]];
       YS* ps =gSurfaces[activeS[i]];
       double DL = DLambda[activeS[i]];
-      A.append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
-      A.appendCol(ps->get_dfds(s, aTrial),        0, 3+i, 1., 0.);
-      A.appendRow(ys->get_dfds(s, aTrial),      3+i,   0, 1., 0.);
+      A.Append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
+      A.AppendCol(ps->get_dfds(s, aTrial),        0, 3+i, 1., 0.);
+      A.AppendRow(ys->get_dfds(s, aTrial),      3+i,   0, 1., 0.);
       R.append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
       R[3+i]=-(ys->get_f(s, aTrial));
-      A.appendCol(DL*(ps->get_f2dkds(s, aTrial)), 0, 3+nA, 1., 1.);
+      A.AppendCol(DL*(ps->get_f2dkds(s, aTrial)), 0, 3+nA, 1., 1.);
       A(3+i, 3+nA)+=ys->get_dfdk(s, aTrial);
     }
     // hardening
-    A.appendRow(DLambda[0]*(gSurfaces[0]->get_dfds(s, aTrial)),
+    A.AppendRow(DLambda[0]*(gSurfaces[0]->get_dfds(s, aTrial)),
                             3+nA, 0, 1., 0.);
 
     A(3+nA, 3+nA-1) = -EL.get_h(gSurfaces[0]->get_dfds(s, aTrial));
@@ -182,7 +182,7 @@ void DruckerPragerNew::set_strain(const Vector& De) {
     // solve
     // report(A, "A", 12, 4);
     // report(R, "R");
-    A.solve(x, R);
+    A.Solve(x, R);
     // report(x, "x");
 
     // update

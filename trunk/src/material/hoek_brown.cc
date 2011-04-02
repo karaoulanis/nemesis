@@ -277,14 +277,14 @@ void HoekBrown::set_strain(const Vector& De) {
     A.Resize(3+nActive, 3+nActive, 0.);
     R.resize(3+nActive, 0.);
     x.resize(3+nActive);
-    A.append(C3, 0, 0);
+    A.Append(C3, 0, 0);
     R.append(-C3*s+eTrial3, 0, 1., 0.);
     int pos = 0;
     for (int i = 0; i < 3; i++) {
       if (active[i]) {
-        A.append(DLambda[i]*d2gdsds[i],    0,    0, 1., 1.);
-        A.appendCol(dgds[i],               0, 3+pos, 1., 0.);
-        A.appendRow(dfds[i],           3+pos,    0, 1., 0.);
+        A.Append(DLambda[i]*d2gdsds[i],    0,    0, 1., 1.);
+        A.AppendCol(dgds[i],               0, 3+pos, 1., 0.);
+        A.AppendRow(dfds[i],           3+pos,    0, 1., 0.);
         R.append(-DLambda[i]*dgds[i],            0, 1., 1.);
         R[3+pos]=-f[i];
         pos++;
@@ -322,7 +322,7 @@ void HoekBrown::set_strain(const Vector& De) {
     }
 
     // solve
-    A.solve(x, R);
+    A.Solve(x, R);
 
     // Update stresses
     for (int i = 0;i < 3;i++)

@@ -161,20 +161,20 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       A.Resize(3+nA+1, 3+nA+1, 0.);
       R.resize(3+nA+1, 0.);
       x.resize(3+nA+1);
-      A.append(C3, 0, 0, 1.0, 1.0);
+      A.Append(C3, 0, 0, 1.0, 1.0);
 
       R.append(C3*s-eTrial3, 0, 1.0, 0.0);
       YS* ys =fSurfaces[0];
       YS* ps =gSurfaces[0];
       double DL = DLambda[0];
-      A.append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
-      A.appendCol(ps->get_dfds(s, aTrial),        0,   3, 1., 0.);
-      A.appendRow(ys->get_dfds(s, aTrial),        3,   0, 1., 0.);
+      A.Append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
+      A.AppendCol(ps->get_dfds(s, aTrial),        0,   3, 1., 0.);
+      A.AppendRow(ys->get_dfds(s, aTrial),        3,   0, 1., 0.);
 
       R.append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
       R[3]=ys->get_f(s, aTrial);
 
-      A.solve(x, -R);
+      A.Solve(x, -R);
       // report(R, "R");
 
       // update
@@ -214,12 +214,12 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       double D = Kc*6*cos(phi)/(sqrt(3.)*(3-sin(phi)));
 
       // Row 1
-      A.append(C3, 0, 0, 1.0, 1.0);
-      A.append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
+      A.Append(C3, 0, 0, 1.0, 1.0);
+      A.Append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
       A(0, 3)=0.;
       A(1, 3)=0.;
       A(2, 3)=0.;
-      A.appendCol(ps->get_dfds(s, aTrial),        0,   4, 1., 0.);
+      A.AppendCol(ps->get_dfds(s, aTrial),        0,   4, 1., 0.);
       R.append(C3*s-eTrial3, 0, 1.0, 0.0);
       R.append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
 
@@ -232,14 +232,14 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       R[3]=-aTrial+aConvg+DL*dhdq;
 
       // Row 3
-      A.appendRow(ys->get_dfds(s, aTrial),        4,   0, 1., 0.);
+      A.AppendRow(ys->get_dfds(s, aTrial),        4,   0, 1., 0.);
       A(4, 3)=1.;
       A(4, 4)=0.;
       R[4]=ys->get_f(s, aTrial);
 
       // report(A, "A");
       // report(R, "R");
-      A.solve(x, -R);
+      A.Solve(x, -R);
       // report(x, "x");
 
       // update

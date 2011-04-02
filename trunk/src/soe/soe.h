@@ -34,13 +34,12 @@
 #include "analysis/analysis.h"
 #include "analysis/analysis_object.h"
 #include "containers/containers.h"
-#include "numeric/lapack.h"
-#include "numeric/matrix.h"
 #include "numeric/vector.h"
 
 // Forward declarations
 class Analysis;
 class Model;
+class Matrix;
 
 class SOE: public AnalysisObject {
  protected:

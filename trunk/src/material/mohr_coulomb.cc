@@ -172,14 +172,14 @@ void MohrCoulomb::set_strain(const Vector& De) {
     x.resize(3+active.size());
     R.resize(3+active.size());
     R.clear();
-    A.append(C3, 0, 0);
+    A.Append(C3, 0, 0);
     for (unsigned i = 0; i < active.size(); i++) {
-      A.appendCol(dg[active[i]],  0, 3+i);
-      A.appendRow(df[active[i]], 3+i,  0);
+      A.AppendCol(dg[active[i]],  0, 3+i);
+      A.AppendRow(df[active[i]], 3+i,  0);
       R[3+i]=-f[active[i]];
     }
     // solve
-    A.solve(x, R);
+    A.Solve(x, R);
     // check
     bool restart = false;
     for (unsigned i = 0; i < active.size(); i++) {

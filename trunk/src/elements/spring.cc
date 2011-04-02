@@ -81,8 +81,8 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
       yp[1]= xp1;
       xp.normalize();
       yp.normalize();
-      T.appendRow(xp, 0, 0);
-      T.appendRow(yp, 1, 0);
+      T.AppendRow(xp, 0, 0);
+      T.AppendRow(yp, 1, 0);
       break;
     case 3:
       xp.resize(3);
@@ -99,9 +99,9 @@ Spring::Spring(int ID, int Node_1, int Node_2, int matID,
       xp.normalize();
       yp.normalize();
       zp.normalize();
-      T.appendRow(xp, 0, 0);
-      T.appendRow(yp, 1, 0);
-      T.appendRow(zp, 2, 0);
+      T.AppendRow(xp, 0, 0);
+      T.AppendRow(yp, 1, 0);
+      T.AppendRow(zp, 2, 0);
       break;
     default:
       break;
@@ -136,10 +136,10 @@ const Matrix& Spring::get_K() {
   K.Clear();
   const Matrix& Ct = mySpringMaterial->get_C();
   Matrix K0 = Transpose(T)*Ct*T;
-  K.append(K0, 0, 0, +1.);
-  K.append(K0, 0, 3, -1.);
-  K.append(K0, 3, 0, -1.);
-  K.append(K0, 3, 3, +1.);
+  K.Append(K0, 0, 0, +1.);
+  K.Append(K0, 0, 3, -1.);
+  K.Append(K0, 3, 0, -1.);
+  K.Append(K0, 3, 3, +1.);
   double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   K*=facK;
   // report(K, "K", 14, 1);

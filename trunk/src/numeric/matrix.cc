@@ -168,7 +168,7 @@ void Matrix::Clear() {
   }
 }
 
-void Matrix::solve(Vector& x, const Vector& b) {
+void Matrix::Solve(Vector& x, const Vector& b) {
   #ifdef _DEBUG
   num::check::array_size(cols_, rows_);
   num::check::array_size(cols_, b.size());
