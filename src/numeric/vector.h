@@ -32,85 +32,52 @@
 #include "numeric/numeric.h"
 
 class Vector {
- protected:
-  int size_;
-  double* data_;
  public:
+  
   /**
    * Default constructor.
-   * Initializes everything to zero.
+   * Initializes size and data pointer to zero.
    */
-  Vector()
-    :size_(0), data_(0) {
-  }
+  Vector();
+
   /**
    * Constructor.
-   * Allocates a size n double.
-   * Exception handling for bad allocation is provided.
-   * @param n The size of the vector.
+   * Allocates a Vector of size size.
+   * Values of the Vector are uninitialized.
+   * Throws an exception if allocation fails.
+   * @param size The size of the vector.
    */
-  explicit Vector(int n)
-    :size_(n) {
-    try {
-      data_ = new double[size_];
-    } catch(std::bad_alloc) {
-      throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-    }
-  }
+  explicit Vector(int size);
+
   /**
    * Constructor.
-   * Allocates a size n double and initializes entries to c.
-   * Exception handling for bad allocation is provided.
-   * @param n The size of the vector.
-   * @param c Initial value for all entries.
+   * Allocates a Vector of size size and initializes everything to value.
+   * Throws an exception if allocation fails.
+   * @param size The size of the vector.
+   * @param value Initial value for all entries.
    */
-  Vector(int n, double c)
-    :size_(n) {
-    try {
-      data_ = new double[size_];
-    } catch(std::bad_alloc) {
-      throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-    }
-    for (int i = 0;i < size_;i++) data_[i]=c;
-  }
+  Vector(int size, double value);
+  
   /**
    * Copy constructor.
-   * Allocates a v.size double and copies entries from Vector v2.
-   * Exception handling for bad allocation is provided.
-   * @param v The Vector that is copied.
+   * Throws an exception if allocation fails.
+   * @param vector The Vector that is copied.
    */
-  Vector(const Vector& v)
-    :size_(v.size_) {
-    if (size_ != 0) {
-      try {
-        data_ = new double[size_];
-      }
-      catch(std::bad_alloc) {
-      throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
-      }
-      for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
-    } else {
-      data_ = 0;
-    }
-  }
+  Vector(const Vector& vector);
+  
   /**
    * Destructor.
    */
-  ~Vector() {
-    if (data_ != 0) delete[] data_;
-  }
+  ~Vector();
+
   /**
    * Copy assignment.
+   * Throws an exception (debug version) if sizes do not match.
    * Size checking is provided for the debug version.
+   * @param vector The Vector that is copied.
    */
-  inline Vector& operator=(const Vector& v) {
-    #ifdef _DEBUG
-    num::check::array_size(v.size_, size_);
-    #endif
-    if (this != &v)
-      for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
-    return *this;
-  }
+  Vector& operator=(const Vector& vector);
+
   /**
    * Implements [i] operator: v[i]
    * Range checking is provided for the debug version.
@@ -603,5 +570,9 @@ class Vector {
     }
     return s;
   }
+
+ protected:
+  int size_;
+  double* data_;
 };
 #endif  // SRC_NUMERIC_VECTOR_H_
