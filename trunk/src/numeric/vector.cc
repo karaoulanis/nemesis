@@ -27,6 +27,58 @@
 #include "numeric/lapack.h"
 #include "numeric/numeric.h"
 
+Vector::Vector()
+:size_(0), data_(0) {
+}
+
+Vector::Vector(int size)
+:size_(size), data_(0) {
+  try {
+    data_ = new double[size_];
+  } catch(std::bad_alloc) {
+    throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
+  }
+}
+
+Vector::Vector(int size, double value)
+:size_(size), data_(0) {
+  try {
+    data_ = new double[size_];
+  } catch(std::bad_alloc) {
+    throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
+  }
+  for (int i = 0; i < size_; i++) {
+    data_[i] = value;
+  }
+}
+
+Vector::Vector(const Vector& vector)
+:size_(vector.size_), data_(0) {
+  if (size_ != 0) {
+    try {
+      data_ = new double[size_];
+    } catch(std::bad_alloc) {
+      throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
+    }
+    for (int i = 0; i < size_; i++) {
+      data_[i] = vector.data_[i];
+    }
+  }
+}
+  
+Vector::~Vector() {
+  if (data_ != 0) delete[] data_;
+}
+
+Vector& Vector::operator=(const Vector& v) {
+  #ifdef _DEBUG
+  num::check::array_size(v.size_, size_);
+  #endif
+  if (this != &v)
+    for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
+  return *this;
+}
+ 
 const Vector& Vector::eigenvalues() {
   #ifdef _DEBUG
   num::check::array_size(size_, 6);
