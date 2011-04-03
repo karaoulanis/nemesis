@@ -60,27 +60,52 @@ namespace num {
   inline double rad2deg(double d) {
     return d*180./pi;
   }
+
   inline void print_d(double d, int total, int decimal) {
-    char format[64];
-    sprintf(format, "%% %d.%df", total, decimal);
-    int fw = total-1-1-decimal;
-    if (fabs(d) < pow(10.0, static_cast<double>(fw))) {
-      printf(format, d);
-    } else {
+    // (total)-(decimal)-(sign)-(period)
+    int integral = total-decimal-1-1;
+    // find number of integral digits on d 
+    int digits = 0;
+    int temp = static_cast<int>(fabs(d)); 
+    while (temp > 0) {
+      digits++;
+      temp /= 10;
+    }
+    // now we are ready to print
+    if (integral < 0) {
       for (int i = 0; i < total; i++) printf("*");
+    } else if (digits > integral) {  
+      printf(" ");
+      for (int i = 0; i < integral; i++) printf("*");
+      printf(".");
+      for (int i = 0; i < decimal; i++) printf("*");
+    } else {  
+      printf("%*.*f", total, decimal, d);
     }
   }
+
   inline void print_i(int n, int total) {
-    char format[64];
-    sprintf(format, "%% %dd", total);
-    int fw = total-1;
-    /// @todo Check for abs(int)
-    if (fabs(static_cast<double>(n)) < pow(10.0, static_cast<double>(fw))) {
-      printf(format, n);
-    } else {
-      for (int i = 0;i < total; i++) printf("*");
+    // (total)-(decimal)-(sign)-(period)
+    int integral = total-1;
+    // find number of integral digits on d 
+    int digits = 0;
+    int temp = fabs(n); 
+    while (temp > 0) {
+      digits++;
+      temp /= 10;
+    }
+    // now we are ready to print
+    if (integral < 0) {
+      for (int i = 0; i < total; i++) printf("*");
+    } else if (digits > integral) {  
+      printf(" ");
+      for (int i = 0; i < integral; i++) printf("*");
+    } else {  
+      printf("%*d", total, n);
     }
   }
+
+
   inline double sign(double d) {
     return d < 0  ? -1 : 1;
   }
