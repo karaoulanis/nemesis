@@ -66,7 +66,7 @@ namespace num {
     int integral = total-decimal-1-1;
     // find number of integral digits on d 
     int digits = 0;
-    int temp = static_cast<int>(fabs(d)); 
+    int temp = d>0 ? static_cast<int>(d) : -static_cast<int>(d); 
     while (temp > 0) {
       digits++;
       temp /= 10;
@@ -89,7 +89,7 @@ namespace num {
     int integral = total-1;
     // find number of integral digits on d 
     int digits = 0;
-    int temp = fabs(n); 
+    int temp = n>0 ? n : -n; 
     while (temp > 0) {
       digits++;
       temp /= 10;
