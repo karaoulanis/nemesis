@@ -1713,6 +1713,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\numeric\vector.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\numeric\vector.h"
 				>
 			</File>
