@@ -40,13 +40,13 @@ Node::Node() {
  * Constructor.
  */
 Node::Node(int ID, double xc1, double xc2, double xc3)
-:DomainObject(ID),
-  myActivatedDofs(MAX_NUMBER_OF_DOFS, -1),
-  myConstrainedDofs(MAX_NUMBER_OF_DOFS, 0) {
+    : DomainObject(ID),
+      x1(xc1),
+      x2(xc2),
+      x3(xc3),
+      myActivatedDofs(MAX_NUMBER_OF_DOFS, -1),
+      myConstrainedDofs(MAX_NUMBER_OF_DOFS, 0) {
   myTag = TAG_NODE;
-  x1 = xc1;
-  x2 = xc2;
-  x3 = xc3;
   nActivatedDofs = 0;
   stress.resize(6, 0.);
   strain.resize(6, 0.);
