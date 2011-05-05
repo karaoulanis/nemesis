@@ -6,7 +6,7 @@ CXXFLAGS                = -g -O2 -Wno-deprecated -Wall -Wextra -Wc++0x-compat -p
 
 
 CPPFLAGS                = -Isrc -I/usr/include
-PYTHON_CPPFLAGS         = -I/usr/include/python2.6
+PYTHON_CPPFLAGS         = -I/usr/include/python2.7
 BOOST_CPPFLAGS          = 
 BOOSTLAPACK_CPPFLAGS    = -I/opt/acml4.4.0/gfortran32_mp/include
 SQLITE3_CPPFLAGS        = 
@@ -17,7 +17,7 @@ LDFLAGS                 = -L/usr/lib
 LDADD                   = 
 # python flags
 PYTHON_LDFLAGS          = 
-PYTHON_LDADD            = -lpython2.6
+PYTHON_LDADD            = -lpython2.7
 # boost flags
 BOOST_LDFLAGS           = 
 BOOST_LDADD             = 
