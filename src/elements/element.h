@@ -102,7 +102,7 @@ class Element: public DomainObject {
   virtual const Vector& get_disp_incrm();
 
   // GroupData related info
-  void SetGroupData(GroupData* groupdata);
+  void SetGroupData(const GroupData& groupdata);
   bool IsActive();
 
   virtual void recoverStresses() {}
@@ -124,7 +124,7 @@ class Element: public DomainObject {
   std::vector<Node*> nodes_;
   IDContainer myNodalIDs;
   IDContainer myLocalNodalDofs;
-  GroupData* groupdata_;
+  const GroupData* groupdata_;
 
   // Materials
   Material* myMaterial;

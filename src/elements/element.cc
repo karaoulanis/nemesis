@@ -279,11 +279,8 @@ void Element::addGroundMotion(int dof, double val) {
 /**
  * Set GroupData
  */
-void Element::SetGroupData(GroupData* groupdata) {
-  groupdata_ = groupdata;
-  for (unsigned i = 0; i < nodes_.size(); i++) {
-    nodes_[i]->SetActive(groupdata_->active_);
-  }
+void Element::SetGroupData(const GroupData& groupdata) {
+  groupdata_ = &groupdata;
 }
 
 /**
