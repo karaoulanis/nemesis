@@ -242,7 +242,7 @@ void Domain::Initialize() {
   default_groupdata.factor_G_ = 1.0;
   default_groupdata.factor_P_ = 1.0;
   for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
-    e->second->SetGroupData(&default_groupdata);
+    e->second->SetGroupData(default_groupdata);
   }
 }
 
