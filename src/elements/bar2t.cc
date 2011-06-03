@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/bar2t.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/uniaxial_material.h"
 
 /**
@@ -85,19 +85,21 @@ const Matrix& Bar2t::get_K() {
   }
 
   /// @todo Add nodal transformations
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
 const Vector& Bar2t::get_R() {
   Vector& R=*myVector;
   R.clear();
-
-  // Factors
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
+  // Get factors
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   // Directional cosines, L^2 and strain (in the current configuration)
   static Vector du(2*nDim);

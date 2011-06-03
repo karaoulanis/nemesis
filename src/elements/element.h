@@ -102,7 +102,7 @@ class Element: public DomainObject {
   virtual const Vector& get_disp_incrm();
 
   // GroupData related info
-  void SetGroupData(const GroupData& groupdata);
+  void SetGroupData(const GroupData* groupdata);
   bool IsActive();
 
   virtual void recoverStresses() {}

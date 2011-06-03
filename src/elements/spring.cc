@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/spring.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "main/nemesis_debug.h"
 #include "material/spring_material.h"
 #include "node/node.h"
@@ -140,7 +140,7 @@ const Matrix& Spring::get_K() {
   K.Append(K0, 0, 3, -1.);
   K.Append(K0, 3, 0, -1.);
   K.Append(K0, 3, 3, +1.);
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K: 1e-7;
   K*=facK;
   // report(K, "K", 14, 1);
   return K;
@@ -170,11 +170,14 @@ const Matrix& Spring::get_M() {
 const Vector& Spring::get_R() {
   Vector& R=*myVector;
   R.clear();
-  // Factors
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  // double facG = groupdata_->factor_G_;
-  // double facP = groupdata_->factor_P_;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
+  // Get factors
+  double facS = groupdata_->factor_S;
+  // double facG = groupdata_->factor_G;
+  // double facP = groupdata_->factor_P;
   /// @todo check
   // double facG = myGroup->get_fac_G();
   // double facP = myGroup->get_fac_P();

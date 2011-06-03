@@ -26,23 +26,27 @@
 #include "loadcase/group_state.h"
 #include "elements/element.h"
 #include "group/group.h"
+#include "group/group_data.h"
 
 GroupState::GroupState() {
+}
+
+GroupState::~GroupState() {
+  delete groupdata_;
 }
 
 GroupState::GroupState(Group* group, int active,
                        double factor_K, double factor_S, double factor_G,
                        double factor_P) {
   group_    = group;
-  groupdata_.active_   == 0 ? active = false : active = true;
-  groupdata_.factor_K_ = factor_K;
-  groupdata_.factor_S_ = factor_S;
-  groupdata_.factor_G_ = factor_G;
-  groupdata_.factor_P_ = factor_P;
+  groupdata_ = new GroupData();
+  groupdata_->active   =  active == 0 ?  false : true;
+  groupdata_->factor_K = factor_K;
+  groupdata_->factor_S = factor_S;
+  groupdata_->factor_G = factor_G;
+  groupdata_->factor_P = factor_P;
 }
 
 void GroupState::Apply() {
-  for (unsigned i = 0; i < group_->get_elements().size(); i++) {
-    group_->get_elements()[i]->SetGroupData(groupdata_);
-  }
+  group_->SetGroupData(groupdata_);
 }

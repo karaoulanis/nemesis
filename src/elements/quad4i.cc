@@ -25,7 +25,7 @@
 
 #include "elements/quad4i.h"
 #include "elements/shape_functions.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "main/nemesis_debug.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
@@ -63,7 +63,7 @@ const Matrix& Quad4i::get_K() {
   // Form K
   K = Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
   // Get group factor
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   // Return K
   return K;
@@ -96,13 +96,15 @@ const Vector& Quad4i::get_R() {
   static Vector sigma(6);
   static Matrix Ba(3, 2);
 
-  // Quick return if element not active
-  if (!(groupdata_->active_))  return R;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
 
   // Factors
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
@@ -131,7 +133,9 @@ const Vector& Quad4i::get_R() {
  */
 void Quad4i::update() {
   // Check for a quick return
-  if (!(groupdata_->active_))  return;
+  if (!(groupdata_->active)) {
+    return;
+  }
   // Static vectors and matrices
   static Vector Du(8), Da(4), epsilon(6);
   static Matrix Ba(3, 2);

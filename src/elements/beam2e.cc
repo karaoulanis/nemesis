@@ -25,7 +25,7 @@
 
 #include "crosssection/cross_section.h"
 #include "elements/beam2e.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/uniaxial_material.h"
 
 Beam2e::Beam2e() {
@@ -119,7 +119,7 @@ const Matrix& Beam2e::get_K() {
   K(5, 4)=-K5;
   K(5, 5)= K6;
 
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -197,18 +197,21 @@ const Vector& Beam2e::get_Rgrad() {
   K(5, 4)=-K5;
   K(5, 5)= K6;
 
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K: 1e-7;
   K*=facK;
   return *myVector;
 }
 const Vector& Beam2e::get_R() {
   Vector& R=*myVector;
   R.clear();
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
   // Factors
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   double c = cosX[0];
   double s = cosX[1];

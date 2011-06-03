@@ -10,28 +10,49 @@ domain.gravity(10., ( 0.0, -1.0, 0.0))
 material.elastic( 1, 2000., 0., 2.)
 
 #nodes
-node.add(1,    0.0,   0.0)
-node.add(2,    1.0,   0.0)
-node.add(3,    0.0,   1.0)
-node.add(4,    1.0,   1.0)
-node.add(5,    0.0,   2.0)
-node.add(6,    1.0,   2.0)
+node.add( 1,    0.0,   0.0)
+node.add( 2,    1.0,   0.0)
+node.add( 3,    2.0,   0.0)
+node.add( 4,    0.0,   1.0)
+node.add( 5,    1.0,   1.0)
+node.add( 6,    2.0,   1.0)
+node.add( 7,    0.0,   2.0)
+node.add( 8,    1.0,   2.0)
+node.add( 9,    2.0,   2.0)
+node.add(10,    0.0,   3.0)
+node.add(11,    1.0,   3.0)
+node.add(12,    2.0,   3.0)
+node.add(13,    0.0,   4.0)
+node.add(14,    1.0,   4.0)
+node.add(15,    2.0,   4.0)
 
 #elements
 group.define(1)
-element.quad4d(1, 1, 2, 4, 3, 1)
+element.quad4d(1,  1,  2,  5,  4, 1)
+element.quad4d(2,  2,  3,  6,  5, 1)
+element.quad4d(3,  4,  5,  8,  7, 1)
+element.quad4d(4,  5,  6,  9,  8, 1)
 group.define(2)
-element.quad4d(2, 3, 4, 6, 5, 1)
+element.quad4d(5,  7,  8, 11, 10, 1)
+element.quad4d(6,  8,  9, 12, 11, 1)
+element.quad4d(7, 10, 11, 14, 13, 1)
+element.quad4d(8, 11, 12, 15, 14, 1)
 
 #constraints
-node.fix(1, 1)
-node.fix(1, 2)
-node.fix(2, 1)
-node.fix(2, 2)
-node.fix(3, 1)
-node.fix(4, 1)
-node.fix(5, 1)
-node.fix(6, 1)
+node.fix( 1, 1)
+node.fix( 1, 2)
+node.fix( 2, 1)
+node.fix( 2, 2)
+node.fix( 3, 1)
+node.fix( 3, 2)
+node.fix( 4, 1)
+node.fix( 6, 1)
+node.fix( 7, 1)
+node.fix( 9, 1)
+node.fix(10, 1)
+node.fix(12, 1)
+node.fix(13, 1)
+node.fix(15, 1)
 
 lc.define(1,'Self weight')
 group.state(1, 1, 1., 1., 1., 1.)
@@ -45,25 +66,25 @@ group.state(2, 0)
 # slef weight analysis
 #---------------------------------------------------------
 analysis.static()
-#imposer.elimination()
+imposer.elimination()
 #imposer.penalty(1e14)
-imposer.lagrange()
+#imposer.lagrange()
 control.load(1.0)
 algorithm.linear()
 convergence.set(20,1e-2,1e-6)
 #reorder.rCM()
 soe.full()
 analysis.run(1,1)
-print("u5  = ",json.loads(node.data(3))['disp'])#[1]
-print("u7  = ",json.loads(node.data(4))['disp'])#[1]
-print("u9  = ",json.loads(node.data(5))['disp'])#[1]
-print("u11 = ",json.loads(node.data(6))['disp'])#[1]
+print(" 4  = ",json.loads(node.data( 4))['disp'])#[1]
+print(" 7  = ",json.loads(node.data( 7))['disp'])#[1]
+print("10  = ",json.loads(node.data(10))['disp'])#[1]
+print("13  = ",json.loads(node.data(13))['disp'])#[1]
 
 #---------------------------------------------------------
 # excavation analysis
 #---------------------------------------------------------
 analysis.run(2,1)
-print("u5  = ",json.loads(node.data(3))['disp'])#[1]
-print("u7  = ",json.loads(node.data(4))['disp'])#[1]
+print(" 4  = ",json.loads(node.data( 4))['disp'])#[1]
+print(" 7  = ",json.loads(node.data( 7))['disp'])#[1]
 
 

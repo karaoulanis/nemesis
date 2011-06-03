@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/quad4_disp_plain.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
 
@@ -66,7 +66,7 @@ const Matrix& Quad4DispPlain::get_K() {
       ii+=2;
     }
   }
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -87,12 +87,14 @@ const Vector& Quad4DispPlain::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
   R.clear();
-
-  if (!(groupdata_->active_))  return R;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
   // Factors
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
@@ -111,7 +113,10 @@ const Vector& Quad4DispPlain::get_R() {
   return R;
 }
 void Quad4DispPlain::update() {
-  if (!(groupdata_->active_))  return;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return;
+  }
   Vector& u=*myVector;
   /// @todo: Change this with incrm
   static Vector u1(8);

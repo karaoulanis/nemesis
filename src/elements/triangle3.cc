@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/triangle3.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
 #include "node/node.h"
@@ -121,7 +121,7 @@ const Matrix& Triangle3::get_K() {
   K(5, 3) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c2+(c3*C(1, 3)+b3*C(3, 3))*b2);
   K(5, 4) = coeff*((c3*C(1, 0)+b3*C(3, 0))*b3+(c3*C(1, 3)+b3*C(3, 3))*c3);
   K(5, 5) = coeff*((c3*C(1, 1)+b3*C(3, 1))*c3+(c3*C(1, 3)+b3*C(3, 3))*b3);
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -131,10 +131,14 @@ const Matrix& Triangle3::get_M() {
 const Vector& Triangle3::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
+  // Get factors
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
   double s1=(myMatPoints[0]->get_material()->get_stress())[0];
   double s2=(myMatPoints[0]->get_material()->get_stress())[1];
   double s3=(myMatPoints[0]->get_material()->get_stress())[3];
@@ -151,7 +155,10 @@ const Vector& Triangle3::get_R() {
   return R;
 }
 void Triangle3::update() {
-  if (!(groupdata_->active_))  return;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return;
+  }
   Vector& u=*myVector;
   u = this->get_disp_incrm();
   // Determine the strain

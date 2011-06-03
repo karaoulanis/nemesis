@@ -25,7 +25,7 @@
 
 #include "elements/brick8i.h"
 #include "elements/shape_functions.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "main/nemesis_debug.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
@@ -63,7 +63,7 @@ const Matrix& Brick8i::get_K() {
   // Form K
   K = Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
   // Get group factors
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   // Return K
   return K;
@@ -91,17 +91,20 @@ const Matrix& Brick8i::get_M() {
  * Element residual vector.
  */
 const Vector& Brick8i::get_R() {
-  // Get a reference to myVector as R
-  Vector& R=*myVector;
-  R.clear();
   // Static vectors and matrices
   static Vector sigma(6);
   static Matrix Ba(6, 3);
-  // Factors
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  // Get a reference to myVector as R
+  Vector& R=*myVector;  
+  R.clear();
+  // Quick return if inactive  
+  if (!(groupdata_->active)) {
+    return R;
+  }
+  // Get factors
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
@@ -130,7 +133,9 @@ const Vector& Brick8i::get_R() {
  */
 void Brick8i::update() {
   // Check for a quick return
-  if (!(groupdata_->active_))  return;
+  if (!(groupdata_->active)) {
+    return;
+  }
   // Static vectors and matrices
   static Vector Du(24), Da(9), epsilon(6);
   static Matrix Ba(6, 3);

@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/triangle6.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
 #include "node/node.h"
@@ -147,7 +147,7 @@ const Matrix& Triangle6::get_K() {
       ii+=2;
     }
   }
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -159,10 +159,14 @@ const Matrix& Triangle6::get_M() {
 const Vector& Triangle6::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  // Quick return if incactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
+  // Get group factors
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     // Get B-matrix
     static Matrix N(6, 3);
@@ -185,7 +189,11 @@ const Vector& Triangle6::get_R() {
   return R;
 }
 void Triangle6::update() {
-  if (!(groupdata_->active_))  return;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return;
+  }
+  // Get incremental displacement vector
   Vector& u=*myVector;
   u = this->get_disp_incrm();
   // For each material point
