@@ -23,25 +23,14 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef SRC_GROUP_GROUP_H_
-#define SRC_GROUP_GROUP_H_
+#ifndef SRC_LOADCASE_GROUP_DATA_H_
+#define SRC_LOADCASE_GROUP_DATA_H_
 
-// Included files
-#include <vector>
-#include "domain/domain_object.h"
-
-class Element;
-struct GroupData;
-class Group: public DomainObject {
- public:
-  Group();
-  ~Group();
-  explicit Group(int id);
-  inline const std::vector<Element*>& get_elements()  {return elements_;}
-  void AddElement(Element* element);
- private:
-  GroupData groupdata_;
-  std::vector<Element*> elements_;
+struct GroupData {
+  bool   active_;
+  double factor_K_;
+  double factor_S_;
+  double factor_G_;
+  double factor_P_;
 };
-
-#endif  // SRC_GROUP_GROUP_H_
+#endif  // SRC_LOADCASE_GROUP_DATA_H_
