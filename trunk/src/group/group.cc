@@ -24,17 +24,31 @@
 // *****************************************************************************
 
 #include "group/group.h"
-#include "loadcase/group_state.h"
+#include "group/group_data.h"
+#include "elements/element.h"
 
 Group::Group() {
 }
 
 Group::Group(int id)
 :DomainObject(id) {
+  groupdata_ = new GroupData();
+  groupdata_->Reset();
 }
 
 Group::~Group() {
+  delete groupdata_;
 }
+
+void Group::SetGroupData(const GroupData* groupdata) {
+  // Just copy data.
+  groupdata_->active   = groupdata->active;
+  groupdata_->factor_G = groupdata->factor_G;
+  groupdata_->factor_K = groupdata->factor_K;
+  groupdata_->factor_P = groupdata->factor_P;
+  groupdata_->factor_S = groupdata->factor_S;
+}
+
 void Group::AddElement(Element* element) {
   elements_.push_back(element);
   element->SetGroupData(groupdata_);

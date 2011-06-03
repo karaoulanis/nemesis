@@ -26,19 +26,21 @@
 #ifndef SRC_LOADCASE_GROUP_STATE_H_
 #define SRC_LOADCASE_GROUP_STATE_H_
 
-#include "loadcase/group_data.h"
-
 class Group;
 struct GroupData;
 
 class GroupState {
  public:
   GroupState();
+  ~GroupState();
+
   GroupState(Group* group, int active,
-    double factor_K, double factor_S, double factor_G, double factor_P);
+             double factor_K, double factor_S,
+             double factor_G, double factor_P);
   void Apply();
+
  private:
   Group* group_;
-  GroupData groupdata_;
+  GroupData* groupdata_;
 };
 #endif  // SRC_LOADCASE_GROUP_STATE_H_

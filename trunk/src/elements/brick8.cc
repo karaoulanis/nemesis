@@ -25,7 +25,7 @@
 
 #include "elements/brick8.h"
 #include "elements/shape_functions.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "main/nemesis_debug.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
@@ -127,7 +127,7 @@ const Matrix& Brick8::get_K() {
     }
   }
   // Multiply by facK (active/deactivated)
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -148,11 +148,14 @@ const Vector& Brick8::get_R() {
   static Matrix Ba(6, 3);
   Vector& R=*myVector;
   R.clear();
-  // Factors
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  // Quick return if not active
+  if (!(groupdata_->active)) {
+    return R;
+  }
+  // Get factors
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])
   this->shapeFunctions();
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
@@ -181,8 +184,10 @@ void Brick8::update() {
   static Vector u(24);
   static Vector epsilon(6);
   static Matrix B;
-  // Check if active
-  if (!(groupdata_->active_))  return;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return;
+  }
   // Get incremental displacements
   u = this->get_disp_incrm();
   // Find shape functions for all GaussPoints (double shp[node][N, i][GPoint])

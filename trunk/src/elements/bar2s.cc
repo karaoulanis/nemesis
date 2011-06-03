@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/bar2s.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/uniaxial_material.h"
 
 /**
@@ -64,7 +64,7 @@ const Matrix& Bar2s::get_K() {
       K(i+nDim, j+nDim) =  d;
     }
   /// @todo Add nodal transformations
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -88,7 +88,7 @@ const Vector& Bar2s::get_Rgrad() {
       K(i+nDim, j+nDim) = d;
     }
   /// @todo Add nodal transformations
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   *myVector = K*(this->get_disp_convg());
   return *myVector;
@@ -98,12 +98,14 @@ const Vector& Bar2s::get_R() {
   R.clear();
 
   // Quick return if element not active
-  if (!(groupdata_->active_))  return R;
+  if (!(groupdata_->active)) {
+    return R;
+  }
 
   // Factors
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   // R = Fint - Fext
   double F0 = A0*(myUniMaterial->get_stress());

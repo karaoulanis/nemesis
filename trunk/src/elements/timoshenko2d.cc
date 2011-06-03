@@ -25,7 +25,7 @@
 
 #include "elements/timoshenko2d.h"
 #include "crosssection/cross_section.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/uniaxial_material.h"
 
 Timoshenko2d::Timoshenko2d() {
@@ -175,12 +175,14 @@ const Vector& Timoshenko2d::get_Rgrad() {
 const Vector& Timoshenko2d::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(groupdata_->active_))  return R;
-
-  // Factors
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
+  // Get factors
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   double E =myUniMaterial->get_param(0);
   double nu = myUniMaterial->get_param(1);

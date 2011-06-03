@@ -27,7 +27,7 @@
 #include <cmath>
 #include "domain/domain.h"
 #include "group/group.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/material.h"
 #include "node/node.h"
 
@@ -279,15 +279,15 @@ void Element::addGroundMotion(int dof, double val) {
 /**
  * Set GroupData
  */
-void Element::SetGroupData(const GroupData& groupdata) {
-  groupdata_ = &groupdata;
+void Element::SetGroupData(const GroupData* groupdata) {
+  groupdata_ = groupdata;
 }
 
 /**
  * Check if active.
  */
 bool Element::IsActive() {
-  return groupdata_->active_;
+  return groupdata_->active;
 }
 
 int Element::get_num_plastic_points() {

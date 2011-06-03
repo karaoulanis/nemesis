@@ -27,10 +27,17 @@
 #define SRC_LOADCASE_GROUP_DATA_H_
 
 struct GroupData {
-  bool   active_;
-  double factor_K_;
-  double factor_S_;
-  double factor_G_;
-  double factor_P_;
+  bool   active;
+  double factor_K;
+  double factor_S;
+  double factor_G;
+  double factor_P;
+  void Reset() {
+    active = true;
+    factor_K = 1.0;
+    factor_S = 1.0;
+    factor_G = 1.0;
+    factor_P = 1.0;
+  }
 };
 #endif  // SRC_LOADCASE_GROUP_DATA_H_

@@ -34,7 +34,7 @@
 #include "elements/element.h"
 #include "exception/sexception.h"
 #include "group/group.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "loadcase/loadcase.h"
 #include "material/material.h"
 #include "node/node.h"
@@ -236,13 +236,13 @@ void Domain::Initialize() {
   /// @todo: rename as to be consistent
   // default groupdata for all elements
   static GroupData default_groupdata;
-  default_groupdata.active_ = true;
-  default_groupdata.factor_K_ = 1.0;
-  default_groupdata.factor_S_ = 1.0;
-  default_groupdata.factor_G_ = 1.0;
-  default_groupdata.factor_P_ = 1.0;
+  default_groupdata.active = true;
+  default_groupdata.factor_K = 1.0;
+  default_groupdata.factor_S = 1.0;
+  default_groupdata.factor_G = 1.0;
+  default_groupdata.factor_P = 1.0;
   for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
-    e->second->SetGroupData(default_groupdata);
+//    e->second->SetGroupData(default_groupdata);
   }
 }
 

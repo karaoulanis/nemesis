@@ -29,6 +29,7 @@
 // Included files
 #include <vector>
 #include "domain/domain_object.h"
+#include "group/group_data.h"
 
 class Element;
 struct GroupData;
@@ -38,9 +39,10 @@ class Group: public DomainObject {
   ~Group();
   explicit Group(int id);
   inline const std::vector<Element*>& get_elements()  {return elements_;}
+  void SetGroupData(const GroupData* groupdata);
   void AddElement(Element* element);
  private:
-  GroupData groupdata_;
+  GroupData* groupdata_;
   std::vector<Element*> elements_;
 };
 

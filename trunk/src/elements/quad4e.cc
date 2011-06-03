@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/quad4e.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "main/nemesis_debug.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
@@ -46,7 +46,7 @@ Quad4e::~Quad4e() {
 const Matrix& Quad4e::get_K() {
   this->formKR();
   Matrix &K=*myMatrix;
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -58,12 +58,15 @@ const Matrix& Quad4e::get_M() {
 const Vector& Quad4e::get_R() {
   Vector& R=*myVector;
   R.clear();
-  if (!(groupdata_->active_))  return R;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
 
   // Factors
-  // double facS = groupdata_->factor_S_;
-  // double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  // double facS = groupdata_->factor_S;
+  // double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   this->formKR();
   R-=facP*P;

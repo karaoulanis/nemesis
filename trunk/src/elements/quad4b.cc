@@ -25,7 +25,7 @@
 
 #include "elements/quad4b.h"
 #include "elements/shape_functions.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "main/nemesis_debug.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
@@ -64,7 +64,7 @@ const Matrix& Quad4b::get_K() {
       }
     }
   }
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -90,12 +90,14 @@ const Vector& Quad4b::get_R() {
   static Matrix Ba;
   Vector& R=*myVector;
   R.clear();
-  if (!(groupdata_->active_))  return R;
-
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
   // Factors
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
 
   // Find shape functions for all GaussPoints
   this->shapeFunctions();
@@ -127,7 +129,10 @@ void Quad4b::update() {
   static Vector epsilon(6);
   static Matrix Ba;
 
-  if (!(groupdata_->active_))  return;
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return;
+  }
   u = this->get_disp_incrm();
 
   this->shapeFunctions();

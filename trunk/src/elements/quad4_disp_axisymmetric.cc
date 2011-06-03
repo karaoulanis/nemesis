@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "elements/quad4_disp_axisymmetric.h"
-#include "loadcase/group_data.h"
+#include "group/group_data.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
 
@@ -74,7 +74,7 @@ const Matrix& Quad4DispAxisymmetric::get_K() {
       ii+=2;
     }
   }
-  double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
+  double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K*=facK;
   return K;
 }
@@ -97,11 +97,14 @@ const Vector& Quad4DispAxisymmetric::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
   R.clear();
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return R;
+  }
   // Factors
-  if (!(groupdata_->active_))  return R;
-  double facS = groupdata_->factor_S_;
-  double facG = groupdata_->factor_G_;
-  double facP = groupdata_->factor_P_;
+  double facS = groupdata_->factor_S;
+  double facG = groupdata_->factor_G;
+  double facP = groupdata_->factor_P;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
     this->findShapeFunctionsAt(myMatPoints[k]);
@@ -120,7 +123,7 @@ const Vector& Quad4DispAxisymmetric::get_R() {
   return R;
 }
 void Quad4DispAxisymmetric::update() {
-  if (!(groupdata_->active_))  return;
+  if (!(groupdata_->active))  return;
   Vector& u=*myVector;
   static Vector u1(8);
   static Vector u2(8);
