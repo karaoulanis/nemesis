@@ -37,4 +37,5 @@ Group::~Group() {
 }
 void Group::AddElement(Element* element) {
   elements_.push_back(element);
+  element->SetGroupData(groupdata_);
 }
