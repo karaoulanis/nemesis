@@ -95,9 +95,9 @@ const Vector& Brick8i::get_R() {
   static Vector sigma(6);
   static Matrix Ba(6, 3);
   // Get a reference to myVector as R
-  Vector& R=*myVector;  
+  Vector& R=*myVector;
   R.clear();
-  // Quick return if inactive  
+  // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
   }

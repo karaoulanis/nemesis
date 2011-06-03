@@ -65,7 +65,7 @@ Vector::Vector(const Vector& vector)
     }
   }
 }
-  
+
 Vector::~Vector() {
   if (data_ != 0) delete[] data_;
 }
@@ -78,7 +78,7 @@ Vector& Vector::operator=(const Vector& v) {
     for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
   return *this;
 }
- 
+
 const Vector& Vector::eigenvalues() {
   #ifdef _DEBUG
   num::check::array_size(size_, 6);
