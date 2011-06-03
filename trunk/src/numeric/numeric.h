@@ -64,9 +64,9 @@ namespace num {
   inline void print_d(double d, int total, int decimal) {
     // (total)-(decimal)-(sign)-(period)
     int integral = total-decimal-1-1;
-    // find number of integral digits on d 
+    // find number of integral digits on d
     int digits = 0;
-    int temp = d>0 ? static_cast<int>(d) : -static_cast<int>(d); 
+    int temp = d>0 ? static_cast<int>(d) : -static_cast<int>(d);
     while (temp > 0) {
       digits++;
       temp /= 10;
@@ -74,12 +74,12 @@ namespace num {
     // now we are ready to print
     if (integral < 0) {
       for (int i = 0; i < total; i++) printf("*");
-    } else if (digits > integral) {  
+    } else if (digits > integral) {
       printf(" ");
       for (int i = 0; i < integral; i++) printf("*");
       printf(".");
       for (int i = 0; i < decimal; i++) printf("*");
-    } else {  
+    } else {
       printf("%*.*f", total, decimal, d);
     }
   }
@@ -87,9 +87,9 @@ namespace num {
   inline void print_i(int n, int total) {
     // (total)-(decimal)-(sign)-(period)
     int integral = total-1;
-    // find number of integral digits on d 
+    // find number of integral digits on d
     int digits = 0;
-    int temp = n>0 ? n : -n; 
+    int temp = n>0 ? n : -n;
     while (temp > 0) {
       digits++;
       temp /= 10;
@@ -97,10 +97,10 @@ namespace num {
     // now we are ready to print
     if (integral < 0) {
       for (int i = 0; i < total; i++) printf("*");
-    } else if (digits > integral) {  
+    } else if (digits > integral) {
       printf(" ");
       for (int i = 0; i < integral; i++) printf("*");
-    } else {  
+    } else {
       printf("%*d", total, n);
     }
   }

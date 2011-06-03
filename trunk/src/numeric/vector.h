@@ -33,7 +33,7 @@
 
 class Vector {
  public:
-  
+
   /**
    * Default constructor.
    * Initializes size and data pointer to zero.
@@ -57,14 +57,14 @@ class Vector {
    * @param value Initial value for all entries.
    */
   Vector(int size, double value);
-  
+
   /**
    * Copy constructor.
    * Throws an exception if allocation fails.
    * @param vector The Vector that is copied.
    */
   Vector(const Vector& vector);
-  
+
   /**
    * Destructor.
    */

@@ -38,7 +38,7 @@ class Matrix {
  public:
   /**
    * Default constructor
-   */ 
+   */
   Matrix();
 
   /**
