@@ -32,12 +32,18 @@
 class SpringMaterial;
 
 class Spring: public Element {
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Spring(const Spring&);
+  void operator=(const Spring&);
  protected:
   int nDim;
   // double gap;
   SpringMaterial* mySpringMaterial;
   Matrix T;
-  public:
+ public:
   // Constructors and Destructor
   Spring();
   Spring(int ID, int Node_1, int Node_2, int matID,

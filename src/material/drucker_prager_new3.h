@@ -47,6 +47,11 @@ class DruckerPragerNew3: public MultiaxialMaterial {
   vector<YS*> fSurfaces;
   vector<YS*> gSurfaces;
   Hardening EL;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  DruckerPragerNew3(const DruckerPragerNew3&);
+  void operator=(const DruckerPragerNew3&);
 
  public:
   DruckerPragerNew3();

@@ -42,5 +42,10 @@ class GroupState {
  private:
   Group* group_;
   GroupData* groupdata_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  GroupState(const GroupState&);
+  void operator=(const GroupState&);
 };
 #endif  // SRC_LOADCASE_GROUP_STATE_H_

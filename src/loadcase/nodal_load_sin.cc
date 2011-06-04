@@ -26,15 +26,18 @@
 #include "loadcase/nodal_load_sin.h"
 #include <cmath>
 
-NodalLoadSin::NodalLoadSin() {
+NodalLoadSin::NodalLoadSin()
+    : a_(0.),
+      omega_(0.),
+      phi_(0.) {
 }
 
 NodalLoadSin::NodalLoadSin(Node* node, int dof, double a, double omega,
                            double phi)
-                           :NodalLoad(node, dof) {
-  a_     = a;
-  omega_ = omega;
-  phi_   = phi;
+    : NodalLoad(node, dof),
+      a_(a),
+      omega_(omega),
+      phi_(phi) {
 }
 
 double NodalLoadSin::GetValue(double time) {

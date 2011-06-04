@@ -34,7 +34,11 @@ int Constraint::num_constraints_ = 0;
  * Constructor.
  */
 Constraint::Constraint()
-  :DomainObject(++num_constraints_), val_(0), f_trial_(0), f_convg_(0) {
+    : DomainObject(++num_constraints_),
+      cdofs_(0), 
+      val_(0),
+      f_trial_(0),
+      f_convg_(0) {
 }
 
 /**

@@ -41,6 +41,11 @@ class Bar: public Element {
   double A0;
   Vector cosX;
   UniaxialMaterial* myUniMaterial;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Bar(const Bar&);
+  void operator=(const Bar&);
  public:
   // Constructors and Destructor
   Bar();

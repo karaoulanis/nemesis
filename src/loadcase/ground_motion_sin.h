@@ -44,6 +44,12 @@ class GroundMotionSin: public Load {
   double a_;
   double omega_;
   double phi_;
-};
 
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  GroundMotionSin(const GroundMotionSin&);
+  void operator=(const GroundMotionSin&);
+};
 #endif  // SRC_LOADCASE_GROUND_MOTION_SIN_H_

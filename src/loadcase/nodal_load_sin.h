@@ -38,5 +38,10 @@ class NodalLoadSin: public NodalLoad {
   double omega_;
   double phi_;
   double GetValue(double time);
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  NodalLoadSin(const NodalLoadSin&);
+  void operator=(const NodalLoadSin&);
 };
 #endif  // SRC_LOADCASE_NODAL_LOAD_SIN_H_

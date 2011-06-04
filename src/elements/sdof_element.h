@@ -30,9 +30,14 @@
 #include "material/sdof_material.h"
 
 class SDofElement: public Element {
-  private:
+ private:
   SDofMaterial* mySDofMaterial;
-  public:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  SDofElement(const SDofElement&);
+  void operator=(const SDofElement&);
+ public:
   // Constructors and Destructor
   SDofElement();
   SDofElement(int ID, int NodeID, int dofID, int matID);

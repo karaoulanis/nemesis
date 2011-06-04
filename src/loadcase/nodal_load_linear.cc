@@ -25,14 +25,16 @@
 
 #include "loadcase/nodal_load_linear.h"
 
-NodalLoadLinear::NodalLoadLinear() {
+NodalLoadLinear::NodalLoadLinear()
+    : initial_value_(0.),
+      gradient_(0.) {
 }
 
 NodalLoadLinear::NodalLoadLinear(Node* node, int dof, double initial_value,
                                  double gradient)
-                                 :NodalLoad(node, dof) {
-  initial_value_ = initial_value;
-  gradient = gradient_;
+    : NodalLoad(node, dof),
+      initial_value_(initial_value),
+      gradient_(gradient) {
 }
 
 double NodalLoadLinear::GetValue(double time) {

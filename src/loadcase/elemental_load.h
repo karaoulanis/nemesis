@@ -42,7 +42,15 @@ class ElementalLoad: public Load {
   // Apply load
   virtual const Vector& get_P()=0;
   void apply(double fact, double t);
+
  protected:
   Element* element_;
+
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  ElementalLoad(const ElementalLoad&);
+  void operator=(const ElementalLoad&);
 };
 #endif  // SRC_LOADCASE_ELEMENTAL_LOAD_H_

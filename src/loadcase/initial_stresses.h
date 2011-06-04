@@ -47,5 +47,10 @@ class InitialStresses: public InitialCondition {
   double h2_;
   double s2_;
   double K0_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  InitialStresses(const InitialStresses&);
+  void operator=(const InitialStresses&);
 };
 #endif  // SRC_LOADCASE_INITIAL_STRESSES_H_

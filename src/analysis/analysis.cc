@@ -34,16 +34,18 @@
 #include "soe/soe.h"
 
 Analysis::Analysis(Domain* pDomain)
-:M(pDomain), theDomain(pDomain) {
+    : M(pDomain),
+      theDomain(pDomain),
+      theAnalysisType(NULL),
+      theAlgorithm(NULL),
+      theControl(NULL),
+      theSOE(NULL),
+      theImposer(NULL),
+      theNorm(new ConvergenceNorm()),
+      theReorderer(NULL) {
   M.set_analysis(this);
-  theNorm = new ConvergenceNorm();
-  theAnalysisType = 0;
-  theImposer = 0;
-  theControl = 0;
-  theAlgorithm = 0;
-  theSOE = 0;
-  theReorderer = 0;
 }
+
 Analysis::~Analysis() {
   delete theNorm;
   this->clear();

@@ -33,19 +33,6 @@
  * The Hoek-Brown Class.
  */
 class HoekBrown: public MultiaxialMaterial {
- private:
-  MultiaxialMaterial* myElastic;
-  static Matrix C;
-  static Matrix C3;
-  bool plastic;
-  int inaccurate;
-
-  Vector f;
-  vector<Vector> dfds;
-  vector<Vector> dgds;
-  vector<Matrix> d2gdsds;
-
-  double aTrial, aConvg;
  public:
   HoekBrown();
   HoekBrown(int ID, int elasticID, double si, double sp, double mb, double mbb,
@@ -65,5 +52,22 @@ class HoekBrown: public MultiaxialMaterial {
 
   // Tracker member functions
   void track();
+
+ private:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  static Matrix C3;
+  bool plastic;
+  int inaccurate;
+  Vector f;
+  vector<Vector> dfds;
+  vector<Vector> dgds;
+  vector<Matrix> d2gdsds;
+  double aTrial, aConvg;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  HoekBrown(const HoekBrown&);
+  void operator=(const HoekBrown&);
 };
 #endif  // SRC_MATERIAL_HOEK_BROWN_H_

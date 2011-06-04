@@ -30,21 +30,34 @@
 #include "numeric/vector.h"
 #include "soe/soe.h"
 
+/// @todo: Check initialization list
 BFGS::BFGS(int m_)
-:m(m_), isLineSearchActive(false) {
+    : m(m_),
+      etaMin(0.),
+      etaMax(0.),
+      rTol(0.),
+      maxIter(0.),
+      isLineSearchActive(false),
+      s(m_),
+      y(m_) {
   myTag = TAG_NONE;
-  s.resize(m);
-  y.resize(m);
 }
+
 BFGS::BFGS(int m_, double etaMin_, double etaMax_, double rTol_, int maxIter_)
-:m(m_), etaMin(etaMin_), etaMax(etaMax_), rTol(rTol_), maxIter(maxIter_),
-isLineSearchActive(true) {
+    : m(m_),
+      etaMin(etaMin_),
+      etaMax(etaMax_),
+      rTol(rTol_),
+      maxIter(maxIter_),
+      isLineSearchActive(true),
+      s(m_),
+      y(m_) {
   myTag = TAG_NONE;
-  s.resize(m);
-  y.resize(m);
 }
+
 BFGS::~BFGS() {
 }
+
 int BFGS::solveStep(int /*n*/) {
   int size = pA->get_model()->get_num_eqns();
   Vector resOld(size);

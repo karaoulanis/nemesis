@@ -38,6 +38,12 @@ class EvolutionLaw;
  * The MultiaxialElastoPlastic Class.
  */
 class MultiaxialElastoPlastic: public MultiaxialMaterial {
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  MultiaxialElastoPlastic(const MultiaxialElastoPlastic&);
+  void operator=(const MultiaxialElastoPlastic&);
  protected:
   MultiaxialMaterial* myElastic;
 
