@@ -28,7 +28,18 @@
 #include "numeric/matrix.h"
 
 SOE::SOE() 
-    : size_(0),
+    : model_(0),
+      size_(0),
+      A(),
+      X(),
+      B(),
+      IPIV(),
+      isLUFactored(false) {
+}
+
+SOE::SOE(const Model* model) 
+    : model_(model),
+      size_(0),
       A(),
       X(),
       B(),
@@ -46,12 +57,6 @@ int SOE::insertVectorIntoB(const Vector& Ve, const IDContainer& EFTable,
   return 0;
 }
 
-void SOE::printSolution() {
-  for (int i = 0;i < size_; i++) {
-    printf("%12.4f", X[i]);
-  }
-}
-
 const Vector& SOE::get_X() {
   return X;
 }
@@ -62,6 +67,10 @@ const Vector& SOE::get_B() {
 
 void SOE::addB(const Vector& v) {
   B+=v;
+}
+
+void SOE::set_model(const Model& model) {
+  model_=&model;
 }
 
 void SOE::set_B(const Vector& v) {

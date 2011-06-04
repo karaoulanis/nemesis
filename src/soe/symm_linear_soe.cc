@@ -29,11 +29,18 @@
 #include "numeric/matrix.h"
 
 SymmLinearSOE::SymmLinearSOE()
-  :SOE() {
+    : SOE() {
   myTag = TAG_SOE_LINEAR_SYMM;
 }
+
+SymmLinearSOE::SymmLinearSOE(const Model* model)
+    : SOE(model) {
+  myTag = TAG_SOE_LINEAR_SYMM;
+}
+
 SymmLinearSOE::~SymmLinearSOE() {
 }
+
 int SymmLinearSOE::
 insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;

@@ -41,6 +41,7 @@ class EigenSOE: public SOE {
  public:
   // Constructor and destructor
   EigenSOE();
+  EigenSOE(const Model* model);
   ~EigenSOE();
 
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,

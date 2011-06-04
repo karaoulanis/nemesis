@@ -29,11 +29,19 @@
 #include "numeric/matrix.h"
 
 BandLinearSOE::BandLinearSOE()
-  :SOE() {
+    : SOE(),
+      lowerBandwidth(0),
+      upperBandwidth(0),
+      nRows(0) {
   myTag = TAG_SOE_LINEAR_BAND;
-  lowerBandwidth = 0;
-  upperBandwidth = 0;
-  nRows = 0;
+}
+
+BandLinearSOE::BandLinearSOE(const Model* model)
+    : SOE(model),
+      lowerBandwidth(0),
+      upperBandwidth(0),
+      nRows(0) {
+  myTag = TAG_SOE_LINEAR_BAND;
 }
 
 BandLinearSOE::~BandLinearSOE() {

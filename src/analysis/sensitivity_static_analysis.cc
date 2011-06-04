@@ -41,7 +41,7 @@ SensitivityStaticAnalysis::SensitivityStaticAnalysis()
   pA->set_imposer(new EliminationImposer());
   pA->set_control(new LoadControl(1., 1., 1., 1, 0.5, 0.));
   pA->set_algorithm(new LinearAlgorithm());
-  pA->set_soe(new FullLinearSOE());
+  pA->set_soe(new FullLinearSOE(pA->get_model()));
   theSensitivityControl = new SensitivityControl;
 }
 

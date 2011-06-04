@@ -29,13 +29,14 @@
 #include "soe/soe.h"
 
 class BandLinearSOE: public SOE {
-  private:
+ private:
   int lowerBandwidth;
   int upperBandwidth;
   int nRows;
-  public:
+ public:
   // Constructor and destructor
   BandLinearSOE();
+  BandLinearSOE(const Model* model);
   ~BandLinearSOE();
 
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,

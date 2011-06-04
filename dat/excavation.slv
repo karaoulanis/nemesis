@@ -73,7 +73,9 @@ control.load(1.0)
 algorithm.linear()
 convergence.set(20,1e-2,1e-6)
 #reorder.rCM()
-soe.full()
+#soe.full()
+#soe.band()
+soe.symm()
 analysis.run(1,1)
 print(" 4  = ",json.loads(node.data( 4))['disp'])#[1]
 print(" 7  = ",json.loads(node.data( 7))['disp'])#[1]

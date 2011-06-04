@@ -29,8 +29,13 @@
 #include "numeric/matrix.h"
 
 FullLinearSOE::FullLinearSOE()
-  :SOE() {
-  myTag = TAG_SOE_LINEAR_FULL;
+    : SOE() {
+      myTag = TAG_SOE_LINEAR_FULL;
+}
+
+FullLinearSOE::FullLinearSOE(const Model* model)
+    : SOE(model) {
+      myTag = TAG_SOE_LINEAR_FULL;
 }
 
 FullLinearSOE::~FullLinearSOE() {
