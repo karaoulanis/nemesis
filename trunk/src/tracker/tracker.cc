@@ -27,8 +27,10 @@
 #include <iostream>
 #include <sstream>
 
-Tracker::Tracker() {
+Tracker::Tracker()
+    : records_(0) {
 }
+
 Tracker::~Tracker() {
 }
 int Tracker::get_steps() {

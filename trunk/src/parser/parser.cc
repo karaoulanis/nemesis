@@ -28,7 +28,8 @@
  * Simple constructor.
  */
 Parser::Parser()
-:A(&D) {
+    : D(),
+      A(&D) {
 }
 /**
  * Virtual destructor.
