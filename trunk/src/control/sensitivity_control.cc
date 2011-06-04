@@ -31,8 +31,11 @@
 #include "model/model_node.h"
 #include "soe/soe.h"
 
-SensitivityControl::SensitivityControl() {
+SensitivityControl::SensitivityControl()
+    : ds(0),
+      currParameter(0) {
 }
+
 SensitivityControl::~SensitivityControl() {
 }
 

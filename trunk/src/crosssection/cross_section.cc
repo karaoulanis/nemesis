@@ -28,9 +28,9 @@
 
 RectangularCrossSection::RectangularCrossSection(int ID, double width,
                                                  double height)
-:CrossSection(ID) {
-  w = width;
-  h = height;
+    : CrossSection(ID),
+      w(width),
+      h(height) {
   A = w*h;
   As2 = 5./6.*A;
   As3 = 5./6.*A;
@@ -49,7 +49,7 @@ UserDefinedCrossSection::UserDefinedCrossSection(int ID,
                           double J3_in,
                           double h2_in,
                           double h3_in)
-:CrossSection(ID) {
+    : CrossSection(ID) {
   A = A_in;
   As2 = As2_in;
   As3 = As3_in;
