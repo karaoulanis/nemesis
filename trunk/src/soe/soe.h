@@ -44,7 +44,7 @@ class Matrix;
 class SOE: public AnalysisObject {
  public:
   SOE();
-  SOE(const Model* model);
+  SOE(Model* model);
   virtual ~SOE();
 
   virtual int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
@@ -62,7 +62,7 @@ class SOE: public AnalysisObject {
   const Vector& get_X();
   const Vector& get_B();
   void addB(const Vector& v);
-  void set_model(const Model& model);
+  void set_model(Model* model);
   void set_B(const Vector& v);
   void set_X(const Vector& v);
 
@@ -72,7 +72,7 @@ class SOE: public AnalysisObject {
 
   virtual int solve()=0;
  protected:
-  const Model* model_;
+  Model* model_;
   int size_;
   std::valarray<double> A;
   Vector X;

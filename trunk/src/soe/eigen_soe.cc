@@ -33,7 +33,7 @@ EigenSOE::EigenSOE()
       myTag = TAG_NONE;
 }
 
-EigenSOE::EigenSOE(const Model* model)
+EigenSOE::EigenSOE(Model* model)
     : SOE(model) {
       myTag = TAG_NONE;
 }
@@ -67,11 +67,11 @@ insertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable, double factor) {
 
 void EigenSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (size_ == pA->get_model()->get_num_eqns()) {
+  if (size_ == model_->get_num_eqns()) {
     return;
-  } else {
-    size_ = pA->get_model()->get_num_eqns();
   }
+  
+  size_ = model_->get_num_eqns();
   A.resize(size_*size_);
   M.resize(size_*size_);
   X.resize(size_);

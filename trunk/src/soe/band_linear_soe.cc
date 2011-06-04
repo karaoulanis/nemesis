@@ -36,7 +36,7 @@ BandLinearSOE::BandLinearSOE()
   myTag = TAG_SOE_LINEAR_BAND;
 }
 
-BandLinearSOE::BandLinearSOE(const Model* model)
+BandLinearSOE::BandLinearSOE(Model* model)
     : SOE(model),
       lowerBandwidth(0),
       upperBandwidth(0),
@@ -68,9 +68,9 @@ void BandLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
   if (size_ == model_->get_num_eqns()) {
     return;
-  } else {
-    size_ = model_->get_num_eqns();
   }
+  
+  size_ = model_->get_num_eqns();
   nRows = 2*lowerBandwidth+upperBandwidth+1;
   A.resize(nRows*size_);
   B.resize(size_);

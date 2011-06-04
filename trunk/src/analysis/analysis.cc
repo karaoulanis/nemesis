@@ -104,5 +104,5 @@ void Analysis::set_reorderer(Reorderer* p) {
 void Analysis::set_soe(SOE* p) {
   if (theSOE != 0) delete theSOE;
   theSOE = p;
-  theSOE->set_model(M);
+  theSOE->set_model(&M);
 }

@@ -36,7 +36,7 @@ class BandLinearSOE: public SOE {
  public:
   // Constructor and destructor
   BandLinearSOE();
-  BandLinearSOE(const Model* model);
+  BandLinearSOE(Model* model);
   ~BandLinearSOE();
 
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,

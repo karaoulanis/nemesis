@@ -32,7 +32,7 @@ class FullLinearSOE: public SOE {
  public:
   // Constructor and destructor
   FullLinearSOE();
-  FullLinearSOE(const Model* model);
+  FullLinearSOE(Model* model);
   ~FullLinearSOE();
 
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
