@@ -33,7 +33,7 @@ SymmLinearSOE::SymmLinearSOE()
   myTag = TAG_SOE_LINEAR_SYMM;
 }
 
-SymmLinearSOE::SymmLinearSOE(const Model* model)
+SymmLinearSOE::SymmLinearSOE(Model* model)
     : SOE(model) {
   myTag = TAG_SOE_LINEAR_SYMM;
 }
@@ -60,21 +60,20 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
 }
 void SymmLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (size_ == pA->get_model()->get_num_eqns()) {
+  if (size_ == model_->get_num_eqns()) {
     return;
-  } else {
-    size_ = pA->get_model()->get_num_eqns();
   }
+  size_ = model_->get_num_eqns();
   A.resize(static_cast<int>(0.5*size_*(size_+1)));
   B.resize(size_);
   X.resize(size_);
   IPIV.resize(size_);
-
   size_t d = (static_cast<int>(0.5*size_*(size_+1))+size_+size_)*sizeof(double);
   size_t i = size_*sizeof(int);
   printf("soe: Allocated %6.2fmb of memory for %d dofs.\n",
     static_cast<double>(d+i)/(1024*1024), size_);
 }
+
 void SymmLinearSOE::print() {
   for (int i = 0; i < size_; i++) {
     for (int j = 0; j < size_; j++) {

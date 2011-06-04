@@ -33,7 +33,7 @@ FullLinearSOE::FullLinearSOE()
       myTag = TAG_SOE_LINEAR_FULL;
 }
 
-FullLinearSOE::FullLinearSOE(const Model* model)
+FullLinearSOE::FullLinearSOE(Model* model)
     : SOE(model) {
       myTag = TAG_SOE_LINEAR_FULL;
 }
@@ -55,16 +55,14 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
 
 void FullLinearSOE::set_size() {
   // If the size has not changed do not resize arrays
-  if (size_ == pA->get_model()->get_num_eqns()) {
+  if (size_ == model_->get_num_eqns()) {
     return;
-  } else {
-    size_ = pA->get_model()->get_num_eqns();
   }
+  size_ = model_->get_num_eqns();
   A.resize(size_*size_);
   B.resize(size_);
   X.resize(size_);
   IPIV.resize(size_);
-
   size_t d = (size_*size_+2*size_)*sizeof(double);
   size_t i = size_*sizeof(int);
   printf("soe: Allocated %6.2fmb of memory for %d dofs.\n",

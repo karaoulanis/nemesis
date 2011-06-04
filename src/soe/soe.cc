@@ -37,7 +37,7 @@ SOE::SOE()
       isLUFactored(false) {
 }
 
-SOE::SOE(const Model* model) 
+SOE::SOE(Model* model) 
     : model_(model),
       size_(0),
       A(),
@@ -69,8 +69,8 @@ void SOE::addB(const Vector& v) {
   B+=v;
 }
 
-void SOE::set_model(const Model& model) {
-  model_=&model;
+void SOE::set_model(Model* model) {
+  model_ = model;
 }
 
 void SOE::set_B(const Vector& v) {
