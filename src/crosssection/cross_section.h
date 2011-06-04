@@ -43,11 +43,29 @@ class CrossSection: public DomainObject {
   double J3;
   double h2;
   double h3;
-  public:
-  CrossSection() {}
+ public:
+  CrossSection()
+    : A(0.0),
+      As2(0.0),
+      As3(0.0),
+      J1(0.0),
+      J2(0.0),
+      J3(0.0),
+      h2(0.0),
+      h3(0.0) {
+  }
   explicit CrossSection(int ID)
-    :DomainObject(ID)  {}
-    ~CrossSection() {}
+    : DomainObject(ID),
+      A(0.0),
+      As2(0.0),
+      As3(0.0),
+      J1(0.0),
+      J2(0.0),
+      J3(0.0),
+      h2(0.0),
+      h3(0.0) {
+  }
+  ~CrossSection() {}
   double get_A()   {return A;}
   double get_As2()   {return As2;}
   double get_As3()   {return As3;}
@@ -62,13 +80,14 @@ class CrossSection: public DomainObject {
 // Rectangular CrossSection
 //=============================================================
 class RectangularCrossSection: public CrossSection {
-  private:
+ private:
   double w;
   double h;
-  public:
+ public:
   RectangularCrossSection(int ID, double width, double height);
   ~RectangularCrossSection() {}
 };
+
 //=============================================================
 // User Defined CrossSection
 //=============================================================

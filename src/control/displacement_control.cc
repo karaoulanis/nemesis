@@ -46,17 +46,23 @@
 DisplacementControl::DisplacementControl(int nodeID, int dofID,
     double Du0, double minDu, double maxDu, int IterDesired,
     double n, double DeltaTime)
-:StaticControl(Du0, minDu, maxDu, IterDesired, n, DeltaTime), DeltaU(Du0) {
-  theNodeID = nodeID;
-  theDofID = dofID;
+    : StaticControl(Du0, minDu, maxDu, IterDesired, n, DeltaTime),
+      DeltaU(Du0),
+      Du_k(0.0),
+      duT_k(0.0),
+      theNodeID(nodeID),
+      theDofID(dofID),
+      theRefDof(0) { 
   myTag = TAG_CONTROL_DISPLACEMENT;
 }
+
 /**
  * Destructor.
  */
 DisplacementControl::~DisplacementControl() {
   // Does nothing
 }
+
 /**
  * Creates new step for a Displacement control based static analysis.
  * It does two things:

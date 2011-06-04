@@ -36,20 +36,22 @@
  * Constructor.
  */
 Newmark::Newmark(double beta_, double gamma_, double dt_)
-:TransientControl() {
+    : TransientControl(),
+      beta(beta_),
+      gamma(gamma_),
+      dt(dt_) {
   myTag = TAG_CONTROL_LOAD;
-  beta = beta_;
-  gamma = gamma_;
-  dt = dt_;
   c[0]=1.0;
   c[1]=1.0/(beta*dt*dt);
   c[2]=gamma/(beta*dt);
 }
+
 /**
  * Destructor.
  */
 Newmark::~Newmark() {
 }
+
 /**
  *
  */

@@ -30,14 +30,17 @@
 #include "model/model_node.h"
 #include "soe/soe.h"
 
-Control::Control() {
-  lambdaTrial = 0;
-  lambdaConvg = 0;
-  DLambda = 0;
-  dLambda = 0;
+Control::Control()
+    : lambdaTrial(0.0),
+      lambdaConvg(0.0),
+      DLambda(0.0),
+      dLambda(0.0),
+      qRef(0) {
 }
+
 Control::~Control() {
 }
+
 void Control::formTangent() {
   pA->get_soe()->zeroA();
   int n = pA->get_model()->get_model_elements().size();
@@ -47,6 +50,7 @@ void Control::formTangent() {
     pA->get_soe()->insertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
   }
 }
+
 double Control::get_lambda() {
   return lambdaTrial;
 }
