@@ -30,12 +30,26 @@
 #include "numeric/matrix.h"
 
 EigenSOE::EigenSOE()
-    : SOE() {
-      myTag = TAG_NONE;
+    : SOE(),
+      M(0),
+      ALPHAR(0),
+      ALPHAI(0),
+      BETA(0),
+      VL(0),
+      VR(0),
+      WORK(0) {
+  myTag = TAG_NONE;
 }
 
 EigenSOE::EigenSOE(Model* model)
-    : SOE(model) {
+    : SOE(model),
+      M(0),
+      ALPHAR(0),
+      ALPHAI(0),
+      BETA(0),
+      VL(0),
+      VR(0),
+      WORK(0) {
       myTag = TAG_NONE;
 }
 

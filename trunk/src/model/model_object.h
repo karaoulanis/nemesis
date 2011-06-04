@@ -49,5 +49,11 @@ class ModelObject {
   static Vector** theStaticVectors;
   Matrix* myMatrix;
   Vector* myVector;
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  ModelObject(const ModelObject&);
+  void operator=(const ModelObject&);
 };
 #endif  // SRC_MODEL_MODEL_OBJECT_H_

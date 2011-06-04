@@ -32,12 +32,6 @@ class CrossSection;
 class UniaxialMaterial;
 
 class Beam2e: public Element {
- protected:
-  double cosX[2];
-  int mySecID;
-  CrossSection* mySection;
-  double L;
-  UniaxialMaterial* myUniMaterial;
  public:
   Beam2e();
   Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section);
@@ -52,5 +46,19 @@ class Beam2e: public Element {
   void update()           {return;}
   void commit()           {return;}
   void recoverStresses();
+
+ protected:
+  double cosX[2];
+  int mySecID;
+  CrossSection* mySection;
+  double L;
+  UniaxialMaterial* myUniMaterial;
+ 
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Beam2e(const Beam2e&);
+  void operator=(const Beam2e&);
 };
 #endif  // SRC_ELEMENTS_BEAM2E_H_

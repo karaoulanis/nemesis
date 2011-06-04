@@ -39,17 +39,6 @@ class Reorderer;
 class SOE;
 
 class Analysis {
- private:
-  Model M;
-  Domain* theDomain;
-  AnalysisType* theAnalysisType;
-  Algorithm* theAlgorithm;
-  Control* theControl;
-  SOE* theSOE;
-  Imposer* theImposer;
-  ConvergenceNorm* theNorm;
-  Reorderer* theReorderer;
-
  public:
   explicit Analysis(Domain* pDomain);
   ~Analysis();
@@ -73,5 +62,21 @@ class Analysis {
 
   int analyze(LoadCase* loadcase, int num_loadsteps);
   void clear();
+
+ private:
+  Model M;
+  Domain* theDomain;
+  AnalysisType* theAnalysisType;
+  Algorithm* theAlgorithm;
+  Control* theControl;
+  SOE* theSOE;
+  Imposer* theImposer;
+  ConvergenceNorm* theNorm;
+  Reorderer* theReorderer;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Analysis(const Analysis&);
+  void operator=(const Analysis&);
 };
 #endif  // SRC_ANALYSIS_ANALYSIS_H_

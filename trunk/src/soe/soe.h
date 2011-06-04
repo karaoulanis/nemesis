@@ -77,5 +77,10 @@ class SOE: public AnalysisObject {
   Vector B;
   std::valarray<int> IPIV;
   bool isLUFactored;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  SOE(const SOE&);
+  void operator=(const SOE&);
 };
 #endif  // SRC_SOE_SOE_H_

@@ -140,5 +140,12 @@ class Element: public DomainObject {
   static Vector** theStaticVectors;
   int handleCommonInfo();
   int activeParameter;
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Element(const Element&);
+  void operator=(const Element&);
+
 };
 #endif  // SRC_ELEMENTS_ELEMENT_H_

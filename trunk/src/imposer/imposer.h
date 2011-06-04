@@ -36,12 +36,6 @@ class Domain;
 class Constraint;
 
 class Imposer: public AnalysisObject {
- protected:
-  Model* theModel;
-  Domain* theDomain;
-  std::map<int, Constraint*>* theConstraints;
-  IDContainer myNodalIDs;
-  IDContainer theNodalGlobalDofs;
  public:
   Imposer();
   virtual ~Imposer();
@@ -49,5 +43,17 @@ class Imposer: public AnalysisObject {
   int get_global_dof(int NodeID, int localDof);
   const IDContainer get_global_dofs(int NodeID);
   virtual int impose()=0;
+ protected:
+  Model* theModel;
+  Domain* theDomain;
+  std::map<int, Constraint*>* theConstraints;
+  IDContainer myNodalIDs;
+  IDContainer theNodalGlobalDofs;
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Imposer(const Imposer&);
+  void operator=(const Imposer&);
 };
 #endif  // SRC_IMPOSER_IMPOSER_H_

@@ -30,12 +30,7 @@
 
 class Constraint;
 class ModelElement : public ModelObject {
-  private:
-
- protected:
-  Element* myElement;
-  Constraint* myConstraint;
-  public:
+ public:
   // Constructors
   ModelElement();
   ModelElement(const IDContainer& FTable, Element* pElement,
@@ -57,6 +52,17 @@ class ModelElement : public ModelObject {
   virtual void add_Reff(double factor = 1.0)=0;
 
   virtual void add_Kgrad(double /*factor = 1.0*/) {}
+ 
+ protected:
+  Element* myElement;
+  Constraint* myConstraint;
+ 
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  ModelElement(const ModelElement&);
+  void operator=(const ModelElement&);
 };
 
 #endif  // SRC_MODEL_MODEL_ELEMENT_H_
