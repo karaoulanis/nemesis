@@ -29,9 +29,10 @@
 #include "soe/soe.h"
 
 class SymmLinearSOE: public SOE {
-  public:
+ public:
   // Constructor and destructor
   SymmLinearSOE();
+  SymmLinearSOE(const Model* model);
   ~SymmLinearSOE();
 
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,

@@ -36,7 +36,7 @@ EigenAnalysis::EigenAnalysis()
   // defaults
   pA->set_imposer(new EliminationImposer());
   pA->set_control(new EigenControl());
-  pA->set_soe(new EigenSOE());
+  pA->set_soe(new EigenSOE(pA->get_model()));
 }
 EigenAnalysis::~EigenAnalysis() {
 }

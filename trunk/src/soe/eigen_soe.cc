@@ -29,8 +29,13 @@
 #include "numeric/matrix.h"
 
 EigenSOE::EigenSOE()
-  :SOE() {
-  myTag = TAG_NONE;
+    : SOE() {
+      myTag = TAG_NONE;
+}
+
+EigenSOE::EigenSOE(const Model* model)
+    : SOE(model) {
+      myTag = TAG_NONE;
 }
 
 EigenSOE::~EigenSOE() {

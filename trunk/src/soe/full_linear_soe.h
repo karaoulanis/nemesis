@@ -29,9 +29,10 @@
 #include "soe/soe.h"
 
 class FullLinearSOE: public SOE {
-  public:
+ public:
   // Constructor and destructor
   FullLinearSOE();
+  FullLinearSOE(const Model* model);
   ~FullLinearSOE();
 
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
