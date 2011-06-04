@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "analysis/analysis_object.h"
+#include "analysis/analysis.h"
 
 Analysis* AnalysisObject::pA = 0;
 

@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "analysis/eigen_analysis.h"
+#include "analysis/analysis.h"
 #include "control/eigen_control.h"
 #include "domain/domain.h"
 #include "imposer/elimination_imposer.h"

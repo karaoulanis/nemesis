@@ -25,6 +25,7 @@
 
 #include "analysis/static_analysis.h"
 #include <stdio.h>
+#include "analysis/analysis.h"
 #include "algorithm/linear_algorithm.h"
 #include "control/load_control.h"
 #include "convergence/convergence_norm.h"

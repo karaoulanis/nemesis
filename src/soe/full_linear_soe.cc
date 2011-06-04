@@ -25,6 +25,7 @@
 
 #include "soe/full_linear_soe.h"
 #include <stdio.h>
+#include "model/model.h"
 #include "numeric/lapack.h"
 #include "numeric/matrix.h"
 
