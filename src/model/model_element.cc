@@ -28,8 +28,11 @@
 /**
  * Default constructor.
  */
-ModelElement::ModelElement() {
+ModelElement::ModelElement()
+    : myElement(NULL),
+      myConstraint(NULL) {
 }
+
 /**
  * Simple constructor.
  * Initializes the ModelObject, which in turn initializes the FEObject and
@@ -39,7 +42,9 @@ ModelElement::ModelElement() {
  */
 ModelElement::ModelElement(const IDContainer& FTable, Element* pElement,
                            Constraint* pConstraint)
-  :ModelObject(FTable), myElement(pElement), myConstraint(pConstraint) {
+    : ModelObject(FTable),
+      myElement(pElement),
+      myConstraint(pConstraint) {
 }
 /**
  * Destructor.
