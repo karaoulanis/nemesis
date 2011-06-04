@@ -42,14 +42,7 @@ class Model;
 class Matrix;
 
 class SOE: public AnalysisObject {
- protected:
-  int size_;
-  std::valarray<double> A;
-  Vector X;
-  Vector B;
-  bool isLUFactored;
-  std::valarray<int> IPIV;
-  public:
+ public:
   SOE();
   virtual ~SOE();
 
@@ -77,6 +70,12 @@ class SOE: public AnalysisObject {
   virtual void printSolution();
 
   virtual int solve()=0;
-  int plotGraph(const char* s);
+ protected:
+  int size_;
+  std::valarray<double> A;
+  Vector X;
+  Vector B;
+  std::valarray<int> IPIV;
+  bool isLUFactored;
 };
 #endif  // SRC_SOE_SOE_H_

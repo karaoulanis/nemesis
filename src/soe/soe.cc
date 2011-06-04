@@ -27,9 +27,13 @@
 #include <stdio.h>
 #include "numeric/matrix.h"
 
-SOE::SOE() {
-  size_ = 0;
-  isLUFactored = false;
+SOE::SOE() 
+    : size_(0),
+      A(),
+      X(),
+      B(),
+      IPIV(),
+      isLUFactored(false) {
 }
 
 SOE::~SOE() {
@@ -88,18 +92,5 @@ void SOE::zeroX() {
 
 int SOE::insertMatrixIntoA(const Matrix& /*Be*/, const IDContainer& /*EFTable*/,
                   const IDContainer& /*SFTable*/, double /*factor*/) {
-  return 0;
-}
-
-int SOE::plotGraph(const char* s) {
-  // Create the Graph
-  if (size_ <= 0)
-    throw SException("[nemesis:%d] %s", 1110, "Could not initialize graph.\n");
-  UndirectedGraph G(size_);
-  pA->get_model()->get_undirected_graph(G);
-  // Plot the Graph
-  std::ofstream outfile(s);
-  /// @todo: the following line is commented, produces error/warnings
-  // write_graphviz(outfile, G);
   return 0;
 }
