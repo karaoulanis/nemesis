@@ -61,15 +61,15 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
 
 void BandLinearSOE::set_size() {
   UndirectedGraph G;
-  pA->get_model()->get_undirected_graph(G);
+  model_->get_undirected_graph(G);
   lowerBandwidth = bandwidth(G);
   upperBandwidth = lowerBandwidth;
 
   // If the size has not changed do not resize arrays
-  if (size_ == pA->get_model()->get_num_eqns()) {
+  if (size_ == model_->get_num_eqns()) {
     return;
   } else {
-    size_ = pA->get_model()->get_num_eqns();
+    size_ = model_->get_num_eqns();
   }
   nRows = 2*lowerBandwidth+upperBandwidth+1;
   A.resize(nRows*size_);
