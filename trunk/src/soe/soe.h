@@ -36,7 +36,6 @@
 #include "numeric/vector.h"
 
 // Forward declarations
-class Analysis;
 class Model;
 class Matrix;
 
