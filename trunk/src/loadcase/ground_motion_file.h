@@ -47,6 +47,12 @@ class GroundMotionFile: public Load {
   std::vector<double> data_;
   double dt_;
   double scale_;
-};
 
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  GroundMotionFile(const GroundMotionFile&);
+  void operator=(const GroundMotionFile&);
+};
 #endif  // SRC_LOADCASE_GROUND_MOTION_FILE_H_

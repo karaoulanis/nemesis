@@ -44,6 +44,11 @@ class Group: public DomainObject {
  private:
   GroupData* groupdata_;
   std::vector<Element*> elements_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Group(const Group&);
+  void operator=(const Group&);
 };
 
 #endif  // SRC_GROUP_GROUP_H_

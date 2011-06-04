@@ -32,6 +32,12 @@ class UniaxialMaterial;
 class CrossSection;
 
 class Timoshenko2d: public Element {
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Timoshenko2d(const Timoshenko2d&);
+  void operator=(const Timoshenko2d&);
  protected:
   double cosX[2];
   int mySecID;
@@ -41,7 +47,7 @@ class Timoshenko2d: public Element {
   static const double GaussCoords[4][4];
   static const double GaussWeights[4][4];
   int gPoints;
-  public:
+ public:
   Timoshenko2d();
   Timoshenko2d(int ID, int Node_1, int Node_2,
                int matID, CrossSection* section, int rule);

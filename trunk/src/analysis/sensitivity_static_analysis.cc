@@ -36,14 +36,14 @@
 #include "soe/full_linear_soe.h"
 
 SensitivityStaticAnalysis::SensitivityStaticAnalysis()
-  :AnalysisType() {
+    : AnalysisType(),
+      theSensitivityControl(new SensitivityControl) {
   myTag = TAG_ANALYSIS_STATIC;
   // defaults
   pA->set_imposer(new EliminationImposer());
   pA->set_control(new LoadControl(1., 1., 1., 1, 0.5, 0.));
   pA->set_algorithm(new LinearAlgorithm());
   pA->set_soe(new FullLinearSOE(pA->get_model()));
-  theSensitivityControl = new SensitivityControl;
 }
 
 SensitivityStaticAnalysis::~SensitivityStaticAnalysis() {

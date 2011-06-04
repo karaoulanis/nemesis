@@ -40,5 +40,10 @@ class InitialDisplacement: public InitialCondition {
   int dof_;
   Node* node_;
   double disp_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  InitialDisplacement(const InitialDisplacement&);
+  void operator=(const InitialDisplacement&);
 };
 #endif  // SRC_LOADCASE_INITIAL_DISPLACEMENT_H_

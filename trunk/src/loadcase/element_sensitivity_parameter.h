@@ -31,14 +31,18 @@
 class Element;
 
 class ElementSensitivityParameter: public DomainObject {
-  private:
-  static int nSensitivityParameters;
-  Element* myElement;
-  int parameter;
-  public:
+ public:
   ElementSensitivityParameter();
   ElementSensitivityParameter(int elemID, int param);
   int apply();
+ private:
+  static int nSensitivityParameters;
+  Element* myElement;
+  int parameter;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  ElementSensitivityParameter(const ElementSensitivityParameter&);
+  void operator=(const ElementSensitivityParameter&);
 };
-
 #endif  // SRC_LOADCASE_ELEMENT_SENSITIVITY_PARAMETER_H_

@@ -31,14 +31,6 @@
  * The Creep Class.
  */
 class Creep: public MultiaxialMaterial {
- protected:
-  MultiaxialMaterial* myElastic;
-
-  static Matrix C;
-  Vector eCTrial, eCConvg;
-  double A;
-  double n;
-  double k;
  public:
   Creep();
   Creep(int ID, int elasticID, double A, double n, double k);
@@ -53,5 +45,20 @@ class Creep: public MultiaxialMaterial {
 
   // Tracker member functions
   void track();
+
+ protected:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  Vector eCTrial, eCConvg;
+  double A;
+  double n;
+  double k;
+
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Creep(const Creep&);
+  void operator=(const Creep&);
 };
 #endif  // SRC_MATERIAL_CREEP_H_

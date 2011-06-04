@@ -36,8 +36,13 @@ class InitialVelocity: public InitialCondition {
   InitialVelocity(Node* node, int dof, double velocity);
   void Apply();
  private:
-  int dof_;
   Node* node_;
+  int dof_;
   double velocity_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  InitialVelocity(const InitialVelocity&);
+  void operator=(const InitialVelocity&);
 };
 #endif  // SRC_LOADCASE_INITIAL_VELOCITY_H_

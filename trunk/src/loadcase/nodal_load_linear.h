@@ -37,6 +37,11 @@ class NodalLoadLinear: public NodalLoad {
  private:
   double initial_value_;
   double gradient_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  NodalLoadLinear(const NodalLoadLinear&);
+  void operator=(const NodalLoadLinear&);
 };
 
 #endif  // SRC_LOADCASE_NODAL_LOAD_LINEAR_H_

@@ -65,6 +65,11 @@ class NodalLoad: public Load {
  protected:
   Node* node_;
   int dof_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  NodalLoad(const NodalLoad&);
+  void operator=(const NodalLoad&);
 };
 
 #endif  // SRC_LOADCASE_NODAL_LOAD_H_

@@ -26,20 +26,22 @@
 #include "loadcase/initial_velocity.h"
 #include "node/node.h"
 
-InitialVelocity::InitialVelocity() {
+InitialVelocity::InitialVelocity()
+    : node_(0),
+      dof_(0),
+      velocity_(0.0) {
 }
 
 InitialVelocity::InitialVelocity(Node* node, int dof, double velocity)
-:InitialCondition() {
-  // Retrieve node from the domain
-  node_ = node;
-  dof_ = dof-1;
+    : InitialCondition(),
+      node_(node),
+      dof_(dof-1),
+      velocity_(velocity) {
   //  Check if dof is activated
   /// @todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
   /// @todo Give SException the right id and not 9999.
   if (node_->get_activated_dof(dof_) < 0)
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
-  velocity_ = velocity;
 }
 
 void InitialVelocity::Apply() {

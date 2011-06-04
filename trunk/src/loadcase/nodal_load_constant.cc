@@ -25,12 +25,13 @@
 
 #include "loadcase/nodal_load_constant.h"
 
-NodalLoadConstant::NodalLoadConstant() {
+NodalLoadConstant::NodalLoadConstant()
+    : value_(0.) {
 }
 
 NodalLoadConstant::NodalLoadConstant(Node* node, int dof, double value)
-:NodalLoad(node, dof) {
-  value_ = value;
+    : NodalLoad(node, dof),
+      value_(value) {
 }
 
 double NodalLoadConstant::GetValue(double /*time*/) {

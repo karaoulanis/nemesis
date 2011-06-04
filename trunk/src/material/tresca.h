@@ -32,13 +32,7 @@
  * The Tresca Material Class.
  */
 class Tresca: public MultiaxialMaterial {
- protected:
-  MultiaxialMaterial* myElastic;
-  static Matrix C;
-  static Matrix C3;
-  bool plastic;
-  int inaccurate;
-  public:
+ public:
   Tresca();
   Tresca(int ID, int elasticID, double sy, double kx, double ky, double kz);
   ~Tresca();
@@ -51,5 +45,20 @@ class Tresca: public MultiaxialMaterial {
 
   // Tracker member functions
   void track();
+
+ protected:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  static Matrix C3;
+  bool plastic;
+  int inaccurate;
+
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Tresca(const Tresca&);
+  void operator=(const Tresca&);
+
 };
 #endif  // SRC_MATERIAL_TRESCA_H_

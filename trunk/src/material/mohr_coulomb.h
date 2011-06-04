@@ -32,13 +32,7 @@
  * The Mohr-Coulomb Class.
  */
 class MohrCoulomb: public MultiaxialMaterial {
-  private:
-  MultiaxialMaterial* myElastic;
-  static Matrix C;
-  static Matrix C3;
-  bool plastic;
-  int inaccurate;
-  public:
+ public:
   MohrCoulomb();
   MohrCoulomb(int ID, int elasticID, double c, double phi, double alpha);
   ~MohrCoulomb();
@@ -51,5 +45,17 @@ class MohrCoulomb: public MultiaxialMaterial {
 
   // Tracker member functions
   void track();
+
+ private:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  static Matrix C3;
+  bool plastic;
+  int inaccurate;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  MohrCoulomb(const MohrCoulomb&);
+  void operator=(const MohrCoulomb&);
 };
 #endif  // SRC_MATERIAL_MOHR_COULOMB_H_
