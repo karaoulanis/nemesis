@@ -29,13 +29,15 @@
 #include "analysis/analysis.h"
 #include "model/model.h"
 
-ForwardSloan::ForwardSloan(double w1, double w2) {
-  myTag = TAG_REORDERER_REVERSE_SLOAN;
-  weight1 = w1;
-  weight2 = w2;
+ForwardSloan::ForwardSloan(double w1, double w2)
+    : weight1(w1),
+      weight2(w2) {
+  myTag = TAG_REORDERER_FORWARD_SLOAN;
 }
+
 ForwardSloan::~ForwardSloan() {
 }
+
 int ForwardSloan::get_perm(std::vector<int>& perm) {
   // Create the Graph and additional vectors
   UndirectedGraph G(pA->get_model()->get_num_eqns());
