@@ -30,14 +30,6 @@
 #include "soe/soe.h"
 
 class EigenSOE: public SOE {
- protected:
-  std::valarray<double> M;
-  std::valarray<double> ALPHAR;
-  std::valarray<double> ALPHAI;
-  std::valarray<double> BETA;
-  std::valarray<double> VL;
-  std::valarray<double> VR;
-  std::valarray<double> WORK;
  public:
   // Constructor and destructor
   EigenSOE();
@@ -54,5 +46,13 @@ class EigenSOE: public SOE {
   void set_size();
   void print();
   int get_eigen_sign();
+ protected:
+  std::valarray<double> M;
+  std::valarray<double> ALPHAR;
+  std::valarray<double> ALPHAI;
+  std::valarray<double> BETA;
+  std::valarray<double> VL;
+  std::valarray<double> VR;
+  std::valarray<double> WORK;
 };
 #endif  // SRC_SOE_EIGEN_SOE_H_

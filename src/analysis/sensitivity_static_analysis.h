@@ -32,13 +32,18 @@ class Analysis;
 class SensitivityControl;
 
 class SensitivityStaticAnalysis :public AnalysisType {
-  private:
-  SensitivityControl* theSensitivityControl;
-  public:
+ public:
   SensitivityStaticAnalysis();
   ~SensitivityStaticAnalysis();
   bool checkIfAllows(FEObject* f);
   int run(LoadCase* loadcase, int num_loadsteps);
+ private:
+  SensitivityControl* theSensitivityControl;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  SensitivityStaticAnalysis(const SensitivityStaticAnalysis&);
+  void operator=(const SensitivityStaticAnalysis&);
 };
 
 #endif  // SRC_ANALYSIS_SENSITIVITY_STATIC_ANALYSIS_H_

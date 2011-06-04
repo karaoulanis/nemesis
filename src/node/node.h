@@ -63,6 +63,11 @@ class Node: public DomainObject {
   bool isLoadApplied;
 
   int active_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Node(const Node&);
+  void operator=(const Node&);
 
  public:
   // Constructors and destructor

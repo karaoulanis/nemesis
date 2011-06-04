@@ -32,10 +32,7 @@ class Node;
 class Constraint;
 
 class ModelNode :public ModelObject {
- protected:
-  Node* myNode;
-  Constraint* myConstraint;
-  public:
+ public:
   // Constructors
   ModelNode();
   ModelNode(const IDContainer& FTable, Node* pNode = 0,
@@ -59,6 +56,15 @@ class ModelNode :public ModelObject {
   virtual void commit()=0;
   virtual void commitSens(const Vector& /*ds*/, int /*param*/) {}
   virtual void rollback();
+ protected:
+  Node* myNode;
+  Constraint* myConstraint;
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  ModelNode(const ModelNode&);
+  void operator=(const ModelNode&);
 };
 
 #endif  // SRC_MODEL_MODEL_NODE_H_

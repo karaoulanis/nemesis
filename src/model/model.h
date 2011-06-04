@@ -35,6 +35,7 @@
 #include <boost/graph/wavefront.hpp>
 #include <vector>
 #include "analysis/analysis_object.h"
+#include "main/base.h"
 
 class ModelNode;
 class ModelElement;
@@ -72,13 +73,6 @@ typedef std::vector<ModelElement*>                ModelElementContainer;
 typedef std::vector<ModelNode*>::const_iterator   ModelNodeIterator;
 
 class Model: public AnalysisObject {
- private:
-  Domain* theDomain;
-  ModelNodeContainer    theModelNodes;
-  ModelElementContainer theModelElements;
-  int nEquations;
-  bool constrained;
-  bool reordered;
  public:
   // Contructor and destructor
   explicit Model(Domain* pDomain);
@@ -122,5 +116,17 @@ class Model: public AnalysisObject {
 
   // XFem (or other type) enrichment
   void enrich();
+ private:
+  Domain* theDomain;
+  ModelNodeContainer    theModelNodes;
+  ModelElementContainer theModelElements;
+  int nEquations;
+  bool constrained;
+  bool reordered;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Model(const Model&);
+  void operator=(const Model&);
 };
 #endif  // SRC_MODEL_MODEL_H_

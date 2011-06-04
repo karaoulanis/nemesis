@@ -31,15 +31,7 @@
 class MultiaxialMaterial;
 
 class MatPoint: public DomainObject {
-  private:
-  double x, y, z;
-  double r, s, t;
-  double w;
-  static const double GaussCrds[7][7];
-  static const double GaussWght[7][7];
-  MultiaxialMaterial* myMaterial;
-  static int IDCounter;
-  public:
+ public:
   MatPoint();
   MatPoint(MultiaxialMaterial* mat, int index, int p1);
   MatPoint(MultiaxialMaterial* mat, int index1, int index2, int p1, int p2);
@@ -62,6 +54,19 @@ class MatPoint: public DomainObject {
   inline double get_w()     {return w;}
   const Packet& get_packet()   {return thePacket;  }
   void set_packet(const Packet& /*p*/) {/*does nothing*/ }
+ private:
+  double x, y, z;
+  double r, s, t;
+  double w;
+  static const double GaussCrds[7][7];
+  static const double GaussWght[7][7];
+  MultiaxialMaterial* myMaterial;
+  static int IDCounter;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  MatPoint(const MatPoint&);
+  void operator=(const MatPoint&);
 };
 
 #endif  // SRC_MATERIAL_MATPOINT_H_

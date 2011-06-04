@@ -98,7 +98,13 @@ class Domain {
   double lambdaConvg;
 
   void init();
-  public:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Domain(const Domain&);
+  void operator=(const Domain&);
+ 
+ public:
   // Constructors and Destructors
   Domain();
   ~Domain();

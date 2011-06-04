@@ -37,13 +37,7 @@ class Domain;
  * The Material Class.
  */
 class Material: public DomainObject {
- protected:
-  static int counter;
-  int index;
-  Vector MatParams;
-  Tracker* myTracker;
-  double x, y, z;
-  public:
+ public:
   Material();
   Material(int ID, double rho, double aT);
   virtual ~Material();
@@ -59,6 +53,18 @@ class Material: public DomainObject {
   void addTracker();
   Tracker* get_tracker();
   virtual void track();
+ protected:
+  static int counter;
+  int index;
+  Vector MatParams;
+  Tracker* myTracker;
+  double x, y, z;
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Material(const Material&);
+  void operator=(const Material&);
 };
 
 #endif  // SRC_MATERIAL_MATERIAL_H_
