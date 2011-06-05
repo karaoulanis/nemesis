@@ -33,7 +33,18 @@
 /**
  * Constructor.
  */
-StaticControl::StaticControl() {
+StaticControl::StaticControl()
+    : Delta0(0.),
+      minDelta(0.),
+      maxDelta(fabs(0.)),
+      du(0),
+      duT(0),
+      duBar(0),
+      Du(0),
+      Io(0),
+      Id(0),
+      nExp(0.),
+      Dt(0.) {
 }
 /**
  * Constructor.
@@ -46,14 +57,22 @@ StaticControl::StaticControl() {
  */
 StaticControl::StaticControl(double D0, double minD, double maxD,
                    int IterDesired, double n, double DeltaTime)
-:Delta0(D0), minDelta(fabs(minD)), maxDelta(fabs(maxD)),
-Io(IterDesired), Id(IterDesired), nExp(n) {
+    : Delta0(D0),
+      minDelta(fabs(minD)),
+      maxDelta(fabs(maxD)),
+      du(0),
+      duT(0),
+      duBar(0),
+      Du(0),
+      Io(IterDesired),
+      Id(IterDesired),
+      nExp(n),
+      Dt(DeltaTime) {
   DLambda = D0;
   if (minDelta>maxDelta)
     throw SException("[nemesis:%d] %s", 9999, "'max' is less than 'min'.");
   if (IterDesired <= 0)
     throw SException("[nemesis:%d] %s", 9999, "'Id' should be greater than 0.");
-  Dt = DeltaTime;
 }
 /**
  * Destructor.
