@@ -34,7 +34,29 @@
 /**
  * Defuault Constructor.
  */
-Node::Node() {
+Node::Node()
+    : x1(0.),
+      x2(0.),
+      x3(0.),
+      myConnectedElements(0),
+      myActivatedDofs(MAX_NUMBER_OF_DOFS, -1),
+      myConstrainedDofs(MAX_NUMBER_OF_DOFS, 0),
+      nActivatedDofs(0),
+      P(0),
+      dispTrial(0),
+      dispConvg(0),
+      velcTrial(0),
+      velcConvg(0),
+      acclTrial(0),
+      acclConvg(0),
+      dispSensi(0, 0),
+      eigenVecs(0, 0),
+      myTracker(0),
+      avgStress(0.),
+      stress(6, 0.),
+      strain(6,0.),
+      isLoadApplied(false),
+      active_(0) {
 }
 /**
  * Constructor.
@@ -44,15 +66,26 @@ Node::Node(int ID, double xc1, double xc2, double xc3)
       x1(xc1),
       x2(xc2),
       x3(xc3),
+      myConnectedElements(0),
       myActivatedDofs(MAX_NUMBER_OF_DOFS, -1),
-      myConstrainedDofs(MAX_NUMBER_OF_DOFS, 0) {
+      myConstrainedDofs(MAX_NUMBER_OF_DOFS, 0),
+      nActivatedDofs(0),
+      P(0),
+      dispTrial(0),
+      dispConvg(0),
+      velcTrial(0),
+      velcConvg(0),
+      acclTrial(0),
+      acclConvg(0),
+      dispSensi(0, 0),
+      eigenVecs(0, 0),
+      myTracker(0),
+      avgStress(0.),
+      stress(6, 0.),
+      strain(6,0.),
+      isLoadApplied(false),
+      active_(0) {
   myTag = TAG_NODE;
-  nActivatedDofs = 0;
-  stress.resize(6, 0.);
-  strain.resize(6, 0.);
-  avgStress = 0;
-  myTracker = 0;
-  active_ = 0;
 }
 Node::~Node() {
   if (myTracker != 0) delete myTracker;
