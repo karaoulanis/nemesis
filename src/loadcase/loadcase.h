@@ -63,13 +63,11 @@ class LoadCase: public DomainObject {
  private:
   char label_[512];
   double factor_;
-
   bool applied_;
   bool active_;
-
   std::vector<Load*> loads_;
-  std::vector<GroupState*> group_states_;
-  std::vector<InitialCondition*> initial_conditions_;
-  std::vector<ElementSensitivityParameter*> sensitivity_parameters_;
+  std::vector<GroupState*> groupstates_;
+  std::vector<InitialCondition*> initialconditions_;
+  std::vector<ElementSensitivityParameter*> sensitivityparameters_;
 };
 #endif  // SRC_LOADCASE_LOADCASE_H_

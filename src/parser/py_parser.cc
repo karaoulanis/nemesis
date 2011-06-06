@@ -1683,20 +1683,28 @@ static PyMethodDef InitialConditionsMethods[] =  {
 ******************************************************************************/
 static PyObject* pyLC_Define(PyObject* /*self*/, PyObject* args) {
   int id;
-  const char* name = 0;
-  if (!PyArg_ParseTuple(args, "i|s", &id, &name)) return NULL;
-  LoadCase* pLC;
+  const char* label = 0;
+  if (!PyArg_ParseTuple(args, "i|s", &id, &label)) {
+    return NULL;
+  }
+  LoadCase* loadcase;
   /// @todo: check this better
-  if (name != 0) pLC = new LoadCase(id, name);
-  else    pLC = new LoadCase(id, "default");
-  pD->add(pD->get_loadcases(), pLC);
+  if (label != 0) {
+    loadcase = new LoadCase(id, label);
+  } else {
+    loadcase = new LoadCase(id, "default");
+  }
+  pD->add(pD->get_loadcases(), loadcase);
   currentLC = id;
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyLC_Info(PyObject* /*self*/, PyObject* args) {
   int id;
-    if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
+  if (!PyArg_ParseTuple(args, "i", &id)) {
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }

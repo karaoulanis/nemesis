@@ -25,11 +25,13 @@
 
 #include "loadcase/elemental_load.h"
 
-ElementalLoad::ElementalLoad() {
+/// @todo NULL is not recognized
+ElementalLoad::ElementalLoad()
+    : element_(0) {
 }
 
-ElementalLoad::ElementalLoad(Element* element) {
-  element_ = element;
+ElementalLoad::ElementalLoad(Element* element)
+    : element_(element) {
 }
 
 ElementalLoad::~ElementalLoad() {
