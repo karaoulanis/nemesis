@@ -33,13 +33,21 @@
 /**
  * Constructor.
  */
-TransientControl::TransientControl() {
+TransientControl::TransientControl()
+    : u(0),
+      v(0),
+      a(0),
+      ut(0),
+      vt(0),
+      at(0) {
 }
+
 /**
  * Destructor.
  */
 TransientControl::~TransientControl() {
 }
+
 /**
  * @return 0 if everything is ok.
  */

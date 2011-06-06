@@ -31,8 +31,16 @@
 #include "elements/element.h"
 #include "soe/soe.h"
 
-ConvergenceNorm::ConvergenceNorm() {
-  tol.resize(3);
+ConvergenceNorm::ConvergenceNorm()
+    : tol(3), 
+      maxIter(0),
+      iter(0),
+      ro(0.),
+      uo(0.),
+      wo(0.),
+      LC(0),
+      nSteps(0),
+      step(0) {
 }
 
 ConvergenceNorm::~ConvergenceNorm() {

@@ -32,15 +32,6 @@
 #include "database/database.h"
 
 class SQLiteDatabase: public Database {
-  private:
-  sqlite3* db;
-  int executeQuery(const char* query);
-  static int callback(void *NotUsed, int argc, char **argv, char **azColName);
-  // Dummy copy constructor and copy assignment as to explicitly disable them.
-  // Only the declarations are provided and not the definitions.
-  // When called a linking error will occur.
-  SQLiteDatabase(const SQLiteDatabase&);
-  void operator=(const SQLiteDatabase&);
  public:
   SQLiteDatabase();
   explicit SQLiteDatabase(const char* workname);
@@ -58,5 +49,14 @@ class SQLiteDatabase: public Database {
   int commitTransaction();
 
   void exportToVtk(const char* tableName);
+ private:
+  sqlite3* db;
+  int executeQuery(const char* query);
+  static int callback(void *NotUsed, int argc, char **argv, char **azColName);
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  SQLiteDatabase(const SQLiteDatabase&);
+  void operator=(const SQLiteDatabase&);
 };
 #endif  // SRC_DATABASE_SQLITE_DATABASE_H_

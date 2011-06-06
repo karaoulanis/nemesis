@@ -34,7 +34,14 @@
 /**
  * Default constructor.
  */
-LoadCase::LoadCase() {
+LoadCase::LoadCase()
+    : factor_(0.),
+      applied_(false),
+      active_(false),
+      loads_(0),
+      groupstates_(0),
+      initialconditions_(0),
+      sensitivityparameters_(0) {
 }
 
 /**
@@ -42,15 +49,19 @@ LoadCase::LoadCase() {
  */
 
 LoadCase::LoadCase(int id, const char* label)
-:DomainObject(id) {
+    : DomainObject(id),
+      factor_(0.),
+      applied_(false),
+      active_(false),
+      loads_(0),
+      groupstates_(0),
+      initialconditions_(0),
+      sensitivityparameters_(0) {
   if (!strcmp(label, "default")) {
     sprintf(myLabel, "LC_%04d", id);
   } else {
     sprintf(myLabel, "%s", label);
   }
-  applied_ = false;
-  active_  = false;
-  factor_  = 0.;
 }
 
 /**
@@ -58,9 +69,9 @@ LoadCase::LoadCase(int id, const char* label)
  */
 LoadCase::~LoadCase() {
   Containers::vector_delete(loads_);
-  Containers::vector_delete(group_states_);
-  Containers::vector_delete(initial_conditions_);
-  Containers::vector_delete(sensitivity_parameters_);
+  Containers::vector_delete(groupstates_);
+  Containers::vector_delete(initialconditions_);
+  Containers::vector_delete(sensitivityparameters_);
 }
 
 /**
@@ -77,8 +88,8 @@ void LoadCase::AddLoad(Load* load) {
  * The InitialCondition object should be first added to the Domain. Then a
  * pointer is passed to the corresponding LoadCase.
  */
-void LoadCase::AddInitialCondition(InitialCondition* initial_condition) {
-  initial_conditions_.push_back(initial_condition);
+void LoadCase::AddInitialCondition(InitialCondition* initialcondition) {
+  initialconditions_.push_back(initialcondition);
 }
 
 /**
@@ -86,8 +97,8 @@ void LoadCase::AddInitialCondition(InitialCondition* initial_condition) {
  * The GroupState object should be first added to the Domain. Then a
  * pointer is passed to the corresponding LoadCase.
  */
-void LoadCase::AddGroupState(GroupState* group_state) {
-  group_states_.push_back(group_state);
+void LoadCase::AddGroupState(GroupState* groupstate) {
+  groupstates_.push_back(groupstate);
 }
 
 void LoadCase::Initialize() {
@@ -96,12 +107,12 @@ void LoadCase::Initialize() {
   if (active_ || applied_) return;
   // First time encountered so this is now active
   active_ = true;
-  for (unsigned i = 0; i < group_states_.size(); i++) {
-    group_states_[i]->Apply();
+  for (unsigned i = 0; i < groupstates_.size(); i++) {
+    groupstates_[i]->Apply();
   }
   // Apply initial conditions
-  for (unsigned int i = 0;i < initial_conditions_.size();i++) {
-    initial_conditions_[i]->Apply();
+  for (unsigned int i = 0;i < initialconditions_.size();i++) {
+    initialconditions_[i]->Apply();
   }
   // Increase domain time
   /// @todo
@@ -123,12 +134,12 @@ void LoadCase::Finalize() {
 }
 
 void LoadCase::ApplySensitivityParameter(int param) {
-  sensitivity_parameters_[param]->apply();
+  sensitivityparameters_[param]->apply();
 }
 int LoadCase::GetNumSensitivityParameters() {
-  return sensitivity_parameters_.size();
+  return sensitivityparameters_.size();
 }
 void LoadCase::AddSensitivityParameter(ElementSensitivityParameter*
                                        pElementSensitivityParameter) {
-  sensitivity_parameters_.push_back(pElementSensitivityParameter);
+  sensitivityparameters_.push_back(pElementSensitivityParameter);
 }

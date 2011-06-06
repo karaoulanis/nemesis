@@ -32,7 +32,6 @@
 class FEObject {
  protected:
   FEObjectTag myTag;
-  std::vector<FEObjectTag> consistentTags;
   char myLabel[64];
  public:
   FEObject();

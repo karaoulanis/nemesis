@@ -37,7 +37,8 @@ using std::endl;
  * Default constructor.
  */
 SQLiteDatabase::SQLiteDatabase()
-:Database() {
+    : Database(),
+      db(NULL) {
   /// @todo Use synch/not synch to increase performance.
   /// @todo Use PRIMARY KEY index.
   /// @todo Check if db locked.

@@ -26,15 +26,17 @@
 #include "feobject/fe_object.h"
 #include <string.h>
 
-FEObject::FEObject() {
-  myTag = TAG_NONE;
-  strcpy(myLabel, "Unnamed");
+FEObject::FEObject()
+    : myTag(TAG_NONE) {
 }
-FEObject::FEObject(FEObjectTag tag) {
-  myTag = tag;
+
+FEObject::FEObject(FEObjectTag tag)
+    : myTag(tag) {
 }
+
 FEObject::~FEObject() {
 }
+
 FEObjectTag FEObject::get_tag() {
   return myTag;
 }
@@ -43,5 +45,6 @@ bool FEObject::checkIfAllows(FEObject* /*f*/) {
   /// @todo When finished implementing all turn this function into pure.
   return 0;
 }
+
 void FEObject::checkConstency(FEObject* /*f*/) {
 }

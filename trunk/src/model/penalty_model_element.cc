@@ -31,16 +31,18 @@
  * Default constructor
  */
 PenaltyModelElement::PenaltyModelElement()
-  :ModelElement() {
+    : ModelElement(),
+      a(0.) {
 }
+
 /**
  * Constructor
  */
 PenaltyModelElement::PenaltyModelElement(const IDContainer& FTable,
                        Constraint* pConstraint,
                        double aFactor)
-  :ModelElement(FTable, 0, pConstraint) {
-  a = aFactor;
+    : ModelElement(FTable, 0, pConstraint),
+      a(aFactor) {
   myMatrix = theStaticMatrices[FTable.size()];
   myVector = theStaticVectors[FTable.size()];
 }
