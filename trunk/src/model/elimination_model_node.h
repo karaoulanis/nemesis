@@ -30,16 +30,13 @@
 #include "node/node.h"
 
 class EliminationModelNode: public ModelNode {
-  private:
-  IDContainer theOldFTable;
-  public:
+ public:
   // Constructors
   EliminationModelNode();
   EliminationModelNode(const IDContainer& FTable, Node* pNode);
   ~EliminationModelNode();
 
   void set_old_FTable(const IDContainer& ftab);
-
   void add_R(double factor);
   void incTrialDisp(const Vector& du);
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
@@ -47,6 +44,8 @@ class EliminationModelNode: public ModelNode {
   void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a);
   void commit();
   void commitSens(const Vector& X, int param);
+ private:
+  IDContainer theOldFTable;
 };
 
 #endif  // SRC_MODEL_ELIMINATION_MODEL_NODE_H_

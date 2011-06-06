@@ -29,23 +29,29 @@
  * Default constructor.
  */
 EliminationModelNode::EliminationModelNode()
-:ModelNode() {
+    : ModelNode(),
+      theOldFTable(0) {
 }
+
 /**
  * Constructor.
  */
 EliminationModelNode::EliminationModelNode(const IDContainer& FTable,
                                            Node* pNode)
-  :ModelNode(FTable, pNode) {
+    : ModelNode(FTable, pNode),
+      theOldFTable(0) {
 }
+
 /**
- * Constructor.
+ * Destructor.
  */
 EliminationModelNode::~EliminationModelNode() {
 }
+
 void EliminationModelNode::set_old_FTable(const IDContainer& ftab) {
   theOldFTable = ftab;
 }
+
 void EliminationModelNode::add_R(double factor) {
   if (myNode->existsLoad())
     myVector->add_cV(factor, myNode->get_R());
@@ -60,6 +66,7 @@ void EliminationModelNode::incTrialDisp(const Vector& du) {
   }
   myNode->incTrialDisp(*myVector);
 }
+
 void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
                                         const Vector& da) {
   /// @todo Run these within a loop
@@ -91,6 +98,7 @@ void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
   }
   myNode->addTrialAccl(*myVector);
 }
+
 void EliminationModelNode::set_trial_disp(const Vector& u) {
   myVector->clear();
   for (unsigned i = 0;i < theFTable.size(); i++) {
@@ -100,6 +108,7 @@ void EliminationModelNode::set_trial_disp(const Vector& u) {
   }
   myNode->set_trial_disp(*myVector);
 }
+
 void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
                                         const Vector& a) {
   /// @todo Run these within a loop
@@ -131,6 +140,7 @@ void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
   }
   myNode->set_trial_accl(*myVector);
 }
+
 void EliminationModelNode::commit() {
   myNode->commit();
 }

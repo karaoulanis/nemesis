@@ -32,8 +32,7 @@ class Node;
 class Constraint;
 
 class LagrangeModelNode: public ModelNode {
-  private:
-  public:
+ public:
   // Constructors
   LagrangeModelNode();
   LagrangeModelNode(const IDContainer& FTable, Node* pNode,

@@ -29,7 +29,6 @@
 #include "model/model_element.h"
 
 class EliminationModelElement : public ModelElement {
- private:
  public:
   EliminationModelElement();
   EliminationModelElement(const IDContainer& FTable, Element* pElement);

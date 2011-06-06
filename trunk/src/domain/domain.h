@@ -80,7 +80,6 @@ class Domain {
   Vector gravityVect;
   double gravityAccl;
   bool groupsByMaterial;
-
   NodeContainer         theNodes;
   CrossSectionContainer theCrossSections;
   ElementContainer      theElements;
@@ -88,11 +87,9 @@ class Domain {
   MaterialContainer     theMaterials;
   LoadCaseContainer     theLoadCases;
   ConstraintContainer   theConstraints;
-
   Database* theDatabase;
   Vector RayleighFactors;
   Vector eigenVals;
-
   double timeCurr;
   double timePrev;
   double lambdaConvg;
