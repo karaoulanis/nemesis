@@ -29,16 +29,20 @@
 /**
  * Default constructor.
  */
-ModelNode::ModelNode() {
+ModelNode::ModelNode()
+    : myNode(0),
+      myConstraint(0) {
 }
 /**
  * Constructor.
  * Initializes the ModelObject, which in turn initializes the FEObject, passes
  * the FTable to the ModelObject and copies the address of it's node.
  */
-ModelNode::ModelNode(const IDContainer& FTable, Node* pNode,
-                     Constraint* pConstraint)
-  :ModelObject(FTable), myNode(pNode), myConstraint(pConstraint) {
+ModelNode::ModelNode(const IDContainer& FTable, Node* node,
+                     Constraint* constraint)
+    : ModelObject(FTable),
+      myNode(node),
+      myConstraint(constraint) {
   // Set a pointer to the corresponding static Vector
   myVector = theStaticVectors[FTable.size()];
 }

@@ -42,12 +42,27 @@
 /**
  * Default Constructor.
  */
-Domain::Domain()   {
-  dim_ = 0;
-  myTag = TAG_DOMAIN_NOT_SET;
-  myFac = 1.0;
-  upToDate = false;
-  theDatabase = 0;
+Domain::Domain()
+    : dim_(0),
+     myTag(TAG_DOMAIN_NOT_SET),
+      myFac(1.0),
+      upToDate(false),
+      gravityVect(0),
+      gravityAccl(0),
+      groupsByMaterial(true),
+      theNodes(),
+      theCrossSections(),
+      theElements(),
+      theGroups(),
+      theMaterials(),
+      theLoadCases(),
+      theConstraints(),
+      theDatabase(0),
+      RayleighFactors(0),
+      eigenVals(0),
+      timeCurr(0.),
+      timePrev(0.),
+      lambdaConvg(0.) {
   this->init();
 }
 /**

@@ -29,9 +29,7 @@
 #include "model/model_element.h"
 
 class PenaltyModelElement : public ModelElement {
- private:
-  double a;
-  public:
+ public:
   PenaltyModelElement();
   PenaltyModelElement(const IDContainer& FTable,
     Constraint* pConstraint, double aFactor);
@@ -42,5 +40,7 @@ class PenaltyModelElement : public ModelElement {
   void add_C(double factor = 1.0);
   void add_R(double factor = 1.0);
   void add_Reff(double factor = 1.0);
+ private:
+  double a_;
 };
 #endif  // SRC_MODEL_PENALTY_MODEL_ELEMENT_H_

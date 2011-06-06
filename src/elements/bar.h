@@ -33,19 +33,6 @@ class Tracker;
 class UniaxialMaterial;
 
 class Bar: public Element {
- protected:
-  int nDim;
-  CrossSection* iSection;
-  CrossSection* jSection;
-  double L0;
-  double A0;
-  Vector cosX;
-  UniaxialMaterial* myUniMaterial;
-  // Dummy copy constructor and copy assignment as to explicitly disable them.
-  // Only the declarations are provided and not the definitions.
-  // When called a linking error will occur.
-  Bar(const Bar&);
-  void operator=(const Bar&);
  public:
   // Constructors and Destructor
   Bar();
@@ -63,5 +50,18 @@ class Bar: public Element {
   void addTracker(int index);
   Tracker* get_tracker(int index);
   void track();
-};
+
+ protected:
+  int nDim;
+  CrossSection* iSection;
+  CrossSection* jSection;
+  double L0;
+  double A0;
+  Vector cosX;
+  UniaxialMaterial* myUniMaterial;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Bar(const Bar&);
+  void operator=(const Bar&);};
 #endif  // SRC_ELEMENTS_BAR_H_

@@ -29,8 +29,8 @@
  * Default constructor.
  */
 ModelElement::ModelElement()
-    : myElement(NULL),
-      myConstraint(NULL) {
+    : myElement(0),
+      myConstraint(0) {
 }
 
 /**

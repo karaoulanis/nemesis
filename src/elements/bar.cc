@@ -31,7 +31,7 @@
 /**
  * Default constructor.
  */
-Bar::Bar()   {
+Bar::Bar() {
 }
 /**
  * Constructor.

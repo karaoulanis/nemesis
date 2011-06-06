@@ -29,7 +29,6 @@
 #include "model/model_element.h"
 
 class LagrangeModelElement : public ModelElement {
- private:
  public:
   LagrangeModelElement();
   LagrangeModelElement(const IDContainer& FTable, Constraint* pConstraint);

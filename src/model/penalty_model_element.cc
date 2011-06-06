@@ -32,17 +32,15 @@
  */
 PenaltyModelElement::PenaltyModelElement()
     : ModelElement(),
-      a(0.) {
+      a_(0.) {
 }
 
 /**
  * Constructor
  */
 PenaltyModelElement::PenaltyModelElement(const IDContainer& FTable,
-                       Constraint* pConstraint,
-                       double aFactor)
-    : ModelElement(FTable, 0, pConstraint),
-      a(aFactor) {
+                                         Constraint* pConstraint, double a)
+    : ModelElement(FTable, 0, pConstraint), a_(a) {
   myMatrix = theStaticMatrices[FTable.size()];
   myVector = theStaticVectors[FTable.size()];
 }
@@ -56,7 +54,7 @@ void PenaltyModelElement::add_K(double factor) {
     for (unsigned int j = 0; j < theFTable.size(); j++) {
       double ci = myConstraint->get_cdof(i).coeff;
       double cj = myConstraint->get_cdof(j).coeff;
-      (*myMatrix)(i, j)+=factor*a*ci*cj;
+      (*myMatrix)(i, j)+=factor*a_*ci*cj;
     }
   }
 }
@@ -65,7 +63,7 @@ void PenaltyModelElement::add_M(double factor) {
     for (unsigned int j = 0; j < theFTable.size(); j++) {
       double ci = myConstraint->get_cdof(i).coeff;
       double cj = myConstraint->get_cdof(j).coeff;
-      (*myMatrix)(i, j)+=factor*a*ci*cj;
+      (*myMatrix)(i, j)+=factor*a_*ci*cj;
     }
   }
 }
@@ -78,9 +76,9 @@ void PenaltyModelElement::add_R(double factor) {
   for (unsigned i = 0; i < theFTable.size(); i++) {
     double ci = myConstraint->get_cdof(i).coeff;
     double ui = myConstraint->get_disp(i);
-    cv+=a*ci*ui;
+    cv+=a_*ci*ui;
   }
-  cv-=a*c;
+  cv-=a_*c;
   // Add to constraint load vector
   for (unsigned i = 0; i < theFTable.size(); i++) {
     double ci = myConstraint->get_cdof(i).coeff;
@@ -94,9 +92,9 @@ void PenaltyModelElement::add_Reff(double factor) {
   for (unsigned i = 0; i < theFTable.size(); i++) {
     double ci = myConstraint->get_cdof(i).coeff;
     double ui = myConstraint->get_disp(i);
-    cv+=a*ci*ui;
+    cv+=a_*ci*ui;
   }
-  cv-=a*c;
+  cv-=a_*c;
   // Add to constraint load vector
   for (unsigned i = 0; i < theFTable.size(); i++) {
     double ci = myConstraint->get_cdof(i).coeff;

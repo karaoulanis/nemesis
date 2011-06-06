@@ -29,7 +29,6 @@
 #include "model/model_element.h"
 
 class StandardModelElement : public ModelElement {
- private:
  public:
   // Constructors
   StandardModelElement();

@@ -29,7 +29,6 @@
 #include "model/model_node.h"
 
 class StandardModelNode :public ModelNode {
- protected:
  public:
   // Constructors
   StandardModelNode();
