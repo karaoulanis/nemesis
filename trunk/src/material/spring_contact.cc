@@ -28,9 +28,9 @@
 
 SpringContact::SpringContact() {
 }
-SpringContact::SpringContact(int ID, double Kn, double Ks, double mu,
+SpringContact::SpringContact(int ID, int dim, double Kn, double Ks, double mu,
                              double gap)
-:SpringMaterial(ID) {
+:SpringMaterial(ID, dim) {
   // Material parameters
   MatParams[0]=Kn;
   MatParams[1]=Ks;
@@ -58,7 +58,7 @@ SpringMaterial* SpringContact::get_clone() {
   double gap = MatParams[3];
 
   // Create clone and return
-  SpringMaterial* clone = new SpringContact(myID, Kn, Ks, mu, gap);
+  SpringMaterial* clone = new SpringContact(myID, dim_, Kn, Ks, mu, gap);
   return clone;
 }
 void SpringContact::set_strain(const Vector& De) {

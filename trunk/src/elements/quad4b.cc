@@ -34,18 +34,23 @@ double Quad4b::detJ[4];
 double Quad4b::shp[4][3][4];
 std::vector<int> Quad4b::perm(4);
 
-Quad4b::Quad4b() {
+Quad4b::Quad4b()
+    : axisymmetric_(false) {
 }
-Quad4b::Quad4b(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
-               int MatID)
-:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, 2, 2) {
+
+Quad4b::Quad4b(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
+               double thickness, bool axisymmetric)
+    : Quad4(id, nodes,material,thickness),
+      axisymmetric_(axisymmetric) {
   perm[0]=0;
   perm[1]=1;
   perm[2]=2;
   perm[3]=3;
 }
+
 Quad4b::~Quad4b() {
 }
+
 const Matrix& Quad4b::get_K() {
   Matrix &K=*myMatrix;
   static Matrix Ba;
@@ -59,7 +64,7 @@ const Matrix& Quad4b::get_K() {
       this->get_B(Ba, a, k);
       for (unsigned b = 0; b < nodes_.size(); b++) {
         this->get_B(Bb, b, k);
-        double dV=(pD->get_fac())*detJ[k];
+        double dV = thickness_*detJ[k];
         K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
@@ -68,6 +73,7 @@ const Matrix& Quad4b::get_K() {
   K*=facK;
   return K;
 }
+
 const Matrix& Quad4b::get_M() {
   Matrix &M=*myMatrix;
   M.Clear();
@@ -76,11 +82,12 @@ const Matrix& Quad4b::get_M() {
 
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++)
-    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w());
+    volume+=detJ[k]*thickness_*(myMatPoints[k]->get_w());
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
   return M;
 }
+
 /**
  * Element residual vector.
  */
@@ -105,7 +112,7 @@ const Vector& Quad4b::get_R() {
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
-    double dV=(pD->get_fac())*detJ[k];
+    double dV = thickness_*detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
       this->get_B(Ba, a, k);
@@ -121,6 +128,7 @@ const Vector& Quad4b::get_R() {
   // Return
   return R;
 }
+
 /**
  * Element update.
  */
@@ -142,16 +150,17 @@ void Quad4b::update() {
     for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(Ba, a, k);
       /// @todo check dV
-      // double dV=(pD->get_fac())*detJ[k];
+      // double dV = thickness_*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
   }
 }
+
 void Quad4b::shapeFunctions() {
   shape4(x, shp, detJ);
   // Axisymmetry
-  if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
+  if (axisymmetric_) {
     for (int k = 0; k < 4; k++) {    // matpoints
       double r = 0.;
       for (int i = 0; i < 4; i++) {  // nodes
@@ -161,11 +170,12 @@ void Quad4b::shapeFunctions() {
     }
   }
 }
+
 void Quad4b::get_B(Matrix& B, int node, int gPoint) {
   B.Resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
   for (int k = 0;k < 4;k++) {  // matpoints
-    double dV = detJ[k]*(pD->get_fac());
+    double dV = thickness_*detJ[k];
     Bb1+=shp[node][1][k]*dV;
     Bb2+=shp[node][2][k]*dV;
     vol+=dV;
@@ -176,7 +186,7 @@ void Quad4b::get_B(Matrix& B, int node, int gPoint) {
   double B0 = 0., Bb0 = 0.;
   // Axisymmetry
   double r = 0.;
-  if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
+  if (axisymmetric_) {
     for (int i = 0;i < 4;i++) {
           r+=x(i, 0)*shp[i][0][gPoint];
     }
@@ -186,7 +196,7 @@ void Quad4b::get_B(Matrix& B, int node, int gPoint) {
       for (int i = 0;i < 4;i++) {
           r+=x(i, 0)*shp[i][0][k];
       }
-      Bb0+=shp[node][0][k]*detJ[k]*(pD->get_fac())/vol/r;
+      Bb0+=shp[node][0][k]*detJ[k]*thickness_/vol/r;
     }
   }
 

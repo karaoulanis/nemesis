@@ -68,7 +68,7 @@ Bar::Bar(int ID, int Node_1, int Node_2, int matID,
   A0 = 0.5*(iSection->get_A()+jSection->get_A());
 
   // Store material information
-  myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial)->get_clone();
+  myUniMaterial = static_cast<UniaxialMaterial*>(myMaterial)->get_clone();
 }
 /**
  * Destructor.

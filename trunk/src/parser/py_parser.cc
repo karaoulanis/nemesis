@@ -469,7 +469,7 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   std::ostringstream os;
   try {
-    pD->get < Node>(pD->get_nodes(), id)->save(os);
+    pD->get<Node>(pD->get_nodes(), id)->save(os);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -482,7 +482,7 @@ static PyObject* pyNode_Track(PyObject* /*self*/, PyObject* args) {
   int id;
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   try {
-    pD->get < Node>(pD->get_nodes(), id)->addTracker();
+    pD->get<Node>(pD->get_nodes(), id)->addTracker();
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -495,7 +495,7 @@ static PyObject* pyNode_Path(PyObject* /*self*/, PyObject* args) {
   const char* s;
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   try {
-    s = pD->get < Node>(pD->get_nodes(), id)->get_tracker()->data();
+    s = pD->get<Node>(pD->get_nodes(), id)->get_tracker()->data();
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -584,7 +584,8 @@ static PyObject* pyMaterial_SpringElastic(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "id|dd", &id, &Kn, &Ks2, &Ks3)) {
     return NULL;
   }
-  Material* pMaterial = new SpringElastic(id, Kn, Ks2, Ks3);
+  int dim = pD->get_dim();
+  Material* pMaterial = new SpringElastic(id, dim, Kn, Ks2, Ks3);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
@@ -596,7 +597,8 @@ static PyObject* pyMaterial_SpringContact(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "idddd", &id, &Kn, &Ks, &mu, &gap)) {
     return NULL;
   }
-  Material* pMaterial = new SpringContact(id, Kn, Ks, mu, gap);
+  int dim = pD->get_dim();
+  Material* pMaterial = new SpringContact(id, dim, Kn, Ks, mu, gap);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
@@ -881,25 +883,48 @@ static PyMethodDef MaterialMethods[] =  {
     METH_VARARGS, "Define a creep material."},
   {NULL, NULL, 0, NULL}
 };
+
 /*******************************************************************************
 * Element commands
 *******************************************************************************/
 static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
-  int id, na, nb, mat;
+  int id, na, nb, mat_id, dim;
   double xp1 = 1., xp2 = 0., xp3 = 0., yp1 = 0., yp2 = 1., yp3 = 0.;
   // Check for consistent input
-  if (!PyArg_ParseTuple(args, "iiii|(ddd)(ddd)", &id, &na, &nb, &mat,
-                                        &xp1, &xp2, &xp3, &yp1, &yp2, &yp3))
+  if (!PyArg_ParseTuple(args, "iiiii|(ddd)(ddd)", &id, &na, &nb, &mat_id, &dim,
+    &xp1, &xp2, &xp3, &yp1, &yp2, &yp3)) {
     return NULL;
-  // Create element and add it to domain
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(2);
   try {
-    Element* elem = new Spring(id, na, nb, mat, xp1, xp2, xp3, yp1, yp2, yp3);
-    pD->add(pD->get_elements(), elem);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), na);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), nb);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  // Increase reference count and return
+  // Get material pointer from domain
+  SpringMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
+    /// @todo Check material before casting 
+    material = static_cast<SpringMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element and add it to domain
+  try {
+    Spring* spring = new Spring(id, nodes, material, dim, 
+                                xp1, xp2, xp3, yp1, yp2, yp3);
+    pD->add(pD->get_elements(), spring);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(spring);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -1070,24 +1095,64 @@ static PyObject* pyElement_SDOF(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Add a new quad (plane stress/plane strain/axisymmetric to the domain)
+ *
+ */
 static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, n4, matID;
-  if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
+  // Local variables
+  int id, n1, n2, n3, n4, mat_id;
+  double thickness = 1.0;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiiii|d",
+                        &id, &n1, &n2, &n3, &n4, &mat_id, &thickness)) {
     return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(4);
   try {
-    Element* pElement;
-    if (pD->get_tag() == TAG_DOMAIN_PLANE_STRAIN ||
-        pD->get_tag() == TAG_DOMAIN_PLANE_STRESS) {
-          pElement = new Quad4DispPlain(id, n1, n2, n3, n4, matID, 2, 2);
-    } else if (pD->get_tag() == TAG_DOMAIN_AXISYMMETRIC) {
-        pElement = new Quad4DispAxisymmetric(id, n1, n2, n3, n4, matID, 2, 2);
-    } else {
-      throw SException("[nemesis:%d] %s", 1110,
-        "A quad4d can be used only in plane strain/stress/axisymmetry.");
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Quad4* quad4;
+  try {
+    switch(pD->get_tag()) {
+      case TAG_DOMAIN_PLANE_STRAIN:
+      case TAG_DOMAIN_PLANE_STRESS:
+        quad4 = new Quad4DispPlain(id, nodes, material, thickness);
+        break;
+      case TAG_DOMAIN_AXISYMMETRIC:
+        quad4 = new Quad4DispAxisymmetric(id, nodes, material, thickness);
+        break;
+      default:
+        throw SException("[nemesis:%d] %s", 1110,
+          "A quad4d can be used only in plane strain/stress/axisymmetry.");
     }
-    pD->add(pD->get_elements(), pElement);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), quad4);
     Group* group = pD->get<Group>(pD->get_groups(), current_group);
-    group->AddElement(pElement);
+    group->AddElement(quad4);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1096,62 +1161,260 @@ static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Add a new quad (plane stress/plane strain/axisymmetric) to the domain
+ *
+ */
 static PyObject* pyElement_Quad4Test(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, n4, matID;
-  if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
+  // Local variables
+  int id, n1, n2, n3, n4, mat_id;
+  double thickness = 1.0;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiiii|d",
+                        &id, &n1, &n2, &n3, &n4, &mat_id, &thickness)) {
     return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(4);
   try {
-    Element* pElement = new Quad4d(id, n1, n2, n3, n4, matID);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pyElement_Quad4b(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, n4, matID;
-  if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
-    return NULL;
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
   try {
-    Element* pElement = new Quad4b(id, n1, n2, n3, n4, matID);
-    pD->add(pD->get_elements(), pElement);
+    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pyElement_Quad4i(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, n4, matID;
-  if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
-    return NULL;
+  // Create element
+  Quad4* quad4;
   try {
-    Element* pElement = new Quad4i(id, n1, n2, n3, n4, matID);
-    pD->add(pD->get_elements(), pElement);
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, n4, matID;
-  if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
-    return NULL;
-  try {
-    Element* pElement;
-    if (pD->get_tag() == TAG_DOMAIN_PLANE_STRAIN||
-        pD->get_tag() == TAG_DOMAIN_PLANE_STRESS) {
-          pElement = new Quad4e(id, n1, n2, n3, n4, matID);
-    } else {
-      throw SException("[nemesis:%d] %s", 1110,
-        "A quad4e can be used only in plane strain/stress.");
+    switch(pD->get_tag()) {
+      case TAG_DOMAIN_PLANE_STRAIN:
+      case TAG_DOMAIN_PLANE_STRESS:
+        quad4 = new Quad4d(id, nodes, material, thickness, false);
+        break;
+      case TAG_DOMAIN_AXISYMMETRIC:
+        quad4 = new Quad4d(id, nodes, material, thickness, true);
+        break;
+      default:
+        throw SException("[nemesis:%d] %s", 1110,
+          "A quad4d can be used only in plane strain/stress/axisymmetry.");
     }
-    pD->add(pD->get_elements(), pElement);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), quad4);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(quad4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+/**
+ * Add a new b-bar quad (plane stress/plane strain/axisymmetric to the domain)
+ *
+ */
+static PyObject* pyElement_Quad4b(PyObject* /*self*/, PyObject* args) {
+  // Local variables
+  int id, n1, n2, n3, n4, mat_id;
+  double thickness = 1.0;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiiii|d",
+                        &id, &n1, &n2, &n3, &n4, &mat_id, &thickness)) {
+    return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(4);
+  try {
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Quad4* quad4;
+  try {
+    switch(pD->get_tag()) {
+      case TAG_DOMAIN_PLANE_STRAIN:
+      case TAG_DOMAIN_PLANE_STRESS:
+        quad4 = new Quad4b(id, nodes, material, thickness, false);
+        break;
+      case TAG_DOMAIN_AXISYMMETRIC:
+        quad4 = new Quad4b(id, nodes, material, thickness, true);
+        break;
+      default:
+        throw SException("[nemesis:%d] %s", 1110,
+          "A quad4d can be used only in plane strain/stress/axisymmetry.");
+    }
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), quad4);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(quad4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+/**
+ * Add a new quad (incompatible nodes) to the domain
+ *
+ */
+static PyObject* pyElement_Quad4i(PyObject* /*self*/, PyObject* args) {
+  // Local variables
+  int id, n1, n2, n3, n4, mat_id;
+  double thickness = 1.0;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiiii|d",
+                        &id, &n1, &n2, &n3, &n4, &mat_id, &thickness)) {
+    return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(4);
+  try {
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Quad4* quad4;
+  try {
+    switch(pD->get_tag()) {
+      /// @todo:  check
+      case TAG_DOMAIN_PLANE_STRAIN:
+      case TAG_DOMAIN_PLANE_STRESS:
+        quad4 = new Quad4i(id, nodes, material, thickness);
+        break;
+      case TAG_DOMAIN_AXISYMMETRIC:
+      default:
+        throw SException("[nemesis:%d] %s", 1110,
+          "A quad4d can be used only in plane strain/stress.");
+    }
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), quad4);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(quad4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+/**
+ * Add a new quad (incompatible nodes) to the domain
+ *
+ */
+static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args) {
+  // Local variables
+  int id, n1, n2, n3, n4, mat_id;
+  double thickness = 1.0;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiiii|d",
+                        &id, &n1, &n2, &n3, &n4, &mat_id, &thickness)) {
+    return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(4);
+  try {
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Quad4* quad4;
+  try {
+    switch(pD->get_tag()) {
+      /// @todo:  check
+      case TAG_DOMAIN_PLANE_STRAIN:
+      case TAG_DOMAIN_PLANE_STRESS:
+        quad4 = new Quad4e(id, nodes, material, thickness);
+        break;
+      case TAG_DOMAIN_AXISYMMETRIC:
+      default:
+        throw SException("[nemesis:%d] %s", 1110,
+          "A quad4e can be used only in plane strain/stress.");
+    }
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), quad4);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(quad4);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1213,6 +1476,7 @@ static PyObject* pyElement_Tetrahedron4d(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
   int id;
   // define an output string stream
@@ -2085,7 +2349,7 @@ static PyObject* pyTracker_Steps(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   try
   {
-    steps = pD->get < Tracker>(pD->get_trackers(), id)->get_steps();
+    steps = pD->get<Tracker>(pD->get_trackers(), id)->get_steps();
   }
   catch(SException e)
   {
@@ -2101,7 +2365,7 @@ static PyObject* pyTracker_Time(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
   try
   {
-    time = pD->get < Tracker>(pD->get_trackers(), id)->get_time(step);
+    time = pD->get<Tracker>(pD->get_trackers(), id)->get_time(step);
   }
   catch(SException e)
   {
@@ -2117,7 +2381,7 @@ static PyObject* pyTracker_Lambda(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
   try
   {
-    lambda = pD->get < Tracker>(pD->get_trackers(), id)->get_lambda(step);
+    lambda = pD->get<Tracker>(pD->get_trackers(), id)->get_lambda(step);
   }
   catch(SException e)
   {
@@ -2131,7 +2395,7 @@ static PyObject* pyTracker_Data(PyObject* self, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
   try
   {
-    return buildTuple(pD->get < Tracker>(pD->get_trackers(), id)->get_packet(step));
+    return buildTuple(pD->get<Tracker>(pD->get_trackers(), id)->get_packet(step));
   }
   catch(SException e)
   {

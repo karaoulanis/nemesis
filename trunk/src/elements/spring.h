@@ -32,23 +32,19 @@
 class SpringMaterial;
 
 class Spring: public Element {
- private:
-  // Dummy copy constructor and copy assignment as to explicitly disable them.
-  // Only the declarations are provided and not the definitions.
-  // When called a linking error will occur.
-  Spring(const Spring&);
-  void operator=(const Spring&);
- protected:
-  int nDim;
-  // double gap;
-  SpringMaterial* mySpringMaterial;
-  Matrix T;
  public:
   // Constructors and Destructor
   Spring();
-  Spring(int ID, int Node_1, int Node_2, int matID,
-       double xp1 = 1, double xp2 = 0, double xp3 = 0,
-       double yp1 = 0, double yp2 = 1, double yp3 = 0);
+  Spring(int id,
+         std::vector<Node*> nodes,
+         SpringMaterial* material,
+         int dim,
+         double xp1 = 1.,
+         double xp2 = 0.,
+         double xp3 = 0.,
+         double yp1 = 0.,
+         double yp2 = 1.,
+         double yp3 = 0.);
   ~Spring();
   void update();
   void commit();
@@ -65,5 +61,18 @@ class Spring: public Element {
   void addTracker(int index);
   Tracker* get_tracker(int index);
   void track();
+
+ protected:
+  int dim_;
+  // double gap;
+  SpringMaterial* mySpringMaterial;
+  Matrix T;
+
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  Spring(const Spring&);
+  void operator=(const Spring&);
 };
 #endif  // SRC_ELEMENTS_SPRING_H_

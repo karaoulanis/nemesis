@@ -46,7 +46,7 @@ Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section)
   this->handleCommonInfo();
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
           +(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
-  myUniMaterial = static_cast < UniaxialMaterial*>(myMaterial);
+  myUniMaterial = static_cast<UniaxialMaterial*>(myMaterial);
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system

@@ -34,16 +34,9 @@
  * The Single Dof Material Class.
  */
 class SpringMaterial: public Material {
- protected:
-  Vector sTrial;
-  Vector sConvg;
-  Vector eTrial;
-  Vector eTotal;
-  Matrix Ct;
-  int nDim;
  public:
   SpringMaterial();
-  explicit SpringMaterial(int ID);
+  SpringMaterial(int ID, int dim);
 
   // Get clone
   virtual SpringMaterial* get_clone()=0;
@@ -57,6 +50,14 @@ class SpringMaterial: public Material {
 
   // Tracker member functions
   void track();
+
+ protected:
+  int dim_;
+  Vector sTrial;
+  Vector sConvg;
+  Vector eTrial;
+  Vector eTotal;
+  Matrix Ct;
 };
 
 #endif  // SRC_MATERIAL_SPRING_MATERIAL_H_

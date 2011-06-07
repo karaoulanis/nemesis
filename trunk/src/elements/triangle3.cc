@@ -74,7 +74,7 @@ Triangle3::Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID)
 
   // Material
   myMatPoints.resize(1);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
+  MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 1);
   myMatPoints[0]->set_X(num::d13*(x(0, 0)+x(1, 0)+x(2, 0)),
                        num::d13*(x(0, 1)+x(1, 1)+x(2, 1)));

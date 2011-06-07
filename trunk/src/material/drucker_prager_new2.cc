@@ -40,7 +40,7 @@ DruckerPragerNew2::DruckerPragerNew2(int ID, int elasticID, double c,
                                      double Kphi, double T)
 :MultiaxialMaterial(ID, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get < Material>(pD->get_materials(), elasticID);
+  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
   if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
     throw SException("[nemesis:%d] %s", 9999,
                       "Multiaxial elastic material expected.");

@@ -104,14 +104,10 @@ class Element: public DomainObject {
   // GroupData related info
   void SetGroupData(const GroupData* groupdata);
   bool IsActive();
-
   virtual void recoverStresses() {}
-
   // Serialise
   void save(std::ostream& s);
-
   void activateParameter(int param) {activeParameter = param;}
-
   // Tracker member functions
   virtual void addTracker(int index);
   virtual Tracker* get_tracker(int index);
@@ -140,12 +136,12 @@ class Element: public DomainObject {
   static Vector** theStaticVectors;
   int handleCommonInfo();
   int activeParameter;
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.
   // When called a linking error will occur.
   Element(const Element&);
   void operator=(const Element&);
-
 };
 #endif  // SRC_ELEMENTS_ELEMENT_H_

@@ -32,7 +32,22 @@
 #include "numeric/vector.h"
 
 class Quad4i: public Quad4 {
-  private:
+ public:
+  // Constructors and Destructor
+  Quad4i();
+  Quad4i(int id,
+         std::vector<Node*> nodes,
+         MultiaxialMaterial* material,
+         double thickness);
+  ~Quad4i();
+
+  const Matrix& get_K();
+    const Matrix& get_M();
+  const Vector& get_R();
+  void update();
+  void commit();
+ 
+ private:
   static double shpStd[4][3][4];
   static double shpInc[2][3][4];
 
@@ -47,17 +62,5 @@ class Quad4i: public Quad4 {
   void get_Kdd(Matrix& K);
   void get_Kda(Matrix& K);
   void get_Kaa(Matrix& K);
-  public:
-  // Constructors and Destructor
-  Quad4i();
-  Quad4i(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
-  ~Quad4i();
-
-  const Matrix& get_K();
-    const Matrix& get_M();
-  const Vector& get_R();
-  void update();
-  void commit();
 };
-
 #endif  // SRC_ELEMENTS_QUAD4I_H_

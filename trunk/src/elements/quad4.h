@@ -33,22 +33,15 @@ class MatPoint;
 class MultiaxialMaterial;
 
 class Quad4: public Element {
- protected:
-  int p1;                 // Integration rule xi
-  int p2;                 // Integration rule eta
-  static Matrix N;
-  static double detJ;
-  std::vector<MatPoint*> myMatPoints;
-  std::vector<MultiaxialMaterial*> materials;
  public:
   // Constructors and Destructor
   Quad4();
-  Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
-         int integrationRuleXi, int integrationRuleEta);
-  Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material);
+  Quad4(int id,
+        std::vector<Node*> nodes,
+        MultiaxialMaterial* material,
+        double thickness);
   ~Quad4();
 
-  void commit();
 
   void findShapeFunctionsAt(MatPoint* pMatPoint);
   bool checkIfAllows(FEObject* f);
@@ -61,7 +54,16 @@ class Quad4: public Element {
   Tracker* get_tracker(int index);
   void track();
 
+  void commit();
   int get_num_plastic_points();
-};
 
+ protected:
+  int p1;  // Integration rule xi
+  int p2;  // Integration rule eta
+  double thickness_;
+  std::vector<MatPoint*> myMatPoints;
+  std::vector<MultiaxialMaterial*> materials;
+  static Matrix N;
+  static double detJ;
+};
 #endif  // SRC_ELEMENTS_QUAD4_H_

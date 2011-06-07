@@ -30,22 +30,29 @@
 #include "elements/quad4.h"
 
 class Quad4d: public Quad4 {
-  private:
-  static double shp[4][3][4];
-  static double detJ[4];
-  static std::vector<int> perm;
-  public:
+ public:
   // Constructors and Destructor
   Quad4d();
-  Quad4d(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
+  Quad4d(int id,
+         std::vector<Node*> nodes,
+         MultiaxialMaterial* material,
+         double thickness,
+         bool axisymmetric);
   ~Quad4d();
 
   const Matrix& get_K();
-    const Matrix& get_M();
+  const Matrix& get_M();
   const Vector& get_R();
   void get_B(Matrix& B, int node, int gPoint);
   void shapeFunctions();
   void update();
+ private:
+  static double shp[4][3][4];
+  static double detJ[4];
+  static std::vector<int> perm;
+  ///@todo make axysmmetric static at Quad4
+  bool axisymmetric_;
+
 };
 
 #endif  // SRC_ELEMENTS_QUAD4D_H_

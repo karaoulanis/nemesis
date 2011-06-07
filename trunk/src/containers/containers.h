@@ -67,7 +67,7 @@ namespace Containers {
     if (i == c.end()) {
       return -1;
     } else {
-      return static_cast < int>(std::distance(c.begin(), i));
+      return static_cast<int>(std::distance(c.begin(), i));
     }
   }
 

@@ -38,37 +38,57 @@ Spring::Spring()   {
  * Constructor.
  * Creates a Bar Element.
  */
-Spring::Spring(int ID, int Node_1, int Node_2, int matID,
-                double xp1, double xp2, double xp3,
-                double yp1, double yp2, double yp3)
-:Element(ID, matID) {
+Spring::Spring(int id, std::vector<Node*> nodes, SpringMaterial* material,
+               int dim,
+               double xp1, double xp2, double xp3,
+               double yp1, double yp2, double yp3)
+    : Element(id, nodes),
+      dim_(dim) {
   myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
-  // Get dimension
-  nDim = pD->get_dim();
-
-  // Store the nodes
-  myNodalIDs.resize(2);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
 
   // The dofs needed for this element
-  myLocalNodalDofs.resize(nDim);
-  for (int i = 0;i < nDim;i++) myLocalNodalDofs[i]=i;
+  myLocalNodalDofs.resize(dim_);
+  for (int i = 0;i < dim_; i++) myLocalNodalDofs[i] = i;
 
-  // Handle common info
-  this->handleCommonInfo();
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[2*dim_];
+  myVector = theStaticVectors[2*dim_];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(2, 3);
+  for (int i = 0; i < 2; i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < dim_; j++)
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+  // Load vector
+  P.resize(2*dim_, 0.);
+  // Self weight
+  G.resize(2*dim_, 0.);
+  b.resize(3);
+  double g = pD->get_gravity_accl();
+  const Vector& gravity_vect = pD->get_gravity_vect();
+  b[0]=g*gravity_vect[0]*(material->get_rho());
+  b[1]=g*gravity_vect[1]*(material->get_rho());
+  b[2]=g*gravity_vect[2]*(material->get_rho());
+  // Handle common info: End ---------------------------------------------------
 
   // Store material information
-  mySpringMaterial = static_cast < SpringMaterial*>(myMaterial)->get_clone();
+  mySpringMaterial = static_cast<SpringMaterial*>(myMaterial)->get_clone();
 
   // Find gap
   // gap = sqrt((x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0))
   //      +(x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
   //      +(x(1, 2)-x(0, 2))*(x(1, 2)-x(0, 2)));
   // Define transformations
-  T.Resize(nDim, nDim, 0.);
+  T.Resize(dim_, dim_, 0.);
   static Vector xp, yp, zp;
-  switch (nDim) {
+  switch (dim_) {
     case 1:
       T(0, 0)=1.;
       break;
@@ -114,14 +134,14 @@ Spring::~Spring() {
   delete mySpringMaterial;
 }
 void Spring::update() {
-  static Vector du(2*nDim);
+  static Vector du(2*dim_);
   du = this->get_disp_incrm();
   report(du, "du");
-  static Vector de(nDim, 0);
+  static Vector de(dim_, 0);
   de.clear();
-  for (int k = 0;k < nDim;k++)
-    for (int i = 0;i < nDim;i++)
-      de[i]+=T(i, k)*(du[k+nDim]-du[k]);
+  for (int k = 0;k < dim_;k++)
+    for (int i = 0;i < dim_;i++)
+      de[i]+=T(i, k)*(du[k+dim_]-du[k]);
   // report(de, "de");
   mySpringMaterial->set_strain(de);
 }
@@ -183,11 +203,11 @@ const Vector& Spring::get_R() {
   // double facP = myGroup->get_fac_P();
   // R = Fint - Fext
   Vector sigma = mySpringMaterial->get_stress();
-  for (int k = 0; k < nDim; k++) {
-    for (int i = 0; i < nDim; i++) {
+  for (int k = 0; k < dim_; k++) {
+    for (int i = 0; i < dim_; i++) {
       double d = facS*T(k, i)*sigma[k];
       R[i     ]+=-d;
-      R[i+nDim]+= d;
+      R[i+dim_]+= d;
     }
   }
   report(R, "R");

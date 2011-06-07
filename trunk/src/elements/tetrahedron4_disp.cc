@@ -55,7 +55,7 @@ Tetrahedron4Disp::Tetrahedron4Disp(int ID,
 
   // Materials
   myMatPoints.resize(1);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
+  MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 1, 1, 1);
 }
 Tetrahedron4Disp::~Tetrahedron4Disp() {
