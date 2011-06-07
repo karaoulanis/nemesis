@@ -37,7 +37,13 @@
  * Default constructor.
  */
 Model::Model(Domain* pDomain)
-:AnalysisObject(), theDomain(pDomain), constrained(false) {
+    : AnalysisObject(),
+      theDomain(pDomain),
+      theModelNodes(0),
+      theModelElements(0),
+      nEquations(0),
+      constrained(false),
+      reordered(false) {
 }
 /**
  * Destructor.

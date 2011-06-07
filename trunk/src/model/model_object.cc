@@ -32,13 +32,19 @@ static bool allocatedArrays = false;
 /**
  * Default constructor.
  */
-ModelObject::ModelObject() {
+ModelObject::ModelObject()
+    : theFTable(0),
+      myMatrix(0),
+      myVector(0) {
 }
+
 /**
  * Constructor.
  */
-ModelObject::ModelObject(const IDContainer& FTable) {
-//  :FEObject()
+ModelObject::ModelObject(const IDContainer& FTable)
+    : theFTable(FTable),
+      myMatrix(0),
+      myVector(0) {
   // Create static matrices and static vectors
   if (allocatedArrays == false) {
     theStaticVectors = new Vector*[64];
@@ -49,7 +55,6 @@ ModelObject::ModelObject(const IDContainer& FTable) {
     }
     allocatedArrays = true;
   }
-  theFTable = FTable;
 }
 /**
  * Destructor.
