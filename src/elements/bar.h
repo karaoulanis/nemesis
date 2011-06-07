@@ -36,9 +36,14 @@ class Bar: public Element {
  public:
   // Constructors and Destructor
   Bar();
-  Bar(int ID, int Node_1, int Node_2, int matID,
-      CrossSection* iSec, CrossSection* jSec);
+  Bar(int id,
+      std::vector<Node*> nodes,
+      UniaxialMaterial* material,
+      CrossSection* iSec,
+      CrossSection* jSec,
+      int dim);
   ~Bar();
+
   void update();
   void commit();
   bool checkIfAllows(FEObject* f);
@@ -52,7 +57,7 @@ class Bar: public Element {
   void track();
 
  protected:
-  int nDim;
+  int dim_;
   CrossSection* iSection;
   CrossSection* jSection;
   double L0;
@@ -63,5 +68,6 @@ class Bar: public Element {
   // Only the declarations are provided and not the definitions.
   // When called a linking error will occur.
   Bar(const Bar&);
-  void operator=(const Bar&);};
+  void operator=(const Bar&);
+};
 #endif  // SRC_ELEMENTS_BAR_H_

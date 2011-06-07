@@ -38,11 +38,11 @@ Bar2t::Bar2t()   {
  * Material are stored. Only when this element is added to the Domain, the
  * pointers concerning the Nodes and the Material are initiated.
  */
-Bar2t::Bar2t(int ID, int Node_1, int Node_2, int matID,
-             CrossSection* iSec, CrossSection* jSec)
-  :Bar(ID, Node_1, Node_2, matID, iSec, jSec) {
+Bar2t::Bar2t(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
+         CrossSection* iSec, CrossSection* jSec, int dim)
+    : Bar(id, nodes, material, iSec, jSec, dim) {
   myTag = TAG_ELEM_BAR_2D_TOTAL_LAGRANGIAN;
-  cosX.resize(nDim);
+  cosX.resize(dim_);
   cosX.clear();
 }
 /**
@@ -54,12 +54,12 @@ const Matrix& Bar2t::get_K() {
   Matrix& K=*myMatrix;
 
   // Directional cosines, L^2 and strain (in the current configuration)
-  static Vector du(2*nDim);
+  static Vector du(2*dim_);
   du = this->get_disp_trial();
-  for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
+  for (int i = 0;i < dim_; i++) cosX[i]=(x(1, i)-x(0, i)+du[i+dim_]-du[i])/L0;
   double L2 = 0;
-  for (int i = 0;i < nDim;i++)
-    L2+=(x(1, i)-x(0, i)+du[i+nDim]-du[i])*(x(1, i)-x(0, i)+du[i+nDim]-du[i]);
+  for (int i = 0;i < dim_; i++)
+    L2+=(x(1, i)-x(0, i)+du[i+dim_]-du[i])*(x(1, i)-x(0, i)+du[i+dim_]-du[i]);
   double e=(L2-L0*L0)/(2*L0*L0);
 
   // Matrix KM
@@ -67,19 +67,19 @@ const Matrix& Bar2t::get_K() {
   double E = myUniMaterial->get_C();
   double K0 = E*A0/L0;
   double d;
-  for (int i = 0;i < nDim;i++)
-    for (int j = 0; j < nDim; j++) {
+  for (int i = 0;i < dim_;i++)
+    for (int j = 0; j < dim_; j++) {
       d = cosX[i]*cosX[j]*K0;
       K(i     , j)      = d;
-      K(i+nDim, j)      =-d;
-      K(i     , j+nDim) =-d;
-      K(i+nDim, j+nDim) = d;
+      K(i+dim_, j)      =-d;
+      K(i     , j+dim_) =-d;
+      K(i+dim_, j+dim_) = d;
     }
   // Matrix KG
   K0 = E*A0*e/L0;
   int ii;
-  for (int i = 0; i < nDim; i++) {
-    i < nDim ? ii = i+nDim : ii = i-nDim;
+  for (int i = 0; i < dim_; i++) {
+    i < dim_ ? ii = i+dim_ : ii = i-dim_;
     K(i, i) += K0;
     K(i, ii)+=-K0;
   }
@@ -102,25 +102,25 @@ const Vector& Bar2t::get_R() {
   double facP = groupdata_->factor_P;
 
   // Directional cosines, L^2 and strain (in the current configuration)
-  static Vector du(2*nDim);
+  static Vector du(2*dim_);
   du = this->get_disp_trial();
-  for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+nDim]-du[i])/L0;
+  for (int i = 0;i < dim_;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+dim_]-du[i])/L0;
   double L2 = 0;
-  for (int i = 0;i < nDim;i++)
-    L2+=(x(1, i)-x(0, i)+du[i+nDim]-du[i])*(x(1, i)-x(0, i)+du[i+nDim]-du[i]);
+  for (int i = 0;i < dim_;i++)
+    L2+=(x(1, i)-x(0, i)+du[i+dim_]-du[i])*(x(1, i)-x(0, i)+du[i+dim_]-du[i]);
   double e=(L2-L0*L0)/(2*L0*L0);
   double E = myUniMaterial->get_C();
   double N = E*A0*e;
-  for (int i = 0; i < nDim; i++) {
+  for (int i = 0; i < dim_; i++) {
     double d = facS*cosX[i]*N;
     R[i]      =-d - facP*P[i];
-    R[i+nDim] = d - facP*P[i+nDim];
+    R[i+dim_] = d - facP*P[i+dim_];
   }
   // Self-weigth (only in y todo: check this)
-  if (!num::tiny(facG) && nDim>1) {
+  if (!num::tiny(facG) && dim_>1) {
     double b=-facG*0.5*(myUniMaterial->get_rho())*A0*L0;
     R[1]-=b;
-    R[1+nDim]-=b;
+    R[1+dim_]-=b;
   }
   /// @todo Add nodal transformations
   return R;

@@ -887,6 +887,9 @@ static PyMethodDef MaterialMethods[] =  {
 /*******************************************************************************
 * Element commands
 *******************************************************************************/
+/**
+ *
+ */
 static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
   int id, na, nb, mat_id, dim;
   double xp1 = 1., xp2 = 0., xp3 = 0., yp1 = 0., yp2 = 1., yp3 = 0.;
@@ -929,19 +932,56 @@ static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ *
+ */
 static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, isec_id, jsec_id=-9999;
-  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat,
-    &isec_id, &jsec_id))
+  int id, n1, n2, mat, s1, s2=-9999;
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &n1, &n2, &mat, &s1, &s2)) {
     return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(2);
   try {
-    if (jsec_id == -9999) {
-      jsec_id = isec_id;
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  UniaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<UniaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get section pointers from domain
+  CrossSection* sec1;
+  CrossSection* sec2;
+  try {
+    sec1 = pD->get<CrossSection>(pD->get_sections(), s1);
+    if (s2 == -9999) {
+      sec2 = sec1;
+    } else {
+      sec2 = pD->get<CrossSection>(pD->get_sections(), s2);
     }
-    CrossSection* isec = pD->get<CrossSection>(pD->get_sections(), isec_id);
-    CrossSection* jsec = pD->get<CrossSection>(pD->get_sections(), jsec_id);
-    Element* pElement = new Bar2s(id, iNode, jNode, mat, isec, jsec);
-    pD->add(pD->get_elements(), pElement);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get domain dimension
+  int dim = pD->get_dim();
+  // Create element and add it to domain
+  try {
+    Bar2s* elem = new Bar2s(id, nodes, material, sec1, sec2, dim);
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -949,19 +989,57 @@ static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
+/**
+ *
+ */
 static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, isec_id, jsec_id=-9999;
-  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &iNode, &jNode, &mat,
-    &isec_id, &jsec_id))
+  int id, n1, n2, mat, s1, s2=-9999;
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &n1, &n2, &mat, &s1, &s2)) {
     return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(2);
   try {
-    if (jsec_id == -9999) {
-      jsec_id = isec_id;
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  UniaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<UniaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get section pointers from domain
+  CrossSection* sec1;
+  CrossSection* sec2;
+  try {
+    sec1 = pD->get<CrossSection>(pD->get_sections(), s1);
+    if (s2 == -9999) {
+      sec2 = sec1;
+    } else {
+      sec2 = pD->get<CrossSection>(pD->get_sections(), s2);
     }
-    CrossSection* isec = pD->get<CrossSection>(pD->get_sections(), isec_id);
-    CrossSection* jsec = pD->get<CrossSection>(pD->get_sections(), jsec_id);
-    Element* pElement = new Bar2t(id, iNode, jNode, mat, isec, jsec);
-    pD->add(pD->get_elements(), pElement);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get domain dimension
+  int dim = pD->get_dim();
+  // Create element and add it to domain
+  try {
+    Bar2t* elem = new Bar2t(id, nodes, material, sec1, sec2, dim);
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -969,6 +1047,7 @@ static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
   int id, iNode, jNode, mat, sec_id;
   if (!PyArg_ParseTuple(args, "iiiii", &id, &iNode, &jNode, &mat, &sec_id))

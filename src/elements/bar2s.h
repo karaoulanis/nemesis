@@ -29,17 +29,20 @@
 #include "elements/bar.h"
 
 class Bar2s: public Bar {
-  private:
-  public:
+ public:
   // Constructors and Destructor
   Bar2s();
-  Bar2s(int ID, int Node_1, int Node_2, int matID,
-        CrossSection* iSec, CrossSection* jSec);
+  Bar2s(int id,
+      std::vector<Node*> nodes,
+      UniaxialMaterial* material,
+      CrossSection* iSec,
+      CrossSection* jSec,
+      int dim);
   ~Bar2s();
 
   const Matrix& get_K();
   const Vector& get_R();
   const Vector& get_Rgrad();
+ private:
 };
-
 #endif  // SRC_ELEMENTS_BAR2S_H_
