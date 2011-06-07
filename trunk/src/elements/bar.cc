@@ -37,39 +37,68 @@ Bar::Bar() {
  * Constructor.
  * Creates a Bar Element.
  */
-Bar::Bar(int ID, int Node_1, int Node_2, int matID,
-         CrossSection* iSec, CrossSection* jSec)
-:Element(ID, matID) {
-  // Get dimension
-  nDim = pD->get_dim();
+Bar::Bar(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
+         CrossSection* iSec, CrossSection* jSec, int dim)
+    : Element(id, nodes),
+      dim_(dim),
+      iSection(iSec),
+      jSection(jSec) {
 
-  // Store the nodes
+  // Store material information
+  myUniMaterial = material->get_clone();
+
+  // Get nodal data
   myNodalIDs.resize(2);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
+  myNodalIDs[0] = nodes_[0]->get_id();
+  myNodalIDs[1] = nodes_[1]->get_id();
 
-  // The dofs needed for this element
-  myLocalNodalDofs.resize(nDim);
-  for (int i = 0;i < nDim;i++) myLocalNodalDofs[i]=i;
+  // Set local nodal dofs
+  myLocalNodalDofs.resize(dim_);
+  for (int i = 0; i < dim_; i++) {
+    myLocalNodalDofs[i] = i;
+  }
 
-  // Handle common info
-  this->handleCommonInfo();
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[2*dim_];
+  myVector = theStaticVectors[2*dim_];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(2, 3);
+  for (int i = 0; i < 2; i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < dim_; j++)
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+  // Load vector
+  P.resize(2*dim_, 0.);
+  // Self weight
+  G.resize(2*dim_, 0.);
+  b.resize(3);
+  double g = this->get_gravity_accl();
+  const Vector& gravity_vect = this->get_gravity_vect();
+  b[0]=g*gravity_vect[0]*(material->get_rho());
+  b[1]=g*gravity_vect[1]*(material->get_rho());
+  b[2]=g*gravity_vect[2]*(material->get_rho());
+  // Handle common info: End ---------------------------------------------------
 
   // Find length
   L0 = 0.;
-  for (int i = 0;i < nDim;i++) L0+=(x(1, i)-x(0, i))*(x(1, i)-x(0, i));
+  for (int i = 0; i < dim_; i++) {
+    L0 += (x(1, i)-x(0, i))*(x(1, i)-x(0, i));
+  }
   L0 = sqrt(L0);
-  if (num::tiny(L0))
+  if (num::tiny(L0)) {
     throw SException("[nemesis:%d] %s", 9999, "Zero length bar is not allowed");
-
+  }
   // Retrieve the CrossSection pointers and get A0
-  iSection = iSec;
-  jSection = jSec;
   A0 = 0.5*(iSection->get_A()+jSection->get_A());
-
-  // Store material information
-  myUniMaterial = static_cast<UniaxialMaterial*>(myMaterial)->get_clone();
 }
+
 /**
  * Destructor.
  */
@@ -77,10 +106,10 @@ Bar::~Bar() {
   delete myUniMaterial;
 }
 void Bar::update() {
-  static Vector du(2*nDim);
+  static Vector du(2*dim_);
   du = this->get_disp_incrm();
     double dL = 0;
-  for (int i = 0;i < nDim;i++) dL+=(du[i+nDim]-du[i])*cosX[i];
+  for (int i = 0;i < dim_; i++) dL+=(du[i+dim_]-du[i])*cosX[i];
     double de = dL/L0;
   myUniMaterial->set_strain(de);
 }
@@ -95,9 +124,9 @@ const Matrix& Bar::get_M() {
   M.Clear();
   double rho = myUniMaterial->get_rho();
   double mass = 0.5*L0*A0*rho;
-  for (int i = 0; i < nDim; i++) {
+  for (int i = 0; i < dim_; i++) {
     M(i     , i)      = mass;
-    M(i+nDim, i+nDim) = mass;
+    M(i+dim_, i+dim_) = mass;
   }
   return M;
 }
@@ -112,9 +141,9 @@ const Vector& Bar::get_Reff() {
   double mass = 0.5*rho*L0;
   const Vector& a0 = nodes_[0]->get_accl_trial();
   const Vector& a1 = nodes_[1]->get_accl_trial();
-  for (int i = 0;i < nDim;i++) {
+  for (int i = 0;i < dim_;i++) {
       Reff[i]      += mass*a0[i];
-      Reff[i+nDim] += mass*a1[i];
+      Reff[i+dim_] += mass*a1[i];
   }
   Reff+=(this->get_C())*(velc);
   return Reff;

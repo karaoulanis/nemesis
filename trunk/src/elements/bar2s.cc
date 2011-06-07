@@ -36,14 +36,14 @@ Bar2s::Bar2s()   {
  * Constructor.
  * Creates a Bar2s Element.
  */
-Bar2s::Bar2s(int ID, int Node_1, int Node_2, int matID,
-             CrossSection* iSec, CrossSection* jSec)
-  :Bar(ID, Node_1, Node_2, matID, iSec, jSec) {
+Bar2s::Bar2s(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
+         CrossSection* iSec, CrossSection* jSec, int dim)
+    : Bar(id, nodes, material, iSec, jSec, dim) {
   myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
   // Find directional cosines
-  cosX.resize(nDim);
+  cosX.resize(dim_);
   cosX.clear();
-  for (int i = 0;i < nDim;i++) cosX[i]=(x(1, i)-x(0, i))/L0;
+  for (int i = 0;i < dim_; i++) cosX[i]=(x(1, i)-x(0, i))/L0;
 }
 /**
  * Destructor.
@@ -55,13 +55,13 @@ const Matrix& Bar2s::get_K() {
   double E = myUniMaterial->get_C();
   double K0 = E*A0/L0;
   double d;
-  for (int i = 0;i < nDim;i++)
-    for (int j = 0; j < nDim; j++) {
+  for (int i = 0;i < dim_; i++)
+    for (int j = 0; j < dim_; j++) {
       d = cosX[i]*cosX[j]*K0;
       K(i     , j)      =  d;
-      K(i+nDim, j)      = -d;
-      K(i     , j+nDim) = -d;
-      K(i+nDim, j+nDim) =  d;
+      K(i+dim_, j)      = -d;
+      K(i     , j+dim_) = -d;
+      K(i+dim_, j+dim_) =  d;
     }
   /// @todo Add nodal transformations
   double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
@@ -79,13 +79,13 @@ const Vector& Bar2s::get_Rgrad() {
   default: K0 = 0.;
   }
   double d;
-  for (int i = 0;i < nDim;i++)
-    for (int j = 0; j < nDim; j++) {
+  for (int i = 0;i < dim_;i++)
+    for (int j = 0; j < dim_; j++) {
       d = cosX[i]*cosX[j]*K0;
       K(i     , j)      = d;
-      K(i+nDim, j)      =-d;
-      K(i     , j+nDim) =-d;
-      K(i+nDim, j+nDim) = d;
+      K(i+dim_, j)      =-d;
+      K(i     , j+dim_) =-d;
+      K(i+dim_, j+dim_) = d;
     }
   /// @todo Add nodal transformations
   double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
@@ -109,16 +109,16 @@ const Vector& Bar2s::get_R() {
 
   // R = Fint - Fext
   double F0 = A0*(myUniMaterial->get_stress());
-  for (int i = 0; i < nDim; i++) {
+  for (int i = 0; i < dim_; i++) {
     double d = facS*cosX[i]*F0;
     R[i]      =-d - facP*P[i];
-    R[i+nDim] = d - facP*P[i+nDim];
+    R[i+dim_] = d - facP*P[i+dim_];
   }
   // Self-weigth (only in y todo: check this)
-  if (!num::tiny(facG) && nDim>1) {
+  if (!num::tiny(facG) && dim_>1) {
     double b=-facG*0.5*(myUniMaterial->get_rho())*A0*L0;
     R[1]-=b;
-    R[1+nDim]-=b;
+    R[1+dim_]-=b;
   }
   /// @todo Add nodal transformations
   return R;

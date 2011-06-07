@@ -71,8 +71,8 @@ Spring::Spring(int id, std::vector<Node*> nodes, SpringMaterial* material,
   // Self weight
   G.resize(2*dim_, 0.);
   b.resize(3);
-  double g = pD->get_gravity_accl();
-  const Vector& gravity_vect = pD->get_gravity_vect();
+  double g = this->get_gravity_accl();
+  const Vector& gravity_vect = this->get_gravity_vect();
   b[0]=g*gravity_vect[0]*(material->get_rho());
   b[1]=g*gravity_vect[1]*(material->get_rho());
   b[2]=g*gravity_vect[2]*(material->get_rho());

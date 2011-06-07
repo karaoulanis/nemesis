@@ -116,6 +116,10 @@ class Element: public DomainObject {
   // Enrichment functions
   virtual void enrich();
 
+  // Temporary functions till pointers to domain are removed
+  const Vector& get_gravity_vect();
+  const double  get_gravity_accl();
+
  protected:
   std::vector<Node*> nodes_;
   IDContainer myNodalIDs;

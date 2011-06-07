@@ -118,6 +118,13 @@ const Vector& Element::get_Rgrad() {
   return *myVector;
 }
 
+const Vector& Element::get_gravity_vect() {
+  return pD->get_gravity_vect();
+}
+const double  Element::get_gravity_accl() {
+  return pD->get_gravity_accl();
+}
+
 int Element::handleCommonInfo() {
   // Define number of nodes, number of dofs
   int nNodes = myNodalIDs.size();
@@ -152,10 +159,10 @@ int Element::handleCommonInfo() {
     this->checkIfAllows(myMaterial);
     // Self weight
     b.resize(3);
-    double g = pD->get_gravity_accl();
-    b[0]=g*(pD->get_gravity_vect()[0])*(myMaterial->get_rho());
-    b[1]=g*(pD->get_gravity_vect()[1])*(myMaterial->get_rho());
-    b[2]=g*(pD->get_gravity_vect()[2])*(myMaterial->get_rho());
+    double g = this->get_gravity_accl();
+    b[0]=g*(this->get_gravity_vect()[0])*(myMaterial->get_rho());
+    b[1]=g*(this->get_gravity_vect()[1])*(myMaterial->get_rho());
+    b[2]=g*(this->get_gravity_vect()[2])*(myMaterial->get_rho());
   }
   return 0;
 }
