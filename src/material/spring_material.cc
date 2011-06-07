@@ -27,17 +27,23 @@
 #include <sstream>
 #include <string>
 
-SpringMaterial::SpringMaterial() {
+SpringMaterial::SpringMaterial()
+    : dim_(0),
+      sTrial(0),
+      sConvg(0),
+      eTrial(0),
+      eTotal(0),
+      Ct(0, 0) {
 }
-SpringMaterial::SpringMaterial(int ID)
-:Material(ID, 0., 0.) {
-  // Initialize vectors
-  nDim = pD->get_dim();
-  sTrial.resize(nDim, 0.);
-  sConvg.resize(nDim, 0.);
-  eTrial.resize(nDim, 0.);
-  eTotal.resize(nDim, 0.);
-  Ct.Resize(3, 3, 0.);
+
+SpringMaterial::SpringMaterial(int ID, int dim)
+    : Material(ID, 0., 0.),
+      dim_(dim),
+      sTrial(dim, 0.),
+      sConvg(dim, 0.),
+      eTrial(dim, 0.),
+      eTotal(dim, 0.),
+      Ct(3, 3, 0.) {
 }
 /**
  */

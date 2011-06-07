@@ -80,7 +80,7 @@ void EigenControl::formNodalResidual(ModelNode* pModelNode) {
   pModelNode->add_R(1.0);
 }
 void EigenControl::formTangent() {
-  EigenSOE* pSOE = static_cast < EigenSOE*>(pA->get_soe());
+  EigenSOE* pSOE = static_cast<EigenSOE*>(pA->get_soe());
   pSOE->zeroA();
   pSOE->zeroM();
 

@@ -62,16 +62,19 @@ Element::Element(int ID, int matID)
 }
 
 Element::Element(int id, std::vector<Node*> nodes)
-:DomainObject(id) {
+    : DomainObject(id),
+      nodes_(nodes) {
   // Create static Matrices/vectors if they do not exist yet
   if (theStaticMatrices == 0) {
     theStaticMatrices = new Matrix*[64];
-    for (int i = 1;i < 64;i++) theStaticMatrices[i]=new Matrix(i, i, 0.);
+    for (int i = 1;i < 64;i++) {
+      theStaticMatrices[i]=new Matrix(i, i, 0.);
+    }
     theStaticVectors = new Vector*[64];
-    for (int i = 1;i < 64;i++) theStaticVectors[i]=new Vector(i, 0.);
+    for (int i = 1;i < 64;i++) {
+      theStaticVectors[i]=new Vector(i, 0.);
+    }
   }
-  // Copy vector of pointer
-  nodes_ = nodes;
 }
 
 Element::~Element() {

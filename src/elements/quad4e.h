@@ -31,16 +31,13 @@
 #include "numeric/vector.h"
 
 class Quad4e: public Quad4 {
-  private:
-  static Matrix Bu;
-  static Matrix Be;
-  static Matrix T0;
-  static Vector Nu;
-  Vector alpha;
-  public:
+ public:
   // Constructors and Destructor
   Quad4e();
-  Quad4e(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int MatID);
+  Quad4e(int id,
+         std::vector<Node*> nodes,
+         MultiaxialMaterial* material,
+         double thickness);
   ~Quad4e();
 
   const Matrix& get_K();
@@ -55,6 +52,11 @@ class Quad4e: public Quad4 {
   void formBu(double xi, double eta);
   void formBe(double xi, double eta);
   void formT0(double xi, double eta);
-};
+ private:
+  static Matrix Bu;
+  static Matrix Be;
+  static Matrix T0;
+  static Vector Nu;
+  Vector alpha;};
 
 #endif  // SRC_ELEMENTS_QUAD4E_H_

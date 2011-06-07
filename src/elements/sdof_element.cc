@@ -43,7 +43,7 @@ SDofElement::SDofElement(int ID, int NodeID, int dofID, int matID)
   myLocalNodalDofs[0]=dofID-1;
   // Handle common info
     this->handleCommonInfo();
-  mySDofMaterial = static_cast < SDofMaterial*>(myMaterial)->get_clone();
+  mySDofMaterial = static_cast<SDofMaterial*>(myMaterial)->get_clone();
 }
 SDofElement::~SDofElement() {
 }

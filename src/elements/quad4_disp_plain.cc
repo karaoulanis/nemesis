@@ -30,20 +30,21 @@
 
 Quad4DispPlain::Quad4DispPlain() {
 }
-Quad4DispPlain::Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3,
-                               int Node_4, int MatID,
-                               int integrationRuleXi, int integrationRuleEta)
-:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID,
-       integrationRuleXi, integrationRuleEta) {
+
+Quad4DispPlain::Quad4DispPlain(int id, std::vector<Node*> nodes,
+                               MultiaxialMaterial* material, double thickness)
+                               : Quad4(id, nodes,material,thickness) {
 }
+
 Quad4DispPlain::~Quad4DispPlain() {
 }
+
 const Matrix& Quad4DispPlain::get_K() {
   Matrix &K=*myMatrix;
   K.Clear();
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
-    double dV = detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
+    double dV = detJ*thickness_*(myMatPoints[k]->get_w());
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     int ii = 0;
     for (int i = 0; i < 4; i++) {
@@ -70,6 +71,7 @@ const Matrix& Quad4DispPlain::get_K() {
   K*=facK;
   return K;
 }
+
 const Matrix& Quad4DispPlain::get_M() {
   Matrix &M=*myMatrix;
   M.Clear();
@@ -77,12 +79,13 @@ const Matrix& Quad4DispPlain::get_M() {
   double volume = 0.;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
-    volume+=detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
+    volume+=detJ*thickness_*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
   return M;
 }
+
 const Vector& Quad4DispPlain::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
@@ -100,7 +103,7 @@ const Vector& Quad4DispPlain::get_R() {
     sigma = myMatPoints[k]->get_material()->get_stress();
     this->findShapeFunctionsAt(myMatPoints[k]);
     int ii = 0;
-    double dV = detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
+    double dV = detJ*thickness_*(myMatPoints[k]->get_w());
     for (int i = 0; i < 4; i++) {
       R[ii  ]+=facS*(N(1, i)*sigma[0]+N(2, i)*sigma[3])*dV;
       R[ii+1]+=facS*(N(2, i)*sigma[1]+N(1, i)*sigma[3])*dV;
@@ -112,6 +115,7 @@ const Vector& Quad4DispPlain::get_R() {
   R-=facP*P;
   return R;
 }
+
 void Quad4DispPlain::update() {
   // Quick return if inactive
   if (!(groupdata_->active)) {

@@ -70,7 +70,7 @@ Brick8::Brick8(int ID,
 
   // Materials
   myMatPoints.resize(8);
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
+  MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 2, 2, 2);
   myMatPoints[1]=new MatPoint(pMat, 2, 1, 1, 2, 2, 2);
   myMatPoints[2]=new MatPoint(pMat, 2, 2, 1, 2, 2, 2);

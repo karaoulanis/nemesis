@@ -26,22 +26,22 @@
 #ifndef SRC_ELEMENTS_QUAD4_DISP_PLAIN_H_
 #define SRC_ELEMENTS_QUAD4_DISP_PLAIN_H_
 
+#include <vector>
 #include "elements/quad4.h"
 
 class Quad4DispPlain: public Quad4 {
-  public:
+ public:
   // Constructors and Destructor
   Quad4DispPlain();
-  Quad4DispPlain(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
-                 int MatID,
-         int integrationRuleXi, int integrationRuleEta);
+  Quad4DispPlain(int id,
+                 std::vector<Node*> nodes,
+                 MultiaxialMaterial* material,
+                 double thickness);
   ~Quad4DispPlain();
 
   const Matrix& get_K();
-    const Matrix& get_M();
+  const Matrix& get_M();
   const Vector& get_R();
-
   void update();
 };
-
 #endif  // SRC_ELEMENTS_QUAD4_DISP_PLAIN_H_

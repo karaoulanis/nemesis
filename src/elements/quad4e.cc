@@ -34,15 +34,19 @@ Matrix Quad4e::Be(3, 4);
 Matrix Quad4e::T0(3, 3);
 Vector Quad4e::Nu(2, 8);
 
-Quad4e::Quad4e() {
+Quad4e::Quad4e()
+  : alpha(4, 0.) {
 }
-Quad4e::Quad4e(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
-               int matID)
-     :Quad4(ID, Node_1, Node_2, Node_3, Node_4, matID, 2, 2) {
-  alpha.resize(4, 0.);
+
+Quad4e::Quad4e(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
+               double thickness)
+    : Quad4(id, nodes, material, thickness),
+      alpha(4, 0.) {
 }
+
 Quad4e::~Quad4e() {
 }
+
 const Matrix& Quad4e::get_K() {
   this->formKR();
   Matrix &K=*myMatrix;

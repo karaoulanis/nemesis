@@ -37,14 +37,16 @@ std::vector<int> Quad4i::perm(3);
 
 Quad4i::Quad4i() {
 }
-Quad4i::Quad4i(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
-               int MatID)
-:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID, 2, 2) {
+
+Quad4i::Quad4i(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
+               double thickness)
+               : Quad4(id, nodes, material, thickness),
+                 aTrial(4, 0.),
+                 aConvg(4, 0.) {
   perm[0]=0;
   perm[1]=1;
   perm[2]=3;
-  aTrial.resize(4, 0.);
-  aConvg.resize(4, 0.);
+
 }
 Quad4i::~Quad4i() {
 }
@@ -77,7 +79,7 @@ const Matrix& Quad4i::get_M() {
   double volume = 0.;
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++)
-    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w());
+    volume += detJ[k]*thickness_*(myMatPoints[k]->get_w());
   double mass = rho*volume;
   // Set corresponding mass to diagonal terms
   for (int i = 0;i < 8;i++)
@@ -112,7 +114,7 @@ const Vector& Quad4i::get_R() {
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
-    double dV=(pD->get_fac())*detJ[k];
+    double dV = thickness_*detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
       this->get_Bstd(Ba, a, k);
@@ -155,13 +157,13 @@ void Quad4i::update() {
     for (unsigned a = 0; a < 4; a++) {
       this->get_Bstd(Ba, a, k);
       /// @todo check
-      // double dV=(pD->get_fac())*detJ[k];
+      // double dV = thickness_*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 2; a++) {
       this->get_BInc(Ba, a, k);
       /// @todo check
-      // double dV=(pD->get_fac())*detJ[k];
+      // double dV = thickness_*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, Da, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
@@ -241,7 +243,7 @@ void Quad4i::get_Kdd(Matrix& K) {
       get_Bstd(Ba, a, k);
       for (unsigned b = 0; b < 4; b++) {
         get_Bstd(Bb, b, k);
-        double dV=(pD->get_fac())*detJ[k];
+        double dV = thickness_*detJ[k];
         K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }

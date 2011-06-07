@@ -27,8 +27,8 @@
 
 SpringElastic::SpringElastic() {
 }
-SpringElastic::SpringElastic(int ID, double Kn, double Ks2, double Ks3)
-:SpringMaterial(ID) {
+SpringElastic::SpringElastic(int ID, int dim, double Kn, double Ks2, double Ks3)
+:SpringMaterial(ID, dim) {
   // Material parameters
   MatParams[0]=Kn;
   MatParams[1]=Ks2;
@@ -47,7 +47,7 @@ SpringMaterial* SpringElastic::get_clone() {
   double Ks2 =MatParams[1];
   double Ks3 =MatParams[2];
   // Create clone and return
-  SpringMaterial* clone = new SpringElastic(myID, Kn, Ks2, Ks3);
+  SpringMaterial* clone = new SpringElastic(myID, dim_, Kn, Ks2, Ks3);
   return clone;
 }
 void SpringElastic::set_strain(const Vector& De) {
@@ -55,7 +55,7 @@ void SpringElastic::set_strain(const Vector& De) {
   double Ks2 =MatParams[1];
   double Ks3 =MatParams[2];
   eTrial = eTotal+De;
-  switch (nDim) {
+  switch (dim_) {
   case 3:
     sTrial[2]=Ks3*eTrial[2];
   case 2:

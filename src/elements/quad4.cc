@@ -33,47 +33,67 @@ double Quad4::detJ;
 
 Quad4::Quad4() {
 }
-Quad4::Quad4(int ID, int Node_1, int Node_2, int Node_3, int Node_4, int matID,
-           int /*integrationRuleXi*/, int /*integrationRuleEta*/)
-:Element(ID, matID) {
-  myTag = TAG_ELEM_QUAD_4_DISP;
-  // Get nodal data
-  myNodalIDs.resize(4);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
-  myNodalIDs[2]=Node_3;
-  myNodalIDs[3]=Node_4;
-  // Set local nodal dofs
-  myLocalNodalDofs.resize(2);
-  myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;
-  // Handle common info
-  this->handleCommonInfo();
 
-  /// @todo User defined integration rule
-  // p1 = integrationRuleXi;
-  // p2 = integrationRuleEta;
-  p1 = 2;
-  p2 = 2;
+Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
+             double thickness)
+    : Element(id, nodes),
+      p1(2),
+      p2(2),
+      thickness_(thickness) {
+    // tag
+    myTag = TAG_ELEM_QUAD_4_DISP;
+
+    // Get nodal data
+    myNodalIDs.resize(4);
+    myNodalIDs[0] = nodes_[0]->get_id();
+    myNodalIDs[1] = nodes_[1]->get_id();
+    myNodalIDs[2] = nodes_[2]->get_id();
+    myNodalIDs[3] = nodes_[3]->get_id();
+
+    // Set local nodal dofs
+    myLocalNodalDofs.resize(2);
+    myLocalNodalDofs[0] = 0;
+    myLocalNodalDofs[1] = 1;
+
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[8];
+  myVector = theStaticVectors[8];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(4, 3);
+  for (int i = 0; i < 4; i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (int i = 0; i < 4; i++)
+    for (int j = 0; j < 2; j++)
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+  // Load vector
+  P.resize(8, 0.);
+  // Self weight
+  G.resize(8, 0.);
+  b.resize(3);
+  double g = pD->get_gravity_accl();
+  const Vector& gravity_vect = pD->get_gravity_vect();
+  b[0]=g*gravity_vect[0]*(material->get_rho());
+  b[1]=g*gravity_vect[1]*(material->get_rho());
+  b[2]=g*gravity_vect[2]*(material->get_rho());
+  // Handle common info: End ---------------------------------------------------
+
+  // Matpoints
   myMatPoints.resize(4);
-  MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
-  myMatPoints[0]=new MatPoint(pMat, 1, 1, p1, p2);
-  myMatPoints[1]=new MatPoint(pMat, 2, 1, p1, p2);
-  myMatPoints[2]=new MatPoint(pMat, 2, 2, p1, p2);
-  myMatPoints[3]=new MatPoint(pMat, 1, 2, p1, p2);
+  myMatPoints[0]=new MatPoint(material, 1, 1, p1, p2);
+  myMatPoints[1]=new MatPoint(material, 2, 1, p1, p2);
+  myMatPoints[2]=new MatPoint(material, 2, 2, p1, p2);
+  myMatPoints[3]=new MatPoint(material, 1, 2, p1, p2);
   for (unsigned i = 0; i < 4; i++) {
     this->findShapeFunctionsAt(myMatPoints[i]);
     double xG = N(0, 0)*x(0, 0)+N(0, 1)*x(1, 0)+N(0, 2)*x(2, 0)+N(0, 3)*x(3, 0);
     double yG = N(0, 0)*x(0, 1)+N(0, 1)*x(1, 1)+N(0, 2)*x(2, 1)+N(0, 3)*x(3, 1);
     myMatPoints[i]->set_X(xG, yG);
-  }
-}
-
-Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material)
-:Element(id, nodes) {
-  materials.resize(4);
-  for (unsigned i = 0; i < 4; i++) {
-    materials[i] = material->get_clone();
   }
 }
 

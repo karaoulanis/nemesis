@@ -56,7 +56,7 @@ Triangle6::Triangle6(int ID,
   // Handle common info
   this->handleCommonInfo();
   // Materials
-  MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
+  MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, num::d23, num::d16, num::d16, num::d13);
   myMatPoints[1]=new MatPoint(pMat, num::d16, num::d23, num::d16, num::d13);
   myMatPoints[2]=new MatPoint(pMat, num::d16, num::d16, num::d23, num::d13);

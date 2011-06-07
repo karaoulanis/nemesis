@@ -29,12 +29,13 @@
 #include "elements/quad4.h"
 
 class Quad4DispAxisymmetric: public Quad4 {
-  public:
+ public:
   // Constructors and Destructor
   Quad4DispAxisymmetric();
-  Quad4DispAxisymmetric(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
-                        int MatID,
-                        int integrationRuleXi, int integrationRuleEta);
+  Quad4DispAxisymmetric(int id,
+                 std::vector<Node*> nodes,
+                 MultiaxialMaterial* material,
+                 double thickness);
   ~Quad4DispAxisymmetric();
 
   const Matrix& get_K();

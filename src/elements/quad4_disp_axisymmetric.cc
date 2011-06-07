@@ -30,22 +30,22 @@
 
 Quad4DispAxisymmetric::Quad4DispAxisymmetric() {
 }
-Quad4DispAxisymmetric::Quad4DispAxisymmetric(int ID, int Node_1, int Node_2,
-                                             int Node_3, int Node_4, int MatID,
-                                             int integrationRuleXi,
-                                             int integrationRuleEta)
-:Quad4(ID, Node_1, Node_2, Node_3, Node_4, MatID,
-       integrationRuleXi, integrationRuleEta) {
+
+Quad4DispAxisymmetric::Quad4DispAxisymmetric(int id, std::vector<Node*> nodes,
+                               MultiaxialMaterial* material, double thickness)
+                               : Quad4(id, nodes,material,thickness) {
 }
+
 Quad4DispAxisymmetric::~Quad4DispAxisymmetric() {
 }
+
 const Matrix& Quad4DispAxisymmetric::get_K() {
   Matrix &K=*myMatrix;
   K.Clear();
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
     double r = x(0, 0)*N(0, 0)+x(1, 0)*N(0, 1)+x(2, 0)*N(0, 2)+x(3, 0)*N(0, 3);
-    double dV = detJ*r*(pD->get_fac())*(myMatPoints[k]->get_w());
+    double dV = detJ*r*thickness_*(myMatPoints[k]->get_w());
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     int ii = 0;
     for (int i = 0; i < 4; i++) {
@@ -78,6 +78,7 @@ const Matrix& Quad4DispAxisymmetric::get_K() {
   K*=facK;
   return K;
 }
+
 /// @todo
 const Matrix& Quad4DispAxisymmetric::get_M() {
   Matrix &M=*myMatrix;
@@ -86,7 +87,7 @@ const Matrix& Quad4DispAxisymmetric::get_M() {
   double volume = 0.;
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     this->findShapeFunctionsAt(myMatPoints[k]);
-    volume+=detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
+    volume+=detJ*thickness_*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
   for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
@@ -109,7 +110,7 @@ const Vector& Quad4DispAxisymmetric::get_R() {
     sigma = myMatPoints[k]->get_material()->get_stress();
     this->findShapeFunctionsAt(myMatPoints[k]);
     double r = x(0, 0)*N(0, 0)+x(1, 0)*N(0, 1)+x(2, 0)*N(0, 2)+x(3, 0)*N(0, 3);
-    double dV = detJ*r*(pD->get_fac())*(myMatPoints[k]->get_w());
+    double dV = detJ*r*thickness_*(myMatPoints[k]->get_w());
     int ii = 0;
     for (int i = 0; i < 4; i++) {
       R[ii  ]+=facS*(N(1, i)*sigma[0]+N(0, i)/r*sigma[2]+N(2, i)*sigma[3])*dV;
@@ -122,6 +123,7 @@ const Vector& Quad4DispAxisymmetric::get_R() {
   R-=facP*P;
   return R;
 }
+
 void Quad4DispAxisymmetric::update() {
   if (!(groupdata_->active))  return;
   Vector& u=*myVector;
