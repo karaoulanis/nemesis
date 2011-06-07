@@ -32,13 +32,7 @@
 class MatPoint;
 
 class Triangle6: public Element {
- protected:
-  double a1, a2, a3;
-  double b1, b2, b3;
-  double c1, c2, c3;
-  double A;
-  std::vector<MatPoint*> myMatPoints;
-  public:
+ public:
   // Constructors and Destructor
   Triangle6();
   Triangle6(int ID, int Node_1, int Node_2, int Node_3,
@@ -58,6 +52,9 @@ class Triangle6: public Element {
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
   int get_num_plastic_points();
+
+ private:
+  std::vector<MatPoint*> myMatPoints;
 };
 
 #endif  // SRC_ELEMENTS_TRIANGLE6_H_

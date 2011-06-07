@@ -29,13 +29,17 @@
 #include "material/multiaxial_material.h"
 #include "node/node.h"
 
-Triangle6::Triangle6() {
+Triangle6::Triangle6()
+  : myMatPoints(0) {
 }
+
 Triangle6::Triangle6(int ID,
              int Node_1, int Node_2, int Node_3,
              int Node_4, int Node_5, int Node_6,
              int matID)
-:Element(ID, matID) {
+    : Element(ID, matID),
+      myMatPoints(3) {
+  // tag
   myTag = TAG_ELEM_TRIANGLE_6;
   // Get nodal data
   myNodalIDs.resize(6);
@@ -51,9 +55,7 @@ Triangle6::Triangle6(int ID,
   myLocalNodalDofs[1]=1;
   // Handle common info
   this->handleCommonInfo();
-
   // Materials
-  myMatPoints.resize(3);
   MultiaxialMaterial* pMat = static_cast < MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, num::d23, num::d16, num::d16, num::d13);
   myMatPoints[1]=new MatPoint(pMat, num::d16, num::d23, num::d16, num::d13);
@@ -69,9 +71,11 @@ Triangle6::Triangle6(int ID,
     myMatPoints[i]->set_X(xG, yG);
   }
 }
+
 Triangle6::~Triangle6() {
   Containers::vector_delete(myMatPoints);
 }
+
 void Triangle6::get_shape_functions(MatPoint* pMatPoint,
                                     Matrix& N, double& detJ) {
   double z1 = pMatPoint->get_r();
@@ -117,6 +121,7 @@ void Triangle6::get_shape_functions(MatPoint* pMatPoint,
   N(4, 2)=J*4*(z3*Jx13+z2*Jx21);
   N(5, 2)=J*4*(z1*Jx21+z3*Jx32);
 }
+
 const Matrix& Triangle6::get_K() {
   Matrix &K=*myMatrix;
   K.Clear();
@@ -151,11 +156,13 @@ const Matrix& Triangle6::get_K() {
   K*=facK;
   return K;
 }
+
 const Matrix& Triangle6::get_M() {
   Matrix &M=*myMatrix;
   M.Clear();
   return M;
 }
+
 const Vector& Triangle6::get_R() {
   Vector& R=*myVector;
   R.clear();
@@ -188,6 +195,7 @@ const Vector& Triangle6::get_R() {
   R-=facP*P;
   return R;
 }
+
 void Triangle6::update() {
   // Quick return if inactive
   if (!(groupdata_->active)) {
@@ -217,13 +225,16 @@ void Triangle6::update() {
     myMatPoints[i]->get_material()->set_strain(epsilon);
   }
 }
+
 void Triangle6::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->get_material()->commit();
 }
+
 bool Triangle6::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
+
 void Triangle6::recoverStresses() {
   /// @todo check Gauss extrapolation
   static Vector sigma(6);
