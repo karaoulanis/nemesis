@@ -40,8 +40,8 @@ Brick8i::Brick8i(int ID,
              int Node_1, int Node_2, int Node_3, int Node_4,
              int Node_5, int Node_6, int Node_7, int Node_8,
              int matID)
-:Brick8(ID, Node_1, Node_2, Node_3, Node_4, Node_5, Node_6, Node_7, Node_8,
-        matID) {
+    : Brick8(ID, Node_1, Node_2, Node_3, Node_4, Node_5, Node_6, Node_7, Node_8,
+      matID) {
   myTag = TAG_ELEM_BRICK_8_BBAR;
   aTrial.resize(9, 0.);
   aConvg.resize(9, 0.);
@@ -77,7 +77,7 @@ const Matrix& Brick8i::get_M() {
   double volume = 0.;
   this->shapeFunctions();
   for (unsigned k = 0;k < myMatPoints.size();k++) {
-    volume+=detJ[k]*(pD->get_fac())*(myMatPoints[k]->get_w());
+    volume+=detJ[k]*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
   // Set corresponding mass to diagonal terms
@@ -112,7 +112,7 @@ const Vector& Brick8i::get_R() {
   // R = facS*Fint - facG*SelfWeigth - facP*ElementalLoads
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     sigma = myMatPoints[k]->get_material()->get_stress();
-    double dV = (pD->get_fac())*detJ[k];
+    double dV = detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
       this->get_Bstd(Ba, a, k);
@@ -154,14 +154,10 @@ void Brick8i::update() {
     epsilon.clear();
     for (unsigned a = 0; a < 8; a++) {
       this->get_Bstd(Ba, a, k);
-      /// @todo check dV
-      // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 3; a++) {
       this->get_BInc(Ba, a, k);
-      /// @todo check dV
-      // double dV=(pD->get_fac())*detJ[k];
       add_Bv(epsilon, 3*a, &perm[0], Ba, Da, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
@@ -269,7 +265,7 @@ void Brick8i::get_Kdd(Matrix& K) {
       get_Bstd(Ba, a, k);
       for (unsigned b = 0; b < 8; b++) {
         get_Bstd(Bb, b, k);
-        double dV=(pD->get_fac())*detJ[k];
+        double dV = detJ[k];
         K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }

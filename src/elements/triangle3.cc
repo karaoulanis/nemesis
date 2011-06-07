@@ -29,8 +29,20 @@
 #include "material/multiaxial_material.h"
 #include "node/node.h"
 
-Triangle3::Triangle3() {
+Triangle3::Triangle3()
+    : a1(0.),
+      a2(0.),  
+      a3(0.),  
+      b1(0.),  
+      b2(0.),  
+      b3(0.),  
+      c1(0.),  
+      c2(0.),  
+      c3(0.),  
+      A(0.),
+      myMatPoints(0) {
 }
+
 Triangle3::Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID)
 :Element(ID, matID) {
   myTag = TAG_ELEM_TRIANGLE_3_PRESSURE;
