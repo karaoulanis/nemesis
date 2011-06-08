@@ -23,32 +23,64 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include "crosssection/cross_section.h"
 #include "elements/beam2e.h"
+#include "crosssection/cross_section.h"
 #include "group/group_data.h"
 #include "material/uniaxial_material.h"
+#include "node/node.h"
 
-Beam2e::Beam2e() {
+Beam2e::Beam2e()
+    : myUniMaterial(0),
+      mySection(0),
+      L(0.) {
 }
-Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section)
-:Element(ID, matID) {
+
+Beam2e::Beam2e(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
+       CrossSection* section)
+    : Element(id, nodes),
+      myUniMaterial(material),
+      mySection(section) {
+  // Tag
   myTag = TAG_ELEM_BEAM_2D_EULER;
+  // Nodal ids
   myNodalIDs.resize(2);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
+  myNodalIDs[0] = nodes_[0]->get_id();
+  myNodalIDs[1] = nodes_[1]->get_id();
+  // Local dofs
   myLocalNodalDofs.resize(3);
-  myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;
-  myLocalNodalDofs[2]=5;
-  mySection = section;
-  mySecID = section->get_id();  // /@todo remove
-  // Handle common info
-  this->handleCommonInfo();
+  myLocalNodalDofs[0] = 0;
+  myLocalNodalDofs[1] = 1;
+  myLocalNodalDofs[2] = 5;
+  
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[6];
+  myVector = theStaticVectors[6];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(2, 3);
+  for (int i = 0; i < 2; i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 3; j++)
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+  // Load vector
+  P.resize(6, 0.);
+  // Self weight
+  G.resize(6, 0.);
+  this->AssignGravityLoads();
+  // Handle common info: End ---------------------------------------------------
+
+  // Length 
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
           +(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
-  myUniMaterial = static_cast<UniaxialMaterial*>(myMaterial);
-  cosX[0]=(x(1, 0)-x(0, 0))/L;
-  cosX[1]=(x(1, 1)-x(0, 1))/L;
+  // Directional cosines
+  cosX[0] = (x(1, 0)-x(0, 0))/L;
+  cosX[1] = (x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
   /// @todo: check this
   double A = mySection->get_A();
@@ -57,11 +89,13 @@ Beam2e::Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section)
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
   b[1]=-cosX[1]*b0A+cosX[0]*b1A;
 }
+
 /**
  * Destructor.
  */
 Beam2e::~Beam2e() {
 }
+
 const Matrix& Beam2e::get_K() {
   Matrix& K=*myMatrix;
   K.Clear();
@@ -123,11 +157,13 @@ const Matrix& Beam2e::get_K() {
   K*=facK;
   return K;
 }
+
 const Matrix& Beam2e::get_M() {
   Matrix& M=*myMatrix;
   M.Clear();
   return M;
 }
+
 const Vector& Beam2e::get_Rgrad() {
   /// @todo
   Matrix& K=*myMatrix;
@@ -201,6 +237,7 @@ const Vector& Beam2e::get_Rgrad() {
   K*=facK;
   return *myVector;
 }
+
 const Vector& Beam2e::get_R() {
   Vector& R=*myVector;
   R.clear();
@@ -258,6 +295,7 @@ const Vector& Beam2e::get_R() {
   R[4]=R4;
   return R;
 }
+
 void Beam2e::recoverStresses() {
   return;
 }

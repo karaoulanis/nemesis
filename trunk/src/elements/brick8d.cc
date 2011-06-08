@@ -28,16 +28,16 @@
 
 Brick8d::Brick8d() {
 }
-Brick8d::Brick8d(int ID,
-             int Node_1, int Node_2, int Node_3, int Node_4,
-             int Node_5, int Node_6, int Node_7, int Node_8,
-             int matID)
-:Brick8(ID, Node_1, Node_2, Node_3, Node_4, Node_5, Node_6, Node_7, Node_8,
-        matID) {
+
+Brick8d::Brick8d(int id, std::vector<Node*> nodes,
+                     MultiaxialMaterial* material)
+    : Brick8(id, nodes, material) {
   myTag = TAG_ELEM_BRICK_8_DISP;
 }
+
 Brick8d::~Brick8d() {
 }
+
 void Brick8d::get_B(Matrix& B, int node, int gPoint) {
   // Resize B
   B.Resize(6, 3);

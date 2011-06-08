@@ -29,13 +29,12 @@
 #include "elements/brick8.h"
 
 class Brick8b: public Brick8 {
-  public:
+ public:
   // Constructors and Destructor
   Brick8b();
-  Brick8b(int ID,
-        int Node_1, int Node_2, int Node_3, int Node_4,
-        int Node_5, int Node_6, int Node_7, int Node_8,
-        int matID);
+  Brick8b(int id,
+        std::vector<Node*> nodes,
+        MultiaxialMaterial* material);
   ~Brick8b();
 
   void get_B(Matrix& B, int node, int gPoint);

@@ -38,26 +38,27 @@ std::vector<int> Brick8::perm(8);
 /**
  * Default constructor.
  */
-Brick8::Brick8() {
+Brick8::Brick8()
+    : myMatPoints(8) {
 }
+
 /**
  * Constructor.
  */
-Brick8::Brick8(int ID,
-             int Node_1, int Node_2, int Node_3, int Node_4,
-             int Node_5, int Node_6, int Node_7, int Node_8,
-             int matID)
-:Element(ID, matID) {
+Brick8::Brick8(int id, std::vector<Node*> nodes,
+                     MultiaxialMaterial* material)
+    : Element(id, nodes),
+      myMatPoints(8) {
   // Get nodal data
   myNodalIDs.resize(8);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
-  myNodalIDs[2]=Node_3;
-  myNodalIDs[3]=Node_4;
-  myNodalIDs[4]=Node_5;
-  myNodalIDs[5]=Node_6;
-  myNodalIDs[6]=Node_7;
-  myNodalIDs[7]=Node_8;
+  myNodalIDs[0] = nodes_[0]->get_id();
+  myNodalIDs[1] = nodes_[1]->get_id();
+  myNodalIDs[2] = nodes_[2]->get_id();
+  myNodalIDs[3] = nodes_[3]->get_id();
+  myNodalIDs[4] = nodes_[4]->get_id();
+  myNodalIDs[5] = nodes_[5]->get_id();
+  myNodalIDs[6] = nodes_[6]->get_id();
+  myNodalIDs[7] = nodes_[7]->get_id();
 
   // Set local nodal dofs
   myLocalNodalDofs.resize(3);
@@ -65,11 +66,31 @@ Brick8::Brick8(int ID,
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=2;
 
-  // Handle common info
-  this->handleCommonInfo();
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[24];
+  myVector = theStaticVectors[24];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(8, 3);
+  for (int i = 0; i < 8; i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (int i = 0; i < 8; i++)
+    for (int j = 0; j < 2; j++)
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+  // Load vector
+  P.resize(24, 0.);
+  // Self weight
+  G.resize(24, 0.);
+  myMaterial = material;
+  this->AssignGravityLoads();
+  // Handle common info: End ---------------------------------------------------
 
   // Materials
-  myMatPoints.resize(8);
   MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 2, 2, 2);
   myMatPoints[1]=new MatPoint(pMat, 2, 1, 1, 2, 2, 2);
