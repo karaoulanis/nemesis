@@ -151,7 +151,7 @@ const Matrix& Triangle6::get_K() {
     static Matrix N(6, 3);
     static double detJ;
     this->get_shape_functions(myMatPoints[k], N, detJ);
-    double dV = detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
+    double dV = detJ*thickness_*(myMatPoints[k]->get_w());
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     int ii = 0;
     for (int i = 0; i < 6; i++) {
@@ -201,7 +201,7 @@ const Vector& Triangle6::get_R() {
     static Matrix N(6, 3);
     static double detJ;
     this->get_shape_functions(myMatPoints[k], N, detJ);
-    double dV = detJ*(pD->get_fac())*(myMatPoints[k]->get_w());
+    double dV = detJ*thickness_*(myMatPoints[k]->get_w());
     // Get stress vector
     static Vector sigma(6);
     sigma = myMatPoints[k]->get_material()->get_stress();
