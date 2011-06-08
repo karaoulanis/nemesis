@@ -28,23 +28,25 @@
 #include "group/group.h"
 #include "group/group_data.h"
 
-GroupState::GroupState() {
-}
-
-GroupState::~GroupState() {
-  delete groupdata_;
+GroupState::GroupState()
+    : group_(0),
+      groupdata_(0) {
 }
 
 GroupState::GroupState(Group* group, int active,
                        double factor_K, double factor_S, double factor_G,
-                       double factor_P) {
-  group_    = group;
-  groupdata_ = new GroupData();
+                       double factor_P)
+    : group_(group),
+      groupdata_(new GroupData()) {
   groupdata_->active   =  active == 0 ?  false : true;
   groupdata_->factor_K = factor_K;
   groupdata_->factor_S = factor_S;
   groupdata_->factor_G = factor_G;
   groupdata_->factor_P = factor_P;
+}
+
+GroupState::~GroupState() {
+  delete groupdata_;
 }
 
 void GroupState::Apply() {

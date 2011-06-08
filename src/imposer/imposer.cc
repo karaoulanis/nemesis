@@ -32,12 +32,15 @@
 #include "model/standard_model_node.h"
 #include "node/node.h"
 
-Imposer::Imposer() {
+Imposer::Imposer() 
+    : myNodalIDs(0),
+      theNodalGlobalDofs(0) {
   theModel = pA->get_model();
   theConstraints=&(pA->get_domain()->get_constraints());
   theModel->set_constrained(false);
   theDomain = pA->get_domain();
 }
+
 Imposer::~Imposer() {
 }
 /**

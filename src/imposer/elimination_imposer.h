@@ -29,11 +29,11 @@
 #include "imposer/imposer.h"
 
 class EliminationImposer: public Imposer {
-  private:
-  IDContainer theNewDofs;
-  public:
+ public:
   EliminationImposer();
   ~EliminationImposer();
+ private:
+  IDContainer theNewDofs;
   int impose();
 };
 #endif  // SRC_IMPOSER_ELIMINATION_IMPOSER_H_

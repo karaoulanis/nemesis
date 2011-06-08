@@ -27,19 +27,26 @@
 #include "elements/element.h"
 #include "group/group.h"
 
-InitialStresses::InitialStresses() {
+InitialStresses::InitialStresses()
+   :  group_(),
+      direction_(),
+      h1_(),
+      s1_(),
+      h2_(),
+      s2_(),
+      K0_() {
 }
 InitialStresses::InitialStresses(Group* group, int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0)
-                                 :InitialCondition() {
-  group_ = group;
-  direction_ = direction;
-  h1_ = h1;
-  s1_ = s1;
-  h2_ = h2;
-  s2_ = s2;
-  K0_ = K0;
+    : InitialCondition(),
+      group_(group),
+      direction_(direction),
+      h1_(h1),
+      s1_(s1),
+      h2_(h2),
+      s2_(s2),
+      K0_(K0) {
   // Check direction
   /// @todo Give SException the right id and not 9999.
   if (direction_ < 1 || direction_ > 3) {

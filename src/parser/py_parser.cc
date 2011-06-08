@@ -1803,13 +1803,14 @@ static PyMethodDef GroupMethods[] =  {
 * Sensitivity commands
 ******************************************************************************/
 static PyObject* pySens_Elem(PyObject* /*self*/, PyObject* args) {
-  int elemID, param;
-  if (!PyArg_ParseTuple(args, "ii", &elemID, &param)) return NULL;
+  int id, parameter;
+  if (!PyArg_ParseTuple(args, "ii", &id, &parameter)) {
+    return NULL;
+  }
   try {
-    ElementSensitivityParameter* pParam =
-      new ElementSensitivityParameter(elemID, param);
-    pD->get<LoadCase>(pD->get_loadcases(),
-      currentLC)->AddSensitivityParameter(pParam);
+    Element* e = pD->get<Element>(pD->get_elements(), id); 
+    LoadCase* lc = pD->get<LoadCase>(pD->get_loadcases(), currentLC);
+    lc->AddSensitivityParameter(new ElementSensitivityParameter(e, parameter));
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1817,6 +1818,10 @@ static PyObject* pySens_Elem(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
+/**
+ *
+ */
 static PyMethodDef SensitivityMethods[] =  {
   {"elem",  pySens_Elem,
     METH_VARARGS, "Define element sensitivity parameter."},

@@ -28,17 +28,23 @@
 #include "elements/element.h"
 #include "exception/sexception.h"
 
-GroundMotionFile::GroundMotionFile() {
+GroundMotionFile::GroundMotionFile()
+    : elements_(0),
+      dof_(0),
+      data_(0),
+      dt_(0.),
+      scale_(0.) {
 }
 
 GroundMotionFile::GroundMotionFile(const std::map<int, Element*>* elements,
                                    int dof, std::istream& s, double dt,
                                    double scale)
-                                   :Load() {
-  elements_ = elements;
-  dof_ = dof - 1;
-  dt_ = dt;
-  scale_ = scale;
+    : Load(),
+      elements_(elements),
+      dof_(dof - 1),
+      data_(0),
+      dt_(dt),
+      scale_(scale) {
   while (!s.eof()) {
     double d;
     s >> d;

@@ -31,7 +31,12 @@
 Matrix Quad4::N(3, 4);
 double Quad4::detJ;
 
-Quad4::Quad4() {
+Quad4::Quad4()
+    : p1(0),
+      p2(0),
+      thickness_(0),
+      myMatPoints(0),
+      materials(0) {
 }
 
 Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
@@ -39,21 +44,23 @@ Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
     : Element(id, nodes),
       p1(2),
       p2(2),
-      thickness_(thickness) {
-    // tag
-    myTag = TAG_ELEM_QUAD_4_DISP;
+      thickness_(thickness),
+      myMatPoints(4),
+      materials(0) {
+  // tag
+  myTag = TAG_ELEM_QUAD_4_DISP;
 
-    // Get nodal data
-    myNodalIDs.resize(4);
-    myNodalIDs[0] = nodes_[0]->get_id();
-    myNodalIDs[1] = nodes_[1]->get_id();
-    myNodalIDs[2] = nodes_[2]->get_id();
-    myNodalIDs[3] = nodes_[3]->get_id();
+  // Get nodal data
+  myNodalIDs.resize(4);
+  myNodalIDs[0] = nodes_[0]->get_id();
+  myNodalIDs[1] = nodes_[1]->get_id();
+  myNodalIDs[2] = nodes_[2]->get_id();
+  myNodalIDs[3] = nodes_[3]->get_id();
 
-    // Set local nodal dofs
-    myLocalNodalDofs.resize(2);
-    myLocalNodalDofs[0] = 0;
-    myLocalNodalDofs[1] = 1;
+  // Set local nodal dofs
+  myLocalNodalDofs.resize(2);
+  myLocalNodalDofs[0] = 0;
+  myLocalNodalDofs[1] = 1;
 
   // Handle common info: Start -------------------------------------------------
   // Find own matrix and vector
@@ -75,16 +82,11 @@ Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
   P.resize(8, 0.);
   // Self weight
   G.resize(8, 0.);
-  b.resize(3);
-  double g = this->get_gravity_accl();
-  const Vector& gravity_vect = this->get_gravity_vect();
-  b[0]=g*gravity_vect[0]*(material->get_rho());
-  b[1]=g*gravity_vect[1]*(material->get_rho());
-  b[2]=g*gravity_vect[2]*(material->get_rho());
+  myMaterial = material;
+  this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 
   // Matpoints
-  myMatPoints.resize(4);
   myMatPoints[0]=new MatPoint(material, 1, 1, p1, p2);
   myMatPoints[1]=new MatPoint(material, 2, 1, p1, p2);
   myMatPoints[2]=new MatPoint(material, 2, 2, p1, p2);

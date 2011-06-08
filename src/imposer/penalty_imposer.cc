@@ -33,9 +33,9 @@
 #include "model/standard_model_node.h"
 #include "node/node.h"
 
-PenaltyImposer::PenaltyImposer(double amf)
-  :Imposer() {
-  a = amf;
+PenaltyImposer::PenaltyImposer(double a)
+    : Imposer(),
+      a_(a) {
   myTag = TAG_IMPOSER_PENALTY;
 }
 
@@ -106,7 +106,7 @@ int PenaltyImposer::impose() {
       cFTable[j]=this->get_global_dof(pConstraint->get_cdof(j).node->get_id(),
                                       pConstraint->get_cdof(j).dof);
     }
-    pPenModelElement = new PenaltyModelElement(cFTable, pConstraint, a);
+    pPenModelElement = new PenaltyModelElement(cFTable, pConstraint, a_);
     theModel->addModelElement(pPenModelElement);
   }
   theModel->set_constrained(true);  /// @todo remove

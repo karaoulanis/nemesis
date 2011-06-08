@@ -31,7 +31,8 @@ Packet DomainObject::thePacket;
 /**
  * Default Constructor.
  */
-DomainObject::DomainObject() {
+DomainObject::DomainObject()
+    : myID(0) {
   // Does nothing.
 }
 /**
@@ -39,8 +40,8 @@ DomainObject::DomainObject() {
  * Construct a DomainObject for a given ID.
  * @param ID An integer that initialize a DomainObject.
  */
-DomainObject::DomainObject(int ID) {
-  myID = ID;
+DomainObject::DomainObject(int ID)
+    : myID(ID) {
 }
 DomainObject::~DomainObject() {
   // Nothing to destruct here.
