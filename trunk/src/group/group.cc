@@ -27,12 +27,15 @@
 #include "group/group_data.h"
 #include "elements/element.h"
 
-Group::Group() {
+Group::Group()
+    : groupdata_(0),
+      elements_(0) {
 }
 
 Group::Group(int id)
-:DomainObject(id) {
-  groupdata_ = new GroupData();
+    : DomainObject(id),
+      groupdata_(new GroupData()),
+      elements_(0) {
   groupdata_->Reset();
 }
 

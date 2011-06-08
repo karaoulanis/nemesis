@@ -291,10 +291,18 @@ void Domain::applyLoads(double lambda_, double time_) {
  */
 void Domain::set_gravity(double g, double xG, double yG, double zG) {
   gravityAccl = g;
-  gravityVect[0]=xG;
-  gravityVect[1]=yG;
-  gravityVect[2]=zG;
+  gravityVect[0] = xG;
+  gravityVect[1] = yG;
+  gravityVect[2] = zG;
   gravityVect.normalize();
+  // Check if elements are already defined
+  if (theElements.size() > 0) {
+    throw SException("[nemesis:%d] %s", 9999, 
+                     "Gravity info must me set before elements' definitions.");
+  }
+  // Set gravity info to elements
+  Element::set_gravitydirection(gravityVect[0], gravityVect[1], gravityVect[2]);
+  Element::set_gravityacceleration(g);
 }
 /**
  * Returns gravity vector.

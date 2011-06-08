@@ -116,9 +116,8 @@ class Element: public DomainObject {
   // Enrichment functions
   virtual void enrich();
 
-  // Temporary functions till pointers to domain are removed
-  const Vector& get_gravity_vect();
-  const double  get_gravity_accl();
+  static void set_gravitydirection(double xG, double yG, double zG);
+  static void set_gravityacceleration(double acceleration);
 
  protected:
   std::vector<Node*> nodes_;
@@ -140,7 +139,10 @@ class Element: public DomainObject {
   static Vector** theStaticVectors;
   int handleCommonInfo();
   int activeParameter;
-
+  
+  static double gravitydirection_[3];
+  static double gravityacceleration_;
+  void AssignGravityLoads();
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

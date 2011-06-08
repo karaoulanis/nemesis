@@ -37,8 +37,8 @@ class InitialDisplacement: public InitialCondition {
   void Apply();
 
  private:
-  int dof_;
   Node* node_;
+  int dof_;
   double disp_;
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

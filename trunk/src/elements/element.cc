@@ -33,6 +33,8 @@
 
 Matrix** Element::theStaticMatrices = 0;
 Vector** Element::theStaticVectors = 0;
+double Element::gravitydirection_[3] = {0., -1., 0.};
+double Element::gravityacceleration_ = 9.81;
 
 /**
  * Default Constructor
@@ -118,11 +120,27 @@ const Vector& Element::get_Rgrad() {
   return *myVector;
 }
 
-const Vector& Element::get_gravity_vect() {
-  return pD->get_gravity_vect();
+void Element::set_gravitydirection(double xG, double yG, double zG) {
+    gravitydirection_[0] = xG;
+    gravitydirection_[1] = yG;
+    gravitydirection_[2] = zG;
 }
-const double  Element::get_gravity_accl() {
-  return pD->get_gravity_accl();
+
+void Element::set_gravityacceleration(double acceleration) {
+  gravityacceleration_ = acceleration;
+}
+
+void Element::AssignGravityLoads() {
+  // Check if a Material exists
+  /// @todo Provide a better check
+  if (myMaterial->get_id() > 0) {
+    b.resize(3);
+    double gamma = (myMaterial->get_rho())*gravityacceleration_;
+    b[0] = gamma*gravitydirection_[0];
+    b[1] = gamma*gravitydirection_[1];
+    b[2] = gamma*gravitydirection_[2];
+  }
+
 }
 
 int Element::handleCommonInfo() {
@@ -153,17 +171,8 @@ int Element::handleCommonInfo() {
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Create load vector
   for (int i = 0;i < nDofs;i++) P[i]=0;
-  // Get Material related info
-  if (myMaterial->get_id()>0) {
-    // Check if the material can be assigned
-    this->checkIfAllows(myMaterial);
-    // Self weight
-    b.resize(3);
-    double g = this->get_gravity_accl();
-    b[0]=g*(this->get_gravity_vect()[0])*(myMaterial->get_rho());
-    b[1]=g*(this->get_gravity_vect()[1])*(myMaterial->get_rho());
-    b[2]=g*(this->get_gravity_vect()[2])*(myMaterial->get_rho());
-  }
+  // Find gravity loads
+  this->AssignGravityLoads();
   return 0;
 }
 

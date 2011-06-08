@@ -24,20 +24,24 @@
 // *****************************************************************************
 
 #include "loadcase/element_sensitivity_parameter.h"
-#include "domain/domain.h"
 #include "elements/element.h"
 
 int ElementSensitivityParameter::nSensitivityParameters = 0;
 
 ElementSensitivityParameter::ElementSensitivityParameter()
-  :DomainObject() {
+    : DomainObject(),
+      element_(0),
+      parameter_(0) {
 }
-ElementSensitivityParameter::ElementSensitivityParameter(int elemID, int param)
-  :DomainObject(++nSensitivityParameters) {
-  myElement = pD->get<Element>(pD->get_elements(), elemID);
-  parameter = param;
+
+ElementSensitivityParameter::ElementSensitivityParameter(Element* element,
+                                                         int parameter)
+    : DomainObject(++nSensitivityParameters),
+      element_(element),
+      parameter_(parameter) {
 }
+
 int ElementSensitivityParameter::apply() {
-  myElement->activateParameter(parameter);
+  element_->activateParameter(parameter_);
   return 0;
 }

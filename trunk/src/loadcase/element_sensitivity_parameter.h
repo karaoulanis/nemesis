@@ -33,12 +33,12 @@ class Element;
 class ElementSensitivityParameter: public DomainObject {
  public:
   ElementSensitivityParameter();
-  ElementSensitivityParameter(int elemID, int param);
+  ElementSensitivityParameter(Element* element, int parameter);
   int apply();
  private:
   static int nSensitivityParameters;
-  Element* myElement;
-  int parameter;
+  Element* element_;
+  int parameter_;
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.
   // When called a linking error will occur.

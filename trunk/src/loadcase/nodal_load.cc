@@ -26,20 +26,22 @@
 #include "loadcase/nodal_load.h"
 #include "node/node.h"
 
-NodalLoad::NodalLoad() {
-}
-
-NodalLoad::~NodalLoad() {
+NodalLoad::NodalLoad()
+    : node_(0),
+      dof_(0) {
 }
 
 NodalLoad::NodalLoad(Node* node, int dof)
-:Load() {
-  node_ = node;
-  dof_  = dof - 1;
+    : Load(),
+      node_(node),
+      dof_(dof-1) {
   /// @todo replace NodalLoad::get_activated_dof(dof_) by IsDofActive()
   /// @todo Give SException the right id and not 9999.
   if (node_->get_activated_dof(dof_) < 0)
     throw SException("[nemesis:%d] %s", 9999, "Dof is not activated.");
+}
+
+NodalLoad::~NodalLoad() {
 }
 
 void NodalLoad::Apply(double factor, double time) {

@@ -31,7 +31,14 @@
 /**
  * Default constructor.
  */
-Bar::Bar() {
+Bar::Bar() 
+   :  dim_(0),
+      iSection(0),
+      jSection(0),
+      L0(0.),
+      A0(0.),
+      cosX(0),
+      myUniMaterial(0) {
 }
 /**
  * Constructor.
@@ -78,12 +85,7 @@ Bar::Bar(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
   P.resize(2*dim_, 0.);
   // Self weight
   G.resize(2*dim_, 0.);
-  b.resize(3);
-  double g = this->get_gravity_accl();
-  const Vector& gravity_vect = this->get_gravity_vect();
-  b[0]=g*gravity_vect[0]*(material->get_rho());
-  b[1]=g*gravity_vect[1]*(material->get_rho());
-  b[2]=g*gravity_vect[2]*(material->get_rho());
+  this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 
   // Find length

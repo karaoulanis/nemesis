@@ -26,17 +26,22 @@
 #include "loadcase/ground_motion_sin.h"
 #include "elements/element.h"
 
-GroundMotionSin::GroundMotionSin() {
+GroundMotionSin::GroundMotionSin()
+    : elements_(0),
+      dof_(0),
+      a_(0.),
+      omega_(0.),
+      phi_(0.) {
 }
 
 GroundMotionSin::GroundMotionSin(const std::map<int, Element*>* elements,
                                  int dof, double a, double omega, double phi)
-                                 :Load() {
-  elements_ = elements;
-  dof_ = dof - 1;
-  a_ = a;
-  omega_ = omega;
-  phi_ = phi;
+    : Load(),
+      elements_(elements),
+      dof_(dof - 1),
+      a_(a),
+      omega_(omega),
+      phi_(phi) {
 }
 void GroundMotionSin::Apply(double /*factor*/, double time) {
   std::map<int, Element*>::const_iterator i;

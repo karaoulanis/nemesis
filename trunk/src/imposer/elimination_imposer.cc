@@ -35,11 +35,14 @@
 #include "node/node.h"
 
 EliminationImposer::EliminationImposer()
-  :Imposer() {
+    : Imposer(),
+      theNewDofs(0) {
   myTag = TAG_IMPOSER_ELIMINATION;
 }
+
 EliminationImposer::~EliminationImposer() {
 }
+
 int EliminationImposer::impose() {
   if (theModel->isConstrained()) return 0;
 
