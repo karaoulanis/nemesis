@@ -30,18 +30,16 @@
 #include "elements/element.h"
 
 class MatPoint;
+class MultiaxialMaterial;
 
 class Triangle3: public Element {
- protected:
-  double a1, a2, a3;
-  double b1, b2, b3;
-  double c1, c2, c3;
-  double A;
-  std::vector<MatPoint*> myMatPoints;
-  public:
+ public:
   // Constructors and Destructor
   Triangle3();
-  Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID);
+  Triangle3(int id,
+        std::vector<Node*> nodes,
+        MultiaxialMaterial* material,
+        double thickness);
   ~Triangle3();
 
   const Matrix& get_K();
@@ -56,6 +54,13 @@ class Triangle3: public Element {
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
   int get_num_plastic_points();
+ protected:
+  double thickness_;
+  std::vector<MatPoint*> myMatPoints;
+  double a1, a2, a3;
+  double b1, b2, b3;
+  double c1, c2, c3;
+  double A;
 };
 
 #endif  // SRC_ELEMENTS_TRIANGLE3_H_

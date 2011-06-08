@@ -30,7 +30,9 @@
 #include "node/node.h"
 
 Triangle3::Triangle3()
-    : a1(0.),
+    : thickness_(0),
+      myMatPoints(0),
+      a1(0.),
       a2(0.),  
       a3(0.),  
       b1(0.),  
@@ -39,24 +41,46 @@ Triangle3::Triangle3()
       c1(0.),  
       c2(0.),  
       c3(0.),  
-      A(0.),
-      myMatPoints(0) {
+      A(0.) {
 }
 
-Triangle3::Triangle3(int ID, int Node_1, int Node_2, int Node_3, int matID)
-:Element(ID, matID) {
+Triangle3::Triangle3(int id, std::vector<Node*> nodes,
+                     MultiaxialMaterial* material, double thickness)
+    : Element(id, nodes),
+      thickness_(thickness) {
   myTag = TAG_ELEM_TRIANGLE_3_PRESSURE;
   // Get nodal data
   myNodalIDs.resize(3);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
-  myNodalIDs[2]=Node_3;
+  myNodalIDs[0] = nodes_[0]->get_id();
+  myNodalIDs[1] = nodes_[1]->get_id();
+  myNodalIDs[2] = nodes_[2]->get_id();
   // Set local nodal dofs
   myLocalNodalDofs.resize(2);
   myLocalNodalDofs[0]=0;
   myLocalNodalDofs[1]=1;
-  // Handle common info
-  this->handleCommonInfo();
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[6];
+  myVector = theStaticVectors[6];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(3, 3);
+  for (int i = 0; i < 3; i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 2; j++)
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+  // Load vector
+  P.resize(6, 0.);
+  // Self weight
+  G.resize(6, 0.);
+  myMaterial = material;
+  this->AssignGravityLoads();
+  // Handle common info: End ---------------------------------------------------
 
   // Find geometrical relations
   a1 = x(1, 0)*x(2, 1)-x(2, 0)*x(1, 1);

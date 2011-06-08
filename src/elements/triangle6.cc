@@ -30,31 +30,53 @@
 #include "node/node.h"
 
 Triangle6::Triangle6()
-  : myMatPoints(0) {
+    : thickness_(0),
+      myMatPoints(0) {
 }
 
-Triangle6::Triangle6(int ID,
-             int Node_1, int Node_2, int Node_3,
-             int Node_4, int Node_5, int Node_6,
-             int matID)
-    : Element(ID, matID),
+Triangle6::Triangle6(int id, std::vector<Node*> nodes,
+                     MultiaxialMaterial* material, double thickness)
+    : Element(id, nodes),
+      thickness_(thickness),
       myMatPoints(3) {
   // tag
   myTag = TAG_ELEM_TRIANGLE_6;
   // Get nodal data
   myNodalIDs.resize(6);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
-  myNodalIDs[2]=Node_3;
-  myNodalIDs[3]=Node_4;
-  myNodalIDs[4]=Node_5;
-  myNodalIDs[5]=Node_6;
+  myNodalIDs[0] = nodes[0]->get_id();
+  myNodalIDs[1] = nodes[1]->get_id();
+  myNodalIDs[2] = nodes[2]->get_id();
+  myNodalIDs[3] = nodes[3]->get_id();
+  myNodalIDs[4] = nodes[4]->get_id();
+  myNodalIDs[5] = nodes[5]->get_id();
   // Set local nodal dofs
   myLocalNodalDofs.resize(2);
   myLocalNodalDofs[0]=0;
   myLocalNodalDofs[1]=1;
-  // Handle common info
-  this->handleCommonInfo();
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[12];
+  myVector = theStaticVectors[12];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(6, 3);
+  for (int i = 0; i < 6; i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (int i = 0; i < 6; i++)
+    for (int j = 0; j < 2; j++)
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+  // Load vector
+  P.resize(12, 0.);
+  // Self weight
+  G.resize(12, 0.);
+  myMaterial = material;
+  this->AssignGravityLoads();
+  // Handle common info: End ---------------------------------------------------
+
   // Materials
   MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
   myMatPoints[0]=new MatPoint(pMat, num::d23, num::d16, num::d16, num::d13);
