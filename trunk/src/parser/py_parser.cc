@@ -1502,41 +1502,101 @@ static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Create a new 3-node triangle
+ * @todo Check for the axisymmetric case 
+ */
 static PyObject* pyElement_Triangle3d(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, matID;
-  // Check for consistent input
-  if (!PyArg_ParseTuple(args, "iiiii", &id, &n1, &n2, &n3, &matID)) {
+  // Local variables
+  int id, n1, n2, n3, mat;
+  double thickness = 1.0;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiii|d",
+                        &id, &n1, &n2, &n3, &mat, &thickness)) {
     return NULL;
   }
-  // Create element and add it to domain
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(3);
   try {
-    Element* pElement = new Triangle3(id, n1, n2, n3, matID);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  // Increase reference count and return
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Triangle3* elem = new Triangle3(id, nodes, material, thickness);
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
 
+/**
+ * Create a new 6-node triangle
+ * @todo Check for the axisymmetric case 
+ */
 static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, n4, n5, n6, matID;
-  // Check for consistent input
-  if (!PyArg_ParseTuple(args, "iiiiiiii",
-                        &id, &n1, &n2, &n3, &n4, &n5, &n6, &matID)) {
+  // Local variables
+  int id, n1, n2, n3, n4, n5, n6, mat;
+  double thickness = 1.0;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiiiiii|d",
+                        &id, &n1, &n2, &n3, &n4, &n5, &n6, &mat, &thickness)) {
     return NULL;
   }
-  // Create element and add it to domain
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(3);
   try {
-    Element* pElement = new Triangle6(id, n1, n2, n3, n4, n5, n6, matID);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+    nodes[4] = pD->get<Node>(pD->get_nodes(), n5);
+    nodes[5] = pD->get<Node>(pD->get_nodes(), n6);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  // Increase reference count and return
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Triangle6* elem = new Triangle6(id, nodes, material, thickness);
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }

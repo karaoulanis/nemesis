@@ -30,13 +30,16 @@
 #include "elements/element.h"
 
 class MatPoint;
+class MultiaxialMaterial;
 
 class Triangle6: public Element {
  public:
   // Constructors and Destructor
   Triangle6();
-  Triangle6(int ID, int Node_1, int Node_2, int Node_3,
-    int Node_4, int Node_5, int Node_6, int matID);
+  Triangle6(int id,
+        std::vector<Node*> nodes,
+        MultiaxialMaterial* material,
+        double thickness);
   ~Triangle6();
 
   const Matrix& get_K();
@@ -54,6 +57,7 @@ class Triangle6: public Element {
   int get_num_plastic_points();
 
  private:
+  double thickness_;
   std::vector<MatPoint*> myMatPoints;
 };
 
