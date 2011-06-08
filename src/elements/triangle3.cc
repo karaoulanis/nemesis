@@ -120,7 +120,7 @@ void Triangle3::AddInitialStresses(int direction,
 const Matrix& Triangle3::get_K() {
   Matrix& K=*myMatrix;
   const Matrix& C = myMatPoints[0]->get_material()->get_C();
-  double coeff = pD->get_fac()*0.25/A;
+  double coeff = thickness_*0.25/A;
   K(0, 0) = coeff*((b1*C(0, 0)+c1*C(3, 0))*b1+(b1*C(0, 3)+c1*C(3, 3))*c1);
   K(0, 1) = coeff*((b1*C(0, 1)+c1*C(3, 1))*c1+(b1*C(0, 3)+c1*C(3, 3))*b1);
   K(0, 2) = coeff*((b1*C(0, 0)+c1*C(3, 0))*b2+(b1*C(0, 3)+c1*C(3, 3))*c2);
@@ -178,9 +178,9 @@ const Vector& Triangle3::get_R() {
   double s1=(myMatPoints[0]->get_material()->get_stress())[0];
   double s2=(myMatPoints[0]->get_material()->get_stress())[1];
   double s3=(myMatPoints[0]->get_material()->get_stress())[3];
-  double fac = facS*0.5*(pD->get_fac());
-  double facb0 = facG*(pD->get_fac())*A*num::d13*b[0];
-  double facb1 = facG*(pD->get_fac())*A*num::d13*b[1];
+  double fac = facS*0.5*thickness_;
+  double facb0 = facG*thickness_*A*num::d13*b[0];
+  double facb1 = facG*thickness_*A*num::d13*b[1];
   R[0]=fac*(b1*s1+c1*s3)-facb0;
   R[1]=fac*(c1*s2+b1*s3)-facb1;
   R[2]=fac*(b2*s1+c2*s3)-facb0;
