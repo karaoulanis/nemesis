@@ -1098,17 +1098,48 @@ static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Create a 2-node Timoshenko Beam.
+ */
 static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, sec_id, rule=-1;
-  if (!PyArg_ParseTuple(args, "iiiii|i",
-                        &id, &iNode, &jNode, &mat, &sec_id, &rule))
+  int id, n1, n2, mat, sec, rule=1;
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiii|i", &id, &n1, &n2, &mat, &sec, &rule)) {
     return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(2);
   try {
-    if (rule == -1)
-      rule = 1;
-    CrossSection* sec = pD->get<CrossSection>(pD->get_sections(), sec_id);
-    Element* pElement = new Timoshenko2d(id, iNode, jNode, mat, sec, rule);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  UniaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<UniaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get section pointers from domain
+  CrossSection* section;
+  try {
+    section = pD->get<CrossSection>(pD->get_sections(), sec);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element and add it to domain
+  try {
+    Timoshenko2d* elem = new Timoshenko2d(id, nodes, material, section, rule);
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1117,24 +1148,53 @@ static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Create a 3-node Timoshenko Beam.
+ */
 static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mNode, mat, sec_id, rule = 2;
+  int id, n1, n2, n3, mat, sec, rule=1;
   // Check for consistent input
-  if (!PyArg_ParseTuple(args, "iiiiii|i",
-                        &id, &iNode, &jNode, &mNode, &mat, &sec_id, &rule)) {
+  if (!PyArg_ParseTuple(args, "iiiiii|i", &id, &n1, &n2, &n3, &mat, &sec, &rule)) {
     return NULL;
   }
-  // Create element and add it to domain
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(2);
   try {
-    CrossSection* sec = pD->get<CrossSection>(pD->get_sections(), sec_id);
-    Element* pElement = new Timoshenko2d(id, iNode, jNode, mNode,
-                                         mat, sec, rule);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  // Increase reference count and return
+  // Get material pointer from domain
+  UniaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<UniaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get section pointers from domain
+  CrossSection* section;
+  try {
+    section = pD->get<CrossSection>(pD->get_sections(), sec);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element and add it to domain
+  try {
+    Timoshenko2d* elem = new Timoshenko2d(id, nodes, material, section, rule);
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
