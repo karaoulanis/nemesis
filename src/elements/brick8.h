@@ -30,20 +30,15 @@
 #include "elements/element.h"
 
 class MatPoint;
+class MultiaxialMaterial;
 
 class Brick8: public Element {
- protected:
-  std::vector<MatPoint*> myMatPoints;
-  static double shp[8][4][8];
-  static double detJ[8];
-  static std::vector<int> perm;
-  public:
+ public:
   // Constructors and Destructor
   Brick8();
-  Brick8(int ID,
-        int Node_1, int Node_2, int Node_3, int Node_4,
-        int Node_5, int Node_6, int Node_7, int Node_8,
-        int matID);
+  Brick8(int id,
+        std::vector<Node*> nodes,
+        MultiaxialMaterial* material);
   virtual ~Brick8();
 
   virtual const Matrix& get_K();
@@ -61,5 +56,11 @@ class Brick8: public Element {
 
   void shapeFunctions();
   virtual void get_B(Matrix& B, int node, int gPoint)=0;
+
+ protected:
+  std::vector<MatPoint*> myMatPoints;
+  static double shp[8][4][8];
+  static double detJ[8];
+  static std::vector<int> perm;
 };
 #endif  // SRC_ELEMENTS_BRICK8_H_

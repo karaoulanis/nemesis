@@ -1048,14 +1048,48 @@ static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Create a 2-node Euler Beam.
+ */
 static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
-  int id, iNode, jNode, mat, sec_id;
-  if (!PyArg_ParseTuple(args, "iiiii", &id, &iNode, &jNode, &mat, &sec_id))
+  int id, n1, n2, mat, sec;
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiiii", &id, &n1, &n2, &mat, &sec)) {
     return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(2);
   try {
-    CrossSection* sec = pD->get<CrossSection>(pD->get_sections(), sec_id);
-    Element* pElement = new Beam2e(id, iNode, jNode, mat, sec);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  UniaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<UniaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get section pointers from domain
+  CrossSection* section;
+  try {
+    section = pD->get<CrossSection>(pD->get_sections(), sec);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element and add it to domain
+  try {
+    Beam2e* elem = new Beam2e(id, nodes, material, section);
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1063,6 +1097,7 @@ static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
   int id, iNode, jNode, mat, sec_id, rule=-1;
   if (!PyArg_ParseTuple(args, "iiiii|i",
@@ -1104,62 +1139,158 @@ static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Create an 8-node brick.
+ *
+ */
 static PyObject* pyElement_Brick8d(PyObject* /*self*/, PyObject* args) {
+  // Local variables
   int id, n1, n2, n3, n4, n5, n6, n7, n8, mat;
-  // Check for consistent input
+  // Get data
   if (!PyArg_ParseTuple(args, "iiiiiiiiii",
                         &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat)) {
     return NULL;
   }
-  // Create element and add it to domain
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(8);
   try {
-    Element* pElement = new Brick8d(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+    nodes[4] = pD->get<Node>(pD->get_nodes(), n5);
+    nodes[5] = pD->get<Node>(pD->get_nodes(), n6);
+    nodes[6] = pD->get<Node>(pD->get_nodes(), n7);
+    nodes[7] = pD->get<Node>(pD->get_nodes(), n8);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  // Increase reference count and return
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Brick8d* elem = new Brick8d(id, nodes, material);
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
 
+/**
+ * Create an 8-node brick.
+ *
+ */
 static PyObject* pyElement_Brick8b(PyObject* /*self*/, PyObject* args) {
+  // Local variables
   int id, n1, n2, n3, n4, n5, n6, n7, n8, mat;
-  // Check for consistent input
+  // Get data
   if (!PyArg_ParseTuple(args, "iiiiiiiiii",
                         &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat)) {
     return NULL;
   }
-  // Create element and add it to domain
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(8);
   try {
-    Element* pElement = new Brick8b(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+    nodes[4] = pD->get<Node>(pD->get_nodes(), n5);
+    nodes[5] = pD->get<Node>(pD->get_nodes(), n6);
+    nodes[6] = pD->get<Node>(pD->get_nodes(), n7);
+    nodes[7] = pD->get<Node>(pD->get_nodes(), n8);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  // Increase reference count and return
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Brick8b* elem = new Brick8b(id, nodes, material);
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }
 
+/**
+ * Create an 8-node brick.
+ *
+ */
 static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args) {
+  // Local variables
   int id, n1, n2, n3, n4, n5, n6, n7, n8, mat;
-  // Check for consistent input
+  // Get data
   if (!PyArg_ParseTuple(args, "iiiiiiiiii",
                         &id, &n1, &n2, &n3, &n4, &n5, &n6, &n7, &n8, &mat)) {
     return NULL;
   }
-  // Create element and add it to domain
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(8);
   try {
-    Element* pElement = new Brick8i(id, n1, n2, n3, n4, n5, n6, n7, n8, mat);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+    nodes[4] = pD->get<Node>(pD->get_nodes(), n5);
+    nodes[5] = pD->get<Node>(pD->get_nodes(), n6);
+    nodes[6] = pD->get<Node>(pD->get_nodes(), n7);
+    nodes[7] = pD->get<Node>(pD->get_nodes(), n8);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  // Increase reference count and return
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Brick8i* elem = new Brick8i(id, nodes, material);
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }

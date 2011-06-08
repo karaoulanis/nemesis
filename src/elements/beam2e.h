@@ -34,7 +34,10 @@ class UniaxialMaterial;
 class Beam2e: public Element {
  public:
   Beam2e();
-  Beam2e(int ID, int Node_1, int Node_2, int matID, CrossSection* section);
+  Beam2e(int id,
+         std::vector<Node*> nodes,
+         UniaxialMaterial* material,
+         CrossSection* section);
   ~Beam2e();
 
   const Matrix& get_K();
@@ -48,11 +51,10 @@ class Beam2e: public Element {
   void recoverStresses();
 
  protected:
-  double cosX[2];
-  int mySecID;
+  UniaxialMaterial* myUniMaterial;
   CrossSection* mySection;
   double L;
-  UniaxialMaterial* myUniMaterial;
+  double cosX[2];
  
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.

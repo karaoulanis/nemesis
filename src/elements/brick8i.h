@@ -29,7 +29,21 @@
 #include "elements/brick8.h"
 
 class Brick8i: public Brick8 {
-  private:
+ public:
+  // Constructors and Destructor
+  Brick8i();
+  Brick8i(int id,
+        std::vector<Node*> nodes,
+        MultiaxialMaterial* material);
+  ~Brick8i();
+
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
+  void update();
+  void commit();
+  void get_B(Matrix& /*B*/, int /*node*/, int /*gPoint*/) {}
+ private:
   static double shpStd[8][4][8];
   static double shpInc[3][4][8];
   static double detJ[8];
@@ -42,21 +56,6 @@ class Brick8i: public Brick8 {
   void get_Kdd(Matrix& K);
   void get_Kda(Matrix& K);
   void get_Kaa(Matrix& K);
-  public:
-  // Constructors and Destructor
-  Brick8i();
-  Brick8i(int ID,
-        int Node_1, int Node_2, int Node_3, int Node_4,
-        int Node_5, int Node_6, int Node_7, int Node_8,
-        int matID);
-  ~Brick8i();
-
-  const Matrix& get_K();
-  const Matrix& get_M();
-  const Vector& get_R();
-  void update();
-  void commit();
-  void get_B(Matrix& /*B*/, int /*node*/, int /*gPoint*/) {}
 };
 
 #endif  // SRC_ELEMENTS_BRICK8I_H_
