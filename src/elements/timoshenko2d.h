@@ -28,42 +28,45 @@
 
 #include "elements/element.h"
 
+class Node;
 class UniaxialMaterial;
 class CrossSection;
 
 class Timoshenko2d: public Element {
+ public:
+  Timoshenko2d();
+  Timoshenko2d(int id,
+         std::vector<Node*> nodes,
+         UniaxialMaterial* material,
+         CrossSection* section,
+         int rule);
+  ~Timoshenko2d();
+
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
+  const Vector& get_Rgrad();
+
+  bool checkIfAllows(FEObject* /*f*/)   {return true;}
+  void update()                         {return;}
+  void commit()                         {return;}
+  void recoverStresses();
+  void shapeFunctions(int n, double xi, double &N, double &dN);
+
+ protected:
+  UniaxialMaterial* myUniMaterial;
+  CrossSection* mySection;
+  double L;
+  double cosX[2];
+  int gPoints;
+  static const double GaussCoords[4][4];
+  static const double GaussWeights[4][4];
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.
   // When called a linking error will occur.
   Timoshenko2d(const Timoshenko2d&);
   void operator=(const Timoshenko2d&);
- protected:
-  double cosX[2];
-  int mySecID;
-  CrossSection* mySection;
-  double L;
-  UniaxialMaterial* myUniMaterial;
-  static const double GaussCoords[4][4];
-  static const double GaussWeights[4][4];
-  int gPoints;
- public:
-  Timoshenko2d();
-  Timoshenko2d(int ID, int Node_1, int Node_2,
-               int matID, CrossSection* section, int rule);
-  Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
-               int matID, CrossSection* section, int rule);
-  ~Timoshenko2d();
-
-  const Matrix& get_K();
-    const Matrix& get_M();
-  const Vector& get_R();
-  const Vector& get_Rgrad();
-
-  bool checkIfAllows(FEObject* /*f*/)   {return true;}
-  void update()           {return;}
-  void commit()           {return;}
-  void recoverStresses();
-  void shapeFunctions(int n, double xi, double &N, double &dN);
 };
 #endif  // SRC_ELEMENTS_TIMOSHENKO2D_H_

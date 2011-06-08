@@ -27,27 +27,62 @@
 #include "crosssection/cross_section.h"
 #include "group/group_data.h"
 #include "material/uniaxial_material.h"
+#include "node/node.h"
 
-Timoshenko2d::Timoshenko2d() {
+Timoshenko2d::Timoshenko2d()
+    : myUniMaterial(0),
+      mySection(0),
+      L(0.),
+      gPoints(0) {
 }
-Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2,
-                           int matID, CrossSection* section, int rule)
-:Element(ID, matID) {
+
+Timoshenko2d::Timoshenko2d(int id, std::vector<Node*> nodes,
+                           UniaxialMaterial* material, CrossSection* section,
+                           int rule)
+    : Element(id, nodes),
+      myUniMaterial(material),
+      mySection(section),
+      gPoints(rule) {
+  // Tag
   myTag = TAG_ELEM_BEAM_2D_TIMOSHENKO_2;
-  myNodalIDs.resize(2);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
+  // Nodal ids
+  myNodalIDs.resize(nodes_.size());
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    myNodalIDs[i] = nodes_[i]->get_id();
+  }
+  // Local dofs
   myLocalNodalDofs.resize(3);
   myLocalNodalDofs[0]=0;
   myLocalNodalDofs[1]=1;
   myLocalNodalDofs[2]=5;
-  mySection = section;
-  mySecID = section->get_id();  /// @todo remove
-  // Handle common info
-  this->handleCommonInfo();
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[3*nodes_.size()];
+  myVector = theStaticVectors[3*nodes_.size()];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(nodes_.size(), 3);
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    for (unsigned j = 0; j < myLocalNodalDofs.size() ; j++) {
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+    }
+  }
+  // Load vector
+  P.resize(3*nodes_.size(), 0.);
+  // Self weight
+  G.resize(3*nodes_.size(), 0.);
+  this->AssignGravityLoads();
+  // Handle common info: End ---------------------------------------------------
+  // Length
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+
            (x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
-  myUniMaterial = static_cast<UniaxialMaterial*>(myMaterial);
+  // Directional cosines
   cosX[0]=(x(1, 0)-x(0, 0))/L;
   cosX[1]=(x(1, 1)-x(0, 1))/L;
   // Self weight - Transform vector b to local system
@@ -57,47 +92,17 @@ Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2,
   double b1A = b[1]*A;
   b[0]= cosX[0]*b0A+cosX[1]*b1A;
   b[1]=-cosX[1]*b0A+cosX[0]*b1A;
-  gPoints = rule;
-  if (rule != 1 && rule != 2)
+  if (nodes_.size() == 2 && rule != 1 && rule != 2) {
     throw SException("[nemesis:%d] %s", 9999, "Integration rule must be 1/2.");
-}
-Timoshenko2d::Timoshenko2d(int ID, int Node_1, int Node_2, int Node_3,
-                           int matID, CrossSection* section, int rule)
-:Element(ID, matID) {
-  myTag = TAG_ELEM_BEAM_2D_TIMOSHENKO_3;
-  myNodalIDs.resize(3);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
-  myNodalIDs[2]=Node_3;
-  myLocalNodalDofs.resize(3);
-  myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;
-  myLocalNodalDofs[2]=5;
-  mySection = section;
-  mySecID = section->get_id();  /// @todo remove
-  // Handle common info
-  this->handleCommonInfo();
-  L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))+
-           (x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
-  myUniMaterial = static_cast<UniaxialMaterial*>(myMaterial);
-  cosX[0]=(x(1, 0)-x(0, 0))/L;
-  cosX[1]=(x(1, 1)-x(0, 1))/L;
-  // Self weight - Transform vector b to local system
-  /// @todo: check this
-  double A = mySection->get_A();
-  double b0A = b[0]*A;
-  double b1A = b[1]*A;
-  b[0]= cosX[0]*b0A+cosX[1]*b1A;
-  b[1]=-cosX[1]*b0A+cosX[0]*b1A;
-  gPoints = rule;
-  if (rule != 2 && rule != 3)
+  }
+  if (nodes_.size() == 3 && rule != 2 && rule != 3) {
     throw SException("[nemesis:%d] %s", 9999, "Integration rule must be 2/3.");
+  }
 }
-/**
- * Destructor.
- */
+
 Timoshenko2d::~Timoshenko2d() {
 }
+
 void Timoshenko2d::shapeFunctions(int n, double xi, double &N, double &dN) {
   switch (nodes_.size()) {
     case 2:
@@ -125,6 +130,7 @@ void Timoshenko2d::shapeFunctions(int n, double xi, double &N, double &dN) {
       break;
   }
 }
+
 const Matrix& Timoshenko2d::get_K() {
   Matrix& K=*myMatrix;
   K.Clear();
@@ -163,15 +169,18 @@ const Matrix& Timoshenko2d::get_K() {
   // double facK = groupdata_->active_ ? groupdata_->factor_K_: 1e-7;
   return K;
 }
+
 const Matrix& Timoshenko2d::get_M() {
   Matrix& M=*myMatrix;
   M.Clear();
   return M;
 }
+
 const Vector& Timoshenko2d::get_Rgrad() {
   myVector->clear();
   return *myVector;
 }
+
 const Vector& Timoshenko2d::get_R() {
   Vector& R=*myVector;
   R.clear();
@@ -254,10 +263,12 @@ const Vector& Timoshenko2d::get_R() {
   }
   return R;
 }
+
 void Timoshenko2d::recoverStresses() {
   /// @todo This might affect nodal stresses.
   return;
 }
+
 const double Timoshenko2d::GaussCoords[4][4]=  { {0.000000000000000,   // Rule 0
                                                   0.000000000000000,
                                                   0.000000000000000,
