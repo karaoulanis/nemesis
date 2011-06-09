@@ -234,15 +234,19 @@ void Domain::save(std::ostream& s) {
 void Domain::set_Rayleigh_factors(const Vector& factors) {
   RayleighFactors.resize(factors.size());
   RayleighFactors = factors;
+  Element::set_rayleigh(factors);
 }
+
 const Vector& Domain::get_rayleigh_factors() {
   return RayleighFactors;
 }
+
 // EigenValues
 void Domain::set_eigenvalues(const Vector& vals) {
   eigenVals.resize(vals.size());
   eigenVals = vals;
 }
+
 const Vector& Domain::get_eigen_values() {
   return eigenVals;
 }

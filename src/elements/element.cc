@@ -35,7 +35,7 @@ Matrix** Element::theStaticMatrices = 0;
 Vector** Element::theStaticVectors = 0;
 double Element::gravitydirection_[3] = {0., -1., 0.};
 double Element::gravityacceleration_ = 9.81;
-
+Vector Element::rayleigh_(0);
 /**
  * Default Constructor
  */
@@ -73,12 +73,11 @@ const Matrix& Element::get_C() {
   static Matrix C;
   int nDofs = myNodalIDs.size()*myLocalNodalDofs.size();
   C.Resize(nDofs, nDofs, 0.);
-  Vector RayleighFactors = pD->get_rayleigh_factors();
-  if (RayleighFactors.size() == 0) {
+  if (rayleigh_.size() == 0) {
     C.Clear();
   } else {
-    C.add_cM(RayleighFactors[0], this->get_K());
-    C.add_cM(RayleighFactors[1], this->get_M());
+    C.add_cM(rayleigh_[0], this->get_K());
+    C.add_cM(rayleigh_[1], this->get_M());
   }
   return C;
 }
@@ -119,7 +118,11 @@ void Element::AssignGravityLoads() {
     b[1] = gamma*gravitydirection_[1];
     b[2] = gamma*gravitydirection_[2];
   }
+}
 
+void Element::set_rayleigh(const Vector& rayleigh) {
+  rayleigh_.resize(rayleigh.size());
+  rayleigh_ = rayleigh;
 }
 
 /**
