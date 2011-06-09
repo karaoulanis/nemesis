@@ -111,9 +111,12 @@ class Element: public DomainObject {
   // Enrichment functions
   virtual void enrich();
 
+  // Set self-weight info
   static void set_gravitydirection(double xG, double yG, double zG);
   static void set_gravityacceleration(double acceleration);
-
+  
+  // Set reyleigh
+  static void set_rayleigh(const Vector& rayleigh);
  protected:
   std::vector<Node*> nodes_;
   IDContainer myNodalIDs;
@@ -134,9 +137,13 @@ class Element: public DomainObject {
   static Vector** theStaticVectors;
   int activeParameter;
   
+  // Self-weight loading
   static double gravitydirection_[3];
   static double gravityacceleration_;
   void AssignGravityLoads();
+
+  // Rayleigh factors
+  static Vector rayleigh_;
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.
