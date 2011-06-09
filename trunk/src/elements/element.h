@@ -54,11 +54,6 @@ class Element: public DomainObject {
 
   /**
    * Constructor.
-   */
-  Element(int ID, int matID);
-
-  /**
-   * Constructor.
    * @param id Element id.
    * @param nodes Pointers to element nodes.
    */
@@ -137,7 +132,6 @@ class Element: public DomainObject {
   Vector* myVector;
   static Matrix** theStaticMatrices;
   static Vector** theStaticVectors;
-  int handleCommonInfo();
   int activeParameter;
   
   static double gravitydirection_[3];
