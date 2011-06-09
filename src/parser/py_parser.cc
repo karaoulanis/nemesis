@@ -1792,13 +1792,45 @@ static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Create an 8-node brick.
+ *
+ */
 static PyObject* pyElement_Tetrahedron4d(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, n4, matID;
-  if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &matID))
+  // Local variables
+  int id, n1, n2, n3, n4, mat;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiiii", &id, &n1, &n2, &n3, &n4, &mat)) {
     return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(8);
   try {
-    Element* pElement = new Tetrahedron4Disp(id, n1, n2, n3, n4, matID);
-    pD->add(pD->get_elements(), pElement);
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  MultiaxialMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  Tetrahedron4Disp* elem = new Tetrahedron4Disp(id, nodes, material);
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1822,6 +1854,7 @@ static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
   tmp = os.str();
   return Py_BuildValue("s", tmp.c_str());
 }
+
 static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
   int id, index;
     if (!PyArg_ParseTuple(args, "ii", &id, &index)) return NULL;
@@ -1829,6 +1862,7 @@ static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pyElement_Path(PyObject* /*self*/, PyObject* args) {
   int id, index;
   const char* s;

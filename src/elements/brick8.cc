@@ -39,7 +39,7 @@ std::vector<int> Brick8::perm(8);
  * Default constructor.
  */
 Brick8::Brick8()
-    : myMatPoints(8) {
+    : myMatPoints(0) {
 }
 
 /**
