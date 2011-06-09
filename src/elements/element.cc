@@ -42,27 +42,6 @@ double Element::gravityacceleration_ = 9.81;
 Element::Element() {
 }
 
-/**
- * Constructor
- * Creates an Element with a given ID and a Material ID.
- * If this is the first element to be created then a series of static Matrices
- * and Vectors is created, which are used in common for all elements. These
- * Matrices/Vectors store element properties as K, M, C, Fint etc in order to
- * reduce memory requirements and to increase speed.
- */
-Element::Element(int ID, int matID)
-:DomainObject(ID), myMaterial(0), activeParameter(0) {
-  // Create static Matrices/vectors if they do not exist yet
-  if (theStaticMatrices == 0) {
-    theStaticMatrices = new Matrix*[64];
-    for (int i = 1;i < 64;i++) theStaticMatrices[i]=new Matrix(i, i, 0.);
-    theStaticVectors = new Vector*[64];
-    for (int i = 1;i < 64;i++) theStaticVectors[i]=new Vector(i, 0.);
-  }
-  // Retrieve Material pointer
-  myMaterial = pD->get<Material>(pD->get_materials(), matID);
-}
-
 Element::Element(int id, std::vector<Node*> nodes)
     : DomainObject(id),
       nodes_(nodes) {
@@ -141,39 +120,6 @@ void Element::AssignGravityLoads() {
     b[2] = gamma*gravitydirection_[2];
   }
 
-}
-
-int Element::handleCommonInfo() {
-  // Define number of nodes, number of dofs
-  int nNodes = myNodalIDs.size();
-  int nLocalDofs = myLocalNodalDofs.size();
-  int nDofs = nNodes*nLocalDofs;
-  nodes_.resize(nNodes);
-  // Find own matrix and vector
-  myMatrix = theStaticMatrices[nDofs];
-  myVector = theStaticVectors[nDofs];
-  // Retrieve the node pointers and check if they do exist
-  for (int i = 0;i < nNodes;i++)
-    nodes_[i] = pD->get <Node>(pD->get_nodes(), myNodalIDs[i]);
-  // Get nodal coordinates
-  x.Resize(nNodes, 3);
-  for (int i = 0; i < nNodes; i++) {
-    x(i, 0) = nodes_[i]->get_x1();
-    x(i, 1) = nodes_[i]->get_x2();
-    x(i, 2) = nodes_[i]->get_x3();
-  }
-  // Resize external load vector, self weigth vector
-  P.resize(nDofs);
-  G.resize(nDofs);
-  // Inform the nodes that the corresponding Dof's must be activated
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nLocalDofs;j++)
-      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
-  // Create load vector
-  for (int i = 0;i < nDofs;i++) P[i]=0;
-  // Find gravity loads
-  this->AssignGravityLoads();
-  return 0;
 }
 
 /**
