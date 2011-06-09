@@ -30,17 +30,13 @@
 #include "material/sdof_material.h"
 
 class SDofElement: public Element {
- private:
-  SDofMaterial* mySDofMaterial;
-  // Dummy copy constructor and copy assignment as to explicitly disable them.
-  // Only the declarations are provided and not the definitions.
-  // When called a linking error will occur.
-  SDofElement(const SDofElement&);
-  void operator=(const SDofElement&);
  public:
   // Constructors and Destructor
   SDofElement();
-  SDofElement(int ID, int NodeID, int dofID, int matID);
+  SDofElement(int id,
+      std::vector<Node*> nodes,
+      int dof,
+      SDofMaterial* material);
   ~SDofElement();
 
   const Matrix& get_K();
@@ -50,6 +46,13 @@ class SDofElement: public Element {
   bool checkIfAllows(FEObject* f);
   void update() {return;}
   void commit() {return;}
+ private:
+  SDofMaterial* mySDofMaterial;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  SDofElement(const SDofElement&);
+  void operator=(const SDofElement&);
 };
 
 #endif  // SRC_ELEMENTS_SDOF_ELEMENT_H_

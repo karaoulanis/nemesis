@@ -1355,12 +1355,43 @@ static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 
+/**
+ * Create a single dof element.
+ */
 static PyObject* pyElement_SDOF(PyObject* /*self*/, PyObject* args) {
-  int id, nodeID, dofID, matID;
-  if (!PyArg_ParseTuple(args, "iiii", &id, &nodeID, &dofID, &matID))
+  int id, node, dof, mat;
+  // Check for consistent input
+  if (!PyArg_ParseTuple(args, "iiii", &id, &node, &dof, &mat)) {
     return NULL;
-  Element* pElement = new SDofElement(id, nodeID, dofID, matID);
-  pD->add(pD->get_elements(), pElement);
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(2);
+  try {
+    nodes[0] = pD->get<Node>(pD->get_nodes(), node);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  SDofMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting 
+    material = static_cast<SDofMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element and add it to domain
+  try {
+    SDofElement* elem = new SDofElement(id, nodes, dof, material);
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   Py_INCREF(Py_None);
   return Py_None;
 }

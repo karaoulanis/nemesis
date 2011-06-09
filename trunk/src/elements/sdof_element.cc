@@ -25,44 +25,76 @@
 
 #include "elements/sdof_element.h"
 #include "group/group_data.h"
+#include "node/node.h"
 
 /**
  * Default constructor.
  */
-SDofElement::SDofElement()   {
+SDofElement::SDofElement() 
+   : mySDofMaterial(0) {
 }
+
 /**
  * Constructor.
  */
-SDofElement::SDofElement(int ID, int NodeID, int dofID, int matID)
-  :Element(ID, matID) {
+SDofElement::SDofElement(int id, std::vector<Node*> nodes, int dof,
+                         SDofMaterial* material)
+    : Element(id, nodes),
+      mySDofMaterial(material) {
   // The dofs needed for this element
   myNodalIDs.resize(1);
-  myNodalIDs[0]=NodeID;
+  myNodalIDs[0] = nodes_[0]->get_id();
+  // Local dofs
   myLocalNodalDofs.resize(1);
-  myLocalNodalDofs[0]=dofID-1;
-  // Handle common info
-    this->handleCommonInfo();
-  mySDofMaterial = static_cast<SDofMaterial*>(myMaterial)->get_clone();
+  myLocalNodalDofs[0] = dof-1;
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[myLocalNodalDofs.size()*nodes_.size()];
+  myVector = theStaticVectors[myLocalNodalDofs.size()*nodes_.size()];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(nodes_.size(), myLocalNodalDofs.size());
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    for (unsigned j = 0; j < myLocalNodalDofs.size() ; j++) {
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+    }
+  }
+  // Load vector
+  P.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  // Self weight
+  G.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  this->AssignGravityLoads();
+  // Handle common info: End ---------------------------------------------------
 }
+
 SDofElement::~SDofElement() {
 }
+
 const Matrix& SDofElement::get_K() {
   Matrix& K=*myMatrix;
   double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K(0, 0)=facK*(mySDofMaterial->get_param(0));
   return K;
 }
+
 const Matrix& SDofElement::get_M() {
   Matrix& M=*myMatrix;
   M(0, 0)=mySDofMaterial->get_rho();
   return M;
 }
+
 const Vector& SDofElement::get_R() {
   Vector& R=*myVector;
   R.clear();
   return R;
 }
+
 bool SDofElement::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
