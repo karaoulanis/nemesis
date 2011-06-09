@@ -31,17 +31,15 @@
 #include "numeric/matrix.h"
 
 class MatPoint;
+class MultiaxialMaterial;
 
 class Tetrahedron4Disp: public Element {
- protected:
-  static Matrix N;
-  static double V;
-  std::vector<MatPoint*> myMatPoints;
-  public:
+ public:
   // Constructors and Destructor
   Tetrahedron4Disp();
-  Tetrahedron4Disp(int ID, int Node_1, int Node_2, int Node_3, int Node_4,
-                   int matID);
+  Tetrahedron4Disp(int id,
+        std::vector<Node*> nodes,
+        MultiaxialMaterial* material);
   ~Tetrahedron4Disp();
 
   const Matrix& get_K();
@@ -54,5 +52,9 @@ class Tetrahedron4Disp: public Element {
   void findShapeFunctions();
   bool checkIfAllows(FEObject* f);
   void recoverStresses();
+ protected:
+  std::vector<MatPoint*> myMatPoints;
+  static Matrix N;
+  static double V;
 };
 #endif  // SRC_ELEMENTS_TETRAHEDRON4_DISP_H_

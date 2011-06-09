@@ -32,35 +32,61 @@
 Matrix Tetrahedron4Disp::N(4, 4);
 double Tetrahedron4Disp::V = 0;
 
-Tetrahedron4Disp::Tetrahedron4Disp() {
+Tetrahedron4Disp::Tetrahedron4Disp()
+    : myMatPoints(0) {
 }
-Tetrahedron4Disp::Tetrahedron4Disp(int ID,
-             int Node_1, int Node_2, int Node_3, int Node_4,
-             int matID)
-:Element(ID, matID) {
+
+Tetrahedron4Disp::Tetrahedron4Disp(int id, std::vector<Node*> nodes,
+                     MultiaxialMaterial* material)
+    : Element(id, nodes),
+      myMatPoints(1) {      
+  // Tqg
   myTag = TAG_ELEM_TETRHEDRON_4_DISP;
   // Get nodal data
   myNodalIDs.resize(4);
-  myNodalIDs[0]=Node_1;
-  myNodalIDs[1]=Node_2;
-  myNodalIDs[2]=Node_3;
-  myNodalIDs[3]=Node_4;
+  myNodalIDs[0] = nodes_[0]->get_id();
+  myNodalIDs[1] = nodes_[1]->get_id();
+  myNodalIDs[2] = nodes_[2]->get_id();
+  myNodalIDs[3] = nodes_[3]->get_id();
   // Set local nodal dofs
   myLocalNodalDofs.resize(3);
-  myLocalNodalDofs[0]=0;
-  myLocalNodalDofs[1]=1;
-  myLocalNodalDofs[2]=2;
-  // Handle common info
-  this->handleCommonInfo();
+  myLocalNodalDofs[0] = 0;
+  myLocalNodalDofs[1] = 1;
+  myLocalNodalDofs[2] = 2;
 
+  // Handle common info: Start -------------------------------------------------
+  // Find own matrix and vector
+  myMatrix = theStaticMatrices[myLocalNodalDofs.size()*nodes_.size()];
+  myVector = theStaticVectors[myLocalNodalDofs.size()*nodes_.size()];
+  // Get nodal coordinates
+  /// @todo replace with const references
+  x.Resize(nodes_.size(), myLocalNodalDofs.size());
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    x(i, 0) = nodes_[i]->get_x1();
+    x(i, 1) = nodes_[i]->get_x2();
+    x(i, 2) = nodes_[i]->get_x3();
+  }
+  // Inform the nodes that the corresponding Dof's must be activated
+  for (unsigned i = 0; i < nodes_.size(); i++) {
+    for (unsigned j = 0; j < myLocalNodalDofs.size() ; j++) {
+      nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
+    }
+  }
+  // Load vector
+  P.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  // Self weight
+  G.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  this->AssignGravityLoads();
+  // Handle common info: End ---------------------------------------------------
+  
   // Materials
-  myMatPoints.resize(1);
-  MultiaxialMaterial* pMat = static_cast<MultiaxialMaterial*>(myMaterial);
-  myMatPoints[0]=new MatPoint(pMat, 1, 1, 1, 1, 1, 1);
+  myMatPoints[0]=new MatPoint(material, 1, 1, 1, 1, 1, 1);
 }
+
 Tetrahedron4Disp::~Tetrahedron4Disp() {
   Containers::vector_delete(myMatPoints);
 }
+
 void Tetrahedron4Disp::findShapeFunctions() {
   V = 1./6.*((x(1, 0)-x(0, 0))*((x(2, 1)-x(0, 1))*(x(3, 2)-x(0, 2))
                                -(x(3, 1)-x(0, 1))*(x(2, 2)-x(0, 2)))
@@ -110,6 +136,7 @@ void Tetrahedron4Disp::findShapeFunctions() {
              +x(1, 0)*(x(2, 1)-x(0, 1))
              -x(2, 0)*(x(1, 1)-x(0, 1)))*V6;
 }
+
 const Matrix& Tetrahedron4Disp::get_K() {
   Matrix &K=*myMatrix;
   K.Clear();
@@ -155,11 +182,13 @@ const Matrix& Tetrahedron4Disp::get_K() {
   K*=facK;
   return K;
 }
+
 const Matrix& Tetrahedron4Disp::get_M() {
   Matrix &M=*myMatrix;
   M.Clear();
   return M;
 }
+
 const Vector& Tetrahedron4Disp::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
@@ -190,6 +219,7 @@ const Vector& Tetrahedron4Disp::get_R() {
   R-=facP*P;
   return R;
 }
+
 void Tetrahedron4Disp::update() {
   if (!(groupdata_->active)) {
     return;
@@ -212,13 +242,16 @@ void Tetrahedron4Disp::update() {
   // And send it to the material point
   myMatPoints[0]->get_material()->set_strain(epsilon);
 }
+
 void Tetrahedron4Disp::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->get_material()->commit();
 }
+
 bool Tetrahedron4Disp::checkIfAllows(FEObject* /*f*/) {
   return true;
 }
+
 void Tetrahedron4Disp::recoverStresses() {
   static Vector sigma(6);
   sigma = myMatPoints[0]->get_material()->get_stress();
