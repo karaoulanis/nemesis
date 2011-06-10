@@ -29,22 +29,24 @@
 // C++ system files
 #include <string>
 #include <vector>
+#include "domain/domain_object.h"
 
 // namespaces
 using std::string;
 using std::vector;
 
-class Tracker {
+class Tracker: public DomainObject {
  public:
   Tracker();
+  Tracker(int id);
   virtual ~Tracker();
+  
+  // Get data
   int get_steps();
-
-  void track(string record);
+  virtual void track(double lambda, double time)=0;
   const char* data();
 
  private:
   vector<string> records_;
 };
-
 #endif  // SRC_TRACKER_TRACKER_H_
