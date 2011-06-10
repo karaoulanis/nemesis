@@ -40,7 +40,7 @@ Quad4d::Quad4d()
 
 Quad4d::Quad4d(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
                double thickness, bool axisymmetric)
-    : Quad4(id, nodes,material,thickness),
+    : Quad4(id, nodes, material, thickness),
       axisymmetric_(axisymmetric) {
   perm[0]=0;
   perm[1]=1;
@@ -109,7 +109,7 @@ const Vector& Quad4d::get_R() {
     sigma = myMatPoints[k]->get_material()->get_stress();
     for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(Ba, a, k);
-      double dV=thickness_*detJ[k];
+      double dV = thickness_*detJ[k];
       add_BTv(R, 2*a, &perm[0], Ba, sigma, dV, 1.0);
     }
   }

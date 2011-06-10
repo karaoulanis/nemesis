@@ -52,6 +52,5 @@ class DomainObject: public FEObject {
   virtual void set_packet(const Packet& p);
   virtual void Save(std::ostream* /*os*/)  {}
   // virtual void load(std::istream& /*s*/)  {}
-
 };
 #endif  // SRC_DOMAIN_DOMAIN_OBJECT_H_

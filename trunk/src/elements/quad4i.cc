@@ -46,10 +46,11 @@ Quad4i::Quad4i(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
   perm[0]=0;
   perm[1]=1;
   perm[2]=3;
-
 }
+
 Quad4i::~Quad4i() {
 }
+
 const Matrix& Quad4i::get_K() {
   // Get a reference to myMatrix as K
   Matrix &K=*myMatrix;

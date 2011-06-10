@@ -42,7 +42,7 @@ class Matrix;
 class SOE: public AnalysisObject {
  public:
   SOE();
-  SOE(Model* model);
+  explicit SOE(Model* model);
   virtual ~SOE();
 
   virtual int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,

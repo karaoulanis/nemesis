@@ -52,11 +52,11 @@ class ModelElement : public ModelObject {
   virtual void add_Reff(double factor = 1.0)=0;
 
   virtual void add_Kgrad(double /*factor = 1.0*/) {}
- 
+
  protected:
   Element* myElement;
   Constraint* myConstraint;
- 
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

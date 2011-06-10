@@ -32,7 +32,7 @@ class SymmLinearSOE: public SOE {
  public:
   // Constructor and destructor
   SymmLinearSOE();
-  SymmLinearSOE(Model* model);
+  explicit SymmLinearSOE(Model* model);
   ~SymmLinearSOE();
 
   int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,

@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
 #define SRC_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_
 
+#include <vector>
 #include "elements/quad4.h"
 
 class Quad4DispAxisymmetric: public Quad4 {

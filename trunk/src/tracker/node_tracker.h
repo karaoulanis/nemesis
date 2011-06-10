@@ -50,5 +50,10 @@ class NodeTracker: public Tracker {
 
  private:
   Node* node_;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  NodeTracker(const NodeTracker&);
+  void operator=(const NodeTracker&);
 };
 #endif  // SRC_TRACKER_NODE_TRACKER_H_

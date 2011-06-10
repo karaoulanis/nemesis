@@ -62,3 +62,4 @@ void NodeTracker::Track(double lambda, double time) {
   tmp = s.str();
   records_.push_back(tmp.c_str());
 }
+

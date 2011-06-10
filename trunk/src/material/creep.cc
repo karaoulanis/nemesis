@@ -37,7 +37,7 @@ Creep::Creep()
 }
 
 Creep::Creep(int id, MultiaxialMaterial* elastic, double A, double n, double k)
-    : MultiaxialMaterial(id, 0., 0.), 
+    : MultiaxialMaterial(id, 0., 0.),
       A(0.),
       n(0.),
       k(0.) {

@@ -40,7 +40,7 @@ Quad4b::Quad4b()
 
 Quad4b::Quad4b(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
                double thickness, bool axisymmetric)
-    : Quad4(id, nodes,material,thickness),
+    : Quad4(id, nodes, material, thickness),
       axisymmetric_(axisymmetric) {
   perm[0]=0;
   perm[1]=1;

@@ -32,7 +32,7 @@
 #include "soe/soe.h"
 
 ConvergenceNorm::ConvergenceNorm()
-    : tol(3), 
+    : tol(3),
       maxIter(0),
       iter(0),
       ro(0.),

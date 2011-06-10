@@ -191,7 +191,8 @@ const Packet& Node::get_packet() {
     if (myActivatedDofs[i] >= 0) {
       thePacket.dblArray[i+3]=dispConvg[myActivatedDofs[i]];
       thePacket.dblArray[i+3+MAX_NUMBER_OF_DOFS]=velcConvg[myActivatedDofs[i]];
-      thePacket.dblArray[i+3+2*MAX_NUMBER_OF_DOFS]=acclConvg[myActivatedDofs[i]];
+      thePacket.dblArray[i+3+2*MAX_NUMBER_OF_DOFS] =
+                                                 acclConvg[myActivatedDofs[i]];
     }
   }
   if (avgStress>0) stress*=1.0/avgStress;

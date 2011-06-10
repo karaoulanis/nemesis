@@ -32,7 +32,7 @@ DruckerPrager::DruckerPrager()
     : type(0) {
 }
 
-DruckerPrager::DruckerPrager(int id,MultiaxialMaterial* elastic, int type_,
+DruckerPrager::DruckerPrager(int id, MultiaxialMaterial* elastic, int type_,
                              double c, double phi, double psi, double T)
     : MultiaxialElastoPlastic(id, elastic),
       type(type_) {
@@ -76,12 +76,12 @@ DruckerPrager::~DruckerPrager() {
 
 MultiaxialMaterial* DruckerPrager::get_clone() {
   // Material parameters
-  int myID    = this->get_id();
+  int id    = this->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double psi  = MatParams[ 2];
   double T    = MatParams[ 3];
   // Create clone and return
-  DruckerPrager* newClone = new DruckerPrager(myID, myElastic, type, c, phi, psi, T);
-  return newClone;
+  DruckerPrager* clone = new DruckerPrager(id, myElastic, type, c, phi, psi, T);
+  return clone;
 }

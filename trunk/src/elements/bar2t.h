@@ -26,10 +26,11 @@
 #ifndef SRC_ELEMENTS_BAR2T_H_
 #define SRC_ELEMENTS_BAR2T_H_
 
+#include <vector>
 #include "elements/bar.h"
 
 class Bar2t: public Bar {
-public:
+ public:
   // Constructors and Destructor
   Bar2t();
   Bar2t(int id,
@@ -42,7 +43,5 @@ public:
 
   const Matrix& get_K();
   const Vector& get_R();
- private:
 };
-
 #endif  // SRC_ELEMENTS_BAR2T_H_

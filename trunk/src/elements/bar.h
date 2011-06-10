@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_BAR_H_
 #define SRC_ELEMENTS_BAR_H_
 
+#include <vector>
 #include "elements/element.h"
 
 class CrossSection;

@@ -70,7 +70,7 @@ void BandLinearSOE::set_size() {
   if (size_ == model_->get_num_eqns()) {
     return;
   }
-  
+
   size_ = model_->get_num_eqns();
   nRows = 2*lowerBandwidth+upperBandwidth+1;
   A.resize(nRows*size_);

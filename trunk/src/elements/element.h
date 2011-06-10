@@ -109,7 +109,7 @@ class Element: public DomainObject {
   // Set self-weight info
   static void set_gravitydirection(double xG, double yG, double zG);
   static void set_gravityacceleration(double acceleration);
-  
+
   // Set reyleigh
   static void set_rayleigh(const Vector& rayleigh);
  protected:
@@ -131,7 +131,7 @@ class Element: public DomainObject {
   static Matrix** theStaticMatrices;
   static Vector** theStaticVectors;
   int activeParameter;
-  
+
   // Self-weight loading
   static double gravitydirection_[3];
   static double gravityacceleration_;

@@ -85,7 +85,7 @@ void EigenSOE::set_size() {
   if (size_ == model_->get_num_eqns()) {
     return;
   }
-  
+
   size_ = model_->get_num_eqns();
   A.resize(size_*size_);
   M.resize(size_*size_);

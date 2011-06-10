@@ -39,6 +39,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <vector>
 
 // additional includes
 #include "algorithm/bfgs.h"

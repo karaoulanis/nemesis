@@ -81,7 +81,7 @@ DruckerPragerNew::~DruckerPragerNew() {
 }
 MultiaxialMaterial* DruckerPragerNew::get_clone() {
   // Material parameters
-  int myID    = this->get_id();
+  int id      = this->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double psi  = MatParams[ 2];
@@ -89,9 +89,9 @@ MultiaxialMaterial* DruckerPragerNew::get_clone() {
   double Kphi = MatParams[ 4];
   double T    = MatParams[ 5];
   // Create clone and return
-  DruckerPragerNew* newClone =
-    new DruckerPragerNew(myID, myElastic, c, phi, psi, Kc, Kphi, T);
-  return newClone;
+  DruckerPragerNew* clone =
+    new DruckerPragerNew(id, myElastic, c, phi, psi, Kc, Kphi, T);
+  return clone;
 }
 
 

@@ -39,7 +39,7 @@ Tetrahedron4Disp::Tetrahedron4Disp()
 Tetrahedron4Disp::Tetrahedron4Disp(int id, std::vector<Node*> nodes,
                      MultiaxialMaterial* material)
     : Element(id, nodes),
-      myMatPoints(1) {      
+      myMatPoints(1) {
   // Tqg
   myTag = TAG_ELEM_TETRHEDRON_4_DISP;
   // Get nodal data
@@ -78,7 +78,7 @@ Tetrahedron4Disp::Tetrahedron4Disp(int id, std::vector<Node*> nodes,
   G.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
-  
+
   // Materials
   myMatPoints[0]=new MatPoint(material, 1, 1, 1, 1, 1, 1);
 }

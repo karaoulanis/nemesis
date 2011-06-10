@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/bar2t.h"
+#include <vector>
 #include "group/group_data.h"
 #include "material/uniaxial_material.h"
 

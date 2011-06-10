@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_BRICK8I_H_
 #define SRC_ELEMENTS_BRICK8I_H_
 
+#include <vector>
 #include "elements/brick8.h"
 
 class Brick8i: public Brick8 {

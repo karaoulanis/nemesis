@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_SPRING_H_
 #define SRC_ELEMENTS_SPRING_H_
 
+#include <vector>
 #include "elements/element.h"
 #include "numeric/matrix.h"
 

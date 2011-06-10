@@ -38,8 +38,8 @@ MohrCoulomb::MohrCoulomb()
       inaccurate(0) {
 }
 
-MohrCoulomb::MohrCoulomb(int id, MultiaxialMaterial* elastic, double c, double phi,
-                         double alpha)
+MohrCoulomb::MohrCoulomb(int id, MultiaxialMaterial* elastic, double c,
+                         double phi, double alpha)
     : MultiaxialMaterial(id, 0., 0.),
       plastic(false),
       inaccurate(0) {

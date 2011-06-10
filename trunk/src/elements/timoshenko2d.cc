@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/timoshenko2d.h"
+#include <vector>
 #include "crosssection/cross_section.h"
 #include "group/group_data.h"
 #include "material/uniaxial_material.h"

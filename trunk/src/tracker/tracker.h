@@ -38,9 +38,9 @@ using std::vector;
 class Tracker: public DomainObject {
  public:
   Tracker();
-  Tracker(int id);
+  explicit Tracker(int id);
   virtual ~Tracker();
-  
+
   int get_steps();
   virtual void Track(double lambda, double time)=0;
   void Save(std::ostream* os);

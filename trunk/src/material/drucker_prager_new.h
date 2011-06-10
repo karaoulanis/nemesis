@@ -73,6 +73,5 @@ class DruckerPragerNew: public MultiaxialMaterial {
   // When called a linking error will occur.
   DruckerPragerNew(const DruckerPragerNew&);
   void operator=(const DruckerPragerNew&);
-
 };
 #endif  // SRC_MATERIAL_DRUCKER_PRAGER_NEW_H_

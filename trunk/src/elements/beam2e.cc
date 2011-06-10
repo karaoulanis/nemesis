@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/beam2e.h"
+#include <vector>
 #include "crosssection/cross_section.h"
 #include "group/group_data.h"
 #include "material/uniaxial_material.h"
@@ -51,7 +52,7 @@ Beam2e::Beam2e(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
   myLocalNodalDofs[0] = 0;
   myLocalNodalDofs[1] = 1;
   myLocalNodalDofs[2] = 5;
-  
+
   // Handle common info: Start -------------------------------------------------
   // Find own matrix and vector
   myMatrix = theStaticMatrices[6];
@@ -75,7 +76,7 @@ Beam2e::Beam2e(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 
-  // Length 
+  // Length
   L = sqrt((x(1, 1)-x(0, 1))*(x(1, 1)-x(0, 1))
           +(x(1, 0)-x(0, 0))*(x(1, 0)-x(0, 0)));
   // Directional cosines

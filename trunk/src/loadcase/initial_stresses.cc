@@ -28,7 +28,7 @@
 #include "group/group.h"
 
 InitialStresses::InitialStresses()
-   :  group_(),
+    : group_(),
       direction_(),
       h1_(),
       s1_(),

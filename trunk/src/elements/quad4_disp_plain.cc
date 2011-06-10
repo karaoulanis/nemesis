@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/quad4_disp_plain.h"
+#include <vector>
 #include "group/group_data.h"
 #include "material/matpoint.h"
 #include "material/multiaxial_material.h"
@@ -33,7 +34,7 @@ Quad4DispPlain::Quad4DispPlain() {
 
 Quad4DispPlain::Quad4DispPlain(int id, std::vector<Node*> nodes,
                                MultiaxialMaterial* material, double thickness)
-                               : Quad4(id, nodes,material,thickness) {
+                               : Quad4(id, nodes, material, thickness) {
 }
 
 Quad4DispPlain::~Quad4DispPlain() {
