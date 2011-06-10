@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_QUAD4E_H_
 #define SRC_ELEMENTS_QUAD4E_H_
 
+#include <vector>
 #include "elements/quad4.h"
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
@@ -57,6 +58,6 @@ class Quad4e: public Quad4 {
   static Matrix Be;
   static Matrix T0;
   static Vector Nu;
-  Vector alpha;};
-
+  Vector alpha;
+};
 #endif  // SRC_ELEMENTS_QUAD4E_H_

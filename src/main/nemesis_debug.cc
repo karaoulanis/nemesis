@@ -24,7 +24,7 @@
 // *****************************************************************************
 
 #include "main/nemesis_debug.h"
-#include "stdio.h"
+#include <stdio.h>
 #include "numeric/lapack.h"
 
 void report(const double d, const char* name, int total, int decimal) {

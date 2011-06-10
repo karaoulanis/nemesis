@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_BEAM2E_H_
 #define SRC_ELEMENTS_BEAM2E_H_
 
+#include <vector>
 #include "elements/element.h"
 
 class CrossSection;
@@ -55,7 +56,7 @@ class Beam2e: public Element {
   CrossSection* mySection;
   double L;
   double cosX[2];
- 
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

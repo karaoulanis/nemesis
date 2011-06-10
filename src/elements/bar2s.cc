@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/bar2s.h"
+#include <vector>
 #include "group/group_data.h"
 #include "material/uniaxial_material.h"
 
@@ -32,6 +33,7 @@
  */
 Bar2s::Bar2s()   {
 }
+
 /**
  * Constructor.
  * Creates a Bar2s Element.

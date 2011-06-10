@@ -58,6 +58,7 @@ Domain::Domain()
       theMaterials(),
       theLoadCases(),
       theConstraints(),
+      trackers_(),
       theDatabase(0),
       RayleighFactors(0),
       eigenVals(0),
@@ -307,7 +308,7 @@ void Domain::set_gravity(double g, double xG, double yG, double zG) {
   gravityVect.normalize();
   // Check if elements are already defined
   if (theElements.size() > 0) {
-    throw SException("[nemesis:%d] %s", 9999, 
+    throw SException("[nemesis:%d] %s", 9999,
                      "Gravity info must me set before elements' definitions.");
   }
   // Set gravity info to elements

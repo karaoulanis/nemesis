@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_TIMOSHENKO2D_H_
 #define SRC_ELEMENTS_TIMOSHENKO2D_H_
 
+#include <vector>
 #include "elements/element.h"
 
 class Node;

@@ -24,14 +24,15 @@
 // *****************************************************************************
 
 #include "elements/sdof_element.h"
+#include <vector>
 #include "group/group_data.h"
 #include "node/node.h"
 
 /**
  * Default constructor.
  */
-SDofElement::SDofElement() 
-   : mySDofMaterial(0) {
+SDofElement::SDofElement()
+    : mySDofMaterial(0) {
 }
 
 /**

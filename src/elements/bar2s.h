@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_BAR2S_H_
 #define SRC_ELEMENTS_BAR2S_H_
 
+#include <vector>
 #include "elements/bar.h"
 
 class Bar2s: public Bar {

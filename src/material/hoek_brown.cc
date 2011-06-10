@@ -109,15 +109,15 @@ HoekBrown::~HoekBrown() {
  */
 MultiaxialMaterial* HoekBrown::get_clone() {
   // Material parameters
-  int myID    = this->get_id();
+  int id    = this->get_id();
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
   double mb       = MatParams[ 2];
   double mbb      = MatParams[ 3];
   double alpha    = MatParams[ 4];
   // Create clone and return
-  HoekBrown* newClone = new HoekBrown(myID, myElastic, sigma_ci, sp, mb, mbb, alpha);
-  return newClone;
+  HoekBrown* clone = new HoekBrown(id, myElastic, sigma_ci, sp, mb, mbb, alpha);
+  return clone;
 }
 
 /**

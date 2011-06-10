@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/spring.h"
+#include <vector>
 #include "group/group_data.h"
 #include "main/nemesis_debug.h"
 #include "material/spring_material.h"

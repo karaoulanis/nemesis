@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/bar.h"
+#include <vector>
 #include "crosssection/cross_section.h"
 #include "material/uniaxial_material.h"
 #include "node/node.h"
@@ -31,8 +32,8 @@
 /**
  * Default constructor.
  */
-Bar::Bar() 
-   :  dim_(0),
+Bar::Bar()
+    : dim_(0),
       iSection(0),
       jSection(0),
       L0(0.),

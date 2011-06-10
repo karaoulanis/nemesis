@@ -52,7 +52,7 @@ DisplacementControl::DisplacementControl(int nodeID, int dofID,
       duT_k(0.0),
       theNodeID(nodeID),
       theDofID(dofID),
-      theRefDof(0) { 
+      theRefDof(0) {
   myTag = TAG_CONTROL_DISPLACEMENT;
 }
 

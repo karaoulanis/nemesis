@@ -106,7 +106,7 @@ class Domain {
   // When called a linking error will occur.
   Domain(const Domain&);
   void operator=(const Domain&);
- 
+
  public:
   // Constructors and Destructors
   Domain();

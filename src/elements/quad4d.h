@@ -50,9 +50,7 @@ class Quad4d: public Quad4 {
   static double shp[4][3][4];
   static double detJ[4];
   static std::vector<int> perm;
-  ///@todo make axysmmetric static at Quad4
+  /// @todo make axysmmetric static at Quad4
   bool axisymmetric_;
-
 };
-
 #endif  // SRC_ELEMENTS_QUAD4D_H_

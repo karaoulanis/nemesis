@@ -63,6 +63,5 @@ class Tresca: public MultiaxialMaterial {
   // When called a linking error will occur.
   Tresca(const Tresca&);
   void operator=(const Tresca&);
-
 };
 #endif  // SRC_MATERIAL_TRESCA_H_

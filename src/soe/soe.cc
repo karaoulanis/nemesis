@@ -28,7 +28,7 @@
 #include "model/model.h"
 #include "numeric/matrix.h"
 
-SOE::SOE() 
+SOE::SOE()
     : model_(0),
       size_(0),
       A(),
@@ -38,7 +38,7 @@ SOE::SOE()
       isLUFactored(false) {
 }
 
-SOE::SOE(Model* model) 
+SOE::SOE(Model* model)
     : model_(model),
       size_(0),
       A(),

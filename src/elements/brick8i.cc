@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "elements/brick8i.h"
+#include <vector>
 #include "elements/shape_functions.h"
 #include "group/group_data.h"
 #include "main/nemesis_debug.h"

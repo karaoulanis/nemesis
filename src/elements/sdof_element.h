@@ -26,6 +26,7 @@
 #ifndef SRC_ELEMENTS_SDOF_ELEMENT_H_
 #define SRC_ELEMENTS_SDOF_ELEMENT_H_
 
+#include <vector>
 #include "elements/element.h"
 #include "material/sdof_material.h"
 
