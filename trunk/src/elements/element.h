@@ -36,7 +36,6 @@
 // Forward Declerations
 class Material;
 class Node;
-class Tracker;
 struct GroupData;
 
 /**
@@ -101,12 +100,8 @@ class Element: public DomainObject {
   bool IsActive();
   virtual void recoverStresses() {}
   // Serialise
-  void save(std::ostream& s);
+  void Save(std::ostream* s);
   void activateParameter(int param) {activeParameter = param;}
-  // Tracker member functions
-  virtual void addTracker(int index);
-  virtual Tracker* get_tracker(int index);
-  virtual void track();
 
   // Enrichment functions
   virtual void enrich();

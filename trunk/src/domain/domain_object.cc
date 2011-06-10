@@ -25,7 +25,6 @@
 
 #include "domain/domain_object.h"
 
-Domain* DomainObject::pD = 0;
 Packet DomainObject::thePacket;
 
 /**
@@ -59,6 +58,4 @@ void DomainObject::set_packet(const Packet& /*p*/) {
   /// @todo When finished implementing all turn this function into pure.
   std::cout << "DomainObject::Not implemented yet!" << std::endl;
 }
-void DomainObject::set_domain(Domain* pDomain) {
-  pD = pDomain;
-}
+

@@ -473,6 +473,22 @@
 			Name="tracker"
 			>
 			<File
+				RelativePath="..\..\src\tracker\material_tracker.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tracker\material_tracker.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tracker\node_tracker.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tracker\node_tracker.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tracker\tracker.cc"
 				>
 			</File>

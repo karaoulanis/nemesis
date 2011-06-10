@@ -138,7 +138,7 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
   // if (fSurfaces[i]->get_f(s, aTrial)>1e-9)
   //   activeS.push_back(i);
 
-  vector<bool> activeS;
+  std::vector<bool> activeS;
   for (unsigned i = 0; i < 2; i++) {
     if (fSurfaces[i]->get_f(s, aTrial)>1e-9) {
       activeS.push_back(true);
@@ -297,6 +297,7 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
   sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
   aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
 }
+
 /**
  * Commit material state.
  */
@@ -306,8 +307,8 @@ void DruckerPragerNew3::commit() {
   eTotal = eTrial;  /// @todo
   sConvg = sTrial;
   aConvg = aTrial;
-  this->track();
 }
+
 /**
  * Get tangent material matrix.
  * @todo fill it
@@ -316,40 +317,22 @@ void DruckerPragerNew3::commit() {
 const Matrix& DruckerPragerNew3::get_C() {
   return myElastic->get_C();
 }
+
 bool DruckerPragerNew3::isPlastic() {
   return plastic;
 }
-/**
- * Add a record to the tracker.
- * If \a myTracker pointer is null (no tracker is added) just return.
- * Otherwise gather info and send them to the tracker.
- * The domain should be already updated!
- */
-void DruckerPragerNew3::track() {
-  if (myTracker == 0) return;
-  // define an output string stream
-  std::ostringstream s;
+
+void DruckerPragerNew3::Save(std::ostream* os) {
   // start saving
-  s << "{";
-  // save lambda
-  s << "\"lambda\":"  << pD->get_lambda() << ",";
-  // save time
-  s << "\"time\":"    << pD->get_time_curr() << ",";
-  // save self
-  s << "\"data\":{";
-  s << "\"sigm\":"    << sConvg << ',';
-  s << "\"epst\":"    << eTotal << ',';
-//  s << "\"epsp\":"    << ePConvg << ',';
-  s << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
-  s << "\"p\":"       << sConvg.p() << ',';
-  s << "\"q\":"       << sConvg.q();
-  s << "}";
+  (*os) << "{";
+  (*os) << "\"data\":{";
+  (*os) << "\"sigm\":"    << sConvg << ',';
+  (*os) << "\"epst\":"    << eTotal << ',';
+//  (*os) << "\"epsp\":"    << ePConvg << ',';
+  (*os) << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
+  (*os) << "\"p\":"       << sConvg.p() << ',';
+  (*os) << "\"q\":"       << sConvg.q();
+  (*os) << "}";
   // finalize
-  s << "}";
-  // convert to c style string and return
-  // needs to be converted to a static string before
-  /// @todo: check for refactoring
-  static string tmp;
-  tmp = s.str();
-  myTracker->track(tmp.c_str());
+  (*os) << "}";
 }

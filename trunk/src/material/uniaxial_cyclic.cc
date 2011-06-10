@@ -96,5 +96,4 @@ void UniaxialCyclic::commit() {
   sConvg = sTrial;
   eConvg = eTrial;
   eTotal = eConvg;
-  this->track();
 }

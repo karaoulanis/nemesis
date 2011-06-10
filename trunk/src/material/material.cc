@@ -33,7 +33,6 @@ int Material::counter = 0;
  * Default constructor.
  */
 Material::Material() {
-  myTracker = 0;
 }
 /**
  * Constructor.
@@ -48,15 +47,14 @@ Material::Material(int ID, double rho, double aT)
   MatParams.resize(32);
   MatParams[30]=rho;
   MatParams[31]=aT;
-  myTracker = 0;
 }
+
 /**
  * Destructor.
- * Deletes only \a myTracker if exists. No other objects created here.
  */
 Material::~Material() {
-  if (myTracker != 0) delete myTracker;
 }
+
 /**
  * Set global coordinates to material.
  * This is useful in case where material is position depended.
@@ -65,32 +63,4 @@ void Material::set_X(double x1_, double x2_, double x3_) {
   x = x1_;
   y = x2_;
   z = x3_;
-}
-/**
- * Add a Tracker to a Material.
- * \a myTracker pointer should be \a null up to this point. If not this means
- * that a Tracker is already added and nothing is changed.
- * The Material deconstructor should take the responsibility to delete the Tracker.
- * Then track is called, in order to initialize the tracker.
- * @todo Check tracker initialization.
- */
-void Material::addTracker() {
-  if (myTracker != 0) return;
-    myTracker = new Tracker();
-  this->track();
-}
-/**
- * Get the Tracker.
- * Return \a myTracker pointer either it is null or not.
- * @todo Change this to a constant pointer.
- * @return  pointer to \a myTracker.
- */
-Tracker* Material::get_tracker() {
-  return myTracker;
-}
-/**
- * Add a record to the tracker.
- * This function should be overwritten in derived classes.
- */
-void Material::track() {
 }

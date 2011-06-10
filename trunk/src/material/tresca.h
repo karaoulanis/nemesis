@@ -48,8 +48,7 @@ class Tresca: public MultiaxialMaterial {
   const Matrix& get_C();
   bool isPlastic();
 
-  // Tracker member functions
-  void track();
+  void Save(std::ostream* os);
 
  protected:
   MultiaxialMaterial* myElastic;

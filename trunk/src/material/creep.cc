@@ -61,16 +61,17 @@ Creep::~Creep() {
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
  */
-void Creep::set_strain(const Vector& De) {
-  double Dt = pD->get_time_incr();
-  eTrial = eTotal+De;
-  // sTrial = sConvg+(myElastic->get_C())*De;
-  sTrial = (myElastic->get_C())*(eTotal-eCConvg);
-  double d = eCConvg.twonorm()*sqrt(3./2.);
-  Vector beta(6, 0);
-  beta = k*pow(A, 1./k)*d*sTrial;
-  eCTrial = eCConvg+Dt*beta;
-  sTrial=(myElastic->get_C())*(eTotal-eCTrial-Dt*beta);
+void Creep::set_strain(const Vector& /*De*/) {
+  /// @todo
+  // double Dt = pD->get_time_incr();
+  // eTrial = eTotal+De;
+  // // sTrial = sConvg+(myElastic->get_C())*De;
+  // sTrial = (myElastic->get_C())*(eTotal-eCConvg);
+  // double d = eCConvg.twonorm()*sqrt(3./2.);
+  // Vector beta(6, 0);
+  // beta = k*pow(A, 1./k)*d*sTrial;
+  // eCTrial = eCConvg+Dt*beta;
+  // sTrial=(myElastic->get_C())*(eTotal-eCTrial-Dt*beta);
 }
 
 /**
@@ -80,7 +81,6 @@ void Creep::commit() {
   eTotal = eTrial;  /// @todo
   eCConvg = eCTrial;
   sConvg = sTrial;
-  this->track();
 }
 
 /**
@@ -103,37 +103,17 @@ MultiaxialMaterial* Creep::get_clone() {
   return newClone;
 }
 
-/**
- * Add a record to the tracker.
- * If \a myTracker pointer is null (no tracker is added) just return.
- * Otherwise gather info and send them to the tracker.
- * The domain should be already updated!
- */
-void Creep::track() {
-  if (myTracker == 0) return;
-  // define an output string stream
-  std::ostringstream s;
+void Creep::Save(std::ostream* os) {
   // start saving
-  s << "{";
-  // save lambda
-  s << "\"lambda\":"  << pD->get_lambda() << ",";
-  // save time
-  s << "\"time\":"    << pD->get_time_curr() << ",";
-  // save self
-  s << "\"data\":{";
-  s << "\"sigm\":"    << sConvg << ',';
-  s << "\"epst\":"    << eTotal << ',';
-//  s << "\"epsp\":"    << ePConvg << ',';
-  s << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
-  s << "\"p\":"       << sConvg.p() << ',';
-  s << "\"q\":"       << sConvg.q();
-  s << "}";
+  (*os) << "{";
+  (*os) << "\"data\":{";
+  (*os) << "\"sigm\":"    << sConvg << ',';
+  (*os) << "\"epst\":"    << eTotal << ',';
+//  (*os) << "\"epsp\":"    << ePConvg << ',';
+  (*os) << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
+  (*os) << "\"p\":"       << sConvg.p() << ',';
+  (*os) << "\"q\":"       << sConvg.q();
+  (*os) << "}";
   // finalize
-  s << "}";
-  // convert to c style string and return
-  // needs to be converted to a static string before
-  /// @todo: check for refactoring
-  static string tmp;
-  tmp = s.str();
-  myTracker->track(s.str());
+  (*os) << "}";
 }

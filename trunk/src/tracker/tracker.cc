@@ -44,22 +44,14 @@ int Tracker::get_steps() {
   return records_.size();
 }
 
-const char* Tracker::data() {
-  // define an output string stream
-  std::ostringstream s;
+void Tracker::Save(std::ostream* os) {
   // start saving
-  s << "[";
+  (*os) << "[";
   // save data
   for (unsigned i = 0; i < records_.size(); i++) {
-    if (i > 0) s <<",";
-    s << records_[i];
+    if (i > 0) (*os) <<",";
+    (*os) << records_[i];
   }
   // finalize
-  s << "]";
-  // convert to c style string and return
-  // needs to be converted to a static string before
-  /// @todo: check for refactoring
-  static string tmp;
-  tmp = s.str();
-  return tmp.c_str();
+  (*os) << "]";
 }

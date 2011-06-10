@@ -29,7 +29,6 @@
 #include "elements/element.h"
 
 class CrossSection;
-class Tracker;
 class UniaxialMaterial;
 
 class Bar: public Element {
@@ -50,12 +49,6 @@ class Bar: public Element {
   const Matrix& get_M();
   const Vector& get_Reff();
   void recoverStresses();
-
-  // Tracker member functions
-  void addTracker(int index);
-  Tracker* get_tracker(int index);
-  void track();
-
  protected:
   int dim_;
   CrossSection* iSection;

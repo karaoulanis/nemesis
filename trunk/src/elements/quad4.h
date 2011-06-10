@@ -48,12 +48,6 @@ class Quad4: public Element {
   void AddInitialStresses(int direction, double h1, double s1,
                           double h2, double s2, double K0);
   void recoverStresses();
-
-  // Tracker member functions
-  void addTracker(int index);
-  Tracker* get_tracker(int index);
-  void track();
-
   void commit();
   int get_num_plastic_points();
 

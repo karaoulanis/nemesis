@@ -44,12 +44,11 @@ class SpringMaterial: public Material {
 
   const Matrix& get_C();
   void commit();
-  inline void set_stress(const Vector& s)  {sTrial = s;    }
-  inline void addStress(const Vector& s)  {sTrial+=s;   }
-  inline const Vector& get_stress()    {return sTrial; }
+  inline void set_stress(const Vector& s)  {sTrial = s;}
+  inline void addStress(const Vector& s)  {sTrial += s;}
+  inline const Vector& get_stress()     {return sTrial;}
 
-  // Tracker member functions
-  void track();
+  void Save(std::ostream* os);
 
  protected:
   int dim_;

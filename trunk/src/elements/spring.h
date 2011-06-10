@@ -57,11 +57,6 @@ class Spring: public Element {
   const Vector& get_Reff();
   const Vector& get_Rgrad();
 
-  // Tracker member functions
-  void addTracker(int index);
-  Tracker* get_tracker(int index);
-  void track();
-
  protected:
   int dim_;
   // double gap;

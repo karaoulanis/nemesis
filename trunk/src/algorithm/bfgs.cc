@@ -36,7 +36,7 @@ BFGS::BFGS(int m_)
       etaMin(0.),
       etaMax(0.),
       rTol(0.),
-      maxIter(0.),
+      maxIter(0),
       isLineSearchActive(false),
       s(m_),
       y(m_) {

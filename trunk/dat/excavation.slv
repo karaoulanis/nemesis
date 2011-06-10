@@ -54,6 +54,8 @@ node.fix(12, 1)
 node.fix(13, 1)
 node.fix(15, 1)
 
+tracker.node(1, 4)
+
 lc.define(1,'Self weight')
 group.state(1, 1, 1., 1., 1., 1.)
 group.state(2, 1, 1., 1., 1., 1.)
@@ -89,4 +91,7 @@ analysis.run(2,1)
 print(" 4  = ",json.loads(node.data( 4))['disp'])#[1]
 print(" 7  = ",json.loads(node.data( 7))['disp'])#[1]
 
-
+s = tracker.data(1)
+s = json.loads(s)
+print(s[0])
+print(s[1])

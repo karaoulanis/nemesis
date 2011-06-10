@@ -38,6 +38,7 @@ class Node;
 class Group;
 class LoadCase;
 class Constraint;
+class Tracker;
 
 // Type definitions - Containers
 typedef std::map<int, Node*>                          NodeContainer;
@@ -47,6 +48,7 @@ typedef std::map<int, CrossSection*>                  CrossSectionContainer;
 typedef std::map<int, Material*>                      MaterialContainer;
 typedef std::map<int, LoadCase*>                      LoadCaseContainer;
 typedef std::map<int, Constraint*>                    ConstraintContainer;
+typedef std::map<int, Tracker*>                       TrackerContainer;
 
 // Type definitions - Iterators
 typedef std::map<int, Node*>::const_iterator          NodeIterator;
@@ -56,6 +58,7 @@ typedef std::map<int, CrossSection*>::const_iterator  CrossSectionIterator;
 typedef std::map<int, Material*>::const_iterator      MaterialIterator;
 typedef std::map<int, LoadCase*>::const_iterator      LoadCaseIterator;
 typedef std::map<int, Constraint*>::const_iterator    ConstraintIterator;
+typedef std::map<int, Tracker*>::const_iterator       TrackerIterator;
 
 // Domain tag
 enum DomainTag {  TAG_DOMAIN_NOT_SET      =  0,
@@ -80,6 +83,7 @@ class Domain {
   Vector gravityVect;
   double gravityAccl;
   bool groupsByMaterial;
+
   NodeContainer         theNodes;
   CrossSectionContainer theCrossSections;
   ElementContainer      theElements;
@@ -87,6 +91,8 @@ class Domain {
   MaterialContainer     theMaterials;
   LoadCaseContainer     theLoadCases;
   ConstraintContainer   theConstraints;
+  TrackerContainer      trackers_;
+
   Database* theDatabase;
   Vector RayleighFactors;
   Vector eigenVals;
@@ -123,14 +129,14 @@ class Domain {
   // Gravity axis
   void set_gravity(double g, double xG, double yG, double zG);
   const Vector& get_gravity_vect();
-  double  get_gravity_accl();
+  double get_gravity_accl();
 
   /// @todo cleanup
   double get_time_curr()      {return timeCurr;}
   double get_time_prev()      {return timePrev;}
   double get_time_incr()      {return timeCurr-timePrev;}
   void incTime(double dt)     {timeCurr+=dt;}
-  void commit()               {timePrev = timeCurr;}
+  void Commit();
   void set_lambda(double l)   {lambdaConvg = l;}
   double get_lambda()         {return lambdaConvg;}
 
@@ -144,9 +150,7 @@ class Domain {
 
   // serialize/deserialize
   const char* get_state();
-  void save(std::ostream& s);
-//  int load();  {}
-
+  void Save(std::ostream* s);
 
   void set_tag(DomainTag t)           {myTag = t;}
   DomainTag get_tag()                 {return myTag;}
@@ -172,6 +176,7 @@ class Domain {
   inline MaterialContainer& get_materials()          {return theMaterials;}
   inline LoadCaseContainer& get_loadcases()          {return theLoadCases;}
   inline ConstraintContainer& get_constraints()      {return theConstraints;}
+  inline TrackerContainer& get_trackers()            {return trackers_;}
 
   template<class TE, class TC> int add(TC& c, TE* e) {
     int id = e->get_id();

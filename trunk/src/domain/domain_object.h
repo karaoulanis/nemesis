@@ -40,7 +40,6 @@ class DomainObject: public FEObject {
  protected:
   int myID;
   static Packet thePacket;
-  static Domain* pD;
  public:
   // Constructors
   DomainObject();
@@ -51,9 +50,8 @@ class DomainObject: public FEObject {
 
   virtual const Packet& get_packet();
   virtual void set_packet(const Packet& p);
-  virtual void save(std::ostream& /*s*/)  {}
-  virtual void load(std::istream& /*s*/)  {}
+  virtual void Save(std::ostream* /*os*/)  {}
+  // virtual void load(std::istream& /*s*/)  {}
 
-  void set_domain(Domain* pDomain);
 };
 #endif  // SRC_DOMAIN_DOMAIN_OBJECT_H_

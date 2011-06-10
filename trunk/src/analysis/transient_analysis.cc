@@ -132,5 +132,6 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
     // pA->get_control()->get_time());
   }
   loadcase->Finalize();
+  pA->get_domain()->Commit();
   return 0;
 }

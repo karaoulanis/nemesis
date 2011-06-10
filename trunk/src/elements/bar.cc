@@ -157,34 +157,3 @@ void Bar::recoverStresses() {
   nodes_[0]->addStress(s);
   nodes_[1]->addStress(s);
 }
-/**
- * Add a Tracker to the Bar's Material.
- * \a index is checked if is in \a myMatPoints range.
- * @param index The index to the Element's Material.
- */
-void Bar::addTracker(int index) {
-  if (index != 1)
-    throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  myUniMaterial->addTracker();
-}
-/**
- * Get the Tracker with \a index.
- * \a index is checked if is 1.
- * An exception is thrown if no tracker is set.
- * @param index The index to the Element's Material.
- */
-Tracker* Bar::get_tracker(int index) {
-  if (index != 1)
-    throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (myUniMaterial->get_tracker() == 0)
-    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.",
-                     9999, myID, index);
-  return myUniMaterial->get_tracker();
-}
-/**
- * Add a record to the tracker.
- * For all non null trackers records are added.
- */
-void Bar::track() {
-    myUniMaterial->track();
-}

@@ -206,38 +206,7 @@ void Quad4::recoverStresses() {
     nodes_[i]->addStress(sigma);
   }
 }
-/**
- * Add a Tracker to an Element's Material.
- * \a index is checked if is in \a myMatPoints range.
- * @param index The index to the Element's Material.
- */
-void Quad4::addTracker(int index) {
-  if (index < 0 || index > static_cast<int>(myMatPoints.size())-1)
-    throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  myMatPoints[index]->get_material()->addTracker();
-}
-/**
- * Get the Tracker with \a index.
- * \a index is checked if is in \a myMatPoints range.
- * An exception is thrown if no tracker is set.
- * @param index The index to the Element's Material.
- */
-Tracker* Quad4::get_tracker(int index) {
-  if (index < 0 || index > static_cast<int>(myMatPoints.size())-1)
-    throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (myMatPoints[index]->get_material()->get_tracker() == 0)
-    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.",
-                     9999, myID, index);
-  return myMatPoints[index]->get_material()->get_tracker();
-}
-/**
- * Add a record to the tracker.
- * For all non null trackers records are added.
- */
-void Quad4::track() {
-  for (unsigned i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->get_material()->track();
-}
+
 int Quad4::get_num_plastic_points() {
   int n = 0;
   for (unsigned int i = 0;i < myMatPoints.size();i++) {
