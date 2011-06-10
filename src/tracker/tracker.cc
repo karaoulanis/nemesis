@@ -31,17 +31,19 @@ Tracker::Tracker()
     : records_(0) {
 }
 
+Tracker::Tracker(int id)
+    : DomainObject(id),
+      records_(0) {
+}
+
+
 Tracker::~Tracker() {
 }
+
 int Tracker::get_steps() {
   return records_.size();
 }
-/**
- * /// @todo: check with const char*
- */
-void Tracker::track(string record) {
-  records_.push_back(record);
-}
+
 const char* Tracker::data() {
   // define an output string stream
   std::ostringstream s;
