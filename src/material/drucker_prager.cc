@@ -28,21 +28,23 @@
 #include "material/dp_out.h"
 #include "material/tc.h"
 
-DruckerPrager::DruckerPrager() {
+DruckerPrager::DruckerPrager()
+    : type(0) {
 }
-DruckerPrager::DruckerPrager(int ID, int elasticID, int type_, double c,
-                             double phi, double psi, double T)
-:MultiaxialElastoPlastic(ID, elasticID) {
+
+DruckerPrager::DruckerPrager(int id,MultiaxialMaterial* elastic, int type_,
+                             double c, double phi, double psi, double T)
+    : MultiaxialElastoPlastic(id, elastic),
+      type(type_) {
   // Material parameters
-  MatParams[0]=c;
-  MatParams[1]=phi;
-  MatParams[2]=psi;
-  MatParams[3]=T;
-  type = type_;
+  MatParams[0] = c;
+  MatParams[1] = phi;
+  MatParams[2] = psi;
+  MatParams[3] = T;
   // Yield/potential surfaces
   switch (type) {
     case 1:  // Inner no Tension cut-off
-     fSurfaces.push_back(new DP_in(c, phi));
+      fSurfaces.push_back(new DP_in(c, phi));
       gSurfaces.push_back(new DP_in(c, psi));
       break;
     case 2:  // Inner with Tension cut-off
@@ -68,17 +70,18 @@ DruckerPrager::DruckerPrager(int ID, int elasticID, int type_, double c,
   // Material tag
   myTag = TAG_MATERIAL_DRUCKER_PRAGER;
 }
+
 DruckerPrager::~DruckerPrager() {
 }
+
 MultiaxialMaterial* DruckerPrager::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double psi  = MatParams[ 2];
   double T    = MatParams[ 3];
   // Create clone and return
-  DruckerPrager* newClone = new DruckerPrager(myID, elID, type, c, phi, psi, T);
+  DruckerPrager* newClone = new DruckerPrager(myID, myElastic, type, c, phi, psi, T);
   return newClone;
 }

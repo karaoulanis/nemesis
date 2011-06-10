@@ -38,12 +38,21 @@ class EvolutionLaw;
  * The MultiaxialElastoPlastic Class.
  */
 class MultiaxialElastoPlastic: public MultiaxialMaterial {
- private:
-  // Dummy copy constructor and copy assignment as to explicitly disable them.
-  // Only the declarations are provided and not the definitions.
-  // When called a linking error will occur.
-  MultiaxialElastoPlastic(const MultiaxialElastoPlastic&);
-  void operator=(const MultiaxialElastoPlastic&);
+ public:
+  MultiaxialElastoPlastic();
+  MultiaxialElastoPlastic(int id, MultiaxialMaterial* elastic);
+  ~MultiaxialElastoPlastic();
+
+  void set_strain(const Vector& De);
+  void commit();
+  const Matrix& get_C();
+  bool isPlastic()              {return plastic;}
+
+  void updateStateVariable();
+
+  // Tracker member functions
+  void track();
+
  protected:
   MultiaxialMaterial* myElastic;
 
@@ -67,19 +76,12 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
   void returnMapMYS(const Vector& De);
   void returnMapMYS2(const Vector& De);
   void returnMapMYS3(const Vector& De);
- public:
-  MultiaxialElastoPlastic();
-  MultiaxialElastoPlastic(int ID, int elasticID);
-  ~MultiaxialElastoPlastic();
 
-  void set_strain(const Vector& De);
-  void commit();
-  const Matrix& get_C();
-  bool isPlastic()              {return plastic;}
-
-  void updateStateVariable();
-
-  // Tracker member functions
-  void track();
+ private:
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  MultiaxialElastoPlastic(const MultiaxialElastoPlastic&);
+  void operator=(const MultiaxialElastoPlastic&);
 };
 #endif  // SRC_MATERIAL_MULTIAXIAL_ELASTIC_PLASTIC_H_

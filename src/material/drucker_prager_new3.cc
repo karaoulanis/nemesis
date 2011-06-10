@@ -34,18 +34,26 @@
 Matrix DruckerPragerNew3::C(6, 6, 0.);
 Matrix DruckerPragerNew3::C3(3, 3, 0.);
 
-DruckerPragerNew3::DruckerPragerNew3() {
+DruckerPragerNew3::DruckerPragerNew3()
+    : myElastic(0),
+      plastic(false),
+      inaccurate(0),
+      aTrial(0.),
+      aConvg(0.),
+      fSurfaces(0),
+      gSurfaces(0) {
 }
-DruckerPragerNew3::DruckerPragerNew3(int ID, int elasticID, double c,
-                                     double phi, double psi, double Kc,
-                                     double Kphi, double T)
-:MultiaxialMaterial(ID, 0., 0.) {
+
+DruckerPragerNew3::DruckerPragerNew3(int id, MultiaxialMaterial* elastic,
+                                   double c, double phi, double psi, double Kc,
+                                   double Kphi, double T)
+    : MultiaxialMaterial(id, 0., 0.),
+      plastic(false),
+      inaccurate(0),
+      aTrial(0.),
+      aConvg(0.) {
   // Get the elastic part
-  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999,
-                      "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
+  myElastic = elastic->get_clone();
   MatParams[30] = myElastic->get_param(30);
   MatParams[31] = myElastic->get_param(31);
   // Material properties
@@ -55,12 +63,6 @@ DruckerPragerNew3::DruckerPragerNew3(int ID, int elasticID, double c,
   MatParams[3] = Kc;
   MatParams[4] = Kphi;
   MatParams[5] = T;
-  // Plastic info
-  plastic = false;
-  inaccurate = 0;
-  // Hardening variables
-  aTrial = 0.;
-  aConvg = 0.;
   // f surfaces
   fSurfaces.resize(2);
   fSurfaces[0] = new DruckerPragerYS(c, phi, Kc, Kphi);
@@ -72,13 +74,14 @@ DruckerPragerNew3::DruckerPragerNew3(int ID, int elasticID, double c,
   // Material tag
   myTag = TAG_MATERIAL_DRUCKER_PRAGER;
 }
+
 DruckerPragerNew3::~DruckerPragerNew3() {
   delete myElastic;
 }
+
 MultiaxialMaterial* DruckerPragerNew3::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double psi  = MatParams[ 2];
@@ -87,7 +90,7 @@ MultiaxialMaterial* DruckerPragerNew3::get_clone() {
   double T    = MatParams[ 5];
   // Create clone and return
   DruckerPragerNew3* newClone =
-    new DruckerPragerNew3(myID, elID, c, phi, psi, Kc, Kphi, T);
+    new DruckerPragerNew3(myID, myElastic, c, phi, psi, Kc, Kphi, T);
   return newClone;
 }
 

@@ -25,7 +25,6 @@
 
 #include "elements/element.h"
 #include <cmath>
-#include "domain/domain.h"
 #include "group/group.h"
 #include "group/group_data.h"
 #include "material/material.h"

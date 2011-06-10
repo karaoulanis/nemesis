@@ -55,8 +55,14 @@ class DruckerPragerNew2: public MultiaxialMaterial {
   void operator=(const DruckerPragerNew2&);
  public:
   DruckerPragerNew2();
-  DruckerPragerNew2(int ID, int elasticID, double c, double phi, double psi,
-    double Kci, double Kphi, double T);
+  DruckerPragerNew2(int id,
+                   MultiaxialMaterial* elastic,
+                   double c,
+                   double phi,
+                   double psi,
+                   double Kci,
+                   double Kphi,
+                   double T);
   ~DruckerPragerNew2();
 
   MultiaxialMaterial* get_clone();

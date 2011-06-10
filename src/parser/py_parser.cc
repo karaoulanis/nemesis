@@ -689,8 +689,16 @@ static PyObject* pyMaterial_VonMises(PyObject* /*self*/, PyObject* args) {
   double s0, K;
   if (!PyArg_ParseTuple(args, "iidd", &id, &elasticId, &s0, &K))
     return NULL;
-  Material* pMaterial = new VonMises(id, elasticId, s0, K);
-  pD->add(pD->get_materials(), pMaterial);
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Material* material = new VonMises(id, elastic, s0, K);
+  pD->add(pD->get_materials(), material);
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -700,7 +708,15 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args) {
   double c, phi, alpha;
   if (!PyArg_ParseTuple(args, "iiddd", &id, &elasticId, &c, &phi, &alpha))
     return NULL;
-  Material* pMaterial = new MohrCoulomb(id, elasticId, c, phi, alpha);
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Material* pMaterial = new MohrCoulomb(id, elastic, c, phi, alpha);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
@@ -712,7 +728,15 @@ static PyObject* pyMaterial_Tresca(PyObject* /*self*/, PyObject* args) {
   double kx = 0., ky = 0., kz = 0.;
   if (!PyArg_ParseTuple(args, "iid|ddd", &id, &elasticId, &cu, &kx, &ky, &kz))
     return NULL;
-  Material* pMaterial = new Tresca(id, elasticId, cu, kx, ky, kz);
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Material* pMaterial = new Tresca(id, elastic, cu, kx, ky, kz);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
@@ -725,7 +749,15 @@ static PyObject* pyMaterial_HoekBrown(PyObject* /*self*/, PyObject* args) {
                         &id, &elasticId, &si, &sp, &mb, &mbb, &alpha)) {
     return NULL;
   }
-  Material* pMaterial = new HoekBrown(id, elasticId, si, sp, mb, mbb, alpha);
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Material* pMaterial = new HoekBrown(id, elastic, si, sp, mb, mbb, alpha);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
@@ -736,7 +768,15 @@ static PyObject* pyMaterial_Creep(PyObject* /*self*/, PyObject* args) {
   double A, n, k;
   if (!PyArg_ParseTuple(args, "iiddd", &id, &elasticId, &A, &n, &k))
     return NULL;
-  Material* pMaterial = new Creep(id, elasticId, A, n, k);
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Material* pMaterial = new Creep(id, elastic, A, n, k);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
@@ -749,7 +789,15 @@ static PyObject* pyMaterial_DruckerPrager(PyObject* /*self*/, PyObject* args) {
                         &id, &elasticId, &type, &c, &phi, &psi, &T)) {
     return NULL;
   }
-  Material* pMaterial = new DruckerPrager(id, elasticId, type, c, phi, psi, T);
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Material* pMaterial = new DruckerPrager(id, elastic, type, c, phi, psi, T);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
@@ -764,8 +812,16 @@ static PyObject* pyMaterial_DruckerPragerNew(PyObject* /*self*/,
                         &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T)) {
     return NULL;
   }
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   // Create material and add it to domain
-  Material* pMaterial = new DruckerPragerNew(id, elasticId,
+  Material* pMaterial = new DruckerPragerNew(id, elastic,
                                              c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), pMaterial);
   // Increase reference count and return
@@ -782,8 +838,16 @@ static PyObject* pyMaterial_DruckerPragerNew2(PyObject* /*self*/,
                         &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T)) {
     return NULL;
   }
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   // Create material and add it to domain
-  Material* pMaterial = new DruckerPragerNew2(id, elasticId,
+  Material* pMaterial = new DruckerPragerNew2(id, elastic,
                                               c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), pMaterial);
   // Increase reference count and return
@@ -800,8 +864,16 @@ static PyObject* pyMaterial_DruckerPragerNew3(PyObject* /*self*/,
                         &id, &elasticId, &c, &phi, &psi, &Kc, &Kphi, &T)) {
     return NULL;
   }
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   // Create material and add it to domain
-  Material* mat = new DruckerPragerNew3(id, elasticId,
+  Material* mat = new DruckerPragerNew3(id, elastic,
                                         c, phi, psi, Kc, Kphi, T);
   pD->add(pD->get_materials(), mat);
   // Increase reference count and return
@@ -817,8 +889,16 @@ static PyObject* pyMaterial_ModifiedCamClay(PyObject* /*self*/,
   if (!PyArg_ParseTuple(args, "iidddd",
                         &id, &elasticId, &M, &po, &kappa, &lambda))
     return NULL;
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   // Create material and add it to domain
-  Material* mat = new ModifiedCamClay(id, elasticId, M, po, kappa, lambda);
+  Material* mat = new ModifiedCamClay(id, elastic, M, po, kappa, lambda);
   pD->add(pD->get_materials(), mat);
   // Increase reference count and return
   Py_INCREF(Py_None);
@@ -832,8 +912,16 @@ static PyObject* pyMaterial_LadeDuncan(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "iid", &id, &elasticId, &K)) {
     return NULL;
   }
+  MultiaxialMaterial* elastic;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), elasticId);
+    elastic = static_cast<MultiaxialMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
   // Create material and add it to domain
-  Material* pMaterial = new LadeDuncan(id, elasticId, K);
+  Material* pMaterial = new LadeDuncan(id, elastic, K);
   pD->add(pD->get_materials(), pMaterial);
   // Increase reference count and return
   Py_INCREF(Py_None);

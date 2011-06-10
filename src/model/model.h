@@ -35,7 +35,6 @@
 #include <boost/graph/wavefront.hpp>
 #include <vector>
 #include "analysis/analysis_object.h"
-#include "main/base.h"
 
 class ModelNode;
 class ModelElement;

@@ -32,18 +32,22 @@
 Matrix Tresca::C(6, 6, 0.);
 Matrix Tresca::C3(3, 3, 0.);
 
-Tresca::Tresca() {
+Tresca::Tresca()
+    : myElastic(0),
+      plastic(false),
+      inaccurate(0) {
 }
-Tresca::Tresca(int ID, int elasticID, double cu, double kx, double ky,
+
+Tresca::Tresca(int id,
+               MultiaxialMaterial* elastic,
+               double cu,
+               double kx,
+               double ky,
                double kz)
-:MultiaxialMaterial(ID, 0., 0.) {
-  // Get the elastic part
-  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC) {
-    throw SException("[nemesis:%d] %s", 9999,
-                     "Multiaxial elastic material expected.");
-  }
-  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
+    : MultiaxialMaterial(id, 0., 0.),
+      plastic(false),
+      inaccurate(0) {
+  myElastic = elastic->get_clone();
   MatParams[30] = myElastic->get_param(30);
   MatParams[31] = myElastic->get_param(31);
 
@@ -52,30 +56,28 @@ Tresca::Tresca(int ID, int elasticID, double cu, double kx, double ky,
   MatParams[1] = kx;
   MatParams[2] = ky;
   MatParams[3] = kz;
-
   // Material state
   // ePTrial.resize(6, 0.);  ePConvg.resize(6, 0.);
   // qTrial.resize(6, 0.);   qConvg.resize(6, 0.);
   // aTrial = 0.;            aConvg = 0.;
-
-  plastic = false;
-  inaccurate = 0;
 }
+
 Tresca::~Tresca() {
   delete myElastic;
 }
+
 MultiaxialMaterial* Tresca::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double cu   = MatParams[ 0];
   double kx   = MatParams[ 1];
   double ky   = MatParams[ 2];
   double kz   = MatParams[ 3];
   // Create clone and return
-  Tresca* newClone = new Tresca(myID, elID, cu, kx, ky, kz);
+  Tresca* newClone = new Tresca(myID, myElastic, cu, kx, ky, kz);
   return newClone;
 }
+
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
