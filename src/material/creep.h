@@ -44,11 +44,8 @@ class Creep: public MultiaxialMaterial {
   void commit();
   const Matrix& get_C();
   bool isPlastic()              {return false;}
-
   MultiaxialMaterial* get_clone();
-
-  // Tracker member functions
-  void track();
+  void Save(std::ostream* os);
 
  protected:
   MultiaxialMaterial* myElastic;

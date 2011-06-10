@@ -74,6 +74,7 @@ Spring::Spring(int id, std::vector<Node*> nodes, SpringMaterial* material,
   // Handle common info: End ---------------------------------------------------
 
   // Store material information
+  myMaterial = material;
   mySpringMaterial = static_cast<SpringMaterial*>(myMaterial)->get_clone();
 
   // Find gap
@@ -227,35 +228,4 @@ void Spring::recoverStresses() {
   s.append(mySpringMaterial->get_stress(), 0);
   nodes_[0]->addStress(s);
   nodes_[1]->addStress(s);
-}
-/**
- * Add a Tracker to the Bar's Material.
- * \a index is checked if is in \a myMatPoints range.
- * @param index The index to the Element's Material.
- */
-void Spring::addTracker(int index) {
-  if (index != 1)
-    throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  mySpringMaterial->addTracker();
-}
-/**
- * Get the Tracker with \a index.
- * \a index is checked if is 1.
- * An exception is thrown if no tracker is set.
- * @param index The index to the Element's Material.
- */
-Tracker* Spring::get_tracker(int index) {
-  if (index != 1)
-    throw SException("[nemesis:%d] %s", 9999, "Invalid index.\n");
-  if (mySpringMaterial->get_tracker() == 0)
-    throw SException("[nemesis:%d] No tracker is set for Element %d, index %d.",
-                      9999, myID, index);
-  return mySpringMaterial->get_tracker();
-}
-/**
- * Add a record to the tracker.
- * For all non null trackers records are added.
- */
-void Spring::track() {
-    mySpringMaterial->track();
 }

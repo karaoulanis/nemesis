@@ -128,6 +128,8 @@
 #include "soe/band_linear_soe.h"
 #include "soe/full_linear_soe.h"
 #include "soe/symm_linear_soe.h"
+#include "tracker/node_tracker.h"
+#include "tracker/material_tracker.h"
 
 /******************************************************************************
 * Static variables
@@ -469,7 +471,7 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   std::ostringstream os;
   try {
-    pD->get<Node>(pD->get_nodes(), id)->save(os);
+    pD->get<Node>(pD->get_nodes(), id)->Save(&os);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -478,30 +480,21 @@ static PyObject* pyNode_Data(PyObject* /*self*/, PyObject* args) {
   tmp = os.str();
   return Py_BuildValue("s", tmp.c_str());
 }
-static PyObject* pyNode_Track(PyObject* /*self*/, PyObject* args) {
-  int id;
-  if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
-  try {
-    pD->get<Node>(pD->get_nodes(), id)->addTracker();
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pyNode_Path(PyObject* /*self*/, PyObject* args) {
-  int id;
-  const char* s;
-  if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
-  try {
-    s = pD->get<Node>(pD->get_nodes(), id)->get_tracker()->data();
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  return Py_BuildValue("s", s);
-}
+
+
+// static PyObject* pyNode_Path(PyObject* /*self*/, PyObject* args) {
+//  int id;
+//  const char* s;
+//  if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
+//  try {
+//    s = pD->get<Node>(pD->get_nodes(), id)->get_tracker()->data();
+//  } catch(SException e) {
+//    PyErr_SetString(PyExc_StandardError, e.what());
+//    return NULL;
+//  }
+//  return Py_BuildValue("s", s);
+// }
+
 static PyMethodDef NodeMethods[] =  {
   {"add",   pyNode_Add,
     METH_VARARGS, "Adds a node to the domain."},
@@ -509,12 +502,13 @@ static PyMethodDef NodeMethods[] =  {
     METH_VARARGS, "Fix a nodal degree of freedom."},
   {"data",  pyNode_Data,
     METH_VARARGS, "Returns a tuple containing nodal data."},
-  {"track", pyNode_Track,
-    METH_VARARGS, "Add a Tracker to the Node."},
-  {"path",  pyNode_Path,
-    METH_VARARGS, "Return the data recorded to the tracker."},
+//  {"track", pyNode_Track,
+//    METH_VARARGS, "Add a Tracker to the Node."},
+//  {"path",  pyNode_Path,
+//    METH_VARARGS, "Return the data recorded to the tracker."},
   {NULL, NULL, 0, NULL}
 };
+
 /*******************************************************************************
 * CrossSection Commands
 *******************************************************************************/
@@ -998,8 +992,8 @@ static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
   // Get material pointer from domain
   SpringMaterial* material;
   try {
-    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
-    /// @todo Check material before casting 
+    Material* m = pD->get<Material>(pD->get_materials(), mat_id);
+    /// @todo Check material before casting
     material = static_cast<SpringMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1007,7 +1001,7 @@ static PyObject* pyElement_Spring(PyObject* /*self*/, PyObject* args) {
   }
   // Create element and add it to domain
   try {
-    Spring* spring = new Spring(id, nodes, material, dim, 
+    Spring* spring = new Spring(id, nodes, material, dim,
                                 xp1, xp2, xp3, yp1, yp2, yp3);
     pD->add(pD->get_elements(), spring);
     Group* group = pD->get<Group>(pD->get_groups(), current_group);
@@ -1042,7 +1036,7 @@ static PyObject* pyElement_Bar2s(PyObject* /*self*/, PyObject* args) {
   UniaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<UniaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1100,7 +1094,7 @@ static PyObject* pyElement_Bar2t(PyObject* /*self*/, PyObject* args) {
   UniaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<UniaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1158,7 +1152,7 @@ static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
   UniaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<UniaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1190,7 +1184,7 @@ static PyObject* pyElement_Beam2e(PyObject* /*self*/, PyObject* args) {
  * Create a 2-node Timoshenko Beam.
  */
 static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, mat, sec, rule=1;
+  int id, n1, n2, mat, sec, rule = 1;
   // Check for consistent input
   if (!PyArg_ParseTuple(args, "iiiii|i", &id, &n1, &n2, &mat, &sec, &rule)) {
     return NULL;
@@ -1208,7 +1202,7 @@ static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
   UniaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<UniaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1240,9 +1234,10 @@ static PyObject* pyElement_Beam2t(PyObject* /*self*/, PyObject* args) {
  * Create a 3-node Timoshenko Beam.
  */
 static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args) {
-  int id, n1, n2, n3, mat, sec, rule=1;
+  int id, n1, n2, n3, mat, sec, rule = 2;
   // Check for consistent input
-  if (!PyArg_ParseTuple(args, "iiiiii|i", &id, &n1, &n2, &n3, &mat, &sec, &rule)) {
+  if (!PyArg_ParseTuple(args, "iiiiii|i", &id, &n1, &n2, &n3,
+                                          &mat, &sec, &rule)) {
     return NULL;
   }
   // Get node pointers from domain
@@ -1259,7 +1254,7 @@ static PyObject* pyElement_Beam3t(PyObject* /*self*/, PyObject* args) {
   UniaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<UniaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1318,7 +1313,7 @@ static PyObject* pyElement_Brick8d(PyObject* /*self*/, PyObject* args) {
   MultiaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1370,7 +1365,7 @@ static PyObject* pyElement_Brick8b(PyObject* /*self*/, PyObject* args) {
   MultiaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1422,7 +1417,7 @@ static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args) {
   MultiaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1464,7 +1459,7 @@ static PyObject* pyElement_SDOF(PyObject* /*self*/, PyObject* args) {
   SDofMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<SDofMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1511,8 +1506,8 @@ static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
   // Get material pointer from domain
   MultiaxialMaterial* material;
   try {
-    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
-    /// @todo Check material before casting 
+    Material* m = pD->get<Material>(pD->get_materials(), mat_id);
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1521,7 +1516,7 @@ static PyObject* pyElement_Quad4d(PyObject* /*self*/, PyObject* args) {
   // Create element
   Quad4* quad4;
   try {
-    switch(pD->get_tag()) {
+    switch (pD->get_tag()) {
       case TAG_DOMAIN_PLANE_STRAIN:
       case TAG_DOMAIN_PLANE_STRESS:
         quad4 = new Quad4DispPlain(id, nodes, material, thickness);
@@ -1577,8 +1572,8 @@ static PyObject* pyElement_Quad4Test(PyObject* /*self*/, PyObject* args) {
   // Get material pointer from domain
   MultiaxialMaterial* material;
   try {
-    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
-    /// @todo Check material before casting 
+    Material* m = pD->get<Material>(pD->get_materials(), mat_id);
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1587,7 +1582,7 @@ static PyObject* pyElement_Quad4Test(PyObject* /*self*/, PyObject* args) {
   // Create element
   Quad4* quad4;
   try {
-    switch(pD->get_tag()) {
+    switch (pD->get_tag()) {
       case TAG_DOMAIN_PLANE_STRAIN:
       case TAG_DOMAIN_PLANE_STRESS:
         quad4 = new Quad4d(id, nodes, material, thickness, false);
@@ -1643,8 +1638,8 @@ static PyObject* pyElement_Quad4b(PyObject* /*self*/, PyObject* args) {
   // Get material pointer from domain
   MultiaxialMaterial* material;
   try {
-    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
-    /// @todo Check material before casting 
+    Material* m = pD->get<Material>(pD->get_materials(), mat_id);
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1653,7 +1648,7 @@ static PyObject* pyElement_Quad4b(PyObject* /*self*/, PyObject* args) {
   // Create element
   Quad4* quad4;
   try {
-    switch(pD->get_tag()) {
+    switch (pD->get_tag()) {
       case TAG_DOMAIN_PLANE_STRAIN:
       case TAG_DOMAIN_PLANE_STRESS:
         quad4 = new Quad4b(id, nodes, material, thickness, false);
@@ -1709,8 +1704,8 @@ static PyObject* pyElement_Quad4i(PyObject* /*self*/, PyObject* args) {
   // Get material pointer from domain
   MultiaxialMaterial* material;
   try {
-    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
-    /// @todo Check material before casting 
+    Material* m = pD->get<Material>(pD->get_materials(), mat_id);
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1719,7 +1714,7 @@ static PyObject* pyElement_Quad4i(PyObject* /*self*/, PyObject* args) {
   // Create element
   Quad4* quad4;
   try {
-    switch(pD->get_tag()) {
+    switch (pD->get_tag()) {
       /// @todo:  check
       case TAG_DOMAIN_PLANE_STRAIN:
       case TAG_DOMAIN_PLANE_STRESS:
@@ -1774,8 +1769,8 @@ static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args) {
   // Get material pointer from domain
   MultiaxialMaterial* material;
   try {
-    Material* m = pD->get<Material>(pD->get_materials(),mat_id);
-    /// @todo Check material before casting 
+    Material* m = pD->get<Material>(pD->get_materials(), mat_id);
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1784,7 +1779,7 @@ static PyObject* pyElement_Quad4e(PyObject* /*self*/, PyObject* args) {
   // Create element
   Quad4* quad4;
   try {
-    switch(pD->get_tag()) {
+    switch (pD->get_tag()) {
       /// @todo:  check
       case TAG_DOMAIN_PLANE_STRAIN:
       case TAG_DOMAIN_PLANE_STRESS:
@@ -1839,7 +1834,7 @@ static PyObject* pyElement_Triangle3d(PyObject* /*self*/, PyObject* args) {
   MultiaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1890,7 +1885,7 @@ static PyObject* pyElement_Triangle6d(PyObject* /*self*/, PyObject* args) {
   MultiaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1937,7 +1932,7 @@ static PyObject* pyElement_Tetrahedron4d(PyObject* /*self*/, PyObject* args) {
   MultiaxialMaterial* material;
   try {
     Material* m = pD->get<Material>(pD->get_materials(), mat);
-    /// @todo Check material before casting 
+    /// @todo Check material before casting
     material = static_cast<MultiaxialMaterial*>(m);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
@@ -1964,7 +1959,7 @@ static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
   std::ostringstream os;
   try {
-    pD->get<Element>(pD->get_elements(), id)->save(os);
+    pD->get<Element>(pD->get_elements(), id)->Save(&os);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -1973,28 +1968,6 @@ static PyObject* pyElement_Data(PyObject* /*self*/, PyObject* args) {
   tmp = os.str();
   return Py_BuildValue("s", tmp.c_str());
 }
-
-static PyObject* pyElement_Track(PyObject* /*self*/, PyObject* args) {
-  int id, index;
-    if (!PyArg_ParseTuple(args, "ii", &id, &index)) return NULL;
-  pD->get<Element>(pD->get_elements(), id)->addTracker(index);
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-static PyObject* pyElement_Path(PyObject* /*self*/, PyObject* args) {
-  int id, index;
-  const char* s;
-  if (!PyArg_ParseTuple(args, "ii", &id, &index)) return NULL;
-  try {
-    s = pD->get<Element>(pD->get_elements(), id)->get_tracker(index)->data();
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  return Py_BuildValue("s", s);
-}
-
 static PyMethodDef ElementMethods[] = {
   {"spring",      pyElement_Spring,
     METH_VARARGS, "Define a spring element."},
@@ -2036,12 +2009,9 @@ static PyMethodDef ElementMethods[] = {
     METH_VARARGS, "Define a 8-Noded non-conforming brick."},
   {"data",      pyElement_Data,
     METH_VARARGS, "Access to the element data."},
-  {"track",     pyElement_Track,
-    METH_VARARGS, "Add a Tracker to an element's material."},
-  {"path",      pyElement_Path,
-    METH_VARARGS, "Return the data recorded to the tracker."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Constraint commands
 ******************************************************************************/
@@ -2212,7 +2182,7 @@ static PyObject* pySens_Elem(PyObject* /*self*/, PyObject* args) {
     return NULL;
   }
   try {
-    Element* e = pD->get<Element>(pD->get_elements(), id); 
+    Element* e = pD->get<Element>(pD->get_elements(), id);
     LoadCase* lc = pD->get<LoadCase>(pD->get_loadcases(), currentLC);
     lc->AddSensitivityParameter(new ElementSensitivityParameter(e, parameter));
   } catch(SException e) {
@@ -2304,6 +2274,7 @@ static PyMethodDef LoadMethods[] =  {
     METH_VARARGS, "Define a sinus nodal load."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Ground Motion commands
 ******************************************************************************/
@@ -2354,6 +2325,7 @@ static PyMethodDef GroundMotionMethods[] =  {
     METH_VARARGS, "Define a sinus uniform excitation."},
   {NULL, NULL, 0, NULL}
 };
+
 /*******************************************************************************
 * Initial Conditions commands
 *******************************************************************************/
@@ -2467,6 +2439,7 @@ static PyMethodDef LCMethods[] =  {
     METH_VARARGS, "Print loadcase info."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Analysis commands
 ******************************************************************************/
@@ -2529,6 +2502,7 @@ static PyMethodDef AnalysisMethods[] =  {
     METH_VARARGS, "Run given analysis."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Imposer commands
 ******************************************************************************/
@@ -2564,6 +2538,7 @@ static PyMethodDef ImposerMethods[] =  {
     METH_VARARGS, "Use the penalty method to impose constraints."},
   {NULL, NULL, 0, NULL}
 };
+
 /*******************************************************************************
 * Control commands
 *******************************************************************************/
@@ -2702,6 +2677,7 @@ static PyMethodDef AlgorithmMethods[] =  {
     METH_VARARGS, "Use Newton-Raphson algorithm with initial stiffness."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Convergence commands
 ******************************************************************************/
@@ -2721,6 +2697,7 @@ static PyMethodDef ConvergenceMethods[] =  {
     METH_VARARGS, "Set convergence check's properties."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * SOE commands
 ******************************************************************************/
@@ -2731,6 +2708,7 @@ static PyObject* pySOE_FullLinearSOE(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pySOE_SymmLinearSOE(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   SOE* pSOE = new SymmLinearSOE();
@@ -2738,6 +2716,7 @@ static PyObject* pySOE_SymmLinearSOE(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+
 static PyObject* pySOE_BandLinearSOE(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   SOE* pSOE = new BandLinearSOE();
@@ -2811,102 +2790,77 @@ static PyMethodDef ReorderMethods[] =  {
 //    METH_VARARGS, "Use Minimum Degree Ordering to reorder nodal numbering."},
   {NULL, NULL, 0, NULL}
 };
+
 /******************************************************************************
 * Tracker commands
 ******************************************************************************/
-/*
-static PyObject* pyTracker_Node(PyObject* self, PyObject* args) {
-  int id, nodeID;
-  if (!PyArg_ParseTuple(args, "ii", &id, &nodeID)) return NULL;
-  try
-  {
-    Tracker* pTracker = new Tracker(id, nodeID);
-    pD->add(pD->get_trackers(), pTracker);
+static PyObject* pyTracker_Node(PyObject* /*self*/, PyObject* args) {
+  // Parse data
+  int id, node_id;
+  if (!PyArg_ParseTuple(args, "ii", &id, &node_id)) {
+    return NULL;
   }
-  catch(SException e)
-  {
+  // Get node pointer from the domain and then
+  // create tracker and add it to the domain
+  try {
+    Node* node = pD->get<Node>(pD->get_nodes(), node_id);
+    Tracker* tracker = new NodeTracker(id, node);
+    pD->add<Tracker>(pD->get_trackers(), tracker);
+  } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
   Py_INCREF(Py_None);
   return Py_None;
 }
-static PyObject* pyTracker_Steps(PyObject* self, PyObject* args) {
+
+static PyObject* pyTracker_MatPoint(PyObject* /*self*/, PyObject* args) {
+  // Parse data
+  int id, elem_id, mat_id;
+  if (!PyArg_ParseTuple(args, "iii", &id, &elem_id, &mat_id)) {
+    return NULL;
+  }
+  /// @todo Add material tracker
+  // Get material pointer from and then
+  // create tracker and add it to the domain
+  // try {
+    // Element* elem = pD->get<Element>(pD->get_elements(), id);
+    // Tracker* tracker = new MaterialTracker(id, material);
+    // pD->add<Tracker>(pD->get_trackers(), tracker);
+  // } catch(SException e) {
+  //  PyErr_SetString(PyExc_StandardError, e.what());
+  //  return NULL;
+  // }
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+static PyObject* pyTracker_Data(PyObject* /*self*/, PyObject* args) {
   int id;
-  int steps = 0;
+  // define an output string stream
   if (!PyArg_ParseTuple(args, "i", &id)) return NULL;
-  try
-  {
-    steps = pD->get<Tracker>(pD->get_trackers(), id)->get_steps();
-  }
-  catch(SException e)
-  {
+  std::ostringstream os;
+  try {
+    pD->get<Tracker>(pD->get_trackers(), id)->Save(&os);
+  } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  return Py_BuildValue("i", steps);
+  static string tmp;
+  tmp = os.str();
+  return Py_BuildValue("s", tmp.c_str());
 }
-static PyObject* pyTracker_Time(PyObject* self, PyObject* args) {
-  int id;
-  int step;
-  double time = 0;
-  if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
-  try
-  {
-    time = pD->get<Tracker>(pD->get_trackers(), id)->get_time(step);
-  }
-  catch(SException e)
-  {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  return Py_BuildValue("d", time);
-}
-static PyObject* pyTracker_Lambda(PyObject* self, PyObject* args) {
-  int id;
-  int step;
-  double lambda = 0;
-  if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
-  try
-  {
-    lambda = pD->get<Tracker>(pD->get_trackers(), id)->get_lambda(step);
-  }
-  catch(SException e)
-  {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  return Py_BuildValue("d", lambda);
-}
-static PyObject* pyTracker_Data(PyObject* self, PyObject* args) {
-  int id, step;
-  if (!PyArg_ParseTuple(args, "ii", &id, &step)) return NULL;
-  try
-  {
-    return buildTuple(pD->get<Tracker>(pD->get_trackers(), id)->get_packet(step));
-  }
-  catch(SException e)
-  {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
+
 static PyMethodDef TrackerMethods[] =  {
   {"node",      pyTracker_Node,
     METH_VARARGS, "Add a new tracker to given node."},
-  {"steps",     pyTracker_Steps,
-    METH_VARARGS, "Get number tracker steps."},
-  {"time",      pyTracker_Time,
-    METH_VARARGS, "Get tracker time for a given step."},
-  {"Lambda",      pyTracker_Lambda,
-    METH_VARARGS, "Get tracker lambda for a given step."},
+  {"matpoint",      pyTracker_MatPoint,
+    METH_VARARGS, "Add a new tracker to given material point."},
   {"data",      pyTracker_Data,
     METH_VARARGS, "Get tracker data for a given step."},
   {NULL, NULL, 0, NULL}
 };
-*/
+
 /******************************************************************************
 * Log commands
 ******************************************************************************/
@@ -3016,6 +2970,7 @@ int PyParser::initModules() {
   Py_InitModule("reorder", ReorderMethods);
   Py_InitModule("group", GroupMethods);
   Py_InitModule("sens", SensitivityMethods);
+  Py_InitModule("tracker", TrackerMethods);
   PyRun_SimpleString("import db");
   PyRun_SimpleString("import domain");
   PyRun_SimpleString("import node");
@@ -3037,6 +2992,7 @@ int PyParser::initModules() {
   PyRun_SimpleString("import reorder");
   PyRun_SimpleString("import group");
   PyRun_SimpleString("import sens");
+  PyRun_SimpleString("import tracker");
 
   Py_InitModule("log", logMethods);
   PyRun_SimpleString("import log\n"

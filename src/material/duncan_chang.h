@@ -40,7 +40,6 @@ class DuncanChang: public MultiaxialMaterial {
   void set_strain(const Vector& De);
   const Matrix& get_C();
   void commit();
-  // Tracker member functions
-  void track();
+  void Save(std::ostream* os);
 };
 #endif  // SRC_MATERIAL_DUNCAN_CHANG_H_

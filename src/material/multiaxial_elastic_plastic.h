@@ -50,8 +50,7 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
 
   void updateStateVariable();
 
-  // Tracker member functions
-  void track();
+  void Save(std::ostream* os);
 
  protected:
   MultiaxialMaterial* myElastic;

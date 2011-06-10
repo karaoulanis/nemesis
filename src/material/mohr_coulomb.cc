@@ -235,7 +235,6 @@ void MohrCoulomb::commit() {
   inaccurate = 0;
   eTotal = eTrial;  /// @todo
   sConvg = sTrial;
-  this->track();
 }
 /**
  * Get tangent material matrix.
@@ -245,40 +244,22 @@ void MohrCoulomb::commit() {
 const Matrix& MohrCoulomb::get_C() {
   return myElastic->get_C();
 }
+
 bool MohrCoulomb::isPlastic() {
   return plastic;
 }
-/**
- * Add a record to the tracker.
- * If \a myTracker pointer is null (no tracker is added) just return.
- * Otherwise gather info and send them to the tracker.
- * The domain should be already updated!
- */
-void MohrCoulomb::track() {
-  if (myTracker == 0) return;
-  // define an output string stream
-  std::ostringstream s;
+
+void MohrCoulomb::Save(std::ostream* os) {
   // start saving
-  s << "{";
-  // save lambda
-  s << "\"lambda\":"  << pD->get_lambda() << ",";
-  // save time
-  s << "\"time\":"    << pD->get_time_curr() << ",";
-  // save self
-  s << "\"data\":{";
-  s << "\"sigm\":"    << sConvg << ',';
-  s << "\"epst\":"    << eTotal << ',';
-//  s << "\"epsp\":"    << ePConvg << ',';
-  s << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
-  s << "\"p\":"       << sConvg.p() << ',';
-  s << "\"q\":"       << sConvg.q();
-  s << "}";
+  (*os) << "{";
+  (*os) << "\"data\":{";
+  (*os) << "\"sigm\":"    << sConvg << ',';
+  (*os) << "\"epst\":"    << eTotal << ',';
+//  (*os) << "\"epsp\":"    << ePConvg << ',';
+  (*os) << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
+  (*os) << "\"p\":"       << sConvg.p() << ',';
+  (*os) << "\"q\":"       << sConvg.q();
+  (*os) << "}";
   // finalize
-  s << "}";
-  // convert to c style string and return
-  // needs to be converted to a static string before
-  /// @todo: check for refactoring
-  static string tmp;
-  tmp = s.str();
-  myTracker->track(tmp.c_str());
+  (*os) << "}";
 }

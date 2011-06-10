@@ -41,12 +41,11 @@ class Tracker: public DomainObject {
   Tracker(int id);
   virtual ~Tracker();
   
-  // Get data
   int get_steps();
-  virtual void track(double lambda, double time)=0;
-  const char* data();
+  virtual void Track(double lambda, double time)=0;
+  void Save(std::ostream* os);
 
- private:
+ protected:
   vector<string> records_;
 };
 #endif  // SRC_TRACKER_TRACKER_H_

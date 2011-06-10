@@ -38,6 +38,7 @@
 #include "loadcase/loadcase.h"
 #include "material/material.h"
 #include "node/node.h"
+#include "tracker/tracker.h"
 
 /**
  * Default Constructor.
@@ -76,7 +77,6 @@ Domain::~Domain()  {
 void Domain::init() {
   // Define group 0
   Group* pGroup = new Group(0);
-  pGroup->set_domain(this);
   this->add(this->get_groups(), pGroup);
   // Define that groups are by set by materials
   groupsByMaterial = true;
@@ -190,7 +190,7 @@ const char* Domain::get_state() {
   // define an output string stream
   std::ostringstream s;
   // save data
-  this->save(s);
+  this->Save(&s);
   // convert to c style string and return
   // needs to be converted to a static string before
   /// @todo: check for refactoring
@@ -202,32 +202,38 @@ const char* Domain::get_state() {
  * Serialize domain to an output stream.
  * Follows the json format.
  */
-void Domain::save(std::ostream& s) {
-  s << "{";
+void Domain::Save(std::ostream* os) {
+  (*os) << "{";
   // Store domain info
 
   // Store nodes
-  s << "\"nodes\":[";
+  (*os) << "\"nodes\":[";
   for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
       if (n->second->IsActive()) {
-        if (n != theNodes.begin()) s << ",";
-        n->second->save(s);
+        if (n != theNodes.begin()) (*os) << ",";
+        n->second->Save(os);
       }
   }
-  s << "],";
+  (*os) << "],";
 
   // Store elements
-  s << "\"elements\":[";
+  (*os) << "\"elements\":[";
   for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
     if (e->second->IsActive()) {
-      if (e != theElements.begin()) s << ",";
-      e->second->save(s);
+      if (e != theElements.begin()) (*os) << ",";
+      e->second->Save(os);
     }
   }
-  s << "]";
+  (*os) << "]";
 
   // domain
-  s << "}";
+  (*os) << "}";
+}
+void Domain::Commit() {
+    timePrev = timeCurr;
+    for (TrackerIterator i = trackers_.begin(); i != trackers_.end(); i++) {
+      i->second->Track(lambdaConvg, timeCurr);
+  }
 }
 
 // Rayleigh damping

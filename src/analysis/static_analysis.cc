@@ -135,6 +135,6 @@ int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   // Finalize
   loadcase->Finalize();
   pA->get_model()->set_nodal_stress();
-  pA->get_domain()->commit();  /// @todo Commiting time; find more elegant way.
+  pA->get_domain()->Commit();
   return ret;
 }

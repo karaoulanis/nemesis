@@ -28,11 +28,9 @@
 #include <cmath>
 #include <sstream>
 #include <string>
-#include "domain/domain.h"
-#include "tracker/tracker.h"
 
 /**
- * Defuault Constructor.
+ * Default Constructor.
  */
 Node::Node()
     : x1(0.),
@@ -51,7 +49,6 @@ Node::Node()
       acclConvg(),
       dispSensi(),
       eigenVecs(),
-      myTracker(0),
       avgStress(0),
       stress(6, 0.),
       strain(6, 0.),
@@ -79,7 +76,6 @@ Node::Node(int ID, double xc1, double xc2, double xc3)
       acclConvg(),
       dispSensi(),
       eigenVecs(),
-      myTracker(0),
       avgStress(0),
       stress(6, 0.),
       strain(6, 0.),
@@ -88,7 +84,6 @@ Node::Node(int ID, double xc1, double xc2, double xc3)
   myTag = TAG_NODE;
 }
 Node::~Node() {
-  if (myTracker != 0) delete myTracker;
 }
 //=============================================================================
 // Access to data members
@@ -215,30 +210,30 @@ void Node::set_packet(const Packet& p) {
   velcTrial = velcConvg;
   acclTrial = acclConvg;
 }
-void Node::save(std::ostream& s) {
-  s << "{";
-  s << "\"id\":" << myID <<",";
-  s << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
-  s << "\"dofs\":[";
+void Node::Save(std::ostream* os) {
+  (*os) << "{";
+  (*os) << "\"id\":" << myID <<",";
+  (*os) << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
+  (*os) << "\"dofs\":[";
   /// @todo make this more general
   for (unsigned i = 0; i < myActivatedDofs.size(); i++) {
-      if (i > 0) s << ',';
-      s << myActivatedDofs[i];
+      if (i > 0) (*os) << ',';
+      (*os) << myActivatedDofs[i];
   }
-  s << "],";
-  s << "\"disp\":[" << dispConvg  << "],";
-  s << "\"velc\":[" << velcConvg  << "],";
-  s << "\"accl\":[" << acclConvg  << "],";
+  (*os) << "],";
+  (*os) << "\"disp\":[" << dispConvg  << "],";
+  (*os) << "\"velc\":[" << velcConvg  << "],";
+  (*os) << "\"accl\":[" << acclConvg  << "],";
 
   if (avgStress > 0) stress*=1.0/avgStress;
   avgStress = 0;
-  s << "\"strs\":[" << stress     << "]";
+  (*os) << "\"strs\":[" << stress     << "]";
 
   /// @todo include strains, sensitivities and eigenvalues also
   // s << "\"strn\":[" << strain     << "]";
   // s << "\"sens\":[" << dispSensi  << "],";
   // s << "\"eige\":[" << eigenVecs  << "]}";
-  s << "}";
+  (*os) << "}";
 }
 void Node::incTrialDisp(const Vector& du) {
   dispTrial+=du;
@@ -262,7 +257,6 @@ void Node::commit() {
   dispConvg = dispTrial;
   velcConvg = velcTrial;
   acclConvg = acclTrial;
-  this->track();
 }
 const Vector& Node::get_disp_trial() {
   return dispTrial;
@@ -288,80 +282,36 @@ void Node::rollback() {
 double Node::get_disp_trial_at_dof(int dof) {
   return dispTrial[myActivatedDofs[dof]];
 }
+
 double Node::get_velc_trial_at_dof(int dof) {
   return velcTrial[myActivatedDofs[dof]];
 }
+
 double Node::get_accl_trial_at_dof(int dof) {
   return acclTrial[myActivatedDofs[dof]];
 }
+
 double Node::get_disp_convg_at_dof(int dof) {
   return dispConvg[myActivatedDofs[dof]];
 }
+
 double Node::get_velc_convg_at_dof(int dof) {
   return velcConvg[myActivatedDofs[dof]];
 }
+
 double Node::get_accl_convg_at_dof(int dof) {
   return acclConvg[myActivatedDofs[dof]];
 }
-/**
- * Add a Tracker to Node.
- * \a myTracker pointer should be \a null up to this point. If not this means
- * that a Tracker is already added and nothing is changed.
- * The Node deconstructor should take the responsibility to delete the Tracker.
- * Then track is called, in order to initialize the tracker.
- * @todo Check tracker initialization.
- */
-void Node::addTracker() {
-  if (myTracker != 0) return;
-    myTracker = new Tracker();
-  this->track();
-}
-/**
- * Get the Tracker.
- * An exception is thrown if no tracker is set.
- * @todo Change this to a constant pointer.
- * @return  pointer to \a myTracker.
- */
-Tracker* Node::get_tracker() {
-  if (myTracker == 0)
-    throw SException("[nemesis:%d] No tracker is set for Node %d.", 9999, myID);
-  return myTracker;
-}
-/**
- * Add a record to the tracker.
- * If \a myTracker pointer is null (no tracker is added) just return.
- * Otherwise gather info and send them to the tracker.
- * The domain should be already updated!
- */
-void Node::track() {
-  if (myTracker == 0) return;
-  // define an output string stream
-  std::ostringstream s;
-  // start saving
-  s << "{";
-  // save lambda
-  s << "\"lambda\":" << pD->get_lambda() << ",";
-  // save time
-  s << "\"time\":" << pD->get_time_curr() << ",";
-  // save self
-  s << "\"data\":";
-  this->save(s);
-  // finalize
-  s << "}";
-  // convert to c style string and return
-  // needs to be converted to a static string before
-  /// @todo: check for refactoring
-  static string tmp;
-  tmp = s.str();
-  myTracker->track(tmp.c_str());
-}
+
 // Sensitivity functions
 void Node::initSensitivityMatrix(int nGrads) {
   dispSensi.Resize(nActivatedDofs, nGrads, 0.);
 }
+
 void Node::commitSens(const Vector& v, int param) {
   dispSensi.AppendCol(v, 0, param);
 }
+
 // Enrichment functions
 void Node::evalLevelSets() {
 }

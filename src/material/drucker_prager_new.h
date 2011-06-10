@@ -55,8 +55,7 @@ class DruckerPragerNew: public MultiaxialMaterial {
   const Matrix& get_C();
   bool isPlastic();
 
-  // Tracker member functions
-  void track();
+  void Save(std::ostream* os);
 
  private:
   MultiaxialMaterial* myElastic;
@@ -66,8 +65,8 @@ class DruckerPragerNew: public MultiaxialMaterial {
   int inaccurate;
   double aTrial, aConvg;
 
-  vector<YS*> fSurfaces;
-  vector<YS*> gSurfaces;
+  std::vector<YS*> fSurfaces;
+  std::vector<YS*> gSurfaces;
   Hardening EL;
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

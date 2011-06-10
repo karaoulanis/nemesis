@@ -45,51 +45,31 @@ SpringMaterial::SpringMaterial(int ID, int dim)
       eTotal(dim, 0.),
       Ct(3, 3, 0.) {
 }
+
 /**
  */
 const Matrix& SpringMaterial::get_C() {
   return Ct;
 }
+
 /**
  */
 void SpringMaterial::commit() {
   sConvg = sTrial;
   eTotal = eTrial;
-  this->track();
 }
-/**
- * Add a record to the tracker.
- * If \a myTracker pointer is null (no tracker is added) just return.
- * Otherwise gather info and send them to the tracker.
- * The domain should be already updated!
- * @todo
- */
-void SpringMaterial::track() {
-  if (myTracker == 0) return;
-  // define an output string stream
-  std::ostringstream s;
+
+void SpringMaterial::Save(std::ostream* os) {
   // start saving
-  s << "{";
-  // save lambda
-  s << "\"lambda\":"  << pD->get_lambda() << ",";
-  // save time
-  s << "\"time\":"    << pD->get_time_curr() << ",";
-  // save self
-  // save self
-  s << "\"data\":{";
-  s << "\"sigm\":"    << sConvg << ',';
-  s << "\"epst\":"    << eTotal << ',';
-//  s << "\"epsp\":"    << ePConvg << ',';
-  s << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
-  s << "\"p\":"       << sConvg.p() << ',';
-  s << "\"q\":"       << sConvg.q();
-  s << "}";
+  (*os) << "{";
+  (*os) << "\"data\":{";
+  (*os) << "\"sigm\":"    << sConvg << ',';
+  (*os) << "\"epst\":"    << eTotal << ',';
+//  (*os) << "\"epsp\":"    << ePConvg << ',';
+  (*os) << "\"epsv\":"    << eTotal[0]+eTotal[1]+eTotal[2] << ',';
+  (*os) << "\"p\":"       << sConvg.p() << ',';
+  (*os) << "\"q\":"       << sConvg.q();
+  (*os) << "}";
   // finalize
-  s << "}";
-  // convert to c style string and return
-  // needs to be converted to a static string before
-  /// @todo: check for refactoring
-  static string tmp;
-  tmp = s.str();
-  myTracker->track(tmp.c_str());
+  (*os) << "}";
 }

@@ -55,8 +55,7 @@ class HoekBrown: public MultiaxialMaterial {
   void find_dgds(const Vector& s, double q);
   void find_d2gdsds(const Vector& s, double q);
 
-  // Tracker member functions
-  void track();
+  void Save(std::ostream* os);
 
  private:
   MultiaxialMaterial* myElastic;
@@ -65,9 +64,9 @@ class HoekBrown: public MultiaxialMaterial {
   bool plastic;
   int inaccurate;
   Vector f;
-  vector<Vector> dfds;
-  vector<Vector> dgds;
-  vector<Matrix> d2gdsds;
+  std::vector<Vector> dfds;
+  std::vector<Vector> dgds;
+  std::vector<Matrix> d2gdsds;
   double aTrial, aConvg;
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

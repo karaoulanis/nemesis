@@ -31,7 +31,6 @@
 #include "numeric/matrix.h"
 #include "numeric/vector.h"
 
-class Tracker;
 const int MAX_NUMBER_OF_DOFS = 16;
 
 /**
@@ -54,8 +53,6 @@ class Node: public DomainObject {
   Vector acclConvg;
   Matrix dispSensi;
   Matrix eigenVecs;
-
-  Tracker* myTracker;
 
   int avgStress;  /// @todo: implement full nodal recovering is implemented
   Vector stress;
@@ -129,12 +126,7 @@ class Node: public DomainObject {
 
   const Packet& get_packet();
   void set_packet(const Packet& p);
-  void save(std::ostream& s);
-
-  // Tracker member functions
-  void addTracker();
-  Tracker* get_tracker();
-  void track();
+  void Save(std::ostream* s);
 
   // Sensitivity functions
   void initSensitivityMatrix(int nGrads);
