@@ -29,16 +29,20 @@
 
 Matrix Creep::C(6, 6, 0.);
 
-Creep::Creep() {
+Creep::Creep()
+    : myElastic(0),
+      A(0.),
+      n(0.),
+      k(0.) {
 }
-Creep::Creep(int ID, int elasticID, double A, double n, double k)
-:MultiaxialMaterial(ID, 0., 0.) {
+
+Creep::Creep(int id, MultiaxialMaterial* elastic, double A, double n, double k)
+    : MultiaxialMaterial(id, 0., 0.), 
+      A(0.),
+      n(0.),
+      k(0.) {
   // Get the elastic part
-  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999,
-                     "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
+  myElastic = elastic->get_clone();
   MatParams[ 0]=A;
   MatParams[ 1]=n;
   MatParams[ 2]=k;
@@ -52,6 +56,7 @@ Creep::Creep(int ID, int elasticID, double A, double n, double k)
 Creep::~Creep() {
   delete myElastic;
 }
+
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.
@@ -67,6 +72,7 @@ void Creep::set_strain(const Vector& De) {
   eCTrial = eCConvg+Dt*beta;
   sTrial=(myElastic->get_C())*(eTotal-eCTrial-Dt*beta);
 }
+
 /**
  * Commit material state.
  */
@@ -76,6 +82,7 @@ void Creep::commit() {
   sConvg = sTrial;
   this->track();
 }
+
 /**
  * Get tangent material matrix.
  * @todo fill it
@@ -84,15 +91,15 @@ void Creep::commit() {
 const Matrix& Creep::get_C() {
   return myElastic->get_C();
 }
+
 MultiaxialMaterial* Creep::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double A    = MatParams[ 0];
   double n    = MatParams[ 1];
   double k    = MatParams[ 2];
   // Create clone and return
-  Creep* newClone = new Creep(myID, elID, A, n, k);
+  Creep* newClone = new Creep(myID, myElastic, A, n, k);
   return newClone;
 }
 

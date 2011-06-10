@@ -33,17 +33,22 @@
 Matrix DruckerPragerNew::C(6, 6, 0.);
 Matrix DruckerPragerNew::C3(3, 3, 0.);
 
-DruckerPragerNew::DruckerPragerNew() {
+DruckerPragerNew::DruckerPragerNew()
+    : myElastic(0),
+      plastic(false),
+      inaccurate(0),
+      aTrial(0.),
+      aConvg(0.),
+      fSurfaces(0),
+      gSurfaces(0) {
 }
-DruckerPragerNew::DruckerPragerNew(int ID, int elasticID, double c, double phi,
-                                   double psi, double Kc, double Kphi, double T)
-:MultiaxialMaterial(ID, 0., 0.) {
+
+DruckerPragerNew::DruckerPragerNew(int id, MultiaxialMaterial* elastic,
+                                   double c, double phi, double psi, double Kc,
+                                   double Kphi, double T)
+    : MultiaxialMaterial(id, 0., 0.) {
   // Get the elastic part
-  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999,
-                     "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
+  myElastic = elastic->get_clone();
   MatParams[30] = myElastic->get_param(30);
   MatParams[31] = myElastic->get_param(31);
 
@@ -77,7 +82,6 @@ DruckerPragerNew::~DruckerPragerNew() {
 MultiaxialMaterial* DruckerPragerNew::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double psi  = MatParams[ 2];
@@ -86,7 +90,7 @@ MultiaxialMaterial* DruckerPragerNew::get_clone() {
   double T    = MatParams[ 5];
   // Create clone and return
   DruckerPragerNew* newClone =
-    new DruckerPragerNew(myID, elID, c, phi, psi, Kc, Kphi, T);
+    new DruckerPragerNew(myID, myElastic, c, phi, psi, Kc, Kphi, T);
   return newClone;
 }
 

@@ -33,7 +33,11 @@
 class Creep: public MultiaxialMaterial {
  public:
   Creep();
-  Creep(int ID, int elasticID, double A, double n, double k);
+  Creep(int id,
+        MultiaxialMaterial* elastic,
+        double A,
+        double n,
+        double k);
   ~Creep();
 
   void set_strain(const Vector& De);

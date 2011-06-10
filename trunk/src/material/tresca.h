@@ -34,7 +34,12 @@
 class Tresca: public MultiaxialMaterial {
  public:
   Tresca();
-  Tresca(int ID, int elasticID, double sy, double kx, double ky, double kz);
+  Tresca(int id,
+         MultiaxialMaterial* elastic,
+         double sy,
+         double kx,
+         double ky,
+         double kz);
   ~Tresca();
 
   MultiaxialMaterial* get_clone();

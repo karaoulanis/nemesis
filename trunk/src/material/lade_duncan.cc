@@ -28,10 +28,11 @@
 
 LadeDuncan::LadeDuncan() {
 }
-LadeDuncan::LadeDuncan(int ID, int elasticID, double K)
-:MultiaxialElastoPlastic(ID, elasticID) {
+
+LadeDuncan::LadeDuncan(int id, MultiaxialMaterial* elastic, double K)
+    : MultiaxialElastoPlastic(id, elastic) {
   // Material parameters
-  MatParams[0]=K;
+  MatParams[0] = K;
   // Yield/potential surfaces
   fSurfaces.push_back(new LadeDuncanSurface(K));
   gSurfaces.push_back(new LadeDuncanSurface(K));
@@ -39,14 +40,15 @@ LadeDuncan::LadeDuncan(int ID, int elasticID, double K)
   // myTag = TAG_MATERIAL_MOHR_COULOMB;
   nHardeningVariables = 1;
 }
+
 LadeDuncan::~LadeDuncan() {
 }
+
 MultiaxialMaterial* LadeDuncan::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double K    = MatParams[ 0];
   // Create clone and return
-  LadeDuncan* newClone = new LadeDuncan(myID, elID, K);
+  LadeDuncan* newClone = new LadeDuncan(myID, myElastic, K);
   return newClone;
 }

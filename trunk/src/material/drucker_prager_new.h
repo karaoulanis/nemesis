@@ -37,6 +37,27 @@ class YS;
  * The Drucker-Prager Class.
  */
 class DruckerPragerNew: public MultiaxialMaterial {
+ public:
+  DruckerPragerNew();
+  DruckerPragerNew(int id,
+                   MultiaxialMaterial* elastic,
+                   double c,
+                   double phi,
+                   double psi,
+                   double Kci,
+                   double Kphi,
+                   double T);
+  ~DruckerPragerNew();
+
+  MultiaxialMaterial* get_clone();
+  void set_strain(const Vector& De);
+  void commit();
+  const Matrix& get_C();
+  bool isPlastic();
+
+  // Tracker member functions
+  void track();
+
  private:
   MultiaxialMaterial* myElastic;
   static Matrix C;
@@ -54,19 +75,5 @@ class DruckerPragerNew: public MultiaxialMaterial {
   DruckerPragerNew(const DruckerPragerNew&);
   void operator=(const DruckerPragerNew&);
 
- public:
-  DruckerPragerNew();
-  DruckerPragerNew(int ID, int elasticID, double c, double phi, double psi,
-                                            double Kci, double Kphi, double T);
-  ~DruckerPragerNew();
-
-  MultiaxialMaterial* get_clone();
-  void set_strain(const Vector& De);
-  void commit();
-  const Matrix& get_C();
-  bool isPlastic();
-
-  // Tracker member functions
-  void track();
 };
 #endif  // SRC_MATERIAL_DRUCKER_PRAGER_NEW_H_

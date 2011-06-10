@@ -32,17 +32,19 @@
 Matrix MohrCoulomb::C(6, 6, 0.);
 Matrix MohrCoulomb::C3(3, 3, 0.);
 
-MohrCoulomb::MohrCoulomb() {
+MohrCoulomb::MohrCoulomb()
+    : myElastic(0),
+      plastic(false),
+      inaccurate(0) {
 }
-MohrCoulomb::MohrCoulomb(int ID, int elasticID, double c, double phi,
+
+MohrCoulomb::MohrCoulomb(int id, MultiaxialMaterial* elastic, double c, double phi,
                          double alpha)
-:MultiaxialMaterial(ID, 0., 0.) {
+    : MultiaxialMaterial(id, 0., 0.),
+      plastic(false),
+      inaccurate(0) {
   // Get the elastic part
-  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999,
-                      "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
+  myElastic = elastic->get_clone();
   MatParams[30] = myElastic->get_param(30);
   MatParams[31] = myElastic->get_param(31);
   // Material properties
@@ -53,26 +55,24 @@ MohrCoulomb::MohrCoulomb(int ID, int elasticID, double c, double phi,
   // ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
   // qTrial.resize(6, 0.);  qConvg.resize(6, 0.);
   // aTrial = 0.;           aConvg = 0.;
-  // plastic info
-  plastic = false;
-  inaccurate = 0;
   // Material tag
   myTag = TAG_MATERIAL_MOHR_COULOMB;
 }
 MohrCoulomb::~MohrCoulomb() {
   delete myElastic;
 }
+
 MultiaxialMaterial* MohrCoulomb::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double c    = MatParams[ 0];
   double phi  = MatParams[ 1];
   double alpha= MatParams[ 2];
   // Create clone and return
-  MohrCoulomb* newClone = new MohrCoulomb(myID, elID, c, phi, alpha);
+  MohrCoulomb* newClone = new MohrCoulomb(myID, myElastic, c, phi, alpha);
   return newClone;
 }
+
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.

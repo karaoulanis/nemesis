@@ -35,7 +35,12 @@
 class HoekBrown: public MultiaxialMaterial {
  public:
   HoekBrown();
-  HoekBrown(int ID, int elasticID, double si, double sp, double mb, double mbb,
+  HoekBrown(int id,
+            MultiaxialMaterial* elastic,
+            double si,
+            double sp,
+            double mb,
+            double mbb,
             double alpha);
   ~HoekBrown();
 

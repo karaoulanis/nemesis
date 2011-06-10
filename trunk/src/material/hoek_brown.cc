@@ -34,7 +34,15 @@ Matrix HoekBrown::C3(3, 3, 0.);
 /**
  * Default constructor.
  */
-HoekBrown::HoekBrown() {
+HoekBrown::HoekBrown()
+      : myElastic(0),
+        plastic(false),
+        inaccurate(0),
+        f(0),
+        dfds(0),
+        dgds(0),
+        aTrial(0.),
+        aConvg(0.) {
 }
 /**
  * Constructor.
@@ -46,24 +54,24 @@ HoekBrown::HoekBrown() {
  * @param mbb Empirically determined parameter (??)
  * @param alpha Empirically determined parameter
  */
-HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
-                     double mbb, double alpha)
-:MultiaxialMaterial(ID, 0., 0.) {
+HoekBrown::HoekBrown(int id, MultiaxialMaterial* elastic, double si, double sp,
+                     double mb, double mbb, double alpha)
+    : MultiaxialMaterial(id, 0., 0.),
+      plastic(false),
+      inaccurate(0),
+      aTrial(0.),
+      aConvg(0.) {
   // Get the elastic part
-  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999,
-    "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
-  MatParams[30]=myElastic->get_param(30);
-  MatParams[31]=myElastic->get_param(31);
+  myElastic = elastic->get_clone();
+  MatParams[30] = myElastic->get_param(30);
+  MatParams[31] = myElastic->get_param(31);
 
   // Material properties
-  MatParams[0]=si;
-  MatParams[1]=sp;
-  MatParams[2]=mb;
-  MatParams[3]=mbb;
-  MatParams[4]=alpha;
+  MatParams[0] = si;
+  MatParams[1] = sp;
+  MatParams[2] = mb;
+  MatParams[3] = mbb;
+  MatParams[4] = alpha;
 
   // Material state
   // ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
@@ -84,14 +92,10 @@ HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
   d2gdsds[1].Resize(3, 3, 0.);
   d2gdsds[2].Resize(3, 3, 0.);
 
-  plastic = false;
-  inaccurate = 0;
-  aTrial = 0.;
-  aConvg = 0.;
-
   // Material tag
   myTag = TAG_MATERIAL_MOHR_COULOMB;
 }
+
 /**
  * Default destructor.
  * Needs to delete cloned elastic material.
@@ -99,22 +103,23 @@ HoekBrown::HoekBrown(int ID, int elasticID, double si, double sp, double mb,
 HoekBrown::~HoekBrown() {
   delete myElastic;
 }
+
 /**
  * Create a clone of this material.
  */
 MultiaxialMaterial* HoekBrown::get_clone() {
   // Material parameters
   int myID    = this->get_id();
-  int elID    = myElastic->get_id();
   double sigma_ci = MatParams[ 0];
   double sp       = MatParams[ 1];
   double mb       = MatParams[ 2];
   double mbb      = MatParams[ 3];
   double alpha    = MatParams[ 4];
   // Create clone and return
-  HoekBrown* newClone = new HoekBrown(myID, elID, sigma_ci, sp, mb, mbb, alpha);
+  HoekBrown* newClone = new HoekBrown(myID, myElastic, sigma_ci, sp, mb, mbb, alpha);
   return newClone;
 }
+
 /**
  * Find the value of the gield surfaces w.r.t. to stress.
  * The derivative is stored at Vector g.
@@ -130,6 +135,7 @@ void HoekBrown::find_f(const Vector& s, double /*q*/) {
   f[1]=s[1]-s[2]-sigma_ci*pow(sp-mb*s[1]/sigma_ci, alpha);
   f[2]=s[0]-s[1]-sigma_ci*pow(sp-mb*s[0]/sigma_ci, alpha);
 }
+
 /**
  * Find the first derivative of the plastic potential surfaces w.r.t. to stress.
  * The derivative is stored at std::vector<Vector> dfds.
@@ -153,6 +159,7 @@ void HoekBrown::find_dfds(const Vector& s, double /*q*/) {
   dfds[1][2] = -1.0;
   dfds[2][2] =  0.0;
 }
+
 /**
  * Find the first derivative of the plastic potential surfaces w.r.t. to stress.
  * The derivative is stored at std::vector<Vector> dgds.
@@ -176,6 +183,7 @@ void HoekBrown::find_dgds(const Vector& s, double /*q*/) {
   dgds[1][2]=-1.0;
   dgds[2][2]= 0.0;
 }
+
 /**
  * Find the second derivative of the yield  potential surfaces w.r.t. to stress.
  * The derivative is stored at std::vector<Matrix> d2gdsds.
@@ -193,6 +201,7 @@ void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
   d2gdsds[1](1, 1)=c11;
   d2gdsds[2](0, 0)=c00;
 }
+
 /**
  * Update stresses given a total strain increment.
  * @param De Vector containing total strain increment.

@@ -36,8 +36,8 @@ class DruckerPrager: public MultiaxialElastoPlastic {
   int type;
   public:
   DruckerPrager();
-  DruckerPrager(int ID, int elasticID, int type_, double c, double phi,
-                double psi, double T);
+  DruckerPrager(int id, MultiaxialMaterial* elastic, int type_,
+                double c, double phi, double psi, double T);
   MultiaxialMaterial* get_clone();
   ~DruckerPrager();
 };

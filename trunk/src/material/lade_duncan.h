@@ -34,7 +34,7 @@
 class LadeDuncan: public MultiaxialElastoPlastic {
  public:
   LadeDuncan();
-  LadeDuncan(int ID, int elasticID, double K);
+  LadeDuncan(int id, MultiaxialMaterial* elastic, double K);
   MultiaxialMaterial* get_clone();
   ~LadeDuncan();
 };

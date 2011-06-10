@@ -34,31 +34,41 @@
 
 Matrix MultiaxialElastoPlastic::C(6, 6, 0.);
 
-MultiaxialElastoPlastic::MultiaxialElastoPlastic() {
+MultiaxialElastoPlastic::MultiaxialElastoPlastic()
+    : myElastic(0),
+      ePTrial(0),
+      ePConvg(0),
+      qTrial(0),
+      qConvg(0),
+      aTrial(0.),
+      aConvg(0.),
+      plastic(false),
+      nHardeningVariables(0),
+      fSurfaces(0),
+      gSurfaces(0),
+      EL(0) {
 }
-MultiaxialElastoPlastic::MultiaxialElastoPlastic(int ID, int elasticID)
-:MultiaxialMaterial(ID, 0., 0.) {
-  // Get the elastic part
-  Material* p = pD->get<Material>(pD->get_materials(), elasticID);
-  if (p->get_tag() != TAG_MATERIAL_MULTIAXIAL_ELASTIC)
-    throw SException("[nemesis:%d] %s", 9999,
-                      "Multiaxial elastic material expected.");
-  myElastic = static_cast<MultiaxialMaterial*>(p)->get_clone();
-  MatParams[30]=myElastic->get_param(30);
-  MatParams[31]=myElastic->get_param(31);
 
+MultiaxialElastoPlastic::MultiaxialElastoPlastic(int id, MultiaxialMaterial* elastic)
+    : MultiaxialMaterial(id, 0., 0.),
+      aTrial(0.),
+      aConvg(0.),
+      plastic(false),
+      nHardeningVariables(0),
+      fSurfaces(0),
+      gSurfaces(0),
+      EL(new LinearEquivalentEL()) {
+  // Get the elastic part
+  myElastic = elastic->get_clone();
+  MatParams[30] = myElastic->get_param(30);
+  MatParams[31] = myElastic->get_param(31);
   // Material state
   ePTrial.resize(6, 0.);
   ePConvg.resize(6, 0.);
   qTrial.resize(6, 0.);
   qConvg.resize(6, 0.);
-  aTrial = 0.;
-  aConvg = 0.;
-
-  plastic = false;
-  nHardeningVariables = 0;
-  EL = new LinearEquivalentEL();
 }
+
 MultiaxialElastoPlastic::~MultiaxialElastoPlastic() {
   delete myElastic;
   Containers::vector_delete(fSurfaces);
