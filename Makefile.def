@@ -1,57 +1,14 @@
 
-
 # compiler flags
-CXX                     = g++
-CXXFLAGS                = -g -O2 -Wno-deprecated -Wall -Wextra -Wc++0x-compat -pedantic -ansi -Weffc++
-
-
-CPPFLAGS                = -Isrc -I/usr/include
-PYTHON_CPPFLAGS         = -I/usr/include/python2.7
-BOOST_CPPFLAGS          = 
-BOOSTLAPACK_CPPFLAGS    = -I/opt/acml4.4.0/gfortran32_mp/include
-SQLITE3_CPPFLAGS        = 
-GTEST_CPPFLAGS          = 
-
-# global flags
-LDFLAGS                 = -L/usr/lib
-LDADD                   = 
-# python flags
-PYTHON_LDFLAGS          = 
-PYTHON_LDADD            = -lpython2.7
-# boost flags
-BOOST_LDFLAGS           = 
-BOOST_LDADD             = 
-# sqlite flags
-SQLITE3_LDFLAGS         = 
-SQLITE3_LDADD           = -lsqlite3
-# boost/lapack flags
-BOOSTLAPACK_LDFLAGS     = -L/opt/acml4.4.0/gfortran32_mp/lib
-BOOSTLAPACK_LDADD       = -lacml_mp -lgfortran -lgomp -lrt -lm
-# gtest flags
-GTEST_LDFLAGS           = 
-GTEST_LDADD             = -lgtest
-
-nemesis_CPPFLAGS        = $(CPPFLAGS) \
-                          $(PYTHON_CPPFLAGS) \
-                          $(BOOST_CPPFLAGS) \
-                          $(BOOSTLAPACK_CPPFLAGS) \
-                          $(SQLITE3_CPPFLAGS)
-nemesis-tests_CPPFLAGS  = $(nemesis_CPPFLAGS) \
-                          $(GTEST_CPPFLAGS)
-
-nemesis_LDFLAGS         = $(LDFLAGS) \
-                          $(PYTHON_LDFLAGS) \
-                          $(BOOST_LDFLAGS) \
-                          $(BOOSTLAPACK_LDFLAGS) \
-                          $(SQLITE3_LDFLAGS)
-nemesis-tests_LDFLAGS   = $(nemesis_LDFLAGS) \
-                          $(GTEST_LDFLAGS)
-
-nemesis_LDADD           = $(LDADD) \
-                          $(PYTHON_LDADD) \
-                          $(BOOST_LDADD) \
-                          $(BOOSTLAPACK_LDADD) \
-                          $(SQLITE3_LDADD)
-nemesis-tests_LDADD     = $(nemesis_LDADD) \
-                          $(GTEST_LDADD)
-
+CXX             = g++
+CXXFLAGS        = -g -O2 -Wno-deprecated -Wall -Wextra    \
+                  -Wc++0x-compat -pedantic -ansi -Weffc++
+CPPFLAGS        = -Isrc -I/usr/include                    \
+                  -I/usr/include/python2.7                \
+                  -I/opt/acml4.4.0/gfortran32_mp/include
+LIBFLAGS        = -L/usr/lib                              \
+                  -lpython2.7                             \
+                  -L/opt/acml4.4.0/gfortran32_mp/lib      \
+                  -lacml_mp -lgfortran -lgomp -lrt -lm    
+TEST_CPPFLAGS   = 
+TEST_LIBFLAGS   = -lgtest

@@ -26,7 +26,7 @@ def get_target(project, path, item, num_items, verbal, color, src_ext = '.cc', o
     s += '[{0:3d}/{1:3d}| '.format(item+1, num_items)
     s += '{0:5d} bytes|{1:3d} deps]{2}: '.format(size, num_deps, color0)
     s += '{0}{1}{2}\'\n'.format(color2, path, color0)
-    s += '\t{0}$(CXX) $(CXXFLAGS) $({1}_CPPFLAGS) '.format(sign, project)
+    s += '\t{0}$(CXX) $(CXXFLAGS) $(CPPFLAGS) '.format(sign, project)
     s += '-c {0} -o {1}\n'.format(path, objname)
     return s
 
@@ -44,7 +44,7 @@ def get_objects(project, paths, verbal, color, src_ext = '.cc', obj_ext = '.o'):
     s += '\t@echo -e \'{0}linking   '.format(color1)
     s += '[{0:16d} object files]{1}: '.format(len(paths), color0)
     s += '{0}{1}{2}\'\n'.format(color2, project, color0)
-    s += '\t{0}$(CXX) -o {1} $(LDFLAGS) $(LDADD) $({1}_LDFLAGS) $({1}_LDADD) $({1}_OBJS)\n'.format(sign, project)
+    s += '\t{0}$(CXX) -o {1} $(LIBFLAGS) $({1}_OBJS)\n'.format(sign, project)
     return s
 
 def get_paths(src, extension):
