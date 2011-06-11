@@ -31,7 +31,7 @@ ModifiedCamClay::ModifiedCamClay() {
 
 ModifiedCamClay::ModifiedCamClay(int id, MultiaxialMaterial* elastic, double M,
                                  double po, double kappa, double lambda)
-:MultiaxialElastoPlastic(id, elastic) {
+    : MultiaxialElastoPlastic(id, elastic) {
   // Material parameters
   MatParams[0] = M;
   MatParams[1] = po;
@@ -41,7 +41,6 @@ ModifiedCamClay::ModifiedCamClay(int id, MultiaxialMaterial* elastic, double M,
   fSurfaces.push_back(new MCC(M, po, kappa, lambda));
   gSurfaces.push_back(new MCC(M, po, kappa, lambda));
   // Material tag
-  myTag = TAG_NONE;
   nHardeningVariables = 1;
 }
 

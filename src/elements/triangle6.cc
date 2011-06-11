@@ -39,8 +39,6 @@ Triangle6::Triangle6(int id, std::vector<Node*> nodes,
     : Element(id, nodes),
       thickness_(thickness),
       myMatPoints(3) {
-  // tag
-  myTag = TAG_ELEM_TRIANGLE_6;
   // Get nodal data
   myNodalIDs.resize(6);
   myNodalIDs[0] = nodes[0]->get_id();
@@ -253,9 +251,6 @@ void Triangle6::commit() {
     myMatPoints[i]->get_material()->commit();
 }
 
-bool Triangle6::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}
 
 void Triangle6::recoverStresses() {
   /// @todo check Gauss extrapolation

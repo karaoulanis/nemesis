@@ -46,7 +46,6 @@ class Bar: public Element {
 
   void update();
   void commit();
-  bool checkIfAllows(FEObject* f);
   const Matrix& get_M();
   const Vector& get_Reff();
   void recoverStresses();

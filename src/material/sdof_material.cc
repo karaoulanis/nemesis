@@ -33,7 +33,6 @@ SDofMaterial::SDofMaterial(int ID, double E, double rho)
     : Material(ID, rho, 0.) {
   // Material parameters
   MatParams[0] = E;
-  myTag = TAG_MATERIAL_SINGLE_DOF;
 }
 
 

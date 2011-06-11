@@ -38,7 +38,6 @@ SpringContact::SpringContact(int ID, int dim, double Kn, double Ks, double mu,
   MatParams[1]=Ks;
   MatParams[2]=mu;
   MatParams[3]=gap;
-  myTag = TAG_MATERIAL_SPRING;
 
   // Initialize Ct
   Ct.Clear();

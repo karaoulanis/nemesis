@@ -55,12 +55,13 @@ MohrCoulomb::MohrCoulomb(int id, MultiaxialMaterial* elastic, double c,
   // ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
   // qTrial.resize(6, 0.);  qConvg.resize(6, 0.);
   // aTrial = 0.;           aConvg = 0.;
-  // Material tag
-  myTag = TAG_MATERIAL_MOHR_COULOMB;
 }
+
+
 MohrCoulomb::~MohrCoulomb() {
   delete myElastic;
 }
+
 
 MultiaxialMaterial* MohrCoulomb::get_clone() {
   // Material parameters

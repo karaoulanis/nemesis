@@ -35,10 +35,10 @@ Vector** Element::theStaticVectors = 0;
 double Element::gravitydirection_[3] = {0., -1., 0.};
 double Element::gravityacceleration_ = 9.81;
 Vector Element::rayleigh_(0);
-/**
- * Default Constructor
- */
-Element::Element() {
+
+
+Element::Element()
+    : nodes_(0) {
 }
 
 Element::Element(int id, std::vector<Node*> nodes)
@@ -56,6 +56,7 @@ Element::Element(int id, std::vector<Node*> nodes)
     }
   }
 }
+
 
 Element::~Element() {
   if (theStaticMatrices != 0) {
@@ -272,7 +273,6 @@ int Element::get_num_plastic_points() {
 void Element::Save(std::ostream* os) {
   (*os) << "{";
   (*os) << "\"id\":" << id_ <<",";
-  (*os) << "\"tag\":"               << this->get_tag()      << ",";
   (*os) << "\"material\":"          << myMaterial->get_id() << ",";
   (*os) << "\"nodes\":[";
   for (unsigned i = 0;i < nodes_.size(); i++) {

@@ -40,6 +40,7 @@ MatPoint::MatPoint()
       z(0.) {
 }
 
+
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index,
                    int p1)
     : DomainObject(IDCounter++),
@@ -55,8 +56,8 @@ MatPoint::MatPoint(MultiaxialMaterial* mat, int index,
     throw SException("[nemesis:%d] %s", 9999, "Rule does not exist.");
   }
   myMaterial = mat->get_clone();
-  myTag = TAG_MATERIAL_POINT;
 }
+
 
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2,
                    int p1, int p2)
@@ -73,8 +74,9 @@ MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2,
     throw SException("[nemesis:%d] %s", 9999, "Integration rule error.");
   }
   myMaterial = mat->get_clone();
-  myTag = TAG_MATERIAL_POINT;
 }
+
+
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2, int index3,
                    int p1, int p2, int p3)
     : DomainObject(IDCounter++),
@@ -90,8 +92,8 @@ MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2, int index3,
     throw SException("[nemesis:%d] %s", 9999, "Integration rule error.");
   }
   myMaterial = mat->get_clone();
-  myTag = TAG_MATERIAL_POINT;
 }
+
 
 MatPoint::MatPoint(MultiaxialMaterial* mat, double r_, double s_, double t_,
                    double w_)
@@ -104,12 +106,13 @@ MatPoint::MatPoint(MultiaxialMaterial* mat, double r_, double s_, double t_,
       y(0.),
       z(0.) {
   myMaterial = mat->get_clone();
-  myTag = TAG_MATERIAL_POINT;
 }
+
 
 MatPoint::~MatPoint() {
   delete myMaterial;
 }
+
 
 void MatPoint::set_X(double x_, double y_, double z_) {
   x = x_;
@@ -117,6 +120,7 @@ void MatPoint::set_X(double x_, double y_, double z_) {
   z = z_;
   myMaterial->set_X(x, y, z);
 }
+
 
 bool MatPoint::isPlastic() {
   return myMaterial->isPlastic();

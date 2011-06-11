@@ -33,7 +33,6 @@ Brick8b::Brick8b() {
 Brick8b::Brick8b(int id, std::vector<Node*> nodes,
                      MultiaxialMaterial* material)
     : Brick8(id, nodes, material) {
-  myTag = TAG_ELEM_BRICK_8_BBAR;
 }
 
 Brick8b::~Brick8b() {

@@ -60,7 +60,7 @@ class LoadCase: public DomainObject {
   void ApplySensitivityParameter(int param);
   int GetNumSensitivityParameters();
 
-  // Serialization 
+  // Serialization
   void Save(std::ostream* /*os*/);
 
  private:

@@ -48,7 +48,6 @@ Triangle3::Triangle3(int id, std::vector<Node*> nodes,
                      MultiaxialMaterial* material, double thickness)
     : Element(id, nodes),
       thickness_(thickness) {
-  myTag = TAG_ELEM_TRIANGLE_3_PRESSURE;
   // Get nodal data
   myNodalIDs.resize(3);
   myNodalIDs[0] = nodes_[0]->get_id();
@@ -206,17 +205,20 @@ void Triangle3::update() {
   // And send it to the material point
   myMatPoints[0]->get_material()->set_strain(epsilon);
 }
+
+
 void Triangle3::commit() {
   myMatPoints[0]->get_material()->commit();
 }
+
+
 void Triangle3::recoverStresses() {
   static Vector sigma(6);
   sigma = myMatPoints[0]->get_material()->get_stress();
   for (int i = 0;i < 3;i++) nodes_[i]->addStress(sigma);
 }
-bool Triangle3::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}
+
+
 int Triangle3::get_num_plastic_points() {
   int n = 0;
   if (myMatPoints[0]->get_material()->isPlastic()) n = 1;

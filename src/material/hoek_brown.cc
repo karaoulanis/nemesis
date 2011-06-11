@@ -91,9 +91,6 @@ HoekBrown::HoekBrown(int id, MultiaxialMaterial* elastic, double si, double sp,
   d2gdsds[0].Resize(3, 3, 0.);
   d2gdsds[1].Resize(3, 3, 0.);
   d2gdsds[2].Resize(3, 3, 0.);
-
-  // Material tag
-  myTag = TAG_MATERIAL_MOHR_COULOMB;
 }
 
 /**

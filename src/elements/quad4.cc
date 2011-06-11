@@ -47,8 +47,6 @@ Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
       thickness_(thickness),
       myMatPoints(4),
       materials(0) {
-  // tag
-  myTag = TAG_ELEM_QUAD_4_DISP;
 
   // Get nodal data
   myNodalIDs.resize(4);
@@ -148,13 +146,8 @@ void Quad4::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
     myMatPoints[i]->get_material()->commit();
 }
-bool Quad4::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}
 
-/**
- * Initial stresses.
- */
+
 void Quad4::AddInitialStresses(int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0) {

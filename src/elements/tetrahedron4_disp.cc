@@ -40,8 +40,6 @@ Tetrahedron4Disp::Tetrahedron4Disp(int id, std::vector<Node*> nodes,
                      MultiaxialMaterial* material)
     : Element(id, nodes),
       myMatPoints(1) {
-  // Tqg
-  myTag = TAG_ELEM_TETRHEDRON_4_DISP;
   // Get nodal data
   myNodalIDs.resize(4);
   myNodalIDs[0] = nodes_[0]->get_id();
@@ -248,9 +246,6 @@ void Tetrahedron4Disp::commit() {
     myMatPoints[i]->get_material()->commit();
 }
 
-bool Tetrahedron4Disp::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}
 
 void Tetrahedron4Disp::recoverStresses() {
   static Vector sigma(6);

@@ -34,7 +34,7 @@ class DP_out: public Surface {
   DP_out(double c_, double phi_);
   ~DP_out();
   double get_f(const Vector& s, const double q);
-  
+
  private:
   double c;
   double phi;

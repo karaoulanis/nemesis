@@ -57,8 +57,6 @@ UniaxialElastoPlastic::UniaxialElastoPlastic(int ID, double E, double nu,
   MatParams[3] = Hiso;
   MatParams[4] = Hkin;
   MatParams[5] = eta;
-  // Tag
-  myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
 
 

@@ -341,9 +341,3 @@ int Brick8::get_num_plastic_points() {
     if (myMatPoints[i]->get_material()->isPlastic()) n+=1;
   return n;
 }
-/**
- * Element consistency.
- */
-bool Brick8::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}

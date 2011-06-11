@@ -35,7 +35,6 @@ UniaxialElastic::UniaxialElastic(int id, double E, double nu, double rho,
   // Material parameters
   MatParams[0]  =E;
   MatParams[1] = nu;
-  myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
 
 

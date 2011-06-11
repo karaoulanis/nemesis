@@ -38,15 +38,19 @@ double Brick8i::shpInc[3][4][8];
 Brick8i::Brick8i() {
 }
 
+
 Brick8i::Brick8i(int id, std::vector<Node*> nodes,
                      MultiaxialMaterial* material)
     : Brick8(id, nodes, material) {
-  myTag = TAG_ELEM_BRICK_8_BBAR;
   aTrial.resize(9, 0.);
   aConvg.resize(9, 0.);
 }
+
+
 Brick8i::~Brick8i() {
 }
+
+
 const Matrix& Brick8i::get_K() {
   // Get a reference to myMatrix as K
   Matrix &K=*myMatrix;
@@ -67,6 +71,8 @@ const Matrix& Brick8i::get_K() {
   // Return K
   return K;
 }
+
+
 const Matrix& Brick8i::get_M() {
   // Get a reference to myMatrix as K
   Matrix &M=*myMatrix;
@@ -86,9 +92,8 @@ const Matrix& Brick8i::get_M() {
   // Return M
   return M;
 }
-/**
- * Element residual vector.
- */
+
+
 const Vector& Brick8i::get_R() {
   // Static vectors and matrices
   static Vector sigma(6);
@@ -127,9 +132,8 @@ const Vector& Brick8i::get_R() {
   // Return R
   return R;
 }
-/**
- * Element update.
- */
+
+
 void Brick8i::update() {
   // Check for a quick return
   if (!(groupdata_->active)) {
@@ -162,31 +166,22 @@ void Brick8i::update() {
     myMatPoints[k]->get_material()->set_strain(epsilon);
   }
 }
-/**
- * Element commit.
- * Overwrites base function, because incompatible modes must also
- * be commited. This takes place in element level.
- */
+
+
 void Brick8i::commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++) {
     myMatPoints[i]->get_material()->commit();
   }
   aConvg = aTrial;
 }
-/**
- * Call shape functions and fill in corresponding arrays.
- */
+
+
 void Brick8i::shapeFunctions() {
   shape8(x, shpStd, detJ);
   shapeQM9(x, shpInc);
 }
-/**
- * Get standard displacement B-matrix.
- * Shape function array shpStd and detJs must be defined.
- * @param B B-Matrix.
- * @param node The corresponding node.
- * @param gPoint The corresponding Gauss Point.
- */
+
+
 void Brick8i::get_Bstd(Matrix& B, int node, int gPoint) {
   // B-factors
   double B1 = shpStd[node][1][gPoint];
@@ -213,13 +208,8 @@ void Brick8i::get_Bstd(Matrix& B, int node, int gPoint) {
   B(5, 1) = 0.;
   B(5, 2) = B1;
 }
-/**
- * Get B-matrix of incompatible modes.
- * Shape function array shpInc and detJs must be defined.
- * @param B B-Matrix.
- * @param node The corresponding node.
- * @param gPoint The corresponding Gauss Point.
- */
+
+
 void Brick8i::get_BInc(Matrix& B, int node, int gPoint) {
   // B-factors
   double B1 = shpInc[node][1][gPoint]/detJ[gPoint];
@@ -247,13 +237,7 @@ void Brick8i::get_BInc(Matrix& B, int node, int gPoint) {
   B(5, 2) = B1;
 }
 
-/**
- * Get Kdd Matrix.
- * This is the usual displacement matrix.
- * Formed as the integral of Bstd^T.C.Bstd on dOmega.
- * @todo Increase performance.
- * @param K The matrix to be filled.
- */
+
 void Brick8i::get_Kdd(Matrix& K) {
   K.Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
@@ -270,12 +254,8 @@ void Brick8i::get_Kdd(Matrix& K) {
     }
   }
 }
-/**
- * Get Kda Matrix.
- * Formed as the integral of Bstd^T.C.Binc on dOmega.
- * @todo Increase performance.
- * @param K The matrix to be filled.
- */
+
+
 void Brick8i::get_Kda(Matrix& K) {
   K.Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
@@ -292,12 +272,8 @@ void Brick8i::get_Kda(Matrix& K) {
     }
   }
 }
-/**
- * Get Kda Matrix.
- * Formed as the integral of Binc^T.C.Binc on dOmega.
- * @todo Increase performance.
- * @param K The matrix to be filled.
- */
+
+
 void Brick8i::get_Kaa(Matrix& K) {
   K.Clear();
   static Matrix Ba(6, 3), Bb(6, 3);

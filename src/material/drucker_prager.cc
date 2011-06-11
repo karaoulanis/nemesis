@@ -67,8 +67,6 @@ DruckerPrager::DruckerPrager(int id, MultiaxialMaterial* elastic, int type_,
       throw SException("[nemesis:%d] %s", 9999, "Invalid index %d.\n", type);
   }
   nHardeningVariables = 1;
-  // Material tag
-  myTag = TAG_MATERIAL_DRUCKER_PRAGER;
 }
 
 DruckerPrager::~DruckerPrager() {

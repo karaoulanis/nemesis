@@ -102,12 +102,12 @@ Bar::Bar(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
   A0 = 0.5*(iSection->get_A()+jSection->get_A());
 }
 
-/**
- * Destructor.
- */
+
 Bar::~Bar() {
   delete myUniMaterial;
 }
+
+
 void Bar::update() {
   static Vector du(2*dim_);
   du = this->get_disp_incrm();
@@ -116,12 +116,13 @@ void Bar::update() {
     double de = dL/L0;
   myUniMaterial->set_strain(de);
 }
+
+
 void Bar::commit() {
   myUniMaterial->commit();
 }
-bool Bar::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}
+
+
 const Matrix& Bar::get_M() {
   Matrix& M=*myMatrix;
   M.Clear();
@@ -133,6 +134,8 @@ const Matrix& Bar::get_M() {
   }
   return M;
 }
+
+
 const Vector& Bar::get_Reff() {
   /// @todo: problem with memory sharing otherwise
   Vector velc = this->get_velc_trial();
@@ -151,6 +154,8 @@ const Vector& Bar::get_Reff() {
   Reff+=(this->get_C())*(velc);
   return Reff;
 }
+
+
 void Bar::recoverStresses() {
   /// @todo Stresses from bar to nodes
   static Vector s(6);

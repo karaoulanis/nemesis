@@ -46,7 +46,6 @@ class Beam2e: public Element {
   const Vector& get_R();
   const Vector& get_Rgrad();
 
-  bool checkIfAllows(FEObject* /*f*/)   {return true;}
   void update()           {return;}
   void commit()           {return;}
   void recoverStresses();

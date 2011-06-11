@@ -48,7 +48,6 @@ class Brick8: public Element {
   virtual void update();
   virtual void commit();
 
-  bool checkIfAllows(FEObject* f);
   void AddInitialStresses(int direction, double h1, double s1,
                           double h2, double s2, double K0);
   void recoverStresses();

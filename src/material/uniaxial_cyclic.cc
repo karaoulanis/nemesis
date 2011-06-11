@@ -50,8 +50,6 @@ UniaxialCyclic::UniaxialCyclic(int id, double E, double nu, double rho,
   MatParams[1] = nu;
   MatParams[2] = tmax;
   MatParams[3] = Gmax;
-  // Tag
-  myTag = TAG_MATERIAL_UNIAXIAL_CYCLIC;
 }
 
 UniaxialCyclic::~UniaxialCyclic() {

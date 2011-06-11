@@ -38,8 +38,6 @@ MultiaxialElastic::MultiaxialElastic(int ID, double E, double nu, double rho,
   MatParams[2]=kx;
   MatParams[3]=ky;
   MatParams[4]=kz;
-  // Material tag
-  myTag = TAG_MATERIAL_MULTIAXIAL_ELASTIC;
 }
 MultiaxialMaterial* MultiaxialElastic::get_clone() {
   // Material parameters
