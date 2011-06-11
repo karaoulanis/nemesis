@@ -44,8 +44,7 @@ Timoshenko2d::Timoshenko2d(int id, std::vector<Node*> nodes,
       myUniMaterial(material),
       mySection(section),
       gPoints(rule) {
-  // Tag
-  myTag = TAG_ELEM_BEAM_2D_TIMOSHENKO_2;
+
   // Nodal ids
   myNodalIDs.resize(nodes_.size());
   for (unsigned i = 0; i < nodes_.size(); i++) {

@@ -27,17 +27,16 @@
 #define SRC_DOMAIN_DOMAIN_OBJECT_H_
 
 #include <iostream>
-#include "feobject/fe_object.h"
 
-class DomainObject: public FEObject {
+class DomainObject {
  public:
   DomainObject();
   explicit DomainObject(int id);
   virtual ~DomainObject();
-  
+
   // Accessor(s)
   virtual int get_id();
-  
+
   // Serialization
   virtual void Save(std::ostream* /*os*/) = 0;
   // virtual void Load(std::istream& /*is*/) = 0;

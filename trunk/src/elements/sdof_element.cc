@@ -96,6 +96,3 @@ const Vector& SDofElement::get_R() {
   return R;
 }
 
-bool SDofElement::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}

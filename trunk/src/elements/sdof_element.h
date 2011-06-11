@@ -44,7 +44,6 @@ class SDofElement: public Element {
   const Matrix& get_M();
   const Vector& get_R();
 
-  bool checkIfAllows(FEObject* f);
   void update() {return;}
   void commit() {return;}
  private:

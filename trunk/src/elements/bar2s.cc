@@ -41,7 +41,6 @@ Bar2s::Bar2s()   {
 Bar2s::Bar2s(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
          CrossSection* iSec, CrossSection* jSec, int dim)
     : Bar(id, nodes, material, iSec, jSec, dim) {
-  myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
   // Find directional cosines
   cosX.resize(dim_);
   cosX.clear();

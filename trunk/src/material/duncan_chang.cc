@@ -41,8 +41,6 @@ DuncanChang::DuncanChang(int ID, double E, double nu, double c, double phi,
   MatParams[4]=phi;
   MatParams[5]=Rf;
   MatParams[6]=pa;
-  // Material tag
-  myTag = TAG_MATERIAL_MULTIAXIAL_ELASTIC;
 }
 
 

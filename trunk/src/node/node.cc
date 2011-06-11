@@ -29,9 +29,6 @@
 #include <sstream>
 #include <string>
 
-/**
- * Default Constructor.
- */
 Node::Node()
     : x1(0.),
       x2(0.),
@@ -55,9 +52,8 @@ Node::Node()
       isLoadApplied(false),
       active_(0) {
 }
-/**
- * Constructor.
- */
+
+
 Node::Node(int ID, double xc1, double xc2, double xc3)
     : DomainObject(ID),
       x1(xc1),
@@ -81,8 +77,9 @@ Node::Node(int ID, double xc1, double xc2, double xc3)
       strain(6, 0.),
       isLoadApplied(false),
       active_(0) {
-  myTag = TAG_NODE;
 }
+
+
 Node::~Node() {
 }
 //=============================================================================

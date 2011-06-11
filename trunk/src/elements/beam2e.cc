@@ -41,8 +41,6 @@ Beam2e::Beam2e(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
     : Element(id, nodes),
       myUniMaterial(material),
       mySection(section) {
-  // Tag
-  myTag = TAG_ELEM_BEAM_2D_EULER;
   // Nodal ids
   myNodalIDs.resize(2);
   myNodalIDs[0] = nodes_[0]->get_id();

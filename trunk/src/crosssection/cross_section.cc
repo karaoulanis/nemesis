@@ -37,7 +37,6 @@ RectangularCrossSection::RectangularCrossSection(int ID, double width,
   J1 = h*w*w*w*(num::d13-0.21*w/h*(1-w*w*w*w/(12*h*h*h*h)));
   J2 = h*w*w*w/12.;
   J3 = w*h*h*h/12.;
-  myTag = TAG_CROSSSECTION_RECTANGLE;
 }
 
 
@@ -59,7 +58,6 @@ UserDefinedCrossSection::UserDefinedCrossSection(int ID,
   J3 = J3_in;
   h2 = h2_in;
   h3 = h3_in;
-  myTag = TAG_CROSSSECTION_USER_DEFINED;
 }
 
 void CrossSection::Save(std::ostream* /*os*/) {

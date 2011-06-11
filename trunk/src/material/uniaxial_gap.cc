@@ -49,7 +49,6 @@ UniaxialGap::UniaxialGap(int ID, double E, double nu, double rho, double aT,
   MatParams[1] = nu;
   MatParams[2] = sy;
   MatParams[3] = gap;
-  myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
 
 

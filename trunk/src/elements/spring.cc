@@ -45,8 +45,6 @@ Spring::Spring(int id, std::vector<Node*> nodes, SpringMaterial* material,
                double yp1, double yp2, double yp3)
     : Element(id, nodes),
       dim_(dim) {
-  myTag = TAG_ELEM_BAR_2D_GEOMETRICALLY_LINEAR;
-
   // The dofs needed for this element
   myLocalNodalDofs.resize(dim_);
   for (int i = 0;i < dim_; i++) myLocalNodalDofs[i] = i;
@@ -145,9 +143,8 @@ void Spring::update() {
 void Spring::commit() {
   mySpringMaterial->commit();
 }
-bool Spring::checkIfAllows(FEObject* /*f*/) {
-  return true;
-}
+
+
 const Matrix& Spring::get_K() {
   Matrix& K=*myMatrix;
   K.Clear();

@@ -59,9 +59,9 @@ LoadCase::LoadCase(int id, const char* label)
       initialconditions_(0),
       sensitivityparameters_(0) {
   if (!strcmp(label, "default")) {
-    sprintf(myLabel, "LC_%04d", id);
+    sprintf(label_, "LC_%04d", id);
   } else {
-    sprintf(myLabel, "%s", label);
+    sprintf(label_, "%s", label);
   }
 }
 

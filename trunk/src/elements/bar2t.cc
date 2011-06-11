@@ -42,7 +42,6 @@ Bar2t::Bar2t()   {
 Bar2t::Bar2t(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
          CrossSection* iSec, CrossSection* jSec, int dim)
     : Bar(id, nodes, material, iSec, jSec, dim) {
-  myTag = TAG_ELEM_BAR_2D_TOTAL_LAGRANGIAN;
   cosX.resize(dim_);
   cosX.clear();
 }

@@ -25,7 +25,7 @@
 
 #include "material/mcc.h"
 
-MCC::MCC() 
+MCC::MCC()
     : M(0.),
       po(0.),
       kappa(0.),

@@ -49,7 +49,6 @@ class Spring: public Element {
   ~Spring();
   void update();
   void commit();
-  bool checkIfAllows(FEObject* f);
   void recoverStresses();
 
   const Matrix& get_M();

@@ -71,8 +71,6 @@ DruckerPragerNew3::DruckerPragerNew3(int id, MultiaxialMaterial* elastic,
   gSurfaces.resize(2);
   gSurfaces[0] = new DruckerPragerYS(c, psi, Kc, Kphi);
   gSurfaces[1] = new TensionCutOffYS(T);
-  // Material tag
-  myTag = TAG_MATERIAL_DRUCKER_PRAGER;
 }
 
 DruckerPragerNew3::~DruckerPragerNew3() {

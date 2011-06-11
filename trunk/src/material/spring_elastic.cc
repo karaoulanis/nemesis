@@ -35,7 +35,6 @@ SpringElastic::SpringElastic(int id, int dim, double Kn, double Ks2, double Ks3)
   MatParams[0]=Kn;
   MatParams[1]=Ks2;
   MatParams[2]=Ks3;
-  myTag = TAG_MATERIAL_SPRING;
 
   // Initialize Ct
   Ct.Clear();

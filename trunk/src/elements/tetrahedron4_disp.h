@@ -50,8 +50,8 @@ class Tetrahedron4Disp: public Element {
   void commit();
 
   void findShapeFunctions();
-  bool checkIfAllows(FEObject* f);
   void recoverStresses();
+
  protected:
   std::vector<MatPoint*> myMatPoints;
   static Matrix N;
