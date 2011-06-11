@@ -59,7 +59,6 @@
 #include "control/newmark.h"
 #include "convergence/convergence_norm.h"
 #include "crosssection/cross_section.h"
-#include "database/sqlite_database.h"
 #include "elements/bar2s.h"
 #include "elements/bar2t.h"
 #include "elements/beam2e.h"
@@ -140,164 +139,6 @@ static Analysis* pA = 0;
 static int currentLC = 0;
 static int current_group = 0;
 
-PyObject* buildList(const Vector& v) {
-  static PyObject* pyList;
-  pyList = PyList_New(v.size());
-  for (int i = 0;i < v.size();i++)
-    PyList_SetItem(pyList, i, PyFloat_FromDouble(v[i]));
-  return pyList;
-}
-
-PyObject* buildList(const Matrix& m) {
-  static PyObject* pyList;
-  pyList = PyList_New(m.get_rows());
-  for (int i = 0; i < m.get_rows(); i++) {
-    PyObject* pyRow = PyList_New(m.get_cols());
-    for (int j = 0;j < m.get_cols();j++)
-      PyList_SetItem(pyRow, j, PyFloat_FromDouble(m(i, j)));
-    PyList_SetItem(pyList, i, pyRow);
-  }
-  return pyList;
-}
-
-static PyObject* buildDict(std::istream& s) {
-  static PyObject* pyDict;
-  pyDict = PyDict_New();
-  char name[128];
-  int tag;
-  s >> name;  // Read label, i.e. NODE
-  s >> name;  // Read first tag name
-  while (strcmp(name, "END")) {
-    s >> tag;
-    PyObject* pyKey = PyString_FromString(name);
-    if (tag == 1000) {
-      int n;
-      s >> n;
-      PyDict_SetItem(pyDict, pyKey, PyInt_FromLong(n));
-    } else if (tag == 1020) {
-      double d;
-      s >> d;
-      PyDict_SetItem(pyDict, pyKey, PyFloat_FromDouble(d));
-    } else if (tag == 1100) {
-      int n;
-      s >> n;
-      Vector v(n);
-      for (int i = 0;i < n;i++) s >> v[i];
-      PyDict_SetItem(pyDict, pyKey, buildList(v));
-    } else if (tag == 1200) {
-      int rows, cols;
-      s >> rows;
-      s >> cols;
-      Matrix m(rows, cols, 0.);
-      for (int i = 0;i < rows*cols;i++) s >> m.get_data()[i];
-      PyDict_SetItem(pyDict, pyKey, buildList(m));
-    } else {
-      throw SException("[nemesis:%d] %s", 9999, "Internal error: Unknown tag.");
-    }
-    s >> name;
-  }
-  return pyDict;
-}
-
-PyObject* buildList(std::istream& s) {
-  static PyObject* pyList;
-  char name[128];
-  int tag;
-  s >> name;  // TRACKER
-  s >> name;  // steps
-  s >> tag;   // 1000
-  int steps;
-  s >> steps;
-  pyList = PyList_New(steps);
-  for (int i = 0; i < steps; i++) {
-    double lambda, time;
-    s >> name;  // lambda
-    s >> tag;   // 1010
-    s >> lambda;
-    s >> name;  // time
-    s >> tag;   // 1010
-    s >> time;
-    s >> name;  // data
-    s >> tag;   // 1020
-    PyObject* pyRow = PyList_New(3);
-    PyList_SetItem(pyRow, 0, PyFloat_FromDouble(lambda));
-    PyList_SetItem(pyRow, 1, PyFloat_FromDouble(time));
-    PyList_SetItem(pyRow, 2, buildDict(s));
-    PyList_SetItem(pyList, i, pyRow);
-  }
-  return pyList;
-}
-/******************************************************************************
-* Database Commands
-******************************************************************************/
-static PyObject* pyDatabase_SQLite(PyObject* /*self*/, PyObject* args) {
-  const char* s;
-  if (!PyArg_ParseTuple(args, "s", &s))  return NULL;
-  try {
-    Database* pDB = new SQLiteDatabase(s);
-    pD->set_database(pDB);
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-    return Py_None;
-}
-
-
-static PyObject* pyDatabase_Store(PyObject* /*self*/, PyObject *args) {
-  const char* s;
-  if (!PyArg_ParseTuple(args, "s", &s))  return NULL;
-  try {
-    /// @todo Implement this method
-    throw SException("[nemesis:%d] %s", 1110, "Unimplemented method");
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-   return Py_None;
-}
-
-
-static PyObject* pyDatabase_Close(PyObject* /*self*/, PyObject* args) {
-  if (!PyArg_ParseTuple(args, ""))  return NULL;
-  try {
-    if (pD->get_database() == 0)
-      throw SException("[nemesis:%d] %s", 1110, "No database set.");
-    pD->get_database()->closeDB();
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyObject* pyDatabase_ExportToVtk(PyObject* /*self*/, PyObject* args) {
-  const char* s;
-  if (!PyArg_ParseTuple(args, "s", &s))  return NULL;
-  try {
-    if (pD->get_database() == 0)
-      throw SException("[nemesis:%d] %s", 1110, "No database set yet.");
-    pD->get_database()->exportToVtk(s);
-  } catch(SException e) {
-    PyErr_SetString(PyExc_StandardError, e.what());
-    return NULL;
-  }
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-static PyMethodDef DatabaseMethods[] =  {
-  {"SQLite",  pyDatabase_SQLite,
-    METH_VARARGS, "Create and utilize an SQLite database."},
-  {"close", pyDatabase_Close,
-    METH_VARARGS, "Close current database."},
-  {"store", pyDatabase_Store,
-    METH_VARARGS, "Store domain's state to the database."},
-  {"exportToVtk", pyDatabase_ExportToVtk,
-    METH_VARARGS, "Export a stored domain's state to vtk file format."},
-  {NULL, NULL, 0, NULL}
-};
 /******************************************************************************
 * Domain Commands
 ******************************************************************************/
@@ -381,7 +222,10 @@ static PyObject* pyDomain_State(PyObject* /*self*/, PyObject* args) {
 }
 static PyObject* pyDomain_EigenValues(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
-  return buildList(pD->get_eigen_values());
+  // return buildList(pD->get_eigen_values());
+  /// @todo Implement method.
+  Py_INCREF(Py_None);
+  return Py_None;
 }
 static PyObject* pyDomain_Type(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
@@ -2954,7 +2798,6 @@ int PyParser::parse(char* filename) {
   return 0;
 }
 int PyParser::initModules() {
-  Py_InitModule("db", DatabaseMethods);
   Py_InitModule("domain", DomainMethods);
   Py_InitModule("node", NodeMethods);
   Py_InitModule("section", SectionMethods);
@@ -2975,7 +2818,6 @@ int PyParser::initModules() {
   Py_InitModule("group", GroupMethods);
   Py_InitModule("sens", SensitivityMethods);
   Py_InitModule("tracker", TrackerMethods);
-  PyRun_SimpleString("import db");
   PyRun_SimpleString("import domain");
   PyRun_SimpleString("import node");
   PyRun_SimpleString("import section");

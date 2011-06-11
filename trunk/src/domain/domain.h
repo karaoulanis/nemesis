@@ -31,7 +31,6 @@
 
 // Forward declarations
 class CrossSection;
-class Database;
 class Element;
 class Material;
 class Node;
@@ -93,7 +92,6 @@ class Domain {
   ConstraintContainer   theConstraints;
   TrackerContainer      trackers_;
 
-  Database* theDatabase;
   Vector RayleighFactors;
   Vector eigenVals;
   double timeCurr;
@@ -141,10 +139,6 @@ class Domain {
   double get_lambda()         {return lambdaConvg;}
 
   void rollback()             {}
-
-  // Functions that handle the database
-  void set_database(Database* db);
-  Database* get_database();
 
   // serialize/deserialize
   const char* get_state();
