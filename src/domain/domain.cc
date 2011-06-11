@@ -28,8 +28,6 @@
 #include <string>
 #include "constraints/constraint.h"
 #include "crosssection/cross_section.h"
-#include "database/database.h"
-#include "database/sqlite_database.h"
 #include "domain/domain_object.h"
 #include "elements/element.h"
 #include "exception/sexception.h"
@@ -45,7 +43,7 @@
  */
 Domain::Domain()
     : dim_(0),
-     myTag(TAG_DOMAIN_NOT_SET),
+      myTag(TAG_DOMAIN_NOT_SET),
       myFac(1.0),
       upToDate(false),
       gravityVect(0),
@@ -59,7 +57,6 @@ Domain::Domain()
       theLoadCases(),
       theConstraints(),
       trackers_(),
-      theDatabase(0),
       RayleighFactors(0),
       eigenVals(0),
       timeCurr(0.),
@@ -73,7 +70,6 @@ Domain::Domain()
 Domain::~Domain()  {
   this->clear();
   Containers::map_delete(theGroups);
-  if (theDatabase != 0) delete theDatabase;
 }
 void Domain::init() {
   // Define group 0
@@ -130,13 +126,7 @@ int Domain::set_dim(int dim) {
 int Domain::get_dim() const {
   return dim_;
 }
-void Domain::set_database(Database* pDB) {
-  if (theDatabase != 0) delete theDatabase;
-  theDatabase = pDB;
-}
-Database* Domain::get_database() {
-  return theDatabase;
-}
+
 void Domain::zeroNodalStress() {
   for (NodeIterator nIter = theNodes.begin();
     nIter != theNodes.end(); nIter++)
