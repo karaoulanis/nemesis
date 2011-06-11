@@ -25,14 +25,19 @@
 
 #include "material/dp_in.h"
 
-DP_in::DP_in() {
+DP_in::DP_in()
+    : c(0.),
+      phi(0.) {
 }
-DP_in::DP_in(double c_, double phi_) {
-  c = c_;
-  phi = phi_;
+
+DP_in::DP_in(double c_, double phi_)
+    : c(c_),
+      phi(phi_) {
 }
+
 DP_in::~DP_in() {
 }
+
 double DP_in::get_f(const Vector& s, const double a) {
   double Kf = 0.2;
   // cout << phi<< '\t' << Kf*a << endl;

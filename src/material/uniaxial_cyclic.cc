@@ -27,29 +27,36 @@
 #include <cmath>
 #include <iostream>
 
-UniaxialCyclic::UniaxialCyclic() {
+UniaxialCyclic::UniaxialCyclic()
+    : sr(0.),
+      er(0.),
+      eTrial(0.),
+      eConvg(0.),
+      Et(0.),
+      reversed(false) {
 }
-UniaxialCyclic::UniaxialCyclic(int ID, double E, double nu, double rho,
+
+UniaxialCyclic::UniaxialCyclic(int id, double E, double nu, double rho,
                                double aT, double tmax, double Gmax)
-:UniaxialMaterial(ID, rho, aT) {
+    : UniaxialMaterial(id, rho, aT),
+      sr(0.),
+      er(0.),
+      eTrial(0.),
+      eConvg(0.),
+      Et(Gmax),
+      reversed(false) {
   // Material parameters
   MatParams[0]=E;
   MatParams[1]=nu;
   MatParams[2]=tmax;
   MatParams[3]=Gmax;
-  // State variables
-  sr = 0.;
-  er = 0.;
-  eTrial = 0.;
-  eConvg = 0.;
-  // Initial stiffness
-  Et = Gmax;
-  reversed = false;
   // Tag
   myTag = TAG_MATERIAL_UNIAXIAL_CYCLIC;
 }
+
 UniaxialCyclic::~UniaxialCyclic() {
 }
+
 UniaxialMaterial* UniaxialCyclic::get_clone() {
   double E   =MatParams[0];
   double nu  =MatParams[1];
@@ -61,6 +68,7 @@ UniaxialMaterial* UniaxialCyclic::get_clone() {
                                                   Gmax);
   return newClone;
 }
+
 void UniaxialCyclic::set_strain(const double De) {
   double tmax = MatParams[2];
   double Gmax = MatParams[3];
@@ -88,10 +96,12 @@ void UniaxialCyclic::set_strain(const double De) {
          (tmax+0.5*Gmax*std::fabs(er-eTrial)));
   }
 }
+
 double UniaxialCyclic::get_C() {
   /// @todo
   return Et;
 }
+
 void UniaxialCyclic::commit() {
   sConvg = sTrial;
   eConvg = eTrial;

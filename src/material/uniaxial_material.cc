@@ -28,7 +28,10 @@
 #include <sstream>
 #include <string>
 
-UniaxialMaterial::UniaxialMaterial() {
+UniaxialMaterial::UniaxialMaterial()
+    : sTrial(0.),
+      sConvg(0.),
+      eTotal(0.) {
 }
 
 UniaxialMaterial::UniaxialMaterial(int ID, double rho, double aT)

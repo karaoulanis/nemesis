@@ -26,12 +26,12 @@
 #include "material/tension_cutoff_ys.h"
 
 
-TensionCutOffYS::TensionCutOffYS(double T_) {
-  T = T_;
+TensionCutOffYS::TensionCutOffYS(double T)
+    : T_(T) {
 }
 double TensionCutOffYS::get_f(const Vector& sigma, const double /*kappa*/) {
   this->set_sigma(sigma);
-  return I1-T;
+  return I1-T_;
 }
 const Vector& TensionCutOffYS::get_dfds(const Vector& sigma,
                                        const double /*kappa*/) {

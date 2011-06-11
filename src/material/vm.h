@@ -29,10 +29,6 @@
 #include "material/surface.h"
 
 class VM: public Surface {
- private:
-  double s0;
-  double K;
-  void find_C(const Vector& s, const double a);
  public:
   VM();
   VM(double s0_, double K_);
@@ -42,5 +38,9 @@ class VM: public Surface {
   double get_dfda(const Vector& s, const double a);
   const Vector& get_df2dsa(const Vector& s, const double a);
   double get_df2daa(const Vector& s, const double a);
+ private:
+  double s0;
+  double K;
+  void find_C(const Vector& s, const double a);
 };
 #endif  // SRC_MATERIAL_VM_H_

@@ -25,24 +25,37 @@
 
 #include "material/uniaxial_elastic_plastic.h"
 
-UniaxialElastoPlastic::UniaxialElastoPlastic() {
+UniaxialElastoPlastic::UniaxialElastoPlastic()
+    : fTrial(0.),
+      aTrial(0.),
+      aConvg(0.),
+      qTrial(0.),
+      qConvg(0.),
+      ePTrial(0.),
+      ePConvg(0.),
+      eTrial(0.) {
 }
+
 UniaxialElastoPlastic::UniaxialElastoPlastic(int ID, double E, double nu,
                                              double rho, double aT, double sy,
                                              double Hiso, double Hkin,
                                              double eta)
-:UniaxialMaterial(ID, rho, aT) {
+    : UniaxialMaterial(ID, rho, aT),
+      fTrial(0.),
+      aTrial(0.),
+      aConvg(0.),
+      qTrial(0.),
+      qConvg(0.),
+      ePTrial(0.),
+      ePConvg(0.),
+      eTrial(0.) {
   // Material parameters
-  MatParams[0]=E;
-  MatParams[1]=nu;
-  MatParams[2]=sy;
-  MatParams[3]=Hiso;
-  MatParams[4]=Hkin;
-  MatParams[5]=eta;
-  // State variables
-  aConvg = 0.;
-  qConvg = 0.;
-  ePConvg = 0.;
+  MatParams[0] = E;
+  MatParams[1] = nu;
+  MatParams[2] = sy;
+  MatParams[3] = Hiso;
+  MatParams[4] = Hkin;
+  MatParams[5] = eta;
   // Tag
   myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }

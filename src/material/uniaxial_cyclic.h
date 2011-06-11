@@ -29,21 +29,21 @@
 #include "material/uniaxial_material.h"
 
 class UniaxialCyclic: public UniaxialMaterial {
-  private:
-  double sr;
-  double er;
-  double eTrial;
-  double eConvg;
-  double Et;
-  bool reversed;
-  public:
+ public:
   UniaxialCyclic();
-  UniaxialCyclic(int ID, double E, double nu, double rho, double aT,
+  UniaxialCyclic(int id, double E, double nu, double rho, double aT,
                  double tmax, double Gmax);
   ~UniaxialCyclic();
   UniaxialMaterial* get_clone();
   void set_strain(const double De);
   double get_C();
   void commit();
+ private:
+  double sr;
+  double er;
+  double eTrial;
+  double eConvg;
+  double Et;
+  bool reversed;
 };
 #endif  // SRC_MATERIAL_UNIAXIAL_CYCLIC_H_

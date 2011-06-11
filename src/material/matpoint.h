@@ -55,13 +55,13 @@ class MatPoint: public DomainObject {
   const Packet& get_packet()   {return thePacket;  }
   void set_packet(const Packet& /*p*/) {/*does nothing*/ }
  private:
-  double x, y, z;
-  double r, s, t;
-  double w;
   static const double GaussCrds[7][7];
   static const double GaussWght[7][7];
-  MultiaxialMaterial* myMaterial;
   static int IDCounter;
+  MultiaxialMaterial* myMaterial;
+  double r, s, t;
+  double w;
+  double x, y, z;
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.
   // When called a linking error will occur.

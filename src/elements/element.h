@@ -46,21 +46,8 @@ struct GroupData;
  */
 class Element: public DomainObject {
  public:
-  /**
-   * Default constructor.
-   */
   Element();
-
-  /**
-   * Constructor.
-   * @param id Element id.
-   * @param nodes Pointers to element nodes.
-   */
   Element(int id, std::vector<Node*> nodes);
-
-  /**
-   * Destructor.
-   */
   ~Element();
 
   const IDContainer& get_nodal_ids() const;

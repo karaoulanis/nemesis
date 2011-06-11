@@ -25,17 +25,24 @@
 
 #include "material/uniaxial_gap.h"
 
-UniaxialGap::UniaxialGap() {
+UniaxialGap::UniaxialGap()
+    : eTrial(0.),
+      eElastMin(0.),
+      eElastMax(0.),
+      sy(0.),
+      gap(0.),
+      Et(0.) {
 }
+
 UniaxialGap::UniaxialGap(int ID, double E, double nu, double rho, double aT,
                          double sy_, double gap_)
-:UniaxialMaterial(ID, rho, aT) {
-  gap = gap_;
-  sy = sy_;
-  eElastMin = gap;
-  eElastMax = gap+sy/E;
-  Et = E;
-
+    : UniaxialMaterial(ID, rho, aT),
+      eTrial(0.),
+      eElastMin(gap_),
+      eElastMax(gap+sy/E),
+      sy(sy_),
+      gap(gap_),
+      Et(E) {
   // Material parameters
   MatParams[0]=E;
   MatParams[1]=nu;
@@ -43,6 +50,7 @@ UniaxialGap::UniaxialGap(int ID, double E, double nu, double rho, double aT,
   MatParams[3]=gap;
   myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
+
 UniaxialMaterial* UniaxialGap::get_clone() {
   // Material parameters
   double E   =MatParams[ 0];
@@ -55,6 +63,7 @@ UniaxialMaterial* UniaxialGap::get_clone() {
   UniaxialMaterial* clone = new UniaxialGap(myID, E, nu, rho, aT, sy, gap);
   return clone;
 }
+
 void UniaxialGap::set_strain(const double De) {
   double E = MatParams[ 0];
   eTrial = eTotal+De;
@@ -82,9 +91,11 @@ void UniaxialGap::set_strain(const double De) {
     }
   }
 }
+
 double UniaxialGap::get_C() {
   return Et;
 }
+
 void UniaxialGap::commit() {
   sConvg = sTrial;
   eTotal = eTrial;

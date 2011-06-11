@@ -29,7 +29,15 @@
 #include "material/uniaxial_material.h"
 
 class UniaxialElastoPlastic: public UniaxialMaterial {
-  private:
+ public:
+  UniaxialElastoPlastic();
+  UniaxialElastoPlastic(int ID, double E, double nu, double rho, double aT,
+              double sy, double Hiso, double Hkin, double eta);
+  UniaxialMaterial* get_clone();
+  void set_strain(const double De);
+  double get_C();
+  void commit();
+ private:
   double fTrial;
   double aTrial;
   double aConvg;
@@ -38,14 +46,6 @@ class UniaxialElastoPlastic: public UniaxialMaterial {
   double ePTrial;
   double ePConvg;
   double eTrial;
-  public:
-  UniaxialElastoPlastic();
-  UniaxialElastoPlastic(int ID, double E, double nu, double rho, double aT,
-              double sy, double Hiso, double Hkin, double eta);
-  UniaxialMaterial* get_clone();
-  void set_strain(const double De);
-  double get_C();
-  void commit();
 };
 
 #endif  // SRC_MATERIAL_UNIAXIAL_ELASTIC_PLASTIC_H_

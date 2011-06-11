@@ -25,16 +25,23 @@
 
 #include "material/mcc.h"
 
-MCC::MCC() {
+MCC::MCC() 
+    : M(0.),
+      po(0.),
+      kappa(0.),
+      lambda(0.) {
 }
-MCC::MCC(double M_, double po_, double kappa_, double lambda_) {
-  M = M_;
-  po = po_;
-  kappa = kappa_;
-  lambda = lambda_;
+
+MCC::MCC(double M_, double po_, double kappa_, double lambda_)
+    : M(M_),
+      po(po_),
+      kappa(kappa_),
+      lambda(lambda_) {
 }
+
 MCC::~MCC() {
 }
+
 double MCC::get_f(const Vector& s, const double /*q_*/) {
   double q = s.q();
   double p = s.p();

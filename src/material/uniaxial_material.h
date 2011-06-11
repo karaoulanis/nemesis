@@ -32,11 +32,7 @@
  * The Uniaxial Material Class.
  */
 class UniaxialMaterial: public Material {
- protected:
-  double sTrial;
-  double sConvg;
-  double eTotal;
-  public:
+ public:
   UniaxialMaterial();
   UniaxialMaterial(int ID, double rho, double aT);
   ~UniaxialMaterial();
@@ -47,8 +43,11 @@ class UniaxialMaterial: public Material {
   inline void set_stress(const double s) {sTrial = s;}
   inline void addStress(const double s)  {sTrial+= s;}  /// @todo: check
   inline double get_stress()             {return sTrial;}
-
   void Save(std::ostream* os);
+ protected:
+  double sTrial;
+  double sConvg;
+  double eTotal;
 };
 
 #endif  // SRC_MATERIAL_UNIAXIAL_MATERIAL_H_

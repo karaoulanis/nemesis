@@ -29,15 +29,17 @@
 #include "material/ys.h"
 
 class DruckerPragerYS: public YS {
-  private:
-  double c0, phi0, Kc, Kphi;
-  public:
+ public:
   DruckerPragerYS(double c_, double phi_, double Kc_, double Kphi_);
   double get_f(const Vector& sigma, const double kappa);
   const Vector& get_dfds(const Vector& sigma, const double kappa);
   const Matrix& get_d2fdsds(const Vector& sigma, const double kappa);
   double get_dfdk(const Vector& sigma, const double kappa);
   const Vector& get_f2dkds(const Vector& sigma, const double kappa);
+ private:
+  double c0;
+  double phi0;
+  double Kc;
+  double Kphi;
 };
-
 #endif  // SRC_MATERIAL_DRUCKER_PRAGER_YS_H_

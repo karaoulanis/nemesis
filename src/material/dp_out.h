@@ -29,15 +29,15 @@
 #include "material/surface.h"
 
 class DP_out: public Surface {
-  private:
-  double c;
-  double phi;
-  void find_C(const Vector& s, const double a);
-  public:
+ public:
   DP_out();
   DP_out(double c_, double phi_);
   ~DP_out();
-
   double get_f(const Vector& s, const double q);
+  
+ private:
+  double c;
+  double phi;
+  void find_C(const Vector& s, const double a);
 };
 #endif  // SRC_MATERIAL_DP_OUT_H_
