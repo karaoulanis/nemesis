@@ -29,61 +29,88 @@
 
 int MatPoint::IDCounter = 0;
 
-MatPoint::MatPoint() {
-  delete myMaterial;
+MatPoint::MatPoint()
+    : myMaterial(0),
+      r(0.),
+      s(0.),
+      t(0.),
+      w(0.),
+      x(0.),
+      y(0.),
+      z(0.) {
 }
+
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index,
                    int p1)
-:DomainObject(IDCounter++) {
+    : DomainObject(IDCounter++),
+      r(GaussCrds[p1][index+1]),
+      s(0.),
+      t(0.),
+      w(GaussWght[p1][index+1]),
+      x(0.),
+      y(0.),
+      z(0.) {
+  /// @todo: Chech rule.
   if (p1>6) {
     throw SException("[nemesis:%d] %s", 9999, "Rule does not exist.");
   }
-  r = GaussCrds[p1][index+1];
-  s = 0;
-  t = 0;
-  w = GaussWght[p1][index+1];
   myMaterial = mat->get_clone();
   myTag = TAG_MATERIAL_POINT;
 }
+
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2,
                    int p1, int p2)
-:DomainObject(IDCounter++) {
+    : DomainObject(IDCounter++),
+      r(GaussCrds[p1][index1]),
+      s(GaussCrds[p2][index2]),
+      t(0.),
+      w(GaussWght[p1][index1]*GaussWght[p2][index2]),
+      x(0.),
+      y(0.),
+      z(0.) {
+  /// @todo: Chech rule.
   if (p1>6||p2>6) {
     throw SException("[nemesis:%d] %s", 9999, "Integration rule error.");
   }
-  r = GaussCrds[p1][index1];
-  s = GaussCrds[p2][index2];
-  t = 0.;
-  w = GaussWght[p1][index1]*GaussWght[p2][index2];
   myMaterial = mat->get_clone();
   myTag = TAG_MATERIAL_POINT;
 }
 MatPoint::MatPoint(MultiaxialMaterial* mat, int index1, int index2, int index3,
                    int p1, int p2, int p3)
-:DomainObject(IDCounter++) {
+    : DomainObject(IDCounter++),
+      r(GaussCrds[p1][index1]),
+      s(GaussCrds[p2][index2]),
+      t(GaussCrds[p3][index3]),
+      w(GaussWght[p1][index1]*GaussWght[p2][index2]*GaussWght[p3][index3]),
+      x(0.),
+      y(0.),
+      z(0.) {
+  /// @todo: Chech rule.
   if (p1>6||p2>6) {
     throw SException("[nemesis:%d] %s", 9999, "Integration rule error.");
   }
-  r = GaussCrds[p1][index1];
-  s = GaussCrds[p2][index2];
-  t = GaussCrds[p3][index3];
-  w = GaussWght[p1][index1]*GaussWght[p2][index2]*GaussWght[p3][index3];
   myMaterial = mat->get_clone();
   myTag = TAG_MATERIAL_POINT;
 }
+
 MatPoint::MatPoint(MultiaxialMaterial* mat, double r_, double s_, double t_,
                    double w_)
-:DomainObject(IDCounter++) {
-  r = r_;
-  s = s_;
-  t = t_;
-  w = w_;
+    : DomainObject(IDCounter++),
+      r(r_),
+      s(s_),
+      t(t_),
+      w(w_),
+      x(0.),
+      y(0.),
+      z(0.) {
   myMaterial = mat->get_clone();
   myTag = TAG_MATERIAL_POINT;
 }
+
 MatPoint::~MatPoint() {
   delete myMaterial;
 }
+
 void MatPoint::set_X(double x_, double y_, double z_) {
   x = x_;
   y = y_;

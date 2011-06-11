@@ -32,12 +32,6 @@
 #include "numeric/matrix.h"
 
 class YS {
- protected:
-  double s1, s2, s3;
-  double I1, J2;
-  Vector a, a1, a2;
-  Matrix da, da2, da11, da22;
-  bool active;
  public:
   YS();
   virtual ~YS();
@@ -49,5 +43,11 @@ class YS {
   virtual const Matrix& get_d2fdsds(const Vector& sigma, const double kappa)=0;
   virtual double get_dfdk(const Vector& sigma, const double kappa)=0;
   virtual const Vector& get_f2dkds(const Vector& sigma, const double kappa)=0;
+ protected:
+  double s1, s2, s3;
+  double I1, J2;
+  Vector a, a1, a2;
+  Matrix da, da2, da11, da22;
+  bool active;
 };
 #endif  // SRC_MATERIAL_YS_H_

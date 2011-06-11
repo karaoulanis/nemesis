@@ -25,19 +25,25 @@
 
 #include "material/dp_out.h"
 
-DP_out::DP_out() {
+DP_out::DP_out()
+    : c(0.),
+      phi(0.) {
 }
-DP_out::DP_out(double c_, double phi_) {
-  c = c_;
-  phi = phi_;
+
+DP_out::DP_out(double c_, double phi_)
+    : c(c_),
+      phi(phi_) {
 }
+
 DP_out::~DP_out() {
 }
+
 double DP_out::get_f(const Vector& s, const double /*q*/) {
   double D=   2*sin(phi)/(num::sq3*(3-sin(phi)));
   double so = 6*c*cos(phi)/(num::sq3*(3-sin(phi)));
   return D*s.I1()+sqrt(s.J2())-so;
 }
+
 void DP_out::find_C(const Vector& s, const double /*a*/) {
   C1  = 2*sin(phi)/(num::sq3*(3-sin(phi)));
   C2  = 0.5/sqrt(s.J2());

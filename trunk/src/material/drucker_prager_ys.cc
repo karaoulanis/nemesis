@@ -26,12 +26,13 @@
 #include "material/drucker_prager_ys.h"
 
 DruckerPragerYS::DruckerPragerYS(double c_, double phi_, double Kc_,
-                                 double Kphi_) {
-  c0 = c_;
-  phi0 = phi_;
-  Kc = Kc_;
-  Kphi = Kphi_;
+                                 double Kphi_)
+    : c0(c_),
+      phi0(phi_),
+      Kc(Kc_),
+      Kphi(Kphi_) {
 }
+
 double DruckerPragerYS::get_f(const Vector& sigma, const double kappa) {
   this->set_sigma(sigma);
   double c = c0+Kc*kappa;
@@ -40,6 +41,7 @@ double DruckerPragerYS::get_f(const Vector& sigma, const double kappa) {
   double k = 6*c*cos(phi)/(sqrt(3.)*(3-sin(phi)));
   return rho*I1+sqrt(J2)-k;
 }
+
 const Vector& DruckerPragerYS::get_dfds(const Vector& sigma,
                                        const double kappa) {
   this->set_sigma(sigma);
@@ -51,6 +53,7 @@ const Vector& DruckerPragerYS::get_dfds(const Vector& sigma,
   a = a1*C1+a2*C2;
   return a;
 }
+
 const Matrix& DruckerPragerYS::get_d2fdsds(const Vector& sigma,
                                           const double /*kappa*/) {
   this->set_sigma(sigma);
@@ -60,6 +63,7 @@ const Matrix& DruckerPragerYS::get_d2fdsds(const Vector& sigma,
   da = C2*da2+C22*da22;
   return da;
 }
+
 double DruckerPragerYS::get_dfdk(const Vector& sigma, const double kappa) {
   this->set_sigma(sigma);
   double c = c0+Kc*kappa;
@@ -74,6 +78,7 @@ double DruckerPragerYS::get_dfdk(const Vector& sigma, const double kappa) {
                         +Kphi*cos(phi+Kphi*kappa)*Kc*kappa)/denom;
   return I1*drhodkappa-dkdkappa;
 }
+
 const Vector& DruckerPragerYS::get_f2dkds(const Vector& sigma,
                                          const double kappa) {
   this->set_sigma(sigma);

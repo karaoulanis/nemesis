@@ -29,15 +29,14 @@
 #include "material/ys.h"
 
 class TensionCutOffYS: public YS {
- private:
-  double T;
  public:
-  explicit TensionCutOffYS(double T_);
+  explicit TensionCutOffYS(double T);
   double get_f(const Vector& sigma, const double kappa);
   const Vector& get_dfds(const Vector& sigma, const double kappa);
   const Matrix& get_d2fdsds(const Vector& sigma, const double kappa);
   double get_dfdk(const Vector& sigma, const double kappa);
   const Vector& get_f2dkds(const Vector& sigma, const double kappa);
+ private:
+  double T_;
 };
-
 #endif  // SRC_MATERIAL_TENSION_CUTOFF_YS_H_

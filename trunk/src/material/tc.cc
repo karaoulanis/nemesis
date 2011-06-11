@@ -25,15 +25,16 @@
 
 #include "material/tc.h"
 
-TC::TC() {
+TC::TC()
+    : t_(0.) {
 }
-TC::TC(double t_) {
-  t = t_;
+TC::TC(double t)
+    : t_(t) {
 }
 TC::~TC() {
 }
 double TC::get_f(const Vector& s, const double /*q*/) {
-  return t+s.I1();
+  return t_+s.I1();
 }
 const Vector& TC::get_dfds(const Vector& /*s*/, const double /*a*/) {
   myVector[0]=1.0;

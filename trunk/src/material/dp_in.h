@@ -29,11 +29,7 @@
 #include "material/surface.h"
 
 class DP_in: public Surface {
-  private:
-  double c;
-  double phi;
-  void find_C(const Vector& s, const double a);
-  public:
+ public:
   DP_in();
   DP_in(double c_, double phi_);
   ~DP_in();
@@ -42,5 +38,9 @@ class DP_in: public Surface {
   double get_dfda(const Vector& s, const double a);
   const Vector& get_df2dsa(const Vector& s, const double a);
   double get_df2daa(const Vector& s, const double a);
+ private:
+  double c;
+  double phi;
+  void find_C(const Vector& s, const double a);
 };
 #endif  // SRC_MATERIAL_DP_IN_H_

@@ -29,14 +29,7 @@
 #include "material/uniaxial_material.h"
 
 class UniaxialGap: public UniaxialMaterial {
-  private:
-  double eTrial;
-  double eElastMin;
-  double eElastMax;
-  double sy;
-  double gap;
-  double Et;
-  public:
+ public:
   UniaxialGap();
   UniaxialGap(int ID, double E, double nu, double rho, double aT, double sy_,
               double gap_ = 0.);
@@ -44,6 +37,13 @@ class UniaxialGap: public UniaxialMaterial {
   void set_strain(const double De);
   double get_C();
   void commit();
+ private:
+  double eTrial;
+  double eElastMin;
+  double eElastMax;
+  double sy;
+  double gap;
+  double Et;
 };
 
 #endif  // SRC_MATERIAL_UNIAXIAL_GAP_H_

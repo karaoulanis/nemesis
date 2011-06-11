@@ -29,14 +29,14 @@
 #include "material/surface.h"
 
 class TC: public Surface {
- private:
-  double t;
  public:
   TC();
-  explicit TC(double t_);
+  explicit TC(double t);
   ~TC();
-
   double get_f(const Vector& s, const double q);
   const Vector& get_dfds(const Vector& s, const double a);
+
+ private:
+  double t_;
 };
 #endif  // SRC_MATERIAL_TC_H_

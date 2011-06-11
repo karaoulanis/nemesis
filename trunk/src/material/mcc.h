@@ -30,13 +30,7 @@
 #include "numeric/vector.h"
 
 class MCC: public Surface {
- protected:
-  double M;
-  double po;
-  double kappa;
-  double lambda;
-  void find_C(const Vector& s, const double a);
-  public:
+ public:
   MCC();
   MCC(double M_, double po_, double kappa_, double lambda_);
   ~MCC();
@@ -44,5 +38,11 @@ class MCC: public Surface {
   double get_dfda(const Vector& s, const double a);
   const Vector& get_df2dsa(const Vector& s, const double a);
   double get_df2daa(const Vector& s, const double a);
+ protected:
+  double M;
+  double po;
+  double kappa;
+  double lambda;
+  void find_C(const Vector& s, const double a);
 };
 #endif  // SRC_MATERIAL_MCC_H_
