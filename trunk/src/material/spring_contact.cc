@@ -28,6 +28,8 @@
 
 SpringContact::SpringContact() {
 }
+
+
 SpringContact::SpringContact(int ID, int dim, double Kn, double Ks, double mu,
                              double gap)
 :SpringMaterial(ID, dim) {
@@ -50,6 +52,8 @@ SpringContact::SpringContact(int ID, int dim, double Kn, double Ks, double mu,
   // eTotal.clear();
   // eTotal[0]=gap;
 }
+
+
 SpringMaterial* SpringContact::get_clone() {
   // Material parameters
   double Kn  = MatParams[0];
@@ -58,9 +62,11 @@ SpringMaterial* SpringContact::get_clone() {
   double gap = MatParams[3];
 
   // Create clone and return
-  SpringMaterial* clone = new SpringContact(myID, dim_, Kn, Ks, mu, gap);
+  SpringMaterial* clone = new SpringContact(id_, dim_, Kn, Ks, mu, gap);
   return clone;
 }
+
+
 void SpringContact::set_strain(const Vector& De) {
   double Kn  = MatParams[0];
   double Ks  = MatParams[1];
@@ -80,7 +86,7 @@ void SpringContact::set_strain(const Vector& De) {
 
   if (f1 < 0. && f2 < 0.) {
   // Case 1: Closed and sticking
-    std::cout << "Spring : " << myID << " Closed and sticking." << std::endl;
+    std::cout << "Spring : " << id_ << " Closed and sticking." << std::endl;
     sTrial[0] = Kn*eTrial[0];
     sTrial[1] = Ks*eTrial[1];
     sTrial[2] = Ks*eTrial[2];
@@ -89,7 +95,7 @@ void SpringContact::set_strain(const Vector& De) {
     Ct(2, 2) = Ks;
   } else if (f1 < 0. && f2 >= 0.)  {
     // Case 2: Closed and sliding
-    std::cout << "Spring : " << myID << " Closed and sliding." << std::endl;
+    std::cout << "Spring : " << id_ << " Closed and sliding." << std::endl;
     sTrial[0] = Kn*eTrial[0];
     sTrial[1] = 0.;
     sTrial[2] = 0.;
@@ -98,7 +104,7 @@ void SpringContact::set_strain(const Vector& De) {
     Ct(2, 2) = 0.;
   } else {
   // Case 3: Open
-    std::cout << "Spring : " << myID << " Open." << std::endl;
+    std::cout << "Spring : " << id_ << " Open." << std::endl;
     sTrial[0] = 0.;
     sTrial[1] = 0.;
     sTrial[2] = 0.;

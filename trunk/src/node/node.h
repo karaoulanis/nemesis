@@ -124,8 +124,6 @@ class Node: public DomainObject {
   void addStress(const Vector& s);
   void multDisp(double facD);
 
-  const Packet& get_packet();
-  void set_packet(const Packet& p);
   void Save(std::ostream* s);
 
   // Sensitivity functions

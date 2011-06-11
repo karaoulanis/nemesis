@@ -33,6 +33,7 @@
 
 class Element;
 struct GroupData;
+
 class Group: public DomainObject {
  public:
   Group();
@@ -41,6 +42,8 @@ class Group: public DomainObject {
   inline const std::vector<Element*>& get_elements()  {return elements_;}
   void SetGroupData(const GroupData* groupdata);
   void AddElement(Element* element);
+  void Save(std::ostream* /*os*/);
+
  private:
   GroupData* groupdata_;
   std::vector<Element*> elements_;

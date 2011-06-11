@@ -52,8 +52,8 @@ class MatPoint: public DomainObject {
   inline double get_s()     {return s;}
   inline double get_t()     {return t;}
   inline double get_w()     {return w;}
-  const Packet& get_packet()   {return thePacket;  }
-  void set_packet(const Packet& /*p*/) {/*does nothing*/ }
+  void Save(std::ostream* /*os*/);
+
  private:
   static const double GaussCrds[7][7];
   static const double GaussWght[7][7];

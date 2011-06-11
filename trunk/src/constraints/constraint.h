@@ -69,5 +69,7 @@ class Constraint: public DomainObject {
 
   void update(double f);
   void commit();
+
+  void Save(std::ostream* /*os*/);
 };
 #endif  // SRC_CONSTRAINTS_CONSTRAINT_H_

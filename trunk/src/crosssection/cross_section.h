@@ -74,6 +74,7 @@ class CrossSection: public DomainObject {
   double get_J3()    {return J3;}
   double get_h2()    {return h2;}
   double get_h3()    {return h3;}
+  void Save(std::ostream* /*os*/);
 };
 
 //=============================================================

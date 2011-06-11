@@ -60,6 +60,9 @@ class LoadCase: public DomainObject {
   void ApplySensitivityParameter(int param);
   int GetNumSensitivityParameters();
 
+  // Serialization 
+  void Save(std::ostream* /*os*/);
+
  private:
   char label_[512];
   double factor_;

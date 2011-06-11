@@ -27,19 +27,31 @@
 
 SDofMaterial::SDofMaterial() {
 }
+
+
 SDofMaterial::SDofMaterial(int ID, double E, double rho)
-:Material(ID, rho, 0.) {
+    : Material(ID, rho, 0.) {
   // Material parameters
-  MatParams[0]=E;
+  MatParams[0] = E;
   myTag = TAG_MATERIAL_SINGLE_DOF;
 }
+
+
 SDofMaterial* SDofMaterial::get_clone() {
   // Material parameters
   double E   =MatParams[ 0];
   double rho =MatParams[30];
   // Create clone and return
-  SDofMaterial* clone = new SDofMaterial(myID, E, rho);
+  SDofMaterial* clone = new SDofMaterial(id_, E, rho);
   return clone;
 }
+
+
 void SDofMaterial::commit() {
 }
+
+
+void SDofMaterial::Save(std::ostream* /*os*/) {
+  /// @todo Implement this method.
+}
+

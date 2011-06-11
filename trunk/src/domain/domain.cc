@@ -152,41 +152,8 @@ void Domain::zeroSensitivityParameters() {
     eIter != theElements.end(); eIter++)
       eIter->second->activateParameter(0);
 }
-int Domain::storeState(const char* tableName) {
-  // Begin transaction
-  theDatabase->beginTransaction();
-  theDatabase->createTable(tableName);
-  theDatabase->useTable(tableName);
-  // Store nodes
-  for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end(); nIter++)
-    if (nIter->second->IsActive())
-      theDatabase->storeData(nIter->second->get_packet());
-  // Store elements
-  for (ElementIterator eIter = theElements.begin();
-    eIter != theElements.end(); eIter++)
-    if (eIter->second->IsActive())
-      theDatabase->storeData(eIter->second->get_packet());
-  // Commit transaction
-  theDatabase->commitTransaction();
-  return 0;
-}
-int Domain::restoreState(const char* tableName) {
-  // Begin transaction
-  theDatabase->beginTransaction();
-  theDatabase->useTable(tableName);
-  // Restore the nodes
-  for (NodeIterator nIter = theNodes.begin(); nIter != theNodes.end(); nIter++)
-      nIter->second->set_packet(theDatabase->retrieveData(nIter->second->get_tag(),
-        nIter->second->get_id()));
-  theDatabase->commitTransaction();
-  return 0;
-}
-/**
- * Get the state of the domain.
- * A c-style string with json format is returned.
- * @return c-style string
- */
+
+
 const char* Domain::get_state() {
   // define an output string stream
   std::ostringstream s;
@@ -199,10 +166,8 @@ const char* Domain::get_state() {
   tmp = s.str();
   return tmp.c_str();
 }
-/**
- * Serialize domain to an output stream.
- * Follows the json format.
- */
+
+
 void Domain::Save(std::ostream* os) {
   (*os) << "{";
   // Store domain info
@@ -230,12 +195,15 @@ void Domain::Save(std::ostream* os) {
   // domain
   (*os) << "}";
 }
+
+
 void Domain::Commit() {
     timePrev = timeCurr;
     for (TrackerIterator i = trackers_.begin(); i != trackers_.end(); i++) {
       i->second->Track(lambdaConvg, timeCurr);
   }
 }
+
 
 // Rayleigh damping
 void Domain::set_Rayleigh_factors(const Vector& factors) {

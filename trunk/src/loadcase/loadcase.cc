@@ -25,6 +25,7 @@
 
 #include "loadcase/loadcase.h"
 #include <stdio.h>
+#include <string.h>
 #include "containers/containers.h"
 #include "loadcase/element_sensitivity_parameter.h"
 #include "loadcase/group_state.h"
@@ -143,3 +144,8 @@ void LoadCase::AddSensitivityParameter(ElementSensitivityParameter*
                                        pElementSensitivityParameter) {
   sensitivityparameters_.push_back(pElementSensitivityParameter);
 }
+
+void LoadCase::Save(std::ostream* /*os*/) {
+  /// @todo Implement this method.
+}
+

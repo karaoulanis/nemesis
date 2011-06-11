@@ -36,6 +36,7 @@ UniaxialElastoPlastic::UniaxialElastoPlastic()
       eTrial(0.) {
 }
 
+
 UniaxialElastoPlastic::UniaxialElastoPlastic(int ID, double E, double nu,
                                              double rho, double aT, double sy,
                                              double Hiso, double Hkin,
@@ -59,19 +60,21 @@ UniaxialElastoPlastic::UniaxialElastoPlastic(int ID, double E, double nu,
   // Tag
   myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
+
+
 UniaxialMaterial* UniaxialElastoPlastic::get_clone() {
   // Material parameters
-  double E   =MatParams[ 0];
-  double nu  =MatParams[ 1];
-  double sy  =MatParams[ 2];
+  double E    = MatParams[ 0];
+  double nu   = MatParams[ 1];
+  double sy   = MatParams[ 2];
   double Hiso = MatParams[ 3];
   double Hkin = MatParams[ 4];
-  double eta =MatParams[ 5];
-  double rho =MatParams[30];
-  double aT  =MatParams[31];
+  double eta  = MatParams[ 5];
+  double rho  = MatParams[30];
+  double aT   = MatParams[31];
   // Create clone and return
   UniaxialElastoPlastic* clone =
-    new UniaxialElastoPlastic(myID, E, nu, rho, aT, sy, Hiso, Hkin, eta);
+    new UniaxialElastoPlastic(id_, E, nu, rho, aT, sy, Hiso, Hkin, eta);
   return clone;
 }
 void UniaxialElastoPlastic::set_strain(const double De) {

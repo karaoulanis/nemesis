@@ -56,3 +56,8 @@ void Group::AddElement(Element* element) {
   elements_.push_back(element);
   element->SetGroupData(groupdata_);
 }
+
+void Group::Save(std::ostream* /*os*/) {
+  /// @todo Implement this method.
+}
+

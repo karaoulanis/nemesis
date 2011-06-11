@@ -51,9 +51,9 @@ MultiaxialMaterial* MultiaxialElastic::get_clone() {
   double rho =MatParams[30];
   double aT  =MatParams[31];
   // Create clone and return
-  MultiaxialElastic* newClone =
-    new MultiaxialElastic(myID, E, nu, rho, aT, kx, ky, kz);
-  return newClone;
+  MultiaxialElastic* clone =
+    new MultiaxialElastic(id_, E, nu, rho, aT, kx, ky, kz);
+  return clone;
 }
 void MultiaxialElastic::set_strain(const Vector& De) {
   eTrial = eTotal+De;

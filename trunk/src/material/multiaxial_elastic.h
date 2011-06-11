@@ -32,7 +32,7 @@
  * The Elastic Class.
  */
 class MultiaxialElastic: public MultiaxialMaterial {
-  public:
+ public:
   MultiaxialElastic();
   MultiaxialElastic(int ID, double E, double nu, double rho, double aT,
     double kx, double ky, double kz);

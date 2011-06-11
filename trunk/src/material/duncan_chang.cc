@@ -44,6 +44,8 @@ DuncanChang::DuncanChang(int ID, double E, double nu, double c, double phi,
   // Material tag
   myTag = TAG_MATERIAL_MULTIAXIAL_ELASTIC;
 }
+
+
 MultiaxialMaterial* DuncanChang::get_clone() {
   // Material parameters
   double E   = MatParams[ 0];
@@ -56,10 +58,11 @@ MultiaxialMaterial* DuncanChang::get_clone() {
   double rho = MatParams[30];
   double aT  = MatParams[31];
   // Create clone and return
-  DuncanChang* newClone =
-    new DuncanChang(myID, E, nu, c, phi, m, Rf, pa, rho, aT);
-  return newClone;
+  DuncanChang* clone = new DuncanChang(id_, E, nu, c, phi, m, Rf, pa, rho, aT);
+  return clone;
 }
+
+
 void DuncanChang::set_strain(const Vector& De) {
   eTrial = eTotal+De;
   sTrial=(this->get_C())*eTrial;

@@ -27,30 +27,22 @@
 #define SRC_DOMAIN_DOMAIN_OBJECT_H_
 
 #include <iostream>
-#include "database/packet.h"
 #include "feobject/fe_object.h"
 
-// Forward declarations
-class Domain;
-
-/**
- * The DomainObject Class.
- */
 class DomainObject: public FEObject {
- protected:
-  int myID;
-  static Packet thePacket;
  public:
-  // Constructors
   DomainObject();
-  explicit DomainObject(int ID);
+  explicit DomainObject(int id);
   virtual ~DomainObject();
-
+  
+  // Accessor(s)
   virtual int get_id();
+  
+  // Serialization
+  virtual void Save(std::ostream* /*os*/) = 0;
+  // virtual void Load(std::istream& /*is*/) = 0;
 
-  virtual const Packet& get_packet();
-  virtual void set_packet(const Packet& p);
-  virtual void Save(std::ostream* /*os*/)  {}
-  // virtual void load(std::istream& /*s*/)  {}
+ protected:
+  int id_;
 };
 #endif  // SRC_DOMAIN_DOMAIN_OBJECT_H_

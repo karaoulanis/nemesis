@@ -145,8 +145,6 @@ class Domain {
   // Functions that handle the database
   void set_database(Database* db);
   Database* get_database();
-  int storeState(const char* tableName);
-  int restoreState(const char* tableName);
 
   // serialize/deserialize
   const char* get_state();
