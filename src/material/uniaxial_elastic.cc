@@ -27,14 +27,18 @@
 
 UniaxialElastic::UniaxialElastic() {
 }
-UniaxialElastic::UniaxialElastic(int ID, double E, double nu, double rho,
+
+
+UniaxialElastic::UniaxialElastic(int id, double E, double nu, double rho,
                                  double aT)
-:UniaxialMaterial(ID, rho, aT) {
+    : UniaxialMaterial(id, rho, aT) {
   // Material parameters
-  MatParams[0]=E;
-  MatParams[1]=nu;
+  MatParams[0]  =E;
+  MatParams[1] = nu;
   myTag = TAG_MATERIAL_UNIAXIAL_ELASTIC;
 }
+
+
 UniaxialMaterial* UniaxialElastic::get_clone() {
   // Material parameters
   double E   =MatParams[ 0];
@@ -42,15 +46,18 @@ UniaxialMaterial* UniaxialElastic::get_clone() {
   double rho =MatParams[30];
   double aT  =MatParams[31];
   // Create clone and return
-  UniaxialMaterial* clone = new UniaxialElastic(myID, E, nu, rho, aT);
+  UniaxialMaterial* clone = new UniaxialElastic(id_, E, nu, rho, aT);
   return clone;
 }
+
 void UniaxialElastic::set_strain(const double De) {
   sTrial = sConvg+MatParams[0]*De;
 }
+
 double UniaxialElastic::get_C() {
   return MatParams[0];
 }
+
 void UniaxialElastic::commit() {
   sConvg = sTrial;
 }

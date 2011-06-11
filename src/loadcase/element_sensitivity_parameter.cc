@@ -34,6 +34,7 @@ ElementSensitivityParameter::ElementSensitivityParameter()
       parameter_(0) {
 }
 
+
 ElementSensitivityParameter::ElementSensitivityParameter(Element* element,
                                                          int parameter)
     : DomainObject(++nSensitivityParameters),
@@ -41,7 +42,13 @@ ElementSensitivityParameter::ElementSensitivityParameter(Element* element,
       parameter_(parameter) {
 }
 
+
 int ElementSensitivityParameter::apply() {
   element_->activateParameter(parameter_);
   return 0;
 }
+
+void ElementSensitivityParameter::Save(std::ostream* /*os*/) {
+  /// @todo Implement this method.
+}
+

@@ -243,20 +243,23 @@ static PyObject* pyDatabase_SQLite(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
     return Py_None;
 }
+
+
 static PyObject* pyDatabase_Store(PyObject* /*self*/, PyObject *args) {
   const char* s;
   if (!PyArg_ParseTuple(args, "s", &s))  return NULL;
   try {
-    if (pD->get_database() == 0)
-      throw SException("[nemesis:%d] %s", 1110, "No database set.");
-    pD->storeState(s);
+    /// @todo Implement this method
+    throw SException("[nemesis:%d] %s", 1110, "Unimplemented method");
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
   Py_INCREF(Py_None);
-    return Py_None;
+   return Py_None;
 }
+
+
 static PyObject* pyDatabase_Close(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, ""))  return NULL;
   try {

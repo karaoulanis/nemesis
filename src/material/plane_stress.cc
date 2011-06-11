@@ -38,7 +38,7 @@ MultiaxialMaterial* PlaneStress::get_clone() {
   double rho =MatParams[30];
   double aT  =MatParams[31];
   // Create clone and return
-  PlaneStress* newClone = new PlaneStress(myID, E, nu, rho, aT);
+  PlaneStress* newClone = new PlaneStress(id_, E, nu, rho, aT);
   return newClone;
 }
 const Matrix& PlaneStress::get_C() {

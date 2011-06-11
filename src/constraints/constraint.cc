@@ -119,3 +119,8 @@ void Constraint::commit() {
 double Constraint::get_F() {
   return f_trial_;
 }
+
+void Constraint::Save(std::ostream* /*os*/) {
+  /// @todo Implement this method.
+}
+

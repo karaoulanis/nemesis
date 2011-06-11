@@ -27,8 +27,10 @@
 
 SpringElastic::SpringElastic() {
 }
-SpringElastic::SpringElastic(int ID, int dim, double Kn, double Ks2, double Ks3)
-:SpringMaterial(ID, dim) {
+
+
+SpringElastic::SpringElastic(int id, int dim, double Kn, double Ks2, double Ks3)
+    : SpringMaterial(id, dim) {
   // Material parameters
   MatParams[0]=Kn;
   MatParams[1]=Ks2;
@@ -41,27 +43,31 @@ SpringElastic::SpringElastic(int ID, int dim, double Kn, double Ks2, double Ks3)
   Ct(1, 1)=Ks2;
   Ct(2, 2)=Ks3;
 }
+
+
 SpringMaterial* SpringElastic::get_clone() {
   // Material parameters
-  double Kn  =MatParams[0];
-  double Ks2 =MatParams[1];
-  double Ks3 =MatParams[2];
+  double Kn  = MatParams[0];
+  double Ks2 = MatParams[1];
+  double Ks3 = MatParams[2];
   // Create clone and return
-  SpringMaterial* clone = new SpringElastic(myID, dim_, Kn, Ks2, Ks3);
+  SpringMaterial* clone = new SpringElastic(id_, dim_, Kn, Ks2, Ks3);
   return clone;
 }
+
+
 void SpringElastic::set_strain(const Vector& De) {
-  double Kn  =MatParams[0];
-  double Ks2 =MatParams[1];
-  double Ks3 =MatParams[2];
+  double Kn  = MatParams[0];
+  double Ks2 = MatParams[1];
+  double Ks3 = MatParams[2];
   eTrial = eTotal+De;
   switch (dim_) {
   case 3:
-    sTrial[2]=Ks3*eTrial[2];
+    sTrial[2] = Ks3*eTrial[2];
   case 2:
-    sTrial[1]=Ks2*eTrial[1];
+    sTrial[1] = Ks2*eTrial[1];
   case 1:
-    sTrial[0]=Kn*eTrial[0];
+    sTrial[0] = Kn*eTrial[0];
   default:
     break;
   }

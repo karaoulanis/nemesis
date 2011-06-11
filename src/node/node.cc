@@ -180,40 +180,10 @@ void Node::addStress(const Vector& s) {
   stress+=s;
   avgStress+=1;
 }
-const Packet& Node::get_packet() {
-  thePacket.zero();
-  thePacket.tag = this->get_tag();
-  thePacket.id = this->get_id();
-  thePacket.dblArray[0]=x1;
-  thePacket.dblArray[1]=x2;
-  thePacket.dblArray[2]=x3;
-  for (unsigned i = 0;i < myActivatedDofs.size();i++) {
-    if (myActivatedDofs[i] >= 0) {
-      thePacket.dblArray[i+3]=dispConvg[myActivatedDofs[i]];
-      thePacket.dblArray[i+3+MAX_NUMBER_OF_DOFS]=velcConvg[myActivatedDofs[i]];
-      thePacket.dblArray[i+3+2*MAX_NUMBER_OF_DOFS] =
-                                                 acclConvg[myActivatedDofs[i]];
-    }
-  }
-  if (avgStress>0) stress*=1.0/avgStress;
-  for (int i = 0;i < 6;i++)
-      thePacket.dblArray[i+3+3*MAX_NUMBER_OF_DOFS]=stress[i];
-  return thePacket;
-}
-void Node::set_packet(const Packet& p) {
-  for (int i = 0; i < MAX_NUMBER_OF_DOFS; i++) {
-    if (myActivatedDofs[i] < 0) continue;
-    dispConvg[myActivatedDofs[i]]=p.dblArray[i+3];
-    velcConvg[myActivatedDofs[i]]=p.dblArray[i+3+MAX_NUMBER_OF_DOFS];
-    acclConvg[myActivatedDofs[i]]=p.dblArray[i+3+2*MAX_NUMBER_OF_DOFS];
-  }
-  dispTrial = dispConvg;
-  velcTrial = velcConvg;
-  acclTrial = acclConvg;
-}
+
 void Node::Save(std::ostream* os) {
   (*os) << "{";
-  (*os) << "\"id\":" << myID <<",";
+  (*os) << "\"id\":" << id_ <<",";
   (*os) << "\"crds\":[" << x1 << "," << x2 << "," << x3 << "],";
   (*os) << "\"dofs\":[";
   /// @todo make this more general
@@ -236,18 +206,28 @@ void Node::Save(std::ostream* os) {
   // s << "\"eige\":[" << eigenVecs  << "]}";
   (*os) << "}";
 }
+
+
 void Node::incTrialDisp(const Vector& du) {
   dispTrial+=du;
 }
+
+
 void Node::addTrialVelc(const Vector& dv) {
   velcTrial+=dv;
 }
+
+
 void Node::addTrialAccl(const Vector& da) {
   acclTrial+=da;
 }
+
+
 void Node::set_trial_disp(const Vector& u) {
   dispTrial = u;
 }
+
+
 void Node::set_trial_velc(const Vector& v) {
   velcTrial = v;
 }

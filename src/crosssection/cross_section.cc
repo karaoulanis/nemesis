@@ -40,6 +40,7 @@ RectangularCrossSection::RectangularCrossSection(int ID, double width,
   myTag = TAG_CROSSSECTION_RECTANGLE;
 }
 
+
 UserDefinedCrossSection::UserDefinedCrossSection(int ID,
                           double A_in,
                           double As2_in,
@@ -60,3 +61,8 @@ UserDefinedCrossSection::UserDefinedCrossSection(int ID,
   h3 = h3_in;
   myTag = TAG_CROSSSECTION_USER_DEFINED;
 }
+
+void CrossSection::Save(std::ostream* /*os*/) {
+  /// @todo Implement this method.
+}
+

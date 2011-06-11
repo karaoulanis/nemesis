@@ -25,37 +25,21 @@
 
 #include "domain/domain_object.h"
 
-Packet DomainObject::thePacket;
-
-/**
- * Default Constructor.
- */
 DomainObject::DomainObject()
-    : myID(0) {
-  // Does nothing.
+    : id_(0) {
 }
-/**
- * Constructor.
- * Construct a DomainObject for a given ID.
- * @param ID An integer that initialize a DomainObject.
- */
-DomainObject::DomainObject(int ID)
-    : myID(ID) {
+
+
+DomainObject::DomainObject(int id)
+    : id_(id) {
 }
+
+
 DomainObject::~DomainObject() {
-  // Nothing to destruct here.
 }
+
+
 int DomainObject::get_id() {
-  return myID;
-}
-const Packet& DomainObject::get_packet() {
-  /// @todo When finished implementing all turn this function into pure.
-  std::cout << "DomainObject::Not implemented yet!" << std::endl;
-  thePacket.zero();
-  return thePacket;
-}
-void DomainObject::set_packet(const Packet& /*p*/) {
-  /// @todo When finished implementing all turn this function into pure.
-  std::cout << "DomainObject::Not implemented yet!" << std::endl;
+  return id_;
 }
 

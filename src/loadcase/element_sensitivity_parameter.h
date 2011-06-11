@@ -35,6 +35,8 @@ class ElementSensitivityParameter: public DomainObject {
   ElementSensitivityParameter();
   ElementSensitivityParameter(Element* element, int parameter);
   int apply();
+  void Save(std::ostream* /*os*/);
+
  private:
   static int nSensitivityParameters;
   Element* element_;

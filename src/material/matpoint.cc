@@ -160,6 +160,12 @@ void MatPoint::AddInitialStresses(int direction,
   }
 }
 
+
+void MatPoint::Save(std::ostream* /*os*/) {
+  /// @todo Implement this method.
+}
+
+
 const double MatPoint::GaussCrds[7][7]=   {  { 0.000000000000000,     // Rule 0
                                                0.000000000000000,
                                                0.000000000000000,

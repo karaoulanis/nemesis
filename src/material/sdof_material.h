@@ -32,12 +32,12 @@
  * The Single Dof Material Class.
  */
 class SDofMaterial: public Material {
- protected:
-  public:
+ public:
   SDofMaterial();
   SDofMaterial(int ID, double E, double rho);
   SDofMaterial* get_clone();
   void commit();
+  void Save(std::ostream* /*os*/);
 };
 
 #endif  // SRC_MATERIAL_SDOF_MATERIAL_H_

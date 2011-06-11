@@ -46,10 +46,10 @@ UniaxialCyclic::UniaxialCyclic(int id, double E, double nu, double rho,
       Et(Gmax),
       reversed(false) {
   // Material parameters
-  MatParams[0]=E;
-  MatParams[1]=nu;
-  MatParams[2]=tmax;
-  MatParams[3]=Gmax;
+  MatParams[0] = E;
+  MatParams[1] = nu;
+  MatParams[2] = tmax;
+  MatParams[3] = Gmax;
   // Tag
   myTag = TAG_MATERIAL_UNIAXIAL_CYCLIC;
 }
@@ -58,13 +58,13 @@ UniaxialCyclic::~UniaxialCyclic() {
 }
 
 UniaxialMaterial* UniaxialCyclic::get_clone() {
-  double E   =MatParams[0];
-  double nu  =MatParams[1];
+  double E    = MatParams[0];
+  double nu   = MatParams[1];
   double tmax = MatParams[2];
   double Gmax = MatParams[3];
-  double rho =MatParams[30];
-  double aT  =MatParams[31];
-  UniaxialMaterial* newClone = new UniaxialCyclic(myID, E, nu, rho, aT, tmax,
+  double rho  = MatParams[30];
+  double aT   = MatParams[31];
+  UniaxialMaterial* newClone = new UniaxialCyclic(id_, E, nu, rho, aT, tmax,
                                                   Gmax);
   return newClone;
 }

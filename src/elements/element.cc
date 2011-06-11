@@ -271,7 +271,7 @@ int Element::get_num_plastic_points() {
  */
 void Element::Save(std::ostream* os) {
   (*os) << "{";
-  (*os) << "\"id\":" << myID <<",";
+  (*os) << "\"id\":" << id_ <<",";
   (*os) << "\"tag\":"               << this->get_tag()      << ",";
   (*os) << "\"material\":"          << myMaterial->get_id() << ",";
   (*os) << "\"nodes\":[";
