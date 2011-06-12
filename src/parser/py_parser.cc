@@ -80,6 +80,7 @@
 #include "exception/sexception.h"
 #include "group/group.h"
 #include "imposer/elimination_imposer.h"
+#include "imposer/elimination_imposer2.h"
 #include "imposer/lagrange_imposer.h"
 #include "imposer/penalty_imposer.h"
 #include "loadcase/element_sensitivity_parameter.h"
@@ -2354,6 +2355,13 @@ static PyMethodDef AnalysisMethods[] =  {
 /******************************************************************************
 * Imposer commands
 ******************************************************************************/
+static PyObject* pyImposer_Eliminatation2(PyObject* /*self*/, PyObject* args) {
+  if (!PyArg_ParseTuple(args, "")) return NULL;
+  Imposer* pImposer = new EliminationImposer2();
+  pA->set_imposer(pImposer);
+  Py_INCREF(Py_None);
+  return Py_None;
+}
 static PyObject* pyImposer_Eliminatation(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
   Imposer* pImposer = new EliminationImposer();
@@ -2378,6 +2386,8 @@ static PyObject* pyImposer_Penalty(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyMethodDef ImposerMethods[] =  {
+  {"elimination2", pyImposer_Eliminatation2,
+    METH_VARARGS, "Use the elimination method to impose constraints."},
   {"elimination", pyImposer_Eliminatation,
     METH_VARARGS, "Use the elimination method to impose constraints."},
   {"lagrange",  pyImposer_Lagrange,
