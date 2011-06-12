@@ -68,8 +68,6 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   // Check the imposer
   if (pA->get_imposer() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
-  if (!this->checkIfAllows(pA->get_imposer()))
-    throw SException("[nemesis:%d] %s", 9999, "Imposer type is incorrect.");
   // Check the control
   if (pA->get_control() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No control has been set.");
@@ -95,7 +93,7 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
     throw SException("[nemesis:%d] %s", 9999, "Reorderer type is incorrect.");
 
   // Create model by applying the constraints
-  pA->get_imposer()->impose();
+  pA->get_imposer()->impose(pA->get_model());
 
   // Now that model is complete, reorder the model
   if (pA->get_reorderer() != 0) pA->get_reorderer()->reorder();

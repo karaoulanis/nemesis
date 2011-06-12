@@ -24,9 +24,7 @@
 // *****************************************************************************
 
 #include "imposer/lagrange_imposer.h"
-#include "analysis/analysis.h"
 #include "constraints/constraint.h"
-#include "domain/domain.h"
 #include "model/lagrange_model_element.h"
 #include "model/lagrange_model_node.h"
 #include "model/model.h"
@@ -35,12 +33,19 @@
 #include "node/node.h"
 
 LagrangeImposer::LagrangeImposer()
-  :Imposer() {
-  myTag = TAG_IMPOSER_LAGRANGE;
+   : Imposer() {
+} 
+
+
+LagrangeImposer::LagrangeImposer(const std::map<int, Node*>& nodes,
+                                 const std::map<int, Element*>& elements,
+                                 const std::map<int, Constraint*>& constraints)
+    : Imposer(nodes, elements, constraints) {
 }
 
-int LagrangeImposer::impose() {
-  if (theModel->isConstrained()) return 0;
+
+int LagrangeImposer::impose(Model* model) {
+  if (model->isConstrained()) return 0;
 
   Node* pNode;                // Pointer to a domain node
   Element* pElement;              // Pointer to a domain element
@@ -54,26 +59,28 @@ int LagrangeImposer::impose() {
   // Find nodal global numbering and store it
   //=========================================================================
   int nDofs = this->createGlobalDofNumbering();
-  theModel->set_equations(nDofs);
+  model->set_equations(nDofs);
 
   //=========================================================================
   // Create Standard ModelNodes
   //=========================================================================
-  for (NodeIterator nIter = pA->get_domain()->get_nodes().begin();
-          nIter != pA->get_domain()->get_nodes().end(); nIter++) {
+  for (std::map<int, Node*>::const_iterator nIter = nodes_->begin();
+                                            nIter != nodes_->end();
+                                            nIter++) {
     // Get a pointer to a node
     pNode = nIter->second;
     // Get the nodal id
     int nodeID = pNode->get_id();
     IDContainer nodalFTable = this->get_global_dofs(nodeID);
     pStdModelNode = new StandardModelNode(nodalFTable, pNode);
-    theModel->addModelNode(pStdModelNode);
+    model->addModelNode(pStdModelNode);
   }
   //=========================================================================
   // Create Standard ModelElements
   //=========================================================================
-    for (ElementIterator eIter = pA->get_domain()->get_elements().begin();
-             eIter != pA->get_domain()->get_elements().end();eIter++) {
+  for (std::map<int, Element*>::const_iterator eIter = elements_->begin();
+                                               eIter != elements_->end();
+                                               eIter++) {
     // Get next (randomly chosen) element
     pElement = eIter->second;
     // Get the ids of the nodes
@@ -93,21 +100,22 @@ int LagrangeImposer::impose() {
       }
     }
     pStdModelElement = new StandardModelElement(elemFTable, pElement);
-    theModel->addModelElement(pStdModelElement);
+    model->addModelElement(pStdModelElement);
   }
   //=========================================================================
   // Constraints
   //=========================================================================
-  int nEquations = theModel->get_num_eqns();
-  for (ConstraintIterator cIter = theConstraints->begin();
-            cIter != theConstraints->end(); cIter++) {
+  int nEquations = model->get_num_eqns();
+  for (std::map<int, Constraint*>::const_iterator cIter = constraints_->begin();
+                                                  cIter != constraints_->end();
+                                                  cIter++) {
     pConstraint = cIter->second;
     if (pConstraint->get_num_cdofs() == 0) continue;
     // Lagrange ModelNode
     static IDContainer nodalFTable(1);
     nodalFTable[0]=nEquations;
     pLagModelNode = new LagrangeModelNode(nodalFTable, 0, pConstraint);
-    theModel->addModelNode(pLagModelNode);
+    model->addModelNode(pLagModelNode);
     // Lagrange ModelElement
     int ncDofs = pConstraint->get_num_cdofs();
     IDContainer cFTable(ncDofs+1);
@@ -117,10 +125,10 @@ int LagrangeImposer::impose() {
     }
     cFTable[ncDofs]=nEquations;
     pLagModelElement = new LagrangeModelElement(cFTable, pConstraint);
-    theModel->addModelElement(pLagModelElement);
+    model->addModelElement(pLagModelElement);
     nEquations++;
   }
-  theModel->set_equations(nEquations);
-  theModel->set_constrained(true);
+  model->set_equations(nEquations);
+  model->set_constrained(true);
   return 0;
 }

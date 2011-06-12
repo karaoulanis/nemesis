@@ -101,6 +101,7 @@ void Domain::clear() {
   Containers::map_delete(theMaterials);
   Containers::map_delete(theLoadCases);
   Containers::map_delete(theConstraints);
+  Containers::map_delete(trackers_);
   this->init();
 }
 /**

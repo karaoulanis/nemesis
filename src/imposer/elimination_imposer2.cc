@@ -27,9 +27,7 @@
 #include <map>
 #include <utility>
 #include <vector>
-#include "analysis/analysis.h"
 #include "constraints/constraint.h"
-#include "domain/domain.h"
 #include "model/elimination_model_element.h"
 #include "model/elimination_model_node.h"
 #include "model/model.h"
@@ -44,7 +42,15 @@
 EliminationImposer2::EliminationImposer2()
     : Imposer(),
       theNewDofs(0) {
-  myTag = TAG_IMPOSER_ELIMINATION;
+}
+
+
+EliminationImposer2::
+EliminationImposer2(const std::map<int, Node*>& nodes,
+                    const std::map<int, Element*>& elements,
+                    const std::map<int, Constraint*>& constraints)
+    : Imposer(nodes, elements, constraints),
+      theNewDofs(0) {
 }
 
 
@@ -52,20 +58,21 @@ EliminationImposer2::~EliminationImposer2() {
 }
 
 
-int EliminationImposer2::impose() {
+int EliminationImposer2::impose(Model* model) {
   // Check if constrains are already imposed
-  if (theModel->isConstrained()) {
+  if (model->isConstrained()) {
     return 0;
   }
-  theModel->clear();
+  model->clear();
 
   // Create a map to hold node ids and freedom tables.
   // e.g. {1:[0, 1], 2:[2, 3], ...}
   std::map<int, std::vector<int> > ftables;
 
   // Step 1.: Run through nodes and collect node ids and active dofs.
-  for (NodeIterator ni = pA->get_domain()->get_nodes().begin();
-            ni != pA->get_domain()->get_nodes().end(); ni++) {
+  for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
+                                            ni != nodes_->end();
+                                            ni++) {
     Node* node = ni->second;
     // Get vector<int> of active dofs. Inactive dofs are equal to -1.
     // e.g. [0, 1, -1, -1, -1, ...]
@@ -83,8 +90,9 @@ int EliminationImposer2::impose() {
   }
 
   // Step 2.: Check and apply constraints.
-  for (ConstraintIterator ci = theConstraints->begin();
-            ci != theConstraints->end(); ci++) {
+  for (std::map<int, Constraint*>::const_iterator ci = constraints_->begin();
+                                                  ci != constraints_->end();
+                                                  ci++) {
     Constraint* constraint = ci->second;
     // Check constraints
     if (constraint->get_num_cdofs() == 0) {
@@ -115,7 +123,8 @@ int EliminationImposer2::impose() {
   // That is why num_dof is preincremented (i.e. starts from 1).
   int num_dofs = 0;
   for (std::map<int, std::vector<int> >::iterator ti = ftables.begin();
-        ti != ftables.end(); ti++) {
+                                                  ti != ftables.end();
+                                                  ti++) {
     std::vector<int>& ftable = ti->second;
     for (unsigned i = 0; i < ftable.size(); i++) {
       if (ftable[i] > 0) {
@@ -125,7 +134,7 @@ int EliminationImposer2::impose() {
     // Remove inactive dofs.
     /// @todo Check which is more efficient.
     // table.erase(std::remove(table.begin(), table.end(), 0), table.end());
-    ftable.erase( std::remove_if(ftable.begin(),
+    ftable.erase(std::remove_if(ftable.begin(),
                                  ftable.end(), num::is_zero), ftable.end());
     // Decrement all (positive) members by one.
     // Dof numbering should be start from 0 now.
@@ -137,11 +146,12 @@ int EliminationImposer2::impose() {
     }
   }
   // Now the number of equations can be set.
-  theModel->set_equations(num_dofs);
+  model->set_equations(num_dofs);
 
   // Step 4.: Create model nodes
-  for (NodeIterator ni = pA->get_domain()->get_nodes().begin();
-            ni != pA->get_domain()->get_nodes().end(); ni++) {
+  for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
+                                            ni != nodes_->end();
+                                            ni++) {
     Node* node = ni->second;
     ModelNode* model_node;
     const std::vector<int>& ftable = ftables[node->get_id()];
@@ -153,7 +163,7 @@ int EliminationImposer2::impose() {
       // Create EliminationModelNode
       model_node = new EliminationModelNode(ftable, node);
     }
-    theModel->addModelNode(model_node);
+    model->addModelNode(model_node);
     /// @todo Remove.
     // print
     // cout << model_node->get_node()->get_id() <<": \t";
@@ -161,8 +171,9 @@ int EliminationImposer2::impose() {
   }
 
   // Step 5.: Create model elements
-  for (ElementIterator ei = pA->get_domain()->get_elements().begin();
-              ei != pA->get_domain()->get_elements().end(); ei++) {
+  for (std::map<int, Element*>::const_iterator ei = elements_->begin();
+                                               ei != elements_->end();
+                                               ei++) {
     Element* elem = ei->second;
     const std::vector<Node*> nodes = elem->get_nodes();
     // Copy ftable from the first node.
@@ -182,7 +193,7 @@ int EliminationImposer2::impose() {
       model_elem = new EliminationModelElement(ftable, elem);
     }
     // Add it to the model
-    theModel->addModelElement(model_elem);
+    model->addModelElement(model_elem);
     /// @todo Remove.
     // print
     // cout << model_elem->get_element()->get_id() <<": \t";
@@ -190,7 +201,7 @@ int EliminationImposer2::impose() {
   }
 
   // Set the model as constrained
-  theModel->set_constrained(true);
+  model->set_constrained(true);
 
   return 0;
 }

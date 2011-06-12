@@ -30,8 +30,12 @@
 
 class PenaltyImposer: public Imposer {
  public:
-  explicit PenaltyImposer(double a);
-  int impose();
+  PenaltyImposer();
+  PenaltyImposer(double a,
+                 const std::map<int, Node*>& nodes,
+                 const std::map<int, Element*>& elements,
+                 const std::map<int, Constraint*>& constraints);
+  int impose(Model* model);
  private:
   double a_;
 };
