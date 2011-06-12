@@ -27,28 +27,34 @@
 #define SRC_IMPOSER_IMPOSER_H_
 
 #include <map>
-#include "analysis/analysis_object.h"
 #include "containers/containers.h"
 
 // Forward declarations
+class Element;
 class Model;
-class Domain;
+class Node;
 class Constraint;
 
-class Imposer: public AnalysisObject {
+class Imposer {
  public:
   Imposer();
+  Imposer(const std::map<int, Node*>& nodes,
+          const std::map<int, Element*>& elements,
+          const std::map<int, Constraint*>& constraints);
   virtual ~Imposer();
-  int createGlobalDofNumbering();
-  int get_global_dof(int NodeID, int localDof);
+
+  int createGlobalDofNumbering();                 /// @todo Remove.
+  int get_global_dof(int NodeID, int localDof);   /// @todo Remove.
   const IDContainer get_global_dofs(int NodeID);
-  virtual int impose()=0;
+  virtual int impose(Model* model)=0;
+
  protected:
-  Model* theModel;
-  Domain* theDomain;
-  std::map<int, Constraint*>* theConstraints;
-  IDContainer myNodalIDs;
-  IDContainer theNodalGlobalDofs;
+  const std::map<int, Node*>*       nodes_;
+  const std::map<int, Element*>*    elements_;
+  const std::map<int, Constraint*>* constraints_;
+  IDContainer myNodalIDs;                         /// @todo Remove.
+  IDContainer theNodalGlobalDofs;                 /// @todo Remove.
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

@@ -46,7 +46,7 @@ bool EigenAnalysis::checkIfAllows(FEObject* /*f*/) {
 }
 int EigenAnalysis::run(LoadCase* /*loadcase*/, int /*num_loadsteps*/) {
   // Create model by applying the constraints
-  pA->get_imposer()->impose();
+  pA->get_imposer()->impose(pA->get_model());
 
   // Now that model is complete, reorder the model
   if (pA->get_reorderer() !=0 ) pA->get_reorderer()->reorder();

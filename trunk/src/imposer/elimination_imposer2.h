@@ -31,9 +31,12 @@
 class EliminationImposer2: public Imposer {
  public:
   EliminationImposer2();
-  ~EliminationImposer2();
+  EliminationImposer2(const std::map<int, Node*>& nodes,
+                      const std::map<int, Element*>& elements,
+                      const std::map<int, Constraint*>& constraints);
+   ~EliminationImposer2();
+  int impose(Model* model);
  private:
   IDContainer theNewDofs;
-  int impose();
 };
 #endif  // SRC_IMPOSER_ELIMINATION_IMPOSER_2_H_

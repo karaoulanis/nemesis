@@ -26,7 +26,6 @@
 #include "imposer/elimination_imposer.h"
 #include "analysis/analysis.h"
 #include "constraints/constraint.h"
-#include "domain/domain.h"
 #include "model/elimination_model_element.h"
 #include "model/elimination_model_node.h"
 #include "model/model.h"
@@ -37,14 +36,24 @@
 EliminationImposer::EliminationImposer()
     : Imposer(),
       theNewDofs(0) {
-  myTag = TAG_IMPOSER_ELIMINATION;
 }
+
+
+EliminationImposer::
+EliminationImposer(const std::map<int, Node*>& nodes,
+                   const std::map<int, Element*>& elements,
+                   const std::map<int, Constraint*>& constraints)
+    : Imposer(nodes, elements, constraints),
+      theNewDofs(0) {
+}
+
 
 EliminationImposer::~EliminationImposer() {
 }
 
-int EliminationImposer::impose() {
-  if (theModel->isConstrained()) return 0;
+
+int EliminationImposer::impose(Model* model) {
+  if (model->isConstrained()) return 0;
 
   Node* pNode;
   Element* pElement;
@@ -57,7 +66,7 @@ int EliminationImposer::impose() {
   // ---------------------------------------------------------------------------
   // Find nodal global numbering and store it
   // ---------------------------------------------------------------------------
-  theModel->clear();
+  model->clear();
   int nDofs = this->createGlobalDofNumbering();
 
   // ---------------------------------------------------------------------------
@@ -65,8 +74,9 @@ int EliminationImposer::impose() {
   // ---------------------------------------------------------------------------
   theNewDofs.resize(nDofs);
   for (int i = 0;i < nDofs;i++) theNewDofs[i]=1;
-  for (ConstraintIterator cIter = theConstraints->begin();
-              cIter != theConstraints->end(); cIter++) {
+  for (std::map<int, Constraint*>::const_iterator cIter = constraints_->begin();
+                                                  cIter != constraints_->end();
+                                                  cIter++) {
     pConstraint = cIter->second;
     if (pConstraint->get_num_cdofs() == 0) continue;
     if (pConstraint->get_num_cdofs() > 1)
@@ -83,13 +93,14 @@ int EliminationImposer::impose() {
   }
   int nEquations = 0;
   for (int i = 0;i < nDofs;i++) if (theNewDofs[i]>0) theNewDofs[i]=nEquations++;
-  theModel->set_equations(nEquations);
+  model->set_equations(nEquations);
 
   // ===========================================================================
   // Create ModelNodes
   // ===========================================================================
-  for (NodeIterator nIter = pA->get_domain()->get_nodes().begin();
-            nIter != pA->get_domain()->get_nodes().end(); nIter++) {
+  for (std::map<int, Node*>::const_iterator nIter = nodes_->begin();
+                                            nIter != nodes_->end();
+                                            nIter++) {
     static IDContainer oldFTable;
     static IDContainer newFTable;
     // Get a pointer to a node
@@ -103,19 +114,20 @@ int EliminationImposer::impose() {
     if (Containers::all_positive(newFTable)) {
       // Create StandardModelNode
       pStdModelNode = new StandardModelNode(newFTable, pNode);
-      theModel->addModelNode(pStdModelNode);
+      model->addModelNode(pStdModelNode);
     } else {
       // Create EliminationModelNode
       pElimModelNode = new EliminationModelNode(newFTable, pNode);
       pElimModelNode->set_old_FTable(oldFTable);
-      theModel->addModelNode(pElimModelNode);
+      model->addModelNode(pElimModelNode);
     }
   }
   // ===========================================================================
   // Create ModelElements
   // ===========================================================================
-  for (ElementIterator eIter = pA->get_domain()->get_elements().begin();
-    eIter != pA->get_domain()->get_elements().end(); eIter++) {
+  for (std::map<int, Element*>::const_iterator eIter = elements_->begin();
+                                               eIter != elements_->end();
+                                               eIter++) {
     /// @todo Needs speed improvements
     // Get next (randomly chosen) element
     pElement = eIter->second;
@@ -139,13 +151,13 @@ int EliminationImposer::impose() {
     if (Containers::all_positive(elemFTable)) {
       // Create StandardModelElement
       pStdModelElement = new StandardModelElement(elemFTable, pElement);
-      theModel->addModelElement(pStdModelElement);
+      model->addModelElement(pStdModelElement);
     } else {
       // Create EliminationModelElement
       pElimModelElement = new EliminationModelElement(elemFTable, pElement);
-      theModel->addModelElement(pElimModelElement);
+      model->addModelElement(pElimModelElement);
     }
   }
-  theModel->set_constrained(true);
+  model->set_constrained(true);
   return 0;
 }

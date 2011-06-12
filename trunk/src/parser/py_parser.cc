@@ -2357,14 +2357,18 @@ static PyMethodDef AnalysisMethods[] =  {
 ******************************************************************************/
 static PyObject* pyImposer_Eliminatation2(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
-  Imposer* pImposer = new EliminationImposer2();
+  Imposer* pImposer = new EliminationImposer2(pD->get_nodes(),
+                                              pD->get_elements(),
+                                              pD->get_constraints());
   pA->set_imposer(pImposer);
   Py_INCREF(Py_None);
   return Py_None;
 }
 static PyObject* pyImposer_Eliminatation(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "")) return NULL;
-  Imposer* pImposer = new EliminationImposer();
+  Imposer* pImposer = new EliminationImposer(pD->get_nodes(),
+                                             pD->get_elements(),
+                                             pD->get_constraints());
   pA->set_imposer(pImposer);
   Py_INCREF(Py_None);
   return Py_None;
@@ -2372,7 +2376,9 @@ static PyObject* pyImposer_Eliminatation(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyImposer_Lagrange(PyObject* /*self*/, PyObject* args) {
   double a;
   if (!PyArg_ParseTuple(args, "", &a)) return NULL;
-  Imposer* pImposer = new LagrangeImposer();
+  Imposer* pImposer = new LagrangeImposer(pD->get_nodes(),
+                                          pD->get_elements(),
+                                          pD->get_constraints());
   pA->set_imposer(pImposer);
   Py_INCREF(Py_None);
   return Py_None;
@@ -2380,7 +2386,10 @@ static PyObject* pyImposer_Lagrange(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyImposer_Penalty(PyObject* /*self*/, PyObject* args) {
   double a;
   if (!PyArg_ParseTuple(args, "d", &a)) return NULL;
-  Imposer* pImposer = new PenaltyImposer(a);
+  Imposer* pImposer = new PenaltyImposer(a,
+                                         pD->get_nodes(),
+                                         pD->get_elements(),
+                                         pD->get_constraints());
   pA->set_imposer(pImposer);
   Py_INCREF(Py_None);
   return Py_None;

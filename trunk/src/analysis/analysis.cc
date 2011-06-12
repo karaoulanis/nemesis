@@ -43,7 +43,7 @@ Analysis::Analysis(Domain* pDomain)
       theImposer(NULL),
       theNorm(new ConvergenceNorm()),
       theReorderer(NULL) {
-  M.set_analysis(this);
+  theNorm->set_analysis(this);
 }
 
 Analysis::~Analysis() {

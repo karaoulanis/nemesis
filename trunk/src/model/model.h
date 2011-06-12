@@ -34,7 +34,6 @@
 #include <boost/graph/properties.hpp>
 #include <boost/graph/wavefront.hpp>
 #include <vector>
-#include "analysis/analysis_object.h"
 
 class ModelNode;
 class ModelElement;
@@ -71,7 +70,7 @@ typedef std::vector<ModelNode*>                   ModelNodeContainer;
 typedef std::vector<ModelElement*>                ModelElementContainer;
 typedef std::vector<ModelNode*>::const_iterator   ModelNodeIterator;
 
-class Model: public AnalysisObject {
+class Model {
  public:
   // Contructor and destructor
   explicit Model(Domain* pDomain);

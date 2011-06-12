@@ -37,8 +37,7 @@
  * Default constructor.
  */
 Model::Model(Domain* pDomain)
-    : AnalysisObject(),
-      theDomain(pDomain),
+    : theDomain(pDomain),
       theModelNodes(0),
       theModelElements(0),
       nEquations(0),

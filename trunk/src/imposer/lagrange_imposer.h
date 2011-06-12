@@ -29,10 +29,11 @@
 #include "imposer/imposer.h"
 
 class LagrangeImposer: public Imposer {
-  private:
-
-  public:
+ public:
   LagrangeImposer();
-  int impose();
+  LagrangeImposer(const std::map<int, Node*>& nodes,
+                  const std::map<int, Element*>& elements,
+                  const std::map<int, Constraint*>& constraints);
+  int impose(Model* model);
 };
 #endif  // SRC_IMPOSER_LAGRANGE_IMPOSER_H_

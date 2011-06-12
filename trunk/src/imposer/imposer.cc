@@ -24,22 +24,28 @@
 // *****************************************************************************
 
 #include "imposer/imposer.h"
-#include "analysis/analysis.h"
 #include "constraints/constraint.h"
-#include "domain/domain.h"
-#include "model/model.h"
-#include "model/standard_model_element.h"
-#include "model/standard_model_node.h"
 #include "node/node.h"
 
 Imposer::Imposer()
-    : myNodalIDs(0),
+    : nodes_(0),
+      elements_(0),
+      constraints_(0),
+      myNodalIDs(0),
       theNodalGlobalDofs(0) {
-  theModel = pA->get_model();
-  theConstraints=&(pA->get_domain()->get_constraints());
-  theModel->set_constrained(false);
-  theDomain = pA->get_domain();
 }
+
+
+Imposer::Imposer(const std::map<int, Node*>& nodes,
+                 const std::map<int, Element*>& elements,
+                 const std::map<int, Constraint*>& constraints)
+    : nodes_(&nodes),
+      elements_(&elements),
+      constraints_(&constraints),
+      myNodalIDs(0),
+      theNodalGlobalDofs(0) {
+}
+
 
 Imposer::~Imposer() {
 }
@@ -56,16 +62,16 @@ Imposer::~Imposer() {
  * @return The number of global dofs.
  */
 int Imposer::createGlobalDofNumbering() {
-  int nNodes = theDomain->get_nodes().size();
+  int nNodes = nodes_->size();
   myNodalIDs.resize(nNodes);
   theNodalGlobalDofs.resize(nNodes);
   int k = 0;
-  for (NodeIterator nIter = theDomain->get_nodes().begin();
-          nIter != theDomain->get_nodes().end(); nIter++) {
+  for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
+                                            ni != nodes_->end(); ni++) {
     // Get the next node from the node container stored in the domain
-    Node* pNode = nIter->second;
+    Node* pNode = ni->second;
     // Store the nodal id
-    myNodalIDs[k]=pNode->get_id();
+    myNodalIDs[k] = pNode->get_id();
     // Sore the number of activated dofs
     int nActivatedDofs = pNode->get_num_activated_dofs();
     if (k == 0) {
@@ -95,7 +101,7 @@ int Imposer::get_global_dof(int NodeID, int localDof) {
   int index = Containers::index_find(myNodalIDs, NodeID);
   int globalDof = 0;
   if (index>0) globalDof = theNodalGlobalDofs[index-1];
-  Node* pNode = theDomain->get<Node>(theDomain->get_nodes(), NodeID);
+  const Node* pNode = nodes_->find(NodeID)->second;
   if (pNode->get_activated_dof(localDof) < 0) return -1;
   globalDof+=pNode->get_activated_dof(localDof);
   return globalDof;
@@ -111,9 +117,7 @@ int Imposer::get_global_dof(int NodeID, int localDof) {
  */
 const IDContainer Imposer::get_global_dofs(int NodeID) {
   int index = Containers::index_find(myNodalIDs, NodeID);
-  int nActivatedDofs= theDomain->
-                      get<Node>(theDomain->get_nodes(), NodeID)->
-                      get_num_activated_dofs();
+  int nActivatedDofs = nodes_->find(NodeID)->second->get_num_activated_dofs();
   IDContainer globalDofs(nActivatedDofs);
   int startDof;
   if (index == 0) {
@@ -121,6 +125,6 @@ const IDContainer Imposer::get_global_dofs(int NodeID) {
   } else {
     startDof = theNodalGlobalDofs[index-1];
   }
-  for (int i = 0;i < nActivatedDofs;i++) globalDofs[i]=startDof+i;
+  for (int i = 0;i < nActivatedDofs;i++) globalDofs[i] = startDof+i;
   return globalDofs;
 }

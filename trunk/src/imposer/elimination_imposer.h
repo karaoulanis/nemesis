@@ -26,14 +26,18 @@
 #ifndef SRC_IMPOSER_ELIMINATION_IMPOSER_H_
 #define SRC_IMPOSER_ELIMINATION_IMPOSER_H_
 
+#include <map>
 #include "imposer/imposer.h"
 
 class EliminationImposer: public Imposer {
  public:
   EliminationImposer();
+  EliminationImposer(const std::map<int, Node*>& nodes,
+                     const std::map<int, Element*>& elements,
+                     const std::map<int, Constraint*>& constraints);
   ~EliminationImposer();
+  int impose(Model* model);
  private:
   IDContainer theNewDofs;
-  int impose();
 };
 #endif  // SRC_IMPOSER_ELIMINATION_IMPOSER_H_
