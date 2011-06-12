@@ -125,8 +125,8 @@ int EliminationImposer2::impose() {
     // Remove inactive dofs.
     /// @todo Check which is more efficient.
     // table.erase(std::remove(table.begin(), table.end(), 0), table.end());
-    ftable.erase(
-      std::remove_if(ftable.begin(), ftable.end(), num::is_zero), ftable.end());
+    ftable.erase( std::remove_if(ftable.begin(),
+                                 ftable.end(), num::is_zero), ftable.end());
     // Decrement all (positive) members by one.
     // Dof numbering should be start from 0 now.
     // e.g. [0, 1, -1]
