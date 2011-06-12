@@ -68,7 +68,8 @@ group.state(2, 0)
 # slef weight analysis
 #---------------------------------------------------------
 analysis.static()
-imposer.elimination()
+imposer.elimination2()
+#imposer.elimination()
 #imposer.penalty(1e14)
 #imposer.lagrange()
 control.load(1.0)
@@ -91,7 +92,7 @@ analysis.run(2,1)
 print(" 4  = ",json.loads(node.data( 4))['disp'])#[1]
 print(" 7  = ",json.loads(node.data( 7))['disp'])#[1]
 
-s = tracker.data(1)
-s = json.loads(s)
-print(s[0])
-print(s[1])
+# s = tracker.data(1)
+# s = json.loads(s)
+# print(s[0])
+# print(s[1])
