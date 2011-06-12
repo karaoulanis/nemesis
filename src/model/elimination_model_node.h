@@ -35,8 +35,6 @@ class EliminationModelNode: public ModelNode {
   EliminationModelNode();
   EliminationModelNode(const IDContainer& FTable, Node* pNode);
   ~EliminationModelNode();
-
-  void set_old_FTable(const IDContainer& ftab);
   void add_R(double factor);
   void incTrialDisp(const Vector& du);
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
@@ -44,7 +42,10 @@ class EliminationModelNode: public ModelNode {
   void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a);
   void commit();
   void commitSens(const Vector& X, int param);
+  ///@todo: Mark for removal
+  void set_old_FTable(const IDContainer& ftab);
  private:
+  ///@todo: Mark for removal
   IDContainer theOldFTable;
 };
 

@@ -109,6 +109,10 @@ namespace num {
   inline double sign(double d) {
     return d < 0  ? -1 : 1;
   }
+  
+  inline bool is_zero(int i) {
+    return i == 0 ? true : false;  
+  }
 
   namespace check {
     inline void array_range(int i, int n) {
