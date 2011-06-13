@@ -82,7 +82,9 @@
 #include "imposer/elimination_imposer.h"
 #include "imposer/elimination_imposer2.h"
 #include "imposer/lagrange_imposer.h"
+#include "imposer/lagrange_imposer2.h"
 #include "imposer/penalty_imposer.h"
+#include "imposer/penalty_imposer2.h"
 #include "loadcase/element_sensitivity_parameter.h"
 #include "loadcase/ground_motion_file.h"
 #include "loadcase/ground_motion_sin.h"
@@ -2383,6 +2385,27 @@ static PyObject* pyImposer_Lagrange(PyObject* /*self*/, PyObject* args) {
   Py_INCREF(Py_None);
   return Py_None;
 }
+static PyObject* pyImposer_Lagrange2(PyObject* /*self*/, PyObject* args) {
+  double a;
+  if (!PyArg_ParseTuple(args, "", &a)) return NULL;
+  Imposer* pImposer = new LagrangeImposer(pD->get_nodes(),
+                                          pD->get_elements(),
+                                          pD->get_constraints());
+  pA->set_imposer(pImposer);
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+static PyObject* pyImposer_Penalty2(PyObject* /*self*/, PyObject* args) {
+  double a;
+  if (!PyArg_ParseTuple(args, "d", &a)) return NULL;
+  Imposer* pImposer = new PenaltyImposer2(a,
+                                         pD->get_nodes(),
+                                         pD->get_elements(),
+                                         pD->get_constraints());
+  pA->set_imposer(pImposer);
+  Py_INCREF(Py_None);
+  return Py_None;
+}
 static PyObject* pyImposer_Penalty(PyObject* /*self*/, PyObject* args) {
   double a;
   if (!PyArg_ParseTuple(args, "d", &a)) return NULL;
@@ -2399,6 +2422,10 @@ static PyMethodDef ImposerMethods[] =  {
     METH_VARARGS, "Use the elimination method to impose constraints."},
   {"elimination", pyImposer_Eliminatation,
     METH_VARARGS, "Use the elimination method to impose constraints."},
+  {"lagrange2",  pyImposer_Lagrange2,
+    METH_VARARGS, "Use the Langange multipliers method to impose constraints."},
+  {"penalty2", pyImposer_Penalty2,
+    METH_VARARGS, "Use the penalty method to impose constraints."},
   {"lagrange",  pyImposer_Lagrange,
     METH_VARARGS, "Use the Langange multipliers method to impose constraints."},
   {"penalty", pyImposer_Penalty,
@@ -2872,3 +2899,4 @@ int PyParser::initModules() {
                      "sys.stderr = StderrCatcher()\n");
   return 0;
 }
+
