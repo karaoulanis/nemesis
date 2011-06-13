@@ -24,6 +24,9 @@
 // *****************************************************************************
 
 #include "imposer/penalty_imposer2.h"
+#include <map>
+#include <utility>
+#include <vector>
 #include "constraints/constraint.h"
 #include "model/model.h"
 #include "model/penalty_model_element.h"
@@ -54,7 +57,7 @@ int PenaltyImposer2::impose(Model* model) {
   // Create a map to hold node ids and freedom tables.
   // e.g. {1:[0, 1], 2:[2, 3], ...}
   std::map<int, std::vector<int> > ftables;
-  
+
   // Step 1.: Run through nodes and collect node ids and active dofs.
   //          Number (global) these dofs.
   //          Store node freedom tables.
@@ -67,18 +70,18 @@ int PenaltyImposer2::impose(Model* model) {
     // Get vector<int> of active dofs. Inactive dofs are equal to -1.
     // e.g. [0, 1, -1, -1, -1, ...]
     std::vector<int> ftable = node->get_activated_dofs();
-   // Now assign global dofs,
+    // Now assign global dofs,
     // e.g. [1, 2, -1, -1, -1, ...]
     for (unsigned i = 0; i < ftable.size(); i++) {
-        if (ftable[i] >= 0 ) {
-          ftable[i] = num_dofs++;
-        }
+      if (ftable[i] >= 0) {
+        ftable[i] = num_dofs++;
+      }
     }
     // Insert to ftables map for later reference (for Model Elements).
     // e.g. {node_id:[1, 2, -1, -1, -1, ...]}
     int node_id = node->get_id();
     ftables.insert(std::pair<int, std::vector<int> >(node_id, ftable));
- }
+  }
   // Now the number of equations can be set.
   model->set_equations(num_dofs);
 
@@ -99,7 +102,8 @@ int PenaltyImposer2::impose(Model* model) {
       ftable[i] = ftables[constrained_node][constrained_dof];
     }
     // Create model element
-    PenaltyModelElement* model_elem = new PenaltyModelElement(ftable, constraint, a_);
+    PenaltyModelElement* model_elem =
+        new PenaltyModelElement(ftable, constraint, a_);
     // Add it to the model
     model->addModelElement(model_elem);
     /// @todo Remove.
@@ -108,8 +112,8 @@ int PenaltyImposer2::impose(Model* model) {
     Containers::vector_print(model_elem->get_FTable());
   }
 
-   // Step 3.: Remove inactive dofs.
-   //          Create standard model nodes
+  // Step 3.: Remove inactive dofs.
+  //          Create standard model nodes
   for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
                                             ni != nodes_->end();
                                             ni++) {
@@ -120,7 +124,7 @@ int PenaltyImposer2::impose(Model* model) {
     // table.erase(std::remove(table.begin(), table.end(), 0), table.end());
     ftable.erase(std::remove_if(ftable.begin(),
                                  ftable.end(), num::is_negative), ftable.end());
-    // Create model nodes. 
+    // Create model nodes.
     StandardModelNode* model_node = new StandardModelNode(ftable, node);
     model->addModelNode(model_node);
     /// @todo Remove.
@@ -151,7 +155,7 @@ int PenaltyImposer2::impose(Model* model) {
     std::cout << model_elem->get_element()->get_id() <<": \t";
     Containers::vector_print(model_elem->get_FTable());
   }
-  
+
   // Set the model as constrained
   model->set_constrained(true);
 
