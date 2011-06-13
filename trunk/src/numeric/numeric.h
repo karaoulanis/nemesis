@@ -114,6 +114,10 @@ namespace num {
     return i == 0 ? true : false;  
   }
 
+  inline bool is_negative(int i) {
+    return i < 0 ? true : false;  
+  }
+  
   namespace check {
     inline void array_range(int i, int n) {
       if ((i < 0)||(i > n))

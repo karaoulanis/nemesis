@@ -83,7 +83,7 @@ int EliminationImposer2::impose(Model* model) {
     for (unsigned i = 0; i < active_dofs.size(); i++) {
       active_dofs[i] += 1;
     }
-    // Insert to node_tables map.
+    // Insert to ftables map.
     // e.g. {node_id:[1, 2, 0, 0, 0, ...]}
     int node_id = node->get_id();
     ftables.insert(std::pair<int, std::vector<int> >(node_id, active_dofs));
@@ -117,10 +117,10 @@ int EliminationImposer2::impose(Model* model) {
   }
 
   // Step 3.: Renumber free dofs.
-  // Again constraints should be the only negatives ones.
-  // Inactive dofs should be zero.
-  // Active dofs should be greater than zero.
-  // That is why num_dof is preincremented (i.e. starts from 1).
+  //          Again constraints should be the only negatives ones.
+  //          Inactive dofs should be zero.
+  //          Active dofs should be greater than zero.
+  //          That is why num_dof is preincremented (i.e. starts from 1).
   int num_dofs = 0;
   for (std::map<int, std::vector<int> >::iterator ti = ftables.begin();
                                                   ti != ftables.end();
