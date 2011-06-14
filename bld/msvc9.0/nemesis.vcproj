@@ -678,34 +678,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="database"
-			>
-			<File
-				RelativePath="..\..\src\database\database.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\database\database.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\database\packet.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\database\packet.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\database\sqlite_database.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\database\sqlite_database.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="domain"
 			>
 			<File
@@ -1001,6 +973,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\imposer\elimination_imposer2.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\imposer\elimination_imposer2.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\imposer\imposer.cc"
 				>
 			</File>
@@ -1017,11 +997,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\imposer\lagrange_imposer2.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\imposer\lagrange_imposer2.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\imposer\penalty_imposer.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\imposer\penalty_imposer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\imposer\penalty_imposer2.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\imposer\penalty_imposer2.h"
 				>
 			</File>
 		</Filter>
