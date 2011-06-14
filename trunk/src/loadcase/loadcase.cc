@@ -122,7 +122,7 @@ void LoadCase::Initialize() {
 void LoadCase::ApplyLoads(double lambda, double time) {
   if (lambda  ==  0.) return;
   if (!active_ && !applied_)  return;
-  else if (active_ == 0) factor_ = lambda;
+  else if (active_ == true) factor_ = lambda;
   // Apply nodal and elemental loads
   for (unsigned int i = 0; i < loads_.size(); i++) {
     loads_[i]->Apply(factor_, time);
