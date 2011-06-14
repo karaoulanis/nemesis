@@ -46,6 +46,7 @@ LagrangeImposer::LagrangeImposer(const std::map<int, Node*>& nodes,
 
 int LagrangeImposer::impose(Model* model) {
   if (model->isConstrained()) return 0;
+  model->clear();
 
   Node* pNode;                // Pointer to a domain node
   Element* pElement;              // Pointer to a domain element

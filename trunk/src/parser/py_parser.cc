@@ -2388,7 +2388,7 @@ static PyObject* pyImposer_Lagrange(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyImposer_Lagrange2(PyObject* /*self*/, PyObject* args) {
   double a;
   if (!PyArg_ParseTuple(args, "", &a)) return NULL;
-  Imposer* pImposer = new LagrangeImposer(pD->get_nodes(),
+  Imposer* pImposer = new LagrangeImposer2(pD->get_nodes(),
                                           pD->get_elements(),
                                           pD->get_constraints());
   pA->set_imposer(pImposer);

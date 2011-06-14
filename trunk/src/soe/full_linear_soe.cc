@@ -94,10 +94,6 @@ int FullLinearSOE::solve() {
   int INFO;
   char c='N';
   // this->print();
-  // for (int i = 0;i < size_;i++) {
-  //   cout << B[i]<<endl;
-  // }
-  //  cout << endl;
   X = B;
   // Compute the LU factorization of the band matrix A.
   if (!isLUFactored) {
@@ -108,6 +104,5 @@ int FullLinearSOE::solve() {
   }
   // Solve the system A*X = B, overwriting B with X.
   dgetrs(&c, &N, &NRHS, &A[0], &LDA, &IPIV[0], &X[0], &LDB, &INFO, 1);
-  // for (int i = 0;i < size_;i++) cout << B[i]<<endl; cout << endl;
-    return 0;
+  return 0;
 }
