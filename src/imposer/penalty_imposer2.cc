@@ -127,10 +127,6 @@ int PenaltyImposer2::impose(Model* model) {
     // Create model nodes.
     StandardModelNode* model_node = new StandardModelNode(ftable, node);
     model->addModelNode(model_node);
-    /// @todo Remove.
-    // print
-    std::cout << model_node->get_node()->get_id() <<": \t";
-    Containers::vector_print(model_node->get_FTable());
   }
 
   // Step 4.: Create standard model elements.
@@ -150,14 +146,11 @@ int PenaltyImposer2::impose(Model* model) {
     StandardModelElement* model_elem = new StandardModelElement(ftable, elem);
     // Add it to the model
     model->addModelElement(model_elem);
-    /// @todo Remove.
-    // print
-    std::cout << model_elem->get_element()->get_id() <<": \t";
-    Containers::vector_print(model_elem->get_FTable());
   }
 
   // Set the model as constrained
   model->set_constrained(true);
 
+  model->print();
   return 0;
 }

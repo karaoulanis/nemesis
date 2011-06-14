@@ -24,6 +24,9 @@
 // *****************************************************************************
 
 #include "imposer/lagrange_imposer2.h"
+#include <map>
+#include <utility>
+#include <vector>
 #include "constraints/constraint.h"
 #include "model/lagrange_model_element.h"
 #include "model/lagrange_model_node.h"
@@ -33,8 +36,8 @@
 #include "node/node.h"
 
 LagrangeImposer2::LagrangeImposer2()
-   : Imposer() {
-} 
+    : Imposer() {
+}
 
 
 LagrangeImposer2::LagrangeImposer2(const std::map<int, Node*>& nodes,
@@ -45,90 +48,114 @@ LagrangeImposer2::LagrangeImposer2(const std::map<int, Node*>& nodes,
 
 
 int LagrangeImposer2::impose(Model* model) {
-  if (model->isConstrained()) return 0;
-
-  Node* pNode;                // Pointer to a domain node
-  Element* pElement;              // Pointer to a domain element
-  ModelNode* pStdModelNode;         // Pointer to a model node
-  StandardModelElement* pStdModelElement;   // Pointer to a model element
-  LagrangeModelElement* pLagModelElement;
-  LagrangeModelNode* pLagModelNode;
-  Constraint* pConstraint;
-
-  //=========================================================================
-  // Find nodal global numbering and store it
-  //=========================================================================
-  int nDofs = this->createGlobalDofNumbering();
-  model->set_equations(nDofs);
-
-  //=========================================================================
-  // Create Standard ModelNodes
-  //=========================================================================
-  for (std::map<int, Node*>::const_iterator nIter = nodes_->begin();
-                                            nIter != nodes_->end();
-                                            nIter++) {
-    // Get a pointer to a node
-    pNode = nIter->second;
-    // Get the nodal id
-    int nodeID = pNode->get_id();
-    IDContainer nodalFTable = this->get_global_dofs(nodeID);
-    pStdModelNode = new StandardModelNode(nodalFTable, pNode);
-    model->addModelNode(pStdModelNode);
+  // Check if constrains are already imposed
+  if (model->isConstrained()) {
+    return 0;
   }
-  //=========================================================================
-  // Create Standard ModelElements
-  //=========================================================================
-  for (std::map<int, Element*>::const_iterator eIter = elements_->begin();
-                                               eIter != elements_->end();
-                                               eIter++) {
-    // Get next (randomly chosen) element
-    pElement = eIter->second;
-    // Get the ids of the nodes
-    IDContainer myNodalIDs = pElement->get_nodal_ids();
-    // Get the local dofs of each node of the element
-    IDContainer theNodalLocalDofs = pElement->get_local_nodal_dofs();
-    // Create an element freedom table
-    IDContainer elemFTable(myNodalIDs.size()*theNodalLocalDofs.size());
+  model->clear();
 
-    int nElemNodes = myNodalIDs.size();
-    for (int j = 0; j < nElemNodes; j++) {
-      int NodeID = myNodalIDs[j];
-      for (unsigned k = 0; k < theNodalLocalDofs.size(); k++) {
-        int localDof = theNodalLocalDofs[k];
-        int globalDof = this->get_global_dof(NodeID, localDof);
-        elemFTable[j*theNodalLocalDofs.size()+k]=globalDof;
+  // Create a map to hold node ids and freedom tables.
+  // e.g. {1:[0, 1], 2:[2, 3], ...}
+  std::map<int, std::vector<int> > ftables;
+
+  // Step 1.: Run through nodes and collect node ids and active dofs.
+  //          Number (global) these dofs.
+  //          Store node freedom tables.
+  //          Set number of equations.
+  int num_dofs = 0;
+  for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
+                                            ni != nodes_->end();
+                                            ni++) {
+    Node* node = ni->second;
+    // Get vector<int> of active dofs. Inactive dofs are equal to -1.
+    // e.g. [0, 1, -1, -1, -1, ...]
+    std::vector<int> ftable = node->get_activated_dofs();
+    // Now assign global dofs,
+    // e.g. [1, 2, -1, -1, -1, ...]
+    for (unsigned i = 0; i < ftable.size(); i++) {
+      if (ftable[i] >= 0) {
+        ftable[i] = num_dofs++;
       }
     }
-    pStdModelElement = new StandardModelElement(elemFTable, pElement);
-    model->addModelElement(pStdModelElement);
+    // Insert to ftables map for later reference (for Model Elements).
+    // e.g. {node_id:[1, 2, -1, -1, -1, ...]}
+    int node_id = node->get_id();
+    ftables.insert(std::pair<int, std::vector<int> >(node_id, ftable));
   }
-  //=========================================================================
-  // Constraints
-  //=========================================================================
-  int nEquations = model->get_num_eqns();
-  for (std::map<int, Constraint*>::const_iterator cIter = constraints_->begin();
-                                                  cIter != constraints_->end();
-                                                  cIter++) {
-    pConstraint = cIter->second;
-    if (pConstraint->get_num_cdofs() == 0) continue;
-    // Lagrange ModelNode
-    static IDContainer nodalFTable(1);
-    nodalFTable[0]=nEquations;
-    pLagModelNode = new LagrangeModelNode(nodalFTable, 0, pConstraint);
-    model->addModelNode(pLagModelNode);
-    // Lagrange ModelElement
-    int ncDofs = pConstraint->get_num_cdofs();
-    IDContainer cFTable(ncDofs+1);
-    for (int j = 0;j < ncDofs;j++) {
-      cFTable[j]=this->get_global_dof(pConstraint->get_cdof(j).node->get_id(),
-                                      pConstraint->get_cdof(j).dof);
+
+  // Step 2.: Check and apply constraints.
+  //          Create Lagrange model nodes and elements.
+  //          Set the number of equations.
+  for (std::map<int, Constraint*>::const_iterator ci = constraints_->begin();
+                                                  ci != constraints_->end();
+                                                  ci++) {
+    Constraint* constraint = ci->second;
+    // Check constraints
+    if (constraint->get_num_cdofs() == 0) {
+      continue;
     }
-    cFTable[ncDofs]=nEquations;
-    pLagModelElement = new LagrangeModelElement(cFTable, pConstraint);
-    model->addModelElement(pLagModelElement);
-    nEquations++;
+    // Create model nodes
+    std::vector<int> node_ftable = std::vector<int>(1);
+    node_ftable[0] = num_dofs;
+    LagrangeModelNode* model_node =
+        new LagrangeModelNode(node_ftable, 0, constraint);
+    model->addModelNode(model_node);
+    // Create model elements
+    int num_constrained_dofs  = constraint->get_num_cdofs();
+    std::vector<int> elem_ftable = std::vector<int>(num_constrained_dofs+1);
+    for (int i = 0; i < num_constrained_dofs; i++) {
+      int constrained_node = constraint->get_cdof(i).node->get_id();
+      int constrained_dof  = constraint->get_cdof(i).dof;
+      elem_ftable[i] = ftables[constrained_node][constrained_dof];
+    }
+    elem_ftable[num_constrained_dofs] = num_dofs;
+    LagrangeModelElement* model_element =
+        new LagrangeModelElement(elem_ftable, constraint);
+    model->addModelElement(model_element);
+    // Increase the number of equations
+    num_dofs++;
   }
-  model->set_equations(nEquations);
+  // Now the number of equations can be set.
+  model->set_equations(num_dofs);
+
+  // Step 3.: Remove inactive dofs.
+  //          Create standard model nodes
+  for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
+                                            ni != nodes_->end();
+                                            ni++) {
+    Node* node = ni->second;
+    std::vector<int>& ftable = ftables[node->get_id()];
+    // Remove inactive dofs.
+    /// @todo Check which is more efficient.
+    // table.erase(std::remove(table.begin(), table.end(), 0), table.end());
+    ftable.erase(std::remove_if(ftable.begin(),
+                                 ftable.end(), num::is_negative), ftable.end());
+    // Create model nodes.
+    StandardModelNode* model_node = new StandardModelNode(ftable, node);
+    model->addModelNode(model_node);
+  }
+
+  // Step 4.: Create standard model elements.
+  for (std::map<int, Element*>::const_iterator ei = elements_->begin();
+                                               ei != elements_->end();
+                                               ei++) {
+    Element* elem = ei->second;
+    const std::vector<Node*> nodes = elem->get_nodes();
+    // Copy ftable from the first node.
+    std::vector<int> ftable = ftables[nodes[0]->get_id()];
+    for (unsigned i = 1; i < nodes.size(); i++) {
+      // Append ftables from the rest of the nodes
+      const std::vector<int> next_ftable = ftables[nodes[i]->get_id()];
+      ftable.insert(ftable.end(), next_ftable.begin(), next_ftable.end());
+    }
+    // Create model element
+    StandardModelElement* model_elem = new StandardModelElement(ftable, elem);
+    // Add it to the model
+    model->addModelElement(model_elem);
+  }
+
+  // Set the model as constrained
   model->set_constrained(true);
+  // model->print();
   return 0;
 }

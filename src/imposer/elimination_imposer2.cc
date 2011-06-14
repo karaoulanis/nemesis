@@ -35,10 +35,6 @@
 #include "model/standard_model_node.h"
 #include "node/node.h"
 
-// #include <iostream>
-// using std::cout;
-// using std::endl;
-
 EliminationImposer2::EliminationImposer2()
     : Imposer(),
       theNewDofs(0) {
@@ -140,7 +136,7 @@ int EliminationImposer2::impose(Model* model) {
     // Dof numbering should be start from 0 now.
     // e.g. [0, 1, -1]
     for (unsigned i = 0; i < ftable.size(); i++) {
-      if (ftable[i] >0) {
+      if (ftable[i] > 0) {
         ftable[i] -= 1;
       }
     }
@@ -164,10 +160,6 @@ int EliminationImposer2::impose(Model* model) {
       model_node = new EliminationModelNode(ftable, node);
     }
     model->addModelNode(model_node);
-    /// @todo Remove.
-    // print
-    // cout << model_node->get_node()->get_id() <<": \t";
-    // Containers::vector_print(model_node->get_FTable());
   }
 
   // Step 5.: Create model elements
@@ -194,10 +186,6 @@ int EliminationImposer2::impose(Model* model) {
     }
     // Add it to the model
     model->addModelElement(model_elem);
-    /// @todo Remove.
-    // print
-    // cout << model_elem->get_element()->get_id() <<": \t";
-    // Containers::vector_print(model_elem->get_FTable());
   }
 
   // Set the model as constrained

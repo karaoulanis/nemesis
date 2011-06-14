@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <set>
 #include <utility>
+#include "constraints/constraint.h"
 #include "domain/domain.h"
 #include "model/model_element.h"
 #include "model/model_node.h"
@@ -221,4 +222,25 @@ void Model::enrich() {
   for (ElementIterator eIter = theDomain->get_elements().begin();
     eIter != theDomain->get_elements().end(); eIter++)
       eIter->second->enrich();
+}
+
+void Model::print() {
+  for (unsigned i = 0; i < theModelNodes.size(); i++) {
+    ModelNode* mn = theModelNodes[i];
+    if (mn->get_node() == 0) {
+      printf("constraint node    : %4d : \t", mn->get_constraint()->get_id());
+    } else {
+      printf("standard node      : %4d : \t", mn->get_node()->get_id());
+    }
+    Containers::vector_print(mn->get_FTable());
+  }
+  for (unsigned i = 0; i < theModelElements.size(); i++) {
+    ModelElement* me = theModelElements[i];
+    if (me->get_element() == 0) {
+      printf("constraint element : %4d : \t", me->get_constraint()->get_id());
+    } else {
+      printf("standard element   : %4d : \t", me->get_element()->get_id());
+    }
+    Containers::vector_print(me->get_FTable());
+  }
 }

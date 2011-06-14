@@ -40,7 +40,8 @@ class ModelNode :public ModelObject {
   virtual ~ModelNode();
 
   // Access to data members
-  Node* get_node()     {return myNode;}
+  Node* get_node()                {return myNode;}
+  Constraint* get_constraint()    {return myConstraint;}
 
   virtual void add_R(double factor = 1.0)=0;
   virtual void add_uTrial(double factor = 1.0);

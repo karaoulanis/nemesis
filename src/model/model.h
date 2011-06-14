@@ -112,6 +112,8 @@ class Model {
   int get_directed_graph(DirectedGraph& G);
   int get_undirected_graph(UndirectedGraph& G);
 
+  void print();
+
   // XFem (or other type) enrichment
   void enrich();
  private:
