@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "imposer/lagrange_imposer.h"
+#include <map>
 #include "constraints/constraint.h"
 #include "model/lagrange_model_element.h"
 #include "model/lagrange_model_node.h"
@@ -33,8 +34,8 @@
 #include "node/node.h"
 
 LagrangeImposer::LagrangeImposer()
-   : Imposer() {
-} 
+    : Imposer() {
+}
 
 
 LagrangeImposer::LagrangeImposer(const std::map<int, Node*>& nodes,

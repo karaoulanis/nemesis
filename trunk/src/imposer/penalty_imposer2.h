@@ -26,6 +26,7 @@
 #ifndef SRC_IMPOSER_PENALTY_IMPOSER2_H_
 #define SRC_IMPOSER_PENALTY_IMPOSER2_H_
 
+#include <map>
 #include "imposer/imposer.h"
 
 class PenaltyImposer2: public Imposer {

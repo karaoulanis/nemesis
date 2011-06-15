@@ -109,15 +109,15 @@ namespace num {
   inline double sign(double d) {
     return d < 0  ? -1 : 1;
   }
-  
+
   inline bool is_zero(int i) {
-    return i == 0 ? true : false;  
+    return i == 0 ? true : false;
   }
 
   inline bool is_negative(int i) {
-    return i < 0 ? true : false;  
+    return i < 0 ? true : false;
   }
-  
+
   namespace check {
     inline void array_range(int i, int n) {
       if ((i < 0)||(i > n))
