@@ -26,6 +26,7 @@
 #ifndef SRC_IMPOSER_LAGRANGE_IMPOSER_H_
 #define SRC_IMPOSER_LAGRANGE_IMPOSER_H_
 
+#include <map>
 #include "imposer/imposer.h"
 
 class LagrangeImposer: public Imposer {

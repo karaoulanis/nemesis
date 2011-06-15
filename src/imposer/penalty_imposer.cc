@@ -24,6 +24,7 @@
 // *****************************************************************************
 
 #include "imposer/penalty_imposer.h"
+#include <map>
 #include "constraints/constraint.h"
 #include "model/model.h"
 #include "model/penalty_model_element.h"

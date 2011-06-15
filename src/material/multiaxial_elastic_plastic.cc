@@ -49,7 +49,8 @@ MultiaxialElastoPlastic::MultiaxialElastoPlastic()
       EL(0) {
 }
 
-MultiaxialElastoPlastic::MultiaxialElastoPlastic(int id, MultiaxialMaterial* elastic)
+MultiaxialElastoPlastic::
+MultiaxialElastoPlastic(int id, MultiaxialMaterial* elastic)
     : MultiaxialMaterial(id, 0., 0.),
       aTrial(0.),
       aConvg(0.),
