@@ -23,21 +23,19 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef SRC_IMPOSER_ELIMINATION_IMPOSER2_H_
-#define SRC_IMPOSER_ELIMINATION_IMPOSER2_H_
+#ifndef SRC_IMPOSER_ELIMINATION_IMPOSER_H_
+#define SRC_IMPOSER_ELIMINATION_IMPOSER_H_
 
 #include <map>
 #include "imposer/imposer.h"
 
-class EliminationImposer2: public Imposer {
+class EliminationImposer: public Imposer {
  public:
-  EliminationImposer2();
-  EliminationImposer2(const std::map<int, Node*>& nodes,
-                      const std::map<int, Element*>& elements,
-                      const std::map<int, Constraint*>& constraints);
-  ~EliminationImposer2();
+  EliminationImposer();
+  EliminationImposer(const std::map<int, Node*>& nodes,
+                     const std::map<int, Element*>& elements,
+                     const std::map<int, Constraint*>& constraints);
+  ~EliminationImposer();
   int impose(Model* model);
- private:
-  IDContainer theNewDofs;
 };
 #endif  // SRC_IMPOSER_ELIMINATION_IMPOSER2_H_

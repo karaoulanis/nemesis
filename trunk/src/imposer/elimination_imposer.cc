@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include "imposer/elimination_imposer2.h"
+#include "imposer/elimination_imposer.h"
 #include <map>
 #include <utility>
 #include <vector>
@@ -35,26 +35,24 @@
 #include "model/standard_model_node.h"
 #include "node/node.h"
 
-EliminationImposer2::EliminationImposer2()
-    : Imposer(),
-      theNewDofs(0) {
+EliminationImposer::EliminationImposer()
+    : Imposer() {
 }
 
 
-EliminationImposer2::
-EliminationImposer2(const std::map<int, Node*>& nodes,
-                    const std::map<int, Element*>& elements,
-                    const std::map<int, Constraint*>& constraints)
-    : Imposer(nodes, elements, constraints),
-      theNewDofs(0) {
+EliminationImposer::
+EliminationImposer(const std::map<int, Node*>& nodes,
+                   const std::map<int, Element*>& elements,
+                   const std::map<int, Constraint*>& constraints)
+    : Imposer(nodes, elements, constraints) {
 }
 
 
-EliminationImposer2::~EliminationImposer2() {
+EliminationImposer::~EliminationImposer() {
 }
 
 
-int EliminationImposer2::impose(Model* model) {
+int EliminationImposer::impose(Model* model) {
   // Check if constrains are already imposed
   if (model->isConstrained()) {
     return 0;
