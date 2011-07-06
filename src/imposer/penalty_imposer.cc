@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include "imposer/penalty_imposer2.h"
+#include "imposer/penalty_imposer.h"
 #include <map>
 #include <utility>
 #include <vector>
@@ -34,20 +34,20 @@
 #include "model/standard_model_node.h"
 #include "node/node.h"
 
-PenaltyImposer2::PenaltyImposer2()
+PenaltyImposer::PenaltyImposer()
     : Imposer(),
       a_(0.) {
 }
 
 
-PenaltyImposer2::PenaltyImposer2(double a,
+PenaltyImposer::PenaltyImposer(double a,
                                const std::map<int, Node*>& nodes,
                                const std::map<int, Element*>& elements,
                                const std::map<int, Constraint*>& constraints)
     : Imposer(nodes, elements, constraints),
       a_(a) {
 }
-int PenaltyImposer2::impose(Model* model) {
+int PenaltyImposer::impose(Model* model) {
   // Check if constrains are already imposed
   if (model->isConstrained()) {
     return 0;

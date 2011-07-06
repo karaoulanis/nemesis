@@ -29,10 +29,10 @@
 #include <map>
 #include "imposer/imposer.h"
 
-class PenaltyImposer2: public Imposer {
+class PenaltyImposer: public Imposer {
  public:
-  PenaltyImposer2();
-  PenaltyImposer2(double a,
+  PenaltyImposer();
+  PenaltyImposer(double a,
                  const std::map<int, Node*>& nodes,
                  const std::map<int, Element*>& elements,
                  const std::map<int, Constraint*>& constraints);

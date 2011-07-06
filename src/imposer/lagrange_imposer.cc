@@ -23,7 +23,7 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#include "imposer/lagrange_imposer2.h"
+#include "imposer/lagrange_imposer.h"
 #include <map>
 #include <utility>
 #include <vector>
@@ -35,19 +35,19 @@
 #include "model/standard_model_node.h"
 #include "node/node.h"
 
-LagrangeImposer2::LagrangeImposer2()
+LagrangeImposer::LagrangeImposer()
     : Imposer() {
 }
 
 
-LagrangeImposer2::LagrangeImposer2(const std::map<int, Node*>& nodes,
+LagrangeImposer::LagrangeImposer(const std::map<int, Node*>& nodes,
                                  const std::map<int, Element*>& elements,
                                  const std::map<int, Constraint*>& constraints)
     : Imposer(nodes, elements, constraints) {
 }
 
 
-int LagrangeImposer2::impose(Model* model) {
+int LagrangeImposer::impose(Model* model) {
   // Check if constrains are already imposed
   if (model->isConstrained()) {
     return 0;

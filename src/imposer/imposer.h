@@ -42,18 +42,12 @@ class Imposer {
           const std::map<int, Element*>& elements,
           const std::map<int, Constraint*>& constraints);
   virtual ~Imposer();
-
-  int createGlobalDofNumbering();                 /// @todo Remove.
-  int get_global_dof(int NodeID, int localDof);   /// @todo Remove.
-  const IDContainer get_global_dofs(int NodeID);
   virtual int impose(Model* model)=0;
 
  protected:
   const std::map<int, Node*>*       nodes_;
   const std::map<int, Element*>*    elements_;
   const std::map<int, Constraint*>* constraints_;
-  IDContainer myNodalIDs;                         /// @todo Remove.
-  IDContainer theNodalGlobalDofs;                 /// @todo Remove.
 
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.

@@ -30,9 +30,7 @@
 Imposer::Imposer()
     : nodes_(0),
       elements_(0),
-      constraints_(0),
-      myNodalIDs(0),
-      theNodalGlobalDofs(0) {
+      constraints_(0) {
 }
 
 
@@ -41,90 +39,9 @@ Imposer::Imposer(const std::map<int, Node*>& nodes,
                  const std::map<int, Constraint*>& constraints)
     : nodes_(&nodes),
       elements_(&elements),
-      constraints_(&constraints),
-      myNodalIDs(0),
-      theNodalGlobalDofs(0) {
+      constraints_(&constraints) {
 }
 
 
 Imposer::~Imposer() {
-}
-/**
- * Creates global dof numbering and stores it into the appropriate containers.
- * There exist two containers: myNodalIDs and theNodalGlobalDofs. The first
- * one holds the ids, while the second one holds the number of the
- * corresponding activated dofs in an accumulative way which makes the
- * retrieval of global dof numbering an easy task. The storing is as follows:
- * Suppose three nodes with ids and activated dofs as, (1, 3), (3, 2), (10, 4).
- * Then it while be stored:
- * myNodalIDs        : [1 3 10]
- * theNodalGlobalDofs : [3 5  9]
- * @return The number of global dofs.
- */
-int Imposer::createGlobalDofNumbering() {
-  int nNodes = nodes_->size();
-  myNodalIDs.resize(nNodes);
-  theNodalGlobalDofs.resize(nNodes);
-  int k = 0;
-  for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
-                                            ni != nodes_->end(); ni++) {
-    // Get the next node from the node container stored in the domain
-    Node* pNode = ni->second;
-    // Store the nodal id
-    myNodalIDs[k] = pNode->get_id();
-    // Sore the number of activated dofs
-    int nActivatedDofs = pNode->get_num_activated_dofs();
-    if (k == 0) {
-      theNodalGlobalDofs[0]=nActivatedDofs;
-    } else {
-      theNodalGlobalDofs[k]=theNodalGlobalDofs[k-1]+nActivatedDofs;
-    }
-    k++;
-  }
-  return theNodalGlobalDofs[theNodalGlobalDofs.size()-1];
-}
-/**
- * Retrieves a global dof when knowing the node id and the local dof id.
- * @see Imposer::createGlobalDofNumbering()
- * For this example the retrieval can be done as follows:
- * Suppose we want the global dof for node 3, local dof 2, where local dof 2 is
- * stored at the first position of the activated dofs.
- * \li Find the index of 3 in myNodalIDs: Here is 1. \n
- * \li Find starting globalDof. Here we start at theNodalGlobalDofs[1-1]=3. \n
- * \li Find position of asked dof in theActivatedDofs and add it to globalDof.
- *     Here position is 0.\n
- * \param NodeID The nodal id.
- * \param localDof The local dof that we are interested in.
- * \return -1 if dof not activated; else globalDof
- */
-int Imposer::get_global_dof(int NodeID, int localDof) {
-  int index = Containers::index_find(myNodalIDs, NodeID);
-  int globalDof = 0;
-  if (index>0) globalDof = theNodalGlobalDofs[index-1];
-  const Node* pNode = nodes_->find(NodeID)->second;
-  if (pNode->get_activated_dof(localDof) < 0) return -1;
-  globalDof+=pNode->get_activated_dof(localDof);
-  return globalDof;
-}
-/**
- * Retrieves a global dof when knowing the node id and the local dof id.
- * @see Model::createGlobalDofNumbering()
- * @see Model::get_global_dof(int NodeID, int localDof)\n
- * The process is the same as mentioned above, but now all the global dofs of
- * a node are returned.
- * @param NodeID The nodal id.
- * @return A constant reference to an IDContainer holding the global dofs.
- */
-const IDContainer Imposer::get_global_dofs(int NodeID) {
-  int index = Containers::index_find(myNodalIDs, NodeID);
-  int nActivatedDofs = nodes_->find(NodeID)->second->get_num_activated_dofs();
-  IDContainer globalDofs(nActivatedDofs);
-  int startDof;
-  if (index == 0) {
-    startDof = 0;
-  } else {
-    startDof = theNodalGlobalDofs[index-1];
-  }
-  for (int i = 0;i < nActivatedDofs;i++) globalDofs[i] = startDof+i;
-  return globalDofs;
 }
