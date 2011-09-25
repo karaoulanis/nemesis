@@ -65,7 +65,7 @@ const Matrix& Quad4b::get_K() {
       for (unsigned b = 0; b < nodes_.size(); b++) {
         this->get_B(Bb, b, k);
         double dV = thickness_*detJ[k];
-        K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }

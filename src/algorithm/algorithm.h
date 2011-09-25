@@ -32,6 +32,6 @@ class Algorithm: public AnalysisObject {
  public:
   Algorithm();
   virtual ~Algorithm();
-  virtual int solveStep(int n)=0;
+  virtual int SolveStep(int n)=0;
 };
 #endif  // SRC_ALGORITHM_ALGORITHM_H_

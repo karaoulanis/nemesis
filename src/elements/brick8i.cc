@@ -249,7 +249,7 @@ void Brick8i::get_Kdd(Matrix& K) {
       for (unsigned b = 0; b < 8; b++) {
         get_Bstd(Bb, b, k);
         double dV = detJ[k];
-        K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
@@ -267,7 +267,7 @@ void Brick8i::get_Kda(Matrix& K) {
       for (unsigned b = 0; b < 3; b++) {
         get_BInc(Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
@@ -285,7 +285,7 @@ void Brick8i::get_Kaa(Matrix& K) {
       for (unsigned b = 0; b < 3; b++) {
         get_BInc(Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }

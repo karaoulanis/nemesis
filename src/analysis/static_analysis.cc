@@ -73,7 +73,7 @@ bool StaticAnalysis::checkIfAllows(FEObject* f) {
   return false;
 }
 
-int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
+int StaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   // Check the imposer
   if (pA->get_imposer() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
@@ -114,7 +114,7 @@ int StaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   int ret = 0;
   for (int i = 0; i < num_loadsteps; i++) {
     // Call algorithm to solve step
-    int check = pA->get_algorithm()->solveStep(i);
+    int check = pA->get_algorithm()->SolveStep(i);
     // Algorithm failed
     if (check < 0) {
       if (check == -1)

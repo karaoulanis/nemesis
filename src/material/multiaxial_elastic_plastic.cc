@@ -690,7 +690,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
       }
     }
     bool reset = false;
-    if (std::abs(det(Gab)) < 1e-8) {
+    if (std::abs(Det(Gab)) < 1e-8) {
       fSurfaces[nActiveSurfaces-1]->set_active(false);
       reset = true;
     }

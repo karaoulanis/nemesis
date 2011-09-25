@@ -33,6 +33,6 @@ class NewtonRaphsonInitial :public Algorithm {
   NewtonRaphsonInitial();
   ~NewtonRaphsonInitial();
 
-  int solveStep(int n);
+  int SolveStep(int n);
 };
 #endif  // SRC_ALGORITHM_NEWTON_RAPHSON_INITIAL_H_

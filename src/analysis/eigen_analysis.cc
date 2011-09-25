@@ -39,12 +39,15 @@ EigenAnalysis::EigenAnalysis()
   pA->set_control(new EigenControl());
   pA->set_soe(new EigenSOE(pA->get_model()));
 }
+
 EigenAnalysis::~EigenAnalysis() {
 }
+
 bool EigenAnalysis::checkIfAllows(FEObject* /*f*/) {
   return false;
 }
-int EigenAnalysis::run(LoadCase* /*loadcase*/, int /*num_loadsteps*/) {
+
+int EigenAnalysis::Run(LoadCase* /*loadcase*/, int /*num_loadsteps*/) {
   // Create model by applying the constraints
   pA->get_imposer()->impose(pA->get_model());
 

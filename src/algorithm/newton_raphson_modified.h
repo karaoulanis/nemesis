@@ -33,6 +33,6 @@ class NewtonRaphsonModified :public Algorithm {
   NewtonRaphsonModified();
   ~NewtonRaphsonModified();
 
-  int solveStep(int n);
+  int SolveStep(int n);
 };
 #endif  // SRC_ALGORITHM_NEWTON_RAPHSON_MODIFIED_H_

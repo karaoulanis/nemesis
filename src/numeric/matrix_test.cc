@@ -39,26 +39,27 @@ class MatrixTest : public ::testing::Test {
 // test: Matrix::Matrix();
 TEST_F(MatrixTest, DefaultConstructor) {
   Matrix m;
-  EXPECT_EQ(m.get_rows(), 0) << "Matrix rows is not null initialized";
-  EXPECT_EQ(m.get_cols(), 0) << "Matrix cols is not null initialized";
-  // ASSERT_EQ(m.get_size(),0)    /// @todo: implement
-  // EXPECT_EQ(m.data(),NULL)     /// @todo: implement;
+  EXPECT_EQ(m.get_rows(),    0) << "Matrix rows are not 0 initialized";
+  EXPECT_EQ(m.get_cols(),    0) << "Matrix cols are not 0 initialized";
+  EXPECT_EQ(m.get_data(),
+    static_cast<double*>(NULL)) << "Matrix data is  not 0 initialized";
+  EXPECT_EQ(m.get_size(),    0) << "Matrix size is  not 0 initialized";
 }
 
 // test: Matrix::Matrix(int rows, int cols);
-TEST_F(MatrixTest, SimpleConstructor) {
+TEST_F(MatrixTest, ConstructorNoValues) {
   Matrix m(3, 2);
-  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)  /// @todo: implement;
+  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows are not set correctly";
+  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols are not set correctly";
+  EXPECT_EQ(m.get_size(), 6) << "Matrix size is  not set correctly";
 }
 
 // test: Matrix::Matrix(int rows, int cols, double value);
-TEST_F(MatrixTest, ConstructorWithDefaultValues) {
+TEST_F(MatrixTest, ConstructorWithValues) {
   Matrix m(3, 2, 2.);
   EXPECT_EQ(m.get_rows(), 3) << "Matrix rows not set correctly";
   EXPECT_EQ(m.get_cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)
+  EXPECT_EQ(m.get_size(), 6) << "Matrix size is  not set correctly";
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
       EXPECT_EQ(m(i, j), 2.) << "Matrix value error";
@@ -70,9 +71,9 @@ TEST_F(MatrixTest, ConstructorWithDefaultValues) {
 TEST_F(MatrixTest, CopyConstructor) {
   Matrix m1(3, 2, 2.);
   Matrix m2(m1);
-  EXPECT_EQ(m2.get_rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m2.get_cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)  /// @todo: implement;
+  EXPECT_EQ(m2.get_rows(), 3) << "Matrix rows are not set correctly";
+  EXPECT_EQ(m2.get_cols(), 2) << "Matrix cols are not set correctly";
+  EXPECT_EQ(m2.get_size(), 6) << "Matrix size is  not set correctly";
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
       EXPECT_EQ(m2(i, j), 2.) << "Matrix value error";
@@ -86,52 +87,253 @@ TEST_F(MatrixTest, CopyConstructor) {
 TEST_F(MatrixTest, CopyAssignment) {
   Matrix m1(3, 2, 2.);
   Matrix m2 = m1;
-  EXPECT_EQ(m2.get_rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m2.get_cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)
+  EXPECT_EQ(m2.get_rows(), 3) << "Matrix rows are not set correctly";
+  EXPECT_EQ(m2.get_cols(), 2) << "Matrix cols are not set correctly";
+  EXPECT_EQ(m2.get_size(), 6) << "Matrix size is  not set correctly";
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
       EXPECT_EQ(m2(i, j), 2.) << "Matrix value error";
     }
   }
-  Matrix m3(4, 4, 2.);
-  m3 = m1;
-  EXPECT_EQ(m3.get_rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m3.get_cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)
+}
+
+// inline double& operator()(int i, int j) {
+TEST_F(MatrixTest, AccessOperator) {
+  Matrix m(3, 2);
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
-      EXPECT_EQ(m3(i, j), 2.) << "Matrix value error";
+      m(i, j) = j*3. + i;
+    }
+  }
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 2; j++) {
+      EXPECT_EQ(m(i, j), j*3. + i) << "Matrix value error";
     }
   }
 }
 
-// inline double& operator()(int i, int j) {
+/// @todo:
 // inline double operator()(int i, int j) const {
+
 // inline int get_rows() const {
+TEST_F(MatrixTest, GetRows) {
+  Matrix m(3, 2, 2.);
+  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows are not set correctly";
+}
+
 // inline int get_cols() const {
+TEST_F(MatrixTest, GetCols) {
+  Matrix m(3, 2, 2.);
+  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols are not set correctly";
+}
+
+/// @todo
 // inline double* get_data() {
 // inline double* get_data() const {
 // inline double* get_data() const {
-// void Resize(int rows, int cols);
-// void Resize(int cols, int rows, double value);
-// void Clear();
+
+// test: void Matirx::resize(int m, int n)
+TEST_F(MatrixTest, MatrixResize) {
+  Matrix m(3, 2);
+  m.Resize(2, 3);
+  EXPECT_EQ(m.get_rows(), 2) << "Matrix rows are not set correctly";
+  EXPECT_EQ(m.get_cols(), 3) << "Matrix cols are not set correctly";
+  EXPECT_EQ(m.get_size(), 6) << "Matrix size is  not set correctly";
+}
+
+// test: void Matirx::resize(int m, int n double c)
+TEST_F(MatrixTest, MatrixResizeWithValues) {
+  Matrix m(2, 3);
+  m.Resize(3, 2, 2.);
+  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows not set correctly";
+  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols not set correctly";
+  EXPECT_EQ(m.get_size(), 6) << "Matrix size is  not set correctly";
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 2; j++) {
+      EXPECT_EQ(m(i, j), 2.) << "Matrix value error";
+    }
+  }
+}
+
+// test: void Matrix::Clear()
+TEST_F(MatrixTest, MatrixClear) {
+  Matrix m(2, 3, 2.);
+  m.Clear();
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m(i, j), 0.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix& operator+=(double value) {
+TEST_F(MatrixTest, MatrixOperatorUnaryPlus) {
+  Matrix m(2, 3, 2.);
+  m += 1.;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m(i, j), 3.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix& operator-=(double value) {
+TEST_F(MatrixTest, MatrixOperatorUnaryMinus) {
+  Matrix m(2, 3, 2.);
+  m -= 1.;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m(i, j), 1.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix& operator*=(double value) {
+TEST_F(MatrixTest, MatrixOperatorUnaryProduct) {
+  Matrix m(2, 3, 2.);
+  m *= 2.;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m(i, j), 4.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix& operator/=(double value) {
+TEST_F(MatrixTest, MatrixOperatorUnaryDivision) {
+  Matrix m(2, 3, 2.);
+  m /= 2.;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m(i, j), 1.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix operator*(const double value) const {
+TEST_F(MatrixTest, MatrixScalarProduct1) {
+  Matrix m1(2, 3, 2.);
+  Matrix m2(2, 3);
+  m2 = m1*2.0;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m2(i, j), 4.) << "Matrix value error";
+    }
+  }
+}
+
 // inline friend Matrix operator*(const double c, const Matrix& m) {
+TEST_F(MatrixTest, MatrixScalarProduct2) {
+  Matrix m1(2, 3, 2.);
+  Matrix m2(2, 3);
+  m2 = 2.0*m1;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m2(i, j), 4.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix operator/(const double c) const {
+TEST_F(MatrixTest, MatrixScalarDivision) {
+  Matrix m1(2, 3, 2.);
+  Matrix m2(2, 3);
+  m2 = m1/2.0;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m2(i, j), 1.) << "Matrix value error";
+    }
+  }
+}
+
 // inline void add_cM(double c, const Matrix& m, double c0 = 1.0) {
 // inline void add_cMM(double c, const Matrix& m1, const Matrix& m2,
+
 // inline Matrix& operator+=(const Matrix& m) {
+TEST_F(MatrixTest, MatrixPlusEqualMatrix) {
+  Matrix m1(2, 3, 2.);
+  Matrix m2(2, 3, 1.);
+  m1 += m2;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m1(i, j), 3.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix& operator-=(const Matrix& m) {
+TEST_F(MatrixTest, MatrixMinusEqualMatrix) {
+  Matrix m1(2, 3, 2.);
+  Matrix m2(2, 3, 1.);
+  m1 -= m2;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m1(i, j), 1.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix operator+(const Matrix& m) const {
+TEST_F(MatrixTest, MatrixPlusMatrix) {
+  Matrix m0(2, 3);
+  Matrix m1(2, 3, 2.);
+  Matrix m2(2, 3, 1.);
+  m0 = m1 + m2;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m0(i, j), 3.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix operator-(const Matrix& m) const {
+TEST_F(MatrixTest, MatrixMinusMatrix) {
+  Matrix m0(2, 3);
+  Matrix m1(2, 3, 2.);
+  Matrix m2(2, 3, 1.);
+  m0 = m1 - m2;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m0(i, j), 1.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix operator*(const Matrix& m) const {
+TEST_F(MatrixTest, MatrixDotMatrix) {
+  Matrix m0(2, 2);
+  Matrix m1(2, 2, 2.);
+  Matrix m2(2, 2, 2.);
+  m0 = m1 * m2;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 2; j++) {
+      EXPECT_EQ(m0(i, j), 8.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix& operator+() {
+TEST_F(MatrixTest, PlusMatrix) {
+  Matrix m(2, 3, 2.);
+  m =  +m;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m(i, j), 2.) << "Matrix value error";
+    }
+  }
+}
+
 // inline Matrix operator-() {
+TEST_F(MatrixTest, MinusMatrix) {
+  Matrix m(2, 3, 2.);
+  m =  -m;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      EXPECT_EQ(m(i, j), -2.) << "Matrix value error";
+    }
+  }
+}
+
 // inline friend Matrix Transpose(const Matrix& m) {
 // inline Vector operator*(const Vector& v) const {
 // inline Matrix& Append(const Matrix& m, int row, int col, double c = 1.0,
@@ -148,37 +350,4 @@ TEST_F(MatrixTest, CopyAssignment) {
 // inline Matrix Identity(int n) {
 // inline Matrix VVT(const Vector& v1, const Vector& v2) {
 
-// test: void Matirx::resize(int m, int n)
-TEST_F(MatrixTest, MatrixResize) {
-  Matrix m(3, 2);
-  m.resize(2, 3);
-  EXPECT_EQ(m.get_rows(), 2) << "Matrix rows not set correctly";
-  EXPECT_EQ(m.get_cols(), 3) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)
-}
-
-// test: void Matirx::resize(int m, int n double c)
-TEST_F(MatrixTest, MatrixResizeWithDefaultValues) {
-  Matrix m(2, 3);
-  m.resize(3, 2, 2.);
-  EXPECT_EQ(m.get_rows(), 3) << "Matrix rows not set correctly";
-  EXPECT_EQ(m.get_cols(), 2) << "Matrix cols not set correctly";
-  // EXPECT_EQ(m.get_size(),6)
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 2; j++) {
-      EXPECT_EQ(m(i, j), 2.) << "Matrix value error";
-    }
-  }
-}
-
-// test: void Matrix::clear()
-TEST_F(MatrixTest, MatrixClear) {
-  Matrix m(2, 3, 2.);
-  m.clear();
-  for (int i = 0; i < 2; i++) {
-    for (int j = 0; j < 3; j++) {
-      EXPECT_EQ(m(i, j), 0.) << "Matrix value error";
-    }
-  }
-}
 

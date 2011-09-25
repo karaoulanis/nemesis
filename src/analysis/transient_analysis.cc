@@ -39,6 +39,7 @@ TransientAnalysis::TransientAnalysis()
   :AnalysisType() {
   myTag = TAG_ANALYSIS_TRANSIENT;
 }
+
 bool TransientAnalysis::checkIfAllows(FEObject* /*f*/) {
 /*  if ( f->get_tag()==TAG_CONTROL_GENERALIZED_A        ||
     f->get_tag()==TAG_ALGORITHM_LINEAR         ||
@@ -64,7 +65,8 @@ bool TransientAnalysis::checkIfAllows(FEObject* /*f*/) {
   return false;*/
   return true;
 }
-int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
+
+int TransientAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   // Check the imposer
   if (pA->get_imposer() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No imposer has been set.");
@@ -112,7 +114,7 @@ int TransientAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
 
   for (int i = 0; i < num_loadsteps; i++) {
     // Call algorithm to solve step
-    int check = pA->get_algorithm()->solveStep(i);
+    int check = pA->get_algorithm()->SolveStep(i);
 
     // Algorithm failed
     if (check < 0) {

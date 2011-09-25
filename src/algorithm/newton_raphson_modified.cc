@@ -32,9 +32,11 @@
 NewtonRaphsonModified::NewtonRaphsonModified() {
   myTag = TAG_ALGORITHM_NEWTON_RAPHSON_MODIFED;
 }
+
 NewtonRaphsonModified::~NewtonRaphsonModified() {
 }
-int NewtonRaphsonModified::solveStep(int /*n*/) {
+
+int NewtonRaphsonModified::SolveStep(int /*n*/) {
   // Predictor phase
   pA->get_control()->formTangent();
   pA->get_control()->predict();

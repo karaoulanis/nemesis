@@ -54,7 +54,7 @@ bool SensitivityStaticAnalysis::checkIfAllows(FEObject* /*f*/) {
   return false;
 }
 
-int SensitivityStaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
+int SensitivityStaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   // Create model by applying the constraints
   pA->get_imposer()->impose(pA->get_model());
 
@@ -80,7 +80,7 @@ int SensitivityStaticAnalysis::run(LoadCase* loadcase, int num_loadsteps) {
   int ret = 0;
   for (int i = 0; i < num_loadsteps; i++) {
     // Call algorithm to solve step
-    int check = pA->get_algorithm()->solveStep(i);
+    int check = pA->get_algorithm()->SolveStep(i);
     // Algorithm failed
     if (check < 0) {
       if (check == -1)

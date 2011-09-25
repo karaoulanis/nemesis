@@ -58,7 +58,7 @@ BFGS::BFGS(int m_, double etaMin_, double etaMax_, double rTol_, int maxIter_)
 BFGS::~BFGS() {
 }
 
-int BFGS::solveStep(int /*n*/) {
+int BFGS::SolveStep(int /*n*/) {
   int size = pA->get_model()->get_num_eqns();
   Vector resOld(size);
   Vector resNew(size);
@@ -115,13 +115,14 @@ int BFGS::solveStep(int /*n*/) {
     pA->get_control()->formResidual(pA->get_control()->get_lambda());
     double s0=-s[k]*resNew;
     double s1=-s[k]*(pA->get_soe()->get_B());
-    if (isLineSearchActive) this->lineSearch(s0, s1, du);
+    if (isLineSearchActive) this->LineSearch(s0, s1, du);
     resOld = resNew;
     ++k;
   }
   return check;
 }
-void BFGS::lineSearch(double s0, double sj, const Vector& du) {
+
+void BFGS::LineSearch(double s0, double sj, const Vector& du) {
   Vector dx = du;
   int k = 0;
   double eta = 1.0;

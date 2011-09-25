@@ -48,13 +48,13 @@ EliminationModelElement::~EliminationModelElement() {
 }
 
 void EliminationModelElement::add_K(double factor) {
-  myMatrix->add_cM(factor, myElement->get_K());
+  myMatrix->Add_cM(factor, myElement->get_K());
 }
 void EliminationModelElement::add_M(double factor) {
-  myMatrix->add_cM(factor, myElement->get_M());
+  myMatrix->Add_cM(factor, myElement->get_M());
 }
 void EliminationModelElement::add_C(double factor) {
-  myMatrix->add_cM(factor, myElement->get_C());
+  myMatrix->Add_cM(factor, myElement->get_C());
 }
 void EliminationModelElement::add_R(double factor) {
   myVector->add_cV(factor, myElement->get_R());

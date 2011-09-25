@@ -27,7 +27,7 @@
 #include "analysis/analysis.h"
 
 AnalysisType::AnalysisType() {
-  pA->clear();
+  pA->Clear();
 }
 AnalysisType::~AnalysisType() {
 }

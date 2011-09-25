@@ -33,7 +33,7 @@ LinearAlgorithm::LinearAlgorithm() {
 }
 LinearAlgorithm::~LinearAlgorithm() {
 }
-int LinearAlgorithm::solveStep(int /*n*/) {
+int LinearAlgorithm::SolveStep(int /*n*/) {
   pA->get_control()->formTangent();
   pA->get_convergence_norm()->newStep();
   pA->get_control()->predict();

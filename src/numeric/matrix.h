@@ -115,6 +115,13 @@ class Matrix {
   }
 
   /**
+   * Returns the array size.
+   */
+  inline int get_size() const {
+    return size_;
+  }
+  
+  /**
    * Returns a pointer to Matrix data.
    */
   inline double* get_data() {
@@ -242,7 +249,7 @@ class Matrix {
    * @param m Matrix to be added.
    * @param c0 Factor for the existing Matrix (this).
    */
-  inline void add_cM(double c, const Matrix& m, double c0 = 1.0) {
+  inline void Add_cM(double c, const Matrix& m, double c0 = 1.0) {
     if (c0 == 0.0)     for (int i = 0;i < size_;i++) data_[i]=0;
     else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
     for (int i = 0;i < size_;i++) data_[i]+=c*m.data_[i];
@@ -256,7 +263,7 @@ class Matrix {
    * @param m2 Second Matrix to be multiplied.
    * @param c0 Factor for the existing Matrix (this).
    */
-  inline void add_cMM(double c, const Matrix& m1, const Matrix& m2,
+  inline void Add_cMM(double c, const Matrix& m1, const Matrix& m2,
                       double c0 = 0.) {
     if (c0 == 0.0)     for (int i = 0;i < size_;i++) data_[i]=0;
     else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
@@ -307,7 +314,7 @@ class Matrix {
     num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
     Matrix res(*this);
-    res.add_cM(1.0, m, 1.0);
+    res.Add_cM(1.0, m, 1.0);
     return res;
   }
 
@@ -323,7 +330,7 @@ class Matrix {
     num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
     Matrix res(*this);
-    res.add_cM(-1.0, m, 1.0);
+    res.Add_cM(-1.0, m, 1.0);
     return res;
   }
 
@@ -339,7 +346,7 @@ class Matrix {
     num::check::array_size(cols_, m.rows_);
     #endif
     Matrix res(rows_, m.cols_);
-    res.add_cMM(1.0, *this, m, 0.0);
+    res.Add_cMM(1.0, *this, m, 0.0);
     return res;
   }
 
@@ -473,7 +480,7 @@ class Matrix {
   /**
    *
    */
-  friend double det(const Matrix& m);
+  friend double Det(const Matrix& m);
 
   /**
    *
@@ -487,7 +494,7 @@ class Matrix {
   /**
    *
    */
-  void add_BTCB(int row, int col, const int* perm, const Matrix& B1,
+  void Add_BTCB(int row, int col, const int* perm, const Matrix& B1,
     const Matrix& C, const Matrix B2, double c1, double c0 = 0.) {
     int m = B1.get_rows();
     int n = B2.get_cols();
