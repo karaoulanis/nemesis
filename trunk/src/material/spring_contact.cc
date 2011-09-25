@@ -81,7 +81,7 @@ void SpringContact::set_strain(const Vector& De) {
   double f2  = sqrt(Fs2*Fs2+Fs3*Fs3)+mu*Fn;
 
   Ct.Clear();
-  sTrial.clear();
+  sTrial.Clear();
 
   if (f1 < 0. && f2 < 0.) {
   // Case 1: Closed and sticking

@@ -40,7 +40,7 @@ class ModelObject {
   void set_FTable(int index, int val);
 
   inline void zeroMatrix()        {myMatrix->Clear();}
-  inline void zeroVector()        {myVector->clear();}
+  inline void zeroVector()        {myVector->Clear();}
   inline const Matrix& get_matrix() const  {return *myMatrix; }
   inline const Vector& get_vector() const  {return *myVector; }
  protected:

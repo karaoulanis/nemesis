@@ -50,8 +50,8 @@ Creep::Creep(int id, MultiaxialMaterial* elastic, double A, double n, double k)
   MatParams[31]=myElastic->get_param(31);
 
   // Material state
-  eCTrial.resize(6, 0.);
-  eCConvg.resize(6, 0.);
+  eCTrial.Resize(6, 0.);
+  eCConvg.Resize(6, 0.);
 }
 Creep::~Creep() {
   delete myElastic;

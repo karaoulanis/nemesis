@@ -74,8 +74,8 @@ void BandLinearSOE::set_size() {
   size_ = model_->get_num_eqns();
   nRows = 2*lowerBandwidth+upperBandwidth+1;
   A.resize(nRows*size_);
-  B.resize(size_);
-  X.resize(size_);
+  B.Resize(size_);
+  X.Resize(size_);
   IPIV.resize(size_);
 
   size_t d = (nRows+2)*size_*sizeof(double);

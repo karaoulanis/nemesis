@@ -165,8 +165,8 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
     if (activeS[0] && Kc>0) nA++;   // hardening (if Drucker-Prager)
     if (activeS[1])      nA++;      // tension cut-off
     A.Resize(3+nA, 3+nA, 0.);
-    R.resize(3+nA, 0.);
-    x.resize(3+nA);
+    R.Resize(3+nA, 0.);
+    x.Resize(3+nA);
 
     // hardening (ok to compute)
     const Vector &v = gSurfaces[0]->get_dfds(s, aTrial);
@@ -181,11 +181,11 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
     // [- - - - - -] [-]
     // [- - - - - -] [-]
     A.Append(C3, 0, 0, 1.0, 1.0);
-    R.append(C3*s-eTrial3, 0, 1.0, 0.0);
+    R.Append(C3*s-eTrial3, 0, 1.0, 0.0);
     for (int i = 0; i < 2; i++) {
       if (activeS[i]) {
         A.Append(DL[i]*(gSurfaces[i]->get_d2fdsds(s, aTrial)), 0,   0, 1., 1.);
-        R.append(DL[i]*(gSurfaces[i]->get_dfds(s, aTrial)),         0, 1., 1.);
+        R.Append(DL[i]*(gSurfaces[i]->get_dfds(s, aTrial)),         0, 1., 1.);
       }
     }
 
@@ -260,8 +260,8 @@ void DruckerPragerNew3::set_strain(const Vector& De) {
     }
 
     // cout << DLambda[0];
-    // cout << R.twonorm()<<endl;
-    if ((R.twonorm() < 1.e-12) && (fSurfaces[0]->get_f(s, aTrial) < 1e-9))
+    // cout << R.Twonorm()<<endl;
+    if ((R.Twonorm() < 1.e-12) && (fSurfaces[0]->get_f(s, aTrial) < 1e-9))
       break;
   }
 

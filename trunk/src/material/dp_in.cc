@@ -75,7 +75,7 @@ double DP_in::get_dfda(const Vector& s, const double a) {
 }
 const Vector& DP_in::get_df2dsa(const Vector& /*s*/, const double a) {
   static Vector ret(6, 0.);
-  ret.clear();
+  ret.Clear();
   double Kf = 0.;
   double d=-2*Kf*sqrt(3.)*cos(phi+Kf*a)/
           (-10.-6.*sin(phi+Kf*a)+pow(cos(phi+Kf*a), 2));

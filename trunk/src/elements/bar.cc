@@ -83,9 +83,9 @@ Bar::Bar(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
     for (int j = 0; j < dim_; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
-  P.resize(2*dim_, 0.);
+  P.Resize(2*dim_, 0.);
   // Self weight
-  G.resize(2*dim_, 0.);
+  G.Resize(2*dim_, 0.);
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 

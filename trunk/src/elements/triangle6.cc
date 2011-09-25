@@ -68,9 +68,9 @@ Triangle6::Triangle6(int id, std::vector<Node*> nodes,
     for (int j = 0; j < 2; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
-  P.resize(12, 0.);
+  P.Resize(12, 0.);
   // Self weight
-  G.resize(12, 0.);
+  G.Resize(12, 0.);
   myMaterial = material;
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
@@ -185,7 +185,7 @@ const Matrix& Triangle6::get_M() {
 
 const Vector& Triangle6::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if incactive
   if (!(groupdata_->active)) {
     return R;
@@ -232,7 +232,7 @@ void Triangle6::update() {
     this->get_shape_functions(myMatPoints[i], N, detJ);
     // Determine the strain
     static Vector epsilon(6);
-      epsilon.clear();
+      epsilon.Clear();
     epsilon[0] = N(0, 1)*u[ 0]+N(1, 1)*u[ 2]+N(2, 1)*u[ 4]
                 +N(3, 1)*u[ 6]+N(4, 1)*u[ 8]+N(5, 1)*u[10];
     epsilon[1] = N(0, 2)*u[ 1]+N(1, 2)*u[ 3]+N(2, 2)*u[ 5]
@@ -280,7 +280,7 @@ void Triangle6::recoverStresses() {
   xi(5, 2) =  d3;
 
   for (unsigned i = 0; i < 6; i++) {
-    sigma.clear();
+    sigma.Clear();
     for (unsigned j = 0; j < 3; j++) {
       sigma+=xi(i, j)*(myMatPoints[j]->get_material()->get_stress());
     }

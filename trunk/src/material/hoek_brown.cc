@@ -74,19 +74,19 @@ HoekBrown::HoekBrown(int id, MultiaxialMaterial* elastic, double si, double sp,
   MatParams[4] = alpha;
 
   // Material state
-  // ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
-  // qTrial.resize(6, 0.);  qConvg.resize(6, 0.);
+  // ePTrial.Resize(6, 0.); ePConvg.Resize(6, 0.);
+  // qTrial.Resize(6, 0.);  qConvg.Resize(6, 0.);
   // aTrial = 0.;           aConvg = 0.;
 
-  f.resize(3, 0.);
+  f.Resize(3, 0.);
   dfds.resize(3);
-  dfds[0].resize(3);
-  dfds[1].resize(3);
-  dfds[2].resize(3);
+  dfds[0].Resize(3);
+  dfds[1].Resize(3);
+  dfds[2].Resize(3);
   dgds.resize(3);
-  dgds[0].resize(3);
-  dgds[1].resize(3);
-  dgds[2].resize(3);
+  dgds[0].Resize(3);
+  dgds[1].Resize(3);
+  dgds[2].Resize(3);
   d2gdsds.resize(3);
   d2gdsds[0].Resize(3, 3, 0.);
   d2gdsds[1].Resize(3, 3, 0.);
@@ -239,7 +239,7 @@ void HoekBrown::set_strain(const Vector& De) {
   // report(f, "f", 8, 4);
 
   // Setup
-  int nf = f.size();
+  int nf = f.get_size();
   std::vector<bool> active(nf);
   std::vector<double> DLambda(nf, 0.);
   Matrix A;
@@ -281,17 +281,17 @@ void HoekBrown::set_strain(const Vector& De) {
   for (; ; ) {
     // setup jacobian
     A.Resize(3+nActive, 3+nActive, 0.);
-    R.resize(3+nActive, 0.);
-    x.resize(3+nActive);
+    R.Resize(3+nActive, 0.);
+    x.Resize(3+nActive);
     A.Append(C3, 0, 0);
-    R.append(-C3*s+eTrial3, 0, 1., 0.);
+    R.Append(-C3*s+eTrial3, 0, 1., 0.);
     int pos = 0;
     for (int i = 0; i < 3; i++) {
       if (active[i]) {
         A.Append(DLambda[i]*d2gdsds[i],    0,    0, 1., 1.);
         A.AppendCol(dgds[i],               0, 3+pos, 1., 0.);
         A.AppendRow(dfds[i],           3+pos,    0, 1., 0.);
-        R.append(-DLambda[i]*dgds[i],            0, 1., 1.);
+        R.Append(-DLambda[i]*dgds[i],            0, 1., 1.);
         R[3+pos]=-f[i];
         pos++;
       }
@@ -299,7 +299,7 @@ void HoekBrown::set_strain(const Vector& De) {
 
     // check for convergence
     iter++;
-    if (R.twonorm() < 1.e-09) {
+    if (R.Twonorm() < 1.e-09) {
       bool restart = false;
       pos = 0;
       for (int i = 0; i < 3; i++) {

@@ -83,9 +83,9 @@ Brick8::Brick8(int id, std::vector<Node*> nodes,
     for (int j = 0; j < 2; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
-  P.resize(24, 0.);
+  P.Resize(24, 0.);
   // Self weight
-  G.resize(24, 0.);
+  G.Resize(24, 0.);
   myMaterial = material;
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
@@ -168,7 +168,7 @@ const Vector& Brick8::get_R() {
   static Vector sigma(6);
   static Matrix Ba(6, 3);
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if not active
   if (!(groupdata_->active)) {
     return R;
@@ -215,7 +215,7 @@ void Brick8::update() {
   this->shapeFunctions();
   // Incremental strains: De+=B[a].Du  (for each GaussPoint)
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    epsilon.clear();
+    epsilon.Clear();
     for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(B, a, k);
       add2(epsilon, 3*a, B, u, 1.0, 1.0);
@@ -323,7 +323,7 @@ void Brick8::recoverStresses() {
   E(7, 7)=a*a*a*d;
 
   for (unsigned i = 0;i < 8;i++) {      // nodes
-    sigma.clear();
+    sigma.Clear();
     for (unsigned j = 0;j < 6;j++) {    // sigma
       for (unsigned k = 0;k < 8;k++) {  // material points
         sigma[j]+=E(i, k)*(myMatPoints[k]->get_material()->get_stress())[j];

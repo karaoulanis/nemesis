@@ -158,11 +158,11 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       ++iter;
       int nA = 0;
       A.Resize(3+nA+1, 3+nA+1, 0.);
-      R.resize(3+nA+1, 0.);
-      x.resize(3+nA+1);
+      R.Resize(3+nA+1, 0.);
+      x.Resize(3+nA+1);
       A.Append(C3, 0, 0, 1.0, 1.0);
 
-      R.append(C3*s-eTrial3, 0, 1.0, 0.0);
+      R.Append(C3*s-eTrial3, 0, 1.0, 0.0);
       YS* ys =fSurfaces[0];
       YS* ps =gSurfaces[0];
       double DL = DLambda[0];
@@ -170,7 +170,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       A.AppendCol(ps->get_dfds(s, aTrial),        0,   3, 1., 0.);
       A.AppendRow(ys->get_dfds(s, aTrial),        3,   0, 1., 0.);
 
-      R.append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
+      R.Append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
       R[3]=ys->get_f(s, aTrial);
 
       A.Solve(x, -R);
@@ -183,7 +183,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       DLambda[0]+=x[3];
       // cout << DLambda[0];
       aTrial = 0.;
-      if ((R.twonorm() < 1.e-12) && (fSurfaces[0]->get_f(s, aTrial) < 1e-9))
+      if ((R.Twonorm() < 1.e-12) && (fSurfaces[0]->get_f(s, aTrial) < 1e-9))
         break;
     }
   }
@@ -202,8 +202,8 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       ++iter;
       int nA = 1;
       A.Resize(3+nA+1, 3+nA+1, 0.);
-      R.resize(3+nA+1, 0.);
-      x.resize(3+nA+1);
+      R.Resize(3+nA+1, 0.);
+      x.Resize(3+nA+1);
 
       YS* ys =fSurfaces[0];
       YS* ps =gSurfaces[0];
@@ -219,8 +219,8 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       A(1, 3)=0.;
       A(2, 3)=0.;
       A.AppendCol(ps->get_dfds(s, aTrial),        0,   4, 1., 0.);
-      R.append(C3*s-eTrial3, 0, 1.0, 0.0);
-      R.append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
+      R.Append(C3*s-eTrial3, 0, 1.0, 0.0);
+      R.Append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
 
       // Row 2
       A(3, 0)=0.;
@@ -249,8 +249,8 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
       // aTrial-=x[3];
       DLambda[0]+=x[4];
       // cout << DLambda[0];
-      // cout << R.twonorm() << endl;
-      if ((R.twonorm() < 1.e-12) && (fSurfaces[0]->get_f(s, aTrial) < 1e-9))
+      // cout << R.Twonorm() << endl;
+      if ((R.Twonorm() < 1.e-12) && (fSurfaces[0]->get_f(s, aTrial) < 1e-9))
         break;
     }
   }

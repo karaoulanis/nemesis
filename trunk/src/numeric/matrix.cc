@@ -189,7 +189,7 @@ void Matrix::Solve(Vector& x, const Vector& b) {
   for (int i = 0;i < rows_;i++) index[i]=0;
   x = b;
   int ret = LU::decomposition(me, rows_, vv, index, d);
-  if (ret == 0) LU::backsubstitution(me, rows_, index, x.data());
+  if (ret == 0) LU::backsubstitution(me, rows_, index, x.get_data());
   delete[] vv;
   delete[] me;
   delete[] index;

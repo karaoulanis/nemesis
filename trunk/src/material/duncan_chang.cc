@@ -67,7 +67,7 @@ void DuncanChang::set_strain(const Vector& De) {
 }
 const Matrix& DuncanChang::get_C() {
   C.Clear();
-  const Vector& s = sTrial.eigenvalues();
+  const Vector& s = sTrial.Eigenvalues();
   double s1 = -s[2];
   double s3 = -s[0];
   std::cout << s1 << '\t' << s3 << std::endl;

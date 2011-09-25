@@ -89,7 +89,7 @@ void EigenSOE::set_size() {
   size_ = model_->get_num_eqns();
   A.resize(size_*size_);
   M.resize(size_*size_);
-  X.resize(size_);
+  X.Resize(size_);
   ALPHAR.resize(size_);
   ALPHAI.resize(size_);
   BETA.resize(size_);

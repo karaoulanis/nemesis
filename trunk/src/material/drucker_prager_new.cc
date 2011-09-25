@@ -152,11 +152,11 @@ void DruckerPragerNew::set_strain(const Vector& De) {
     // build system
     int nA = static_cast<int>(activeS.size());
     A.Resize(3+nA+1, 3+nA+1, 0.);
-    R.resize(3+nA+1, 0.);
-    x.resize(3+nA+1);
+    R.Resize(3+nA+1, 0.);
+    x.Resize(3+nA+1);
     A.Append(C3, 0, 0, 1.0, 1.0);
 
-    R.append(C3*s-eTrial3, 0, 1.0, 0.0);
+    R.Append(C3*s-eTrial3, 0, 1.0, 0.0);
     for (int i = 0; i < nA; i++) {
       YS* ys =fSurfaces[activeS[i]];
       YS* ps =gSurfaces[activeS[i]];
@@ -164,7 +164,7 @@ void DruckerPragerNew::set_strain(const Vector& De) {
       A.Append(DL*(ps->get_d2fdsds(s, aTrial)),   0,   0, 1., 1.);
       A.AppendCol(ps->get_dfds(s, aTrial),        0, 3+i, 1., 0.);
       A.AppendRow(ys->get_dfds(s, aTrial),      3+i,   0, 1., 0.);
-      R.append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
+      R.Append(DL*(ps->get_dfds(s, aTrial)),           0, 1., 1.);
       R[3+i]=-(ys->get_f(s, aTrial));
       A.AppendCol(DL*(ps->get_f2dkds(s, aTrial)), 0, 3+nA, 1., 1.);
       A(3+i, 3+nA)+=ys->get_dfdk(s, aTrial);
@@ -214,22 +214,22 @@ void DruckerPragerNew::set_strain(const Vector& De) {
       }
     }
     if (restart) {
-      DLambda.clear();
+      DLambda.Clear();
       iter = 0;
     }
     // check
-    R.append(C3*s-eTrial3, 0, 1.0, 0.0);
+    R.Append(C3*s-eTrial3, 0, 1.0, 0.0);
     for (int i = 0; i < nA; i++) {
       YS* ys =fSurfaces[activeS[i]];
       YS* ps =gSurfaces[activeS[i]];
       double DL = DLambda[activeS[i]];
-      R.append(DL*(ps->get_dfds(s, aTrial)),          0, 1., 1.);
+      R.Append(DL*(ps->get_dfds(s, aTrial)),          0, 1., 1.);
       R[3+i]=-(ys->get_f(s, aTrial));
     }
 
     if (check == 0 && restart == false) break;
   }
-  if (R.twonorm()>1.e-12) report(R, "error");
+  if (R.Twonorm()>1.e-12) report(R, "error");
   // report(R);
   // cout << fSurfaces[0]->get_f(s, 0.) << endl;
   // cout << fSurfaces[1]->get_f(s, 0.) << endl;

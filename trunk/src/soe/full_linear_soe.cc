@@ -61,8 +61,8 @@ void FullLinearSOE::set_size() {
   }
   size_ = model_->get_num_eqns();
   A.resize(size_*size_);
-  B.resize(size_);
-  X.resize(size_);
+  B.Resize(size_);
+  X.Resize(size_);
   IPIV.resize(size_);
   size_t d = (size_*size_+2*size_)*sizeof(double);
   size_t i = size_*sizeof(int);

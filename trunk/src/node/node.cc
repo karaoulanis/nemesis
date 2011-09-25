@@ -112,20 +112,20 @@ int Node::addDofToNode(int dof) {
   if (myActivatedDofs.at(dof) < 0) {
     /// @todo use resize(size, 0.)
     myActivatedDofs[dof]=nActivatedDofs++;
-    velcConvg.resize(nActivatedDofs);
-    velcConvg.clear();
-    acclTrial.resize(nActivatedDofs);
-    acclTrial.clear();
-    velcTrial.resize(nActivatedDofs);
-    velcTrial.clear();
-    acclConvg.resize(nActivatedDofs);
-    acclConvg.clear();
-    dispTrial.resize(nActivatedDofs);
-    dispTrial.clear();
-    dispConvg.resize(nActivatedDofs);
-    dispConvg.clear();
-    P.resize(nActivatedDofs);
-    P.clear();
+    velcConvg.Resize(nActivatedDofs);
+    velcConvg.Clear();
+    acclTrial.Resize(nActivatedDofs);
+    acclTrial.Clear();
+    velcTrial.Resize(nActivatedDofs);
+    velcTrial.Clear();
+    acclConvg.Resize(nActivatedDofs);
+    acclConvg.Clear();
+    dispTrial.Resize(nActivatedDofs);
+    dispTrial.Clear();
+    dispConvg.Resize(nActivatedDofs);
+    dispConvg.Clear();
+    P.Resize(nActivatedDofs);
+    P.Clear();
   }
   return 0;
 }
@@ -161,7 +161,7 @@ bool Node::existsLoad() {
   return isLoadApplied;
 }
 void Node::zeroLoad() {
-  P.clear();
+  P.Clear();
   isLoadApplied = false;
 }
 
@@ -170,7 +170,7 @@ void Node::multDisp(double facD) {
   dispConvg*=facD;
 }
 void Node::zeroStress() {
-  stress.clear();
+  stress.Clear();
   avgStress = 0;
 }
 void Node::addStress(const Vector& s) {

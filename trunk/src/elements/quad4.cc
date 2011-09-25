@@ -77,9 +77,9 @@ Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
     for (int j = 0; j < 2; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
-  P.resize(8, 0.);
+  P.Resize(8, 0.);
   // Self weight
-  G.resize(8, 0.);
+  G.Resize(8, 0.);
   myMaterial = material;
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
@@ -178,7 +178,7 @@ void Quad4::recoverStresses() {
   E(3, 1) =  1.0-0.5*sq3;
   E(3, 2) = -0.5;
   E(3, 3) =  1.0+0.5*sq3;
-  sigma.clear();
+  sigma.Clear();
   for (unsigned i = 0; i < 4; i++) {
     sigma[0]=E(i, 0)*myMatPoints[0]->get_material()->get_stress()[0]
         +E(i, 1)*myMatPoints[1]->get_material()->get_stress()[0]

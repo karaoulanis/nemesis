@@ -71,9 +71,9 @@ Tetrahedron4Disp::Tetrahedron4Disp(int id, std::vector<Node*> nodes,
     }
   }
   // Load vector
-  P.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  P.Resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
   // Self weight
-  G.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  G.Resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 
@@ -190,7 +190,7 @@ const Matrix& Tetrahedron4Disp::get_M() {
 const Vector& Tetrahedron4Disp::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
 
   // Quick return if inactive
   if (!(groupdata_->active)) {

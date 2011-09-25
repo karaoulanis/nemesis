@@ -64,10 +64,10 @@ MultiaxialElastoPlastic(int id, MultiaxialMaterial* elastic)
   MatParams[30] = myElastic->get_param(30);
   MatParams[31] = myElastic->get_param(31);
   // Material state
-  ePTrial.resize(6, 0.);
-  ePConvg.resize(6, 0.);
-  qTrial.resize(6, 0.);
-  qConvg.resize(6, 0.);
+  ePTrial.Resize(6, 0.);
+  ePConvg.Resize(6, 0.);
+  qTrial.Resize(6, 0.);
+  qConvg.Resize(6, 0.);
 }
 
 MultiaxialElastoPlastic::~MultiaxialElastoPlastic() {
@@ -132,11 +132,11 @@ void MultiaxialElastoPlastic::returnMapTest(const Vector& De) {
     tmp = De;
     tmp-=invCel*(sTrial-sConvg);
     tmp-=dg*(gS->get_dfds(sTrial, aTrial));
-    R.clear();
-    R.append(tmp, 0);
+    R.Clear();
+    R.Append(tmp, 0);
     R[6]=-(fS->get_f(sTrial, q));
     // Convergence check
-    if ((tmp.twonorm() < tol1) && (std::abs(fS->get_f(sTrial, q)) < tol2)) {
+    if ((tmp.Twonorm() < tol1) && (std::abs(fS->get_f(sTrial, q)) < tol2)) {
       aTrial+=dg;
       ePTrial+=dg*gS->get_dfds(sTrial, aTrial);
       std::cout << dg << std::endl;
@@ -205,19 +205,19 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De) {
 
     static Vector R(6, 0.);
     if (nHardeningVariables>0)
-      R.resize(7, 0.);
-    R.clear();
+      R.Resize(7, 0.);
+    R.Clear();
     Vector temp = De;
     temp-=invCel*(sTrial-sConvg);
     temp-=dg*(gS->get_dfds(sTrial, aTrial));
-    R.append(temp, 0);
+    R.Append(temp, 0);
     if (nHardeningVariables>0) {
       R[6]=-aTrial+aConvg+dg*(EL->get_h(gS->get_dfds(sTrial, aTrial)));
     }
     // =========================================================================
     // Step 4: Check convergence
     // =========================================================================
-    if (R.twonorm() < tol1 && std::abs(fS->get_f(sTrial, aTrial)) < tol2) break;
+    if (R.Twonorm() < tol1 && std::abs(fS->get_f(sTrial, aTrial)) < tol2) break;
 
     // =========================================================================
     // Step 5: Compute elastic moduli and consistent tangent moduli
@@ -238,12 +238,12 @@ void MultiaxialElastoPlastic::returnMapSYS(const Vector& De) {
     // Step 6: Obtain increment to consistency parameter
     // =========================================================================
     Vector vf(6+nHardeningVariables, 0);
-    vf.append(fS->get_dfds(sTrial, aTrial), 0);
+    vf.Append(fS->get_dfds(sTrial, aTrial), 0);
     for (int i = 0;i < nHardeningVariables;i++)
       vf[6+i]=fS->get_dfda(sTrial, aTrial);
 
     Vector vh(6+nHardeningVariables, 0);
-    vh.append(fS->get_dfds(sTrial, aTrial), 0);
+    vh.Append(fS->get_dfds(sTrial, aTrial), 0);
     for (int i = 0;i < nHardeningVariables;i++) {
       vh[6+i]=EL->get_h(gS->get_dfds(sTrial, aTrial));
     }
@@ -326,14 +326,14 @@ void MultiaxialElastoPlastic::returnMapSYS2(const Vector& De) {
     Vector temp = De;
     temp-=invCel*(sTrial-sConvg);
     temp-=dg*(gS->get_dfds(sTrial, aTrial));
-    R.append(temp, 0);
+    R.Append(temp, 0);
     R[6]=-aTrial+aConvg+kappa(gS->get_dfds(sTrial, aTrial), dg);
     R[7]=-(fS->get_f(sTrial, aTrial));
 
     //=====================================================================
     // Step 4: Check convergence
     //=====================================================================
-    if (R.twonorm() < tol1 && std::abs(fS->get_f(sTrial, aTrial)) < tol2) break;
+    if (R.Twonorm() < tol1 && std::abs(fS->get_f(sTrial, aTrial)) < tol2) break;
 
     //=====================================================================
     // Step 5: Compute elastic moduli and consistent tangent moduli
@@ -395,7 +395,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
 
   ePTrial = ePConvg;   // todo:CHECK!!!!
   // aTrial = aConvg;  // todo:CHECK!!!!
-  // aTrial.clear();   // todo:CHECK!!!!
+  // aTrial.Clear();   // todo:CHECK!!!!
   eTotal+=De;
   Vector enn = invCel*sConvg+ePConvg+De;
   // Vector enn = eTotal;
@@ -444,7 +444,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
     // Step 4: Check convergence
     // =========================================================================
     bool converged = false;
-    if (R.twonorm()>tol1) converged = false;
+    if (R.Twonorm()>tol1) converged = false;
     for (unsigned a = 0;a < fSurfaces.size();a++) {
       if ((fSurfaces[a]->isActive()) &&
           (std::abs(fSurfaces[a]->get_f(sTrial, q)) < tol2)) {
@@ -491,7 +491,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
     // =========================================================================
     // Step 6: Obtain increment to consistency parameter
     // =========================================================================
-    ddg.clear();
+    ddg.Clear();
     for (unsigned a = 0;a < fSurfaces.size();a++) {
       for (unsigned b = 0;b < fSurfaces.size();b++) {
         if (fSurfaces[a]->isActive() && fSurfaces[b]->isActive()) {
@@ -519,7 +519,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
     // Step 7: Obtain incremental plastic strains and internal variables
     // =========================================================================
     static Vector temp(6);
-    temp.clear();
+    temp.Clear();
     for (unsigned b = 0;b < fSurfaces.size();b++)
       if (fSurfaces[b]->isActive())
         temp+=ddg[b]*(fSurfaces[b]->get_dfds(sTrial, aTrial));
@@ -587,7 +587,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
 
   ePTrial = ePConvg;   // todo:CHECK!!!!
   // aTrial = aConvg;  // todo:CHECK!!!!
-  // aTrial.clear();   // todo:CHECK!!!!
+  // aTrial.Clear();   // todo:CHECK!!!!
   eTrial = eTotal;
   eTrial+=De;
   Vector enn = invCel*sConvg+ePConvg+De;
@@ -637,7 +637,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
     // Step 4: Check convergence
     //==========================================================================
     bool converged = false;
-    if (R.twonorm()>tol1) converged = false;
+    if (R.Twonorm()>tol1) converged = false;
     for (unsigned a = 0;a < fSurfaces.size();a++) {
       if ((fSurfaces[a]->isActive()) &&
           (std::abs(fSurfaces[a]->get_f(sTrial, q)) < tol2)) {
@@ -645,7 +645,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
       }
     }
     if (converged) break;
-    // cout << "Res:"<<R.twonorm()<<' '<<abs(fSurfaces[0]->get_f(sTrial))<<endl;
+    // cout << "Res:"<<R.Twonorm()<<' '<<abs(fSurfaces[0]->get_f(sTrial))<<endl;
 
     // =========================================================================
     // Step 5: Compute elastic moduli and consistent tangent moduli
@@ -715,7 +715,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
     // Step 7: Obtain incremental plastic strains and internal variables
     // =========================================================================
     static Vector temp(6);
-    temp.clear();
+    temp.Clear();
     for (unsigned b = 0;b < fSurfaces.size();b++)
       if (fSurfaces[b]->isActive())
         temp+=ddg[b]*(fSurfaces[b]->get_dfds(sTrial, aTrial));
@@ -731,7 +731,7 @@ void MultiaxialElastoPlastic::returnMapMYS2(const Vector& De) {
   // if (k == nIter) cout << "FAILED"<<std::endl;
 }
 void MultiaxialElastoPlastic::updateStateVariable() {
-  // double eq = sqrt(2/3.)*ePTrial.twonorm();
+  // double eq = sqrt(2/3.)*ePTrial.Twonorm();
 }
 
 void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
@@ -785,7 +785,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
     }
 
     if (activeSurfaces.size()>tol2 &&
-        std::abs(sTrial.theta())*180./num::pi>29.99) {
+        std::abs(sTrial.Theta())*180./num::pi>29.99) {
       activeSurfaces.resize(0);
       for (unsigned i = 0;i < fSurfaces.size(); i++)
         fSurfaces[i]->set_active(false);
@@ -803,7 +803,7 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
     for (unsigned b = 0;b < fSurfaces.size();b++)
       if (fSurfaces[b]->isActive())
         temp-=dg[b]*(fSurfaces[b]->get_dfds(sTrial, aTrial));
-    R.append(temp, 0);
+    R.Append(temp, 0);
     // ----- R[6]
     R[6]=aTrial-aConvg;  // -kappa(fSurfaces[b]->get_dfds(sTrial, aTrial), dg);
     // ----- R[7- ]
@@ -815,9 +815,9 @@ void MultiaxialElastoPlastic::returnMapMYS3(const Vector& De) {
     //=====================================================================
     // for (unsigned i = 0;i < fSurfaces.size();i++)
     //  cout << k<<'\t'<<i<<'\t'<<fSurfaces[i]->get_f(sTrial, aTrial)<<endl;
-    // cout << R.twonorm()<<std::endl;
+    // cout << R.Twonorm()<<std::endl;
     bool converged = true;
-    if (R.twonorm()>tol1) converged = false;
+    if (R.Twonorm()>tol1) converged = false;
     for (unsigned i = 0;i < activeSurfaces.size();i++)
       if (fSurfaces[activeSurfaces[i]]->get_f(sTrial, aTrial)>tol2)
         converged = false;

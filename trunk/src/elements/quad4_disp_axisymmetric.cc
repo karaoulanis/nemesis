@@ -98,7 +98,7 @@ const Matrix& Quad4DispAxisymmetric::get_M() {
 const Vector& Quad4DispAxisymmetric::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -139,7 +139,7 @@ void Quad4DispAxisymmetric::update() {
     double r = x(0, 0)*N(0, 0)+x(1, 0)*N(0, 1)+x(2, 0)*N(0, 2)+x(3, 0)*N(0, 3);
     // Determine the strain
     static Vector epsilon(6);
-    epsilon.clear();
+    epsilon.Clear();
     epsilon[0] = N(1, 0)*u[0]  +N(1, 1)*u[2]  +N(1, 2)*u[4]  +N(1, 3)*u[6];
     epsilon[1] = N(2, 0)*u[1]  +N(2, 1)*u[3]  +N(2, 2)*u[5]  +N(2, 3)*u[7];
     epsilon[2] = N(0, 0)/r*u[0]+N(0, 1)/r*u[2]+N(0, 2)/r*u[4]+N(0, 3)/r*u[6];

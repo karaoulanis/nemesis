@@ -49,10 +49,10 @@ ModelNode::ModelNode(const IDContainer& FTable, Node* node,
 ModelNode::~ModelNode() {
 }
 void ModelNode::add_uTrial(double factor) {
-  if (myNode != 0) myVector->add_cV(factor, myNode->get_disp_trial());
+  if (myNode != 0) myVector->Add_cV(factor, myNode->get_disp_trial());
 }
 void ModelNode::add_vTrial(double factor) {
-  if (myNode != 0) myVector->add_cV(factor, myNode->get_velc_trial());
+  if (myNode != 0) myVector->Add_cV(factor, myNode->get_velc_trial());
 }
 void ModelNode::rollback() {
   if (myNode != 0) myNode->rollback();

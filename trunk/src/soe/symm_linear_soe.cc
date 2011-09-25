@@ -66,8 +66,8 @@ void SymmLinearSOE::set_size() {
   }
   size_ = model_->get_num_eqns();
   A.resize(static_cast<int>(0.5*size_*(size_+1)));
-  B.resize(size_);
-  X.resize(size_);
+  B.Resize(size_);
+  X.Resize(size_);
   IPIV.resize(size_);
   size_t d = (static_cast<int>(0.5*size_*(size_+1))+size_+size_)*sizeof(double);
   size_t i = size_*sizeof(int);

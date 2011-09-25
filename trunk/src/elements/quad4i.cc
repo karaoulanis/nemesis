@@ -94,7 +94,7 @@ const Matrix& Quad4i::get_M() {
 const Vector& Quad4i::get_R() {
   // Get a reference to myVector as R
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Static vectors and matrices
   static Vector sigma(6);
   static Matrix Ba(3, 2);
@@ -154,7 +154,7 @@ void Quad4i::update() {
   aTrial = aConvg+Da;
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    epsilon.clear();
+    epsilon.Clear();
     for (unsigned a = 0; a < 4; a++) {
       this->get_Bstd(Ba, a, k);
       /// @todo check

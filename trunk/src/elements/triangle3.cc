@@ -74,9 +74,9 @@ Triangle3::Triangle3(int id, std::vector<Node*> nodes,
     for (int j = 0; j < 2; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
-  P.resize(6, 0.);
+  P.Resize(6, 0.);
   // Self weight
-  G.resize(6, 0.);
+  G.Resize(6, 0.);
   myMaterial = material;
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
@@ -165,7 +165,7 @@ const Matrix& Triangle3::get_M() {
 }
 const Vector& Triangle3::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -189,6 +189,7 @@ const Vector& Triangle3::get_R() {
   R-=facP*P;
   return R;
 }
+
 void Triangle3::update() {
   // Quick return if inactive
   if (!(groupdata_->active)) {
@@ -198,7 +199,7 @@ void Triangle3::update() {
   u = this->get_disp_incrm();
   // Determine the strain
   static Vector epsilon(6);
-  epsilon.clear();
+  epsilon.Clear();
   epsilon[0]=(0.5/A)*(b1*u[0]+b2*u[2]+b3*u[4]);
   epsilon[1]=(0.5/A)*(c1*u[1]+c2*u[3]+c3*u[5]);
   epsilon[3]=(0.5/A)*(c1*u[0]+b1*u[1]+c2*u[2]+b2*u[3]+c3*u[4]+b3*u[5]);

@@ -101,21 +101,22 @@ class Vector {
   /**
    * Returns the size of the Vector.
    */
-  inline int size() const {
+  inline int get_size() const {
     return size_;
   }
   /**
    * Returns a pointer to Vector data.
    */
-  inline double* data() {
+  inline double* get_data() {
     return data_;
   }
   /**
    * Returns a const pointer to Vector data.
    */
-  inline double* data() const {
+  inline double* get_data() const {
     return data_;
   }
+
   /**
    * Resizes the Vector.
    * Does not preserves data and does not initialize entries.
@@ -123,7 +124,7 @@ class Vector {
    * Exception handling for bad allocation is provided.
    * @param n The size of the vector.
    */
-  inline void resize(int n) {
+  inline void Resize(int n) {
     if (size_ != n) {
       size_ = n;
       if (data_ != 0) delete[] data_;
@@ -135,6 +136,7 @@ class Vector {
       }
     }
   }
+
   /**
    * Resizes the Vector.
    * Does not preserves data but initializes all entries to c.
@@ -143,7 +145,7 @@ class Vector {
    * @param n The size of the vector.
    * @param c Initial value for all entries.
    */
-  inline void resize(int n, double c) {
+  inline void Resize(int n, double c) {
     if (size_ != n) {
       size_ = n;
       if (data_ != 0) delete[] data_;
@@ -156,12 +158,14 @@ class Vector {
     }
     for (int i = 0;i < size_;i++) data_[i]=c;
   }
+
   /**
    * Clears the contents of a Vector.
    */
-  inline void clear() {
+  inline void Clear() {
     for (int i = 0;i < size_;i++) data_[i]=0.;
   }
+
   /**
    * Implements += operator: this+=c.
    */
@@ -226,6 +230,7 @@ class Vector {
     for (int i = 0;i < size_;i++) data_[i]+=v.data_[i];
     return *this;
   }
+
   /**
    * Implements -= operator: this-=v.
    * Size checking is provided for the debug version.
@@ -237,11 +242,12 @@ class Vector {
     for (int i = 0;i < size_;i++) data_[i]-=v.data_[i];
     return *this;
   }
+
   /**
    * Implements c0*this+=c*v.
    * Size checking is provided for the debug version.
    */
-  inline void add_cV(double c, const Vector& v, double c0 = 1.0) {
+  inline void Add_cV(double c, const Vector& v, double c0 = 1.0) {
     #ifdef _DEBUG
     num::check::array_size(v.size_, size_);
     #endif
@@ -250,15 +256,17 @@ class Vector {
     else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
     for (int i = 0;i < size_;i++) data_[i]+=c*v.data_[i];
   }
+
   /**
    * Implements + operator: this+v.
    * A temporary object is created.
    */
   inline Vector operator+(const Vector& v) {
     Vector res(*this);
-    res.add_cV(1.0, v, 1.0);
+    res.Add_cV(1.0, v, 1.0);
     return res;
   }
+
   /**
    * Implements - operator: this-v.
    * A temporary object is created.
@@ -266,15 +274,17 @@ class Vector {
    */
   inline Vector operator-(const Vector& v) {
     Vector res(*this);
-    res.add_cV(-1.0, v, 1.0);
+    res.Add_cV(-1.0, v, 1.0);
     return res;
   }
+
   /**
    * Implements + operator: +this.
    */
   inline Vector& operator+() {
     return *this;
   }
+
   /**
    * Implements - operator: -this.
    * A temporary object is created.
@@ -284,6 +294,7 @@ class Vector {
     for (int i = 0;i < size_;i++) res.data_[i]=-data_[i];
     return res;
   }
+
   /**
    * Implements dot product.
    * Size checking is provided for the debug version.
@@ -297,11 +308,12 @@ class Vector {
     for (int i = 1;i < v1.size_;i++) res+=v1.data_[i]*v2.data_[i];
     return res;
   }
+
   /**
    * Implements cross product.
    * Size checking is provided for the debug version.
    */
-  inline friend Vector cross(const Vector& v1, const Vector& v2) {
+  inline friend Vector Cross(const Vector& v1, const Vector& v2) {
     #ifdef _DEBUG
     num::check::array_size(v1.size_, 3);
     num::check::array_size(v2.size_, 3);
@@ -312,11 +324,12 @@ class Vector {
     res.data_[2]=v1.data_[0]*v2.data_[1]-v1.data_[1]*v2.data_[0];
     return res;
   }
+
   /**
    * Implements Euclidean norm.
    * The implementation provides overflow protection.
    */
-  inline double twonorm() const {
+  inline double Twonorm() const {
     if (size_ == 0) return 0;
     double norm = fabs(data_[0]);
     for (int i = 1;i < size_;i++) {
@@ -330,10 +343,11 @@ class Vector {
     }
     return norm;
   }
+
   /**
    * Implements maximum norm.
    */
-  inline double maxnorm() const {
+  inline double Maxnorm() const {
     if (size_ == 0) return 0;
     double norm = fabs(data_[0]);
     for (int i = 1;i < size_;i++)
@@ -341,17 +355,19 @@ class Vector {
         norm = fabs(data_[i]);
     return norm;
   }
+
   /**
    * Returns the normal of a Vector.
    * Provides check for zero division.
    */
-  inline Vector& normalize() {
-    double norm = twonorm();
+  inline Vector& Normalize() {
+    double norm = Twonorm();
     if (num::tiny(norm))
       throw SException("[nemesis:%d] %s", 9999, "Zero vector length.");
     for (int i = 0;i < size_;i++) data_[i]/=norm;
     return *this;
   }
+
   /**
    * Appends the entries of a Vector v.
    * Range checking is provided for the debug version.
@@ -360,7 +376,7 @@ class Vector {
    * @param c A factor to be multiplied with the appended entries.
    * @param c0 A factor to be multiplied with the existing entries.
    */
-  inline Vector& append(const Vector& v, int row, double c = 1.,
+  inline Vector& Append(const Vector& v, int row, double c = 1.,
                                                   double c0 = 0.) {
     #ifdef _DEBUG
     num::check::array_range(row+v.size_, size_);
@@ -370,14 +386,16 @@ class Vector {
     for (int i = 0;i < v.size_;i++) data_[row+i]+=c*v.data_[i];
     return *this;
   }
-  inline friend double angle(const Vector& v1, const Vector& v2) {
-    double denom = v1.twonorm()*v2.twonorm();
+
+  inline friend double Angle(const Vector& v1, const Vector& v2) {
+    double denom = v1.Twonorm()*v2.Twonorm();
     if (denom == 0.) return -360.;
     double beta=(v1*v2)/denom;
     if (beta >= 1.) beta= 0.999999999999999999;
     if (beta <=-1.) beta=-0.999999999999999999;
     return acos(beta)*180/num::pi;
   }
+
   /**
    * Return mean stress.
    * sb = 1/3*(sxx+syy+szz)
@@ -388,6 +406,7 @@ class Vector {
     #endif
     return num::d13*(data_[0]+data_[1]+data_[2]);
   }
+
   /**
    * Return invariant I1.
    * I1 = sxx+syy+szz
@@ -398,6 +417,7 @@ class Vector {
     #endif
     return data_[0]+data_[1]+data_[2];
   }
+
   /**
    * Return invariant I2.
    * @todo this
@@ -408,6 +428,7 @@ class Vector {
     #endif
     return 0.;
   }
+
   /**
    * Return invariant I3.
    * I3 = sxx*syy*szz+2.*txy*tzx*tyz-sxx*tyz*tyz-syy*tzx*tzx-szz*txy*txy
@@ -422,6 +443,7 @@ class Vector {
         -data_[1]*data_[5]*data_[5]
         -data_[2]*data_[3]*data_[3];
   }
+
   /**
    * Return invariant J1.
    * J1 = 0
@@ -432,6 +454,7 @@ class Vector {
     #endif
     return 0;
   }
+
   /**
    * Return invariant J2.
    * J2 = 0.5*(sx*sx+sy*sy+sz*sz)+txy*txy+tyz*tyz+tzx*tzx
@@ -447,6 +470,7 @@ class Vector {
     return 0.5*(sx*sx+sy*sy+sz*sz)
         +data_[3]*data_[3]+data_[4]*data_[4]+data_[5]*data_[5];
   }
+
   /**
    * Return invariant J3.
    * J3 = sx*sy*sz+2.*txy*tyz*tzx-sx*tyz*tyz-sy*tzx*tzx-sz*txy*txy
@@ -464,12 +488,13 @@ class Vector {
         -sy*data_[5]*data_[5]
         -sz*data_[3]*data_[3];
   }
+
   /**
    * Return theta.
    * theta=-1.5*sqrt(3.)*J3/(sqJ2*sqJ2*sqJ2)/3.0
    * @todo check this
    */
-  inline double theta() const {
+  inline double Theta() const {
     #ifdef _DEBUG
     num::check::array_size(size_, 6);
     #endif
@@ -494,6 +519,7 @@ class Vector {
     else if (arg < -1.)  arg=-1.0;
     return asin(arg)/3.0;
   }
+
   /**
    * Return p (hydrostatic).
    * p=-I1/3.0 (sign convention).
@@ -504,6 +530,7 @@ class Vector {
     #endif
     return -I1()/3.0;
   }
+
   /**
    * Return q (deviatoric).
    * p = sqrt(3*J2)
@@ -514,6 +541,7 @@ class Vector {
     #endif
     return sqrt(3.*J2());
   }
+
   /**
    * Return dp/ds.
    * @todo remove?
@@ -528,6 +556,7 @@ class Vector {
     ret[2]=-num::d13;
     return ret;
   }
+
   /**
    * Return dq/ds.
    * @todo remove?
@@ -554,11 +583,12 @@ class Vector {
     ret*=num::sq3/(2*J2());
     return ret;
   }
+
   /**
    * Return eigenvalues.
    * Eigenvalues are returned in descending order.
    */
-  const Vector& eigenvalues();
+  const Vector& Eigenvalues();
 
   inline friend std::ostream& operator<<(std::ostream& s, const Vector& v) {
     // s << 1100 << ' ' << v.size_ << ' ';

@@ -75,5 +75,5 @@ void StandardModelNode::commitSens(const Vector& X, int param) {
   myNode->commitSens(*myVector, param);
 }
 void StandardModelNode::add_R(double factor) {
-  if (myNode->existsLoad()) myVector->add_cV(factor, myNode->get_R());
+  if (myNode->existsLoad()) myVector->Add_cV(factor, myNode->get_R());
 }

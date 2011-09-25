@@ -44,8 +44,8 @@ void report(const Matrix& m, const char* name, int total, int decimal) {
 }
 
 void report(const Vector& v, const char* name, int total, int decimal) {
-  printf("%s [%d] =", name, v.size());
-  for (int i = 0; i < v.size(); i++) {
+  printf("%s [%d] =", name, v.get_size());
+  for (int i = 0; i < v.get_size(); i++) {
     num::print_d(v[i], total, decimal);
   }
   printf("\n");
@@ -75,8 +75,8 @@ void add(Vector& R, int row, const Matrix& BT, const Vector& V,
          double c1, double c0) {
   int m = BT.get_rows();
   int n = BT.get_cols();
-  double* pV =V.data();
-  double* pR =R.data();
+  double* pV =V.get_data();
+  double* pR =R.get_data();
   double* pBT = BT.get_data();
   for (int i = 0;i < n;i++)
     pR[i]*=c0;
@@ -89,8 +89,8 @@ void add2(Vector& R, int row, const Matrix& BT, const Vector& V,
           double c1, double c0) {
   int m = BT.get_rows();
   int n = BT.get_cols();
-  double* pV =V.data();
-  double* pR =R.data();
+  double* pV =V.get_data();
+  double* pR =R.get_data();
   double* pBT = BT.get_data();
   for (int i = 0;i < m;i++)
     pR[i]*=c0;
@@ -128,8 +128,8 @@ void add_BTv(Vector& R, int row, const int* perm,
              const Matrix& B, const Vector& v, double c1, double c0) {
   int m = B.get_rows();
   int n = B.get_cols();
-  double* pV = v.data();
-  double* pR = R.data();
+  double* pV = v.get_data();
+  double* pR = R.get_data();
   double* pB = B.get_data();
   for (int i = 0;i < n;i++)
     pR[i]*=c0;
@@ -142,8 +142,8 @@ void add_Bv(Vector& R, int row, const int* perm,
             const Matrix& B, const Vector& v, double c1, double c0) {
   int m = B.get_rows();
   int n = B.get_cols();
-  double* pV = v.data();
-  double* pR = R.data();
+  double* pV = v.get_data();
+  double* pR = R.get_data();
   double* pB = B.get_data();
   for (int i = 0;i < m;i++)
     pR[i]*=c0;
@@ -171,7 +171,7 @@ void spectralDecomposition(const Vector& s, Vector& sP, Matrix& sV) {
   sV(2, 1) = 0.;
   sV(2, 2) = s[2];
 
-  dsyev(&JOBZ, &UPLO, &N, sV.get_data(), &LDA, sP.data(), WORK.data(),
+  dsyev(&JOBZ, &UPLO, &N, sV.get_data(), &LDA, sP.get_data(), WORK.get_data(),
         &LWORK, &INFO, 1, 1);
   // cout << WORK[0]<<endl;
   double d, d0, d1, d2;

@@ -66,9 +66,9 @@ Spring::Spring(int id, std::vector<Node*> nodes, SpringMaterial* material,
     for (int j = 0; j < dim_; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
-  P.resize(2*dim_, 0.);
+  P.Resize(2*dim_, 0.);
   // Self weight
-  G.resize(2*dim_, 0.);
+  G.Resize(2*dim_, 0.);
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 
@@ -88,32 +88,32 @@ Spring::Spring(int id, std::vector<Node*> nodes, SpringMaterial* material,
       T(0, 0)=1.;
       break;
     case 2:
-      xp.resize(2);
-      yp.resize(2);
+      xp.Resize(2);
+      yp.Resize(2);
       xp[0]= xp1;
       xp[1]= xp2;
       yp[0]=-xp2;
       yp[1]= xp1;
-      xp.normalize();
-      yp.normalize();
+      xp.Normalize();
+      yp.Normalize();
       T.AppendRow(xp, 0, 0);
       T.AppendRow(yp, 1, 0);
       break;
     case 3:
-      xp.resize(3);
-      yp.resize(3);
-      zp.resize(3);
+      xp.Resize(3);
+      yp.Resize(3);
+      zp.Resize(3);
       xp[0]=xp1;
       xp[1]=xp2;
       xp[2]=xp3;
       yp[0]=yp1;
       yp[1]=yp2;
       yp[2]=yp3;
-      zp = cross(xp, yp);
-      yp = cross(zp, xp);
-      xp.normalize();
-      yp.normalize();
-      zp.normalize();
+      zp = Cross(xp, yp);
+      yp = Cross(zp, xp);
+      xp.Normalize();
+      yp.Normalize();
+      zp.Normalize();
       T.AppendRow(xp, 0, 0);
       T.AppendRow(yp, 1, 0);
       T.AppendRow(zp, 2, 0);
@@ -133,7 +133,7 @@ void Spring::update() {
   du = this->get_disp_incrm();
   report(du, "du");
   static Vector de(dim_, 0);
-  de.clear();
+  de.Clear();
   for (int k = 0;k < dim_;k++)
     for (int i = 0;i < dim_;i++)
       de[i]+=T(i, k)*(du[k+dim_]-du[k]);
@@ -160,7 +160,7 @@ const Matrix& Spring::get_K() {
   return K;
 
 /*  Matrix& K=*myMatrix;
-  K.clear();
+  K.Clear();
   Vector Ct = mySpringMaterial->get_C();
   for (int k = 0; k < nDim; k++) {
     for (int j = 0; j < nDim; j++) {
@@ -183,7 +183,7 @@ const Matrix& Spring::get_M() {
 }
 const Vector& Spring::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -210,20 +210,20 @@ const Vector& Spring::get_R() {
 const Vector& Spring::get_Reff() {
   /// @todo: form Reff
   Vector& Reff=*myVector;
-  Reff.clear();
+  Reff.Clear();
   return Reff;
 }
 const Vector& Spring::get_Rgrad() {
   /// @todo: form Rgrad
   Vector& Rgrad=*myVector;
-  Rgrad.clear();
+  Rgrad.Clear();
   return Rgrad;
 }
 void Spring::recoverStresses() {
   /// @todo Stresses from bar to nodes
   static Vector s(6);
-  s.clear();
-  s.append(mySpringMaterial->get_stress(), 0);
+  s.Clear();
+  s.Append(mySpringMaterial->get_stress(), 0);
   nodes_[0]->addStress(s);
   nodes_[1]->addStress(s);
 }

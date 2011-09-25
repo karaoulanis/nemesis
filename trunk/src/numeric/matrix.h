@@ -438,10 +438,10 @@ class Matrix {
     num::check::array_range(row, col+v.size(), rows_, cols_);
     #endif
     if (c0 == 0.0)
-      for (int i = 0;i < v.size();i++) data_[row*cols_+col+i]=0.;
+      for (int i = 0; i < v.get_size(); i++)  data_[row*cols_+col+i]=0.;
     else if (c0 != 1.0)
-      for (int i = 0;i < v.size();i++) data_[row*cols_+col+i]*=c0;
-    for (int i = 0;i < v.size();i++)     data_[row*cols_+col+i]+=c*v[i];
+      for (int i = 0; i < v.get_size(); i++)  data_[row*cols_+col+i]*=c0;
+    for (int i = 0; i < v.get_size(); i++)    data_[row*cols_+col+i]+=c*v[i];
     return *this;
   }
 
@@ -460,10 +460,10 @@ class Matrix {
     num::check::array_range(row+v.size(), col, rows_, cols_);
     #endif
     if (c0 == 0.0)
-      for (int i = 0;i < v.size();i++) data_[(row+i)*cols_+col]=0.;
+      for (int i = 0; i < v.get_size(); i++) data_[(row+i)*cols_+col]=0.;
     else if (c0 != 1.0)
-      for (int i = 0;i < v.size();i++) data_[(row+i)*cols_+col]*=c0;
-    for (int i = 0;i < v.size();i++)     data_[(row+i)*cols_+col]+=c*v[i];
+      for (int i = 0; i < v.get_size(); i++) data_[(row+i)*cols_+col]*=c0;
+    for (int i = 0; i < v.get_size(); i++)   data_[(row+i)*cols_+col]+=c*v[i];
     return *this;
   }
 
@@ -540,11 +540,11 @@ inline Matrix Identity(int n) {
  */
 inline Matrix VVT(const Vector& v1, const Vector& v2) {
   #ifdef _DEBUG
-  num::check::array_size(v1.size(), v2.size());
+  num::check::array_size(v1.get_size(), v2.get_size());
   #endif
-  Matrix res(v1.size(), v2.size());
-  for (int i = 0;i < v1.size();i++)
-    for (int j = 0;j < v2.size();j++)
+  Matrix res(v1.get_size(), v2.get_size());
+  for (int i = 0;i < v1.get_size();i++)
+    for (int j = 0;j < v2.get_size();j++)
       res(i, j)=v1[i]*v2[j];
   return res;
 }

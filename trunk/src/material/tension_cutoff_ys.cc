@@ -50,7 +50,7 @@ double TensionCutOffYS::get_dfdk(const Vector& /*sigma*/,
 }
 const Vector& TensionCutOffYS::get_f2dkds(const Vector& /*sigma*/,
                                          const double /*kappa*/) {
-  a.clear();
+  a.Clear();
   return a;
 }
 
