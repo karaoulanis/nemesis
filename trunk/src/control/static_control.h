@@ -44,7 +44,29 @@
  * step fails.
  */
 class StaticControl :public Control {
- protected:
+  public:
+  // Constructors and destructor
+  StaticControl();
+  StaticControl(double D0, double minD, double maxD,
+                int IterDesired, double n, double DeltaTime);
+  virtual ~StaticControl();
+
+  void FormResidual(double factor);
+
+  // Form tangent and residual element by element
+  virtual void FormElementalTangent(ModelElement* pModelElement);
+  virtual void FormElementalResidual(ModelElement* pModelElement,
+                                     double time = 0.);
+
+  // Form residual node by node
+  void FormNodalResidual(ModelNode* pModelNode);
+
+  // Methods that are used through analysis
+  virtual void Init();
+  virtual void Commit();
+  virtual void Rollback();
+
+protected:
   double Delta0;        /// < Initial Delta
   double minDelta;      /// < Lower bound for Delta (absolute);
   double maxDelta;      /// < Upper bound for Delta (absolute);
@@ -56,28 +78,5 @@ class StaticControl :public Control {
   int Id;               /// < Desired number of iterations in this step
   double nExp;          /// < Exponent for the auto incrementation
   double Dt;            /// < Timestep for viscoplastic solutions
-  public:
-
-  // Constructors and destructor
-  StaticControl();
-  StaticControl(double D0, double minD, double maxD,
-    int IterDesired, double n, double DeltaTime);
-  virtual ~StaticControl();
-
-  void formResidual(double factor);
-
-  // Form tangent and residual element by element
-  virtual void formElementalTangent(ModelElement* pModelElement);
-  virtual void formElementalResidual(ModelElement* pModelElement,
-                                     double time = 0.);
-
-  // Form residual node by node
-  void formNodalResidual(ModelNode* pModelNode);
-
-  // Methods that are used through analysis
-  virtual void init();
-  virtual void commit();
-  virtual void rollback();
 };
-
 #endif  // SRC_CONTROL_STATIC_CONTROL_H_

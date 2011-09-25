@@ -106,8 +106,8 @@ int TransientAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   // Initialize
   pA->get_domain()->Initialize();
   loadcase->Initialize();
-  pA->get_control()->init();
-  pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
+  pA->get_control()->Init();
+  pA->get_convergence_norm()->Init(loadcase->get_id(), num_loadsteps);
   /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // pA->get_domain()->keepTrack(pA->get_control()->get_ambda(),
   // pA->get_control()->get_time());
@@ -122,11 +122,11 @@ int TransientAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
         printf("Warning  : Solution is diverging.\n");
       else if (check == -2)
         printf("Warning  : Maximum number of iteration was exceeded.\n");
-      pA->get_control()->rollback();
+      pA->get_control()->Rollback();
       break;
     }
     // Algorithm succeeded
-    pA->get_control()->commit();
+    pA->get_control()->Commit();
     /// @todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // pA->get_domain()->keepTrack(pA->get_control()->get_lambda(),
     // pA->get_control()->get_time());

@@ -71,11 +71,11 @@ int SensitivityStaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   //    pA->get_domain()->get_loadcases(), nLC));
 
   // Initialize control
-  pA->get_control()->init();
-  theSensitivityControl->init();
+  pA->get_control()->Init();
+  theSensitivityControl->Init();
 
   // Initialize the convergence check
-  pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
+  pA->get_convergence_norm()->Init(loadcase->get_id(), num_loadsteps);
 
   int ret = 0;
   for (int i = 0; i < num_loadsteps; i++) {
@@ -90,17 +90,17 @@ int SensitivityStaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
       ret=-1;
     }
     // Algorithm succeeded
-    pA->get_control()->commit();
+    pA->get_control()->Commit();
 
     // Sensitivity
     int nParams =loadcase->GetNumSensitivityParameters();
     for (int j = 0; j < nParams; j++) {
-      theSensitivityControl->formTangent();
-      theSensitivityControl->formResidual(0.);
+      theSensitivityControl->FormTangent();
+      theSensitivityControl->FormResidual(0.);
       // pA->get_soe()->print();
       pA->get_soe()->solve();
       // cout << pA->get_soe()->get_X();
-      theSensitivityControl->commit();
+      theSensitivityControl->Commit();
     }
   }
 

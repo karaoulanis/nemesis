@@ -54,7 +54,7 @@ void ConvergenceNorm::set_check(int maxIterations,
   tol[2] = tolWrel;
 }
 
-void ConvergenceNorm::init(int LCid, int steps) {
+void ConvergenceNorm::Init(int LCid, int steps) {
   LC = LCid;
   nSteps = steps;
   step = 0;
@@ -62,7 +62,7 @@ void ConvergenceNorm::init(int LCid, int steps) {
   printf("Step   Iter   Lambda     Time    R(abs)    R(rel)    E(rel)   P.P.\n");
 }
 
-void ConvergenceNorm::newStep() {
+void ConvergenceNorm::NewStep() {
   step++;
   iter = 0;
   ro = 0;
@@ -82,7 +82,7 @@ void ConvergenceNorm::newStep() {
   wo = abs(wo);
 }
 
-int ConvergenceNorm::update() {
+int ConvergenceNorm::Update() {
   iter++;
   double ri = 0, wi = 0;
   double ridro, widwo;

@@ -55,7 +55,7 @@ Newmark::~Newmark() {
 /**
  *
  */
-void Newmark::predict() {
+void Newmark::Predict() {
   pA->get_domain()->incTime(dt);
   ut = u;
   vt = v;
@@ -70,7 +70,7 @@ void Newmark::predict() {
   pA->get_model()->set_trial_vecs(u, v, a);
   pA->get_model()->update();
 
-  this->formResidual(1.0);
+  this->FormResidual(1.0);
   pA->get_soe()->solve();
 
   u = u+(pA->get_soe()->get_X());
@@ -79,10 +79,11 @@ void Newmark::predict() {
   pA->get_model()->set_trial_vecs(u, v, a);
   pA->get_model()->update();
 }
+
 /**
  *
  */
-void Newmark::correct() {
+void Newmark::Correct() {
   u = u+(pA->get_soe()->get_X());
   v = v+c[2]*(pA->get_soe()->get_X());
   a = a+c[1]*(pA->get_soe()->get_X());

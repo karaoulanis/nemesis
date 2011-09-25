@@ -47,8 +47,8 @@ class LoadControl :public StaticControl {
   ~LoadControl();
 
   // Methods for incremental/iterative algorithms
-  void predict();
-  void correct();
+  void Predict();
+  void Correct();
 };
 
 #endif  // SRC_CONTROL_LOAD_CONTROL_H_

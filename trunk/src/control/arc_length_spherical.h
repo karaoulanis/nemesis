@@ -45,8 +45,8 @@ class ArcLengthSpherical :public StaticControl {
   ~ArcLengthSpherical();
 
   // Methods for incremental/iterative algorithms
-  void predict();
-  void correct();
+  void Predict();
+  void Correct();
 };
 
 #endif  // SRC_CONTROL_ARC_LENGTH_SPHERICAL_H_

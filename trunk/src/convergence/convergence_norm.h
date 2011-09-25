@@ -41,8 +41,8 @@ class ConvergenceNorm: public AnalysisObject {
   ~ConvergenceNorm();
   void set_check(int maxIterations, double tolRabs, double tolRrel,
                 double tolWrel);
-  void init(int LCid, int steps);
-  void newStep();
-  int update();
+  void Init(int LCid, int steps);
+  void NewStep();
+  int Update();
 };
 #endif  // SRC_CONVERGENCE_CONVERGENCE_NORM_H_

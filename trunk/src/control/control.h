@@ -33,32 +33,33 @@ class ModelElement;
 class ModelNode;
 
 class Control: public AnalysisObject {
- protected:
+ public:
+  Control();
+  virtual ~Control();
+
+  virtual void FormTangent();
+  virtual void FormResidual(double factor)=0;
+
+  // Functions to build Element by Element or Node by Node it's contribution
+  virtual void FormElementalTangent(ModelElement* pModelElement)=0;
+  virtual void FormElementalResidual(ModelElement* pModelElement,
+                                     double time = 0.)=0;
+  virtual void FormNodalResidual(ModelNode* pModelNode)=0;
+
+  virtual double get_lambda();
+  virtual double get_time() {return 0;}  /// @todo: implement this better
+
+  virtual void Init()=0;
+  virtual void Predict()=0;
+  virtual void Correct()=0;
+  virtual void Commit()=0;
+  virtual void Rollback()=0;
+
+protected:
   double lambdaTrial;
   double lambdaConvg;
   double DLambda;
   double dLambda;
   Vector qRef;
- public:
-  Control();
-  virtual ~Control();
-
-  virtual void formTangent();
-  virtual void formResidual(double factor)=0;
-
-  // Functions to build Element by Element or Node by Node it's contribution
-  virtual void formElementalTangent(ModelElement* pModelElement)=0;
-  virtual void formElementalResidual(ModelElement* pModelElement,
-                                     double time = 0.)=0;
-  virtual void formNodalResidual(ModelNode* pModelNode)=0;
-
-  virtual double get_lambda();
-  virtual double get_time() {return 0;}  /// @todo: implement this better
-
-  virtual void init()=0;
-  virtual void predict()=0;
-  virtual void correct()=0;
-  virtual void commit()=0;
-  virtual void rollback()=0;
 };
 #endif  // SRC_CONTROL_CONTROL_H_

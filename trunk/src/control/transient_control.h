@@ -43,14 +43,14 @@ class TransientControl :public Control {
   virtual ~TransientControl();
 
   // Form tangent and residuals
-  virtual void formElementalTangent(ModelElement* pModelElement);
-  virtual void formElementalResidual(ModelElement* pModelElement,
+  virtual void FormElementalTangent(ModelElement* pModelElement);
+  virtual void FormElementalResidual(ModelElement* pModelElement,
                                      double time = 0.);
-  virtual void formNodalResidual(ModelNode* pModelNode);
-  virtual void formResidual(double factor);
+  virtual void FormNodalResidual(ModelNode* pModelNode);
+  virtual void FormResidual(double factor);
 
-  virtual void init();
-  virtual void commit();
-  virtual void rollback();
+  virtual void Init();
+  virtual void Commit();
+  virtual void Rollback();
 };
 #endif  // SRC_CONTROL_TRANSIENT_CONTROL_H_

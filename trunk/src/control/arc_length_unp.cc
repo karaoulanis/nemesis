@@ -46,12 +46,14 @@ ArcLengthUNP::ArcLengthUNP(double DL0, double minDL, double maxDL,
 :StaticControl(DL0, minDL, maxDL, IterDesired, n, DeltaTime) {
   myTag = TAG_CONTROL_ARC_LENGTH_UNP;
 }
+
 /**
  * Destructor.
  */
 ArcLengthUNP::~ArcLengthUNP() {
   // Does nothing
 }
+
 /**
  * Creates new step for a Arc Length UNP control based static analysis.
  * It does two things:
@@ -76,7 +78,7 @@ ArcLengthUNP::~ArcLengthUNP() {
  * p.285-286 of Cridfield's book. As soon this is computed the domain is
  * updated.
  */
-void ArcLengthUNP::predict() {
+void ArcLengthUNP::Predict() {
   // Find DLambda
   /// @todo Auto-incrementation involves abs() and this might be a problem...
 //  DLambda = DLambda*pow(((double)Id/(double)Io), nExp);
@@ -108,11 +110,12 @@ void ArcLengthUNP::predict() {
   // Set du to the SOE so the norm can find it there
   pA->get_soe()->set_X(du);
 }
+
 /**
  * Updates that occur within each iterative step.
  * In this case only one root is taken, so no criterion is needed.
  */
-void ArcLengthUNP::correct() {
+void ArcLengthUNP::Correct() {
   // Find du_bar
   duBar = pA->get_soe()->get_X();
 

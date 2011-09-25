@@ -47,12 +47,14 @@ ArcLengthSpherical::ArcLengthSpherical(double DL0, double minDL, double maxDL,
   DeltaL = DL0;
   myTag = TAG_CONTROL_ARC_LENGTH_SPHERICAL;
 }
+
 /**
  * Destructor.
  */
 ArcLengthSpherical::~ArcLengthSpherical() {
   // Does nothing
 }
+
 /**
  * Creates new step for a Arc Length Spherical control based static analysis.
  * It does two things:
@@ -77,7 +79,7 @@ ArcLengthSpherical::~ArcLengthSpherical() {
  * p.285-286 of Cridfield's book. As soon this is computed the domain is
  * updated.
  */
-void ArcLengthSpherical::predict() {
+void ArcLengthSpherical::Predict() {
   // Find DeltaL increment
   /// @todo Auto-incrementation involves abs() and this might be a problem...
   DeltaL*=pow(static_cast<double>(Id)/static_cast<double>(Io), nExp);
@@ -107,6 +109,7 @@ void ArcLengthSpherical::predict() {
   // Set du to the SOE so the norm can find it there
   pA->get_soe()->set_X(du);
 }
+
 /**
  * Updates that occur within each iterative step.
  * \f$\delta\lambda\f$ is the root of the equation
@@ -116,7 +119,7 @@ void ArcLengthSpherical::predict() {
  * This equation gives two roots. The minimum angle criterion is used to choose
  * which of these two roots will be used.
  */
-void ArcLengthSpherical::correct() {
+void ArcLengthSpherical::Correct() {
   // Find du_bar
   duBar = pA->get_soe()->get_X();
 

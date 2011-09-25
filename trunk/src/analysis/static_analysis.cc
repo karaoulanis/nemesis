@@ -108,8 +108,8 @@ int StaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   // Initialize
   pA->get_domain()->Initialize();
   loadcase->Initialize();
-  pA->get_control()->init();
-  pA->get_convergence_norm()->init(loadcase->get_id(), num_loadsteps);
+  pA->get_control()->Init();
+  pA->get_convergence_norm()->Init(loadcase->get_id(), num_loadsteps);
 
   int ret = 0;
   for (int i = 0; i < num_loadsteps; i++) {
@@ -128,7 +128,7 @@ int StaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
       // return -1;
     }
     // Algorithm succeeded
-    pA->get_control()->commit();
+    pA->get_control()->Commit();
   }
   // Finalize
   loadcase->Finalize();
