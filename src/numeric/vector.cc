@@ -79,7 +79,7 @@ Vector& Vector::operator=(const Vector& v) {
   return *this;
 }
 
-const Vector& Vector::eigenvalues() {
+const Vector& Vector::Eigenvalues() {
   #ifdef _DEBUG
   num::check::array_size(size_, 6);
   #endif
@@ -92,7 +92,7 @@ const Vector& Vector::eigenvalues() {
   static Vector res(3);
 static Vector A(9);
   static Vector WORK(LWORK);
-  res.clear();
+  res.Clear();
 
   A[0]=data_[0];
   A[1]=data_[3];
@@ -106,8 +106,8 @@ static Vector A(9);
   A[7]=0.;
   A[8]=data_[2];
 
-  dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK,
-        &INFO, 1, 1);
+  dsyev(&JOBZ, &UPLO, &N, A.get_data(), &LDA, res.get_data(), WORK.get_data(),
+        &LWORK, &INFO, 1, 1);
   //  dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK,
   //        &INFO);
   //  cout << "Optimal LWORK : "<<WORK[0]<<endl;

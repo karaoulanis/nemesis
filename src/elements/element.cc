@@ -73,7 +73,7 @@ const Matrix& Element::get_C() {
   static Matrix C;
   int nDofs = myNodalIDs.size()*myLocalNodalDofs.size();
   C.Resize(nDofs, nDofs, 0.);
-  if (rayleigh_.size() == 0) {
+  if (rayleigh_.get_size() == 0) {
     C.Clear();
   } else {
     C.Add_cM(rayleigh_[0], this->get_K());
@@ -86,7 +86,7 @@ const Matrix& Element::get_C() {
  * @todo
  */
 const Vector& Element::get_Reff() {
-  myVector->clear();
+  myVector->Clear();
   return *myVector;
 }
 
@@ -94,7 +94,7 @@ const Vector& Element::get_Reff() {
  * @todo
  */
 const Vector& Element::get_Rgrad() {
-  myVector->clear();
+  myVector->Clear();
   return *myVector;
 }
 
@@ -112,7 +112,7 @@ void Element::AssignGravityLoads() {
   // Check if a Material exists
   /// @todo Provide a better check
   if (myMaterial->get_id() > 0) {
-    b.resize(3);
+    b.Resize(3);
     double gamma = (myMaterial->get_rho())*gravityacceleration_;
     b[0] = gamma*gravitydirection_[0];
     b[1] = gamma*gravitydirection_[1];
@@ -121,7 +121,7 @@ void Element::AssignGravityLoads() {
 }
 
 void Element::set_rayleigh(const Vector& rayleigh) {
-  rayleigh_.resize(rayleigh.size());
+  rayleigh_.Resize(rayleigh.get_size());
   rayleigh_ = rayleigh;
 }
 
@@ -214,11 +214,11 @@ const Vector& Element::get_disp_incrm() {
 }
 
 void Element::zeroLoad() {
-  P.clear();
+  P.Clear();
 }
 
 void Element::addLoad(const Vector& val, double fac) {
-  P.add_cV(fac, val);
+  P.Add_cV(fac, val);
 }
 
 /**

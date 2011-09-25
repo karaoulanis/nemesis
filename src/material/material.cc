@@ -44,7 +44,7 @@ Material::Material() {
 Material::Material(int ID, double rho, double aT)
 :DomainObject(ID) {
   index = counter++;
-  MatParams.resize(32);
+  MatParams.Resize(32);
   MatParams[30]=rho;
   MatParams[31]=aT;
 }

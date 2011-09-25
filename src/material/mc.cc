@@ -34,7 +34,7 @@ MC::MC(double c_, double phi_)
 MC::~MC() {
 }
 void MC::find_C(const Vector& s, const double /*a*/) {
-  double theta = s.theta();
+  double theta = s.Theta();
   double J2 = s.J2();
   double sqJ2 = sqrt(J2);
   double A, dA, d2A;

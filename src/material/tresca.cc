@@ -84,9 +84,9 @@ MultiaxialMaterial* Tresca::get_clone() {
  */
 void Tresca::set_strain(const Vector& De) {
   std::vector<Vector> df(3);
-  df[0].resize(3);
-  df[1].resize(3);
-  df[2].resize(3);
+  df[0].Resize(3);
+  df[1].Resize(3);
+  df[2].Resize(3);
   df[0][0] = 1.0;
   df[0][1] = 0.0;
   df[0][2] =-1.0;
@@ -126,7 +126,7 @@ void Tresca::set_strain(const Vector& De) {
   f[1]=s[0]-s[1]-2.*cu;
   f[2]=s[1]-s[2]-2.*cu;
   // report(f, "Yield fun", true, 12);
-  double theta = sTrial.theta();
+  double theta = sTrial.Theta();
   // report(2.*sqrt(sTrial.J2())*cos(theta)-cu, "f");
 
   std::vector<int> active;
@@ -147,9 +147,9 @@ void Tresca::set_strain(const Vector& De) {
       if (f[i]>0.) active.push_back(i);
   for (int k = 0; k < 4; k++) {
     A.Resize(3+active.size(), 3+active.size(), 0.);
-    x.resize(3+active.size());
-    R.resize(3+active.size());
-    R.clear();
+    x.Resize(3+active.size());
+    R.Resize(3+active.size());
+    R.Clear();
 
     A.Append(C3, 0, 0);
     for (unsigned i = 0; i < active.size(); i++) {
@@ -202,7 +202,7 @@ void Tresca::set_strain(const Vector& De) {
              +s[1]*sV(1, 0)*sV(1, 2)
              +s[2]*sV(2, 0)*sV(2, 2);
 
-  theta = sTrial.theta();
+  theta = sTrial.Theta();
   //  if ((2.*sqrt(sTrial.J2())*cos(theta)-2*cu) > 1e-6) {
   //    inaccurate++;
   //    cout << "error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu << endl;

@@ -61,7 +61,7 @@ const Matrix& Quad4e::get_M() {
 }
 const Vector& Quad4e::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -96,13 +96,13 @@ void Quad4e::formKR() {
   Du = this->get_disp_incrm();
 
   // Local Newton scheme to enforce orthogonality
-  Dalpha.clear();
+  Dalpha.Clear();
   int counter = 0;
   do {
     counter++;
     // Form enhanced tagent matrix/vector
     Kee.Clear();
-    Fe.clear();
+    Fe.Clear();
     for (unsigned i = 0; i < myMatPoints.size(); i++) {
       double xi =myMatPoints[i]->get_r();
       double eta = myMatPoints[i]->get_s();
@@ -122,7 +122,7 @@ void Quad4e::formKR() {
       this->formBu(xi, eta);
 
       Depsilon3 = Bu*Du+Be*Dalpha;
-      Depsilon.clear();
+      Depsilon.Clear();
       Depsilon[0]=Depsilon3[0];
       Depsilon[1]=Depsilon3[1];
       Depsilon[3]=Depsilon3[2];
@@ -165,7 +165,7 @@ void Quad4e::formKR() {
       report(Dalpha, "Da",  20, 10);
       throw SException("[nemesis:%d] %s", 9999, "Error in quad4e.\n");
     }
-  } while (Fe.twonorm() > 1e-6);
+  } while (Fe.Twonorm() > 1e-6);
   alpha+=Dalpha;
   // report(alpha, "alpha", true, 12, 9);
 
@@ -193,7 +193,7 @@ void Quad4e::formKR() {
   }
 
 
-  Fu.clear();
+  Fu.Clear();
   for (unsigned i = 0; i < myMatPoints.size(); i++) {
     double xi =myMatPoints[i]->get_r();
     double eta = myMatPoints[i]->get_s();

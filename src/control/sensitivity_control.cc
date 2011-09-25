@@ -63,8 +63,8 @@ void SensitivityControl::formResidual(double /*factor*/) {
 void SensitivityControl::init() {
   currParameter = 0;
   int size = pA->get_model()->get_num_eqns();
-  ds.resize(size);
-  ds.clear();
+  ds.Resize(size);
+  ds.Clear();
   for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
     // ModelNode* p = pA->get_model()->get_model_nodes()[i];
     /// @todo  initSensitivityMatrix stupid

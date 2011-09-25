@@ -67,9 +67,9 @@ SDofElement::SDofElement(int id, std::vector<Node*> nodes, int dof,
     }
   }
   // Load vector
-  P.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  P.Resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
   // Self weight
-  G.resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
+  G.Resize(myLocalNodalDofs.size()*nodes_.size(), 0.);
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 }
@@ -92,7 +92,7 @@ const Matrix& SDofElement::get_M() {
 
 const Vector& SDofElement::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   return R;
 }
 

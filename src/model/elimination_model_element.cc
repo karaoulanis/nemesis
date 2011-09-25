@@ -57,11 +57,11 @@ void EliminationModelElement::add_C(double factor) {
   myMatrix->Add_cM(factor, myElement->get_C());
 }
 void EliminationModelElement::add_R(double factor) {
-  myVector->add_cV(factor, myElement->get_R());
+  myVector->Add_cV(factor, myElement->get_R());
 }
 void EliminationModelElement::add_Reff(double factor) {
-  myVector->add_cV(factor, myElement->get_Reff());
+  myVector->Add_cV(factor, myElement->get_Reff());
 }
 void EliminationModelElement::add_Rgrad(double factor) {
-  myVector->add_cV(factor, myElement->get_Rgrad());
+  myVector->Add_cV(factor, myElement->get_Rgrad());
 }

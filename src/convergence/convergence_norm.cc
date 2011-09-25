@@ -70,7 +70,7 @@ void ConvergenceNorm::newStep() {
   wo = 0;
   const Vector& Ro = pA->get_soe()->get_B();
   const Vector& dUo = pA->get_soe()->get_X();
-  for (int i = 0; i < Ro.size(); i++) {
+  for (int i = 0; i < Ro.get_size(); i++) {
     double c1 = Ro[i];
     double c2 = dUo[i];
     ro+=c1*c1;
@@ -99,7 +99,7 @@ int ConvergenceNorm::update() {
   const Vector& dR = pA->get_soe()->get_B();
   const Vector& dU = pA->get_soe()->get_X();
   // for (int i = 0;i < dR.size();i++) cout << dR[i] <<endl;
-  for (int i = 0; i < dR.size(); i++) {
+  for (int i = 0; i < dR.get_size(); i++) {
     double c1 = dR[i];
     double c2 = dU[i];
     ri+=c1*c1;

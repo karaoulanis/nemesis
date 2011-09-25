@@ -90,7 +90,7 @@ const Matrix& Quad4DispPlain::get_M() {
 const Vector& Quad4DispPlain::get_R() {
   static Vector sigma(6);
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -134,7 +134,7 @@ void Quad4DispPlain::update() {
     this->findShapeFunctionsAt(myMatPoints[i]);
     // Determine the strain
     static Vector epsilon(6);
-      epsilon.clear();
+      epsilon.Clear();
     epsilon[0]=N(1, 0)*u[0]+N(1, 1)*u[2]+N(1, 2)*u[4]+N(1, 3)*u[6];
     epsilon[1]=N(2, 0)*u[1]+N(2, 1)*u[3]+N(2, 2)*u[5]+N(2, 3)*u[7];
     epsilon[3]=N(2, 0)*u[0]+N(1, 0)*u[1]+N(2, 1)*u[2]+N(1, 1)*u[3]+

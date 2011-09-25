@@ -88,16 +88,16 @@ void StaticControl::init() {
   // Check the size
   int size = pA->get_model()->get_num_eqns();
   /// @todo resize(size, 0.)
-  qRef.resize(size);
-  qRef.clear();
-  Du.resize(size);
-  Du.clear();
-  du.resize(size);
-  du.clear();
-  duBar.resize(size);
-  duBar.clear();
-  duT.resize(size);
-  duT.clear();
+  qRef.Resize(size);
+  qRef.Clear();
+  Du.Resize(size);
+  Du.Clear();
+  du.Resize(size);
+  du.Clear();
+  duBar.Resize(size);
+  duBar.Clear();
+  duT.Resize(size);
+  duT.Clear();
 
   this->formResidual(1.0);
   qRef = pA->get_soe()->get_B();

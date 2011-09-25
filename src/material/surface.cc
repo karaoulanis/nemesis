@@ -178,7 +178,7 @@ const Matrix& Surface::get_df2dss(const Vector& s, const double a) {
 }
 
 const Vector& Surface::get_df2dsa(const Vector& /*s*/, const double /*a*/) {
-  myVector.clear();
+  myVector.Clear();
   return myVector;
 }
 

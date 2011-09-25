@@ -31,10 +31,10 @@ MultiaxialMaterial::MultiaxialMaterial() {
 }
 MultiaxialMaterial::MultiaxialMaterial(int ID, double rho, double aT)
 :Material(ID, rho, aT) {
-  sTrial.resize(6, 0.);
-  sConvg.resize(6, 0.);
-  eTrial.resize(6, 0.);
-  eTotal.resize(6, 0.);
+  sTrial.Resize(6, 0.);
+  sConvg.Resize(6, 0.);
+  eTrial.Resize(6, 0.);
+  eTotal.Resize(6, 0.);
 }
 
 MultiaxialMaterial::~MultiaxialMaterial() {

@@ -93,11 +93,11 @@ void SOE::zeroA() {
 }
 
 void SOE::zeroB() {
-  B.clear();
+  B.Clear();
 }
 
 void SOE::zeroX() {
-  X.clear();
+  X.Clear();
 }
 
 int SOE::insertMatrixIntoA(const Matrix& /*Be*/, const IDContainer& /*EFTable*/,

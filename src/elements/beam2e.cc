@@ -68,9 +68,9 @@ Beam2e::Beam2e(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
     for (int j = 0; j < 3; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
-  P.resize(6, 0.);
+  P.Resize(6, 0.);
   // Self weight
-  G.resize(6, 0.);
+  G.Resize(6, 0.);
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
 
@@ -167,7 +167,7 @@ const Vector& Beam2e::get_Rgrad() {
   /// @todo
   Matrix& K=*myMatrix;
   K.Clear();
-  myVector->clear();
+  myVector->Clear();
   double E =myUniMaterial->get_param(0);
   double A = mySection->get_A();
   double J = mySection->get_J3();
@@ -239,7 +239,7 @@ const Vector& Beam2e::get_Rgrad() {
 
 const Vector& Beam2e::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;

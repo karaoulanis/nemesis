@@ -67,8 +67,8 @@ int BFGS::SolveStep(int /*n*/) {
   Vector a(m);
   Vector r(m);
   for (int j = 0; j < m; j++) {
-    s[j].resize(size, 0.);
-    y[j].resize(size, 0.);
+    s[j].Resize(size, 0.);
+    y[j].Resize(size, 0.);
   }
 
   // Predictor phase

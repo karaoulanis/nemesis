@@ -133,7 +133,7 @@ void MatPoint::AddInitialStresses(int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0) {
   static Vector s0(6);
-  s0.clear();
+  s0.Clear();
   switch (direction) {
     case 1:
       if (x < h1 && x > h2) {

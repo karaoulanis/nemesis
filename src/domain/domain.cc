@@ -82,7 +82,7 @@ void Domain::init() {
   timePrev = 0.;
   lambdaConvg = 0.;
   // Gravity direction vector and default orientation/acceleration
-  gravityVect.resize(3, 0.);
+  gravityVect.Resize(3, 0.);
   gravityVect[1]=-1;
   gravityAccl = 9.81;
 }
@@ -92,8 +92,8 @@ void Domain::init() {
  */
 void Domain::clear() {
   dim_ = 0;
-  RayleighFactors.resize(0);
-  eigenVals.resize(0);
+  RayleighFactors.Resize(0);
+  eigenVals.Resize(0);
   Containers::map_delete(theNodes);
   Containers::map_delete(theElements);
   Containers::map_delete(theGroups);
@@ -198,7 +198,7 @@ void Domain::Commit() {
 
 // Rayleigh damping
 void Domain::set_Rayleigh_factors(const Vector& factors) {
-  RayleighFactors.resize(factors.size());
+  RayleighFactors.Resize(factors.get_size());
   RayleighFactors = factors;
   Element::set_rayleigh(factors);
 }
@@ -209,7 +209,7 @@ const Vector& Domain::get_rayleigh_factors() {
 
 // EigenValues
 void Domain::set_eigenvalues(const Vector& vals) {
-  eigenVals.resize(vals.size());
+  eigenVals.Resize(vals.get_size());
   eigenVals = vals;
 }
 
@@ -264,7 +264,7 @@ void Domain::set_gravity(double g, double xG, double yG, double zG) {
   gravityVect[0] = xG;
   gravityVect[1] = yG;
   gravityVect[2] = zG;
-  gravityVect.normalize();
+  gravityVect.Normalize();
   // Check if elements are already defined
   if (theElements.size() > 0) {
     throw SException("[nemesis:%d] %s", 9999,

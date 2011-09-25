@@ -42,8 +42,8 @@ Brick8i::Brick8i() {
 Brick8i::Brick8i(int id, std::vector<Node*> nodes,
                      MultiaxialMaterial* material)
     : Brick8(id, nodes, material) {
-  aTrial.resize(9, 0.);
-  aConvg.resize(9, 0.);
+  aTrial.Resize(9, 0.);
+  aConvg.Resize(9, 0.);
 }
 
 
@@ -100,7 +100,7 @@ const Vector& Brick8i::get_R() {
   static Matrix Ba(6, 3);
   // Get a reference to myVector as R
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -154,7 +154,7 @@ void Brick8i::update() {
   aTrial = aConvg+Da;
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    epsilon.clear();
+    epsilon.Clear();
     for (unsigned a = 0; a < 8; a++) {
       this->get_Bstd(Ba, a, k);
       add_Bv(epsilon, 3*a, &perm[0], Ba, Du, 1.0, 1.0);

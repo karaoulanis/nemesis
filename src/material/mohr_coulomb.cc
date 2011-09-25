@@ -52,8 +52,8 @@ MohrCoulomb::MohrCoulomb(int id, MultiaxialMaterial* elastic, double c,
   MatParams[1] = phi;
   MatParams[2] = alpha;
   // Material state
-  // ePTrial.resize(6, 0.); ePConvg.resize(6, 0.);
-  // qTrial.resize(6, 0.);  qConvg.resize(6, 0.);
+  // ePTrial.Resize(6, 0.); ePConvg.Resize(6, 0.);
+  // qTrial.Resize(6, 0.);  qConvg.Resize(6, 0.);
   // aTrial = 0.;           aConvg = 0.;
 }
 
@@ -88,9 +88,9 @@ void MohrCoulomb::set_strain(const Vector& De) {
 
   // derivatives
   std::vector<Vector> df(3);
-  df[0].resize(3);
-  df[1].resize(3);
-  df[2].resize(3);
+  df[0].Resize(3);
+  df[1].Resize(3);
+  df[2].Resize(3);
   // df[3].resize(3);
   df[0][0] = 1.0+sin(phi);
   df[1][0] = 0.0;
@@ -106,9 +106,9 @@ void MohrCoulomb::set_strain(const Vector& De) {
   // df[3][2]=+1.0;
 
   std::vector<Vector> dg(3);
-  dg[0].resize(3);
-  dg[1].resize(3);
-  dg[2].resize(3);
+  dg[0].Resize(3);
+  dg[1].Resize(3);
+  dg[2].Resize(3);
   // df[3].resize(3);
   dg[0][0] = 1.0+sin(alpha);
   dg[1][0] = 0.0;
@@ -170,9 +170,9 @@ void MohrCoulomb::set_strain(const Vector& De) {
 
   for (int k = 0; k < 4; k++) {
     A.Resize(3+active.size(), 3+active.size(), 0.);
-    x.resize(3+active.size());
-    R.resize(3+active.size());
-    R.clear();
+    x.Resize(3+active.size());
+    R.Resize(3+active.size());
+    R.Clear();
     A.Append(C3, 0, 0);
     for (unsigned i = 0; i < active.size(); i++) {
       A.AppendCol(dg[active[i]],  0, 3+i);

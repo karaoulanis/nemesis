@@ -54,18 +54,18 @@ TransientControl::~TransientControl() {
 void TransientControl::init() {
   int size = pA->get_model()->get_num_eqns();
   /// @todo: resize(size, 0.)
-  u.resize(size);
-  u.clear();
-  v.resize(size);
-  v.clear();
-  a.resize(size);
-  a.clear();
-  ut.resize(size);
-  ut.clear();
-  vt.resize(size);
-  vt.clear();
-  at.resize(size);
-  at.clear();
+  u.Resize(size);
+  u.Clear();
+  v.Resize(size);
+  v.Clear();
+  a.Resize(size);
+  a.Clear();
+  ut.Resize(size);
+  ut.Clear();
+  vt.Resize(size);
+  vt.Clear();
+  at.Resize(size);
+  at.Clear();
   lambdaTrial = 1.0;
   lambdaConvg = 1.0;
 /*

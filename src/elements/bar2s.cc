@@ -42,15 +42,17 @@ Bar2s::Bar2s(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
          CrossSection* iSec, CrossSection* jSec, int dim)
     : Bar(id, nodes, material, iSec, jSec, dim) {
   // Find directional cosines
-  cosX.resize(dim_);
-  cosX.clear();
+  cosX.Resize(dim_);
+  cosX.Clear();
   for (int i = 0;i < dim_; i++) cosX[i]=(x(1, i)-x(0, i))/L0;
 }
+
 /**
  * Destructor.
  */
 Bar2s::~Bar2s()  {
 }
+
 const Matrix& Bar2s::get_K() {
   Matrix& K=*myMatrix;
   double E = myUniMaterial->get_C();
@@ -69,6 +71,7 @@ const Matrix& Bar2s::get_K() {
   K*=facK;
   return K;
 }
+
 const Vector& Bar2s::get_Rgrad() {
   double E = myUniMaterial->get_C();
   Matrix& K=*myMatrix;
@@ -94,9 +97,10 @@ const Vector& Bar2s::get_Rgrad() {
   *myVector = K*(this->get_disp_convg());
   return *myVector;
 }
+
 const Vector& Bar2s::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
 
   // Quick return if element not active
   if (!(groupdata_->active)) {

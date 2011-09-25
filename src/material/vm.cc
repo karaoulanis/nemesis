@@ -57,7 +57,7 @@ double VM::get_dfda(const Vector& /*s*/, const double /*a*/) {
 }
 const Vector& VM::get_df2dsa(const Vector& /*s*/, const double /*a*/) {
   static Vector ret(6, 0.);
-  ret.clear();
+  ret.Clear();
   return ret;
 }
 double VM::get_df2daa(const Vector& /*s*/, const double /*a*/) {

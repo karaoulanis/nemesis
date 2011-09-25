@@ -27,13 +27,16 @@
 
 MC_2::MC_2() {
 }
+
 MC_2::MC_2(double c_, double phi_)
 :MC(c_, phi_) {
 }
+
 MC_2::~MC_2() {
 }
+
 void MC_2::find_A(const Vector& s, double& A, double& dA, double& d2A) {
-  double theta = s.theta();
+  double theta = s.Theta();
   A  = 0.5*cos(theta)*(1.+sin(phi))+0.5*sin(theta)/num::sq3*(sin(phi)-3.);
   dA =-0.5*sin(theta)*(1.+sin(phi))+0.5*cos(theta)/num::sq3*(sin(phi)-3.);
   d2A=-0.5*cos(theta)*(1.+sin(phi))-0.5*sin(theta)/num::sq3*(sin(phi)-3.);

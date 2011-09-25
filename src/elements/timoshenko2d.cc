@@ -74,9 +74,9 @@ Timoshenko2d::Timoshenko2d(int id, std::vector<Node*> nodes,
     }
   }
   // Load vector
-  P.resize(3*nodes_.size(), 0.);
+  P.Resize(3*nodes_.size(), 0.);
   // Self weight
-  G.resize(3*nodes_.size(), 0.);
+  G.Resize(3*nodes_.size(), 0.);
   this->AssignGravityLoads();
   // Handle common info: End ---------------------------------------------------
   // Length
@@ -177,13 +177,13 @@ const Matrix& Timoshenko2d::get_M() {
 }
 
 const Vector& Timoshenko2d::get_Rgrad() {
-  myVector->clear();
+  myVector->Clear();
   return *myVector;
 }
 
 const Vector& Timoshenko2d::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -205,13 +205,13 @@ const Vector& Timoshenko2d::get_R() {
   Vector u(3*nodes_.size());
   static Vector epsilon(3);
   u = this->get_disp_trial();
-  R.clear();  // get_disp_trial() and R use the same static matrix
+  R.Clear();  // get_disp_trial() and R use the same static matrix
   for (int k = 0; k < gPoints; k++) {
     // Find epsilon
     /// @todo This should happen to update() for elastoplastic computations
     double xi = GaussCoords[gPoints][k+1];
     double dx = GaussWeights[gPoints][k+1]*0.5*L;
-    epsilon.clear();
+    epsilon.Clear();
     for (unsigned i = 0; i < nodes_.size(); i++) {
       this->shapeFunctions(i, xi, Ni, dNi);
       epsilon[0]+=dNi*(c*u[0+3*i]+s*u[1+3*i]);

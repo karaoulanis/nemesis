@@ -54,11 +54,11 @@ void EliminationModelNode::set_old_FTable(const IDContainer& ftab) {
 
 void EliminationModelNode::add_R(double factor) {
   if (myNode->existsLoad())
-    myVector->add_cV(factor, myNode->get_R());
+    myVector->Add_cV(factor, myNode->get_R());
 }
 
 void EliminationModelNode::incTrialDisp(const Vector& du) {
-  myVector->clear();
+  myVector->Clear();
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=du[theFTable[i]];
@@ -100,7 +100,7 @@ void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
 }
 
 void EliminationModelNode::set_trial_disp(const Vector& u) {
-  myVector->clear();
+  myVector->Clear();
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=u[theFTable[i]];
@@ -145,7 +145,7 @@ void EliminationModelNode::commit() {
   myNode->commit();
 }
 void EliminationModelNode::commitSens(const Vector& X, int param) {
-  myVector->clear();
+  myVector->Clear();
   for (unsigned i = 0;i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=X[theFTable[i]];

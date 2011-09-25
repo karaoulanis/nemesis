@@ -33,6 +33,7 @@
  */
 Bar2t::Bar2t()   {
 }
+
 /**
  * Constructor.
  * Creates a Bar2t Element. At this point only the id's of the nodes and the
@@ -42,9 +43,10 @@ Bar2t::Bar2t()   {
 Bar2t::Bar2t(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
          CrossSection* iSec, CrossSection* jSec, int dim)
     : Bar(id, nodes, material, iSec, jSec, dim) {
-  cosX.resize(dim_);
-  cosX.clear();
+  cosX.Resize(dim_);
+  cosX.Clear();
 }
+
 /**
  * Destructor.
  */
@@ -89,9 +91,10 @@ const Matrix& Bar2t::get_K() {
   K*=facK;
   return K;
 }
+
 const Vector& Bar2t::get_R() {
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;

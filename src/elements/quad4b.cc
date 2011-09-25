@@ -96,7 +96,7 @@ const Vector& Quad4b::get_R() {
   static Vector sigma(6);
   static Matrix Ba;
   Vector& R=*myVector;
-  R.clear();
+  R.Clear();
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return R;
@@ -146,7 +146,7 @@ void Quad4b::update() {
   this->shapeFunctions();
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
-    epsilon.clear();
+    epsilon.Clear();
     for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(Ba, a, k);
       /// @todo check dV
