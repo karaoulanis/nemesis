@@ -32,22 +32,24 @@
 NewtonRaphsonFull::NewtonRaphsonFull() {
   myTag = TAG_ALGORITHM_NEWTON_RAPHSON_FULL;
 }
+
 NewtonRaphsonFull::~NewtonRaphsonFull() {
 }
+
 int NewtonRaphsonFull::SolveStep(int /*n*/) {
   // Predictor phase
-  pA->get_control()->formTangent();
-  pA->get_control()->predict();
-  pA->get_convergence_norm()->newStep();
-  pA->get_control()->formResidual(pA->get_control()->get_lambda());
+  pA->get_control()->FormTangent();
+  pA->get_control()->Predict();
+  pA->get_convergence_norm()->NewStep();
+  pA->get_control()->FormResidual(pA->get_control()->get_lambda());
 
   // Corrector phase
   int check;
-  while ((check = pA->get_convergence_norm()->update())>0) {
-    pA->get_control()->formTangent();
+  while ((check = pA->get_convergence_norm()->Update())>0) {
+    pA->get_control()->FormTangent();
     pA->get_soe()->solve();
-    pA->get_control()->correct();
-    pA->get_control()->formResidual(pA->get_control()->get_lambda());
+    pA->get_control()->Correct();
+    pA->get_control()->FormResidual(pA->get_control()->get_lambda());
   }
   return check;
 }

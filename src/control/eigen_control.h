@@ -35,22 +35,22 @@ class EigenControl :public Control {
   EigenControl();
   ~EigenControl();
 
-  void init()     {}
-  void predict()    {}
-  void correct()    {}
-  void commit()   {}
-  void formResidual(double /*factor*/) {}
-  void formTangent();
+  void Init()     {}
+  void Predict()    {}
+  void Correct()    {}
+  void Commit()   {}
+  void FormResidual(double /*factor*/) {}
+  void FormTangent();
 
   // Form tangent and residual element by element
-  void formElementalTangent(ModelElement* pModelElement);
-  void formElementalMassMatrix(ModelElement* pModelElement);
-  void formElementalResidual(ModelElement* pModelElement, double time = 0.);
+  void FormElementalTangent(ModelElement* pModelElement);
+  void FormElementalMassMatrix(ModelElement* pModelElement);
+  void FormElementalResidual(ModelElement* pModelElement, double time = 0.);
 
   // Form residual node by node
-  void formNodalResidual(ModelNode* pModelNode);
+  void FormNodalResidual(ModelNode* pModelNode);
 
   // Methods that are used through analysis
-  void rollback();
+  void Rollback();
 };
 #endif  // SRC_CONTROL_EIGEN_CONTROL_H_

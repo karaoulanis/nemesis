@@ -31,13 +31,15 @@
 LinearAlgorithm::LinearAlgorithm() {
   myTag = TAG_ALGORITHM_LINEAR;
 }
+
 LinearAlgorithm::~LinearAlgorithm() {
 }
+
 int LinearAlgorithm::SolveStep(int /*n*/) {
-  pA->get_control()->formTangent();
-  pA->get_convergence_norm()->newStep();
-  pA->get_control()->predict();
-  pA->get_control()->formResidual(pA->get_control()->get_lambda());
-  pA->get_convergence_norm()->update();
+  pA->get_control()->FormTangent();
+  pA->get_convergence_norm()->NewStep();
+  pA->get_control()->Predict();
+  pA->get_control()->FormResidual(pA->get_control()->get_lambda());
+  pA->get_convergence_norm()->Update();
   return 0;
 }

@@ -63,8 +63,8 @@ class DisplacementControl :public StaticControl {
   ~DisplacementControl();
 
   // Methods for incremental/iterative algorithms
-  void predict();
-  void correct();
+  void Predict();
+  void Correct();
 };
 
 #endif  // SRC_CONTROL_DISPLACEMENT_CONTROL_H_

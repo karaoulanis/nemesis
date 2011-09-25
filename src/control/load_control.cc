@@ -75,7 +75,7 @@ LoadControl::~LoadControl() {
  * The predictor step is based on a forward Euler scheme. As soon this is
  * computed the domain is updated.
  */
-void LoadControl::predict() {
+void LoadControl::Predict() {
   // Find lambdaTrial
   /// @todo Auto-incrementation involves abs() and this might be a problem...
   /// @todo Check defaults
@@ -107,7 +107,7 @@ void LoadControl::predict() {
  * The nodal displacements are updated, while \f$\delta\lambda\f$ is assummed
  * to be zero, so no updates for \f$\Delta\lambda\f$ take place in this step.
  */
-void LoadControl::correct() {
+void LoadControl::Correct() {
   // Find incremental and accumulative displacements
   du = pA->get_soe()->get_X();
   Du+=du;

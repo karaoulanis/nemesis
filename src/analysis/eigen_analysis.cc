@@ -58,7 +58,7 @@ int EigenAnalysis::Run(LoadCase* /*loadcase*/, int /*num_loadsteps*/) {
   pA->get_soe()->set_size();
 
   // Initialize the control
-  pA->get_control()->formTangent();
+  pA->get_control()->FormTangent();
   //  pA->get_soe()->print();
   pA->get_soe()->solve();
   pA->get_domain()->set_eigenvalues(pA->get_soe()->get_X());

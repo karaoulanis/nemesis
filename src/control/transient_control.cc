@@ -51,7 +51,7 @@ TransientControl::~TransientControl() {
 /**
  * @return 0 if everything is ok.
  */
-void TransientControl::init() {
+void TransientControl::Init() {
   int size = pA->get_model()->get_num_eqns();
   /// @todo: resize(size, 0.)
   u.Resize(size);
@@ -141,31 +141,31 @@ void TransientControl::init() {
  * @param pModelElement A pointer to the ModelElement that is treated.
  * @return 0 if everything is ok.
  */
-void TransientControl::formElementalTangent(ModelElement* pModelElement)  {
+void TransientControl::FormElementalTangent(ModelElement* pModelElement)  {
   pModelElement->zeroMatrix();
   pModelElement->add_K(c[0]);
   pModelElement->add_M(c[1]);
   pModelElement->add_C(c[2]);
 }
-void TransientControl::formElementalResidual(ModelElement* pModelElement,
+void TransientControl::FormElementalResidual(ModelElement* pModelElement,
                                              double /*time*/) {
   pModelElement->zeroVector();
   pModelElement->add_Reff(1.0);
 }
-void TransientControl::formNodalResidual(ModelNode* pModelNode) {
+void TransientControl::FormNodalResidual(ModelNode* pModelNode) {
   pModelNode->zeroVector();
   pModelNode->add_R(1.0);
 }
-void TransientControl::commit() {
+void TransientControl::Commit() {
   pA->get_model()->commit();
 }
 /**
  * Aborts step.
  */
-void TransientControl::rollback() {
+void TransientControl::Rollback() {
   lambdaTrial = lambdaConvg;
 }
-void TransientControl::formResidual(double fac)  {
+void TransientControl::FormResidual(double fac)  {
   pA->get_soe()->zeroB();
   pA->get_domain()->zeroLoads();
   pA->get_domain()->applyLoads(fac, pA->get_domain()->get_time_curr());
@@ -173,13 +173,13 @@ void TransientControl::formResidual(double fac)  {
   // Take contribution from Nodes
   for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
     ModelNode* p = pA->get_model()->get_model_nodes()[i];
-    this->formNodalResidual(p);
+    this->FormNodalResidual(p);
     pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
   // Take contribution from Elements
   for (unsigned i = 0; i < pA->get_model()->get_model_elements().size(); i++) {
     ModelElement* p = pA->get_model()->get_model_elements()[i];
-    this->formElementalResidual(p);
+    this->FormElementalResidual(p);
     pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
 }

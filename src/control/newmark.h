@@ -42,8 +42,8 @@ class Newmark :public TransientControl {
   ~Newmark();
 
   // Methods for incremental/iterative algorithms
-  void predict();
-  void correct();
+  void Predict();
+  void Correct();
 };
 
 #endif  // SRC_CONTROL_NEWMARK_H_

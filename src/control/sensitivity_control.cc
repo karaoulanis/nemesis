@@ -40,27 +40,27 @@ SensitivityControl::~SensitivityControl() {
 }
 
 // Form tangent and residual element by element
-void SensitivityControl::formElementalTangent(ModelElement* pModelElement) {
+void SensitivityControl::FormElementalTangent(ModelElement* pModelElement) {
   pModelElement->zeroMatrix();
   pModelElement->add_K(1.0);
 }
-void SensitivityControl::formElementalResidual(ModelElement* pModelElement,
+void SensitivityControl::FormElementalResidual(ModelElement* pModelElement,
                                                double /*time*/) {
   pModelElement->zeroVector();
   pModelElement->add_Kgrad(1.0);
 }
-void SensitivityControl::formResidual(double /*factor*/) {
+void SensitivityControl::FormResidual(double /*factor*/) {
   pA->get_soe()->zeroB();
   pA->get_domain()->zeroSensitivityParameters();
   // theLoadCase->applySensitivityParameter(currParameter);
   // Take contribution from Elements
   for (unsigned i = 0; i < pA->get_model()->get_model_elements().size(); i++) {
     ModelElement* p = pA->get_model()->get_model_elements()[i];
-    this->formElementalResidual(p);
+    this->FormElementalResidual(p);
     pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
 }
-void SensitivityControl::init() {
+void SensitivityControl::Init() {
   currParameter = 0;
   int size = pA->get_model()->get_num_eqns();
   ds.Resize(size);
@@ -71,7 +71,7 @@ void SensitivityControl::init() {
     // p->get_node()->initSensitivityMatrix(theLoadCase->get_num_sens_param());
   }
 }
-void SensitivityControl::commit() {
+void SensitivityControl::Commit() {
   ds = pA->get_soe()->get_X();
   pA->get_model()->commitSens(ds, currParameter);
   currParameter++;

@@ -41,12 +41,12 @@ Control::Control()
 Control::~Control() {
 }
 
-void Control::formTangent() {
+void Control::FormTangent() {
   pA->get_soe()->zeroA();
   int n = pA->get_model()->get_model_elements().size();
   for (int i = 0; i < n; i++) {
     ModelElement* p = pA->get_model()->get_model_elements()[i];
-    this->formElementalTangent(p);
+    this->FormElementalTangent(p);
     pA->get_soe()->insertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
   }
 }

@@ -84,7 +84,7 @@ StaticControl::~StaticControl() {
  * vector of external forces and initializes the norm.
  * @return 0 if everything is ok.
  */
-void StaticControl::init() {
+void StaticControl::Init() {
   // Check the size
   int size = pA->get_model()->get_num_eqns();
   /// @todo resize(size, 0.)
@@ -99,7 +99,7 @@ void StaticControl::init() {
   duT.Resize(size);
   duT.Clear();
 
-  this->formResidual(1.0);
+  this->FormResidual(1.0);
   qRef = pA->get_soe()->get_B();
 
   lambdaTrial = 0;
@@ -112,7 +112,7 @@ void StaticControl::init() {
  * @param pModelElement A pointer to the ModelElement that is treated.
  * @return 0 if everything is ok.
  */
-void StaticControl::formElementalTangent(ModelElement* pModelElement)  {
+void StaticControl::FormElementalTangent(ModelElement* pModelElement)  {
   pModelElement->zeroMatrix();
   pModelElement->add_K(1.0);
 }
@@ -122,7 +122,7 @@ void StaticControl::formElementalTangent(ModelElement* pModelElement)  {
  * @param time Current(?) time.
  * @return 0 if everything is ok.
  */
-void StaticControl::formElementalResidual(ModelElement* pModelElement,
+void StaticControl::FormElementalResidual(ModelElement* pModelElement,
                                           double /*time*/) {
   pModelElement->zeroVector();
   pModelElement->add_R(1.0);
@@ -132,11 +132,11 @@ void StaticControl::formElementalResidual(ModelElement* pModelElement,
  * @param pModelNode A pointer to the ModelNode that is treated.
  * @return 0 if everything is ok.
  */
-void StaticControl::formNodalResidual(ModelNode* pModelNode) {
+void StaticControl::FormNodalResidual(ModelNode* pModelNode) {
   pModelNode->zeroVector();
   pModelNode->add_R(1.0);
 }
-void StaticControl::formResidual(double fac)   {
+void StaticControl::FormResidual(double fac)   {
   pA->get_soe()->zeroB();
   pA->get_domain()->zeroLoads();
   pA->get_domain()->applyLoads(fac, 0.);
@@ -144,13 +144,13 @@ void StaticControl::formResidual(double fac)   {
   // Take contribution from Nodes
   for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
     ModelNode* p = pA->get_model()->get_model_nodes()[i];
-    this->formNodalResidual(p);
+    this->FormNodalResidual(p);
     pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
   // Take contribution from Elements
   for (unsigned i = 0; i < pA->get_model()->get_model_elements().size(); i++) {
     ModelElement* p = pA->get_model()->get_model_elements()[i];
-    this->formElementalResidual(p);
+    this->FormElementalResidual(p);
     pA->get_soe()->insertVectorIntoB(p->get_vector(), p->get_FTable(), -1.0);
   }
 }
@@ -160,7 +160,7 @@ void StaticControl::formResidual(double fac)   {
  * converged. Time and lambda are committed to Domain.
  * @return 0 if everything is ok.
  */
-void StaticControl::commit() {
+void StaticControl::Commit() {
   lambdaConvg = lambdaTrial;
   pA->get_domain()->set_lambda(lambdaConvg);
   // pA->get_domain()->commit(); /// @todo this commits only domains time!
@@ -172,7 +172,7 @@ void StaticControl::commit() {
  * previous converged step.
  * @return 0 if everything is ok.
  */
-void StaticControl::rollback() {
+void StaticControl::Rollback() {
   // pA->get_model()->rollBack();
   lambdaTrial = lambdaConvg;
 }

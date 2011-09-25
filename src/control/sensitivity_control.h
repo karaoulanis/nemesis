@@ -40,21 +40,21 @@ class SensitivityControl :public Control {
   virtual ~SensitivityControl();
 
   // Form tangent and residual element by element
-  virtual void formElementalTangent(ModelElement* pModelElement);
-  virtual void formElementalResidual(ModelElement* pModelElement,
+  virtual void FormElementalTangent(ModelElement* pModelElement);
+  virtual void FormElementalResidual(ModelElement* pModelElement,
                                      double time = 0.);
 
   // Form residual node by node
-  void formNodalResidual(ModelNode* /*pModelNode*/) {}
+  void FormNodalResidual(ModelNode* /*pModelNode*/) {}
 
   // Methods that are used through analysis
-  virtual void init();
-  virtual void predict()              {}
-  virtual void correct()              {}
-  virtual void commit();
-  virtual void rollback()             {}
+  virtual void Init();
+  virtual void Predict()              {}
+  virtual void Correct()              {}
+  virtual void Commit();
+  virtual void Rollback()             {}
 
-  virtual void formResidual(double factor);
+  virtual void FormResidual(double factor);
 };
 
 #endif  // SRC_CONTROL_SENSITIVITY_CONTROL_H_
