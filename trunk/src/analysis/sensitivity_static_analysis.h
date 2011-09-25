@@ -36,7 +36,8 @@ class SensitivityStaticAnalysis :public AnalysisType {
   SensitivityStaticAnalysis();
   ~SensitivityStaticAnalysis();
   bool checkIfAllows(FEObject* f);
-  int run(LoadCase* loadcase, int num_loadsteps);
+  int Run(LoadCase* loadcase, int num_loadsteps);
+
  private:
   SensitivityControl* theSensitivityControl;
   // Dummy copy constructor and copy assignment as to explicitly disable them.

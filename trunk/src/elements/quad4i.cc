@@ -245,7 +245,7 @@ void Quad4i::get_Kdd(Matrix& K) {
       for (unsigned b = 0; b < 4; b++) {
         get_Bstd(Bb, b, k);
         double dV = thickness_*detJ[k];
-        K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
@@ -268,7 +268,7 @@ void Quad4i::get_Kda(Matrix& K) {
       for (unsigned b = 0; b < 2; b++) {
         get_BInc(Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
@@ -290,7 +290,7 @@ void Quad4i::get_Kaa(Matrix& K) {
       for (unsigned b = 0; b < 2; b++) {
         get_BInc(Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }

@@ -10,5 +10,6 @@ LIBFLAGS        = -L/usr/lib                              \
                   -lpython2.7                             \
                   -L/opt/acml4.4.0/gfortran32_mp/lib      \
                   -lacml_mp -lgfortran -lgomp -lrt -lm    
-TEST_CPPFLAGS   = 
-TEST_LIBFLAGS   = -lgtest
+TEST_CXXFLAGS   =  $(CXXFLAGS)
+TEST_CPPFLAGS   =  $(CPPFLAGS)
+TEST_LIBFLAGS   =  $(LIBFLAGS) -lgtest

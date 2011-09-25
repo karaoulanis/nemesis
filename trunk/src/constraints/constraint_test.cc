@@ -22,7 +22,7 @@
 // $HeadURL$
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
-
+/*
 // Included files
 #include "constraints/constraint.h"
 #include <gtest/gtest.h>
@@ -52,10 +52,10 @@ class ConstraintTest : public ::testing::Test {
 };
 
 TEST_F(ConstraintTest, DofNotActivated) {
-  EXPECT_THROW({
+  //EXPECT_THROW({
     // Take the already existing node
-    Node* n = d.get<Node>(d.get_nodes(), 1);
+    //Node* n = d.get<Node>(d.get_nodes(), 1);
     // Try to add a constraint to a not activated dof
-    c->set_cdof(n, 1, 8.);
-  }, SException);
-}
+    //c->set_cdof(n, 1, 8.);
+  //}, SException);
+}*/

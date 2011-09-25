@@ -38,7 +38,7 @@ Matrix::Matrix()
     : rows_(0),
       cols_(0),
       size_(0),
-      data_(0) {
+      data_(NULL) {
 }
 
 /**
@@ -227,7 +227,7 @@ Matrix Inverse(const Matrix& m) {
   return inv;
 }
 
-double det(const Matrix& m) {
+double Det(const Matrix& m) {
   #ifdef _DEBUG
   num::check::array_size(m.cols_, m.rows_);
   #endif

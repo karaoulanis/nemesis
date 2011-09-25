@@ -34,7 +34,7 @@ class AnalysisType: public AnalysisObject {
   public:
   AnalysisType();
   ~AnalysisType();
-  virtual int run(LoadCase* loadcase, int num_loadsteps)=0;
+  virtual int Run(LoadCase* loadcase, int num_loadsteps)=0;
 };
 
 #endif  // SRC_ANALYSIS_ANALYSIS_TYPE_H_

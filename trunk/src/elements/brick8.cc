@@ -143,7 +143,7 @@ const Matrix& Brick8::get_K() {
       this->get_B(Ba, a, k);
       for (unsigned b = 0; b < nodes_.size(); b++) {
         this->get_B(Bb, b, k);
-        K.add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }

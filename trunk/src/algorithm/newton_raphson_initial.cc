@@ -32,9 +32,11 @@
 NewtonRaphsonInitial::NewtonRaphsonInitial() {
   myTag = TAG_ALGORITHM_NEWTON_RAPHSON_INITIAL;
 }
+
 NewtonRaphsonInitial::~NewtonRaphsonInitial() {
 }
-int NewtonRaphsonInitial::solveStep(int n) {
+
+int NewtonRaphsonInitial::SolveStep(int n) {
   // Predictor phase
   if (n == 0) pA->get_control()->formTangent();
   pA->get_control()->predict();

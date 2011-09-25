@@ -60,8 +60,8 @@ class Analysis {
   void set_reorderer(Reorderer* p);
   void set_soe(SOE* p);
 
-  int analyze(LoadCase* loadcase, int num_loadsteps);
-  void clear();
+  int Analyze(LoadCase* loadcase, int num_loadsteps);
+  void Clear();
 
  private:
   Model M;

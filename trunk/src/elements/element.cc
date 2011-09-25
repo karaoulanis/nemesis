@@ -76,8 +76,8 @@ const Matrix& Element::get_C() {
   if (rayleigh_.size() == 0) {
     C.Clear();
   } else {
-    C.add_cM(rayleigh_[0], this->get_K());
-    C.add_cM(rayleigh_[1], this->get_M());
+    C.Add_cM(rayleigh_[0], this->get_K());
+    C.Add_cM(rayleigh_[1], this->get_M());
   }
   return C;
 }

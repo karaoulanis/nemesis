@@ -209,7 +209,7 @@ static PyObject* pyDomain_RayleighDamping(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyDomain_Clear(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, ""))  return NULL;
   pD->clear();
-  pA->clear();
+  pA->Clear();
   Py_INCREF(Py_None);
   return Py_None;
 }
@@ -2329,7 +2329,7 @@ static PyObject* pyAnalysis_Run(PyObject* /*self*/, PyObject* args) {
   if (!PyArg_ParseTuple(args, "ii", &id, &steps)) return NULL;
   try {
     LoadCase* loadcase = pD->get<LoadCase>(pD->get_loadcases(), id);
-    ret = pA->analyze(loadcase, steps);
+    ret = pA->Analyze(loadcase, steps);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;

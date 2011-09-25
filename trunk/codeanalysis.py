@@ -89,8 +89,10 @@ def lowercase_names(root, extensions):
         class_name, functions = get_functions(path) 
         total += len(functions)
         for function in functions:
-            name = function[0]
-            if name[0].islower():
+            name = function[0] 
+            if name.find('operator') >= 0:
+                total -= 1
+            elif name[0].islower():
                 lower += 1  
                 print('\t'+name)    
     perc = float(lower)/float(total)*100.
@@ -175,7 +177,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--deps',             action = 'store_true', 
                              dest = 'deps',         help = 'grep pattern')
-    parser.add_argument('-n', '--functions',        action = 'store_true', 
+    parser.add_argument('--lowercase',              action = 'store_true', 
                              dest = 'fn',           help = 'functions lowercase')
     parser.add_argument('-w', '--whitespaces',      action = 'store_true', 
                              dest = 'w',            help = 'trailing whitespaces')

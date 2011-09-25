@@ -45,7 +45,7 @@ class BFGS :public Algorithm {
   explicit BFGS(int m_ = 10);
   BFGS(int m_, double etaMin_, double etaMax_, double rTol_, int maxIter_);
   ~BFGS();
-  int solveStep(int n);
-  void lineSearch(double s0, double s1, const Vector& du);
+  int SolveStep(int n);
+  void LineSearch(double s0, double s1, const Vector& du);
 };
 #endif  // SRC_ALGORITHM_BFGS_H_

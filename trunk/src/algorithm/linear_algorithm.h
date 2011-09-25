@@ -33,6 +33,6 @@ class LinearAlgorithm :public Algorithm {
   LinearAlgorithm();
   ~LinearAlgorithm();
 
-  int solveStep(int n);
+  int SolveStep(int n);
 };
 #endif  // SRC_ALGORITHM_LINEAR_ALGORITHM_H_

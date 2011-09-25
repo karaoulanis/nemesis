@@ -48,15 +48,15 @@ Analysis::Analysis(Domain* pDomain)
 
 Analysis::~Analysis() {
   delete theNorm;
-  this->clear();
+  this->Clear();
 }
-int Analysis::analyze(LoadCase* loadcase, int num_loadsteps) {
+int Analysis::Analyze(LoadCase* loadcase, int num_loadsteps) {
   if (theAnalysisType == 0)
     throw SException("[nemesis:%d] %s", 9999, "No analysis type set.");
   // Run the analysis
-  return theAnalysisType->run(loadcase, num_loadsteps);
+  return theAnalysisType->Run(loadcase, num_loadsteps);
 }
-void Analysis::clear() {
+void Analysis::Clear() {
   M.clear();
   if (theAnalysisType != 0) {
     delete theAnalysisType;
