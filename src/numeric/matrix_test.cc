@@ -335,7 +335,41 @@ TEST_F(MatrixTest, MinusMatrix) {
 }
 
 // inline friend Matrix Transpose(const Matrix& m) {
+TEST_F(MatrixTest, Transpose) {
+  Matrix m(2, 3);
+  m(0, 0) = 11;
+  m(0, 1) = 12;
+  m(0, 2) = 13;
+  m(1, 0) = 21;
+  m(1, 1) = 22;
+  m(1, 2) = 23;
+  Matrix mT = Transpose(m);
+  EXPECT_EQ(mT(0, 0), m(0, 0)) << "Matrix value error";
+  EXPECT_EQ(mT(0, 1), m(1, 0)) << "Matrix value error";
+  EXPECT_EQ(mT(1, 0), m(0, 1)) << "Matrix value error";
+  EXPECT_EQ(mT(1, 1), m(1, 1)) << "Matrix value error";
+  EXPECT_EQ(mT(2, 0), m(0, 2)) << "Matrix value error";
+  EXPECT_EQ(mT(2, 1), m(1, 2)) << "Matrix value error";
+}
+
 // inline Vector operator*(const Vector& v) const {
+TEST_F(MatrixTest, MatrixVector) {
+  Matrix m(2, 3);
+  m(0, 0) = 11.;
+  m(0, 1) = 12.;
+  m(0, 2) = 13.;
+  m(1, 0) = 21.;
+  m(1, 1) = 22.;
+  m(1, 2) = 23.;
+  Vector v(3);
+  v[0] = 1.;
+  v[1] = 2.;
+  v[2] = 3.;
+  Vector res = m*v;
+  EXPECT_EQ(res[0],  74.) << "Vector value error";
+  EXPECT_EQ(res[1], 134.) << "Vector value error";
+  
+}
 // inline Matrix& Append(const Matrix& m, int row, int col, double c = 1.0,
 //                         double c0 = 0.) {
 // inline Matrix& AppendRow(const Vector& v, int row, int col, double c = 1.0,
