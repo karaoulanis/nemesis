@@ -546,10 +546,24 @@ TEST_F(MatrixTest, AppendCol) {
 
 // void Solve(Vector& x, const Vector& b);
 // friend Matrix Inverse(const Matrix& m);
-// friend double det(const Matrix& m);
+// friend double Det(const Matrix& m);
 // friend std::ostream& operator<<(std::ostream& s, const Matrix& m) {
 // void add_BTCB(int row, int col, const int* perm, const Matrix& B1,
+
 // inline Matrix Identity(int n) {
+TEST_F(MatrixTest, Identity) {
+  Matrix m = Identity(3);
+  EXPECT_EQ(m(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 1), 0.) << "Matrix value error";
+  EXPECT_EQ(m(0, 2), 0.) << "Matrix value error";
+  EXPECT_EQ(m(1, 0), 0.) << "Matrix value error";
+  EXPECT_EQ(m(1, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 2), 0.) << "Matrix value error";
+  EXPECT_EQ(m(2, 0), 0.) << "Matrix value error";
+  EXPECT_EQ(m(2, 1), 0.) << "Matrix value error";
+  EXPECT_EQ(m(2, 2), 1.) << "Matrix value error";
+}
+
 // inline Matrix VVT(const Vector& v1, const Vector& v2) {
 
 
