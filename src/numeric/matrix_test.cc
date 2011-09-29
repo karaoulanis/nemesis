@@ -372,10 +372,178 @@ TEST_F(MatrixTest, MatrixVector) {
 }
 // inline Matrix& Append(const Matrix& m, int row, int col, double c = 1.0,
 //                         double c0 = 0.) {
+TEST_F(MatrixTest, Append) {
+  Matrix m1;
+  Matrix m2;
+  // append at 1,1 with c = 1.0 (default) and c0 = 0. (default).
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  2  2]
+  //     [ 1  1  1]     [ 2  2]         [ 1  2  2]
+  m1.Resize(3, 3, 1.);
+  m2.Resize(2, 2., 2.);
+  m1.Append(m2, 1, 1);
+  EXPECT_EQ(m1(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 1), 2.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 2), 2.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 1), 2.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 2), 2.) << "Matrix value error";
+  // append at 1,1 with c = 2.0 and c0 = 0. (default).
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  4  4]
+  //     [ 1  1  1]     [ 2  2]         [ 1  4  4]
+  m1.Resize(3, 3, 1.);
+  m2.Resize(2, 2., 2.);
+  m1.Append(m2, 1, 1, 2.);
+  EXPECT_EQ(m1(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 1), 4.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 2), 4.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 1), 4.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 2), 4.) << "Matrix value error";
+  // append at 1,1 with c = 2.0 and c0 = 2.
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  6  6]
+  //     [ 1  1  1]     [ 2  2]         [ 1  6  6]
+  m1.Resize(3, 3, 1.);
+  m2.Resize(2, 2., 2.);
+  m1.Append(m2, 1, 1, 2., 2.);
+  EXPECT_EQ(m1(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 1), 6.) << "Matrix value error";
+  EXPECT_EQ(m1(1, 2), 6.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 1), 6.) << "Matrix value error";
+  EXPECT_EQ(m1(2, 2), 6.) << "Matrix value error";
+}
+
 // inline Matrix& AppendRow(const Vector& v, int row, int col, double c = 1.0,
 //                            double c0 = 0.) {
+TEST_F(MatrixTest, AppendRow) {
+  Matrix m;
+  Vector v;
+  // append at 1,1 with c = 1.0 (default) and c0 = 0. (default).
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  2  2]
+  //     [ 1  1  1]                     [ 1  1  1]
+  m.Resize(3, 3, 1.);
+  v.Resize(2, 2.);
+  m.AppendRow(v, 1, 1);
+  EXPECT_EQ(m(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 1), 2.) << "Matrix value error";
+  EXPECT_EQ(m(1, 2), 2.) << "Matrix value error";
+  EXPECT_EQ(m(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 2), 1.) << "Matrix value error";
+  // append at 1,1 with c = 2.0 and c0 = 0. (default).
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  4  4]
+  //     [ 1  1  1]                     [ 1  1  1]
+  m.Resize(3, 3, 1.);
+  v.Resize(2, 2.);
+  m.AppendRow(v, 1, 1, 2.);
+  EXPECT_EQ(m(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 1), 4.) << "Matrix value error";
+  EXPECT_EQ(m(1, 2), 4.) << "Matrix value error";
+  EXPECT_EQ(m(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 2), 1.) << "Matrix value error";
+  // append at 1,1 with c = 2.0 and c0 = 2.
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  6  6]
+  //     [ 1  1  1]                     [ 1  1  1]
+  m.Resize(3, 3, 1.);
+  v.Resize(2, 2.);
+  m.AppendRow(v, 1, 1, 2., 2.);
+  EXPECT_EQ(m(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 1), 6.) << "Matrix value error";
+  EXPECT_EQ(m(1, 2), 6.) << "Matrix value error";
+  EXPECT_EQ(m(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 2), 1.) << "Matrix value error";
+}
+
 // inline Matrix& AppendCol(const Vector& v, int row, int col, double c = 1.0,
 //                            double c0 = 0.) {
+TEST_F(MatrixTest, AppendCol) {
+  Matrix m;
+  Vector v;
+  // append at 1,1 with c = 1.0 (default) and c0 = 0. (default).
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  2  1]
+  //     [ 1  1  1]                     [ 1  2  1]
+  m.Resize(3, 3, 1.);
+  v.Resize(2, 2.);
+  m.AppendCol(v, 1, 1);
+  EXPECT_EQ(m(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 1), 2.) << "Matrix value error";
+  EXPECT_EQ(m(1, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 1), 2.) << "Matrix value error";
+  EXPECT_EQ(m(2, 2), 1.) << "Matrix value error";
+  // append at 1,1 with c = 2.0 and c0 = 0. (default).
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  4  1]
+  //     [ 1  1  1]                     [ 1  4  1]
+  m.Resize(3, 3, 1.);
+  v.Resize(2, 2.);
+  m.AppendCol(v, 1, 1, 2.);
+  EXPECT_EQ(m(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 1), 4.) << "Matrix value error";
+  EXPECT_EQ(m(1, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 1), 4.) << "Matrix value error";
+  EXPECT_EQ(m(2, 2), 1.) << "Matrix value error";
+  // append at 1,1 with c = 2.0 and c0 = 2.
+  // Matrix should be:
+  //     [ 1  1  1]                     [ 1  1  1]          
+  // m = [ 1  1  1] v = [ 2  2] --> m = [ 1  6  1]
+  //     [ 1  1  1]                     [ 1  6  1]
+  m.Resize(3, 3, 1.);
+  v.Resize(2, 2.);
+  m.AppendCol(v, 1, 1, 2., 2.);
+  EXPECT_EQ(m(0, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 1), 1.) << "Matrix value error";
+  EXPECT_EQ(m(0, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(1, 1), 6.) << "Matrix value error";
+  EXPECT_EQ(m(1, 2), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 0), 1.) << "Matrix value error";
+  EXPECT_EQ(m(2, 1), 6.) << "Matrix value error";
+  EXPECT_EQ(m(2, 2), 1.) << "Matrix value error";
+}
+
 // void Solve(Vector& x, const Vector& b);
 // friend Matrix Inverse(const Matrix& m);
 // friend double det(const Matrix& m);
