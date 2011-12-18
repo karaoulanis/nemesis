@@ -370,6 +370,7 @@ TEST_F(MatrixTest, MatrixVector) {
   EXPECT_EQ(res[1], 134.) << "Vector value error";
   
 }
+
 // inline Matrix& Append(const Matrix& m, int row, int col, double c = 1.0,
 //                         double c0 = 0.) {
 TEST_F(MatrixTest, Append) {
