@@ -33,78 +33,85 @@
 #include "reorderer/reorderer.h"
 #include "soe/soe.h"
 
-Analysis::Analysis(Domain* pDomain)
-    : M(pDomain),
-      theDomain(pDomain),
-      theAnalysisType(NULL),
-      theAlgorithm(NULL),
-      theControl(NULL),
-      theSOE(NULL),
-      theImposer(NULL),
-      theNorm(new ConvergenceNorm()),
-      theReorderer(NULL) {
-  theNorm->set_analysis(this);
+Analysis::Analysis(Domain* domain)
+    : M(domain),
+      domain_(domain),
+      analysis_type_(NULL),
+      algorithm_(NULL),
+      control_(NULL),
+      soe_(NULL),
+      imposer_(NULL),
+      norm_(new ConvergenceNorm()),
+      reorderer_(NULL) {
+  norm_->set_analysis(this);
 }
 
 Analysis::~Analysis() {
-  delete theNorm;
+  delete norm_;
   this->Clear();
 }
+
 int Analysis::Analyze(LoadCase* loadcase, int num_loadsteps) {
-  if (theAnalysisType == 0)
+  if (analysis_type_ == 0)
     throw SException("[nemesis:%d] %s", 9999, "No analysis type set.");
   // Run the analysis
-  return theAnalysisType->Run(loadcase, num_loadsteps);
+  return analysis_type_->Run(loadcase, num_loadsteps);
 }
+
 void Analysis::Clear() {
   M.clear();
-  if (theAnalysisType != 0) {
-    delete theAnalysisType;
-    theAnalysisType = 0;
+  if (analysis_type_ != 0) {
+    delete analysis_type_;
+    analysis_type_ = 0;
   }
-  if (theImposer != 0) {
-    delete theImposer;
-    theImposer = 0;
+  if (imposer_ != 0) {
+    delete imposer_;
+    imposer_ = 0;
   }
-  if (theControl != 0) {
-    delete theControl;
-    theControl = 0;
+  if (control_ != 0) {
+    delete control_;
+    control_ = 0;
   }
-  if (theAlgorithm != 0) {
-    delete theAlgorithm;
-    theAlgorithm = 0;
+  if (algorithm_ != 0) {
+    delete algorithm_;
+    algorithm_ = 0;
   }
-  if (theSOE != 0) {
-    delete theSOE;
-    theSOE = 0;
+  if (soe_ != 0) {
+    delete soe_;
+    soe_ = 0;
   }
-  if (theReorderer != 0) {
-    delete theReorderer;
-    theReorderer = 0;
+  if (reorderer_ != 0) {
+    delete reorderer_;
+    reorderer_ = 0;
   }
 }
-void Analysis::set_analysis_type(AnalysisType* p) {
-  if (theAnalysisType != 0) delete theAnalysisType;
-  theAnalysisType = p;
+void Analysis::set_analysis_type(AnalysisType* analysis_type) {
+  if (analysis_type_ != 0) delete analysis_type_;
+  analysis_type_ = analysis_type;
 }
-void Analysis::set_algorithm(Algorithm* p) {
-  if (theAlgorithm != 0) delete theAlgorithm;
-  theAlgorithm = p;
+
+void Analysis::set_algorithm(Algorithm* algorithm) {
+  if (algorithm_ != 0) delete algorithm_;
+  algorithm_ = algorithm;
 }
-void Analysis::set_control(Control* p) {
-  if (theControl != 0) delete theControl;
-  theControl = p;
+
+void Analysis::set_control(Control* control) {
+  if (control_ != 0) delete control_;
+  control_ = control;
 }
-void Analysis::set_imposer(Imposer* p) {
-  if (theImposer != 0) delete theImposer;
-  theImposer = p;
+
+void Analysis::set_imposer(Imposer* imposer) {
+  if (imposer_ != 0) delete imposer_;
+  imposer_ = imposer;
 }
-void Analysis::set_reorderer(Reorderer* p) {
-  if (theReorderer != 0) delete theReorderer;
-  theReorderer = p;
+
+void Analysis::set_reorderer(Reorderer* reorderer) {
+  if (reorderer_ != 0) delete reorderer_;
+  reorderer_ = reorderer;
 }
-void Analysis::set_soe(SOE* p) {
-  if (theSOE != 0) delete theSOE;
-  theSOE = p;
-  theSOE->set_model(&M);
+
+void Analysis::set_soe(SOE* soe) {
+  if (soe_ != 0) delete soe_;
+  soe_ = soe;
+  soe_->set_model(&M);
 }

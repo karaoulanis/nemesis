@@ -44,35 +44,35 @@ class Analysis {
   ~Analysis();
 
   inline Model* get_model()                      {return &M;}
-  inline AnalysisType* get_analysis_type()       {return theAnalysisType;}
-  inline Algorithm* get_algorithm()              {return theAlgorithm;}
-  inline Control* get_control()                  {return theControl;}
-  inline Imposer* get_imposer()                  {return theImposer;}
-  inline ConvergenceNorm* get_convergence_norm() {return theNorm;}
-  inline Reorderer* get_reorderer()              {return theReorderer;}
-  inline SOE* get_soe()                          {return theSOE;}
-  inline Domain* get_domain()                    {return theDomain;}
+  inline AnalysisType* get_analysis_type()       {return analysis_type_;}
+  inline Algorithm* get_algorithm()              {return algorithm_;}
+  inline Control* get_control()                  {return control_;}
+  inline Imposer* get_imposer()                  {return imposer_;}
+  inline ConvergenceNorm* get_convergence_norm() {return norm_;}
+  inline Reorderer* get_reorderer()              {return reorderer_;}
+  inline SOE* get_soe()                          {return soe_;}
+  inline Domain* get_domain()                    {return domain_;}
 
-  void set_analysis_type(AnalysisType* p);
-  void set_algorithm(Algorithm* p);
-  void set_control(Control* p);
-  void set_imposer(Imposer* p);
-  void set_reorderer(Reorderer* p);
-  void set_soe(SOE* p);
+  void set_analysis_type(AnalysisType* analysis_type);
+  void set_algorithm(Algorithm* algorithm);
+  void set_control(Control* control);
+  void set_imposer(Imposer* imposer);
+  void set_reorderer(Reorderer* reorderer);
+  void set_soe(SOE* soe);
 
   int Analyze(LoadCase* loadcase, int num_loadsteps);
   void Clear();
 
  private:
   Model M;
-  Domain* theDomain;
-  AnalysisType* theAnalysisType;
-  Algorithm* theAlgorithm;
-  Control* theControl;
-  SOE* theSOE;
-  Imposer* theImposer;
-  ConvergenceNorm* theNorm;
-  Reorderer* theReorderer;
+  Domain* domain_;
+  AnalysisType* analysis_type_;
+  Algorithm* algorithm_;
+  Control* control_;
+  Imposer* imposer_;
+  ConvergenceNorm* norm_;
+  Reorderer* reorderer_;
+  SOE* soe_;
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.
   // When called a linking error will occur.
