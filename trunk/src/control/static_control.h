@@ -66,7 +66,7 @@ class StaticControl :public Control {
   virtual void Commit();
   virtual void Rollback();
 
-protected:
+ protected:
   double Delta0;        /// < Initial Delta
   double minDelta;      /// < Lower bound for Delta (absolute);
   double maxDelta;      /// < Upper bound for Delta (absolute);

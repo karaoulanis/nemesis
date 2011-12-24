@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef SRC_IMPOSER_PENALTY_IMPOSER2_H_
-#define SRC_IMPOSER_PENALTY_IMPOSER2_H_
+#ifndef SRC_IMPOSER_PENALTY_IMPOSER_H_
+#define SRC_IMPOSER_PENALTY_IMPOSER_H_
 
 #include <map>
 #include "imposer/imposer.h"
@@ -40,4 +40,4 @@ class PenaltyImposer: public Imposer {
  private:
   double a_;
 };
-#endif  // SRC_IMPOSER_PENALTY_IMPOSER2_H_
+#endif  // SRC_IMPOSER_PENALTY_IMPOSER_H_

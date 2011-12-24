@@ -23,8 +23,8 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef SRC_IMPOSER_LAGRANGE_IMPOSER2_H_
-#define SRC_IMPOSER_LAGRANGE_IMPOSER2_H_
+#ifndef SRC_IMPOSER_LAGRANGE_IMPOSER_H_
+#define SRC_IMPOSER_LAGRANGE_IMPOSER_H_
 
 #include <map>
 #include "imposer/imposer.h"
@@ -37,4 +37,4 @@ class LagrangeImposer: public Imposer {
                   const std::map<int, Constraint*>& constraints);
   int impose(Model* model);
 };
-#endif  // SRC_IMPOSER_LAGRANGE_IMPOSER2_H_
+#endif  // SRC_IMPOSER_LAGRANGE_IMPOSER_H_
