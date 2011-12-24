@@ -49,13 +49,13 @@ Domain::Domain()
       gravityVect(0),
       gravityAccl(0),
       groupsByMaterial(true),
-      theNodes(),
-      theCrossSections(),
-      theElements(),
-      theGroups(),
-      theMaterials(),
-      theLoadCases(),
-      theConstraints(),
+      nodes_(),
+      sections_(),
+      elements_(),
+      groups_(),
+      materials_(),
+      loadcases_(),
+      constraints_(),
       trackers_(),
       RayleighFactors(0),
       eigenVals(0),
@@ -69,7 +69,7 @@ Domain::Domain()
  */
 Domain::~Domain()  {
   this->clear();
-  Containers::map_delete(theGroups);
+  Containers::map_delete(groups_);
 }
 void Domain::init() {
   // Define group 0
@@ -94,13 +94,13 @@ void Domain::clear() {
   dim_ = 0;
   RayleighFactors.Resize(0);
   eigenVals.Resize(0);
-  Containers::map_delete(theNodes);
-  Containers::map_delete(theElements);
-  Containers::map_delete(theGroups);
-  Containers::map_delete(theCrossSections);
-  Containers::map_delete(theMaterials);
-  Containers::map_delete(theLoadCases);
-  Containers::map_delete(theConstraints);
+  Containers::map_delete(nodes_);
+  Containers::map_delete(elements_);
+  Containers::map_delete(groups_);
+  Containers::map_delete(sections_);
+  Containers::map_delete(materials_);
+  Containers::map_delete(loadcases_);
+  Containers::map_delete(constraints_);
   Containers::map_delete(trackers_);
   this->init();
 }
@@ -129,18 +129,18 @@ int Domain::get_dim() const {
 }
 
 void Domain::zeroNodalStress() {
-  for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end(); nIter++)
+  for (NodeIterator nIter = nodes_.begin();
+    nIter != nodes_.end(); nIter++)
       nIter->second->zeroStress();
 }
 void Domain::state(double facD) {
-  for (NodeIterator nIter = theNodes.begin();
-    nIter != theNodes.end(); nIter++)
+  for (NodeIterator nIter = nodes_.begin();
+    nIter != nodes_.end(); nIter++)
       nIter->second->multDisp(facD);
 }
 void Domain::zeroSensitivityParameters() {
-  for (ElementIterator eIter = theElements.begin();
-    eIter != theElements.end(); eIter++)
+  for (ElementIterator eIter = elements_.begin();
+    eIter != elements_.end(); eIter++)
       eIter->second->activateParameter(0);
 }
 
@@ -165,9 +165,9 @@ void Domain::Save(std::ostream* os) {
 
   // Store nodes
   (*os) << "\"nodes\":[";
-  for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
       if (n->second->IsActive()) {
-        if (n != theNodes.begin()) (*os) << ",";
+        if (n != nodes_.begin()) (*os) << ",";
         n->second->Save(os);
       }
   }
@@ -175,9 +175,9 @@ void Domain::Save(std::ostream* os) {
 
   // Store elements
   (*os) << "\"elements\":[";
-  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
+  for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
     if (e->second->IsActive()) {
-      if (e != theElements.begin()) (*os) << ",";
+      if (e != elements_.begin()) (*os) << ",";
       e->second->Save(os);
     }
   }
@@ -226,23 +226,23 @@ void Domain::Initialize() {
   default_groupdata.factor_S = 1.0;
   default_groupdata.factor_G = 1.0;
   default_groupdata.factor_P = 1.0;
-  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
+  for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
 //    e->second->SetGroupData(default_groupdata);
   }
 }
 
 void Domain::zeroLoads() {
-  for (ElementIterator e = theElements.begin(); e != theElements.end(); e++) {
+  for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
     e->second->zeroLoad();
   }
-  for (NodeIterator n = theNodes.begin(); n != theNodes.end(); n++) {
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
     n->second->zeroLoad();
   }
 }
 
 void Domain::applyLoads(double lambda_, double time_) {
-  for (LoadCaseIterator lcIter = theLoadCases.begin();
-    lcIter != theLoadCases.end(); lcIter++)
+  for (LoadCaseIterator lcIter = loadcases_.begin();
+    lcIter != loadcases_.end(); lcIter++)
       lcIter->second->ApplyLoads(lambda_, time_);
 }
 
@@ -266,7 +266,7 @@ void Domain::set_gravity(double g, double xG, double yG, double zG) {
   gravityVect[2] = zG;
   gravityVect.Normalize();
   // Check if elements are already defined
-  if (theElements.size() > 0) {
+  if (elements_.size() > 0) {
     throw SException("[nemesis:%d] %s", 9999,
                      "Gravity info must me set before elements' definitions.");
   }

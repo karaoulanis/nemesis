@@ -83,13 +83,13 @@ class Domain {
   double gravityAccl;
   bool groupsByMaterial;
 
-  NodeContainer         theNodes;
-  CrossSectionContainer theCrossSections;
-  ElementContainer      theElements;
-  GroupContainer        theGroups;
-  MaterialContainer     theMaterials;
-  LoadCaseContainer     theLoadCases;
-  ConstraintContainer   theConstraints;
+  NodeContainer         nodes_;
+  CrossSectionContainer sections_;
+  ElementContainer      elements_;
+  GroupContainer        groups_;
+  MaterialContainer     materials_;
+  LoadCaseContainer     loadcases_;
+  ConstraintContainer   constraints_;
   TrackerContainer      trackers_;
 
   Vector RayleighFactors;
@@ -161,13 +161,13 @@ class Domain {
   void set_eigenvalues(const Vector& vals);
   const Vector& get_eigen_values();
 
-  inline NodeContainer& get_nodes()                  {return theNodes;}
-  inline CrossSectionContainer& get_sections()       {return theCrossSections;}
-  inline ElementContainer& get_elements()            {return theElements;}
-  inline GroupContainer& get_groups()                {return theGroups;}
-  inline MaterialContainer& get_materials()          {return theMaterials;}
-  inline LoadCaseContainer& get_loadcases()          {return theLoadCases;}
-  inline ConstraintContainer& get_constraints()      {return theConstraints;}
+  inline NodeContainer& get_nodes()                  {return nodes_;}
+  inline CrossSectionContainer& get_sections()       {return sections_;}
+  inline ElementContainer& get_elements()            {return elements_;}
+  inline GroupContainer& get_groups()                {return groups_;}
+  inline MaterialContainer& get_materials()          {return materials_;}
+  inline LoadCaseContainer& get_loadcases()          {return loadcases_;}
+  inline ConstraintContainer& get_constraints()      {return constraints_;}
   inline TrackerContainer& get_trackers()            {return trackers_;}
 
   template<class TE, class TC> int add(TC& c, TE* e) {
