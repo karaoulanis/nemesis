@@ -240,14 +240,16 @@ void Domain::zeroLoads() {
   }
 }
 
-void Domain::applyLoads(double lambda_, double time_) {
-  for (LoadCaseIterator lcIter = loadcases_.begin();
-    lcIter != loadcases_.end(); lcIter++)
-      lcIter->second->ApplyLoads(lambda_, time_);
+/**
+ * @brief Apply loads for given \f$\lambda\f$ and \f$t\f$.
+ * @param lambda Given \f$\lambda\f$.
+ * @param time Given \f$t\f$.
+ */
+void Domain::ApplyLoads(double lambda, double time) {
+  for (LoadCaseIterator iter = loadcases_.begin();
+    iter != loadcases_.end(); iter++)
+      iter->second->ApplyLoads(lambda, time);
 }
-
-
-
 
 /**
  * Sets gravity info.
