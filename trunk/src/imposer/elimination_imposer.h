@@ -38,4 +38,4 @@ class EliminationImposer: public Imposer {
   ~EliminationImposer();
   int impose(Model* model);
 };
-#endif  // SRC_IMPOSER_ELIMINATION_IMPOSER2_H_
+#endif  // SRC_IMPOSER_ELIMINATION_IMPOSER_H_
