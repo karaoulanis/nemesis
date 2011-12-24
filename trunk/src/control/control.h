@@ -55,7 +55,7 @@ class Control: public AnalysisObject {
   virtual void Commit()=0;
   virtual void Rollback()=0;
 
-protected:
+ protected:
   double lambdaTrial;
   double lambdaConvg;
   double DLambda;
