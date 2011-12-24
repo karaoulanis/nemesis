@@ -118,7 +118,7 @@ class Domain {
   void Initialize();
   void zeroNodalStress();
   void zeroSensitivityParameters();
-  void applyLoads(double lambda_, double time_);
+  void ApplyLoads(double lambda_, double time_);
   void zeroLoads();
 
   void clear();

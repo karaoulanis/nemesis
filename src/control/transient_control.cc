@@ -168,7 +168,7 @@ void TransientControl::Rollback() {
 void TransientControl::FormResidual(double fac)  {
   pA->get_soe()->zeroB();
   pA->get_domain()->zeroLoads();
-  pA->get_domain()->applyLoads(fac, pA->get_domain()->get_time_curr());
+  pA->get_domain()->ApplyLoads(fac, pA->get_domain()->get_time_curr());
 
   // Take contribution from Nodes
   for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {

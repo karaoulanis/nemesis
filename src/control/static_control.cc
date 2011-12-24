@@ -139,7 +139,7 @@ void StaticControl::FormNodalResidual(ModelNode* pModelNode) {
 void StaticControl::FormResidual(double fac)   {
   pA->get_soe()->zeroB();
   pA->get_domain()->zeroLoads();
-  pA->get_domain()->applyLoads(fac, 0.);
+  pA->get_domain()->ApplyLoads(fac, 0.);
 
   // Take contribution from Nodes
   for (unsigned i = 0; i < pA->get_model()->get_model_nodes().size(); i++) {
