@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) {
   /*****************************************************************************
   * Info
   *****************************************************************************/
-  printf("nemesis-%s[nemesis-project.org] ", NEMESIS_VERSION);
-  printf("Copyright (C) 2004-2011 F.E. Karaoulanis.\n");
+  printf("nemesis %s. ", NEMESIS_VERSION);
+  printf("Copyright (C) 2004-2011 Fotios E. Karaoulanis.\n");
   printf("Built on %s ", NEMESIS_PLATFORM);
   printf("with %s ", NEMESIS_COMPILER_NAME);
   printf("ver.%s ", NEMESIS_COMPILER_VERSION);
@@ -40,6 +40,7 @@ int main(int argc, char* argv[]) {
   printf("Licensed under GPL v3.0; ");
   printf("provided \"AS IS\"; ");
   printf("comes with ABSOLUTELY NO WARRANTY.\n");
+  printf("Please visit http://www.nemesis-project.org for more information.\n");
 
   if (argc == 1) {
   /*****************************************************************************
