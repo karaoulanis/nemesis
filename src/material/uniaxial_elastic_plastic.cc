@@ -108,9 +108,9 @@ double UniaxialElastoPlastic::get_C() {
   double Hiso = MatParams[ 3];
   double Hkin = MatParams[ 4];
   double eta  = MatParams[ 5];
-  // double dt = pD->get_time_incr();
-  double dt = 1.;
   if (fTrial>0) {
+    // double dt = pD->get_time_incr();
+    double dt = 1.;
     E = E*(Hkin+Hiso+eta/dt)/(E+Hkin+Hiso+eta/dt);
   }
   return E;

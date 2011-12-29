@@ -105,7 +105,7 @@ Matrix::Matrix(const Matrix& m)
  * Destructor.
  */
 Matrix::~Matrix() {
-  if (data_ != 0) delete[] data_;
+  delete[] data_;
 }
 
 /**
