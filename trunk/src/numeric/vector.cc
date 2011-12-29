@@ -67,7 +67,7 @@ Vector::Vector(const Vector& vector)
 }
 
 Vector::~Vector() {
-  if (data_ != 0) delete[] data_;
+  delete[] data_;
 }
 
 Vector& Vector::operator=(const Vector& v) {

@@ -86,32 +86,32 @@ void Analysis::Clear() {
   }
 }
 void Analysis::set_analysis_type(AnalysisType* analysis_type) {
-  if (analysis_type_ != 0) delete analysis_type_;
+  delete analysis_type_;
   analysis_type_ = analysis_type;
 }
 
 void Analysis::set_algorithm(Algorithm* algorithm) {
-  if (algorithm_ != 0) delete algorithm_;
+  delete algorithm_;
   algorithm_ = algorithm;
 }
 
 void Analysis::set_control(Control* control) {
-  if (control_ != 0) delete control_;
+  delete control_;
   control_ = control;
 }
 
 void Analysis::set_imposer(Imposer* imposer) {
-  if (imposer_ != 0) delete imposer_;
+  delete imposer_;
   imposer_ = imposer;
 }
 
 void Analysis::set_reorderer(Reorderer* reorderer) {
-  if (reorderer_ != 0) delete reorderer_;
+  delete reorderer_;
   reorderer_ = reorderer;
 }
 
 void Analysis::set_soe(SOE* soe) {
-  if (soe_ != 0) delete soe_;
+  delete soe_;
   soe_ = soe;
   soe_->set_model(&M);
 }

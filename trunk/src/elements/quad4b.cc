@@ -185,8 +185,8 @@ void Quad4b::get_B(Matrix& B, int node, int gPoint) {
 
   double B0 = 0., Bb0 = 0.;
   // Axisymmetry
-  double r = 0.;
   if (axisymmetric_) {
+    double r = 0.;
     for (int i = 0;i < 4;i++) {
           r+=x(i, 0)*shp[i][0][gPoint];
     }
