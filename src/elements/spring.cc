@@ -33,16 +33,25 @@
 /**
  * Default constructor.
  */
-Spring::Spring()   {
+Spring::Spring()
+  : dim_(0),
+    mySpringMaterial(NULL) {
 }
+
 /**
  * Constructor.
  * Creates a Bar Element.
  */
-Spring::Spring(int id, std::vector<Node*> nodes, SpringMaterial* material,
+Spring::Spring(int id,
+               std::vector<Node*> nodes,
+               SpringMaterial* material,
                int dim,
-               double xp1, double xp2, double xp3,
-               double yp1, double yp2, double yp3)
+               double xp1,
+               double xp2,
+               double xp3,
+               double yp1,
+               double yp2,
+               double yp3)
     : Element(id, nodes),
       dim_(dim) {
   // The dofs needed for this element

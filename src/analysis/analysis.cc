@@ -39,10 +39,10 @@ Analysis::Analysis(Domain* domain)
       analysis_type_(NULL),
       algorithm_(NULL),
       control_(NULL),
-      soe_(NULL),
       imposer_(NULL),
       norm_(new ConvergenceNorm()),
-      reorderer_(NULL) {
+      reorderer_(NULL),
+      soe_(NULL) {
   norm_->set_analysis(this);
 }
 
