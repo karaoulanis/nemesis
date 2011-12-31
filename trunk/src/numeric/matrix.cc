@@ -128,11 +128,9 @@ void Matrix::Resize(int rows, int cols) {
   cols_ = cols;
   if (size_ != rows*cols) {
     size_ = rows*cols;
-    // Delete the data_ if exists
+    // Delete the data_
     /// @todo Check whether data can persist (implement capacity).
-    if (data_ != NULL) {
-      delete[] data_;
-    }
+    delete[] data_;
     try {
       data_ = new double[size_];
     } catch(std::bad_alloc) {
@@ -148,9 +146,7 @@ void Matrix::Resize(int rows, int cols, double value) {
     size_ = rows*cols;
     // Delete the data_ if exists
     /// @todo Check whether data can persist (implement capacity).
-    if (data_ != NULL) {
-      delete[] data_;
-    }
+    delete[] data_;
     try {
       data_ = new double[size_];
     } catch(std::bad_alloc) {
@@ -174,15 +170,18 @@ void Matrix::Solve(Vector& x, const Vector& b) {
   num::check::array_size(cols_, b.size());
   num::check::array_size(x.size(), b.size());
   #endif
-  double* me;
-  double* vv;
-  int* index;
+  double* me = NULL;
+  double* vv = NULL;
+  int* index = NULL;
   double d;
   try {
     me = new double[size_];
     vv = new double[rows_];
     index = new int[rows_];
   } catch(std::bad_alloc) {
+    delete[] vv;
+    delete[] me;
+    delete[] index;
     throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
   }
   for (int i = 0;i < size_;i++) me[i]=data_[i];
@@ -201,10 +200,10 @@ Matrix Inverse(const Matrix& m) {
   num::check::array_size(m.cols_, m.rows_);
   #endif
   Matrix inv = m;
-  double* me;
-  double* col;
-  double* vv;
-  int* index;
+  double* me = NULL;
+  double* col = NULL;
+  double* vv = NULL;
+  int* index = NULL;
   double d;
   try {
     me = new double[m.size_];
@@ -212,6 +211,10 @@ Matrix Inverse(const Matrix& m) {
     vv = new double[m.rows_];
     index = new int[m.rows_];
   } catch(std::bad_alloc) {
+    delete[] me;
+    delete[] col;
+    delete[] vv;
+    delete[] index;
     throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
   }
   for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
@@ -231,9 +234,9 @@ double Det(const Matrix& m) {
   #ifdef _DEBUG
   num::check::array_size(m.cols_, m.rows_);
   #endif
-  double* me;
-  double* vv;
-  int* index;
+  double* me = NULL;
+  double* vv = NULL;
+  int* index = NULL;
   double d;
   double det;
   try {
@@ -241,6 +244,9 @@ double Det(const Matrix& m) {
     vv = new double[m.rows_];
     index = new int[m.rows_];
   } catch(std::bad_alloc) {
+    delete[] me;
+    delete[] vv;
+    delete[] index;
     throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
   }
   for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];

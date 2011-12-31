@@ -126,7 +126,7 @@ void Tresca::set_strain(const Vector& De) {
   f[1]=s[0]-s[1]-2.*cu;
   f[2]=s[1]-s[2]-2.*cu;
   // report(f, "Yield fun", true, 12);
-  double theta = sTrial.Theta();
+  // double theta = sTrial.Theta();
   // report(2.*sqrt(sTrial.J2())*cos(theta)-cu, "f");
 
   std::vector<int> active;
@@ -134,7 +134,7 @@ void Tresca::set_strain(const Vector& De) {
     if (f[i]>0.) active.push_back(i);
 
   // Elastic case
-  if (active.size() == 0) return;
+  if (active.empty()) return;
   plastic = true;
 
   // Plastic case
@@ -202,7 +202,7 @@ void Tresca::set_strain(const Vector& De) {
              +s[1]*sV(1, 0)*sV(1, 2)
              +s[2]*sV(2, 0)*sV(2, 2);
 
-  theta = sTrial.Theta();
+  // theta = sTrial.Theta();
   //  if ((2.*sqrt(sTrial.J2())*cos(theta)-2*cu) > 1e-6) {
   //    inaccurate++;
   //    cout << "error : "<<2.*sqrt(sTrial.J2())*cos(theta)-2*cu << endl;
