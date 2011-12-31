@@ -155,7 +155,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
   if (f[i]>0.) active.push_back(i);
 
   // Elastic case
-  if (active.size() == 0) return;
+  if (active.empty()) return;
   plastic = true;
 
   // Plastic case

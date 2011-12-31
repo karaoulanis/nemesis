@@ -181,7 +181,7 @@ int Model::get_directed_graph(DirectedGraph& G) {
       }
   }
   std::set < Pair>::iterator iEdges;
-  for (iEdges = theEdges.begin();iEdges != theEdges.end();iEdges++)
+  for (iEdges = theEdges.begin(); iEdges != theEdges.end(); ++iEdges)
     add_edge(iEdges->first, iEdges->second, G);
   return 0;
 }
@@ -203,25 +203,31 @@ int Model::get_undirected_graph(UndirectedGraph& G) {
       }
   }
   std::set<Pair>::iterator iEdges;
-  for (iEdges = theEdges.begin(); iEdges != theEdges.end(); iEdges++)
+  for (iEdges = theEdges.begin(); iEdges != theEdges.end(); ++iEdges)
     add_edge(iEdges->first, iEdges->second, G);
   return 0;
 }
+
 void Model::set_nodal_stress() {
   theDomain->zeroNodalStress();
-  for (ElementIterator eIter = theDomain->get_elements().begin();
-    eIter != theDomain->get_elements().end(); eIter++)
-      eIter->second->recoverStresses();
+  for (ElementIterator  eIter = theDomain->get_elements().begin();
+                        eIter != theDomain->get_elements().end();
+                        ++eIter)
+    eIter->second->recoverStresses();
 }
+
 void Model::enrich() {
   // First enrich nodes (Level set initialization)
   for (NodeIterator nIter = theDomain->get_nodes().begin();
-    nIter != theDomain->get_nodes().end(); nIter++)
-      nIter->second->evalLevelSets();
+                    nIter != theDomain->get_nodes().end();
+                    ++nIter)
+    nIter->second->evalLevelSets();
+
   // And then enrich elements
-  for (ElementIterator eIter = theDomain->get_elements().begin();
-    eIter != theDomain->get_elements().end(); eIter++)
-      eIter->second->enrich();
+  for (ElementIterator  eIter = theDomain->get_elements().begin();
+                        eIter != theDomain->get_elements().end();
+                        eIter++)
+    eIter->second->enrich();
 }
 
 void Model::print() {

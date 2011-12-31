@@ -66,7 +66,7 @@ void GroundMotionFile::Apply(double factor, double time) {
   double d2 = data_[n+1];
   double d = d1+(time-t1)*(d2-d1)/(t2-t1);
   std::map<int, Element*>::const_iterator i;
-  for (i = elements_->begin(); i != elements_->end(); i++) {
+  for (i = elements_->begin(); i != elements_->end(); ++i) {
     i->second->addGroundMotion(dof_, factor*scale_*d);
   }
 }

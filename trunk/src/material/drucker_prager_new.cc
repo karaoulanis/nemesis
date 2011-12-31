@@ -133,7 +133,7 @@ void DruckerPragerNew::set_strain(const Vector& De) {
 
   // cout << fSurfaces[0]->get_f(s, aTrial) << ' ' << aTrial << endl;
   // Elastic (quick return)
-  if (activeS.size() == 0)
+  if (activeS.empty())
     return;
 
   if (activeS.size() == 2)

@@ -204,7 +204,6 @@ void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
  * @param De Vector containing total strain increment.
  */
 void HoekBrown::set_strain(const Vector& De) {
-  int response;
 
   // material properties
   double E = myElastic->get_param(0);
@@ -259,16 +258,13 @@ void HoekBrown::set_strain(const Vector& De) {
 
   // Check for purely elastic
   if (nActive == 0) {
-    response = 0;
     return;
   }
 
   plastic = true;
-  response = 1;
 
   // Check for stupid
   if (nActive == 3) {
-    response = 3;
     // return;
   }
 
@@ -277,7 +273,6 @@ void HoekBrown::set_strain(const Vector& De) {
   this->find_dgds(s, q);
   this->find_d2gdsds(s, q);
 
-  int iter = 0;
   for (; ; ) {
     // setup jacobian
     A.Resize(3+nActive, 3+nActive, 0.);
@@ -288,17 +283,16 @@ void HoekBrown::set_strain(const Vector& De) {
     int pos = 0;
     for (int i = 0; i < 3; i++) {
       if (active[i]) {
-        A.Append(DLambda[i]*d2gdsds[i],    0,    0, 1., 1.);
+        A.Append(DLambda[i]*d2gdsds[i],    0,     0, 1., 1.);
         A.AppendCol(dgds[i],               0, 3+pos, 1., 0.);
-        A.AppendRow(dfds[i],           3+pos,    0, 1., 0.);
-        R.Append(-DLambda[i]*dgds[i],            0, 1., 1.);
+        A.AppendRow(dfds[i],           3+pos,     0, 1., 0.);
+        R.Append(-DLambda[i]*dgds[i],             0, 1., 1.);
         R[3+pos]=-f[i];
         pos++;
       }
     }
 
     // check for convergence
-    iter++;
     if (R.Twonorm() < 1.e-09) {
       bool restart = false;
       pos = 0;
