@@ -40,7 +40,6 @@ class FEObject {
 
   FEObjectTag get_tag();
   virtual bool checkIfAllows(FEObject* f);
-  virtual void checkConstency(FEObject* f);
 };
 
 #endif  // SRC_FEOBJECT_FE_OBJECT_H_

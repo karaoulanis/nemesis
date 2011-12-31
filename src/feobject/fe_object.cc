@@ -46,5 +46,3 @@ bool FEObject::checkIfAllows(FEObject* /*f*/) {
   return 0;
 }
 
-void FEObject::checkConstency(FEObject* /*f*/) {
-}
