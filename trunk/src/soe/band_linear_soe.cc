@@ -55,7 +55,9 @@ insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
     for (unsigned j = 0; j < EFTable.size(); j++) {
       if (EFTable[i] < 0) continue;
       if (EFTable[j] < 0) continue;
-      A[EFTable[j]*nRows+(lowerBandwidth+upperBandwidth+EFTable[i]-EFTable[j])]+=factor*Ke(i, j);
+      unsigned index = EFTable[j]*nRows + lowerBandwidth + upperBandwidth +
+                       EFTable[i]-EFTable[j];
+      A[index]+=factor*Ke(i, j);
     }
   return 0;
 }
@@ -121,5 +123,5 @@ int BandLinearSOE::solve() {
   }
   // Solve the system A*X = B, overwriting B with X.
   dgbtrs(&c, &N, &KL, &KU, &NRHS, &A[0], &LDAB, &IPIV[0], &X[0], &LDB, &INFO, 1);
-    return 0;
+  return 0;
 }

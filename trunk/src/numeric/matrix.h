@@ -120,7 +120,7 @@ class Matrix {
   inline int get_size() const {
     return size_;
   }
-  
+
   /**
    * Returns a pointer to Matrix data.
    */
