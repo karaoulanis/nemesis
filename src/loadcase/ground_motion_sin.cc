@@ -45,6 +45,6 @@ GroundMotionSin::GroundMotionSin(const std::map<int, Element*>* elements,
 }
 void GroundMotionSin::Apply(double /*factor*/, double time) {
   std::map<int, Element*>::const_iterator i;
-  for (i = elements_->begin(); i != elements_->end(); i++)
+  for (i = elements_->begin(); i != elements_->end(); ++i)
     i->second->addGroundMotion(dof_, a_*std::sin(omega_*time+phi_));
 }

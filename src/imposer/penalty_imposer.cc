@@ -65,7 +65,7 @@ int PenaltyImposer::impose(Model* model) {
   int num_dofs = 0;
   for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
                                             ni != nodes_->end();
-                                            ni++) {
+                                            ++ni) {
     Node* node = ni->second;
     // Get vector<int> of active dofs. Inactive dofs are equal to -1.
     // e.g. [0, 1, -1, -1, -1, ...]
@@ -88,7 +88,7 @@ int PenaltyImposer::impose(Model* model) {
   // Step 2.: Check and apply constraints.
   for (std::map<int, Constraint*>::const_iterator ci = constraints_->begin();
                                                   ci != constraints_->end();
-                                                  ci++) {
+                                                  ++ci) {
     Constraint* constraint = ci->second;
     // Check constraints
     if (constraint->get_num_cdofs() == 0) {
@@ -116,7 +116,7 @@ int PenaltyImposer::impose(Model* model) {
   //          Create standard model nodes
   for (std::map<int, Node*>::const_iterator ni = nodes_->begin();
                                             ni != nodes_->end();
-                                            ni++) {
+                                            ++ni) {
     Node* node = ni->second;
     std::vector<int>& ftable = ftables[node->get_id()];
     // Remove inactive dofs.
@@ -132,7 +132,7 @@ int PenaltyImposer::impose(Model* model) {
   // Step 4.: Create standard model elements.
   for (std::map<int, Element*>::const_iterator ei = elements_->begin();
                                                ei != elements_->end();
-                                               ei++) {
+                                               ++ei) {
     Element* elem = ei->second;
     const std::vector<Node*> nodes = elem->get_nodes();
     // Copy ftable from the first node.
