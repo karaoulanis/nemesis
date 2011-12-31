@@ -32,8 +32,13 @@ int Material::counter = 0;
 /**
  * Default constructor.
  */
-Material::Material() {
+Material::Material()
+    :index(0),
+     x(0.),
+     y(0.),
+     z(0.) {
 }
+
 /**
  * Constructor.
  * Creates a Material and increases Material's index by one.
@@ -42,8 +47,11 @@ Material::Material() {
  * @param aT Thermal coefficient.
  */
 Material::Material(int ID, double rho, double aT)
-:DomainObject(ID) {
-  index = counter++;
+    :DomainObject(ID),
+     index(counter++),
+     x(0.),
+     y(0.),
+     z(0.) {
   MatParams.Resize(32);
   MatParams[30]=rho;
   MatParams[31]=aT;
