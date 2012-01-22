@@ -61,9 +61,9 @@ const Matrix& Quad4b::get_K() {
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < nodes_.size(); a++) {
-      this->get_B(Ba, a, k);
+      this->get_B(&Ba, a, k);
       for (unsigned b = 0; b < nodes_.size(); b++) {
-        this->get_B(Bb, b, k);
+        this->get_B(&Bb, b, k);
         double dV = thickness_*detJ[k];
         K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
@@ -115,8 +115,8 @@ const Vector& Quad4b::get_R() {
     double dV = thickness_*detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
-      this->get_B(Ba, a, k);
-      add_BTv(R, 2*a, &perm[0], Ba, sigma, facS*dV, 1.0);
+      this->get_B(&Ba, a, k);
+      add_BTv(&R, 2*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 2;i++)
         R[2*a+i]-=facG*shp[a][0][k]*b[i]*dV;
@@ -148,10 +148,10 @@ void Quad4b::update() {
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.Clear();
     for (unsigned a = 0; a < nodes_.size(); a++) {
-      this->get_B(Ba, a, k);
+      this->get_B(&Ba, a, k);
       /// @todo check dV
       // double dV = thickness_*detJ[k];
-      add_Bv(epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
+      add_Bv(&epsilon, 2*a, &perm[0], Ba, u, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
   }
@@ -171,8 +171,8 @@ void Quad4b::shapeFunctions() {
   }
 }
 
-void Quad4b::get_B(Matrix& B, int node, int gPoint) {
-  B.Resize(4, 2);
+void Quad4b::get_B(Matrix* B, int node, int gPoint) {
+  B->Resize(4, 2);
   double Bb1 = 0., Bb2 = 0., vol = 0.;
   for (int k = 0;k < 4;k++) {  // matpoints
     double dV = thickness_*detJ[k];
@@ -211,12 +211,12 @@ void Quad4b::get_B(Matrix& B, int node, int gPoint) {
   double B12 = B1+B10;
 
   // B-matrix
-  B(0, 0) = B12;
-  B(0, 1) = B6;
-  B(1, 0) = B10;
-  B(1, 1) = B7;
-  B(2, 0) = B11;
-  B(2, 1) = B6;
-  B(3, 0) = B2;
-  B(3, 1) = B1;
+  (*B)(0, 0) = B12;
+  (*B)(0, 1) = B6;
+  (*B)(1, 0) = B10;
+  (*B)(1, 1) = B7;
+  (*B)(2, 0) = B11;
+  (*B)(2, 1) = B6;
+  (*B)(3, 0) = B2;
+  (*B)(3, 1) = B1;
 }

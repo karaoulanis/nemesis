@@ -186,7 +186,7 @@ const Vector& Brick8::get_R() {
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
       this->get_B(&Ba, a, k);
-      add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
+      add_BTv(&R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 3;i++)
         R[3*a+i]-=facG*shp[a][0][k]*b[i]*dV;
@@ -218,7 +218,7 @@ void Brick8::update() {
     epsilon.Clear();
     for (unsigned a = 0; a < nodes_.size(); a++) {
       this->get_B(&B, a, k);
-      add2(epsilon, 3*a, B, u, 1.0, 1.0);
+      add2(&epsilon, 3*a, B, u, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
   }
