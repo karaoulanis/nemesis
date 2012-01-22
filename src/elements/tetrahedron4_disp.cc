@@ -82,7 +82,7 @@ Tetrahedron4Disp::Tetrahedron4Disp(int id, std::vector<Node*> nodes,
 }
 
 Tetrahedron4Disp::~Tetrahedron4Disp() {
-  Containers::vector_delete(myMatPoints);
+  Containers::vector_delete(&myMatPoints);
 }
 
 void Tetrahedron4Disp::findShapeFunctions() {

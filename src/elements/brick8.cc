@@ -122,7 +122,7 @@ Brick8::Brick8(int id, std::vector<Node*> nodes,
  * Destructor.
  */
 Brick8::~Brick8() {
-  Containers::vector_delete(myMatPoints);
+  Containers::vector_delete(&myMatPoints);
 }
 /**
  * Element stiffness matrix.

@@ -33,10 +33,10 @@
 typedef std::vector<int> IDContainer;
 
 namespace Containers {
-  template<class TC> void map_delete(TC& c) {
+  template<class TC> void map_delete(TC* c) {
     typename TC::const_iterator p;
-    for (p = c.begin(); p != c.end(); p++) delete p->second;
-    c.clear();
+    for (p = c->begin(); p != c->end(); p++) delete p->second;
+    c->clear();
   }
 
   template<class TC> void map_print(const TC& c) {
@@ -48,10 +48,9 @@ namespace Containers {
     std::cout << std::endl;
   }
 
-  template<class TC> void vector_delete(TC& c) {
-    int n = c.size();
-    for (int i = 0;i < n;i++) delete c[i];
-    c.clear();
+  template<class TC> void vector_delete(TC* c) {
+    for (unsigned i = 0; i < c->size(); i++) delete (*c)[i];
+    c->clear();
   }
 
   template<class TC> void vector_print(const TC& c) {

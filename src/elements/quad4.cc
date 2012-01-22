@@ -98,8 +98,8 @@ Quad4::Quad4(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
 }
 
 Quad4::~Quad4() {
-  Containers::vector_delete(myMatPoints);
-  Containers::vector_delete(materials);
+  Containers::vector_delete(&myMatPoints);
+  Containers::vector_delete(&materials);
 }
 
 void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {

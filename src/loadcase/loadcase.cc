@@ -69,10 +69,10 @@ LoadCase::LoadCase(int id, const char* label)
  * Destructor.
  */
 LoadCase::~LoadCase() {
-  Containers::vector_delete(loads_);
-  Containers::vector_delete(groupstates_);
-  Containers::vector_delete(initialconditions_);
-  Containers::vector_delete(sensitivityparameters_);
+  Containers::vector_delete(&loads_);
+  Containers::vector_delete(&groupstates_);
+  Containers::vector_delete(&initialconditions_);
+  Containers::vector_delete(&sensitivityparameters_);
 }
 
 /**
