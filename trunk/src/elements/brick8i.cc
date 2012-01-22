@@ -41,7 +41,7 @@ Brick8i::Brick8i() {
 
 Brick8i::Brick8i(int id, std::vector<Node*> nodes,
                      MultiaxialMaterial* material)
-    : Brick8(id, nodes, material) {
+: Brick8(id, nodes, material) {
   aTrial.Resize(9, 0.);
   aConvg.Resize(9, 0.);
 }
@@ -60,9 +60,9 @@ const Matrix& Brick8i::get_K() {
   // Form shape functions
   this->shapeFunctions();
   // Get Kdd, Kda, Kaa Matrices
-  this->get_Kdd(Kdd);
-  this->get_Kda(Kda);
-  this->get_Kaa(Kaa);
+  this->get_Kdd(&Kdd);
+  this->get_Kda(&Kda);
+  this->get_Kaa(&Kaa);
   // Form K
   K = Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
   // Get group factors
@@ -119,7 +119,7 @@ const Vector& Brick8i::get_R() {
     double dV = detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
-      this->get_Bstd(Ba, a, k);
+      this->get_Bstd(&Ba, a, k);
       add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 3;i++)
@@ -148,19 +148,19 @@ void Brick8i::update() {
   // Get incremental displacements
   Du = this->get_disp_incrm();
   // Get incremental alphas
-  this->get_Kda(Kda);
-  this->get_Kaa(Kaa);
+  this->get_Kda(&Kda);
+  this->get_Kaa(&Kaa);
   Da=-Inverse(Kaa)*Transpose(Kda)*Du;
   aTrial = aConvg+Da;
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.Clear();
     for (unsigned a = 0; a < 8; a++) {
-      this->get_Bstd(Ba, a, k);
+      this->get_Bstd(&Ba, a, k);
       add_Bv(epsilon, 3*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 3; a++) {
-      this->get_BInc(Ba, a, k);
+      this->get_BInc(&Ba, a, k);
       add_Bv(epsilon, 3*a, &perm[0], Ba, Da, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
@@ -182,110 +182,110 @@ void Brick8i::shapeFunctions() {
 }
 
 
-void Brick8i::get_Bstd(Matrix& B, int node, int gPoint) {
+void Brick8i::get_Bstd(Matrix* B, int node, int gPoint) {
   // B-factors
   double B1 = shpStd[node][1][gPoint];
   double B2 = shpStd[node][2][gPoint];
   double B3 = shpStd[node][3][gPoint];
 
   // B-matrix
-  B(0, 0) = B1;
-  B(0, 1) = 0.;
-  B(0, 2) = 0.;
-  B(1, 0) = 0.;
-  B(1, 1) = B2;
-  B(1, 2) = 0.;
-  B(2, 0) = 0.;
-  B(2, 1) = 0.;
-  B(2, 2) = B3;
-  B(3, 0) = B2;
-  B(3, 1) = B1;
-  B(3, 2) = 0.;
-  B(4, 0) = 0.;
-  B(4, 1) = B3;
-  B(4, 2) = B2;
-  B(5, 0) = B3;
-  B(5, 1) = 0.;
-  B(5, 2) = B1;
+  (*B)(0, 0) = B1;
+  (*B)(0, 1) = 0.;
+  (*B)(0, 2) = 0.;
+  (*B)(1, 0) = 0.;
+  (*B)(1, 1) = B2;
+  (*B)(1, 2) = 0.;
+  (*B)(2, 0) = 0.;
+  (*B)(2, 1) = 0.;
+  (*B)(2, 2) = B3;
+  (*B)(3, 0) = B2;
+  (*B)(3, 1) = B1;
+  (*B)(3, 2) = 0.;
+  (*B)(4, 0) = 0.;
+  (*B)(4, 1) = B3;
+  (*B)(4, 2) = B2;
+  (*B)(5, 0) = B3;
+  (*B)(5, 1) = 0.;
+  (*B)(5, 2) = B1;
 }
 
 
-void Brick8i::get_BInc(Matrix& B, int node, int gPoint) {
+void Brick8i::get_BInc(Matrix* B, int node, int gPoint) {
   // B-factors
   double B1 = shpInc[node][1][gPoint]/detJ[gPoint];
   double B2 = shpInc[node][2][gPoint]/detJ[gPoint];
   double B3 = shpInc[node][3][gPoint]/detJ[gPoint];
 
   // B-matrix
-  B(0, 0) = B1;
-  B(0, 1) = 0.;
-  B(0, 2) = 0.;
-  B(1, 0) = 0.;
-  B(1, 1) = B2;
-  B(1, 2) = 0.;
-  B(2, 0) = 0.;
-  B(2, 1) = 0.;
-  B(2, 2) = B3;
-  B(3, 0) = B2;
-  B(3, 1) = B1;
-  B(3, 2) = 0.;
-  B(4, 0) = 0.;
-  B(4, 1) = B3;
-  B(4, 2) = B2;
-  B(5, 0) = B3;
-  B(5, 1) = 0.;
-  B(5, 2) = B1;
+  (*B)(0, 0) = B1;
+  (*B)(0, 1) = 0.;
+  (*B)(0, 2) = 0.;
+  (*B)(1, 0) = 0.;
+  (*B)(1, 1) = B2;
+  (*B)(1, 2) = 0.;
+  (*B)(2, 0) = 0.;
+  (*B)(2, 1) = 0.;
+  (*B)(2, 2) = B3;
+  (*B)(3, 0) = B2;
+  (*B)(3, 1) = B1;
+  (*B)(3, 2) = 0.;
+  (*B)(4, 0) = 0.;
+  (*B)(4, 1) = B3;
+  (*B)(4, 2) = B2;
+  (*B)(5, 0) = B3;
+  (*B)(5, 1) = 0.;
+  (*B)(5, 2) = B1;
 }
 
 
-void Brick8i::get_Kdd(Matrix& K) {
-  K.Clear();
+void Brick8i::get_Kdd(Matrix* K) {
+  K->Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 8; a++) {
-      get_Bstd(Ba, a, k);
+      get_Bstd(&Ba, a, k);
       for (unsigned b = 0; b < 8; b++) {
-        get_Bstd(Bb, b, k);
+        get_Bstd(&Bb, b, k);
         double dV = detJ[k];
-        K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K->Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
 }
 
 
-void Brick8i::get_Kda(Matrix& K) {
-  K.Clear();
+void Brick8i::get_Kda(Matrix* K) {
+  K->Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 8; a++) {
-      get_Bstd(Ba, a, k);
+      get_Bstd(&Ba, a, k);
       for (unsigned b = 0; b < 3; b++) {
-        get_BInc(Bb, b, k);
+        get_BInc(&Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K->Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
 }
 
 
-void Brick8i::get_Kaa(Matrix& K) {
-  K.Clear();
+void Brick8i::get_Kaa(Matrix* K) {
+  K->Clear();
   static Matrix Ba(6, 3), Bb(6, 3);
   // For all Gauss points
   for (unsigned k = 0; k < 8; k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 3; a++) {
-      get_BInc(Ba, a, k);
+      get_BInc(&Ba, a, k);
       for (unsigned b = 0; b < 3; b++) {
-        get_BInc(Bb, b, k);
+        get_BInc(&Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K->Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
