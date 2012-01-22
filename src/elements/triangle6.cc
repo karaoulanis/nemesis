@@ -216,7 +216,7 @@ const Vector& Triangle6::get_R() {
   return R;
 }
 
-void Triangle6::update() {
+void Triangle6::Update() {
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return;
@@ -246,9 +246,9 @@ void Triangle6::update() {
   }
 }
 
-void Triangle6::commit() {
+void Triangle6::Commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->get_material()->commit();
+    myMatPoints[i]->get_material()->Commit();
 }
 
 

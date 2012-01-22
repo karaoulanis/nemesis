@@ -286,7 +286,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
 /**
  * Commit material state.
  */
-void DruckerPragerNew2::commit() {
+void DruckerPragerNew2::Commit() {
   // report(inaccurate);
   inaccurate = 0;
   eTotal = eTrial;  /// @todo

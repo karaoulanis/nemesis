@@ -43,7 +43,7 @@ EigenAnalysis::EigenAnalysis()
 EigenAnalysis::~EigenAnalysis() {
 }
 
-bool EigenAnalysis::checkIfAllows(FEObject* /*f*/) {
+bool EigenAnalysis::CheckIfAllows(FEObject* /*f*/) {
   return false;
 }
 

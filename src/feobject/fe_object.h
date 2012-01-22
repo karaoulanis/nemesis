@@ -39,7 +39,7 @@ class FEObject {
   virtual ~FEObject();
 
   FEObjectTag get_tag();
-  virtual bool checkIfAllows(FEObject* f);
+  virtual bool CheckIfAllows(FEObject* f);
 };
 
 #endif  // SRC_FEOBJECT_FE_OBJECT_H_

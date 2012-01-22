@@ -46,8 +46,8 @@ class Triangle3: public Element {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void update();
-  void commit();
+  void Update();
+  void Commit();
 
   void AddInitialStresses(int direction, double h1, double s1,
                           double h2, double s2, double K0);

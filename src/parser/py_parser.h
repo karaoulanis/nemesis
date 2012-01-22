@@ -35,7 +35,7 @@ class PyParser: public Parser {
   // Constructors and destructor
   PyParser();
   virtual ~PyParser();
-  int parse();
-  int parse(char* filename);
+  int Parse();
+  int Parse(char* filename);
 };
 #endif  // SRC_PARSER_PY_PARSER_H_

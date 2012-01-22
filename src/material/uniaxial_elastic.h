@@ -35,7 +35,7 @@ class UniaxialElastic: public UniaxialMaterial {
   UniaxialMaterial* get_clone();
   void set_strain(const double De);
   double get_C();
-  void commit();
+  void Commit();
 };
 
 #endif  // SRC_MATERIAL_UNIAXIAL_ELASTIC_H_

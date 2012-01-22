@@ -2325,11 +2325,11 @@ static PyObject* pyAnalysis_Sensitivity(PyObject* /*self*/, PyObject* args) {
   return Py_None;
 }
 static PyObject* pyAnalysis_Run(PyObject* /*self*/, PyObject* args) {
-  int id, steps, ret;
+  int id, steps;
   if (!PyArg_ParseTuple(args, "ii", &id, &steps)) return NULL;
   try {
     LoadCase* loadcase = pD->get<LoadCase>(pD->get_loadcases(), id);
-    ret = pA->Analyze(loadcase, steps);
+    pA->Analyze(loadcase, steps);
   } catch(SException e) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
@@ -2763,7 +2763,7 @@ PyParser::~PyParser() {
 /**
 * Parse interactively.
 */
-int PyParser::parse() {
+int PyParser::Parse() {
   Py_Initialize();
   this->initModules();
   FILE* fp = stdin;
@@ -2774,7 +2774,7 @@ int PyParser::parse() {
 /**
 * Parse file.
 */
-int PyParser::parse(char* filename) {
+int PyParser::Parse(char* filename) {
   // Check if the extension is correct
   int len = strlen(filename);
   if ((  filename[len-4] != '.'

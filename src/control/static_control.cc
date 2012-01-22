@@ -164,7 +164,7 @@ void StaticControl::Commit() {
   lambdaConvg = lambdaTrial;
   pA->get_domain()->set_lambda(lambdaConvg);
   // pA->get_domain()->commit(); /// @todo this commits only domains time!
-  pA->get_model()->commit();
+  pA->get_model()->Commit();
 }
 /**
  * Aborts step.

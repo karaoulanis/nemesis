@@ -97,7 +97,7 @@ double UniaxialGap::get_C() {
   return Et;
 }
 
-void UniaxialGap::commit() {
+void UniaxialGap::Commit() {
   sConvg = sTrial;
   eTotal = eTrial;
 }

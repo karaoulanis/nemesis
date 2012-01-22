@@ -125,7 +125,7 @@ const Vector& Quad4DispAxisymmetric::get_R() {
   return R;
 }
 
-void Quad4DispAxisymmetric::update() {
+void Quad4DispAxisymmetric::Update() {
   if (!(groupdata_->active))  return;
   Vector& u=*myVector;
   static Vector u1(8);

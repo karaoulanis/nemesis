@@ -217,7 +217,7 @@ void Tresca::set_strain(const Vector& De) {
 /**
  * Commit material state.
  */
-void Tresca::commit() {
+void Tresca::Commit() {
   // report(inaccurate);
   inaccurate = 0;
   eTotal = eTrial;  /// @todo

@@ -35,7 +35,7 @@ class BandLinearSOE: public SOE {
   explicit BandLinearSOE(Model* model);
   ~BandLinearSOE();
 
-  int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
+  int InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
               double factor = 1.0);
   int solve();
   void set_size();

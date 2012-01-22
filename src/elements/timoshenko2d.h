@@ -48,8 +48,8 @@ class Timoshenko2d: public Element {
   const Vector& get_R();
   const Vector& get_Rgrad();
 
-  void update()                         {return;}
-  void commit()                         {return;}
+  void Update()                         {return;}
+  void Commit()                         {return;}
   void recoverStresses();
   void shapeFunctions(int n, double xi, double* N, double* dN);
 

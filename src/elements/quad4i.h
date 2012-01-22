@@ -44,8 +44,8 @@ class Quad4i: public Quad4 {
   const Matrix& get_K();
     const Matrix& get_M();
   const Vector& get_R();
-  void update();
-  void commit();
+  void Update();
+  void Commit();
 
  private:
   static double shpStd[4][3][4];

@@ -51,9 +51,9 @@ ModelElement::ModelElement(const IDContainer& FTable, Element* pElement,
  */
 ModelElement::~ModelElement() {
 }
-void ModelElement::update() {
-  if (myElement != 0) myElement->update();
+void ModelElement::Update() {
+  if (myElement != 0) myElement->Update();
 }
-void ModelElement::commit() {
-  if (myElement != 0) myElement->commit();
+void ModelElement::Commit() {
+  if (myElement != 0) myElement->Commit();
 }

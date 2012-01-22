@@ -142,15 +142,15 @@ void Model::set_trial_vecs(const Vector& u, const Vector& a, const Vector& v) {
   for (unsigned i = 0;i < theModelNodes.size();i++)
     theModelNodes[i]->set_trial_vecs(u, a, v);
 }
-void Model::update() {
+void Model::Update() {
   for (unsigned i = 0;i < theModelElements.size();i++)
-    theModelElements[i]->update();
+    theModelElements[i]->Update();
 }
-void Model::commit() {
+void Model::Commit() {
   for (unsigned i = 0;i < theModelNodes.size();i++)
-    theModelNodes[i]->commit();
+    theModelNodes[i]->Commit();
   for (unsigned i = 0;i < theModelElements.size();i++)
-    theModelElements[i]->commit();
+    theModelElements[i]->Commit();
 }
 void Model::commitSens(const Vector& ds, int param) {
   for (unsigned i = 0;i < theModelNodes.size();i++)

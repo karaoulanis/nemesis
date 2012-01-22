@@ -134,7 +134,7 @@ const Vector& Brick8i::get_R() {
 }
 
 
-void Brick8i::update() {
+void Brick8i::Update() {
   // Check for a quick return
   if (!(groupdata_->active)) {
     return;
@@ -168,9 +168,9 @@ void Brick8i::update() {
 }
 
 
-void Brick8i::commit() {
+void Brick8i::Commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++) {
-    myMatPoints[i]->get_material()->commit();
+    myMatPoints[i]->get_material()->Commit();
   }
   aConvg = aTrial;
 }

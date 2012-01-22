@@ -39,8 +39,8 @@ class Parser {
   virtual ~Parser();
 
   // Parse the problem
-  virtual int parse()=0;
-  virtual int parse(char* filename)=0;
+  virtual int Parse()=0;
+  virtual int Parse(char* filename)=0;
 };
 
 #endif  // SRC_PARSER_PARSER_H_

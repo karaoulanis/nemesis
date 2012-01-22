@@ -102,7 +102,7 @@ const Matrix& DuncanChang::get_C() {
   C(5, 5)=Em*0.5*(1.-2*nu);
   return C;
 }
-void DuncanChang::commit() {
+void DuncanChang::Commit() {
   eTotal = eTrial;
   sConvg = sTrial;
 }

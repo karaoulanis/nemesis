@@ -46,8 +46,8 @@ class Triangle6: public Element {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void update();
-  void commit();
+  void Update();
+  void Commit();
 
   void get_shape_functions(MatPoint* pMatPoint, Matrix* N, double* detJ);
   void AddInitialStresses(int direction, double h1, double s1,

@@ -115,7 +115,7 @@ double UniaxialElastoPlastic::get_C() {
   }
   return E;
 }
-void UniaxialElastoPlastic::commit() {
+void UniaxialElastoPlastic::Commit() {
   sConvg = sTrial;
   aConvg = aTrial;
   qConvg = qTrial;

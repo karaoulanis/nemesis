@@ -45,7 +45,7 @@ StaticAnalysis::StaticAnalysis()
   pA->set_soe(new FullLinearSOE(pA->get_model()));
 }
 
-bool StaticAnalysis::checkIfAllows(FEObject* f) {
+bool StaticAnalysis::CheckIfAllows(FEObject* f) {
   if (f->get_tag() == TAG_CONTROL_LOAD                      ||
       f->get_tag() == TAG_CONTROL_DISPLACEMENT              ||
       f->get_tag() == TAG_CONTROL_ARC_LENGTH_SPHERICAL      ||
@@ -80,20 +80,20 @@ int StaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   // Check the control
   if (pA->get_control() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No control has been set.");
-  if (!this->checkIfAllows(pA->get_control()))
+  if (!this->CheckIfAllows(pA->get_control()))
     throw SException("[nemesis:%d] %s", 9999, "Control type is incorrect.");
   // Check the algorithm
   if (pA->get_algorithm() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No algorithm has been set.");
-  if (!this->checkIfAllows(pA->get_algorithm()))
+  if (!this->CheckIfAllows(pA->get_algorithm()))
     throw SException("[nemesis:%d] %s", 9999, "Algorithm type is incorrect.");
   // Check the SOE
   if (pA->get_soe() == 0)
     throw SException("[nemesis:%d] %s", 9999, "No soe has been set.");
-  if (!this->checkIfAllows(pA->get_soe()))
+  if (!this->CheckIfAllows(pA->get_soe()))
     throw SException("[nemesis:%d] %s", 9999, "Soe type is incorrect.");
   // Check the Reorderer
-  if ((pA->get_reorderer() != 0) && (!this->checkIfAllows(pA->get_reorderer())))
+  if ((pA->get_reorderer() != 0) && (!this->CheckIfAllows(pA->get_reorderer())))
     throw SException("[nemesis:%d] %s", 9999, "Reorderer type is incorrect.");
 
   // Create model by applying the constraints

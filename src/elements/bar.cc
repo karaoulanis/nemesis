@@ -108,7 +108,7 @@ Bar::~Bar() {
 }
 
 
-void Bar::update() {
+void Bar::Update() {
   static Vector du(2*dim_);
   du = this->get_disp_incrm();
     double dL = 0;
@@ -118,8 +118,8 @@ void Bar::update() {
 }
 
 
-void Bar::commit() {
-  myUniMaterial->commit();
+void Bar::Commit() {
+  myUniMaterial->Commit();
 }
 
 

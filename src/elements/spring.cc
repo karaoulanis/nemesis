@@ -137,7 +137,7 @@ Spring::Spring(int id,
 Spring::~Spring() {
   delete mySpringMaterial;
 }
-void Spring::update() {
+void Spring::Update() {
   static Vector du(2*dim_);
   du = this->get_disp_incrm();
   report(du, "du");
@@ -149,8 +149,8 @@ void Spring::update() {
   // report(de, "de");
   mySpringMaterial->set_strain(de);
 }
-void Spring::commit() {
-  mySpringMaterial->commit();
+void Spring::Commit() {
+  mySpringMaterial->Commit();
 }
 
 

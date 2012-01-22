@@ -36,7 +36,7 @@ class UniaxialGap: public UniaxialMaterial {
   UniaxialMaterial* get_clone();
   void set_strain(const double De);
   double get_C();
-  void commit();
+  void Commit();
  private:
   double eTrial;
   double eElastMin;

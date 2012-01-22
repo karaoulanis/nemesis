@@ -49,14 +49,14 @@ int main(int argc, char* argv[]) {
     printf("Type help(nemesis) for additional info.\n");
     printf("Use Ctrl-Z plus Return to exit.\n");
     Parser* theParser = new PyParser();
-    theParser->parse();
+    theParser->Parse();
     delete theParser;
   } else if (argc == 3 && !strcmp(argv[1], "-p")) {
   /*****************************************************************************
   // Python parser with file
   *****************************************************************************/
     Parser* theParser = new PyParser();
-    theParser->parse(argv[2]);
+    theParser->Parse(argv[2]);
     delete theParser;
   } else {
   /*****************************************************************************

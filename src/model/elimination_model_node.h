@@ -40,7 +40,7 @@ class EliminationModelNode: public ModelNode {
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
   void set_trial_disp(const Vector& u);
   void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a);
-  void commit();
+  void Commit();
   void commitSens(const Vector& X, int param);
   /// @todo: Mark for removal
   void set_old_FTable(const IDContainer& ftab);

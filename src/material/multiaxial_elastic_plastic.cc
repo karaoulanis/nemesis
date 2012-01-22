@@ -90,7 +90,7 @@ void MultiaxialElastoPlastic::set_strain(const Vector& De) {
 /**
  * Commit material state.
  */
-void MultiaxialElastoPlastic::commit() {
+void MultiaxialElastoPlastic::Commit() {
   eTotal = eTrial;  /// @todo
   ePConvg = ePTrial;
   sConvg = sTrial;

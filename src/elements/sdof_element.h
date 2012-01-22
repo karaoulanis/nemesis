@@ -44,8 +44,8 @@ class SDofElement: public Element {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void update() {return;}
-  void commit() {return;}
+  void Update() {return;}
+  void Commit() {return;}
  private:
   SDofMaterial* mySDofMaterial;
   // Dummy copy constructor and copy assignment as to explicitly disable them.

@@ -200,7 +200,7 @@ const Vector& Brick8::get_R() {
 /**
  * Element update.
  */
-void Brick8::update() {
+void Brick8::Update() {
   // Static variables and references
   static Vector u(24);
   static Vector epsilon(6);
@@ -226,9 +226,9 @@ void Brick8::update() {
 /**
  * Element commit.
  */
-void Brick8::commit() {
+void Brick8::Commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->get_material()->commit();
+    myMatPoints[i]->get_material()->Commit();
 }
 /**
  * Element shape functions.

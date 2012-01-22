@@ -67,8 +67,8 @@ void StandardModelNode::set_trial_vecs(const Vector& u, const Vector& v,
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=a[theFTable[i]];
   myNode->set_trial_accl(*myVector);
 }
-void StandardModelNode::commit() {
-  myNode->commit();
+void StandardModelNode::Commit() {
+  myNode->Commit();
 }
 void StandardModelNode::commitSens(const Vector& X, int param) {
   for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=X[theFTable[i]];

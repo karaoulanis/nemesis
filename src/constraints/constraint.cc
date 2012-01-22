@@ -108,11 +108,11 @@ void Constraint::inc_trial_force(double f) {
   f_trial_+=f;
 }
 
-void Constraint::update(double f)  {
+void Constraint::Update(double f)  {
   f_trial_+=f;
 }
 
-void Constraint::commit() {
+void Constraint::Commit() {
   f_convg_ = f_trial_;
 }
 

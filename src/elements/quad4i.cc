@@ -136,7 +136,7 @@ const Vector& Quad4i::get_R() {
 /**
  * Element update.
  */
-void Quad4i::update() {
+void Quad4i::Update() {
   // Check for a quick return
   if (!(groupdata_->active)) {
     return;
@@ -177,9 +177,9 @@ void Quad4i::update() {
  * Overwrites base function, because incompatible modes must also
  * be commited. This takes place in element level.
  */
-void Quad4i::commit() {
+void Quad4i::Commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->get_material()->commit();
+    myMatPoints[i]->get_material()->Commit();
   aConvg = aTrial;
 }
 /**

@@ -68,7 +68,7 @@ void Newmark::Predict() {
   a = c4*a+c3*vt;
 
   pA->get_model()->set_trial_vecs(u, v, a);
-  pA->get_model()->update();
+  pA->get_model()->Update();
 
   this->FormResidual(1.0);
   pA->get_soe()->solve();
@@ -77,7 +77,7 @@ void Newmark::Predict() {
   v = v+c[2]*(pA->get_soe()->get_X());
   a = a+c[1]*(pA->get_soe()->get_X());
   pA->get_model()->set_trial_vecs(u, v, a);
-  pA->get_model()->update();
+  pA->get_model()->Update();
 }
 
 /**
@@ -89,5 +89,5 @@ void Newmark::Correct() {
   a = a+c[1]*(pA->get_soe()->get_X());
 
   pA->get_model()->set_trial_vecs(u, v, a);
-  pA->get_model()->update();
+  pA->get_model()->Update();
 }

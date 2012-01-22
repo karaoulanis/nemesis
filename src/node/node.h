@@ -105,7 +105,7 @@ class Node: public DomainObject {
   void set_trial_disp(const Vector& u);
   void set_trial_velc(const Vector& v);
   void set_trial_accl(const Vector& a);
-  void commit();
+  void Commit();
   void rollback();
 
   const Vector& get_disp_trial();

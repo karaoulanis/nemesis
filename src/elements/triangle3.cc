@@ -190,7 +190,7 @@ const Vector& Triangle3::get_R() {
   return R;
 }
 
-void Triangle3::update() {
+void Triangle3::Update() {
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return;
@@ -208,8 +208,8 @@ void Triangle3::update() {
 }
 
 
-void Triangle3::commit() {
-  myMatPoints[0]->get_material()->commit();
+void Triangle3::Commit() {
+  myMatPoints[0]->get_material()->Commit();
 }
 
 

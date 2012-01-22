@@ -112,7 +112,7 @@ void DisplacementControl::Predict() {
   du = DLambda*duT;
   Du_k = du[theRefDof];
   pA->get_model()->incTrialDisp(du);
-  pA->get_model()->update();
+  pA->get_model()->Update();
 
   // Set num of achieved iterations to one
   Io = 1;
@@ -143,7 +143,7 @@ void DisplacementControl::Correct() {
   // Update displacements in the model
   du+=dLambda*duT;
   pA->get_model()->incTrialDisp(du);
-  pA->get_model()->update();
+  pA->get_model()->Update();
 
   // Increase number of iterations
   Io++;

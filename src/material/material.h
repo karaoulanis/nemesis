@@ -47,7 +47,7 @@ class Material: public DomainObject {
   inline double get_param(int i)            {return MatParams[i];}
   inline double get_rho()                   {return MatParams[30];}
   inline double get_aT()                    {return MatParams[31];}
-  virtual void commit()=0;
+  virtual void Commit()=0;
 
  protected:
   static int counter;

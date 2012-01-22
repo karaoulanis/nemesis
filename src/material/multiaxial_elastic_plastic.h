@@ -44,7 +44,7 @@ class MultiaxialElastoPlastic: public MultiaxialMaterial {
   ~MultiaxialElastoPlastic();
 
   void set_strain(const Vector& De);
-  void commit();
+  void Commit();
   const Matrix& get_C();
   bool isPlastic()              {return plastic;}
 

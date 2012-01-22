@@ -54,7 +54,7 @@ const Matrix& SpringMaterial::get_C() {
 
 /**
  */
-void SpringMaterial::commit() {
+void SpringMaterial::Commit() {
   sConvg = sTrial;
   eTotal = eTrial;
 }

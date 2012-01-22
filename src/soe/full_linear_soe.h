@@ -35,7 +35,7 @@ class FullLinearSOE: public SOE {
   explicit FullLinearSOE(Model* model);
   ~FullLinearSOE();
 
-  int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
+  int InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
               double factor = 1.0);
   int solve();
   void set_size();

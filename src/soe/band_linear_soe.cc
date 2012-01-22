@@ -49,7 +49,7 @@ BandLinearSOE::~BandLinearSOE() {
 }
 
 int BandLinearSOE::
-insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
+InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
   for (unsigned i = 0;i < EFTable.size();i++)
     for (unsigned j = 0; j < EFTable.size(); j++) {

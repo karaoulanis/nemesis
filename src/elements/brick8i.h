@@ -41,8 +41,8 @@ class Brick8i: public Brick8 {
   const Matrix& get_K();
   const Matrix& get_M();
   const Vector& get_R();
-  void update();
-  void commit();
+  void Update();
+  void Commit();
   void get_B(Matrix* /*B*/, int /*node*/, int /*gPoint*/) {}
  private:
   static double shpStd[8][4][8];

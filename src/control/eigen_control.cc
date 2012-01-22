@@ -98,9 +98,9 @@ void EigenControl::FormTangent() {
   for (int i = 0; i < n; i++) {
     ModelElement* p = pA->get_model()->get_model_elements()[i];
     this->FormElementalTangent(p);
-    pSOE->insertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
+    pSOE->InsertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
     this->FormElementalMassMatrix(p);
-    pSOE->insertMatrixIntoM(p->get_matrix(), p->get_FTable(), 1.0);
+    pSOE->InsertMatrixIntoM(p->get_matrix(), p->get_FTable(), 1.0);
   }
 }
 

@@ -32,7 +32,7 @@ class Analysis;
 class StaticAnalysis :public AnalysisType {
   public:
   StaticAnalysis();
-  bool checkIfAllows(FEObject* f);
+  bool CheckIfAllows(FEObject* f);
   int Run(LoadCase* loadcase, int num_loadsteps);
 };
 
