@@ -38,6 +38,6 @@ class Brick8d: public Brick8 {
         MultiaxialMaterial* material);
   ~Brick8d();
 
-  void get_B(Matrix& B, int node, int gPoint);
+  void get_B(Matrix* B, int node, int gPoint);
 };
 #endif  // SRC_ELEMENTS_BRICK8D_H_

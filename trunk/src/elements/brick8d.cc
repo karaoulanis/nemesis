@@ -38,29 +38,29 @@ Brick8d::Brick8d(int id, std::vector<Node*> nodes,
 Brick8d::~Brick8d() {
 }
 
-void Brick8d::get_B(Matrix& B, int node, int gPoint) {
+void Brick8d::get_B(Matrix* B, int node, int gPoint) {
   // Resize B
-  B.Resize(6, 3);
+  B->Resize(6, 3);
   double B1 = shp[node][1][gPoint];
   double B2 = shp[node][2][gPoint];
   double B3 = shp[node][3][gPoint];
 
-  B(0, 0) = B1;
-  B(0, 1) = 0.;
-  B(0, 2) = 0.;
-  B(1, 0) = 0.;
-  B(1, 1) = B2;
-  B(1, 2) = 0.;
-  B(2, 0) = 0.;
-  B(2, 1) = 0.;
-  B(2, 2) = B3;
-  B(3, 0) = B2;
-  B(3, 1) = B1;
-  B(3, 2) = 0.;
-  B(4, 0) = 0.;
-  B(4, 1) = B3;
-  B(4, 2) = B2;
-  B(5, 0) = B3;
-  B(5, 1) = 0.;
-  B(5, 2) = B1;
+  (*B)(0, 0) = B1;
+  (*B)(0, 1) = 0.;
+  (*B)(0, 2) = 0.;
+  (*B)(1, 0) = 0.;
+  (*B)(1, 1) = B2;
+  (*B)(1, 2) = 0.;
+  (*B)(2, 0) = 0.;
+  (*B)(2, 1) = 0.;
+  (*B)(2, 2) = B3;
+  (*B)(3, 0) = B2;
+  (*B)(3, 1) = B1;
+  (*B)(3, 2) = 0.;
+  (*B)(4, 0) = 0.;
+  (*B)(4, 1) = B3;
+  (*B)(4, 2) = B2;
+  (*B)(5, 0) = B3;
+  (*B)(5, 1) = 0.;
+  (*B)(5, 2) = B1;
 }

@@ -38,9 +38,9 @@ Brick8b::Brick8b(int id, std::vector<Node*> nodes,
 Brick8b::~Brick8b() {
 }
 
-void Brick8b::get_B(Matrix& B, int node, int gPoint) {
+void Brick8b::get_B(Matrix* B, int node, int gPoint) {
   // Resize B
-  B.Resize(6, 3);
+  B->Resize(6, 3);
 
   // Find B-bar coefficients
   double Bb1 = 0., Bb2 = 0., Bb3 = 0., vol = 0.;
@@ -67,22 +67,22 @@ void Brick8b::get_B(Matrix& B, int node, int gPoint) {
   double B9 = B3+B8;
 
   // Fill in B matrix
-  B(0, 0) = B5;
-  B(0, 1) = B6;
-  B(0, 2) = B8;
-  B(1, 0) = B4;
-  B(1, 1) = B7;
-  B(1, 2) = B8;
-  B(2, 0) = B4;
-  B(2, 1) = B6;
-  B(2, 2) = B9;
-  B(3, 0) = B2;
-  B(3, 1) = B1;
-  B(3, 2) = 0.;
-  B(4, 0) = 0.;
-  B(4, 1) = B3;
-  B(4, 2) = B2;
-  B(5, 0) = B3;
-  B(5, 1) = 0.;
-  B(5, 2) = B1;
+  (*B)(0, 0) = B5;
+  (*B)(0, 1) = B6;
+  (*B)(0, 2) = B8;
+  (*B)(1, 0) = B4;
+  (*B)(1, 1) = B7;
+  (*B)(1, 2) = B8;
+  (*B)(2, 0) = B4;
+  (*B)(2, 1) = B6;
+  (*B)(2, 2) = B9;
+  (*B)(3, 0) = B2;
+  (*B)(3, 1) = B1;
+  (*B)(3, 2) = 0.;
+  (*B)(4, 0) = 0.;
+  (*B)(4, 1) = B3;
+  (*B)(4, 2) = B2;
+  (*B)(5, 0) = B3;
+  (*B)(5, 1) = 0.;
+  (*B)(5, 2) = B1;
 }
