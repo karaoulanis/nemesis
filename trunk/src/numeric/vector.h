@@ -28,7 +28,8 @@
 
 // C/C++ include files
 #include <cmath>
-#include <iostream>
+#include <ostream>
+#include "exception/sexception.h"
 #include "numeric/numeric.h"
 
 class Vector {

@@ -26,6 +26,7 @@
 #ifndef SRC_NODE_NODE_H_
 #define SRC_NODE_NODE_H_
 
+#include <ostream>
 #include "containers/containers.h"
 #include "domain/domain_object.h"
 #include "numeric/matrix.h"

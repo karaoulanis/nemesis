@@ -27,6 +27,7 @@
 #define SRC_DOMAIN_DOMAIN_H_
 
 #include <map>
+#include <iostream>
 #include "numeric/vector.h"
 
 // Forward declarations

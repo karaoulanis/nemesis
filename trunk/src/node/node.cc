@@ -26,7 +26,6 @@
 #include "node/node.h"
 #include <stdlib.h>
 #include <cmath>
-#include <sstream>
 #include <string>
 
 Node::Node()
