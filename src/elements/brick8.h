@@ -54,7 +54,7 @@ class Brick8: public Element {
   int get_num_plastic_points();
 
   void shapeFunctions();
-  virtual void get_B(Matrix& B, int node, int gPoint)=0;
+  virtual void get_B(Matrix* B, int node, int gPoint)=0;
 
  protected:
   std::vector<MatPoint*> myMatPoints;

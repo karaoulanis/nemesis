@@ -140,9 +140,9 @@ const Matrix& Brick8::get_K() {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     double dV = detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
-      this->get_B(Ba, a, k);
+      this->get_B(&Ba, a, k);
       for (unsigned b = 0; b < nodes_.size(); b++) {
-        this->get_B(Bb, b, k);
+        this->get_B(&Bb, b, k);
         K.Add_BTCB(3*a, 3*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
@@ -185,7 +185,7 @@ const Vector& Brick8::get_R() {
     double dV = detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
-      this->get_B(Ba, a, k);
+      this->get_B(&Ba, a, k);
       add_BTv(R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 3;i++)
@@ -217,7 +217,7 @@ void Brick8::update() {
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.Clear();
     for (unsigned a = 0; a < nodes_.size(); a++) {
-      this->get_B(B, a, k);
+      this->get_B(&B, a, k);
       add2(epsilon, 3*a, B, u, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);

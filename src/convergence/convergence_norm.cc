@@ -58,8 +58,8 @@ void ConvergenceNorm::Init(int LCid, int steps) {
   LC = LCid;
   nSteps = steps;
   step = 0;
-  printf("__________________________________________________________________\n");
-  printf("Step   Iter   Lambda     Time    R(abs)    R(rel)    E(rel)   P.P.\n");
+  printf("_________________________________________________________________\n");
+  printf("Step   Iter   Lambda     Time    R(abs)    R(rel)    E(rel)  P.P.\n");
 }
 
 void ConvergenceNorm::NewStep() {
@@ -151,7 +151,7 @@ int ConvergenceNorm::Update() {
   // cout<<' ';
   num::print_d(widwo, 9, 6);
   printf(" ");
-  num::print_i(nPP, 6);
+  num::print_i(nPP, 5);
   printf("\n");
 
   if (iter <= maxIter &&
