@@ -35,7 +35,9 @@ double Quad4i::shpStd[4][3][4];
 double Quad4i::shpInc[2][3][4];
 std::vector<int> Quad4i::perm(3);
 
-Quad4i::Quad4i() {
+Quad4i::Quad4i()
+  : aTrial(4, 0.),
+    aConvg(4, 0.) {
 }
 
 Quad4i::Quad4i(int id, std::vector<Node*> nodes, MultiaxialMaterial* material,
@@ -60,9 +62,9 @@ const Matrix& Quad4i::get_K() {
   // Form shape functions
   this->shapeFunctions();
   // Get Kdd, Kda, Kaa Matrices
-  this->get_Kdd(Kdd);
-  this->get_Kda(Kda);
-  this->get_Kaa(Kaa);
+  this->get_Kdd(&Kdd);
+  this->get_Kda(&Kda);
+  this->get_Kaa(&Kaa);
   // Form K
   K = Kdd-Kda*Inverse(Kaa)*Transpose(Kda);
   // Get group factor
@@ -118,7 +120,7 @@ const Vector& Quad4i::get_R() {
     double dV = thickness_*detJ[k];
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
-      this->get_Bstd(Ba, a, k);
+      this->get_Bstd(&Ba, a, k);
       add_BTv(R, 2*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 2;i++)
@@ -148,21 +150,21 @@ void Quad4i::update() {
   // Get incremental displacements
   Du = this->get_disp_incrm();
   // Get incremental alphas
-  this->get_Kda(Kda);
-  this->get_Kaa(Kaa);
+  this->get_Kda(&Kda);
+  this->get_Kaa(&Kaa);
   Da=-Inverse(Kaa)*Transpose(Kda)*Du;
   aTrial = aConvg+Da;
   // For each material point
   for (unsigned k = 0; k < myMatPoints.size(); k++) {
     epsilon.Clear();
     for (unsigned a = 0; a < 4; a++) {
-      this->get_Bstd(Ba, a, k);
+      this->get_Bstd(&Ba, a, k);
       /// @todo check
       // double dV = thickness_*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 2; a++) {
-      this->get_BInc(Ba, a, k);
+      this->get_BInc(&Ba, a, k);
       /// @todo check
       // double dV = thickness_*detJ[k];
       add_Bv(epsilon, 2*a, &perm[0], Ba, Da, 1.0, 1.0);
@@ -194,19 +196,20 @@ void Quad4i::shapeFunctions() {
  * @param node The corresponding node.
  * @param gPoint The corresponding Gauss Point.
  */
-void Quad4i::get_Bstd(Matrix& B, int node, int gPoint) {
+void Quad4i::get_Bstd(Matrix* B, int node, int gPoint) {
   // B-factors
   double B1 = shpStd[node][1][gPoint];
   double B2 = shpStd[node][2][gPoint];
 
   // B-matrix
-  B(0, 0) = B1;
-  B(0, 1) = 0.;
-  B(1, 0) = 0.;
-  B(1, 1) = B2;
-  B(2, 0) = B2;
-  B(2, 1) = B1;
+  (*B)(0, 0) = B1;
+  (*B)(0, 1) = 0.;
+  (*B)(1, 0) = 0.;
+  (*B)(1, 1) = B2;
+  (*B)(2, 0) = B2;
+  (*B)(2, 1) = B1;
 }
+
 /**
  * Get B-matrix of incompatible modes.
  * Shape function array shpInc and detJs must be defined.
@@ -214,19 +217,20 @@ void Quad4i::get_Bstd(Matrix& B, int node, int gPoint) {
  * @param node The corresponding node.
  * @param gPoint The corresponding Gauss Point.
  */
-void Quad4i::get_BInc(Matrix& B, int node, int gPoint) {
+void Quad4i::get_BInc(Matrix* B, int node, int gPoint) {
   // B-factors
   double B1 = shpInc[node][1][gPoint]/detJ[gPoint];
   double B2 = shpInc[node][2][gPoint]/detJ[gPoint];
 
   // B-matrix
-  B(0, 0) = B1;
-  B(0, 1) = 0.;
-  B(1, 0) = 0.;
-  B(1, 1) = B2;
-  B(2, 0) = B2;
-  B(2, 1) = B1;
+  (*B)(0, 0) = B1;
+  (*B)(0, 1) = 0.;
+  (*B)(1, 0) = 0.;
+  (*B)(1, 1) = B2;
+  (*B)(2, 0) = B2;
+  (*B)(2, 1) = B1;
 }
+
 /**
  * Get Kdd Matrix.
  * This is the usual displacement matrix.
@@ -234,18 +238,18 @@ void Quad4i::get_BInc(Matrix& B, int node, int gPoint) {
  * @todo Increase performance.
  * @param K The matrix to be filled.
  */
-void Quad4i::get_Kdd(Matrix& K) {
-  K.Clear();
+void Quad4i::get_Kdd(Matrix* K) {
+  K->Clear();
   static Matrix Ba(3, 2), Bb(3, 2);
   // For all Gauss points
   for (unsigned k = 0; k < 4; k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 4; a++) {
-      get_Bstd(Ba, a, k);
+      get_Bstd(&Ba, a, k);
       for (unsigned b = 0; b < 4; b++) {
-        get_Bstd(Bb, b, k);
+        get_Bstd(&Bb, b, k);
         double dV = thickness_*detJ[k];
-        K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K->Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
@@ -257,18 +261,18 @@ void Quad4i::get_Kdd(Matrix& K) {
  * @todo Increase performance.
  * @param K The matrix to be filled.
  */
-void Quad4i::get_Kda(Matrix& K) {
-  K.Clear();
+void Quad4i::get_Kda(Matrix* K) {
+  K->Clear();
   static Matrix Ba(3, 2), Bb(3, 2);
   // For all Gauss points
   for (unsigned k = 0; k < 4; k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 4; a++) {
-      get_Bstd(Ba, a, k);
+      get_Bstd(&Ba, a, k);
       for (unsigned b = 0; b < 2; b++) {
-        get_BInc(Bb, b, k);
+        get_BInc(&Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K->Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }
@@ -279,18 +283,18 @@ void Quad4i::get_Kda(Matrix& K) {
  * @todo Increase performance.
  * @param K The matrix to be filled.
  */
-void Quad4i::get_Kaa(Matrix& K) {
-  K.Clear();
+void Quad4i::get_Kaa(Matrix* K) {
+  K->Clear();
   static Matrix Ba(3, 2), Bb(3, 2);
   // For all Gauss points
   for (unsigned k = 0; k < 4; k++) {
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     for (unsigned a = 0; a < 2; a++) {
-      get_BInc(Ba, a, k);
+      get_BInc(&Ba, a, k);
       for (unsigned b = 0; b < 2; b++) {
-        get_BInc(Bb, b, k);
+        get_BInc(&Bb, b, k);
         double dV = 1.0*detJ[k];
-        K.Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
+        K->Add_BTCB(2*a, 2*b, &perm[0], Ba, C, Bb, dV, 1.0);
       }
     }
   }

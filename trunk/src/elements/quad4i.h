@@ -57,10 +57,10 @@ class Quad4i: public Quad4 {
   Vector aTrial;
   Vector aConvg;
   void shapeFunctions();
-  void get_Bstd(Matrix& B, int node, int gPoint);
-  void get_BInc(Matrix& B, int node, int gPoint);
-  void get_Kdd(Matrix& K);
-  void get_Kda(Matrix& K);
-  void get_Kaa(Matrix& K);
+  void get_Bstd(Matrix* B, int node, int gPoint);
+  void get_BInc(Matrix* B, int node, int gPoint);
+  void get_Kdd(Matrix* K);
+  void get_Kda(Matrix* K);
+  void get_Kaa(Matrix* K);
 };
 #endif  // SRC_ELEMENTS_QUAD4I_H_

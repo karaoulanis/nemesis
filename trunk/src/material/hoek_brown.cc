@@ -204,7 +204,6 @@ void HoekBrown::find_d2gdsds(const Vector& s, double /*q*/) {
  * @param De Vector containing total strain increment.
  */
 void HoekBrown::set_strain(const Vector& De) {
-
   // material properties
   double E = myElastic->get_param(0);
   double nu= myElastic->get_param(1);
