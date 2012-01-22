@@ -51,13 +51,13 @@ void report(const Vector& v, const char* name, int total, int decimal) {
   printf("\n");
 }
 
-void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C,
+void add(Matrix* K, int row, int col, const Matrix& B1, const Matrix& C,
          const Matrix B2, double c1, double c0) {
   int m = B1.get_rows();
   int n = B2.get_cols();
-  int pos = row*K.get_cols()+col;
-  int colK = K.get_cols();
-  double* pK =K.get_data();
+  int pos     = row*K->get_cols()+col;
+  int colK    = K->get_cols();
+  double* pK  = K->get_data();
   double* pB1 = B1.get_data();
   double* pB2 = B2.get_data();
   double* pC = C.get_data();
@@ -71,12 +71,12 @@ void add(Matrix& K, int row, int col, const Matrix& B1, const Matrix& C,
           pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[k*m+l]*pB2[l*n+j];
 }
 
-void add(Vector& R, int row, const Matrix& BT, const Vector& V,
+void add(Vector* R, int row, const Matrix& BT, const Vector& V,
          double c1, double c0) {
   int m = BT.get_rows();
   int n = BT.get_cols();
-  double* pV =V.get_data();
-  double* pR =R.get_data();
+  double* pV = V.get_data();
+  double* pR = R->get_data();
   double* pBT = BT.get_data();
   for (int i = 0;i < n;i++)
     pR[i]*=c0;
@@ -85,12 +85,12 @@ void add(Vector& R, int row, const Matrix& BT, const Vector& V,
       pR[row+i]+=c1*pBT[j*n+i]*pV[j];
 }
 
-void add2(Vector& R, int row, const Matrix& BT, const Vector& V,
+void add2(Vector* R, int row, const Matrix& BT, const Vector& V,
           double c1, double c0) {
   int m = BT.get_rows();
   int n = BT.get_cols();
-  double* pV =V.get_data();
-  double* pR =R.get_data();
+  double* pV = V.get_data();
+  double* pR = R->get_data();
   double* pBT = BT.get_data();
   for (int i = 0;i < m;i++)
     pR[i]*=c0;
@@ -102,15 +102,15 @@ void add2(Vector& R, int row, const Matrix& BT, const Vector& V,
 // ****************************************************************************
 //
 // ****************************************************************************
-void add_BTCB(Matrix& K, int row, int col, const int* perm,
+void add_BTCB(Matrix* K, int row, int col, const int* perm,
               const Matrix& B1, const Matrix& C, const Matrix B2,
               double c1, double c0) {
   int m = B1.get_rows();
   int n = B2.get_cols();
-  int pos = row*K.get_cols()+col;
-  int colK = K.get_cols();
+  int pos = row*K->get_cols()+col;
+  int colK = K->get_cols();
   int colC = C.get_cols();
-  double* pK =K.get_data();
+  double* pK = K->get_data();
   double* pB1 = B1.get_data();
   double* pB2 = B2.get_data();
   double* pC = C.get_data();
@@ -124,12 +124,12 @@ void add_BTCB(Matrix& K, int row, int col, const int* perm,
           pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
 }
 
-void add_BTv(Vector& R, int row, const int* perm,
+void add_BTv(Vector* R, int row, const int* perm,
              const Matrix& B, const Vector& v, double c1, double c0) {
   int m = B.get_rows();
   int n = B.get_cols();
   double* pV = v.get_data();
-  double* pR = R.get_data();
+  double* pR = R->get_data();
   double* pB = B.get_data();
   for (int i = 0;i < n;i++)
     pR[i]*=c0;
@@ -138,12 +138,12 @@ void add_BTv(Vector& R, int row, const int* perm,
       pR[row+i]+=c1*pB[j*n+i]*pV[perm[j]];
 }
 
-void add_Bv(Vector& R, int row, const int* perm,
+void add_Bv(Vector* R, int row, const int* perm,
             const Matrix& B, const Vector& v, double c1, double c0) {
   int m = B.get_rows();
   int n = B.get_cols();
   double* pV = v.get_data();
-  double* pR = R.get_data();
+  double* pR = R->get_data();
   double* pB = B.get_data();
   for (int i = 0;i < m;i++)
     pR[i]*=c0;

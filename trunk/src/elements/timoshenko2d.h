@@ -51,7 +51,7 @@ class Timoshenko2d: public Element {
   void update()                         {return;}
   void commit()                         {return;}
   void recoverStresses();
-  void shapeFunctions(int n, double xi, double &N, double &dN);
+  void shapeFunctions(int n, double xi, double* N, double* dN);
 
  protected:
   UniaxialMaterial* myUniMaterial;

@@ -43,7 +43,7 @@ class Quad4d: public Quad4 {
   const Matrix& get_K();
   const Matrix& get_M();
   const Vector& get_R();
-  void get_B(Matrix& B, int node, int gPoint);
+  void get_B(Matrix* B, int node, int gPoint);
   void shapeFunctions();
   void update();
  private:

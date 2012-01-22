@@ -121,7 +121,7 @@ const Vector& Quad4i::get_R() {
     for (unsigned a = 0; a < nodes_.size(); a++) {
       // +facS*Fint
       this->get_Bstd(&Ba, a, k);
-      add_BTv(R, 2*a, &perm[0], Ba, sigma, facS*dV, 1.0);
+      add_BTv(&R, 2*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
       for (int i = 0;i < 2;i++)
         R[2*a+i]-=facG*shpStd[a][0][k]*b[i]*dV;
@@ -161,13 +161,13 @@ void Quad4i::update() {
       this->get_Bstd(&Ba, a, k);
       /// @todo check
       // double dV = thickness_*detJ[k];
-      add_Bv(epsilon, 2*a, &perm[0], Ba, Du, 1.0, 1.0);
+      add_Bv(&epsilon, 2*a, &perm[0], Ba, Du, 1.0, 1.0);
     }
     for (unsigned a = 0; a < 2; a++) {
       this->get_BInc(&Ba, a, k);
       /// @todo check
       // double dV = thickness_*detJ[k];
-      add_Bv(epsilon, 2*a, &perm[0], Ba, Da, 1.0, 1.0);
+      add_Bv(&epsilon, 2*a, &perm[0], Ba, Da, 1.0, 1.0);
     }
     myMatPoints[k]->get_material()->set_strain(epsilon);
   }

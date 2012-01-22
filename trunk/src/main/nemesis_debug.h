@@ -36,20 +36,20 @@ void report(const Matrix& m, const char* name="Noname",
 void report(const Vector& v,
             const char* name="Noname", int total = 8, int decimal = 4);
 
-void add(Matrix& K, int row, int col, const Matrix& B1,
+void add(Matrix* K, int row, int col, const Matrix& B1,
          const Matrix& C, const Matrix B2, double c1, double c0 = 0.);
-void add(Vector& R, int row, const Matrix& BT,
+void add(Vector* R, int row, const Matrix& BT,
          const Vector& V, double c1, double c0 = 0.);
-void add2(Vector& R, int row, const Matrix& BT, const Vector& V,
+void add2(Vector* R, int row, const Matrix& BT, const Vector& V,
           double c1, double c0 = 0.);
 
-void add_BTCB(Matrix& K, int row, int col, const int* perm,
+void add_BTCB(Matrix* K, int row, int col, const int* perm,
               const Matrix& B1, const Matrix& C, const Matrix B2,
               double c1, double c0 = 0.);
-void add_BTv(Vector& R, int row, const int* perm,
+void add_BTv(Vector* R, int row, const int* perm,
              const Matrix& B, const Vector& v,
              double c1, double c0 = 0.);
-void add_Bv(Vector& R, int row, const int* perm,
+void add_Bv(Vector* R, int row, const int* perm,
             const Matrix& B, const Vector& v,
             double c1, double c0 = 0.);
 

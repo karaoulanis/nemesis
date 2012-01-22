@@ -103,27 +103,27 @@ Timoshenko2d::Timoshenko2d(int id, std::vector<Node*> nodes,
 Timoshenko2d::~Timoshenko2d() {
 }
 
-void Timoshenko2d::shapeFunctions(int n, double xi, double &N, double &dN) {
+void Timoshenko2d::shapeFunctions(int n, double xi, double* N, double* dN) {
   switch (nodes_.size()) {
     case 2:
       if (n == 0) {
-        N = 0.5*(1-xi);
-        dN=-1/L;
+        (*N)  =  0.5*(1-xi);
+        (*dN) = -1/L;
       } else {
-        N = 0.5*(1+xi);
-        dN=+1/L;
+        (*N)  =  0.5*(1+xi);
+        (*dN) = +1/L;
       }
       break;
     case 3:
       if (n == 0) {
-        N =-0.5*xi*(1-xi);
-        dN=(-1+2*xi)/L;
+        (*N)  = -0.5*xi*(1-xi);
+        (*dN) = (-1+2*xi)/L;
       } else if (n == 1) {
-        N = 0.5*xi*(1+xi);
-        dN=(+1+2*xi)/L;
+        (*N)  =  0.5*xi*(1+xi);
+        (*dN) = (+1+2*xi)/L;
       } else {
-        N = (1+xi)*(1-xi);
-        dN=-4*xi/L;
+        (*N)  = (1+xi)*(1-xi);
+        (*dN) = -4*xi/L;
       }
       break;
     default:
@@ -152,8 +152,8 @@ const Matrix& Timoshenko2d::get_K() {
     for (unsigned i = 0; i < nodes_.size(); i++) {
       for (unsigned j = 0; j < nodes_.size(); j++) {
         double Ni, Nj, dNi, dNj;
-        this->shapeFunctions(i, xi, Ni, dNi);
-        this->shapeFunctions(j, xi, Nj, dNj);
+        this->shapeFunctions(i, xi, &Ni, &dNi);
+        this->shapeFunctions(j, xi, &Nj, &dNj);
         K(3*i+0, 3*j+0)+=(dNi*dNj*(C1*c*c+C3-c*c*C3))*dx;
         K(3*i+0, 3*j+1)+=(c*dNi*dNj*s*(-C3+C1))*dx;
         K(3*i+0, 3*j+2)+=(s*dNi*C3*Nj)*dx;
@@ -213,7 +213,7 @@ const Vector& Timoshenko2d::get_R() {
     double dx = GaussWeights[gPoints][k+1]*0.5*L;
     epsilon.Clear();
     for (unsigned i = 0; i < nodes_.size(); i++) {
-      this->shapeFunctions(i, xi, Ni, dNi);
+      this->shapeFunctions(i, xi, &Ni, &dNi);
       epsilon[0]+=dNi*(c*u[0+3*i]+s*u[1+3*i]);
       epsilon[1]+=dNi*u[2+3*i];
       epsilon[2]+=dNi*(-s*u[0+3*i]+c*u[1+3*i])-Ni*u[2+3*i];
@@ -226,7 +226,7 @@ const Vector& Timoshenko2d::get_R() {
     sigma[2]=a*E/(2*(1+nu))*A*epsilon[2];
     // R = Fint
     for (unsigned i = 0; i < nodes_.size(); i++) {
-      this->shapeFunctions(i, xi, Ni, dNi);
+      this->shapeFunctions(i, xi, &Ni, &dNi);
       R[3*i+0]+=facS*((dNi*sigma[0]))*dx;
       R[3*i+1]+=facS*((dNi*sigma[2]))*dx;
       R[3*i+2]+=facS*((dNi*sigma[1]-Ni*sigma[2]))*dx;
