@@ -72,8 +72,8 @@ MultiaxialElastoPlastic(int id, MultiaxialMaterial* elastic)
 
 MultiaxialElastoPlastic::~MultiaxialElastoPlastic() {
   delete myElastic;
-  Containers::vector_delete(fSurfaces);
-  Containers::vector_delete(gSurfaces);
+  Containers::vector_delete(&fSurfaces);
+  Containers::vector_delete(&gSurfaces);
 }
 /**
  * Update stresses given a total strain increment.

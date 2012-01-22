@@ -69,7 +69,7 @@ Domain::Domain()
  */
 Domain::~Domain()  {
   this->clear();
-  Containers::map_delete(groups_);
+  Containers::map_delete(&groups_);
 }
 void Domain::init() {
   // Define group 0
@@ -94,14 +94,14 @@ void Domain::clear() {
   dim_ = 0;
   RayleighFactors.Resize(0);
   eigenVals.Resize(0);
-  Containers::map_delete(nodes_);
-  Containers::map_delete(elements_);
-  Containers::map_delete(groups_);
-  Containers::map_delete(sections_);
-  Containers::map_delete(materials_);
-  Containers::map_delete(loadcases_);
-  Containers::map_delete(constraints_);
-  Containers::map_delete(trackers_);
+  Containers::map_delete(&nodes_);
+  Containers::map_delete(&elements_);
+  Containers::map_delete(&groups_);
+  Containers::map_delete(&sections_);
+  Containers::map_delete(&materials_);
+  Containers::map_delete(&loadcases_);
+  Containers::map_delete(&constraints_);
+  Containers::map_delete(&trackers_);
   this->init();
 }
 /**

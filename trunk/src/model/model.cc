@@ -157,15 +157,15 @@ void Model::commitSens(const Vector& ds, int param) {
     theModelNodes[i]->commitSens(ds, param);
 }
 void Model::clear() {
-  Containers::vector_delete(theModelNodes);
-  Containers::vector_delete(theModelElements);
+  Containers::vector_delete(&theModelNodes);
+  Containers::vector_delete(&theModelElements);
   nEquations = 0;
   constrained = false;
   reordered = false;
 }
 int Model::get_directed_graph(DirectedGraph& G) {
-  typedef graph_traits < DirectedGraph>::vertex_descriptor Vertex;
-  typedef graph_traits < DirectedGraph>::vertices_size_type size_type;
+  typedef graph_traits < DirectedGraph >::vertex_descriptor Vertex;
+  typedef graph_traits < DirectedGraph >::vertices_size_type size_type;
   typedef std::pair < int, int > Pair;
   std::set < Pair > theEdges;
   Pair Edge;

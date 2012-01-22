@@ -93,7 +93,7 @@ Triangle6::Triangle6(int id, std::vector<Node*> nodes,
 }
 
 Triangle6::~Triangle6() {
-  Containers::vector_delete(myMatPoints);
+  Containers::vector_delete(&myMatPoints);
 }
 
 void Triangle6::get_shape_functions(MatPoint* pMatPoint,

@@ -118,7 +118,7 @@ namespace LU {
       for (int i = 0;i < n;i++) inv[i*n+j]=col[i];
     }
   }
-  inline double determinant(double* data, int n, double& d) {
+  inline double determinant(double* data, int n, const double& d) {
     double det = d;
     for (int j = 0;j < n;j++) det*=data[j*n+j];
     return det;
