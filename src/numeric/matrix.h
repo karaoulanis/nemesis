@@ -485,15 +485,6 @@ class Matrix {
   /**
    *
    */
-  friend std::ostream& operator<<(std::ostream& s, const Matrix& m) {
-    s << 1200 << ' ' << m.rows_ << ' ' << m.cols_ << ' ';
-    for (int i = 0;i < m.size_;i++) s << m.data_[i] << ' ';
-    return s;
-  }
-
-  /**
-   *
-   */
   void Add_BTCB(int row, int col, const int* perm, const Matrix& B1,
     const Matrix& C, const Matrix B2, double c1, double c0 = 0.) {
     int m = B1.get_rows();

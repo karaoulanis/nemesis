@@ -83,7 +83,7 @@ Triangle6::Triangle6(int id, std::vector<Node*> nodes,
   static Matrix N(6, 3);
   static double detJ;
   for (unsigned i = 0; i < 3; i++) {
-    this->get_shape_functions(myMatPoints[i], N, detJ);
+    this->get_shape_functions(myMatPoints[i], &N, &detJ);
     double xG = N(0, 0)*x(0, 0)+N(1, 0)*x(2, 0)+N(1, 0)*x(2, 0)
            +N(3, 0)*x(3, 0)+N(4, 0)*x(4, 0)+N(5, 0)*x(5, 0);
     double yG = N(0, 0)*x(0, 1)+N(1, 0)*x(1, 1)+N(2, 0)*x(2, 1)
@@ -97,7 +97,7 @@ Triangle6::~Triangle6() {
 }
 
 void Triangle6::get_shape_functions(MatPoint* pMatPoint,
-                                    Matrix& N, double& detJ) {
+                                    Matrix* N, double* detJ) {
   double z1 = pMatPoint->get_r();
   double z2 = pMatPoint->get_s();
   double z3 = pMatPoint->get_t();
@@ -119,27 +119,27 @@ void Triangle6::get_shape_functions(MatPoint* pMatPoint,
   double Jy12 = y12+4*(Dy4*(z2-z1)+(Dy6-Dy5)*z3);
   double Jy23 = y23+4*(Dy5*(z3-z2)+(Dy4-Dy6)*z1);
   double Jy31 = y31+4*(Dy6*(z1-z3)+(Dy5-Dy4)*z2);
-  detJ = 0.5*(Jx21*Jy31-Jy12*Jx13);
-  double J = 0.5/detJ;
+  *detJ = 0.5*(Jx21*Jy31-Jy12*Jx13);
+  double J = 0.5/(*detJ);
 
-  N(0, 0)=z1*(2*z1-1);
-  N(1, 0)=z2*(2*z2-1);
-  N(2, 0)=z3*(2*z3-1);
-  N(3, 0)=4*z1*z2;
-  N(4, 0)=4*z2*z3;
-  N(5, 0)=4*z3*z1;
-  N(0, 1)=J*(4*z1-1)*Jy23;
-  N(1, 1)=J*(4*z2-1)*Jy31;
-  N(2, 1)=J*(4*z3-1)*Jy12;
-  N(3, 1)=J*4*(z2*Jy23+z1*Jy31);
-  N(4, 1)=J*4*(z3*Jy31+z2*Jy12);
-  N(5, 1)=J*4*(z1*Jy12+z3*Jy23);
-  N(0, 2)=J*(4*z1-1)*Jx32;
-  N(1, 2)=J*(4*z2-1)*Jx13;
-  N(2, 2)=J*(4*z3-1)*Jx21;
-  N(3, 2)=J*4*(z2*Jx32+z1*Jx13);
-  N(4, 2)=J*4*(z3*Jx13+z2*Jx21);
-  N(5, 2)=J*4*(z1*Jx21+z3*Jx32);
+  (*N)(0, 0)=z1*(2*z1-1);
+  (*N)(1, 0)=z2*(2*z2-1);
+  (*N)(2, 0)=z3*(2*z3-1);
+  (*N)(3, 0)=4*z1*z2;
+  (*N)(4, 0)=4*z2*z3;
+  (*N)(5, 0)=4*z3*z1;
+  (*N)(0, 1)=J*(4*z1-1)*Jy23;
+  (*N)(1, 1)=J*(4*z2-1)*Jy31;
+  (*N)(2, 1)=J*(4*z3-1)*Jy12;
+  (*N)(3, 1)=J*4*(z2*Jy23+z1*Jy31);
+  (*N)(4, 1)=J*4*(z3*Jy31+z2*Jy12);
+  (*N)(5, 1)=J*4*(z1*Jy12+z3*Jy23);
+  (*N)(0, 2)=J*(4*z1-1)*Jx32;
+  (*N)(1, 2)=J*(4*z2-1)*Jx13;
+  (*N)(2, 2)=J*(4*z3-1)*Jx21;
+  (*N)(3, 2)=J*4*(z2*Jx32+z1*Jx13);
+  (*N)(4, 2)=J*4*(z3*Jx13+z2*Jx21);
+  (*N)(5, 2)=J*4*(z1*Jx21+z3*Jx32);
 }
 
 const Matrix& Triangle6::get_K() {
@@ -148,7 +148,7 @@ const Matrix& Triangle6::get_K() {
   for (unsigned int k = 0; k < myMatPoints.size(); k++) {
     static Matrix N(6, 3);
     static double detJ;
-    this->get_shape_functions(myMatPoints[k], N, detJ);
+    this->get_shape_functions(myMatPoints[k], &N, &detJ);
     double dV = detJ*thickness_*(myMatPoints[k]->get_w());
     const Matrix& C = myMatPoints[k]->get_material()->get_C();
     int ii = 0;
@@ -198,7 +198,7 @@ const Vector& Triangle6::get_R() {
     // Get B-matrix
     static Matrix N(6, 3);
     static double detJ;
-    this->get_shape_functions(myMatPoints[k], N, detJ);
+    this->get_shape_functions(myMatPoints[k], &N, &detJ);
     double dV = detJ*thickness_*(myMatPoints[k]->get_w());
     // Get stress vector
     static Vector sigma(6);
@@ -229,7 +229,7 @@ void Triangle6::update() {
     // Get B-matrix
     static Matrix N(6, 3);
     static double detJ;
-    this->get_shape_functions(myMatPoints[i], N, detJ);
+    this->get_shape_functions(myMatPoints[i], &N, &detJ);
     // Determine the strain
     static Vector epsilon(6);
       epsilon.Clear();
