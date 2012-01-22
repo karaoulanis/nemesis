@@ -485,7 +485,7 @@ void MultiaxialElastoPlastic::returnMapMYS(const Vector& De) {
         }
       }
     }
-    std::cout << Gab << std::endl;
+    // std::cout << Gab << std::endl;
     Gab = Inverse(Gab);
 
     // =========================================================================
