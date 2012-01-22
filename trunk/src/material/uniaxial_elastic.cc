@@ -57,6 +57,6 @@ double UniaxialElastic::get_C() {
   return MatParams[0];
 }
 
-void UniaxialElastic::commit() {
+void UniaxialElastic::Commit() {
   sConvg = sTrial;
 }

@@ -41,7 +41,7 @@ FEObjectTag FEObject::get_tag() {
   return myTag;
 }
 
-bool FEObject::checkIfAllows(FEObject* /*f*/) {
+bool FEObject::CheckIfAllows(FEObject* /*f*/) {
   /// @todo When finished implementing all turn this function into pure.
   return 0;
 }

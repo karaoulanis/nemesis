@@ -142,9 +142,9 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
   N(2, 2)=+0.25*(1+eta)*dxidy +0.25*(1+xi)*detady;  // N3, 2
   N(2, 3)=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady;  // N4, 2
 }
-void Quad4::commit() {
+void Quad4::Commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->get_material()->commit();
+    myMatPoints[i]->get_material()->Commit();
 }
 
 

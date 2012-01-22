@@ -43,7 +43,7 @@ class SpringMaterial: public Material {
   virtual void set_strain(const Vector& De)=0;
 
   const Matrix& get_C();
-  void commit();
+  void Commit();
   inline void set_stress(const Vector& s)  {sTrial = s;}
   inline void addStress(const Vector& s)  {sTrial += s;}
   inline const Vector& get_stress()     {return sTrial;}

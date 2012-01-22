@@ -43,7 +43,7 @@ class LagrangeModelNode: public ModelNode {
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
   void set_trial_disp(const Vector& u);
   void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a);
-  void commit();
+  void Commit();
 };
 
 #endif  // SRC_MODEL_LAGRANGE_MODEL_NODE_H_

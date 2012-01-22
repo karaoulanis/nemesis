@@ -37,7 +37,7 @@ class UniaxialCyclic: public UniaxialMaterial {
   UniaxialMaterial* get_clone();
   void set_strain(const double De);
   double get_C();
-  void commit();
+  void Commit();
  private:
   double sr;
   double er;

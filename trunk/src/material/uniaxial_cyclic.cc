@@ -100,7 +100,7 @@ double UniaxialCyclic::get_C() {
   return Et;
 }
 
-void UniaxialCyclic::commit() {
+void UniaxialCyclic::Commit() {
   sConvg = sTrial;
   eConvg = eTrial;
   eTotal = eConvg;

@@ -76,7 +76,7 @@ const Vector& Quad4e::get_R() {
   R-=facP*P;
   return R;
 }
-void Quad4e::update() {
+void Quad4e::Update() {
 }
 void Quad4e::formKR() {
   static Vector Du(8);

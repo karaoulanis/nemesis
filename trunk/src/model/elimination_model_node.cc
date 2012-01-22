@@ -141,8 +141,8 @@ void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
   myNode->set_trial_accl(*myVector);
 }
 
-void EliminationModelNode::commit() {
-  myNode->commit();
+void EliminationModelNode::Commit() {
+  myNode->Commit();
 }
 void EliminationModelNode::commitSens(const Vector& X, int param) {
   myVector->Clear();

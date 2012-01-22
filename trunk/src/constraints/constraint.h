@@ -67,8 +67,8 @@ class Constraint: public DomainObject {
   double get_accl_convg(int i);
   double get_F();
 
-  void update(double f);
-  void commit();
+  void Update(double f);
+  void Commit();
 
   void Save(std::ostream* /*os*/);
 };

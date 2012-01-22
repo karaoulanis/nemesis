@@ -82,7 +82,7 @@ const Matrix& MultiaxialElastic::get_C() {
   C(5, 5) = Em*0.5*(1.-2*nu);
   return C;
 }
-void MultiaxialElastic::commit() {
+void MultiaxialElastic::Commit() {
   eTotal = eTrial;
   sConvg = sTrial;
 }

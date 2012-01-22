@@ -67,7 +67,7 @@ class DruckerPragerNew2: public MultiaxialMaterial {
 
   MultiaxialMaterial* get_clone();
   void set_strain(const Vector& De);
-  void commit();
+  void Commit();
   const Matrix& get_C();
   bool isPlastic();
   void Save(std::ostream* os);

@@ -230,7 +230,7 @@ void Node::set_trial_velc(const Vector& v) {
 void Node::set_trial_accl(const Vector& a) {
   acclTrial = a;
 }
-void Node::commit() {
+void Node::Commit() {
   dispConvg = dispTrial;
   velcConvg = velcTrial;
   acclConvg = acclTrial;

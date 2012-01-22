@@ -47,7 +47,7 @@ class Quad4: public Element {
   void AddInitialStresses(int direction, double h1, double s1,
                           double h2, double s2, double K0);
   void recoverStresses();
-  void commit();
+  void Commit();
   int get_num_plastic_points();
 
  protected:

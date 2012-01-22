@@ -45,7 +45,7 @@ class Quad4b: public Quad4 {
   const Vector& get_R();
   void get_B(Matrix* B, int node, int gPoint);
   void shapeFunctions();
-  void update();
+  void Update();
 
  private:
   static double shp[4][3][4];

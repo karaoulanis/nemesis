@@ -36,7 +36,7 @@ class SDofMaterial: public Material {
   SDofMaterial();
   SDofMaterial(int ID, double E, double rho);
   SDofMaterial* get_clone();
-  void commit();
+  void Commit();
   void Save(std::ostream* /*os*/);
 };
 

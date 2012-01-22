@@ -372,7 +372,7 @@ void HoekBrown::set_strain(const Vector& De) {
 /**
  * Commit material state.
  */
-void HoekBrown::commit() {
+void HoekBrown::Commit() {
   // report(inaccurate);
   inaccurate = 0;
   eTotal = eTrial;  /// @todo

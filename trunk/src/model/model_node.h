@@ -54,7 +54,7 @@ class ModelNode :public ModelObject {
   virtual void set_trial_vecs(const Vector& u, const Vector& v,
                               const Vector& a)=0;
 
-  virtual void commit()=0;
+  virtual void Commit()=0;
   virtual void commitSens(const Vector& /*ds*/, int /*param*/) {}
   virtual void rollback();
  protected:

@@ -36,9 +36,9 @@ class EigenSOE: public SOE {
   explicit EigenSOE(Model* model);
   ~EigenSOE();
 
-  int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
+  int InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
               double factor = 1.0);
-  int insertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable,
+  int InsertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable,
               double factor = 1.0);
 
   void zeroM();

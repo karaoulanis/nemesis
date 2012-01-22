@@ -46,7 +46,7 @@ SDofMaterial* SDofMaterial::get_clone() {
 }
 
 
-void SDofMaterial::commit() {
+void SDofMaterial::Commit() {
 }
 
 

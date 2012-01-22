@@ -56,6 +56,6 @@ void LagrangeModelNode::set_trial_vecs(const Vector& /*u*/, const Vector& /*v*/,
                                      const Vector& /*a*/) {
 //  myConstraint->set_trial_disp(u[theFTable[0]]);
 }
-void LagrangeModelNode::commit() {
-  myConstraint->commit();
+void LagrangeModelNode::Commit() {
+  myConstraint->Commit();
 }

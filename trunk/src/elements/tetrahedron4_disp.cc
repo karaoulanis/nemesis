@@ -218,7 +218,7 @@ const Vector& Tetrahedron4Disp::get_R() {
   return R;
 }
 
-void Tetrahedron4Disp::update() {
+void Tetrahedron4Disp::Update() {
   if (!(groupdata_->active)) {
     return;
   }
@@ -241,9 +241,9 @@ void Tetrahedron4Disp::update() {
   myMatPoints[0]->get_material()->set_strain(epsilon);
 }
 
-void Tetrahedron4Disp::commit() {
+void Tetrahedron4Disp::Commit() {
   for (unsigned int i = 0;i < myMatPoints.size();i++)
-    myMatPoints[i]->get_material()->commit();
+    myMatPoints[i]->get_material()->Commit();
 }
 
 

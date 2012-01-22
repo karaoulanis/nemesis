@@ -132,7 +132,7 @@ const Vector& Quad4b::get_R() {
 /**
  * Element update.
  */
-void Quad4b::update() {
+void Quad4b::Update() {
   static Vector u(8);
   static Vector epsilon(6);
   static Matrix Ba;

@@ -42,8 +42,8 @@ class ModelElement : public ModelObject {
   Element* get_element()   {return myElement;}
   Constraint* get_constraint() {return myConstraint;}
 
-  virtual void update();
-  virtual void commit();
+  virtual void Update();
+  virtual void Commit();
 
   virtual void add_K(double factor = 1.0)=0;
   virtual void add_M(double factor = 1.0)=0;

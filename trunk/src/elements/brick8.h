@@ -45,8 +45,8 @@ class Brick8: public Element {
   virtual const Matrix& get_M();
   virtual const Vector& get_R();
 
-  virtual void update();
-  virtual void commit();
+  virtual void Update();
+  virtual void Commit();
 
   void AddInitialStresses(int direction, double h1, double s1,
                           double h2, double s2, double K0);

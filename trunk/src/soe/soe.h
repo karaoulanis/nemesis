@@ -45,11 +45,11 @@ class SOE: public AnalysisObject {
   explicit SOE(Model* model);
   virtual ~SOE();
 
-  virtual int insertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
+  virtual int InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable,
                   double factor = 1.0)=0;
   virtual int insertVectorIntoB(const Vector& Ve, const IDContainer& EFTable,
                   double factor = 1.0);
-  virtual int insertMatrixIntoA(const Matrix& Be, const IDContainer& EFTable,
+  virtual int InsertMatrixIntoA(const Matrix& Be, const IDContainer& EFTable,
                   const IDContainer& SFTable, double factor = 1.0);
 
   virtual void zeroA();

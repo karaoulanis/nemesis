@@ -100,7 +100,7 @@ void SOE::zeroX() {
   X.Clear();
 }
 
-int SOE::insertMatrixIntoA(const Matrix& /*Be*/, const IDContainer& /*EFTable*/,
+int SOE::InsertMatrixIntoA(const Matrix& /*Be*/, const IDContainer& /*EFTable*/,
                   const IDContainer& /*SFTable*/, double /*factor*/) {
   return 0;
 }

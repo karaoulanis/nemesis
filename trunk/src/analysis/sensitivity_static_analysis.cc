@@ -50,7 +50,7 @@ SensitivityStaticAnalysis::~SensitivityStaticAnalysis() {
   delete theSensitivityControl;
 }
 
-bool SensitivityStaticAnalysis::checkIfAllows(FEObject* /*f*/) {
+bool SensitivityStaticAnalysis::CheckIfAllows(FEObject* /*f*/) {
   return false;
 }
 

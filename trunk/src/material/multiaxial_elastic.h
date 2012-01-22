@@ -39,7 +39,7 @@ class MultiaxialElastic: public MultiaxialMaterial {
   MultiaxialMaterial* get_clone();
   void set_strain(const Vector& De);
   const Matrix& get_C();
-  void commit();
+  void Commit();
   void Save(std::ostream* os);
 };
 #endif  // SRC_MATERIAL_MULTIAXIAL_ELASTIC_H_

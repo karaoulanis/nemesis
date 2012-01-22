@@ -47,7 +47,7 @@ void Control::FormTangent() {
   for (int i = 0; i < n; i++) {
     ModelElement* p = pA->get_model()->get_model_elements()[i];
     this->FormElementalTangent(p);
-    pA->get_soe()->insertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
+    pA->get_soe()->InsertMatrixIntoA(p->get_matrix(), p->get_FTable(), 1.0);
   }
 }
 

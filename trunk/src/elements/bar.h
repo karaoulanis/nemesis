@@ -44,8 +44,8 @@ class Bar: public Element {
       int dim);
   ~Bar();
 
-  void update();
-  void commit();
+  void Update();
+  void Commit();
   const Matrix& get_M();
   const Vector& get_Reff();
   void recoverStresses();

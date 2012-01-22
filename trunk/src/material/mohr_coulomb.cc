@@ -231,7 +231,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
 /**
  * Commit material state.
  */
-void MohrCoulomb::commit() {
+void MohrCoulomb::Commit() {
   // report(inaccurate);
   inaccurate = 0;
   eTotal = eTrial;  /// @todo

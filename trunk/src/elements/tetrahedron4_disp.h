@@ -46,8 +46,8 @@ class Tetrahedron4Disp: public Element {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void update();
-  void commit();
+  void Update();
+  void Commit();
 
   void findShapeFunctions();
   void recoverStresses();

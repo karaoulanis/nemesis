@@ -157,7 +157,7 @@ void TransientControl::FormNodalResidual(ModelNode* pModelNode) {
   pModelNode->add_R(1.0);
 }
 void TransientControl::Commit() {
-  pA->get_model()->commit();
+  pA->get_model()->Commit();
 }
 /**
  * Aborts step.

@@ -31,7 +31,7 @@
 class TransientAnalysis :public AnalysisType {
   public:
   TransientAnalysis();
-  bool checkIfAllows(FEObject* f);
+  bool CheckIfAllows(FEObject* f);
   int Run(LoadCase* loadcase, int num_loadsteps);
 };
 

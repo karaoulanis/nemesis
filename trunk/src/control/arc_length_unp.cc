@@ -102,7 +102,7 @@ void ArcLengthUNP::Predict() {
   du = DLambda*duT;
   Du = du;
   pA->get_model()->incTrialDisp(du);
-  pA->get_model()->update();
+  pA->get_model()->Update();
 
   // Set num of achieved iterations to one
   Io = 1;
@@ -134,7 +134,7 @@ void ArcLengthUNP::Correct() {
 
   // Update displacements in the model
   pA->get_model()->incTrialDisp(du);
-  pA->get_model()->update();
+  pA->get_model()->Update();
 
   // Increase number of iterations
   Io++;

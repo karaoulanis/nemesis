@@ -47,8 +47,8 @@ class Spring: public Element {
          double yp2 = 1.,
          double yp3 = 0.);
   ~Spring();
-  void update();
-  void commit();
+  void Update();
+  void Commit();
   void recoverStresses();
 
   const Matrix& get_M();
