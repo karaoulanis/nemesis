@@ -44,7 +44,7 @@ Bar2s::Bar2s(int id, std::vector<Node*> nodes, UniaxialMaterial* material,
   // Find directional cosines
   cosX.Resize(dim_);
   cosX.Clear();
-  for (int i = 0;i < dim_; i++) cosX[i]=(x(1, i)-x(0, i))/L0;
+  for (int i = 0; i < dim_; i++) cosX[i]=(x(1, i)-x(0, i))/L0;
 }
 
 /**
@@ -58,7 +58,7 @@ const Matrix& Bar2s::get_K() {
   double E = myUniMaterial->get_C();
   double K0 = E*A0/L0;
   double d;
-  for (int i = 0;i < dim_; i++)
+  for (int i = 0; i < dim_; i++)
     for (int j = 0; j < dim_; j++) {
       d = cosX[i]*cosX[j]*K0;
       K(i     , j)      =  d;
@@ -83,7 +83,7 @@ const Vector& Bar2s::get_Rgrad() {
   default: K0 = 0.;
   }
   double d;
-  for (int i = 0;i < dim_;i++)
+  for (int i = 0; i < dim_; i++)
     for (int j = 0; j < dim_; j++) {
       d = cosX[i]*cosX[j]*K0;
       K(i     , j)      = d;

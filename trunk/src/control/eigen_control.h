@@ -30,7 +30,6 @@
 
 class EigenControl :public Control {
   public:
-
   // Constructors and destructor
   EigenControl();
   ~EigenControl();

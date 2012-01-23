@@ -36,7 +36,7 @@ void report(const double d, const char* name, int total, int decimal) {
 void report(const Matrix& m, const char* name, int total, int decimal) {
   printf("%s [%d, %d] =\n", name, m.get_rows(), m.get_cols());
   for (int i = 0; i < m.get_rows(); i++) {
-    for (int j = 0;j < m.get_cols(); j++) {
+    for (int j = 0; j < m.get_cols(); j++) {
       num::print_d(m(i, j), total, decimal);
     }
     printf("\n");
@@ -61,13 +61,13 @@ void add(Matrix* K, int row, int col, const Matrix& B1, const Matrix& C,
   double* pB1 = B1.get_data();
   double* pB2 = B2.get_data();
   double* pC = C.get_data();
-  for (int i = 0;i < n;i++)
-    for (int j = 0;j < n;j++)
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
       pK[pos+i*colK+j]*=c0;
-  for (int i = 0;i < n;i++)
-    for (int k = 0;k < m;k++)
-      for (int l = 0;l < m;l++)
-        for (int j = 0;j < n;j++)
+  for (int i = 0; i < n; i++)
+    for (int k = 0; k < m; k++)
+      for (int l = 0; l < m; l++)
+        for (int j = 0; j < n; j++)
           pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[k*m+l]*pB2[l*n+j];
 }
 
@@ -78,10 +78,10 @@ void add(Vector* R, int row, const Matrix& BT, const Vector& V,
   double* pV = V.get_data();
   double* pR = R->get_data();
   double* pBT = BT.get_data();
-  for (int i = 0;i < n;i++)
+  for (int i = 0; i < n; i++)
     pR[i]*=c0;
-  for (int i = 0;i < n;i++)
-    for (int j = 0;j < m;j++)
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
       pR[row+i]+=c1*pBT[j*n+i]*pV[j];
 }
 
@@ -92,10 +92,10 @@ void add2(Vector* R, int row, const Matrix& BT, const Vector& V,
   double* pV = V.get_data();
   double* pR = R->get_data();
   double* pBT = BT.get_data();
-  for (int i = 0;i < m;i++)
+  for (int i = 0; i < m; i++)
     pR[i]*=c0;
-  for (int i = 0;i < m;i++)
-    for (int j = 0;j < n;j++)
+  for (int i = 0; i < m; i++)
+    for (int j = 0; j < n; j++)
       pR[i]+=c1*pBT[i*n+j]*pV[row+j];
 }
 
@@ -114,13 +114,13 @@ void add_BTCB(Matrix* K, int row, int col, const int* perm,
   double* pB1 = B1.get_data();
   double* pB2 = B2.get_data();
   double* pC = C.get_data();
-  for (int i = 0;i < n;i++)
-    for (int j = 0;j < n;j++)
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
       pK[pos+i*colK+j]*=c0;
-  for (int i = 0;i < n;i++)
-    for (int k = 0;k < m;k++)
-      for (int l = 0;l < m;l++)
-        for (int j = 0;j < n;j++)
+  for (int i = 0; i < n; i++)
+    for (int k = 0; k < m; k++)
+      for (int l = 0; l < m; l++)
+        for (int j = 0; j < n; j++)
           pK[pos+i*colK+j]+=c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
 }
 
@@ -131,10 +131,10 @@ void add_BTv(Vector* R, int row, const int* perm,
   double* pV = v.get_data();
   double* pR = R->get_data();
   double* pB = B.get_data();
-  for (int i = 0;i < n;i++)
+  for (int i = 0; i < n; i++)
     pR[i]*=c0;
-  for (int i = 0;i < n;i++)
-    for (int j = 0;j < m;j++)
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
       pR[row+i]+=c1*pB[j*n+i]*pV[perm[j]];
 }
 
@@ -145,10 +145,10 @@ void add_Bv(Vector* R, int row, const int* perm,
   double* pV = v.get_data();
   double* pR = R->get_data();
   double* pB = B.get_data();
-  for (int i = 0;i < m;i++)
+  for (int i = 0; i < m; i++)
     pR[i]*=c0;
-  for (int i = 0;i < m;i++)
-    for (int j = 0;j < n;j++)
+  for (int i = 0; i < m; i++)
+    for (int j = 0; j < n; j++)
       pR[perm[i]]+=c1*pB[i*n+j]*pV[row+j];
 }
 

@@ -32,8 +32,6 @@
 // CrossSection Class
 //=============================================================
 class CrossSection: public DomainObject {
-  private:
-
  protected:
   double A;
   double As2;
@@ -43,6 +41,7 @@ class CrossSection: public DomainObject {
   double J3;
   double h2;
   double h3;
+
  public:
   CrossSection()
     : A(0.0),

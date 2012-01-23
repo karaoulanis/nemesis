@@ -34,7 +34,6 @@
 
 class Vector {
  public:
-
   /**
    * Default constructor.
    * Initializes size and data pointer to zero.
@@ -157,42 +156,42 @@ class Vector {
         throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
       }
     }
-    for (int i = 0;i < size_;i++) data_[i]=c;
+    for (int i = 0; i < size_; i++) data_[i]=c;
   }
 
   /**
    * Clears the contents of a Vector.
    */
   inline void Clear() {
-    for (int i = 0;i < size_;i++) data_[i]=0.;
+    for (int i = 0; i < size_; i++) data_[i]=0.;
   }
 
   /**
    * Implements += operator: this+=c.
    */
   inline Vector& operator+=(const double c) {
-    for (int i = 0;i < size_;i++) data_[i]+=c;
+    for (int i = 0; i < size_; i++) data_[i]+=c;
     return *this;
   }
   /**
    * Implements -= operator: v1-=c.
    */
   inline Vector& operator-=(const double c) {
-    for (int i = 0;i < size_;i++) data_[i]-=c;
+    for (int i = 0; i < size_; i++) data_[i]-=c;
     return *this;
   }
   /**
    * Implements *= operator: v1*=c.
    */
   inline Vector& operator*=(const double c) {
-    for (int i = 0;i < size_;i++) data_[i]*=c;
+    for (int i = 0; i < size_; i++) data_[i]*=c;
     return *this;
   }
   /**
    * Implements /= operator: v1/=c.
    */
   inline Vector& operator/=(const double c) {
-    for (int i = 0;i < size_;i++) data_[i]/=c;
+    for (int i = 0; i < size_; i++) data_[i]/=c;
     return *this;
   }
   /**
@@ -228,7 +227,7 @@ class Vector {
     #ifdef _DEBUG
     num::check::array_size(v.size_, size_);
     #endif
-    for (int i = 0;i < size_;i++) data_[i]+=v.data_[i];
+    for (int i = 0; i < size_; i++) data_[i]+=v.data_[i];
     return *this;
   }
 
@@ -240,7 +239,7 @@ class Vector {
     #ifdef _DEBUG
     num::check::array_size(v.size_, size_);
     #endif
-    for (int i = 0;i < size_;i++) data_[i]-=v.data_[i];
+    for (int i = 0; i < size_; i++) data_[i]-=v.data_[i];
     return *this;
   }
 
@@ -253,9 +252,9 @@ class Vector {
     num::check::array_size(v.size_, size_);
     #endif
     if (c == 0.0&&c0 != 0) return;
-    else if (c0 == 0.0)  for (int i = 0;i < size_;i++) data_[i]=0;
-    else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
-    for (int i = 0;i < size_;i++) data_[i]+=c*v.data_[i];
+    else if (c0 == 0.0)  for (int i = 0; i < size_; i++) data_[i]=0;
+    else if (c0 != 1.0)  for (int i = 0; i < size_; i++) data_[i]*=c0;
+    for (int i = 0; i < size_; i++) data_[i]+=c*v.data_[i];
   }
 
   /**
@@ -292,7 +291,7 @@ class Vector {
    */
   inline Vector operator-() {
     Vector res(size_);
-    for (int i = 0;i < size_;i++) res.data_[i]=-data_[i];
+    for (int i = 0; i < size_; i++) res.data_[i]=-data_[i];
     return res;
   }
 
@@ -306,7 +305,7 @@ class Vector {
     #endif
     if (v1.size_ == 0) return 0;
     double res = v1.data_[0]*v2.data_[0];
-    for (int i = 1;i < v1.size_;i++) res+=v1.data_[i]*v2.data_[i];
+    for (int i = 1; i < v1.size_; i++) res += v1.data_[i]*v2.data_[i];
     return res;
   }
 
@@ -333,7 +332,7 @@ class Vector {
   inline double Twonorm() const {
     if (size_ == 0) return 0;
     double norm = fabs(data_[0]);
-    for (int i = 1;i < size_;i++) {
+    for (int i = 1; i < size_; i++) {
       double vi = fabs(data_[i]);
       if (norm < 100) {
         norm = sqrt(norm*norm+vi*vi);
@@ -351,7 +350,7 @@ class Vector {
   inline double Maxnorm() const {
     if (size_ == 0) return 0;
     double norm = fabs(data_[0]);
-    for (int i = 1;i < size_;i++)
+    for (int i = 1; i < size_; i++)
       if (norm < fabs(data_[i]))
         norm = fabs(data_[i]);
     return norm;
@@ -365,7 +364,7 @@ class Vector {
     double norm = Twonorm();
     if (num::tiny(norm))
       throw SException("[nemesis:%d] %s", 9999, "Zero vector length.");
-    for (int i = 0;i < size_;i++) data_[i]/=norm;
+    for (int i = 0; i < size_; i++) data_[i]/=norm;
     return *this;
   }
 
@@ -382,9 +381,9 @@ class Vector {
     #ifdef _DEBUG
     num::check::array_range(row+v.size_, size_);
     #endif
-    if (c0 == 0.0)     for (int i = 0;i < v.size_;i++) data_[row+i]=0.;
-    else if (c0 != 1.0)  for (int i = 0;i < v.size_;i++) data_[row+i]*=c0;
-    for (int i = 0;i < v.size_;i++) data_[row+i]+=c*v.data_[i];
+    if (c0 == 0.0)     for (int i = 0; i < v.size_; i++) data_[row+i]=0.;
+    else if (c0 != 1.0)  for (int i = 0; i < v.size_; i++) data_[row+i]*=c0;
+    for (int i = 0; i < v.size_; i++) data_[row+i]+=c*v.data_[i];
     return *this;
   }
 

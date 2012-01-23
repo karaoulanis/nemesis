@@ -59,7 +59,7 @@ void EliminationModelNode::add_R(double factor) {
 
 void EliminationModelNode::incTrialDisp(const Vector& du) {
   myVector->Clear();
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=du[theFTable[i]];
     }
@@ -71,7 +71,7 @@ void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
                                         const Vector& da) {
   /// @todo Run these within a loop
   // Add displacements
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=du[theFTable[i]];
     } else {
@@ -80,7 +80,7 @@ void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
   }
   myNode->incTrialDisp(*myVector);
   // Add velocities
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=dv[theFTable[i]];
     } else {
@@ -89,7 +89,7 @@ void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
   }
   myNode->addTrialVelc(*myVector);
   // Add accelerations
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=da[theFTable[i]];
     } else {
@@ -101,7 +101,7 @@ void EliminationModelNode::incTrialVecs(const Vector& du, const Vector& dv,
 
 void EliminationModelNode::set_trial_disp(const Vector& u) {
   myVector->Clear();
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=u[theFTable[i]];
     }
@@ -113,7 +113,7 @@ void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
                                         const Vector& a) {
   /// @todo Run these within a loop
   // Set displacements
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=u[theFTable[i]];
     } else {
@@ -122,7 +122,7 @@ void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
   }
   myNode->set_trial_disp(*myVector);
   // Set velocities
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=v[theFTable[i]];
     } else {
@@ -131,7 +131,7 @@ void EliminationModelNode::set_trial_vecs(const Vector& u, const Vector& v,
   }
   myNode->set_trial_velc(*myVector);
   // Set accelerations
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=a[theFTable[i]];
     } else {
@@ -146,7 +146,7 @@ void EliminationModelNode::Commit() {
 }
 void EliminationModelNode::commitSens(const Vector& X, int param) {
   myVector->Clear();
-  for (unsigned i = 0;i < theFTable.size(); i++) {
+  for (unsigned i = 0; i < theFTable.size(); i++) {
     if (theFTable[i] >= 0) {
       (*myVector)[i]=X[theFTable[i]];
     }

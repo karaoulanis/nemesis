@@ -172,8 +172,8 @@ void shape8(const Matrix& x, double shp[8][4][8], double detJ[8]) {
 
     // Inverse J
     double ddetJ = 1./detJ[k];
-    for (int i = 0;i < 3;i++)
-      for (int j = 0;j < 3;j++)
+    for (int i = 0; i < 3; i++)
+      for (int j = 0; j < 3; j++)
         J[i][j]=cof[i][j]*ddetJ;
 
     // dNdx
@@ -313,8 +313,8 @@ void shapeQM9(const Matrix& x, double shpQM9[3][4][8]) {
   cof[2][2]=J[0][0]*J[1][1]-J[1][0]*J[0][1];
 
   // Inverse J
-  for (int i = 0;i < 3;i++)
-    for (int j = 0;j < 3;j++)
+  for (int i = 0; i < 3; i++)
+    for (int j = 0; j < 3; j++)
       J[i][j]=cof[i][j];
 
   const double dsq3 = 0.577350269189626;

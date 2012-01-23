@@ -128,7 +128,7 @@ void DruckerPragerNew2::set_strain(const Vector& De) {
 
   // Find active surfaces
   std::vector<int> activeS;
-  for (unsigned i = 0;i < 2;i++)
+  for (unsigned i = 0; i < 2; i++)
     if (fSurfaces[i]->get_f(s, aTrial)>1e-9)
       activeS.push_back(i);
 

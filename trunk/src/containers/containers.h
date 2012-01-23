@@ -42,7 +42,7 @@ namespace Containers {
   template<class TC> void map_print(const TC& c) {
     typename TC::const_iterator p;
     std::cout << "Container : ";
-    for (p = c.begin();p != c.end();p++) {
+    for (p = c.begin(); p != c.end(); p++) {
       std::cout << p->first << ' ';
     }
     std::cout << std::endl;
@@ -55,7 +55,7 @@ namespace Containers {
 
   template<class TC> void vector_print(const TC& c) {
     int n = c.size();
-    for (int i = 0;i < n;i++) {
+    for (int i = 0; i < n; i++) {
       std::cout << c[i] <<' ';
     }
     std::cout << std::endl;
@@ -72,7 +72,7 @@ namespace Containers {
 
   template<class TE> inline bool all_positive(const std::vector<TE>& c) {
     int n = c.size();
-    for (int i = 0;i < n;i++) {
+    for (int i = 0; i < n; i++) {
       if (c[i] < 0) {
         return false;
       }

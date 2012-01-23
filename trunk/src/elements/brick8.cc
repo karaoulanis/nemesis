@@ -116,7 +116,7 @@ Brick8::Brick8(int id, std::vector<Node*> nodes,
   }
 
   // Permutation index
-  for (int i = 0;i < 8;i++) perm[i]=i;
+  for (int i = 0; i < 8; i++) perm[i]=i;
 }
 /**
  * Destructor.
@@ -188,7 +188,7 @@ const Vector& Brick8::get_R() {
       this->get_B(&Ba, a, k);
       add_BTv(&R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
-      for (int i = 0;i < 3;i++)
+      for (int i = 0; i < 3; i++)
         R[3*a+i]-=facG*shp[a][0][k]*b[i]*dV;
     }
   }
@@ -227,7 +227,7 @@ void Brick8::Update() {
  * Element commit.
  */
 void Brick8::Commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++)
+  for (unsigned int i = 0; i < myMatPoints.size(); i++)
     myMatPoints[i]->get_material()->Commit();
 }
 /**
@@ -243,7 +243,7 @@ void Brick8::shapeFunctions() {
 void Brick8::AddInitialStresses(int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0) {
-  for (unsigned i = 0;i < myMatPoints.size();i++)
+  for (unsigned i = 0; i < myMatPoints.size(); i++)
     myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
 }
 
@@ -322,10 +322,10 @@ void Brick8::recoverStresses() {
   E(7, 6)=b*a*a*d;
   E(7, 7)=a*a*a*d;
 
-  for (unsigned i = 0;i < 8;i++) {      // nodes
+  for (unsigned i = 0; i < 8; i++) {      // nodes
     sigma.Clear();
-    for (unsigned j = 0;j < 6;j++) {    // sigma
-      for (unsigned k = 0;k < 8;k++) {  // material points
+    for (unsigned j = 0; j < 6; j++) {    // sigma
+      for (unsigned k = 0; k < 8; k++) {  // material points
         sigma[j]+=E(i, k)*(myMatPoints[k]->get_material()->get_stress())[j];
       }
     }
@@ -337,7 +337,7 @@ void Brick8::recoverStresses() {
  */
 int Brick8::get_num_plastic_points() {
   int n = 0;
-  for (unsigned i = 0;i < myMatPoints.size();i++)
+  for (unsigned i = 0; i < myMatPoints.size(); i++)
     if (myMatPoints[i]->get_material()->isPlastic()) n+=1;
   return n;
 }

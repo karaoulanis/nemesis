@@ -130,7 +130,7 @@ void Tresca::set_strain(const Vector& De) {
   // report(2.*sqrt(sTrial.J2())*cos(theta)-cu, "f");
 
   std::vector<int> active;
-  for (unsigned i = 0;i < 3;i++)
+  for (unsigned i = 0; i < 3; i++)
     if (f[i]>0.) active.push_back(i);
 
   // Elastic case
@@ -143,7 +143,7 @@ void Tresca::set_strain(const Vector& De) {
   static Vector R;
 
     active.clear();
-    for (unsigned i = 0;i < 3;i++)
+    for (unsigned i = 0; i < 3; i++)
       if (f[i]>0.) active.push_back(i);
   for (int k = 0; k < 4; k++) {
     A.Resize(3+active.size(), 3+active.size(), 0.);
@@ -175,7 +175,7 @@ void Tresca::set_strain(const Vector& De) {
     if (restart) continue;
 
     // update
-    for (int i = 0;i < 3;i++) s[i]+=x[i];
+    for (int i = 0; i < 3; i++) s[i]+=x[i];
     break;
   }
 

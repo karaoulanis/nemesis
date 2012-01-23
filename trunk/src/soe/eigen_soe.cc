@@ -59,7 +59,7 @@ EigenSOE::~EigenSOE() {
 int EigenSOE::
 InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
-  for (unsigned i = 0;i < EFTable.size();i++)
+  for (unsigned i = 0; i < EFTable.size(); i++)
     for (unsigned j = 0; j < EFTable.size(); j++) {
       if (EFTable[i] < 0) continue;
       if (EFTable[j] < 0) continue;
@@ -71,7 +71,7 @@ InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
 int EigenSOE::
 InsertMatrixIntoM(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
-  for (unsigned i = 0;i < EFTable.size();i++)
+  for (unsigned i = 0; i < EFTable.size(); i++)
     for (unsigned j = 0; j < EFTable.size(); j++) {
       if (EFTable[i] < 0) continue;
       if (EFTable[j] < 0) continue;
@@ -125,7 +125,7 @@ int EigenSOE::get_eigen_sign() {
 }
 
 void EigenSOE::zeroM() {
-  for (unsigned i = 0;i < M.size(); i++) M[i]=0;
+  for (unsigned i = 0; i < M.size(); i++) M[i]=0;
 }
 
 int EigenSOE::solve() {
@@ -142,6 +142,6 @@ int EigenSOE::solve() {
     &BETA[0], &VL[0], &LDVL, &VR[0], &LDVR, &WORK[0], &LWORK, &INFO, 1, 1);
   if (INFO != 0)
     throw SException("[nemesis:%d] %s", 1110, "SOE: lapack DSYGV failed.");
-  for (int i = 0;i < size_;i++) X[i]=ALPHAR[i]/BETA[i];
+  for (int i = 0; i < size_; i++) X[i]=ALPHAR[i]/BETA[i];
     return 0;
 }

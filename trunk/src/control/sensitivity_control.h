@@ -30,11 +30,7 @@
 #include "numeric/vector.h"
 
 class SensitivityControl :public Control {
- protected:
-  Vector ds;
-  int currParameter;
-  public:
-
+ public:
   // Constructors and destructor
   SensitivityControl();
   virtual ~SensitivityControl();
@@ -55,6 +51,10 @@ class SensitivityControl :public Control {
   virtual void Rollback()             {}
 
   virtual void FormResidual(double factor);
+
+ protected:
+  Vector ds;
+  int currParameter;
 };
 
 #endif  // SRC_CONTROL_SENSITIVITY_CONTROL_H_

@@ -43,12 +43,14 @@ class ModelObject {
   inline void zeroVector()        {myVector->Clear();}
   inline const Matrix& get_matrix() const  {return *myMatrix; }
   inline const Vector& get_vector() const  {return *myVector; }
+
  protected:
   IDContainer theFTable;
   static Matrix** theStaticMatrices;
   static Vector** theStaticVectors;
   Matrix* myMatrix;
   Vector* myVector;
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

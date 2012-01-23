@@ -242,7 +242,7 @@ void Tetrahedron4Disp::Update() {
 }
 
 void Tetrahedron4Disp::Commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++)
+  for (unsigned int i = 0; i < myMatPoints.size(); i++)
     myMatPoints[i]->get_material()->Commit();
 }
 
@@ -250,5 +250,5 @@ void Tetrahedron4Disp::Commit() {
 void Tetrahedron4Disp::recoverStresses() {
   static Vector sigma(6);
   sigma = myMatPoints[0]->get_material()->get_stress();
-  for (int i = 0;i < 4;i++) nodes_[i]->addStress(sigma);
+  for (int i = 0; i < 4; i++) nodes_[i]->addStress(sigma);
 }

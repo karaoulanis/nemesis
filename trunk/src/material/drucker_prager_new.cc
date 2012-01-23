@@ -127,7 +127,7 @@ void DruckerPragerNew::set_strain(const Vector& De) {
 
   // Find active surfaces
   std::vector<int> activeS;
-  for (unsigned i = 0;i < 2;i++)
+  for (unsigned i = 0; i < 2; i++)
     if (fSurfaces[i]->get_f(s, aTrial)>1e-9)
       activeS.push_back(i);
 
@@ -191,7 +191,7 @@ void DruckerPragerNew::set_strain(const Vector& De) {
     s[0]+=x[0];
     s[1]+=x[1];
     s[2]+=x[2];
-    for (int i = 0;i < nA;i++)
+    for (int i = 0; i < nA; i++)
       DLambda[activeS[i]]+=x[3+i];
     aTrial+=x[3+nA];
 

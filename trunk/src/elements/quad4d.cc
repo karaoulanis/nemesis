@@ -81,10 +81,10 @@ const Matrix& Quad4d::get_M() {
   double volume = 0.;
 
   this->shapeFunctions();
-  for (unsigned k = 0;k < myMatPoints.size();k++)
+  for (unsigned k = 0; k < myMatPoints.size(); k++)
     volume+=detJ[k]*thickness_*(myMatPoints[k]->get_w());
   double mass = rho*volume;
-  for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
+  for (int i = 0; i < 8; i++) M(i, i)=0.25*mass;
   return M;
 }
 
@@ -146,9 +146,9 @@ void Quad4d::shapeFunctions() {
   shape4(x, shp, detJ);
   // Axisymmetry
   if (axisymmetric_) {
-    for (int k = 0;k < 4;k++) {    // matpoints
+    for (int k = 0; k < 4; k++) {    // matpoints
       double r = 0.;
-      for (int i = 0;i < 4;i++) {  // nodes
+      for (int i = 0; i < 4; i++) {  // nodes
           r+=x(i, 0)*shp[i][0][k];
       }
       detJ[k]*=r;
@@ -173,13 +173,13 @@ void Quad4d::get_B(Matrix* B, int node, int gPoint) {
   // Axisymmetry
   if (axisymmetric_)  {
     double r = 0.;
-    for (int i = 0;i < 4;i++) {     // nodes
+    for (int i = 0; i < 4; i++) {     // nodes
           r += x(i, 0)*shp[i][0][gPoint];
     }
     B0 = shp[node][0][gPoint]/r;
-    for (int k = 0;k < 4;k++) {    // matpoints
+    for (int k = 0; k < 4; k++) {    // matpoints
       r = 0.;
-      for (int i = 0;i < 4;i++) {  // nodes
+      for (int i = 0; i < 4; i++) {  // nodes
           r += x(i, 0)*shp[i][0][k];
       }
       Bb0 += shp[node][0][k]*detJ[k]*thickness_/vol/r;

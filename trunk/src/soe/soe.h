@@ -69,6 +69,7 @@ class SOE: public AnalysisObject {
   virtual void print()=0;
 
   virtual int solve()=0;
+
  protected:
   Model* model_;
   int size_;

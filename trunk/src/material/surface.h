@@ -30,6 +30,20 @@
 #include "numeric/vector.h"
 
 class Surface {
+ public:
+  Surface();
+  virtual ~Surface();
+
+  virtual double get_f(const Vector& s, const double a)=0;
+  virtual const Vector& get_dfds(const Vector& s, const double a);
+  virtual double  get_dfda(const Vector& s, const double a);
+  virtual const Matrix& get_df2dss(const Vector& s, const double a);
+  virtual const Vector& get_df2dsa(const Vector& s, const double a);
+  virtual double  get_df2daa(const Vector& s, const double a);
+
+  void set_active(bool b)   {active = b;}
+  bool isActive()           {return active;}
+
  protected:
   static Vector myVector;
   static Matrix myMatrix;
@@ -41,18 +55,5 @@ class Surface {
   void find_da(const Vector& s);
   virtual void find_C(const Vector& s, const double a);
   bool active;
-  public:
-  Surface();
-  virtual ~Surface();
-
-  virtual double get_f(const Vector& s, const double a)=0;
-  virtual const Vector& get_dfds(const Vector& s, const double a);
-  virtual double  get_dfda(const Vector& s, const double a);
-  virtual const Matrix& get_df2dss(const Vector& s, const double a);
-  virtual const Vector& get_df2dsa(const Vector& s, const double a);
-  virtual double  get_df2daa(const Vector& s, const double a);
-
-  void set_active(bool b)  {active = b;}
-  bool isActive()     {return active;}
 };
 #endif  // SRC_MATERIAL_SURFACE_H_

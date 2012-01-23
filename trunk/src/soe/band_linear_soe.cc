@@ -51,7 +51,7 @@ BandLinearSOE::~BandLinearSOE() {
 int BandLinearSOE::
 InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
   isLUFactored = false;
-  for (unsigned i = 0;i < EFTable.size();i++)
+  for (unsigned i = 0; i < EFTable.size(); i++)
     for (unsigned j = 0; j < EFTable.size(); j++) {
       if (EFTable[i] < 0) continue;
       if (EFTable[j] < 0) continue;
@@ -64,7 +64,7 @@ InsertMatrixIntoA(const Matrix& Ke, const IDContainer& EFTable, double factor) {
 
 void BandLinearSOE::set_size() {
   UndirectedGraph G;
-  model_->get_undirected_graph(G);
+  model_->get_undirected_graph(&G);
   lowerBandwidth = bandwidth(G);
   upperBandwidth = lowerBandwidth;
 
@@ -96,7 +96,7 @@ void BandLinearSOE::print() {
 }
 
 int BandLinearSOE::get_eigen_sign() {
-  for (int i = 0;i < size_;i++)
+  for (int i = 0; i < size_; i++)
     if (fabs(A[lowerBandwidth+upperBandwidth+i*size_]) < 1e-12)  return  0;
     else if (A[lowerBandwidth+upperBandwidth+i*size_]  < 0)      return -1;
   return 1;
@@ -122,6 +122,7 @@ int BandLinearSOE::solve() {
     isLUFactored = true;
   }
   // Solve the system A*X = B, overwriting B with X.
-  dgbtrs(&c, &N, &KL, &KU, &NRHS, &A[0], &LDAB, &IPIV[0], &X[0], &LDB, &INFO, 1);
+  dgbtrs(&c, &N, &KL, &KU, &NRHS, &A[0], &LDAB, &IPIV[0],
+         &X[0], &LDB, &INFO, 1);
   return 0;
 }
