@@ -44,6 +44,7 @@ class Brick8i: public Brick8 {
   void Update();
   void Commit();
   void get_B(Matrix* /*B*/, int /*node*/, int /*gPoint*/) {}
+
  private:
   static double shpStd[8][4][8];
   static double shpInc[3][4][8];

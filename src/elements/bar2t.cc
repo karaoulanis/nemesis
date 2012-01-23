@@ -58,9 +58,9 @@ const Matrix& Bar2t::get_K() {
   // Directional cosines, L^2 and strain (in the current configuration)
   static Vector du(2*dim_);
   du = this->get_disp_trial();
-  for (int i = 0;i < dim_; i++) cosX[i]=(x(1, i)-x(0, i)+du[i+dim_]-du[i])/L0;
+  for (int i = 0; i < dim_; i++) cosX[i]=(x(1, i)-x(0, i)+du[i+dim_]-du[i])/L0;
   double L2 = 0;
-  for (int i = 0;i < dim_; i++)
+  for (int i = 0; i < dim_; i++)
     L2+=(x(1, i)-x(0, i)+du[i+dim_]-du[i])*(x(1, i)-x(0, i)+du[i+dim_]-du[i]);
   double e=(L2-L0*L0)/(2*L0*L0);
 
@@ -69,7 +69,7 @@ const Matrix& Bar2t::get_K() {
   double E = myUniMaterial->get_C();
   double K0 = E*A0/L0;
   double d;
-  for (int i = 0;i < dim_;i++)
+  for (int i = 0; i < dim_; i++)
     for (int j = 0; j < dim_; j++) {
       d = cosX[i]*cosX[j]*K0;
       K(i     , j)      = d;
@@ -107,9 +107,9 @@ const Vector& Bar2t::get_R() {
   // Directional cosines, L^2 and strain (in the current configuration)
   static Vector du(2*dim_);
   du = this->get_disp_trial();
-  for (int i = 0;i < dim_;i++) cosX[i]=(x(1, i)-x(0, i)+du[i+dim_]-du[i])/L0;
+  for (int i = 0; i < dim_; i++) cosX[i]=(x(1, i)-x(0, i)+du[i+dim_]-du[i])/L0;
   double L2 = 0;
-  for (int i = 0;i < dim_;i++)
+  for (int i = 0; i < dim_; i++)
     L2+=(x(1, i)-x(0, i)+du[i+dim_]-du[i])*(x(1, i)-x(0, i)+du[i+dim_]-du[i]);
   double e=(L2-L0*L0)/(2*L0*L0);
   double E = myUniMaterial->get_C();

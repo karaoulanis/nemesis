@@ -111,7 +111,7 @@ Triangle3::~Triangle3() {
 void Triangle3::AddInitialStresses(int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0) {
-  for (unsigned i = 0;i < myMatPoints.size();i++) {
+  for (unsigned i = 0; i < myMatPoints.size(); i++) {
     myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
   }
 }
@@ -216,7 +216,7 @@ void Triangle3::Commit() {
 void Triangle3::recoverStresses() {
   static Vector sigma(6);
   sigma = myMatPoints[0]->get_material()->get_stress();
-  for (int i = 0;i < 3;i++) nodes_[i]->addStress(sigma);
+  for (int i = 0; i < 3; i++) nodes_[i]->addStress(sigma);
 }
 
 

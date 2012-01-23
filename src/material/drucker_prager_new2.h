@@ -37,22 +37,6 @@ class YS;
  * The Drucker-Prager Class.
  */
 class DruckerPragerNew2: public MultiaxialMaterial {
- private:
-  MultiaxialMaterial* myElastic;
-  static Matrix C;
-  static Matrix C3;
-  bool plastic;
-  int inaccurate;
-  double aTrial, aConvg;
-
-  std::vector<YS*> fSurfaces;
-  std::vector<YS*> gSurfaces;
-  Hardening EL;
-  // Dummy copy constructor and copy assignment as to explicitly disable them.
-  // Only the declarations are provided and not the definitions.
-  // When called a linking error will occur.
-  DruckerPragerNew2(const DruckerPragerNew2&);
-  void operator=(const DruckerPragerNew2&);
  public:
   DruckerPragerNew2();
   DruckerPragerNew2(int id,
@@ -71,5 +55,22 @@ class DruckerPragerNew2: public MultiaxialMaterial {
   const Matrix& get_C();
   bool isPlastic();
   void Save(std::ostream* os);
+
+ private:
+  MultiaxialMaterial* myElastic;
+  static Matrix C;
+  static Matrix C3;
+  bool plastic;
+  int inaccurate;
+  double aTrial, aConvg;
+
+  std::vector<YS*> fSurfaces;
+  std::vector<YS*> gSurfaces;
+  Hardening EL;
+  // Dummy copy constructor and copy assignment as to explicitly disable them.
+  // Only the declarations are provided and not the definitions.
+  // When called a linking error will occur.
+  DruckerPragerNew2(const DruckerPragerNew2&);
+  void operator=(const DruckerPragerNew2&);
 };
 #endif  // SRC_MATERIAL_DRUCKER_PRAGER_NEW2_H_

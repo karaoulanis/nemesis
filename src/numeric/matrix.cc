@@ -184,8 +184,8 @@ void Matrix::Solve(Vector& x, const Vector& b) {
     delete[] index;
     throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
   }
-  for (int i = 0;i < size_;i++) me[i]=data_[i];
-  for (int i = 0;i < rows_;i++) index[i]=0;
+  for (int i = 0; i < size_; i++) me[i]=data_[i];
+  for (int i = 0; i < rows_; i++) index[i]=0;
   x = b;
   int ret = LU::decomposition(me, rows_, vv, index, d);
   if (ret == 0) LU::backsubstitution(me, rows_, index, x.get_data());
@@ -217,8 +217,8 @@ Matrix Inverse(const Matrix& m) {
     delete[] index;
     throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
   }
-  for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
-  for (int i = 0;i < m.rows_;i++) index[i]=0;
+  for (int i = 0; i < m.size_; i++) me[i]=m.data_[i];
+  for (int i = 0; i < m.rows_; i++) index[i]=0;
   int ret = LU::decomposition(me, m.rows_, vv, index, d);
   if (ret == 0) LU::inverse(me, m.rows_, index, inv.get_data(), col);
   delete[] me;
@@ -249,8 +249,8 @@ double Det(const Matrix& m) {
     delete[] index;
     throw SException("[nemesis:%d] %s", 1001, "Run out of memory.\n");
   }
-  for (int i = 0;i < m.size_;i++) me[i]=m.data_[i];
-  for (int i = 0;i < m.rows_;i++) index[i]=0;
+  for (int i = 0; i < m.size_; i++) me[i]=m.data_[i];
+  for (int i = 0; i < m.rows_; i++) index[i]=0;
   int ret = LU::decomposition(me, m.rows_, vv, index, d);
   det = LU::determinant(me, m.rows_, d);
   delete[] me;

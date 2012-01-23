@@ -53,6 +53,7 @@ class Quad4e: public Quad4 {
   void formBu(double xi, double eta);
   void formBe(double xi, double eta);
   void formT0(double xi, double eta);
+
  private:
   static Matrix Bu;
   static Matrix Be;

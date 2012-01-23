@@ -83,7 +83,7 @@ const Matrix& Quad4DispPlain::get_M() {
     volume+=detJ*thickness_*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
-  for (int i = 0;i < 8;i++) M(i, i)=0.25*mass;
+  for (int i = 0; i < 8; i++) M(i, i)=0.25*mass;
   return M;
 }
 

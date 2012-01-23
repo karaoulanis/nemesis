@@ -46,6 +46,7 @@ class EigenSOE: public SOE {
   void set_size();
   void print();
   int get_eigen_sign();
+
  protected:
   std::valarray<double> M;
   std::valarray<double> ALPHAR;

@@ -81,11 +81,11 @@ const Matrix& Quad4i::get_M() {
   double rho = myMaterial->get_rho();
   double volume = 0.;
   this->shapeFunctions();
-  for (unsigned k = 0;k < myMatPoints.size();k++)
+  for (unsigned k = 0; k < myMatPoints.size(); k++)
     volume += detJ[k]*thickness_*(myMatPoints[k]->get_w());
   double mass = rho*volume;
   // Set corresponding mass to diagonal terms
-  for (int i = 0;i < 8;i++)
+  for (int i = 0; i < 8; i++)
     M(i, i)=0.25*mass;
   // Return M
   return M;
@@ -123,7 +123,7 @@ const Vector& Quad4i::get_R() {
       this->get_Bstd(&Ba, a, k);
       add_BTv(&R, 2*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
-      for (int i = 0;i < 2;i++)
+      for (int i = 0; i < 2; i++)
         R[2*a+i]-=facG*shpStd[a][0][k]*b[i]*dV;
     }
   }
@@ -178,7 +178,7 @@ void Quad4i::Update() {
  * be commited. This takes place in element level.
  */
 void Quad4i::Commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++)
+  for (unsigned int i = 0; i < myMatPoints.size(); i++)
     myMatPoints[i]->get_material()->Commit();
   aConvg = aTrial;
 }

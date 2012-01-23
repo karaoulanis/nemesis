@@ -99,6 +99,7 @@ class Element: public DomainObject {
 
   // Set reyleigh
   static void set_rayleigh(const Vector& rayleigh);
+
  protected:
   std::vector<Node*> nodes_;
   IDContainer myNodalIDs;
@@ -126,6 +127,7 @@ class Element: public DomainObject {
 
   // Rayleigh factors
   static Vector rayleigh_;
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

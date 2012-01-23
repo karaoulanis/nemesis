@@ -42,36 +42,45 @@ StandardModelNode::StandardModelNode(const IDContainer& FTable, Node* pNode)
 StandardModelNode::~StandardModelNode() {
 }
 void StandardModelNode::incTrialDisp(const Vector& du) {
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=du[theFTable[i]];
   myNode->incTrialDisp(*myVector);
 }
 void StandardModelNode::incTrialVecs(const Vector& du, const Vector& dv,
                                      const Vector& da) {
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=du[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=du[theFTable[i]];
   myNode->incTrialDisp(*myVector);
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=dv[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=dv[theFTable[i]];
   myNode->addTrialVelc(*myVector);
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=da[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=da[theFTable[i]];
   myNode->addTrialAccl(*myVector);
 }
 void StandardModelNode::set_trial_disp(const Vector& u) {
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=u[theFTable[i]];
   myNode->set_trial_disp(*myVector);
 }
 void StandardModelNode::set_trial_vecs(const Vector& u, const Vector& v,
                                      const Vector& a) {
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=u[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=u[theFTable[i]];
   myNode->set_trial_disp(*myVector);
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=v[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=v[theFTable[i]];
   myNode->set_trial_velc(*myVector);
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=a[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=a[theFTable[i]];
   myNode->set_trial_accl(*myVector);
 }
 void StandardModelNode::Commit() {
   myNode->Commit();
 }
 void StandardModelNode::commitSens(const Vector& X, int param) {
-  for (unsigned i = 0;i < theFTable.size();i++) (*myVector)[i]=X[theFTable[i]];
+  for (unsigned i = 0; i < theFTable.size(); i++)
+    (*myVector)[i]=X[theFTable[i]];
   myNode->commitSens(*myVector, param);
 }
 void StandardModelNode::add_R(double factor) {

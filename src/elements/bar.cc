@@ -112,7 +112,7 @@ void Bar::Update() {
   static Vector du(2*dim_);
   du = this->get_disp_incrm();
     double dL = 0;
-  for (int i = 0;i < dim_; i++) dL+=(du[i+dim_]-du[i])*cosX[i];
+  for (int i = 0; i < dim_; i++) dL+=(du[i+dim_]-du[i])*cosX[i];
     double de = dL/L0;
   myUniMaterial->set_strain(de);
 }
@@ -147,7 +147,7 @@ const Vector& Bar::get_Reff() {
   double mass = 0.5*rho*L0;
   const Vector& a0 = nodes_[0]->get_accl_trial();
   const Vector& a1 = nodes_[1]->get_accl_trial();
-  for (int i = 0;i < dim_;i++) {
+  for (int i = 0; i < dim_; i++) {
       Reff[i]      += mass*a0[i];
       Reff[i+dim_] += mass*a1[i];
   }

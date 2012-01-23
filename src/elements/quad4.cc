@@ -143,7 +143,7 @@ void Quad4::findShapeFunctionsAt(MatPoint* pMatPoint) {
   N(2, 3)=-0.25*(1+eta)*dxidy +0.25*(1-xi)*detady;  // N4, 2
 }
 void Quad4::Commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++)
+  for (unsigned int i = 0; i < myMatPoints.size(); i++)
     myMatPoints[i]->get_material()->Commit();
 }
 
@@ -151,7 +151,7 @@ void Quad4::Commit() {
 void Quad4::AddInitialStresses(int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0) {
-  for (unsigned i = 0;i < myMatPoints.size();i++) {
+  for (unsigned i = 0; i < myMatPoints.size(); i++) {
     myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
   }
 }
@@ -202,7 +202,7 @@ void Quad4::recoverStresses() {
 
 int Quad4::get_num_plastic_points() {
   int n = 0;
-  for (unsigned int i = 0;i < myMatPoints.size();i++) {
+  for (unsigned int i = 0; i < myMatPoints.size(); i++) {
     if (myMatPoints[i]->get_material()->isPlastic()) n++;
   }
   return n;

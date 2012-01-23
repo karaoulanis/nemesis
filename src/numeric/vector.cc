@@ -75,7 +75,7 @@ Vector& Vector::operator=(const Vector& v) {
   num::check::array_size(v.size_, size_);
   #endif
   if (this != &v)
-    for (int i = 0;i < size_;i++) data_[i]=v.data_[i];
+    for (int i = 0; i < size_; i++) data_[i]=v.data_[i];
   return *this;
 }
 

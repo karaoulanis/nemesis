@@ -81,12 +81,12 @@ const Matrix& Brick8i::get_M() {
   double rho = myMaterial->get_rho();
   double volume = 0.;
   this->shapeFunctions();
-  for (unsigned k = 0;k < myMatPoints.size();k++) {
+  for (unsigned k = 0; k < myMatPoints.size(); k++) {
     volume+=detJ[k]*(myMatPoints[k]->get_w());
   }
   double mass = rho*volume;
   // Set corresponding mass to diagonal terms
-  for (int i = 0;i < 24;i++) {
+  for (int i = 0; i < 24; i++) {
     M(i, i)=0.25*mass;
   }
   // Return M
@@ -122,7 +122,7 @@ const Vector& Brick8i::get_R() {
       this->get_Bstd(&Ba, a, k);
       add_BTv(&R, 3*a, &perm[0], Ba, sigma, facS*dV, 1.0);
       // -facG*SelfWeigth
-      for (int i = 0;i < 3;i++)
+      for (int i = 0; i < 3; i++)
         R[3*a+i]-=facG*shpStd[a][0][k]*b[i]*dV;
     }
   }
@@ -169,7 +169,7 @@ void Brick8i::Update() {
 
 
 void Brick8i::Commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++) {
+  for (unsigned int i = 0; i < myMatPoints.size(); i++) {
     myMatPoints[i]->get_material()->Commit();
   }
   aConvg = aTrial;

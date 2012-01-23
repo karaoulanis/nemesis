@@ -53,6 +53,7 @@ class Triangle3: public Element {
                           double h2, double s2, double K0);
   void recoverStresses();
   int get_num_plastic_points();
+
  protected:
   double thickness_;
   std::vector<MatPoint*> myMatPoints;

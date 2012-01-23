@@ -250,9 +250,9 @@ class Matrix {
    * @param c0 Factor for the existing Matrix (this).
    */
   inline void Add_cM(double c, const Matrix& m, double c0 = 1.0) {
-    if (c0 == 0.0)     for (int i = 0;i < size_;i++) data_[i]=0;
-    else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
-    for (int i = 0;i < size_;i++) data_[i]+=c*m.data_[i];
+    if (c0 == 0.0)     for (int i = 0; i < size_; i++) data_[i]=0;
+    else if (c0 != 1.0)  for (int i = 0; i < size_; i++) data_[i]*=c0;
+    for (int i = 0; i < size_; i++) data_[i]+=c*m.data_[i];
   }
 
   /**
@@ -265,12 +265,12 @@ class Matrix {
    */
   inline void Add_cMM(double c, const Matrix& m1, const Matrix& m2,
                       double c0 = 0.) {
-    if (c0 == 0.0)     for (int i = 0;i < size_;i++) data_[i]=0;
-    else if (c0 != 1.0)  for (int i = 0;i < size_;i++) data_[i]*=c0;
+    if (c0 == 0.0)     for (int i = 0; i < size_; i++) data_[i]=0;
+    else if (c0 != 1.0)  for (int i = 0; i < size_; i++) data_[i]*=c0;
     int bCols = m1.get_cols();
-    for (int i = 0;i < rows_;i++)
-      for (int j = 0;j < cols_;j++)
-        for (int k = 0;k < bCols;k++)
+    for (int i = 0; i < rows_; i++)
+      for (int j = 0; j < cols_; j++)
+        for (int k = 0; k < bCols; k++)
           data_[i*cols_+j]+=c*m1.data_[i*bCols+k]*m2.data_[k*cols_+j];
   }
 
@@ -284,7 +284,7 @@ class Matrix {
     #ifdef _DEBUG
     num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
-    for (int i = 0;i < size_;i++) data_[i]+=m.data_[i];
+    for (int i = 0; i < size_; i++) data_[i]+=m.data_[i];
     return *this;
   }
 
@@ -298,7 +298,7 @@ class Matrix {
     #ifdef _DEBUG
     num::check::array_size(rows_, cols_, m.rows_, m.cols_);
     #endif
-    for (int i = 0;i < size_;i++) data_[i]-=m.data_[i];
+    for (int i = 0; i < size_; i++) data_[i]-=m.data_[i];
     return *this;
   }
 
@@ -364,7 +364,7 @@ class Matrix {
    */
   inline Matrix operator-() {
     Matrix res(cols_, rows_);
-    for (int i = 0;i < size_;i++) res.data_[i]=-data_[i];
+    for (int i = 0; i < size_; i++) res.data_[i]=-data_[i];
     return res;
   }
 
@@ -375,8 +375,8 @@ class Matrix {
    */
   inline friend Matrix Transpose(const Matrix& m) {
     Matrix res(m.cols_, m.rows_);
-    for (int i = 0;i < m.rows_;i++)
-      for (int j = 0;j < m.cols_;j++)
+    for (int i = 0; i < m.rows_; i++)
+      for (int j = 0; j < m.cols_; j++)
         res.data_[j*m.rows_+i]=m.data_[i*m.cols_+j];
     return res;
   }
@@ -392,8 +392,8 @@ class Matrix {
     num::check::array_size(cols_, v.size());
     #endif
     Vector res(rows_, 0.);
-    for (int i = 0;i < rows_;i++)
-      for (int j = 0;j < cols_;j++) res[i]+=data_[i*cols_+j]*v[j];
+    for (int i = 0; i < rows_; i++)
+      for (int j = 0; j < cols_; j++) res[i]+=data_[i*cols_+j]*v[j];
     return res;
   }
 
@@ -412,13 +412,13 @@ class Matrix {
     num::check::array_range(row+m.rows_, col+m.cols_, rows_, cols_);
     #endif
     if (c0 == 0.0)
-      for (int i = 0;i < m.rows_;i++)
-        for (int j = 0;j < m.cols_;j++) data_[(row+i)*cols_+(col+j)]=0.;
+      for (int i = 0; i < m.rows_; i++)
+        for (int j = 0; j < m.cols_; j++) data_[(row+i)*cols_+(col+j)]=0.;
     else if (c0 != 1.0)
-      for (int i = 0;i < m.rows_;i++)
-        for (int j = 0;j < m.cols_;j++) data_[(row+i)*cols_+(col+j)]*=c0;
-    for (int i = 0;i < m.rows_;i++)
-      for (int j = 0;j < m.cols_;j++)
+      for (int i = 0; i < m.rows_; i++)
+        for (int j = 0; j < m.cols_; j++) data_[(row+i)*cols_+(col+j)]*=c0;
+    for (int i = 0; i < m.rows_; i++)
+      for (int j = 0; j < m.cols_; j++)
         data_[(row+i)*cols_+(col+j)]+=c*m.data_[i*m.cols_+j];
     return *this;
   }
@@ -494,16 +494,17 @@ class Matrix {
     double* pB1 = B1.get_data();
     double* pB2 = B2.get_data();
     double* pC = C.get_data();
-    for (int i = 0;i < n;i++)
-      for (int j = 0;j < n;j++)
+    for (int i = 0; i < n; i++)
+      for (int j = 0; j < n; j++)
         data_[pos+i*cols_+j]*=c0;
-    for (int i = 0;i < n;i++)
-      for (int k = 0;k < m;k++)
-        for (int l = 0;l < m;l++)
-          for (int j = 0;j < n;j++)
+    for (int i = 0; i < n; i++)
+      for (int k = 0; k < m; k++)
+        for (int l = 0; l < m; l++)
+          for (int j = 0; j < n; j++)
             data_[pos+i*cols_+j]+=
               c1*pB1[k*n+i]*pC[perm[k]*colC+perm[l]]*pB2[l*n+j];
   }
+
  private:
   int rows_;
   int cols_;
@@ -516,7 +517,7 @@ class Matrix {
 */
 inline Matrix Identity(int n) {
   Matrix res(n, n, 0.);
-  for (int i = 0;i < n;i++) res(i, i)=1.;
+  for (int i = 0; i < n; i++) res(i, i)=1.;
   return res;
 }
 
@@ -534,8 +535,8 @@ inline Matrix VVT(const Vector& v1, const Vector& v2) {
   num::check::array_size(v1.get_size(), v2.get_size());
   #endif
   Matrix res(v1.get_size(), v2.get_size());
-  for (int i = 0;i < v1.get_size();i++)
-    for (int j = 0;j < v2.get_size();j++)
+  for (int i = 0; i < v1.get_size(); i++)
+    for (int j = 0; j < v2.get_size(); j++)
       res(i, j)=v1[i]*v2[j];
   return res;
 }

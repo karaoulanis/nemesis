@@ -151,7 +151,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
   // if (f[0]>0. && f[1]>0. && f[2]>0.) f[2]=-1.;
 
   std::vector<int> active;
-  for (unsigned i = 0;i < 3;i++)
+  for (unsigned i = 0; i < 3; i++)
   if (f[i]>0.) active.push_back(i);
 
   // Elastic case
@@ -164,7 +164,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
   static Vector R;
 
   active.clear();
-  for (unsigned i = 0;i < 3;i++) {
+  for (unsigned i = 0; i < 3; i++) {
     if (f[i]>0.) active.push_back(i);
   }
 
@@ -191,7 +191,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
     }
     if (restart) continue;
     // update
-    for (int i = 0;i < 3;i++) s[i]+=x[i];
+    for (int i = 0; i < 3; i++) s[i]+=x[i];
     break;
   }
 

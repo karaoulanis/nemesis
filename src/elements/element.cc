@@ -47,11 +47,11 @@ Element::Element(int id, std::vector<Node*> nodes)
   // Create static Matrices/vectors if they do not exist yet
   if (theStaticMatrices == 0) {
     theStaticMatrices = new Matrix*[64];
-    for (int i = 1;i < 64;i++) {
+    for (int i = 1; i < 64; i++) {
       theStaticMatrices[i]=new Matrix(i, i, 0.);
     }
     theStaticVectors = new Vector*[64];
-    for (int i = 1;i < 64;i++) {
+    for (int i = 1; i < 64; i++) {
       theStaticVectors[i]=new Vector(i, 0.);
     }
   }
@@ -60,8 +60,8 @@ Element::Element(int id, std::vector<Node*> nodes)
 
 Element::~Element() {
   if (theStaticMatrices != 0) {
-    for (int i = 1;i < 64;i++) delete theStaticMatrices[i];
-    for (int i = 1;i < 64;i++) delete theStaticVectors[i];
+    for (int i = 1; i < 64; i++) delete theStaticMatrices[i];
+    for (int i = 1; i < 64; i++) delete theStaticVectors[i];
     delete[] theStaticMatrices;
     delete[] theStaticVectors;
     theStaticMatrices = 0;
@@ -145,8 +145,8 @@ const Vector& Element::get_disp_trial() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+  for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       disp[i*nDofs+j] = nodes_[i]->get_disp_trial_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
@@ -155,8 +155,8 @@ const Vector& Element::get_velc_trial() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& velc=*myVector;
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+  for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       velc[i*nDofs+j] = nodes_[i]->get_velc_trial_at_dof(myLocalNodalDofs[j]);
   return velc;
 }
@@ -165,8 +165,8 @@ const Vector& Element::get_accl_trial() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& accl=*myVector;
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+  for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       accl[i*nDofs+j] = nodes_[i]->get_accl_trial_at_dof(myLocalNodalDofs[j]);
   return accl;
 }
@@ -175,8 +175,8 @@ const Vector& Element::get_disp_convg() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+  for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       disp[i*nDofs+j] = nodes_[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
@@ -185,8 +185,8 @@ const Vector& Element::get_velc_convg() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& velc=*myVector;
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+  for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       velc[i*nDofs+j] = nodes_[i]->get_velc_convg_at_dof(myLocalNodalDofs[j]);
   return velc;
 }
@@ -195,8 +195,8 @@ const Vector& Element::get_accl_convg() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+  for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       disp[i*nDofs+j] = nodes_[i]->get_accl_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
 }
@@ -206,8 +206,8 @@ const Vector& Element::get_disp_incrm() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
   Vector& disp=*myVector;
-  for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+  for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       disp[i*nDofs+j] = nodes_[i]->get_disp_trial_at_dof(myLocalNodalDofs[j])-
                         nodes_[i]->get_disp_convg_at_dof(myLocalNodalDofs[j]);
   return disp;
@@ -239,8 +239,8 @@ void Element::addGroundMotion(int dof, double val) {
   int nNodes = myNodalIDs.size();
   int nLocalDofs = myLocalNodalDofs.size();
   int nDofs = nLocalDofs*nNodes;
-    for (int i = 0;i < nNodes;i++)
-    for (int j = 0;j < nDofs;j++)
+    for (int i = 0; i < nNodes; i++)
+    for (int j = 0; j < nDofs; j++)
       P[i*nLocalDofs+pos]-=M(j, i*nLocalDofs)*val;
 }
 
@@ -275,7 +275,7 @@ void Element::Save(std::ostream* os) {
   (*os) << "\"id\":" << id_ <<",";
   (*os) << "\"material\":"          << myMaterial->get_id() << ",";
   (*os) << "\"nodes\":[";
-  for (unsigned i = 0;i < nodes_.size(); i++) {
+  for (unsigned i = 0; i < nodes_.size(); i++) {
     if (i>0) {
       (*os) << ',';
     }

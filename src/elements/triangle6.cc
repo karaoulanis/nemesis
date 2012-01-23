@@ -247,7 +247,7 @@ void Triangle6::Update() {
 }
 
 void Triangle6::Commit() {
-  for (unsigned int i = 0;i < myMatPoints.size();i++)
+  for (unsigned int i = 0; i < myMatPoints.size(); i++)
     myMatPoints[i]->get_material()->Commit();
 }
 
@@ -294,14 +294,14 @@ void Triangle6::recoverStresses() {
 void Triangle6::AddInitialStresses(int direction,
                                  double h1, double s1,
                                  double h2, double s2, double K0) {
-  for (unsigned i = 0;i < myMatPoints.size();i++) {
+  for (unsigned i = 0; i < myMatPoints.size(); i++) {
     myMatPoints[i]->AddInitialStresses(direction, h1, s1, h2, s2, K0);
   }
 }
 
 int Triangle6::get_num_plastic_points() {
   int n = 0;
-  for (unsigned int i = 0;i < myMatPoints.size();i++)
+  for (unsigned int i = 0; i < myMatPoints.size(); i++)
     if (myMatPoints[i]->get_material()->isPlastic()) n++;
   return n;
 }

@@ -49,6 +49,7 @@ class Bar: public Element {
   const Matrix& get_M();
   const Vector& get_Reff();
   void recoverStresses();
+
  protected:
   int dim_;
   CrossSection* iSection;

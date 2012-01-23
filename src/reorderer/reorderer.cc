@@ -56,7 +56,7 @@ int Reorderer::reorder() {
     for (unsigned k = 0;
          k < pA->get_model()->get_model_elements().size(); k++) {
       ModelElement* pModelElem = pA->get_model()->get_model_elements()[k];
-      for (unsigned i = 0;i < pModelElem->get_FTable().size();i++) {
+      for (unsigned i = 0; i < pModelElem->get_FTable().size(); i++) {
         if (pModelElem->get_FTable()[i] >= 0)
           pModelElem->set_FTable(i, perm[pModelElem->get_FTable()[i]]);
       }

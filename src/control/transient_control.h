@@ -33,11 +33,7 @@ class ModelElement;
 class ModelNode;
 
 class TransientControl :public Control {
- protected:
-  Vector u, v, a, ut, vt, at;
-  double c[3];
-  public:
-
+ public:
   // Constructors and destructor
   TransientControl();
   virtual ~TransientControl();
@@ -52,5 +48,9 @@ class TransientControl :public Control {
   virtual void Init();
   virtual void Commit();
   virtual void Rollback();
+
+ protected:
+  Vector u, v, a, ut, vt, at;
+  double c[3];
 };
 #endif  // SRC_CONTROL_TRANSIENT_CONTROL_H_

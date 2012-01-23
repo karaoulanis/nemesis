@@ -57,9 +57,11 @@ class ModelNode :public ModelObject {
   virtual void Commit()=0;
   virtual void commitSens(const Vector& /*ds*/, int /*param*/) {}
   virtual void rollback();
+
  protected:
   Node* myNode;
   Constraint* myConstraint;
+
  private:
   // Dummy copy constructor and copy assignment as to explicitly disable them.
   // Only the declarations are provided and not the definitions.

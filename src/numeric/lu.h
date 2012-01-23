@@ -39,7 +39,7 @@ namespace LU {
     // temporary array vv and return -1 if the matrix is singular
     for (i = 0; i < n; i++) {
       big = 0.;
-      for (j = 0;j < n;j++) if ((temp = fabs(data[i*n+j]))>big) big = temp;
+      for (j = 0; j < n; j++) if ((temp = fabs(data[i*n+j]))>big) big = temp;
       if (big == 0.) return -1;
       vv[i]=big;
     }
@@ -48,7 +48,7 @@ namespace LU {
       /* this is the part a) of the algorithm except for i == j */
       for (i = 0; i < j; i++) {
         sum = data[i*n+j];
-        for (k = 0;k < i;k++) sum-=data[i*n+k]*data[k*n+j];
+        for (k = 0; k < i; k++) sum-=data[i*n+k]*data[k*n+j];
         data[i*n+j]=sum;
       }
       /* initialize for the search for the largest pivot element */
@@ -57,7 +57,7 @@ namespace LU {
       /* this is the part a) for i == j and part b) for i>j + pivot search */
       for (i = j; i < n; i++) {
         sum = data[i*n+j];
-        for (k = 0;k < j;k++) sum-=data[i*n+k]*data[k*n+j];
+        for (k = 0; k < j; k++) sum-=data[i*n+k]*data[k*n+j];
         data[i*n+j]=sum;
         /* is the figure of merit for the pivot better than the best so far? */
         if ((temp = vv[i]*fabs(sum)) >= big) {
@@ -83,7 +83,7 @@ namespace LU {
       /* finally, divide by the pivot element */
       if (j < n-1) {
         temp = 1./data[j*n+j];
-        for (i = j+1;i < n;i++) data[i*n+j]*=temp;
+        for (i = j+1; i < n; i++) data[i*n+j]*=temp;
       }
     }
     return 0;
@@ -98,29 +98,29 @@ namespace LU {
       ip = index[i];
       sum = b[ip];
       b[ip]=b[i];
-      if (ii >= 0) for (j = ii;j < i;j++) sum-=data[i*n+j]*b[j];
+      if (ii >= 0) for (j = ii; j < i; j++) sum-=data[i*n+j]*b[j];
       else if (sum) ii = i;  // a nonzero element encounted
       b[i]=sum;
     }
     // the second step
     for (i = n-1; i >= 0; i--) {
       sum = b[i];
-      for (j = i+1;j < n;j++) sum-=data[i*n+j]*b[j];
+      for (j = i+1; j < n; j++) sum-=data[i*n+j]*b[j];
       b[i]=sum/data[i*n+i];
     }
   }
   inline void inverse(double* data, int n, int* index,
                              double* inv, double *col) {
     for (int j = 0; j < n; j++) {
-      for (int i = 0;i < n;i++) col[i]=0.;
+      for (int i = 0; i < n; i++) col[i]=0.;
       col[j]=1.;
       backsubstitution(data, n, index, col);
-      for (int i = 0;i < n;i++) inv[i*n+j]=col[i];
+      for (int i = 0; i < n; i++) inv[i*n+j]=col[i];
     }
   }
   inline double determinant(double* data, int n, const double& d) {
     double det = d;
-    for (int j = 0;j < n;j++) det*=data[j*n+j];
+    for (int j = 0; j < n; j++) det*=data[j*n+j];
     return det;
   }
 }

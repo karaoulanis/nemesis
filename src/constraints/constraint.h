@@ -41,12 +41,6 @@ struct CDof {
  * The Constraint class.
  */
 class Constraint: public DomainObject {
- protected:
-  static int num_constraints_;
-  std::vector<CDof> cdofs_;
-  double val_;
-  double f_trial_;
-  double f_convg_;
  public:
   // Constructors
   Constraint();
@@ -71,5 +65,12 @@ class Constraint: public DomainObject {
   void Commit();
 
   void Save(std::ostream* /*os*/);
+
+ protected:
+  static int num_constraints_;
+  std::vector<CDof> cdofs_;
+  double val_;
+  double f_trial_;
+  double f_convg_;
 };
 #endif  // SRC_CONSTRAINTS_CONSTRAINT_H_

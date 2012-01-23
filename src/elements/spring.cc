@@ -56,7 +56,7 @@ Spring::Spring(int id,
       dim_(dim) {
   // The dofs needed for this element
   myLocalNodalDofs.resize(dim_);
-  for (int i = 0;i < dim_; i++) myLocalNodalDofs[i] = i;
+  for (int i = 0; i < dim_; i++) myLocalNodalDofs[i] = i;
 
   // Handle common info: Start -------------------------------------------------
   // Find own matrix and vector
@@ -143,8 +143,8 @@ void Spring::Update() {
   report(du, "du");
   static Vector de(dim_, 0);
   de.Clear();
-  for (int k = 0;k < dim_;k++)
-    for (int i = 0;i < dim_;i++)
+  for (int k = 0; k < dim_; k++)
+    for (int i = 0; i < dim_; i++)
       de[i]+=T(i, k)*(du[k+dim_]-du[k]);
   // report(de, "de");
   mySpringMaterial->set_strain(de);

@@ -127,33 +127,33 @@ int Model::get_num_eqns() {
   return nEquations;
 }
 void Model::incTrialDisp(const Vector& du) {
-  for (unsigned i = 0;i < theModelNodes.size();i++)
+  for (unsigned i = 0; i < theModelNodes.size(); i++)
     theModelNodes[i]->incTrialDisp(du);
 }
 void Model::set_trial_disp(const Vector& du) {
-  for (unsigned i = 0;i < theModelNodes.size();i++)
+  for (unsigned i = 0; i < theModelNodes.size(); i++)
     theModelNodes[i]->set_trial_disp(du);
 }
 void Model::incTrialVecs(const Vector& du, const Vector& da, const Vector& dv) {
-  for (unsigned i = 0;i < theModelNodes.size();i++)
+  for (unsigned i = 0; i < theModelNodes.size(); i++)
     theModelNodes[i]->incTrialVecs(du, da, dv);
 }
 void Model::set_trial_vecs(const Vector& u, const Vector& a, const Vector& v) {
-  for (unsigned i = 0;i < theModelNodes.size();i++)
+  for (unsigned i = 0; i < theModelNodes.size(); i++)
     theModelNodes[i]->set_trial_vecs(u, a, v);
 }
 void Model::Update() {
-  for (unsigned i = 0;i < theModelElements.size();i++)
+  for (unsigned i = 0; i < theModelElements.size(); i++)
     theModelElements[i]->Update();
 }
 void Model::Commit() {
-  for (unsigned i = 0;i < theModelNodes.size();i++)
+  for (unsigned i = 0; i < theModelNodes.size(); i++)
     theModelNodes[i]->Commit();
-  for (unsigned i = 0;i < theModelElements.size();i++)
+  for (unsigned i = 0; i < theModelElements.size(); i++)
     theModelElements[i]->Commit();
 }
 void Model::commitSens(const Vector& ds, int param) {
-  for (unsigned i = 0;i < theModelNodes.size();i++)
+  for (unsigned i = 0; i < theModelNodes.size(); i++)
     theModelNodes[i]->commitSens(ds, param);
 }
 void Model::clear() {
@@ -163,7 +163,8 @@ void Model::clear() {
   constrained = false;
   reordered = false;
 }
-int Model::get_directed_graph(DirectedGraph& G) {
+
+int Model::get_directed_graph(DirectedGraph* G) {
   typedef graph_traits < DirectedGraph >::vertex_descriptor Vertex;
   typedef graph_traits < DirectedGraph >::vertices_size_type size_type;
   typedef std::pair < int, int > Pair;
@@ -171,7 +172,7 @@ int Model::get_directed_graph(DirectedGraph& G) {
   Pair Edge;
   for (unsigned k = 0; k < theModelElements.size(); k++) {
     ModelElement* pModelElem = theModelElements[k];
-    for (unsigned i = 0;i < pModelElem->get_FTable().size();i++)
+    for (unsigned i = 0; i < pModelElem->get_FTable().size(); i++)
       for (unsigned j = 0; j < pModelElem->get_FTable().size(); j++) {
         if (i == j) continue;
         Edge.first = pModelElem->get_FTable()[i];
@@ -182,10 +183,11 @@ int Model::get_directed_graph(DirectedGraph& G) {
   }
   std::set < Pair>::iterator iEdges;
   for (iEdges = theEdges.begin(); iEdges != theEdges.end(); ++iEdges)
-    add_edge(iEdges->first, iEdges->second, G);
+    add_edge(iEdges->first, iEdges->second, *G);
   return 0;
 }
-int Model::get_undirected_graph(UndirectedGraph& G) {
+
+int Model::get_undirected_graph(UndirectedGraph* G) {
   typedef graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
   typedef graph_traits<UndirectedGraph>::vertices_size_type size_type;
   typedef std::pair<int, int> Pair;
@@ -193,7 +195,7 @@ int Model::get_undirected_graph(UndirectedGraph& G) {
   Pair Edge;
   for (unsigned k = 0; k < theModelElements.size(); k++) {
     ModelElement* pModelElem = theModelElements[k];
-    for (unsigned i = 0;i < pModelElem->get_FTable().size();i++)
+    for (unsigned i = 0; i < pModelElem->get_FTable().size(); i++)
       for (unsigned j = i+1; j < pModelElem->get_FTable().size(); j++) {
         Edge.first = pModelElem->get_FTable()[i];
         Edge.second = pModelElem->get_FTable()[j];
@@ -204,7 +206,7 @@ int Model::get_undirected_graph(UndirectedGraph& G) {
   }
   std::set<Pair>::iterator iEdges;
   for (iEdges = theEdges.begin(); iEdges != theEdges.end(); ++iEdges)
-    add_edge(iEdges->first, iEdges->second, G);
+    add_edge(iEdges->first, iEdges->second, *G);
   return 0;
 }
 

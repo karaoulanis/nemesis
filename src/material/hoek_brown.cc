@@ -308,7 +308,7 @@ void HoekBrown::set_strain(const Vector& De) {
       if (restart) {
         // initialize stresses and lambdas
         s = sTrial3;
-        for (int i = 0;i < nf;i++) DLambda[i]=0.;
+        for (int i = 0; i < nf; i++) DLambda[i]=0.;
         this->find_f(s, q);
         this->find_dfds(s, q);
         this->find_dgds(s, q);
@@ -324,11 +324,11 @@ void HoekBrown::set_strain(const Vector& De) {
     A.Solve(x, R);
 
     // Update stresses
-    for (int i = 0;i < 3;i++)
+    for (int i = 0; i < 3; i++)
       s[i]+=x[i];
     // Update dLambda
     pos = 0;
-    for (int i = 0;i < 3;i++) {
+    for (int i = 0; i < 3; i++) {
       if (active[i]) {
         DLambda[i]+=x[3+pos];
         pos++;

@@ -112,7 +112,7 @@ void LoadCase::Initialize() {
     groupstates_[i]->Apply();
   }
   // Apply initial conditions
-  for (unsigned int i = 0;i < initialconditions_.size();i++) {
+  for (unsigned int i = 0; i < initialconditions_.size(); i++) {
     initialconditions_[i]->Apply();
   }
   // Increase domain time
