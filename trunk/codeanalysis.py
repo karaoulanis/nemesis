@@ -92,6 +92,10 @@ def lowercase_names(root, extensions):
             name = function[0] 
             if name.find('operator') >= 0:
                 total -= 1
+            elif name.find('get_') >= 0:
+                total -= 1
+            elif name.find('set_') >= 0:
+                total -= 1
             elif name[0].islower():
                 lower += 1  
                 print('\t'+name)    
