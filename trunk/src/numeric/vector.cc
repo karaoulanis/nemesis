@@ -106,10 +106,10 @@ static Vector A(9);
   A[7]=0.;
   A[8]=data_[2];
 
+  // dsyev(&JOBZ, &UPLO, &N, A.get_data(), &LDA, res.get_data(), WORK.get_data(),
+  //       &LWORK, &INFO, 1, 1);
   dsyev(&JOBZ, &UPLO, &N, A.get_data(), &LDA, res.get_data(), WORK.get_data(),
-        &LWORK, &INFO, 1, 1);
-  //  dsyev(&JOBZ, &UPLO, &N, A.data(), &LDA, res.data(), WORK.data(), &LWORK,
-  //        &INFO);
+        &LWORK, &INFO);
   //  cout << "Optimal LWORK : "<<WORK[0]<<endl;
   double d = res[0];
   res[0]=res[2];

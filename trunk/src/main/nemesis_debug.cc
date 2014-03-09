@@ -172,7 +172,7 @@ void spectralDecomposition(const Vector& s, Vector& sP, Matrix& sV) {
   sV(2, 2) = s[2];
 
   dsyev(&JOBZ, &UPLO, &N, sV.get_data(), &LDA, sP.get_data(), WORK.get_data(),
-        &LWORK, &INFO, 1, 1);
+        &LWORK, &INFO);
   // cout << WORK[0]<<endl;
   double d, d0, d1, d2;
   d  = sP[0];

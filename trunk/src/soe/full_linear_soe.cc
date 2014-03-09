@@ -103,6 +103,6 @@ int FullLinearSOE::solve() {
     isLUFactored = true;
   }
   // Solve the system A*X = B, overwriting B with X.
-  dgetrs(&c, &N, &NRHS, &A[0], &LDA, &IPIV[0], &X[0], &LDB, &INFO, 1);
+  dgetrs(&c, &N, &NRHS, &A[0], &LDA, &IPIV[0], &X[0], &LDB, &INFO);
   return 0;
 }
