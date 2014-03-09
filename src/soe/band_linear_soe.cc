@@ -123,6 +123,6 @@ int BandLinearSOE::solve() {
   }
   // Solve the system A*X = B, overwriting B with X.
   dgbtrs(&c, &N, &KL, &KU, &NRHS, &A[0], &LDAB, &IPIV[0],
-         &X[0], &LDB, &INFO, 1);
+         &X[0], &LDB, &INFO);
   return 0;
 }

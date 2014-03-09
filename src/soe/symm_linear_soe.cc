@@ -102,12 +102,12 @@ int SymmLinearSOE::solve() {
   char c = 'L';
   X = B;
   if (!isLUFactored) {
-    dsptrf(&c, &N, &A[0], &IPIV[0], &INFO, 1);
+    dsptrf(&c, &N, &A[0], &IPIV[0], &INFO);
     if (INFO != 0)
       throw SException("[nemesis:%d] %s", 1102, "SOE: lapack DSPTRF failed.");
     isLUFactored = true;
   }
   // Solve the system A*X = B, overwriting B with X.
-  dsptrs(&c, &N, &NRHS, &A[0], &IPIV[0], &X[0], &LDB, &INFO, 1);
+  dsptrs(&c, &N, &NRHS, &A[0], &IPIV[0], &X[0], &LDB, &INFO);
   return 0;
 }
