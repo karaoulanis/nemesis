@@ -80,7 +80,7 @@ Brick8::Brick8(int id, std::vector<Node*> nodes,
   }
   // Inform the nodes that the corresponding Dof's must be activated
   for (int i = 0; i < 8; i++)
-    for (int j = 0; j < 2; j++)
+    for (int j = 0; j < 3; j++)
       nodes_[i]->addDofToNode(myLocalNodalDofs[j]);
   // Load vector
   P.Resize(24, 0.);
