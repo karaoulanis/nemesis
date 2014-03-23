@@ -162,6 +162,9 @@ class Domain {
   // EigenValues
   void set_eigenvalues(const Vector& vals);
   const Vector& get_eigen_values();
+  
+  // export
+  void ExportVTK();
 
   inline NodeContainer& get_nodes()                  {return nodes_;}
   inline CrossSectionContainer& get_sections()       {return sections_;}

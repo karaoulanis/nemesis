@@ -163,8 +163,9 @@ void StaticControl::FormResidual(double fac)   {
 void StaticControl::Commit() {
   lambdaConvg = lambdaTrial;
   pA->get_domain()->set_lambda(lambdaConvg);
-  pA->get_domain()->Commit(); /// @todo this commits only domains time!
   pA->get_model()->Commit();
+  pA->get_model()->set_nodal_stress();
+  pA->get_domain()->Commit(); /// @todo this commits only domains time!
 }
 /**
  * Aborts step.

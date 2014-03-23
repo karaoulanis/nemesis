@@ -214,8 +214,14 @@ void Model::set_nodal_stress() {
   theDomain->zeroNodalStress();
   for (ElementIterator  eIter = theDomain->get_elements().begin();
                         eIter != theDomain->get_elements().end();
-                        ++eIter)
+                        ++eIter) {
     eIter->second->recoverStresses();
+  }
+  for (NodeIterator nIter = theDomain->get_nodes().begin();
+                    nIter != theDomain->get_nodes().end();
+                    ++nIter) {
+    nIter->second->AverageStresses();
+  }
 }
 
 void Model::enrich() {

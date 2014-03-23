@@ -176,6 +176,16 @@ void Node::addStress(const Vector& s) {
   stress+=s;
   avgStress+=1;
 }
+void Node::AverageStresses() {
+  if (avgStress > 0) {
+    stress *= 1.0 / avgStress;
+  }
+  avgStress = 0;
+}
+
+const Vector& Node::get_stress() {
+  return stress;
+}
 
 void Node::Save(std::ostream* os) {
   (*os) << "{";
@@ -191,9 +201,6 @@ void Node::Save(std::ostream* os) {
   (*os) << "\"disp\":[" << dispConvg  << "],";
   (*os) << "\"velc\":[" << velcConvg  << "],";
   (*os) << "\"accl\":[" << acclConvg  << "],";
-
-  if (avgStress > 0) stress*=1.0/avgStress;
-  avgStress = 0;
   (*os) << "\"strs\":[" << stress     << "]";
 
   /// @todo include strains, sensitivities and eigenvalues also
