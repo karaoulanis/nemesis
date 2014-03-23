@@ -106,8 +106,8 @@ int StaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   pA->get_soe()->set_size();
 
   // Initialize
-  pA->get_domain()->Initialize();
   loadcase->Initialize();
+  pA->get_domain()->Initialize();
   pA->get_control()->Init();
   pA->get_convergence_norm()->Init(loadcase->get_id(), num_loadsteps);
 
@@ -132,7 +132,7 @@ int StaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
   }
   // Finalize
   loadcase->Finalize();
-  pA->get_model()->set_nodal_stress();
-  pA->get_domain()->Commit();
+  //pA->get_model()->set_nodal_stress();
+  //pA->get_domain()->Commit();
   return ret;
 }

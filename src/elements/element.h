@@ -85,6 +85,7 @@ class Element: public DomainObject {
   // GroupData related info
   void SetGroupData(const GroupData* groupdata);
   bool IsActive();
+  void SetActiveNodes();
   virtual void recoverStresses() {}
   // Serialise
   void Save(std::ostream* s);

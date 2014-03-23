@@ -24,6 +24,8 @@
 // *****************************************************************************
 
 #include "domain/domain.h"
+#include <iomanip>
+#include <fstream>
 #include <sstream>
 #include <string>
 #include "constraints/constraint.h"
@@ -189,10 +191,11 @@ void Domain::Save(std::ostream* os) {
 
 
 void Domain::Commit() {
-    timePrev = timeCurr;
-    for (TrackerIterator i = trackers_.begin(); i != trackers_.end(); i++) {
-      i->second->Track(lambdaConvg, timeCurr);
+  timePrev = timeCurr;
+  for (TrackerIterator i = trackers_.begin(); i != trackers_.end(); i++) {
+    i->second->Track(lambdaConvg, timeCurr);
   }
+  this->ExportVTK();
 }
 
 
@@ -228,6 +231,7 @@ void Domain::Initialize() {
   default_groupdata.factor_P = 1.0;
   for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
 //    e->second->SetGroupData(default_groupdata);
+    e->second->SetActiveNodes();
   }
 }
 
@@ -290,4 +294,171 @@ const Vector& Domain::get_gravity_vect() {
  */
 double Domain::get_gravity_accl() {
   return gravityAccl;
+}
+
+// export
+void Domain::ExportVTK() {
+  std::vector<std::string> data_;
+  data_.push_back("# vtk DataFile Version 3.0");
+  data_.push_back("Author: F.E. Karaoulanis");
+  data_.push_back("ASCII");
+  data_.push_back("DATASET UNSTRUCTURED_GRID");
+  data_.push_back("");
+
+  std::map<int, int> nodes_index;
+  std::stringstream ss;
+  
+  ///@todo avoid running the same loop twice for getting the number of points
+  int num_points = 0;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      num_points++;
+    }
+  }
+  ss  << "POINTS " << num_points << " float" << std::endl;
+  int k = 0;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(12) << std::fixed << std::setprecision(6)
+          << n->second->get_x1() << " "
+          << std::setw(12) << std::fixed << std::setprecision(6)
+          << n->second->get_x2() << " "
+          << std::setw(12) << std::fixed << std::setprecision(6)
+          << n->second->get_x3() << std::endl;
+      nodes_index[n->second->get_id()] = k++;
+    }
+  }
+  data_.push_back(ss.str());
+  
+  ///@todo avoid running the same loop twice for getting the number of points
+  int num_elems = 0;
+  for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
+    if (e->second->IsActive()) {
+      num_elems++;
+    }
+  }
+
+  ss.str("");
+  ss  << "CELLS "
+      << num_elems << " "
+      << (1 + 8) * num_elems << std::endl;
+
+  for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
+    if (e->second->IsActive()) {
+      ss  << "8 "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[0]->get_id()] << " "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[1]->get_id()] << " "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[2]->get_id()] << " "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[3]->get_id()] << " "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[4]->get_id()] << " "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[5]->get_id()] << " "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[6]->get_id()] << " "
+          << std::setw(6) << nodes_index[e->second->get_nodes()[7]->get_id()] << std::endl;
+    }
+  }
+  ss << std::endl;
+  ss << "CELL_TYPES " << num_elems << std::endl;
+  for (int i = 0; i < num_elems; i++) {
+    ss << 12 << std::endl;
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "POINT_DATA " << num_points << std::endl;
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "VECTORS disp float" << std::endl;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_disp_convg()[0] << " "
+          << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_disp_convg()[1] << " "
+          << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_disp_convg()[2] << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "SCALARS sigma_x float" << std::endl;
+  ss << "LOOKUP_TABLE default" << std::endl;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_stress()[0]
+          << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "SCALARS sigma_y float" << std::endl;
+  ss << "LOOKUP_TABLE default" << std::endl;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_stress()[1]
+          << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "SCALARS sigma_z float" << std::endl;
+  ss << "LOOKUP_TABLE default" << std::endl;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_stress()[2]
+          << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "SCALARS sigma_xy float" << std::endl;
+  ss << "LOOKUP_TABLE default" << std::endl;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_stress()[3]
+          << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "SCALARS sigma_yz float" << std::endl;
+  ss << "LOOKUP_TABLE default" << std::endl;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_stress()[4]
+          << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
+  ss << "SCALARS sigma_zx float" << std::endl;
+  ss << "LOOKUP_TABLE default" << std::endl;
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    if (n->second->IsActive()) {
+      ss  << std::setw(16) << std::fixed << std::setprecision(8)
+          << n->second->get_stress()[5]
+          << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  static int lc = 0;
+  ss.str("");
+  ss << "lc_" << std::setw(4) << std::setfill('0') << lc << ".vtk";
+  std::ofstream file(ss.str().c_str());
+  for (unsigned i = 0; i < data_.size(); i++) {
+    file << data_[i] << std::endl;
+  } 
+  lc++;
 }

@@ -251,6 +251,12 @@ void Element::SetGroupData(const GroupData* groupdata) {
   groupdata_ = groupdata;
 }
 
+void Element::SetActiveNodes() {
+    for (unsigned i = 0; i < nodes_.size(); i++) {
+    nodes_[i]->SetActive(groupdata_->active);
+  }
+}
+
 /**
  * Check if active.
  */

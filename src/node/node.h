@@ -123,6 +123,8 @@ class Node: public DomainObject {
 
   void zeroStress();
   void addStress(const Vector& s);
+  void AverageStresses();
+  const Vector& get_stress();
   void multDisp(double facD);
 
   void Save(std::ostream* s);
