@@ -53,6 +53,7 @@ class Element: public DomainObject {
   const IDContainer& get_nodal_ids() const;
   const IDContainer& get_local_nodal_dofs() const;
   const std::vector<Node*>& get_nodes() const;
+  Material* get_material();
 
   virtual int get_num_plastic_points();
 
@@ -87,6 +88,7 @@ class Element: public DomainObject {
   bool IsActive();
   void SetActiveNodes();
   virtual void recoverStresses() {}
+  
   // Serialise
   void Save(std::ostream* s);
   void activateParameter(int param) {activeParameter = param;}

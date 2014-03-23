@@ -141,6 +141,10 @@ const std::vector<Node*>& Element::get_nodes() const {
   return nodes_;
 }
 
+Material* Element::get_material(){
+  return myMaterial;
+}
+
 const Vector& Element::get_disp_trial() {
   int nDofs = myLocalNodalDofs.size();
   int nNodes = myNodalIDs.size();
