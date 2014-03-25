@@ -378,6 +378,16 @@ void Domain::ExportVTK() {
   data_.push_back(ss.str());
 
   ss.str("");
+  ss << "SCALARS plastic_points int" << std::endl;
+  ss << "LOOKUP_TABLE default" << std::endl;
+  for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
+    if (e->second->IsActive()) {
+      ss  << e->second->get_num_plastic_points() << std::endl;
+    }
+  }
+  data_.push_back(ss.str());
+
+  ss.str("");
   ss << "POINT_DATA " << num_points << std::endl;
   data_.push_back(ss.str());
 
