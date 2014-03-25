@@ -251,6 +251,11 @@ void Brick8::AddInitialStresses(int direction,
  * Element stress recovery.
  */
 void Brick8::recoverStresses() {
+  // Quick return if inactive
+  if (!(groupdata_->active)) {
+    return;
+  }
+
   static Vector sigma(6);
   static Matrix E(8, 8);
   const double d = 0.125;
