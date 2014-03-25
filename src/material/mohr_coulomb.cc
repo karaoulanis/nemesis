@@ -225,7 +225,7 @@ void MohrCoulomb::set_strain(const Vector& De) {
   // creep
   double Dt =10000.;
   double eta = 100.;
-  sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
+  // sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
   // aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
 }
 /**
