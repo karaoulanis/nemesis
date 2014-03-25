@@ -79,7 +79,7 @@ void ConvergenceNorm::NewStep() {
   }
   ro = sqrt(ro);
   // uo = sqrt(uo);
-  wo = abs(wo);
+  wo = fabs(wo);
 }
 
 int ConvergenceNorm::Update() {
@@ -108,7 +108,7 @@ int ConvergenceNorm::Update() {
   }
   ri = sqrt(ri);
   // ui = sqrt(ui);
-  wi = abs(wi);
+  wi = fabs(wi);
 
   /// @todo Check if by setting to zero has any problems.
   if (num::smaller(ro, 1e-9)) {
