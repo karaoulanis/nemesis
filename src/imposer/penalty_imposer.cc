@@ -108,8 +108,8 @@ int PenaltyImposer::impose(Model* model) {
     model->addModelElement(model_elem);
     /// @todo Remove.
     // print
-    std::cout << model_elem->get_constraint()->get_id() <<": \t";
-    Containers::vector_print(model_elem->get_FTable());
+    // std::cout << model_elem->get_constraint()->get_id() <<": \t";
+    // Containers::vector_print(model_elem->get_FTable());
   }
 
   // Step 3.: Remove inactive dofs.
@@ -151,6 +151,6 @@ int PenaltyImposer::impose(Model* model) {
   // Set the model as constrained
   model->set_constrained(true);
 
-  model->print();
+  // model->print();
   return 0;
 }
