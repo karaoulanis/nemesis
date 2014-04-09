@@ -140,6 +140,8 @@
     <File Name="../../src/elements/brick8b.cc"/>
     <File Name="../../src/elements/beam2e.cc"/>
     <File Name="../../src/elements/quad4_disp_plain.cc"/>
+    <File Name="../../src/elements/shellMITC4.cc"/>
+    <File Name="../../src/elements/shellMITC4.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="exception">
     <File Name="../../src/exception/sexception.h"/>

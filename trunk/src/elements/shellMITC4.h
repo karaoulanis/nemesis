@@ -23,39 +23,53 @@
 // Author(s): F.E. Karaoulanis (fkar@nemesis-project.org)
 // *****************************************************************************
 
-#ifndef SRC_MATERIAL_SHELL_MATERIAL_H_
-#define SRC_MATERIAL_SHELL_MATERIAL_H_
+#ifndef SRC_ELEMENTS_SHELLMITC4_H_
+#define SRC_ELEMENTS_SHELLMITC4_H_
 
-#include "material/material.h"
-#include "numeric/matrix.h"
-#include "numeric/vector.h"
+#include <vector>
+#include "elements/element.h"
 
-/**
- * The Shell Material Class.
- */
-class ShellMaterial: public Material {
+class MatPoint;
+class ShellMaterial;
+
+class ShellMITC4: public Element {
  public:
-  ShellMaterial();
-  ShellMaterial(int id, double E, double nu, double thickness, double rho,
-                double aT);
-  ~ShellMaterial();
+  // Constructors and Destructor
+  ShellMITC4();
+  ShellMITC4(int id,
+        std::vector<Node*> nodes,
+        ShellMaterial* material);
+  ~ShellMITC4();
 
-  ShellMaterial* get_clone();
-  void set_strain(const Vector& De);
-  const Matrix& get_C();
-  void set_stress(const Vector& s);
-  void addStress(const Vector& s);
-  const Vector& get_stress();
-  bool isPlastic();
+  const Matrix& get_K();
+  const Matrix& get_M();
+  const Vector& get_R();
+
+  void Update();
   void Commit();
-  void Save(std::ostream* os);
-  double get_thickness() const;
-  
- private:
-  Vector sTrial;
-  Vector sConvg;
-  Vector eTrial;
-  Vector eTotal;
-  static Matrix C;
+
+  void AddInitialStresses(int direction, double h1, double s1,
+                          double h2, double s2, double K0);
+  void recoverStresses();
+
+  void FindShapeFunctions();
+  void FindBasis();
+
+  void FormB(Matrix* B, const Matrix& Bm, const Matrix& Bb, const Matrix& Bs);
+  void FormBm(Matrix* Bm, int node, int gp);
+  void FormBb(Matrix* Bb, int node, int gp);
+  void FormBd(Vector* Bd, int node, int gp);
+  void FormBs(Matrix* Bs, int node, int gp);
+
+ protected:
+  std::vector<ShellMaterial*> materials_;
+  static double shp_[3][4][4];
+  static double detJ_[4];
+  double gps_[4][2];
+  double Ktt_;
+  Vector v1_;
+  Vector v2_;
+  Vector v3_;
+  double xl_[2][4];
 };
-#endif  // SRC_MATERIAL_SHELL_MATERIAL_H_
+#endif  // SRC_ELEMENTS_SHELLMITC4_H_

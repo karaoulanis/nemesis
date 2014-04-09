@@ -72,6 +72,7 @@
 #include "elements/quad4e.h"
 #include "elements/quad4i.h"
 #include "elements/sdof_element.h"
+#include "elements/shellMITC4.h"
 #include "elements/spring.h"
 #include "elements/tetrahedron4_disp.h"
 #include "elements/timoshenko2d.h"
@@ -107,6 +108,7 @@
 #include "material/multiaxial_elastic.h"
 #include "material/plane_stress.h"
 #include "material/sdof_material.h"
+#include "material/shell_material.h"
 #include "material/spring_contact.h"
 #include "material/spring_elastic.h"
 #include "material/spring_material.h"
@@ -502,6 +504,20 @@ static PyObject* pyMaterial_Elastic(PyObject* /*self*/, PyObject *args) {
   return Py_None;
 }
 
+static PyObject* pyMaterial_Shell(PyObject* /*self*/, PyObject *args) {
+  int id;
+  double E = 0., nu = 0., thickness = 0., rho = 0., aT = 0.;
+  if (!PyArg_ParseTuple(args, "iddd|dd",
+                        &id, &E, &nu, &thickness, &rho, &aT)) {
+    return NULL;
+  }
+  Material* pMaterial;
+  pMaterial = new ShellMaterial(id, E, nu, thickness, rho, aT);
+  pD->add(pD->get_materials(), pMaterial);
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
 static PyObject* pyMaterial_DuncanChang(PyObject* /*self*/, PyObject* args) {
   int id;
   double E, nu, c, phi, m, Rf, pa, rho = 0, aT = 0;
@@ -807,8 +823,10 @@ static PyMethodDef MaterialMethods[] =  {
     METH_VARARGS, "Define a Drucker-Prager type material."},
   {"modifiedCamClay",       pyMaterial_ModifiedCamClay,
     METH_VARARGS, "Define a Modified Cam-Clay type material."},
-  {"LadeDuncan",          pyMaterial_LadeDuncan,
+  {"LadeDuncan",            pyMaterial_LadeDuncan,
     METH_VARARGS, "Define a Lade-Duncan type material."},
+  {"shell",                 pyMaterial_Shell,
+    METH_VARARGS, "Define a material for shells."},
   {"creep",           pyMaterial_Creep,
     METH_VARARGS, "Define a creep material."},
   {NULL, NULL, 0, NULL}
@@ -1273,6 +1291,54 @@ static PyObject* pyElement_Brick8i(PyObject* /*self*/, PyObject* args) {
   }
   // Create element
   Brick8i* elem = new Brick8i(id, nodes, material);
+  // Add element to the domain/group
+  try {
+    pD->add(pD->get_elements(), elem);
+    Group* group = pD->get<Group>(pD->get_groups(), current_group);
+    group->AddElement(elem);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Py_INCREF(Py_None);
+  return Py_None;
+}
+
+/**
+ * Create an MITC4 shell element.
+ *
+ */
+static PyObject* pyElement_ShellMITC4(PyObject* /*self*/, PyObject* args) {
+  // Local variables
+  int id, n1, n2, n3, n4, mat;
+  // Get data
+  if (!PyArg_ParseTuple(args, "iiiii",
+                        &id, &n1, &n2, &n3, &n4, &mat)) {
+    return NULL;
+  }
+  // Get node pointers from domain
+  std::vector<Node*> nodes = std::vector<Node*>(8);
+  try {
+    nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
+    nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
+    nodes[2] = pD->get<Node>(pD->get_nodes(), n3);
+    nodes[3] = pD->get<Node>(pD->get_nodes(), n4);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Get material pointer from domain
+  ShellMaterial* material;
+  try {
+    Material* m = pD->get<Material>(pD->get_materials(), mat);
+    /// @todo Check material before casting
+    material = static_cast<ShellMaterial*>(m);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  // Create element
+  ShellMITC4* elem = new ShellMITC4(id, nodes, material);
   // Add element to the domain/group
   try {
     pD->add(pD->get_elements(), elem);
@@ -1855,6 +1921,8 @@ static PyMethodDef ElementMethods[] = {
     METH_VARARGS, "Define a 8-Noded Bbar brick."},
   {"brick8i", pyElement_Brick8i,
     METH_VARARGS, "Define a 8-Noded non-conforming brick."},
+  {"shellMITC", pyElement_ShellMITC4,
+    METH_VARARGS, "Define a 4-Node MITC4 shell element."},
   {"data",      pyElement_Data,
     METH_VARARGS, "Access to the element data."},
   {NULL, NULL, 0, NULL}
