@@ -298,6 +298,7 @@ double Domain::get_gravity_accl() {
 
 // export
 void Domain::ExportVTK() {
+  return;
   std::vector<std::string> data_;
   data_.push_back("# vtk DataFile Version 3.0");
   data_.push_back("Author: F.E. Karaoulanis");

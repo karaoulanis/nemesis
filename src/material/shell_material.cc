@@ -111,6 +111,10 @@ void ShellMaterial::Commit() {
   sConvg = sTrial;
 }
 
+double ShellMaterial::get_thickness() const {
+  return MatParams[ 2]; 
+}
+
 void ShellMaterial::Save(std::ostream* os) {
   // start saving
   (*os) << "{";
