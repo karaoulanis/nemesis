@@ -108,14 +108,13 @@ ShellMITC4::ShellMITC4(int id, std::vector<Node*> nodes,
   Vector s(6);
   const Matrix& C = material->get_C();
   s[0] = C(0, 0);
-  s[1] = C(0, 1);
-  s[2] = C(0, 2);
-  s[3] = C(1, 1);
-  s[4] = C(1, 2);
-  s[5] = C(2, 2);
+  s[1] = C(1, 1);
+  s[2] = C(2, 2);
+  s[3] = C(1, 0);
+  s[4] = C(2, 1);
+  s[5] = C(2, 0);
   Vector eig = s.Eigenvalues();
   Ktt_ = std::min(eig[0], std::min(eig[1], eig[2]));
-  
   // Basis
   this->FindBasis();
 }
@@ -134,36 +133,34 @@ const Matrix& ShellMITC4::get_K() {
   // Static variables and references
   Matrix &K=*myMatrix;
   K.Clear();
-
   this->FindShapeFunctions();
   
   Matrix Bmemb(3, 2);
   Matrix Bbend(3, 2);
   Matrix Bshea(2, 3);
-  
+  Vector Da(6);
+  Vector Db(6);
+  Matrix Ba(8, 6);
+  Matrix Bb(8, 6);
+
   for (unsigned k = 0; k < 4; k++) {
     const Matrix& C = materials_[k]->get_C();
-    
     for (unsigned a = 0; a < 4; a++) {
       this->FormBm(&Bmemb, a, k);
       this->FormBb(&Bbend, a, k);
       this->FormBs(&Bshea, a, k);
       Bbend *= -1;
-      Matrix Ba(8, 6);
       this->FormB(&Ba, Bmemb, Bbend, Bshea);
-      Vector Da(6);
       this->FormBd(&Da, a, k);
-  
-      for (unsigned b = 0; b < 4; a++) {
+      for (unsigned b = 0; b < 4; b++) {
         this->FormBm(&Bmemb, b, k);
         this->FormBb(&Bbend, b, k);
         this->FormBs(&Bshea, b, k);
-        Matrix Bb(8, 6);
         this->FormB(&Bb, Bmemb, Bbend, Bshea);
-        Vector Db(6);
         this->FormBd(&Db, b, k);
-        
-        Matrix BB = (Transpose(Ba) * C * Bb) * detJ_[k];
+        ///@todo Remove the following if changed in the Matrix operator=
+        Matrix BB(6, 6, 0.);
+        BB = ((Transpose(Ba) * C) * Bb) * detJ_[k];
         for (unsigned i = 0; i < 6; i++) {
           for (unsigned j = 0; j < 6; j++) {
             K(6 * a + i, 6 * b + j) += BB(i, j) + Ktt_ * Da[i] * Db[j] * detJ_[k];
@@ -172,6 +169,7 @@ const Matrix& ShellMITC4::get_K() {
       }
     }
   }
+
   // Multiply by facK (active/deactivated)
   double facK = groupdata_->active ? groupdata_->factor_K : 1e-7;
   K *= facK; 
@@ -273,6 +271,7 @@ const Vector& ShellMITC4::get_R() {
   }          
   F *= facG;
   R -= F;
+  //report(R, "R", 12, 4);
 
   // -facP*ElementalLoads
   R-=facP*P;
@@ -348,12 +347,12 @@ void ShellMITC4::FindShapeFunctions() {
       }
     }
 
-    detJ_[k] = J[0][0] * J[2][2] - J[0][1] * J[1][0];
+    detJ_[k] = J[0][0] * J[1][1] - J[0][1] * J[1][0];
     double Jinv[2][2];
-    Jinv[0][0] =  J[2][2] / detJ_[k];
+    Jinv[0][0] =  J[1][1] / detJ_[k];
     Jinv[0][1] = -J[0][1] / detJ_[k];
     Jinv[1][0] = -J[1][0] / detJ_[k];
-    Jinv[1][1] =  J[1][1] / detJ_[k];
+    Jinv[1][1] =  J[0][0] / detJ_[k];
 
     for (unsigned i = 0; i < 4; i++) {
       double temp   = shp_[0][i][k] * Jinv[0][0] + shp_[1][i][k] * Jinv[1][0];
@@ -378,22 +377,29 @@ void ShellMITC4::recoverStresses() {
 }
 
 void ShellMITC4::FindBasis() {
+  v1_.Resize(3);
   v1_[0] = 0.5 * (x(2, 0) + x(1, 0) - x(3, 0) - x(0, 0));
   v1_[1] = 0.5 * (x(2, 1) + x(1, 1) - x(3, 1) - x(0, 1));
+  v1_[2] = 0.5 * (x(2, 2) + x(1, 2) - x(3, 2) - x(0, 2));
+  v2_.Resize(3);
   v2_[0] = 0.5 * (x(3, 0) + x(2, 0) - x(1, 0) - x(0, 0));
   v2_[1] = 0.5 * (x(3, 1) + x(2, 1) - x(1, 1) - x(0, 1));
+  v2_[2] = 0.5 * (x(3, 2) + x(2, 2) - x(1, 2) - x(0, 2));
   v1_.Normalize();
   double alpha = v1_ * v2_;
   v2_ -= alpha * v1_;
   v2_.Normalize();
+  ///@todo Remove Resize if is set in vector operator=.
+  v3_.Resize(3);
   v3_ = Cross(v1_, v2_);
   for (unsigned i = 0; i < 4; i++) {
-    xl_[0][i] = x(i, 0) * v1_[0] + x(i, 1) * v1_[1];
-    xl_[1][i] = x(i, 0) * v1_[0] + x(i, 1) * v1_[1];
+    xl_[0][i] = x(i, 0) * v1_[0] + x(i, 1) * v1_[1] + x(i, 2) * v1_[2];
+    xl_[1][i] = x(i, 0) * v2_[0] + x(i, 1) * v2_[1] + x(i, 2) * v2_[2];
   }
 }
 
 void ShellMITC4::FormBm(Matrix* Bm, int node, int gp) {
+  Bm->Clear();
   (*Bm)(0, 0) = shp_[0][node][gp];
   (*Bm)(1, 1) = shp_[1][node][gp];
   (*Bm)(2, 0) = shp_[1][node][gp];
@@ -401,6 +407,7 @@ void ShellMITC4::FormBm(Matrix* Bm, int node, int gp) {
 }
 
 void ShellMITC4::FormBb(Matrix* Bb, int node, int gp) {
+  Bb->Clear();
   (*Bb)(0, 1) = -shp_[0][node][gp];
   (*Bb)(1, 0) =  shp_[1][node][gp];
   (*Bb)(2, 0) =  shp_[0][node][gp];
@@ -408,6 +415,7 @@ void ShellMITC4::FormBb(Matrix* Bb, int node, int gp) {
 }
 
 void ShellMITC4::FormBd(Vector* Bd, int node, int gp) {
+  Bd->Clear();
   double B1 = -0.5 * shp_[1][node][gp];
   double B2 = +0.5 * shp_[0][node][gp];
   double B6 =       -shp_[2][node][gp];
@@ -429,7 +437,7 @@ void ShellMITC4::FormBs(Matrix* Bs, int node, int gp) {
   double dx41 = xl_[0][3] - xl_[0][0];
   double dy41 = xl_[1][3] - xl_[1][0];
   
-  Matrix G(4, 12);
+  Matrix G(4, 12, 0.);
   G( 0,  0) = -0.50;
   G( 0,  1) = -0.25 * dy41;
   G( 0,  2) =  0.25 * dx41;
@@ -465,19 +473,20 @@ void ShellMITC4::FormBs(Matrix* Bs, int node, int gp) {
 
   double alph = atan(Ay / Ax);
   double beta = 0.5 * num::pi - atan(Cx / Cy);
-  Matrix Rot(2, 2);
+  Matrix Rot(2, 2, 0.);
   Rot(0, 0) =  sin(beta);
   Rot(0, 1) = -sin(alph);
   Rot(1, 0) = -cos(beta);
   Rot(1, 1) =  cos(alph);
      
-  Matrix Ms(2, 4);
+  Matrix Ms(2, 4, 0.);
   Ms(1, 0) = 1.0 - gps_[gp][0];
   Ms(0, 1) = 1.0 - gps_[gp][1];
   Ms(1, 2) = 1.0 + gps_[gp][0];
   Ms(0, 3) = 1.0 + gps_[gp][1];
   
-  Matrix Bsv = Ms * G;
+  Matrix Bsv(2, 12, 0.);
+  Bsv = Ms * G;
 
   double r1 = Cx + gps_[gp][0] * Bx;
   double r2 = Ax + gps_[gp][0] * Bx;
@@ -491,8 +500,9 @@ void ShellMITC4::FormBs(Matrix* Bs, int node, int gp) {
   for (unsigned j = 0; j < 12; j++) {
     Bsv(0, j) = Bsv(0, j) * r1 / (8.0 * detJ_[gp]);
     Bsv(1, j) = Bsv(1, j) * r2 / (8.0 * detJ_[gp]);
-  }      
-  Matrix Bss = Rot * Bsv;
+  }
+  Matrix Bss(2, 12, 0.); 
+  Bss = Rot * Bsv;
   
   for (unsigned p = 0; p < 3; p++) {
     (*Bs)(0, p) = Bss(0, node * 3 + p);
@@ -504,19 +514,22 @@ void ShellMITC4::FormBs(Matrix* Bs, int node, int gp) {
 void ShellMITC4::FormB(Matrix* B, const Matrix& Bm, const Matrix& Bb,
                        const Matrix& Bs) {
   
-  Matrix Gmem = Matrix(2, 3);
+  Matrix Gmem = Matrix(2, 3, 0.);
   Gmem(0, 0) = v1_[0];
   Gmem(0, 1) = v1_[1];
   Gmem(0, 2) = v1_[2];
   Gmem(1, 0) = v2_[0];
   Gmem(1, 1) = v2_[1];
   Gmem(1, 2) = v2_[2];
-  Matrix BmembraneShell = Bm * Gmem;
+  Matrix BmembraneShell(3, 3, 0.);
+  BmembraneShell = Bm * Gmem;
+ 
+  Matrix Gbend(2, 3, 0.);
+  Gbend = Gmem;
+  Matrix BbendShell(3, 3, 0.);
+  BbendShell = Bb * Gbend;
   
-  Matrix Gbend = Gmem;
-  Matrix BbendShell = Bb * Gbend;
-  
-  Matrix Gshear = Matrix(3, 6);
+  Matrix Gshear(3, 6, 0.);
   Gshear(0, 0) = v3_[0];
   Gshear(0, 1) = v3_[1];
   Gshear(0, 2) = v3_[2];
@@ -527,7 +540,10 @@ void ShellMITC4::FormB(Matrix* B, const Matrix& Bm, const Matrix& Bb,
   Gshear(2, 4) = v2_[1];
   Gshear(2, 5) = v2_[2];
 
-  Matrix BshearShell = Bs * Gshear;
+  Matrix BshearShell(2, 6, 0.);
+  BshearShell = Bs * Gshear;
+
+  B->Clear();
 
   // membrane terms 
   for (unsigned p = 0; p < 3; p++) {
@@ -535,7 +551,7 @@ void ShellMITC4::FormB(Matrix* B, const Matrix& Bm, const Matrix& Bb,
       (*B)(p, q) = BmembraneShell(p, q);
     }
   }
-
+  
   // bending terms
   for (unsigned p = 3; p < 6; p++) {
     for (unsigned q = 3; q < 6; q++) {
@@ -545,7 +561,7 @@ void ShellMITC4::FormB(Matrix* B, const Matrix& Bm, const Matrix& Bb,
 
   // shear terms 
   for (unsigned p = 0; p < 2; p++) {
-    for (unsigned q = 3; q < 6; q++) {
+    for (unsigned q = 0; q < 6; q++) {
       (*B)(p + 6, q) = BshearShell(p, q);
     }
   }

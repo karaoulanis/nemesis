@@ -1312,12 +1312,12 @@ static PyObject* pyElement_ShellMITC4(PyObject* /*self*/, PyObject* args) {
   // Local variables
   int id, n1, n2, n3, n4, mat;
   // Get data
-  if (!PyArg_ParseTuple(args, "iiiii",
+  if (!PyArg_ParseTuple(args, "iiiiii",
                         &id, &n1, &n2, &n3, &n4, &mat)) {
     return NULL;
   }
   // Get node pointers from domain
-  std::vector<Node*> nodes = std::vector<Node*>(8);
+  std::vector<Node*> nodes = std::vector<Node*>(4);
   try {
     nodes[0] = pD->get<Node>(pD->get_nodes(), n1);
     nodes[1] = pD->get<Node>(pD->get_nodes(), n2);
@@ -1921,7 +1921,7 @@ static PyMethodDef ElementMethods[] = {
     METH_VARARGS, "Define a 8-Noded Bbar brick."},
   {"brick8i", pyElement_Brick8i,
     METH_VARARGS, "Define a 8-Noded non-conforming brick."},
-  {"shellMITC", pyElement_ShellMITC4,
+  {"shellMITC4", pyElement_ShellMITC4,
     METH_VARARGS, "Define a 4-Node MITC4 shell element."},
   {"data",      pyElement_Data,
     METH_VARARGS, "Access to the element data."},

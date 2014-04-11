@@ -298,7 +298,6 @@ double Domain::get_gravity_accl() {
 
 // export
 void Domain::ExportVTK() {
-  return;
   std::vector<std::string> data_;
   data_.push_back("# vtk DataFile Version 3.0");
   data_.push_back("Author: F.E. Karaoulanis");
@@ -333,35 +332,58 @@ void Domain::ExportVTK() {
   
   ///@todo avoid running the same loop twice for getting the number of points
   int num_elems = 0;
+  int num_elem_nodes = 0;
   for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
     if (e->second->IsActive()) {
       num_elems++;
+      num_elem_nodes += 1 + e->second->get_nodes().size();
     }
   }
 
   ss.str("");
   ss  << "CELLS "
-      << num_elems << " "
-      << (1 + 8) * num_elems << std::endl;
-
+      << num_elems      << " "
+      << num_elem_nodes << std::endl;
   for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
     if (e->second->IsActive()) {
-      ss  << "8 "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[0]->get_id()] << " "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[1]->get_id()] << " "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[2]->get_id()] << " "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[3]->get_id()] << " "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[4]->get_id()] << " "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[5]->get_id()] << " "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[6]->get_id()] << " "
-          << std::setw(6) << nodes_index[e->second->get_nodes()[7]->get_id()] << std::endl;
+      
+      if (e->second->get_nodes().size() == 8) {  // eight node bricks
+        ss  << "8 "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[0]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[1]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[2]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[3]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[4]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[5]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[6]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[7]->get_id()] << std::endl;
+      } else if (e->second->get_nodes().size() == 4) {  // shells, quads
+        ss  << "4 "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[0]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[1]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[2]->get_id()] << " "
+            << std::setw(6) << nodes_index[e->second->get_nodes()[3]->get_id()] << std::endl;      
+      } else {
+        std::cout << "Element type not supported." << std::endl;
+      }
+
     }
   }
   ss << std::endl;
+
   ss << "CELL_TYPES " << num_elems << std::endl;
-  for (int i = 0; i < num_elems; i++) {
-    ss << 12 << std::endl;
+  for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
+    if (e->second->IsActive()) {
+      if (e->second->get_nodes().size() == 8) {  // eight node bricks
+        ss << 12 << std::endl;
+      } else if (e->second->get_nodes().size() == 4) {  // shells, quads
+        ss <<  9 << std::endl;
+      } else {
+        std::cout << "Element type not supported." << std::endl;
+      }
+    }
   }
+ 
   data_.push_back(ss.str());
 
   ss.str("");
@@ -484,6 +506,6 @@ void Domain::ExportVTK() {
   std::ofstream file(ss.str().c_str());
   for (unsigned i = 0; i < data_.size(); i++) {
     file << data_[i] << std::endl;
-  } 
+  }
   lc++;
 }

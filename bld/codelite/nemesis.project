@@ -394,7 +394,7 @@
         <Library Value="lapack"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="$(IntermediateDirectory)/../../../bin/$(ProjectName)" IntermediateDirectory="./Debug" Command="../../bin/$(ProjectName)" CommandArguments="-p hb_visco.slv" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)/../../../dat/hb" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <General OutputFile="$(IntermediateDirectory)/../../../bin/$(ProjectName)" IntermediateDirectory="./Debug" Command="../../bin/$(ProjectName)" CommandArguments="-p scordelis_lo.slv" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)/../../../dat/tunnel" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[]]>
       </Environment>
