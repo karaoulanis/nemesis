@@ -71,6 +71,7 @@ Vector::~Vector() {
 }
 
 Vector& Vector::operator=(const Vector& v) {
+  ///@todo Set new size equal to the given one.
   #ifdef _DEBUG
   num::check::array_size(v.size_, size_);
   #endif
@@ -90,7 +91,7 @@ const Vector& Vector::Eigenvalues() {
   int LWORK = 102;
   int INFO;
   static Vector res(3);
-static Vector A(9);
+  static Vector A(9);
   static Vector WORK(LWORK);
   res.Clear();
 

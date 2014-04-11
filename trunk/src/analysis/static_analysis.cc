@@ -104,6 +104,7 @@ int StaticAnalysis::Run(LoadCase* loadcase, int num_loadsteps) {
 
   // Now that model is complete, the SOE can be initialized
   pA->get_soe()->set_size();
+  pA->get_soe()->zeroX();
 
   // Initialize
   loadcase->Initialize();
