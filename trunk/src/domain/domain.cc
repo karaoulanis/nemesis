@@ -229,6 +229,11 @@ void Domain::Initialize() {
   default_groupdata.factor_S = 1.0;
   default_groupdata.factor_G = 1.0;
   default_groupdata.factor_P = 1.0;
+
+  for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
+    n->second->set_active(false);
+  }
+
   for (ElementIterator e = elements_.begin(); e != elements_.end(); e++) {
 //    e->second->SetGroupData(default_groupdata);
     e->second->SetActiveNodes();
