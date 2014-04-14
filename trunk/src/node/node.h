@@ -80,7 +80,8 @@ class Node: public DomainObject {
 
   // Set/check whether node is active.
   // If all connected elements are not active then node is also not active.
-  void SetActive(bool active);
+  void set_active(bool active);
+  void AddActive(bool active);
   bool IsActive();
 
   // Activated Dofs
