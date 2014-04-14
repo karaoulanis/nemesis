@@ -255,7 +255,10 @@ void Brick8::recoverStresses() {
   if (!(groupdata_->active)) {
     return;
   }
-
+  ///@todo nasty fix ->remove
+  if (id_ > 100000) {
+    return;
+  }
   static Vector sigma(6);
   static Matrix E(8, 8);
   const double d = 0.125;
