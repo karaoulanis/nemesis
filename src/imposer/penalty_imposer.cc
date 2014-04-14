@@ -136,11 +136,18 @@ int PenaltyImposer::impose(Model* model) {
     Element* elem = ei->second;
     const std::vector<Node*> nodes = elem->get_nodes();
     // Copy ftable from the first node.
-    std::vector<int> ftable = ftables[nodes[0]->get_id()];
+    /*std::vector<int> ftable = ftables[nodes[0]->get_id()];
     for (unsigned i = 1; i < nodes.size(); i++) {
       // Append ftables from the rest of the nodes
       const std::vector<int> next_ftable = ftables[nodes[i]->get_id()];
       ftable.insert(ftable.end(), next_ftable.begin(), next_ftable.end());
+    }*/
+    std::vector<int> ftable;
+    const std::vector<int> local_dofs = elem->get_local_nodal_dofs();
+    for (unsigned i = 0; i < nodes.size(); i++) {
+      for (unsigned j = 0; j < local_dofs.size(); j++) {
+        ftable.push_back(ftables[nodes[i]->get_id()][local_dofs[j]]);
+      }
     }
     // Create model element
     StandardModelElement* model_elem = new StandardModelElement(ftable, elem);
