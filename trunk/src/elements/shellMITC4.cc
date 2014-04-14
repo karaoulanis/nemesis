@@ -192,6 +192,7 @@ const Vector& ShellMITC4::get_R() {
   // Static variables and references
   static Vector sigma(6);
   static Matrix Ba(6, 3);
+  Vector Du(6);
   Vector& R=*myVector;
   R.Clear();
   // Quick return if not active
@@ -213,8 +214,8 @@ const Vector& ShellMITC4::get_R() {
     for (unsigned a = 0; a < 4; a++) {
       Vector Da(6);
       this->FormBd(&Da, a, k);
-      Vector Du  = nodes_[a]->get_disp_trial();
-      Du        -= nodes_[a]->get_disp_convg();
+      Du  = nodes_[a]->get_disp_trial();
+      Du -= nodes_[a]->get_disp_convg();
       eps_drill += Da * Du;
     }
     double tau_drill = Ktt_ * eps_drill;
@@ -271,11 +272,12 @@ const Vector& ShellMITC4::get_R() {
   }          
   F *= facG;
   R -= F;
-  //report(R, "R", 12, 4);
 
   // -facP*ElementalLoads
   R-=facP*P;
-  // Return
+  //char id_str[64];
+  //snprintf(id_str, 64, "%d", id_);
+  //report(R, id_str);
   return R;
 }
 
@@ -288,6 +290,7 @@ void ShellMITC4::Update() {
   static Vector u(24);
   static Vector epsilon(8);
   static Matrix B;
+  Vector Du(6);
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return;
@@ -305,8 +308,8 @@ void ShellMITC4::Update() {
       this->FormBs(&Bshea, a, k);
       Matrix Ba(8, 6);
       this->FormB(&Ba, Bmemb, Bbend, Bshea);
-      Vector Du  = nodes_[a]->get_disp_trial();
-      Du        -= nodes_[a]->get_disp_convg();
+      Du  = nodes_[a]->get_disp_trial();
+      Du -= nodes_[a]->get_disp_convg();
       epsilon += Ba * Du;
     }
     materials_[k]->set_strain(epsilon);
@@ -318,8 +321,8 @@ void ShellMITC4::Update() {
  * Element commit.
  */
 void ShellMITC4::Commit() {
-/*  for (unsigned int i = 0; i < myMatPoints.size(); i++)
-    myMatPoints[i]->get_material()->Commit();*/
+  for (unsigned int i = 0; i < materials_.size(); i++)
+    materials_[i]->Commit();
 }
 
 /**
