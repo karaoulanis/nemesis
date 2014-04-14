@@ -95,8 +95,12 @@ double Node::get_x3() {
   return x3;
 }
 
-void Node::SetActive(bool active) {
-  active ? ++active_ : --active_;
+void Node::set_active(bool active) {
+  active_ = active;
+}
+
+void Node::AddActive(bool active) {
+  active ? ++active_ : active_;
 }
 
 bool Node::IsActive() {
