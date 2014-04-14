@@ -29,6 +29,7 @@
 #include "group/group_data.h"
 #include "material/material.h"
 #include "node/node.h"
+#include "main/nemesis_debug.h"
 
 Matrix** Element::theStaticMatrices = 0;
 Vector** Element::theStaticVectors = 0;
@@ -257,7 +258,7 @@ void Element::SetGroupData(const GroupData* groupdata) {
 
 void Element::SetActiveNodes() {
     for (unsigned i = 0; i < nodes_.size(); i++) {
-    nodes_[i]->SetActive(groupdata_->active);
+    nodes_[i]->AddActive(groupdata_->active);
   }
 }
 
