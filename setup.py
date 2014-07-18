@@ -125,7 +125,7 @@ if __name__ == '__main__':
     parser.add_argument('--def',
                         metavar='file',
                         dest = 'makefile_def',
-                        default = 'Makefile.def',
+                        default = 'Makefile.bak.def',
                         help = 'makefile def filename (default: Makefile.def)')
 
     parser.add_argument('--nocolor',
