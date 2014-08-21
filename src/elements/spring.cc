@@ -137,7 +137,7 @@ Spring::Spring(int id,
 Spring::~Spring() {
   delete mySpringMaterial;
 }
-void Spring::Update() {
+void Spring::Update(const double Dt) {
   static Vector du(2*dim_);
   du = this->get_disp_incrm();
   report(du, "du");

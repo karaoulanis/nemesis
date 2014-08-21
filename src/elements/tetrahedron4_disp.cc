@@ -218,7 +218,7 @@ const Vector& Tetrahedron4Disp::get_R() {
   return R;
 }
 
-void Tetrahedron4Disp::Update() {
+void Tetrahedron4Disp::Update(const double Dt) {
   if (!(groupdata_->active)) {
     return;
   }

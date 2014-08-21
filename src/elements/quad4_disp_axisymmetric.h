@@ -43,7 +43,7 @@ class Quad4DispAxisymmetric: public Quad4 {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void Update();
+  void Update(const double Dt=0.);
 };
 
 #endif  // SRC_ELEMENTS_QUAD4_DISP_AXISYMMETRIC_H_

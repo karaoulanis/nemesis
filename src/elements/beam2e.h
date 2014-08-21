@@ -46,7 +46,7 @@ class Beam2e: public Element {
   const Vector& get_R();
   const Vector& get_Rgrad();
 
-  void Update()           {return;}
+  void Update(const double Dt=0.)           {return;}
   void Commit()           {return;}
   void recoverStresses();
 

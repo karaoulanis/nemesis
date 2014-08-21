@@ -108,7 +108,7 @@ Bar::~Bar() {
 }
 
 
-void Bar::Update() {
+void Bar::Update(const double Dt) {
   static Vector du(2*dim_);
   du = this->get_disp_incrm();
     double dL = 0;

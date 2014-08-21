@@ -44,7 +44,7 @@ class Bar: public Element {
       int dim);
   ~Bar();
 
-  void Update();
+  void Update(const double Dt=0.);
   void Commit();
   const Matrix& get_M();
   const Vector& get_Reff();

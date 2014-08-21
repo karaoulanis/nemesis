@@ -190,7 +190,7 @@ const Vector& Triangle3::get_R() {
   return R;
 }
 
-void Triangle3::Update() {
+void Triangle3::Update(const double Dt) {
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return;
