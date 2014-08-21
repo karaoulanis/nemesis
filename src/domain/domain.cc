@@ -223,12 +223,12 @@ const Vector& Domain::get_eigen_values() {
 void Domain::Initialize() {
   /// @todo: rename as to be consistent
   // default groupdata for all elements
-  static GroupData default_groupdata;
-  default_groupdata.active = true;
-  default_groupdata.factor_K = 1.0;
-  default_groupdata.factor_S = 1.0;
-  default_groupdata.factor_G = 1.0;
-  default_groupdata.factor_P = 1.0;
+  // static GroupData default_groupdata;
+  // default_groupdata.active = true;
+  // default_groupdata.factor_K = 1.0;
+  // default_groupdata.factor_S = 1.0;
+  // default_groupdata.factor_G = 1.0;
+  // default_groupdata.factor_P = 1.0;
 
   for (NodeIterator n = nodes_.begin(); n != nodes_.end(); n++) {
     n->second->set_active(false);
