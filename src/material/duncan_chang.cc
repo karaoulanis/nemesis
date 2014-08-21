@@ -61,7 +61,7 @@ MultiaxialMaterial* DuncanChang::get_clone() {
 }
 
 
-void DuncanChang::set_strain(const Vector& De) {
+void DuncanChang::set_strain(const Vector& De, const double Dt) {
   eTrial = eTotal+De;
   sTrial=(this->get_C())*eTrial;
 }

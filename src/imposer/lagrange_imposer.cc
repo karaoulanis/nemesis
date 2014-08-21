@@ -163,6 +163,6 @@ int LagrangeImposer::impose(Model* model) {
 
   // Set the model as constrained
   model->set_constrained(true);
-  // model->print();
+  model->print();
   return 0;
 }

@@ -41,7 +41,7 @@ class ShellMaterial: public Material {
   ~ShellMaterial();
 
   ShellMaterial* get_clone();
-  void set_strain(const Vector& De);
+  void set_strain(const Vector& De, const double Dt=0.);
   const Matrix& get_C();
   void set_stress(const Vector& s);
   void addStress(const Vector& s);

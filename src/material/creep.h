@@ -40,7 +40,7 @@ class Creep: public MultiaxialMaterial {
         double k);
   ~Creep();
 
-  void set_strain(const Vector& De);
+  void set_strain(const Vector& De, const double Dt=0.);
   void Commit();
   const Matrix& get_C();
   bool isPlastic()              {return false;}

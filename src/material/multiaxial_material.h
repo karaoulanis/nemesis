@@ -46,7 +46,7 @@ class MultiaxialMaterial: public Material {
   ~MultiaxialMaterial();
 
   virtual MultiaxialMaterial* get_clone()=0;
-  virtual void set_strain(const Vector& De)=0;
+  virtual void set_strain(const Vector& De, const double Dt=0.)=0;
   virtual const Matrix& get_C()=0;
   void set_stress(const Vector& s);
   void addStress(const Vector& s);

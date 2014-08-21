@@ -60,7 +60,7 @@ ShellMaterial* ShellMaterial::get_clone() {
   return clone;
 }
 
-void ShellMaterial::set_strain(const Vector& De) {
+void ShellMaterial::set_strain(const Vector& De, const double Dt) {
   eTrial = eTotal + De;
   sTrial = sConvg + (this->get_C()) * De;
 }

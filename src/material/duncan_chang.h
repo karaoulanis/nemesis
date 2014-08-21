@@ -37,7 +37,7 @@ class DuncanChang: public MultiaxialMaterial {
   DuncanChang(int ID, double E, double nu, double c, double phi,
     double m, double Rf, double pa, double rho, double aT);
   MultiaxialMaterial* get_clone();
-  void set_strain(const Vector& De);
+  void set_strain(const Vector& De, const double Dt=0.);
   const Matrix& get_C();
   void Commit();
   void Save(std::ostream* os);

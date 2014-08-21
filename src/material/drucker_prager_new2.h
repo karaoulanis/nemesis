@@ -50,7 +50,7 @@ class DruckerPragerNew2: public MultiaxialMaterial {
   ~DruckerPragerNew2();
 
   MultiaxialMaterial* get_clone();
-  void set_strain(const Vector& De);
+  void set_strain(const Vector& De, const double Dt=0.);
   void Commit();
   const Matrix& get_C();
   bool isPlastic();
