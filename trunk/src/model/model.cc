@@ -165,8 +165,8 @@ void Model::clear() {
 }
 
 int Model::get_directed_graph(DirectedGraph* G) {
-  typedef graph_traits < DirectedGraph >::vertex_descriptor Vertex;
-  typedef graph_traits < DirectedGraph >::vertices_size_type size_type;
+  // typedef graph_traits < DirectedGraph >::vertex_descriptor Vertex;
+  // typedef graph_traits < DirectedGraph >::vertices_size_type size_type;
   typedef std::pair < int, int > Pair;
   std::set < Pair > theEdges;
   Pair Edge;
@@ -188,8 +188,8 @@ int Model::get_directed_graph(DirectedGraph* G) {
 }
 
 int Model::get_undirected_graph(UndirectedGraph* G) {
-  typedef graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
-  typedef graph_traits<UndirectedGraph>::vertices_size_type size_type;
+  // typedef graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
+  // typedef graph_traits<UndirectedGraph>::vertices_size_type size_type;
   typedef std::pair<int, int> Pair;
   std::set<Pair> theEdges;
   Pair Edge;
