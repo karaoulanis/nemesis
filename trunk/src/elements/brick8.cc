@@ -200,7 +200,7 @@ const Vector& Brick8::get_R() {
 /**
  * Element update.
  */
-void Brick8::Update() {
+void Brick8::Update(const double Dt) {
   // Static variables and references
   static Vector u(24);
   static Vector epsilon(6);

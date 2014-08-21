@@ -117,7 +117,7 @@ const Vector& Quad4DispPlain::get_R() {
   return R;
 }
 
-void Quad4DispPlain::Update() {
+void Quad4DispPlain::Update(const double Dt) {
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return;

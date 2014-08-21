@@ -47,7 +47,7 @@ class Spring: public Element {
          double yp2 = 1.,
          double yp3 = 0.);
   ~Spring();
-  void Update();
+  void Update(const double Dt=0.);
   void Commit();
   void recoverStresses();
 

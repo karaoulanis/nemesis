@@ -134,7 +134,7 @@ const Vector& Brick8i::get_R() {
 }
 
 
-void Brick8i::Update() {
+void Brick8i::Update(const double Dt) {
   // Check for a quick return
   if (!(groupdata_->active)) {
     return;

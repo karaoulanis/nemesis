@@ -136,7 +136,7 @@ const Vector& Quad4i::get_R() {
 /**
  * Element update.
  */
-void Quad4i::Update() {
+void Quad4i::Update(const double Dt) {
   // Check for a quick return
   if (!(groupdata_->active)) {
     return;

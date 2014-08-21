@@ -72,7 +72,7 @@ class Element: public DomainObject {
   virtual void AddInitialStresses(int direction, double h1, double s1,
                                   double h2, double s2, double K0);
 
-  virtual void Update()=0;
+  virtual void Update(const double Dt=0.)=0;
   virtual void Commit()=0;
 
   virtual const Vector& get_disp_trial();

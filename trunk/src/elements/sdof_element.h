@@ -44,7 +44,7 @@ class SDofElement: public Element {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void Update() {return;}
+  void Update(const double Dt=0.) {return;}
   void Commit() {return;}
  private:
   SDofMaterial* mySDofMaterial;

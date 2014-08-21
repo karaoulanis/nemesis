@@ -216,7 +216,7 @@ const Vector& Triangle6::get_R() {
   return R;
 }
 
-void Triangle6::Update() {
+void Triangle6::Update(const double Dt) {
   // Quick return if inactive
   if (!(groupdata_->active)) {
     return;

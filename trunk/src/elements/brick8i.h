@@ -41,7 +41,7 @@ class Brick8i: public Brick8 {
   const Matrix& get_K();
   const Matrix& get_M();
   const Vector& get_R();
-  void Update();
+  void Update(const double Dt=0.);
   void Commit();
   void get_B(Matrix* /*B*/, int /*node*/, int /*gPoint*/) {}
 

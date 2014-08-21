@@ -45,7 +45,7 @@ class Quad4e: public Quad4 {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void Update();
+  void Update(const double Dt=0.);
   void formKR();
   double get_J(double xi, double eta);
   void formTo(double xi, double eta);

@@ -284,7 +284,7 @@ const Vector& ShellMITC4::get_R() {
 /**
  * Element update.
  */
-void ShellMITC4::Update() {
+void ShellMITC4::Update(const double Dt) {
 
   // Static variables and references
   static Vector u(24);

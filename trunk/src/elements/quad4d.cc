@@ -117,7 +117,7 @@ const Vector& Quad4d::get_R() {
   return R;
 }
 
-void Quad4d::Update() {
+void Quad4d::Update(const double Dt) {
   static Vector u(8);
   static Vector epsilon(6);
   static Matrix Ba;

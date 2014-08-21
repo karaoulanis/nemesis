@@ -46,7 +46,7 @@ class Triangle6: public Element {
   const Matrix& get_M();
   const Vector& get_R();
 
-  void Update();
+  void Update(const double Dt=0.);
   void Commit();
 
   void get_shape_functions(MatPoint* pMatPoint, Matrix* N, double* detJ);
