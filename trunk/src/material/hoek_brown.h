@@ -45,7 +45,7 @@ class HoekBrown: public MultiaxialMaterial {
   ~HoekBrown();
 
   MultiaxialMaterial* get_clone();
-  void set_strain(const Vector& De);
+  void set_strain(const Vector& De, const double Dt=0.);
   void Commit();
   const Matrix& get_C();
   bool isPlastic();

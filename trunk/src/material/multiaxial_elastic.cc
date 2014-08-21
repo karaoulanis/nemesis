@@ -53,7 +53,7 @@ MultiaxialMaterial* MultiaxialElastic::get_clone() {
     new MultiaxialElastic(id_, E, nu, rho, aT, kx, ky, kz);
   return clone;
 }
-void MultiaxialElastic::set_strain(const Vector& De) {
+void MultiaxialElastic::set_strain(const Vector& De, const double Dt) {
   eTrial = eTotal+De;
   // sTrial=(this->get_C())*eTrial;
   sTrial = sConvg+(this->get_C())*De;
