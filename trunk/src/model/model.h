@@ -101,7 +101,7 @@ class Model {
   void incTrialVecs(const Vector& du, const Vector& dv, const Vector& da);
   void set_trial_disp(const Vector& u);
   void set_trial_vecs(const Vector& u, const Vector& v, const Vector& a);
-  void Update();
+  void Update(const double Dt=0.);
   void Commit();
   void clear();
 

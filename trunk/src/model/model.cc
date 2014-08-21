@@ -142,9 +142,9 @@ void Model::set_trial_vecs(const Vector& u, const Vector& a, const Vector& v) {
   for (unsigned i = 0; i < theModelNodes.size(); i++)
     theModelNodes[i]->set_trial_vecs(u, a, v);
 }
-void Model::Update() {
+void Model::Update(const double Dt) {
   for (unsigned i = 0; i < theModelElements.size(); i++)
-    theModelElements[i]->Update();
+    theModelElements[i]->Update(Dt);
 }
 void Model::Commit() {
   for (unsigned i = 0; i < theModelNodes.size(); i++)
