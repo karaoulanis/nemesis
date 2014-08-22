@@ -75,6 +75,7 @@ LoadCase::~LoadCase() {
   Containers::vector_delete(&sensitivityparameters_);
 }
 
+
 /**
  * Add a Load to the Loadcase.
  * The Load object should be first added to the Domain. Then a

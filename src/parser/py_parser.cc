@@ -2324,7 +2324,7 @@ static PyMethodDef InitialConditionsMethods[] =  {
 static PyObject* pyLC_Define(PyObject* /*self*/, PyObject* args) {
   int id;
   const char* label = 0;
-  if (!PyArg_ParseTuple(args, "i|s", &id, &label)) {
+  if (!PyArg_ParseTuple(args, "i|sd", &id, &label)) {
     return NULL;
   }
   LoadCase* loadcase;

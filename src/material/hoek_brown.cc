@@ -364,13 +364,14 @@ void HoekBrown::set_strain(const Vector& De, const double Dt) {
   // double Dt  = 10000.;
   // double eta = 100000.;
     //double Dt  = 1.;
-    //double eta = 10.;
+ 
     
     //sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
   // std::cout << sTrial[1] << std::endl;
   //aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
-  double Dt_eta = 0.02;
-  sTrial=(snn + Dt_eta * sTrial) / (1. + Dt_eta);
+  //double Dt_eta = 0.02;
+  double eta = 200.;
+  sTrial=(snn + Dt / eta * sTrial) / (1. + Dt / eta);
 }
 
 /**

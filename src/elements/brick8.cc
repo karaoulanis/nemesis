@@ -220,7 +220,7 @@ void Brick8::Update(const double Dt) {
       this->get_B(&B, a, k);
       add2(&epsilon, 3*a, B, u, 1.0, 1.0);
     }
-    myMatPoints[k]->get_material()->set_strain(epsilon);
+    myMatPoints[k]->get_material()->set_strain(epsilon, Dt);
   }
 }
 /**

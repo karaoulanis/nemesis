@@ -3,7 +3,7 @@
   <Project Name="nemesis" Path="nemesis.project" Active="Yes"/>
   <Project Name="nemesis_test" Path="nemesis_test.project"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="nemesis" ConfigName="Debug"/>
       <Project Name="nemesis_test" ConfigName="Debug"/>
     </WorkspaceConfiguration>

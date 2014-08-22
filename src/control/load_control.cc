@@ -93,7 +93,7 @@ void LoadControl::Predict() {
   // Find du and update model (predictor)
   du = DLambda*duT;
   pA->get_model()->incTrialDisp(du);
-  pA->get_model()->Update();
+  pA->get_model()->Update(Dt);
   Du = du;
 
   // Set num of achieved iterations to one
@@ -117,7 +117,7 @@ void LoadControl::Correct() {
 
   // Update displacements in the model
   pA->get_model()->incTrialDisp(du);
-  pA->get_model()->Update();
+  pA->get_model()->Update(Dt);
 
   // Increase number of iterations
   Io++;
