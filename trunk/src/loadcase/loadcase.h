@@ -48,6 +48,12 @@ class LoadCase: public DomainObject {
   void Initialize();
   void Finalize();
 
+  /**
+   * @brief Get time increment for this loadcase.
+   * @return The time increment.
+   */
+  double get_Dt() const;
+  
   // Add member functions
   void AddLoad(Load* pLoad);
   void AddGroupState(GroupState* pGroupState);
