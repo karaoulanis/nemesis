@@ -55,7 +55,7 @@ HoekBrown::HoekBrown()
  * @param alpha Empirically determined parameter
  */
 HoekBrown::HoekBrown(int id, MultiaxialMaterial* elastic, double si, double sp,
-                     double mb, double mbb, double alpha)
+                     double mb, double mbb, double alpha, double eta)
     : MultiaxialMaterial(id, 0., 0.),
       plastic(false),
       inaccurate(0),
@@ -72,6 +72,7 @@ HoekBrown::HoekBrown(int id, MultiaxialMaterial* elastic, double si, double sp,
   MatParams[2] = mb;
   MatParams[3] = mbb;
   MatParams[4] = alpha;
+  MatParams[5] = eta;
 
   // Material state
   // ePTrial.Resize(6, 0.); ePConvg.Resize(6, 0.);
@@ -112,8 +113,10 @@ MultiaxialMaterial* HoekBrown::get_clone() {
   double mb       = MatParams[ 2];
   double mbb      = MatParams[ 3];
   double alpha    = MatParams[ 4];
+  double eta      = MatParams[ 5];
   // Create clone and return
-  HoekBrown* clone = new HoekBrown(id, myElastic, sigma_ci, sp, mb, mbb, alpha);
+  HoekBrown* clone = new HoekBrown(id, myElastic, sigma_ci, sp, mb, mbb, alpha,
+                                   eta);
   return clone;
 }
 
@@ -370,8 +373,10 @@ void HoekBrown::set_strain(const Vector& De, const double Dt) {
   // std::cout << sTrial[1] << std::endl;
   //aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
   //double Dt_eta = 0.02;
-  double eta = 200.;
-  sTrial=(snn + Dt / eta * sTrial) / (1. + Dt / eta);
+  double eta = MatParams[5];
+  if (eta > 0.) {
+    sTrial=(snn + Dt / eta * sTrial) / (1. + Dt / eta);
+  }
 }
 
 /**

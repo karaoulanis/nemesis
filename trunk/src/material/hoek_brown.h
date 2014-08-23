@@ -41,7 +41,8 @@ class HoekBrown: public MultiaxialMaterial {
             double sp,
             double mb,
             double mbb,
-            double alpha);
+            double alpha,
+            double eta);
   ~HoekBrown();
 
   MultiaxialMaterial* get_clone();
