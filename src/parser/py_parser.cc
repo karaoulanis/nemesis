@@ -603,8 +603,9 @@ static PyObject* pyMaterial_Tresca(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyMaterial_HoekBrown(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double si, sp, mb, mbb, alpha;
-  if (!PyArg_ParseTuple(args, "iiddddd",
-                        &id, &elasticId, &si, &sp, &mb, &mbb, &alpha)) {
+  double eta = 0.;
+  if (!PyArg_ParseTuple(args, "iiddddd|d",
+                        &id, &elasticId, &si, &sp, &mb, &mbb, &alpha, &eta)) {
     return NULL;
   }
   MultiaxialMaterial* elastic;
@@ -615,7 +616,7 @@ static PyObject* pyMaterial_HoekBrown(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  Material* pMaterial = new HoekBrown(id, elastic, si, sp, mb, mbb, alpha);
+  Material* pMaterial = new HoekBrown(id, elastic, si, sp, mb, mbb, alpha, eta);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;
