@@ -564,7 +564,8 @@ static PyObject* pyMaterial_VonMises(PyObject* /*self*/, PyObject* args) {
 static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args) {
   int id, elasticId;
   double c, phi, alpha;
-  if (!PyArg_ParseTuple(args, "iiddd", &id, &elasticId, &c, &phi, &alpha))
+  double eta = 0.;
+  if (!PyArg_ParseTuple(args, "iiddd|d", &id, &elasticId, &c, &phi, &alpha, &eta))
     return NULL;
   MultiaxialMaterial* elastic;
   try {
@@ -574,7 +575,7 @@ static PyObject* pyMaterial_MohrCoulomb(PyObject* /*self*/, PyObject* args) {
     PyErr_SetString(PyExc_StandardError, e.what());
     return NULL;
   }
-  Material* pMaterial = new MohrCoulomb(id, elastic, c, phi, alpha);
+  Material* pMaterial = new MohrCoulomb(id, elastic, c, phi, alpha, eta);
   pD->add(pD->get_materials(), pMaterial);
   Py_INCREF(Py_None);
   return Py_None;

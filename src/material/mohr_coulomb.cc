@@ -39,7 +39,7 @@ MohrCoulomb::MohrCoulomb()
 }
 
 MohrCoulomb::MohrCoulomb(int id, MultiaxialMaterial* elastic, double c,
-                         double phi, double alpha)
+                         double phi, double alpha, double eta)
     : MultiaxialMaterial(id, 0., 0.),
       plastic(false),
       inaccurate(0) {
@@ -51,6 +51,7 @@ MohrCoulomb::MohrCoulomb(int id, MultiaxialMaterial* elastic, double c,
   MatParams[0] = c;
   MatParams[1] = phi;
   MatParams[2] = alpha;
+  MatParams[3] = eta;
   // Material state
   // ePTrial.Resize(6, 0.); ePConvg.Resize(6, 0.);
   // qTrial.Resize(6, 0.);  qConvg.Resize(6, 0.);
@@ -65,12 +66,13 @@ MohrCoulomb::~MohrCoulomb() {
 
 MultiaxialMaterial* MohrCoulomb::get_clone() {
   // Material parameters
-  int myID    = this->get_id();
-  double c    = MatParams[ 0];
-  double phi  = MatParams[ 1];
-  double alpha= MatParams[ 2];
+  int myID     = this->get_id();
+  double c     = MatParams[ 0];
+  double phi   = MatParams[ 1];
+  double alpha = MatParams[ 2];
+  double eta   = MatParams[ 3];
   // Create clone and return
-  MohrCoulomb* newClone = new MohrCoulomb(myID, myElastic, c, phi, alpha);
+  MohrCoulomb* newClone = new MohrCoulomb(myID, myElastic, c, phi, alpha, eta);
   return newClone;
 }
 
@@ -80,11 +82,12 @@ MultiaxialMaterial* MohrCoulomb::get_clone() {
  */
 void MohrCoulomb::set_strain(const Vector& De, const double Dt) {
   // material properties
-  double E = myElastic->get_param(0);
-  double nu= myElastic->get_param(1);
-  double c    = MatParams[ 0];
-  double phi  = MatParams[ 1];
-  double alpha= MatParams[ 2];
+  double E  = myElastic->get_param(0);
+  double nu = myElastic->get_param(1);
+  double c     = MatParams[ 0];
+  double phi   = MatParams[ 1];
+  double alpha = MatParams[ 2];
+  double eta   = MatParams[ 3];
 
   // derivatives
   std::vector<Vector> df(3);
@@ -222,11 +225,11 @@ void MohrCoulomb::set_strain(const Vector& De, const double Dt) {
 
   // if (f[0]>1e-8 || f[1]>1e-8 || f[2]>1e-8)
   //   cout << "inacurate : "<<s[0]<<"\t"<<s[1]<<"\t"<<s[2]<<"\t"<<endl;
+  
   // creep
-  // double Dt =10000.;
-  // double eta = 100.;
-  // sTrial=(snn+(Dt/eta)*sTrial)/(1+Dt/eta);
-  // aTrial=(ann+(Dt/eta)*aTrial)/(1+Dt/eta);
+  if (eta > 0.) {
+    sTrial=(snn + Dt / eta * sTrial) / (1. + Dt / eta);
+  }
 }
 /**
  * Commit material state.
