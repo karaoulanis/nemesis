@@ -38,7 +38,8 @@ class MohrCoulomb: public MultiaxialMaterial {
               MultiaxialMaterial* elastic,
               double c,
               double phi,
-              double alpha);
+              double alpha,
+              double eta);
   ~MohrCoulomb();
 
   MultiaxialMaterial* get_clone();
