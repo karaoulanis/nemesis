@@ -63,7 +63,8 @@ Domain::Domain()
       eigenVals(0),
       timeCurr(0.),
       timePrev(0.),
-      lambdaConvg(0.) {
+      lambdaConvg(0.),
+      export_vtk_(false) {
   this->init();
 }
 /**
@@ -128,6 +129,10 @@ int Domain::set_dim(int dim) {
  */
 int Domain::get_dim() const {
   return dim_;
+}
+
+void Domain::set_export_vtk(bool b) {
+  export_vtk_ = b;
 }
 
 void Domain::zeroNodalStress() {
@@ -195,7 +200,9 @@ void Domain::Commit() {
   for (TrackerIterator i = trackers_.begin(); i != trackers_.end(); i++) {
     i->second->Track(lambdaConvg, timeCurr);
   }
-  // this->ExportVTK();
+  if (export_vtk_) {
+    this->ExportVTK();
+  }
 }
 
 
