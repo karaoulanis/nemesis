@@ -256,6 +256,18 @@ static PyObject* pyDomain_GetState(PyObject* /*self*/, PyObject* args) {
   }
   return Py_BuildValue("s", s);
 }
+static PyObject* pyDomain_ExportVtk(PyObject* /*self*/, PyObject* args) {
+  int b;
+  if (!PyArg_ParseTuple(args, "i", &b))  return NULL;
+  try {
+    pD->set_export_vtk(b);
+  } catch(SException e) {
+    PyErr_SetString(PyExc_StandardError, e.what());
+    return NULL;
+  }
+  Py_INCREF(Py_None);
+  return Py_None;
+}
 static PyMethodDef DomainMethods[] =  {
   {"dim",   pyDomain_Dim,
     METH_VARARGS, "Set domain dimensions."},
@@ -279,6 +291,8 @@ static PyMethodDef DomainMethods[] =  {
     METH_VARARGS, "Set gravity direction."},
   {"get_state",     pyDomain_GetState,
     METH_VARARGS, "Return the domain's state."},
+  {"export_vtk",   pyDomain_ExportVtk,
+    METH_VARARGS, "Set whether the domain will be exported to vtk."},
   {NULL, NULL, 0, NULL}
 };
 /******************************************************************************

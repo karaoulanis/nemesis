@@ -99,6 +99,7 @@ class Domain {
   double timeCurr;
   double timePrev;
   double lambdaConvg;
+  bool export_vtk_;
 
   void init();
   // Dummy copy constructor and copy assignment as to explicitly disable them.
@@ -115,6 +116,7 @@ class Domain {
   // Access to data members
   int set_dim(int dim);
   int get_dim() const;
+  void set_export_vtk(bool b);
 
   // Analysis/LoadCase related members
   void Initialize();
