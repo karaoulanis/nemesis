@@ -195,7 +195,7 @@ void Domain::Commit() {
   for (TrackerIterator i = trackers_.begin(); i != trackers_.end(); i++) {
     i->second->Track(lambdaConvg, timeCurr);
   }
-  this->ExportVTK();
+  // this->ExportVTK();
 }
 
 
