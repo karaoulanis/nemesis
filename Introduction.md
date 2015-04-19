@@ -1,0 +1,1 @@
+The main wiki is maintained at _[nemesis](http://www.nemesis-project.org)_ website. Here you may find additional information mainly about downloading and compiling the source code of _[nemesis](http://www.nemesis-project.org)_.
